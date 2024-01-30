@@ -1,0 +1,70 @@
+{
+	"fields": {
+		"fileName": "اسم الملف",
+		"exportedBy": "تم التصدير بواسطة",
+		"contactCount": "عدد جهات الاتصال",
+		"createdAt": "تاريخ الإنشاء",
+		"contactExportStatus": "الحالة",
+		"statuses": {
+			"inProgress": "منتظر",
+			"failed": "فشل",
+			"completed": "مكتمل"
+		}
+	},
+	"dialogs": {
+		"deleteExports": {
+			"title": "حذف التصدير",
+			"message": {
+				"warning": "هل أنت متأكد أنك تريد حذف عملية التصدير هذه؟",
+				"success": "تم حذف الملف بنجاح"
+			},
+			"actions": {
+				"submit": "التأكد"
+			}
+		},
+		"exportFields": {
+			"title": "تصدير الحقول",
+			"fields": {
+				"fileName": {
+					"label": "اسم الملف",
+					"placeholder": "اكتب اسم الملف المخصص الخاص بك"
+				},
+				"selectExportFields": {
+					"label": "حدد الحقول للتصدير"
+				}
+			},
+			"message": {
+				"success_1": "التنزيل متاح وتم تنفيذه.",
+				"success_2": "انقر على صفحة التصدير."
+			},
+			"buttons": {
+				"submit": "تصدير",
+				"selectAll": "اختر الكل",
+				"clearAll": "امسح الكل"
+			}
+		}
+	},
+	"components": {
+		"statusesPopover": {
+			"label": "الحالة",
+			"placeholder": {
+				"single": "حدد الحالة",
+				"multi": "حدد حالة واحدة أو أكثر"
+			},
+			"options": {
+				"processing": "في تَقَدم",
+				"failed": "فشل",
+				"ready": "مكتمل"
+			}
+		},
+		"exportedByPopover": {
+			"label": "تم التصدير بواسطة",
+			"placeholder": "اختر المستخدم"
+		},
+		"exportTableActions": {
+			"download": "تحميل",
+			"delete": "مسح",
+			"downloadSuccess": "تم تحميل الملف بنجاح"
+		}
+	}
+}

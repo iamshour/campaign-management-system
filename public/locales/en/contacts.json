@@ -1,0 +1,263 @@
+{
+	"components": {
+		"tagsPopover": {
+			"label": "Tags",
+			"placeholder": {
+				"single": "Select one Tag",
+				"multi": "Select one or more tags"
+			},
+			"createNewPopover": {
+				"title": "Create New +",
+				"fields": {
+					"tag-name": {
+						"label": "Tag name",
+						"placeholder": "Add a new unique tag"
+					}
+				}
+			}
+		},
+		"advancedFiltersPreview": {
+			"title": "Advanced Filter Applied",
+			"message": {
+				"noResults": "No Condtions Found"
+			}
+		},
+		"contactForm": {
+			"message": {
+				"phoneOrEmailWarning": "You should pass either a phone number or an email address."
+			},
+			"placeholders": {
+				"firstName": "Type contact's first name",
+				"lastName": "Type contact's last name",
+				"email": "Type contact's email address",
+				"groups": "Add contact in group/s",
+				"tags": "Add tags for the contact",
+				"note": "Type a custom note..."
+			}
+		}
+	},
+	"fields": {
+		"firstName": "First Name",
+		"lastName": "Last Name",
+		"phoneNumber": "Phone Number",
+		"email": "Email",
+		"tags": "Tags",
+		"groups": "Groups",
+		"country": "Country",
+		"createdAt": "Created At",
+		"updatedAt": "Updated At",
+		"note": "Note",
+		"groupName": "Group name"
+	},
+	"table": {
+		"toolbar": {
+			"search": "Search by any field",
+
+			"actions": {
+				"edit": {
+					"title": "Edit Selected",
+					"delete": "Delete Contacts",
+					"addTags": "Add Tags",
+					"removeTags": "Remove Tags",
+					"addToGroups": "Add To Groups",
+					"removeGroups": "Remove Groups"
+				},
+				"import": "Import",
+				"add-contact": "Add Contact"
+			}
+		},
+		"pagination": {
+			"initial-message": "{{selectionLength, number}} of {{totalLength, number}} entries selected",
+			"select-everything-prompt": "Do you want to select everything?",
+			"everything-already-selected-message": "All Contacts in the server are selected.",
+			"select-all-button": "Select All {{count}} Contacts",
+			"clear-all-button": "Clear all Selection?"
+		}
+	},
+	"dialogs": {
+		"view-contact": {
+			"title": "View Contact"
+		},
+		"addContact": {
+			"title": "Add Contact",
+			"message": {
+				"singleAddContactSuccess": "Your contact has been successfully added.",
+				"multiAddContactSuccess": "Your contact has been successfully added, you can add another contact.",
+				"editContactSuccess": "Your contact has been successfully edited."
+			},
+			"buttons": {
+				"singleAdd": "Submit",
+				"multiAdd": "Save & Add Another Contact"
+			}
+		},
+		"editContact": {
+			"title": "Edit Contact",
+			"buttons": {
+				"save": "Save"
+			}
+		},
+		"importContacts": {
+			"title": "Import Contacts",
+			"fileSelection": {
+				"title": "Import Options",
+				"description": "Please select a file containing your contacts or copy/paste them.",
+				"buttons": {
+					"submit": "Proceed To Organize"
+				},
+				"tabs": {
+					"importFile": {
+						"title": "Import File",
+						"description": "Select a .csv, .xls, or .xlsx file",
+						"errors": {
+							"file-too-large": "File is too large, and exceeds the limit: {{count}}MB",
+							"file-invalid-type": "Invalid file upload. Your uploaded file should be of type: excel or csv."
+						}
+					},
+					"copyPaste": {
+						"title": "Copy/Paste",
+						"description": "Copy and paste contacts from your .csv, .xls, or .xlsx file"
+					}
+				}
+			},
+			"fieldsMapping": {
+				"title": "Map Fields",
+				"description": "Please map the columns in the imported file to one of the contacts fields. Make sure your imported phone numbers includes country code.",
+				"buttons": {
+					"submit": "Proceed To Review",
+					"resetMapping": "Reset Mapping"
+				},
+				"labels": {
+					"checkboxLabel": "My data has headers",
+					"invalidFile": "No File uploaded, or an error occurred with current file. Please retry.",
+					"addTagsGroups": "You have the option to either choose an existing group or tags, or create new ones"
+				}
+			},
+			"fileReview": {
+				"title": "Review",
+				"description": "Check all details before importing your contacts' details",
+				"cards": {
+					"allRows": "All Rows",
+					"validRows": "Valid Rows",
+					"notValidRows": "Not Valid Rows"
+				},
+				"validations": {
+					"groups": "All imported contacts are related to this group {{groups}}",
+					"groups_other": "All imported contacts are related to these groups {{groups}}",
+					"tags": "All imported contacts are related to this tag {{tags}}",
+					"tags_other": "All imported contacts are related to these tags {{tags}}",
+					"countries": "Countries detected for valid rows:",
+					"otherErrors": {
+						"label": "Errors",
+						"invalidPhoneNumbers": "1 phone number will be skipped since it already exist.",
+						"invalidPhoneNumbers_other": "{{count}} phone numbers will be skipped since they already exist.",
+						"invalidEmails": "1 email address will be skipped since it already exists.",
+						"invalidEmails_other": "{{count}} email addresses will be skipped since they already exist.",
+						"failedInputs": "1 invalid input, and will be skipped.",
+						"failedInputs_other": "{{count}} invalid inputs, and will be skipped."
+					},
+					"note": "<0>Note:</0> Any rows that contain errors will not be imported. You can <2>Export Error File</2> for further information."
+				},
+				"buttons": {
+					"submit": "Import Now"
+				}
+			},
+			"message": {
+				"reviewSuccess": "File Imported Successfully",
+				"": "",
+				"downloadFileSuccess": "File Downloaded successfully",
+				"invalidData": "Invalid data was passed. Try refreshing the page and restart your action if the problem persists."
+			}
+		},
+		"advancedFilters": {
+			"title": "Advanced Filters",
+			"radioGroup": {
+				"label": "Select an option",
+				"tabs": {
+					"advancedFilter": "Advanced Filter",
+					"segments": "Segments"
+				}
+			},
+			"actions": {
+				"applyFilter": "Apply Filter",
+				"cancel": "Cancel",
+				"clearFilter": "Clear Filter"
+			},
+			"segment": {
+				"addSegment": {
+					"buttonLabel": "Add Segment",
+					"tooltip": "It's optional. You can create it as a segment and it will be add automatically in the segments management."
+				},
+				"selectSegment": "Please select your segment",
+				"enterSegmentDetails": "Please enter you segment details",
+				"editSegment": {
+					"tooltip": "Please note that any adaptations here will affect the segment on \"Segment Management\".",
+					"editButton": "Edit Segment",
+					"saveChanges": "Save Segment",
+					"cancelChanges": "Cancel Changes",
+					"saveSuccessMessage": "Segment successfuly updated"
+				},
+				"title": "Segment Conditions",
+				"editSegmentSubtitle": "Edit you segment conditions"
+			},
+			"appliedSuccessMessage": "Advanced filter successfully applied."
+		},
+		"deleteContacts": {
+			"title": {
+				"single": "Delete Contact",
+				"multiple": "Delete Contacts"
+			},
+			"message": "Are you sure you want to delete this contact?",
+			"message_zero": "Are you sure you want to delete this contact?",
+			"message_other": "Are you sure you want to delete ({{count}}) selected contacts? Deleting contacts is permenant and cannot be undone.",
+			"success": {
+				"single": "Contact deleted successfully.",
+				"multi": "Contacts deleted successfully."
+			},
+			"actions": {
+				"submit": "Confirm"
+			}
+		},
+		"editMultiple": {
+			"addTags": {
+				"title": "Add Tags",
+				"buttons": {
+					"submit": "Add"
+				},
+				"message": "Are you sure you want to add tags to ({{count}}) selected contact? Adding tags is permenant and cannot be undone.",
+				"message_other": "Are you sure you want to add tags to ({{count}}) selected contacts? Adding tags is permenant and cannot be undone.",
+				"success": "Tags added to selected contacts successfully."
+			},
+			"removeTags": {
+				"title": "Remove Tags",
+				"buttons": {
+					"submit": "Remove"
+				},
+				"message": "Are you sure you want to remove tags from ({{count}}) selected contact? Removing tags is permenant and cannot be undone.",
+				"message_other": "Are you sure you want to remove tags from ({{count}}) selected contacts? Removing tags is permenant and cannot be undone.",
+				"success": "Tags were removed from selected contacts successfully."
+			},
+			"addToGroups": {
+				"title": "Add Groups",
+				"buttons": {
+					"submit": "Add"
+				},
+				"message": "Are you sure you want to add groups to ({{count}}) selected contact? Adding groups is permenant and cannot be undone.",
+				"message_other": "Are you sure you want to add groups to ({{count}}) selected contacts? Adding groups is permenant and cannot be undone.",
+				"success": "Contacts were added to selected groups successfully."
+			},
+			"removeFromGroups": {
+				"title": "Remove Groups",
+				"buttons": {
+					"submit": "Remove"
+				},
+				"message": "Are you sure you want to remove groups from ({{count}}) selected contact? Removing groups is permenant and cannot be undone.",
+				"message_other": "Are you sure you want to remove groups from ({{count}}) selected contacts? Removing groups is permenant and cannot be undone.",
+				"success": "Contacts were removed from selected groups successfully."
+			}
+		}
+	},
+	"emptyView": {
+		"headline": "You don't have contacts yet",
+		"message": "Create new contacts or import your own list of contacts to start sending you campaigns"
+	}
+}

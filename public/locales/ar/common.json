@@ -1,0 +1,70 @@
+{
+	"top-bar": {
+		"search": "البحث الذكي",
+		"user-dropdown": {
+			"profile": "حساب تعريفي",
+			"logout": "تسجيل خروج"
+		}
+	},
+	"navbar": {
+		"toggle-btn": {
+			"minimize": "تصغير",
+			"expand": "توسيع"
+		},
+		"nav-elements": {
+			"dashboard": "لوحة القيادة",
+			"inbox": "صندوق الوارد",
+			"integrations": "التكامل",
+			"people": {
+				"title": "الناس",
+				"elements": {
+					"contacts": "جهات الاتصال",
+					"groups": "مجموعات",
+					"exports": "إدارة الصادرات",
+					"segments": "شرائح"
+				}
+			},
+			"campaigns": "مدير الحملات",
+			"templates": {
+				"title": "مدير القوالب",
+				"elements": {
+					"templates": "قوالب"
+				}
+			},
+			"channels": {
+				"title": "القنوات",
+				"elements": {
+					"whatsapp": "واتس اب"
+				}
+			},
+			"chatbot": {
+				"title": "روبوت الدردشة",
+				"elements": {
+					"page-1": "صفحة الشات بوت 1"
+				}
+			}
+		},
+		"language-selector": {
+			"title": "اللغة",
+			"options": {
+				"english": "إنجليزي",
+				"arabic": "عربي"
+			}
+		}
+	},
+	"filters-bar": {
+		"title": "مصنف بواسطة",
+		"trigger-button": {
+			"expand": "إظهار شريط المرشحات",
+			"minimize": "إخفاء شريط المرشحات"
+		},
+		"actions": {
+			"clear": "مسح",
+			"clear-all": "مسح الكل"
+		},
+		"advanced-filters": {
+			"button": "الفلاتر المتقدمة",
+			"applied": "الفلاتر المتقدمة المطبقة"
+		}
+	}
+}

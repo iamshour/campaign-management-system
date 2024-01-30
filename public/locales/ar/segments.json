@@ -1,0 +1,144 @@
+{
+	"components": {
+		"createSegmentPopover": {
+			"fields": {
+				"name": {
+					"label": "إسم المقطع",
+					"placeholder": "املأ الإسم"
+				},
+				"description": {
+					"label": "الوصف",
+					"placeholder": "املأ الوصف"
+				}
+			},
+			"actions": {
+				"create": "إضافة المقطع"
+			},
+			"successMessage": "قطاع ناجح تم إنشاؤه"
+		},
+
+		"segmentsPopover": {
+			"label": "شرائح",
+			"placeholder": {
+				"single": "اختر شريحة واحدة",
+				"multi": "حدد شريحة واحدة أو أكثر"
+			}
+		}
+	},
+	"fields": {
+		"name": "اسم الجزء",
+		"description": "وصف القطاع",
+		"createdAt": "تاريخ الإنشاء"
+	},
+	"table": {
+		"toolbar": {
+			"search": "البحث عن القطاعات",
+
+			"actions": {
+				"create-segment": "إنشاء مقطع"
+			}
+		}
+	},
+	"dialogs": {
+		"delete-segment": {
+			"title": "حذف المقطع",
+			"message": "هل أنت متأكد أنك تريد حذف هذا الجزء؟",
+			"actions": {
+				"submit": "التأكد"
+			}
+		}
+	},
+	"views": {
+		"emptyView": {
+			"headline": "ليس لديك شرائح بعد",
+			"message": "إنشاء شريحة جديدة لجمع جهات الاتصال الخاصة بك"
+		},
+		"editableSegmentView": {
+			"title": {
+				"createSegment": "إنشاء شريحة جديدة",
+				"editSegment": "تحرير المقطع"
+			},
+			"items": {
+				"basicInfo": {
+					"title": "المعلومات الأساسية للقطاع",
+					"description": {
+						"createSegment": "املأ المعلومات الأساسية لشريحتك",
+						"editSegment": "قم بتحرير معلوماتك الأساسية"
+					},
+					"fields": {
+						"name": {
+							"label": "اسم الجزء",
+							"placeholder": "اسم الجزء"
+						},
+						"description": {
+							"label": "الوصف",
+							"placeholder": "أدخل الوصف"
+						}
+					}
+				},
+				"conditions": {
+					"title": "شروط القطاع",
+					"description": {
+						"createSegment": "املأ شروط الجزء الخاص بك",
+						"editSegment": "قم بتحرير شروط القسم الخاص بك"
+					},
+					"conditionCount": "الحالة {{count}}",
+					"andRule": "و",
+					"fields": {
+						"attribute": {
+							"label": "السمة",
+							"placeholder": "حدد السمة",
+							"fields": {
+								"firstName": "الاسم الأول",
+								"lastName": " اسم العائلة",
+								"phoneNumber": "رقم التليفون",
+								"email": "عنوان البريد الإلكتروني",
+								"country": "البلد",
+								"tags": "العلامات",
+								"groups": "مجموعات",
+								"segments": "شرائح"
+							}
+						},
+						"condition": {
+							"label": "الحالة",
+							"placeholder": "حدد الشرط",
+							"fields": {
+								"is": "يكون",
+								"isNot": "ليس",
+								"startsWith": "ابدا ب",
+								"endsWith": "ينتهي ب",
+								"contains": "يتضمن",
+								"notContains": "لا يحتوي",
+								"isEmpty": "فارغ",
+								"isNotEmpty": "ليس فارغا"
+							}
+						},
+						"specification": {
+							"label": "تخصيص",
+							"placeholder": "أضف المواصفات"
+						}
+					},
+					"actions": {
+						"andRule": "+ والقاعدة",
+						"orOperator": "+ أو المشغل",
+						"deleteRule": "حذف القاعدة",
+						"deleteCondition": "حذف الشرط"
+					}
+				}
+			},
+			"actions": {
+				"submit": {
+					"createSegment": "يُقدِّم",
+					"editSegment": "تحديث المقطع"
+				},
+				"cancel": "الإلغاء"
+			}
+		},
+		"viewSegment": {
+			"title": "عرض تفاصيل القطاع",
+			"actions": {
+				"editSegment": "تحرير معلومات المقطع"
+			}
+		}
+	}
+}

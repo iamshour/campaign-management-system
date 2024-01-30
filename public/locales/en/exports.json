@@ -1,0 +1,70 @@
+{
+	"fields": {
+		"fileName": "File Name",
+		"exportedBy": "Exported By",
+		"contactCount": "Number Of Contacts",
+		"createdAt": "Creation Date",
+		"contactExportStatus": "Status",
+		"statuses": {
+			"inProgress": "In Progress",
+			"failed": "Failed",
+			"completed": "Ready"
+		}
+	},
+	"dialogs": {
+		"deleteExports": {
+			"title": "Delete Export",
+			"message": {
+				"warning": "Are you sure you want to delete this export?",
+				"success": "Exports file deleted successfully."
+			},
+			"actions": {
+				"submit": "Confirm"
+			}
+		},
+		"exportFields": {
+			"title": "Export Fields",
+			"fields": {
+				"fileName": {
+					"label": "Export file name",
+					"placeholder": "Type your custom file name"
+				},
+				"selectExportFields": {
+					"label": "Select fields to export"
+				}
+			},
+			"message": {
+				"success_1": "The download is available and done.",
+				"success_2": "Click on the export page."
+			},
+			"buttons": {
+				"submit": "Export",
+				"selectAll": "Select All",
+				"clearAll": "Clear All"
+			}
+		}
+	},
+	"components": {
+		"statusesPopover": {
+			"label": "Status",
+			"placeholder": {
+				"single": "Select a status",
+				"multi": "Select one or more statuses"
+			},
+			"options": {
+				"processing": "In Progress",
+				"failed": "Failed",
+				"ready": "Completed"
+			}
+		},
+		"exportedByPopover": {
+			"label": "Exported By",
+			"placeholder": "Select User"
+		},
+		"exportTableActions": {
+			"download": "Download",
+			"delete": "Delete",
+			"downloadSuccess": "File downloaded successfully"
+		}
+	}
+}
