@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cms
+  namespace: ${NAMESPACE}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: cms
+  template:
+    metadata:
+      labels:
+        app: cms
+    spec:
+      containers:
+      - name: cms
+        image: ${DOCKER_TAG}
+        imagePullPolicy: Always
+        envFrom:
+          - configMapRef:
+              name: cms-configmap
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+    imagePullSecrets:
+      - name: gitlab-registry
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cms-service
+  namespace: ${NAMESPACE}
+spec:
+  selector:
+    app: cms
+  ports:
+  - port: 3000
+    targetPort: 3000
+    protocol: TCP
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cms-configmap
+  namespace: ${NAMESPACE}
+data:
+  VITE_APP_PREFIX: "${VITE_APP_PREFIX}"
+  VITE_APP_API_BASE_URL: "${VITE_APP_API_BASE_URL}"
