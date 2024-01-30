@@ -1,0 +1,13 @@
+include:
+  - project: 'a10179/cicd-pipelines'
+    file:
+      - '/templates-testing/.node-ci-template.yml'
+
+stages:
+  - build
+  - version-check
+  - sonarqube-check
+  - package
+  - release
+  - containerize
+  - deploy
