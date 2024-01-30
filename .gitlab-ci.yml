@@ -1,7 +1,7 @@
 include:
   - project: 'a10179/cicd-pipelines'
     file:
-      - '/templates-testing/.node-ci-template.yml'
+      - '/templates-stable/.node-ci-template.yml'
 
 stages:
   - build
