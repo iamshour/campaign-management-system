@@ -1,13 +1,7 @@
 //#region Import
-import { twMerge } from "@package/ui"
-import Badge from "@package/ui/src/badge"
-import NotFoundError from "@package/ui/src/errors/notfound-error"
-import Input from "@package/ui/src/input/input"
-import Label from "@package/ui/src/label"
-import PhoneInputReadonly from "@package/ui/src/phone-input/phone-input-readonly"
-import Skeleton from "@package/ui/src/skeleton"
-import Textarea from "@package/ui/src/textarea"
-import { format, getListOfKey } from "@package/utils"
+import { twMerge, Badge, NotFoundError, Input, Label, PhoneInputReadonly, Skeleton,
+	Textarea } from "@blueai/ui"
+import { format, getListOfKey } from "@blueai/utils"
 import { useTranslation } from "react-i18next"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"

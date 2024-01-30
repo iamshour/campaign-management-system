@@ -1,11 +1,5 @@
 //#region Import
-import { twMerge } from "@package/ui"
-import Button from "@package/ui/src/button"
-import Skeleton from "@package/ui/src/skeleton"
-import TableSkeleton from "@package/ui/src/skeletons/table-skeleton"
-import Table from "@package/ui/src/table"
-import type { TablePaginationProps } from "@package/ui/src/table/table-pagination"
-import { RowData, TableProps } from "@package/ui/src/table/types"
+import { Button, Skeleton, Table, TableSkeleton, twMerge, type TablePaginationProps, type RowData, type TableProps} from "@blueai/ui"
 import { Suspense, createContext, lazy, useContext, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -21,8 +15,8 @@ import {
 	type TableKey,
 } from "@/core/slices/advanced-table-slice"
 
-const SearchInput = lazy(() => import("@package/ui/src/input/search-Input"))
-const TablePagination = lazy(() => import("@package/ui/src/table/table-pagination"))
+const SearchInput = lazy(() => import("@blueai/ui").then(mod => ({ default: mod.SearchInput })))
+const TablePagination = lazy(() => import("@blueai/ui").then(mod => ({ default: mod.TablePagination })))
 //#endregion
 
 type AdvancedTableContextValue = { tableKey: TableKey; count: number }

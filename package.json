@@ -18,8 +18,8 @@
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.2",
-		"@package/ui": "workspace:*",
-		"@package/utils": "workspace:*",
+		"@blueai/ui": "../packages/ui",
+		"@blueai/utils": "../packages/utils",
 		"@reduxjs/toolkit": "^1.9.7",
 		"i18next": "^23.6.0",
 		"i18next-browser-languagedetector": "^7.1.0",
@@ -36,12 +36,7 @@
 		"zod": "^3.22.4"
 	},
 	"devDependencies": {
-		"@config/eslint-config": "workspace:*",
-		"@config/prettier": "workspace:*",
-		"@config/tailwind": "workspace:*",
-		"@config/ts": "workspace:*",
-		"@config/vite": "workspace:*",
-		"@package/icons": "workspace:*",
+		"@blueai/configs": "../packages/configs",
 		"@iconify/json": "2.2.175",
 		"@types/node": "^20.6.3",
 		"@types/react": "^18.2.21",

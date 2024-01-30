@@ -1,9 +1,7 @@
 //#region Import
-import Button from "@package/ui/src/button"
-import Footer from "@package/ui/src/footer"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
-
+import { Button, Footer } from "@blueai/ui"
 import { useDeleteSegmentMutation } from "@/features/people/segments/api"
 //#endregion
 

@@ -1,5 +1,5 @@
 //#region Import
-import DateRangePicker from "@package/ui/src/date-range-picker"
+import {DateRangePicker} from "@blueai/ui"
 
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"

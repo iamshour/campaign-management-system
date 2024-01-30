@@ -1,8 +1,7 @@
 //#region Import
-import Dialog from "@package/ui/src/dialog"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
-
+import { Dialog } from "@blueai/ui"
 const DeleteSegmentDialogContent = lazy(() => import("./delete-segment-dialog-content"))
 //#endregion
 

@@ -1,6 +1,5 @@
 //#region Import
-import type { UseFormReturn } from "@package/ui"
-import Button from "@package/ui/src/button"
+import { Button, type UseFormReturn } from "@blueai/ui"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"

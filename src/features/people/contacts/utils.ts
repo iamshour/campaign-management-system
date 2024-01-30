@@ -1,6 +1,6 @@
 //#region Import
-import { parsePhoneNumber } from "@package/ui"
-import { createObjtWithCommonValue, getListOfKey, cleanObject } from "@package/utils"
+import { parsePhoneNumber } from "@blueai/ui"
+import { createObjtWithCommonValue, getListOfKey, cleanObject } from "@blueai/utils"
 
 import type { FiltersFields } from "@/core/slices/advanced-table-slice"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"

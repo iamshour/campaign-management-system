@@ -1,4 +1,4 @@
-import type { IconType } from "@package/ui"
+import type { IconType } from "@blueai/ui"
 
 import appPaths from "./app-paths"
 

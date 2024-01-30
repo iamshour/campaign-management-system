@@ -1,5 +1,5 @@
 //#region Import
-import Skeleton from "@package/ui/src/skeleton"
+import {Skeleton} from "@blueai/ui"
 //#endregion
 
 const SegmentViewSkeleton = () => (

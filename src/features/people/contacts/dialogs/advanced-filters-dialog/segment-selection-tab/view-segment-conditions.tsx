@@ -1,6 +1,5 @@
 //#region Import
-import Button from "@package/ui/src/button"
-import Tooltip from "@package/ui/src/tooltip"
+import { Button, Tooltip } from "@blueai/ui"
 import { lazy } from "react"
 import { useTranslation } from "react-i18next"
 

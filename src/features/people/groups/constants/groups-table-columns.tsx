@@ -1,6 +1,6 @@
 //#region Import
-import type { ColumnType } from "@package/ui/src/table/types"
-import { format } from "@package/utils"
+import type { ColumnType } from "@blueai/ui"
+import { format } from "@blueai/utils"
 
 import type { Group } from "../types"
 import GroupsTableActions from "../views/groups-view/groups-table-actions"

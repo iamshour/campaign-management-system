@@ -1,12 +1,11 @@
 //#region Import
 import { zodResolver } from "@hookform/resolvers/zod"
-import { twMerge, useForm } from "@package/ui"
-import Button from "@package/ui/src/button"
-import Checkbox from "@package/ui/src/checkbox"
-import Footer from "@package/ui/src/footer"
-import Form from "@package/ui/src/form"
-import Input from "@package/ui/src/input/input"
-import { cleanObject } from "@package/utils"
+import { twMerge, useForm, Button,
+	Checkbox,
+	Footer,
+	Form,
+	Input } from "@blueai/ui"
+import { cleanObject } from "@blueai/utils"
 import { useMemo } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"

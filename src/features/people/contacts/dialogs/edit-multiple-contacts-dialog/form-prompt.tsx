@@ -1,5 +1,4 @@
-import Form from "@package/ui/src/form"
-import Input from "@package/ui/src/input/input"
+import { Form, Input } from "@blueai/ui"
 import { useTranslation } from "react-i18next"
 
 type DialogFormData = { prompt?: number; tags: string[]; groups: string[] }

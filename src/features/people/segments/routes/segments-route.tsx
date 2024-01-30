@@ -1,8 +1,6 @@
 //#region Import
-import DisplayError from "@package/ui/src/errors/display-error"
-import DataTableSkeleton from "@package/ui/src/skeletons/data-table-skeleton"
 import { lazy } from "react"
-
+import { DisplayError, DataTableSkeleton } from "@blueai/ui"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { AdvancedTableStateValue } from "@/core/slices/advanced-table-slice"

@@ -1,7 +1,6 @@
 //#region Import
-import { ColumnType } from "@package/ui/src/table/types"
-import { format } from "@package/utils"
-
+import { format } from "@blueai/utils"
+import type { ColumnType } from "@blueai/ui"
 import type { Segment } from "../types"
 import SegmentsRowActions from "../views/segments-view/segments-row-actions"
 

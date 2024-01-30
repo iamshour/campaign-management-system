@@ -1,9 +1,5 @@
 //#region Import
-import { twMerge } from "@package/ui"
-import Button from "@package/ui/src/button"
-import Transition from "@package/ui/src/react-spring/transition"
-import Skeleton from "@package/ui/src/skeleton"
-import Tooltip from "@package/ui/src/tooltip"
+import { twMerge, Button, Transition, Skeleton, Tooltip } from "@blueai/ui"
 import { Suspense, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { useLocation } from "react-router-dom"

@@ -1,5 +1,5 @@
 //#region Import
-import Textarea from "@package/ui/src/textarea"
+import { Textarea } from "@blueai/ui"
 
 import { useImportContactsDialogContext } from "../import-contacts-dialog-context"
 //#endregion

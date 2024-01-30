@@ -1,5 +1,5 @@
 //#region Import
-import type { DateRange } from "@package/ui/src/date-range-picker"
+import type { DateRange } from "@blueai/ui"
 
 import type { CommonListArguments } from "@/core/lib/redux-toolkit/types"
 

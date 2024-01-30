@@ -1,7 +1,5 @@
 //#region Import
-import { twMerge } from "@package/ui"
-import Popover from "@package/ui/src/popover"
-import PopoverSkeleton from "@package/ui/src/skeletons/popover-skeleton"
+import { twMerge, Popover, PopoverSkeleton } from "@blueai/ui"
 import { Suspense, lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 

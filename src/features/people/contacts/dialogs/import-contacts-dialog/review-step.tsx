@@ -1,7 +1,6 @@
 //#region Import
-import { IconType, isoCountryOptions, twMerge } from "@package/ui"
-import NotFoundError from "@package/ui/src/errors/notfound-error"
-import { getListOfKey } from "@package/utils"
+import { isoCountryOptions, twMerge, NotFoundError, type IconType } from "@blueai/ui"
+import { getListOfKey } from "@blueai/utils"
 import toast from "react-hot-toast"
 import { Trans, useTranslation } from "react-i18next"
 

@@ -1,6 +1,5 @@
 //#region Import
-import { twMerge } from "@package/ui"
-import Dialog from "@package/ui/src/dialog"
+import { twMerge, Dialog } from "@blueai/ui"
 import { lazy, useState } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
