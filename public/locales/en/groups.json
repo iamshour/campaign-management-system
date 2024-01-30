@@ -1,0 +1,97 @@
+{
+	"components": {
+		"groupsPopover": {
+			"label": "Groups",
+			"placeholder": {
+				"single": "Select one Group",
+				"multi": "Select one or more groups"
+			},
+			"createNewPopover": {
+				"title": "Create New +",
+				"fields": {
+					"name": {
+						"label": "Group name*",
+						"placeholder": "Add a new unique group name"
+					},
+					"description": {
+						"label": "Group Description",
+						"placeholder": "Add group description (optional)"
+					}
+				},
+				"createSuccessMessage": "Group created successfully",
+				"editSuccessMessage": "Group updated successfully"
+			}
+		},
+		"groupContactsTable": {
+			"actionsDropdown": {
+				"edit": "Edit",
+				"move": "Move to Group",
+				"remove": "Remove from this Group"
+			}
+		}
+	},
+	"fields": {
+		"groupName": "Group name",
+		"description": "Group description",
+		"createdAt": "Creation date",
+		"contactsCount": "Number of contacts"
+	},
+	"table": {
+		"toolbar": {
+			"search": "Search by any field",
+
+			"actions": {
+				"create-group": "Create Group"
+			}
+		}
+	},
+	"dialogs": {
+		"create-group": {
+			"title": {
+				"new-group": "Create Group",
+				"edit-group": "Edit Group"
+			}
+		},
+		"delete-group": {
+			"title": "Delete Group",
+			"message": "Deleting a group does not remove any contact, but the contacts won't belong to the deleted group. Do you wish to move the contacts to another group?",
+			"actions": {
+				"delete": "Delete",
+				"move": "Move Contacts",
+				"move-with-delete": "Move & Delete Now"
+			},
+			"successMessage": "Group deleted successfully"
+		},
+		"remove-from-group": {
+			"title": "Remove from this Group",
+			"message": "Are you sure you want to remove this contact from the group?",
+			"message_zero": "Are you sure you want to remove this contact from the group?",
+			"message_other": "Are you sure you want to remove all ({{count}}) selected contacts from this group? Removing contacts is permenant and cannot be undone.",
+			"actions": {
+				"submit": "Confirm"
+			},
+			"successMessage": "Contact removed from group successfully",
+			"successMessage_other": "Contacts removed from group successfully"
+		},
+		"move-to-group": {
+			"title": "Move To Group",
+			"message": "Are you sure you want to move all ({{count}}) selected contacts from this group? Moving contacts is permanent and cannot be undone.",
+			"actions": {
+				"submit": "Move"
+			},
+			"successMessage": "Contact moved to group successfully",
+			"successMessage_other": "Contacts moved to group successfully"
+		}
+	},
+	"views": {
+		"addToGroup": {
+			"title": "Add Contacts to a Group",
+			"actions": {
+				"cancel": "Cancel",
+				"submit": "Add To Group"
+			},
+			"successMessage": "Contact added to group successfully",
+			"successMessage_other": "Contacts added to group successfully"
+		}
+	}
+}

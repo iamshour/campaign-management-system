@@ -1,0 +1,147 @@
+{
+	"components": {
+		"createSegmentPopover": {
+			"fields": {
+				"name": {
+					"label": "Segment Name",
+					"placeholder": "Enter Name"
+				},
+				"description": {
+					"label": "Description",
+					"placeholder": "Enter description"
+				}
+			},
+			"actions": {
+				"create": "Create Segment"
+			},
+			"successMessage": "Segment successfuly created"
+		},
+		"segmentsPopover": {
+			"label": "Segments",
+			"placeholder": {
+				"single": "Select one segment",
+				"multi": "Select one or more segments"
+			}
+		}
+	},
+	"fields": {
+		"name": "Segment Name",
+		"description": "Segment description",
+		"createdAt": "Creation Date"
+	},
+	"table": {
+		"toolbar": {
+			"search": "Search for segments",
+
+			"actions": {
+				"create-segment": "Create Segment"
+			}
+		}
+	},
+	"dialogs": {
+		"delete-segment": {
+			"title": "Delete Segment",
+			"message": "Are you sure you want to delete this segment?",
+			"actions": {
+				"submit": "Confirm"
+			}
+		}
+	},
+	"views": {
+		"emptyView": {
+			"headline": "You don't have segments yet",
+			"message": "Create new segment to collect you contacts"
+		},
+		"editableSegmentView": {
+			"title": {
+				"createSegment": "Create New Segment",
+				"editSegment": "Edit Segment"
+			},
+			"items": {
+				"basicInfo": {
+					"title": "Segment Basic Info",
+					"description": {
+						"createSegment": "Fill your segment basic info",
+						"editSegment": "Edit your basic info"
+					},
+					"fields": {
+						"name": {
+							"label": "Segment name",
+							"placeholder": "Enter name"
+						},
+						"description": {
+							"label": "Description",
+							"placeholder": "Enter description"
+						}
+					}
+				},
+				"conditions": {
+					"title": "Segment Conditions",
+					"description": {
+						"createSegment": "Fill your segment conditions",
+						"editSegment": "Edit your segment conditions"
+					},
+					"conditionCount": "Condition {{count}}",
+					"andRule": "And",
+					"fields": {
+						"attribute": {
+							"label": "Attribute",
+							"placeholder": "Select attribute",
+							"fields": {
+								"firstName": "First name",
+								"lastName": "Last name",
+								"phoneNumber": "Phone number",
+								"email": "Email address",
+								"country": "Country",
+								"tags": "Tags",
+								"groups": "Groups",
+								"segments": "Segments"
+							}
+						},
+						"condition": {
+							"label": "Condition",
+							"placeholder": "Select condition",
+							"fields": {
+								"is": "Is",
+								"isNot": "Is not",
+								"startsWith": "Starts with",
+								"endsWith": "Ends with",
+								"contains": "Contains",
+								"notContains": "Not contains",
+								"isEmpty": "Is empty",
+								"isNotEmpty": "Is not empty"
+							}
+						},
+						"specification": {
+							"label": "Sepecification",
+							"placeholder": "Add specification"
+						}
+					},
+					"actions": {
+						"andRule": "+ And Rule",
+						"orOperator": "+ Or Operator",
+						"deleteRule": "Delete Rule",
+						"deleteCondition": "Delete Condition"
+					}
+				}
+			},
+			"actions": {
+				"submit": {
+					"createSegment": "Submit",
+					"editSegment": "Update Segment"
+				},
+				"cancel": "Cancel"
+			}
+		},
+		"viewSegment": {
+			"title": "View Segment Details",
+			"actions": {
+				"editSegment": "Edit Segment Info"
+			},
+			"fields": {
+				"name": "Segment Name",
+				"description": "Segment Description"
+			}
+		}
+	}
+}

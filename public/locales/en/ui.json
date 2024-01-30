@@ -1,0 +1,63 @@
+{
+	"table": {
+		"actions": {
+			"sort": {
+				"ascending": "Asc",
+				"descending": "Desc",
+				"reset": "Reset"
+			},
+			"export": {
+				"label": "Export Selected",
+				"label_other": "Export All"
+			}
+		},
+		"pagination": {
+			"buttons": {
+				"first-page": "Go to first page",
+				"previous-page": "Go to previous page",
+				"next-page": "Go to next page",
+				"last-page": "Go to last page"
+			},
+			"message": "Page {{currentPage, number}} of {{totalPages, number}}",
+			"limit-selectbar": "Entries per page"
+		},
+		"message": {
+			"noResults": "No results found"
+		}
+	},
+	"prompt-input": {
+		"placeholder": "Enter the number above",
+		"label": "Type '{{count}}' to confirm'"
+	},
+	"comboBox": {
+		"clearButton": "Clear filters",
+		"placeholder": "Type to search",
+		"message": {
+			"noResults": "No results found.",
+			"maxLimitReached": "Max Limit Reached"
+		}
+	},
+	"buttons": {
+		"back": "Go Back",
+		"cancel": "Cancel"
+	},
+	"drop-file-area": {
+		"message": "Drag and drop some files here, or click to select files",
+		"buttons": {
+			"remove": "Remove File"
+		}
+	},
+	"select": {
+		"placeholder": "Select an option"
+	},
+	"dateRange": {
+		"label": "Date Range",
+		"placeholder": "Pick a date range",
+		"actions": {
+			"clear": "Clear"
+		}
+	},
+	"selectCountryPopover": {
+		"placeholder": "Select a country"
+	}
+}

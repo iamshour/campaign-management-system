@@ -1,0 +1,56 @@
+{
+	"table": {
+		"actions": {
+			"sort": {
+				"ascending": "تصاعدي",
+				"descending": "تنازلي",
+				"reset": "إعادة ضبط"
+			},
+			"export": {
+				"label": "تصدير المحدد",
+				"label_other": "تصدير الكل"
+			}
+		},
+		"pagination": {
+			"buttons": {
+				"first-page": "انتقل إلى الصفحة الأولى",
+				"previous-page": "الانتقال إلى الصفحة السابقة",
+				"next-page": "انتقل إلى الصفحة التالية",
+				"last-page": "انتقل إلى الصفحة الأخيرة"
+			},
+			"message": "صفحة {{currentPage, number}} من {{totalPages, number}}",
+			"limit-selectbar": "إدخالات لكل صفحة"
+		},
+		"message": {
+			"noResults": "لم يتم العثور على نتائج"
+		}
+	},
+	"prompt-input": {
+		"placeholder": "أدخل الرقم أعلاه",
+		"label": "اكتب '{{count}}' للتأكيد"
+	},
+	"comboBox": {
+		"clearButton": "مسح المرشحات",
+		"placeholder": "اكتب للبحث",
+		"message": {
+			"noResults": "لم يتم العثور على نتائج.",
+			"maxLimitReached": "تم الوصول إلى الحد الأقصى"
+		}
+	},
+	"buttons": {
+		"back": "تراجع للخلف",
+		"cancel": "إلغاء"
+	},
+	"drop-file-area": {
+		"message": "قم بسحب وإسقاط بعض الملفات هنا، أو انقر لتحديد الملفات",
+		"buttons": {
+			"remove": "إزالة الملف"
+		}
+	},
+	"select": {
+		"placeholder": "حدد اختيارا"
+	},
+	"selectCountryPopover": {
+		"placeholder": "اختر دولة"
+	}
+}

@@ -1,0 +1,70 @@
+{
+	"top-bar": {
+		"search": "Smart Search",
+		"user-dropdown": {
+			"profile": "Profile",
+			"logout": "Logout"
+		}
+	},
+	"navbar": {
+		"toggle-btn": {
+			"minimize": "Minimize",
+			"expand": "Expand"
+		},
+		"nav-elements": {
+			"dashboard": "Dashboard",
+			"inbox": "Inbox",
+			"integrations": "Integrations",
+			"people": {
+				"title": "People",
+				"elements": {
+					"contacts": "Contacts",
+					"groups": "Groups",
+					"exports": "Manage Exports",
+					"segments": "Segments"
+				}
+			},
+			"campaigns": "Campaigns Manager",
+			"templates": {
+				"title": "Templates Manager",
+				"elements": {
+					"templates": "Templates"
+				}
+			},
+			"channels": {
+				"title": "Channels",
+				"elements": {
+					"whatsapp": "Whatsapp"
+				}
+			},
+			"chatbot": {
+				"title": "Chatbot",
+				"elements": {
+					"page-1": "Chatbot Page 1"
+				}
+			}
+		},
+		"language-selector": {
+			"title": "Language",
+			"options": {
+				"english": "English",
+				"arabic": "Arabic"
+			}
+		}
+	},
+	"filters-bar": {
+		"title": "Filter By",
+		"trigger-button": {
+			"expand": "Show Filters bar",
+			"minimize": "Hide filters bar"
+		},
+		"actions": {
+			"clear": "Clear",
+			"clear-all": "Clear All"
+		},
+		"advanced-filters": {
+			"button": "Advanced Filter",
+			"applied": "Advanced Filter Applied"
+		}
+	}
+}
