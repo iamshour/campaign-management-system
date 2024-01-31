@@ -1,7 +1,7 @@
 {
 	"name": "@blueai/cms",
 	"version": "0.1.0",
-	"prettier": "@config/prettier",
+	"prettier": "@blueai/configs/prettier",
 	"scripts": {
 		"dev": "vite --clearScreen false",
 		"server": "json-server src/api/db.json --port 5000",
@@ -16,8 +16,8 @@
 		"test:watch": "vitest"
 	},
 	"dependencies": {
-		"@blueai/ui": "../packages/ui",
-		"@blueai/utils": "../packages/utils",
+		"@blueai/ui": "latest",
+		"@blueai/utils": "latest",
 		"@hookform/resolvers": "^3.3.2",
 		"@reduxjs/toolkit": "^1.9.7",
 		"i18next": "^23.6.0",
@@ -35,7 +35,7 @@
 		"zod": "^3.22.4"
 	},
 	"devDependencies": {
-		"@blueai/configs": "../packages/configs",
+		"@blueai/configs": "latest",
 		"@iconify/json": "2.2.175",
 		"@types/node": "^20.6.3",
 		"@types/react": "^18.2.21",
