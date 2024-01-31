@@ -51,5 +51,9 @@
 		"vite": "^5.0.12",
 		"vite-plugin-svgr": "4.2.0",
 		"vitest": "0.34.6"
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://gitlab.com/api/v4/projects/54390424/packages/npm/"
 	}
 }
