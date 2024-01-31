@@ -1,6 +1,5 @@
 //#region Import
-import type { OptionType } from "@package/ui"
-import { ComboBoxPopper } from "@package/ui/src/combo-box"
+import { ComboBoxPopper, type OptionType } from "@blueai/ui"
 import { useState } from "react"
 //#endregion
 

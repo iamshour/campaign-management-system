@@ -1,5 +1,5 @@
 //#region Import
-import { format } from "@package/utils"
+import { format } from "@blueai/utils"
 
 import { ExportsType } from "./dialogs/export-fields-dialog/export-fields-dialog-content"
 //#endregion

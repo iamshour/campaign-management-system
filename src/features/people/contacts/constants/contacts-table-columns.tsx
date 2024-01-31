@@ -1,7 +1,6 @@
 //#region Import
-import Badge from "@package/ui/src/badge"
-import type { ColumnType } from "@package/ui/src/table/types"
-import { format } from "@package/utils"
+import { Badge, type ColumnType} from "@blueai/ui"
+import { format } from "@blueai/utils"
 
 import type { Contact } from "../types"
 

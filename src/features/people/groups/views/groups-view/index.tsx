@@ -1,10 +1,7 @@
 //#region Import
-import type { IconType } from "@package/ui"
-import DataGridSkeleton from "@package/ui/src/skeletons/data-grid-skeleton"
-import Tabs from "@package/ui/src/tabs"
-import Tooltip from "@package/ui/src/tooltip"
 import { Suspense, lazy } from "react"
 import { useNavigate } from "react-router-dom"
+import { DataGridSkeleton, Tabs, Tooltip, type IconType } from "@blueai/ui"
 
 import AdvancedTable from "@/core/components/advanced-table"
 import useDispatch from "@/core/hooks/useDispatch"

@@ -1,5 +1,5 @@
 //#region Import
-import Dialog from "@package/ui/src/dialog"
+import { Dialog } from "@blueai/ui"
 import { useState, lazy } from "react"
 import { useTranslation } from "react-i18next"
 

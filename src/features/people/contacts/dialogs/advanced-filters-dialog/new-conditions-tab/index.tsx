@@ -1,5 +1,5 @@
 //#region Import
-import Button from "@package/ui/src/button"
+import { Button } from "@blueai/ui"
 import { useTranslation } from "react-i18next"
 
 import SegmentsFunnelEditable from "@/features/people/segments/components/segments-funnel-editable"

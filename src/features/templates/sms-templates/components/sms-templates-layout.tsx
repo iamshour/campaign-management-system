@@ -1,5 +1,5 @@
 //#region Import
-import { twMerge } from "@package/ui"
+import { twMerge } from "@blueai/ui"
 import { NavLink, Outlet, useLocation } from "react-router-dom"
 //#endregion
 

@@ -1,5 +1,5 @@
 //#region Import
-import type { TableState } from "@package/ui/src/table/types"
+import type { TableState } from "@blueai/ui"
 
 import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
 

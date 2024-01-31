@@ -1,8 +1,7 @@
 //#region Import
-import { twMerge } from "@package/ui"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
-
+import { twMerge } from "@blueai/ui"
 import type { SegmentConditionType } from "@/features/people/segments/types"
 
 import SegmentRuleReadonly from "./segment-rule-readonly"

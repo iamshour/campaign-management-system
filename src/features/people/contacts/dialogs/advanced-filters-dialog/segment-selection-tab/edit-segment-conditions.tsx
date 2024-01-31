@@ -1,7 +1,6 @@
 //#region Import
-import Button from "@package/ui/src/button"
-import Spinner from "@package/ui/src/spinner"
-import Tooltip from "@package/ui/src/tooltip"
+import { Button, Spinner,
+	Tooltip } from "@blueai/ui"
 import { useMemo, useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"

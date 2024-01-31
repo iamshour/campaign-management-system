@@ -1,8 +1,7 @@
 //#region Import
-import Button from "@package/ui/src/button"
-import Footer from "@package/ui/src/footer"
-import RadioGroup from "@package/ui/src/radio-group"
-import Skeleton from "@package/ui/src/skeleton"
+import { Button, Footer,
+	RadioGroup,
+	Skeleton } from "@blueai/ui"
 import { Suspense, lazy, useMemo } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"

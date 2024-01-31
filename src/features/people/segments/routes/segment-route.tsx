@@ -8,7 +8,7 @@ import { useGetSegmentByIdQuery } from "../api"
 import SegmentViewSkeleton from "../views/segment-view/segment-view-skeleton"
 
 const SegmentView = lazy(() => import("../views/segment-view"))
-const NotFoundError = lazy(() => import("@package/ui/src/errors/notfound-error"))
+const NotFoundError = lazy(() => import("@blueai/ui").then((mod) => ({ default: mod.NotFoundError })))
 //#endregion
 
 const SegmentRoute = () => {

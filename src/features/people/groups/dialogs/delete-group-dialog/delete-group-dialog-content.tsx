@@ -1,9 +1,8 @@
 //#region Import
-import type { OptionType } from "@package/ui"
-import BackButton from "@package/ui/src/back-button"
-import Button from "@package/ui/src/button"
-import Footer from "@package/ui/src/footer"
-import { useStep } from "@package/utils"
+import { BackButton,
+	Button,
+	Footer, type OptionType } from "@blueai/ui"
+import { useStep } from "@blueai/utils"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"

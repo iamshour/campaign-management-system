@@ -1,6 +1,6 @@
 //#region Import
-import DataTableSkeleton from "@package/ui/src/skeletons/data-table-skeleton"
-import { getListOfKey } from "@package/utils"
+import { DataTableSkeleton } from "@blueai/ui"
+import { getListOfKey } from "@blueai/utils"
 import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
@@ -14,7 +14,7 @@ import { useGetContactsQuery } from "../api"
 
 const ContactsView = lazy(() => import("../views/contacts-view"))
 const EmptyContactsView = lazy(() => import("../views/empty-contacts-view"))
-const DisplayError = lazy(() => import("@package/ui/src/errors/display-error"))
+const DisplayError = lazy(() => import("@blueai/ui").then((mod) => ({ default: mod.DisplayError })))
 //#endregion
 
 const ContactsRoute = () => {

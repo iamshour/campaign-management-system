@@ -1,10 +1,9 @@
 //#region Import
-import Label from "@package/ui/src/label"
-import Select from "@package/ui/src/select"
-import Skeleton from "@package/ui/src/skeleton"
 import { Suspense, lazy, useCallback } from "react"
 import { useTranslation } from "react-i18next"
-
+import { Label,
+	Select,
+	Skeleton } from "@blueai/ui"
 import segmentRuleAttributeFields from "../../constants/segment-rule-attribute-fields"
 import type { SegmentRuleAttribute, SegmentRuleCondition, SegmentRuleType } from "../../types"
 

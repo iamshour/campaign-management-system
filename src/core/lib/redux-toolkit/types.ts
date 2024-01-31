@@ -1,6 +1,5 @@
 //#region Import
-import type { DateRange } from "@package/ui/src/date-range-picker"
-import type { TableState } from "@package/ui/src/table/types"
+import type {  DateRange, TableState } from "@blueai/ui"
 //#endregion
 
 export interface ListDataReturnType<T> {

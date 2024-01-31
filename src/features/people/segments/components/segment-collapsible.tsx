@@ -1,6 +1,5 @@
 //#region Import
-import type { IconType } from "@package/ui"
-import Collapsible from "@package/ui/src/collapsible"
+import { Collapsible, type IconType } from "@blueai/ui"
 //#endregion
 
 interface SegmentCollapsibleProps extends React.ComponentPropsWithoutRef<typeof Collapsible> {

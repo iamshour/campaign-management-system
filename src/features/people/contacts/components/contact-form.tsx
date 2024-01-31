@@ -1,12 +1,13 @@
 //#region Import
 import { zodResolver } from "@hookform/resolvers/zod"
-import { UseFormReturn, useForm } from "@package/ui"
-import Footer from "@package/ui/src/footer"
-import Form from "@package/ui/src/form"
-import Input from "@package/ui/src/input/input"
-import PhoneInput from "@package/ui/src/phone-input/phone-input"
-import Textarea from "@package/ui/src/textarea"
-import { cleanObject, getListOfKey } from "@package/utils"
+import { UseFormReturn, useForm, 
+	Footer,
+	Form,
+	Input,
+	PhoneInput,
+	Textarea
+} from "@blueai/ui"
+import { cleanObject, getListOfKey } from "@blueai/utils"
 import { useTranslation } from "react-i18next"
 
 import SelectGroupsWithCreatePopover from "@/features/people/groups/components/select-groups-with-create-popover"

@@ -1,8 +1,6 @@
 //#region Import
-import type { OptionType } from "@package/ui"
-import type { DateRange } from "@package/ui/src/date-range-picker"
-import type { TableState } from "@package/ui/src/table/types"
-import getObjectSize from "@package/utils/src/get-object-size"
+import type { OptionType, DateRange, TableState } from "@blueai/ui"
+import { getObjectSize } from "@blueai/utils"
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 import type { Contact } from "@/features/people/contacts/types"

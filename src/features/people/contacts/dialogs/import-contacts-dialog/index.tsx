@@ -1,5 +1,5 @@
 //#region Import
-import Dialog from "@package/ui/src/dialog"
+import { Dialog } from "@blueai/ui"
 import { lazy, useState } from "react"
 
 const ImportContactsDialogContext = lazy(() => import("./import-contacts-dialog-context"))

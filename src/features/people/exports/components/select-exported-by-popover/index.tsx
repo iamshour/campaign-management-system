@@ -1,5 +1,5 @@
 //#region Import
-import ComboBox from "@package/ui/src/combo-box"
+import {ComboBox} from "@blueai/ui"
 import { lazy } from "react"
 import { useTranslation } from "react-i18next"
 

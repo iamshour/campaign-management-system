@@ -1,11 +1,11 @@
 //#region Import
-import { twMerge, type IconType } from "@package/ui"
-import Button from "@package/ui/src/button"
-import Collapsible from "@package/ui/src/collapsible"
-import ErrorBoundary from "@package/ui/src/errors/error-boundary"
-import Spring from "@package/ui/src/react-spring/spring"
-import Separator from "@package/ui/src/separator"
-import Tooltip from "@package/ui/src/tooltip"
+import { Button,
+	Collapsible,
+ErrorBoundary,
+Spring,
+Separator,
+Tooltip,
+	twMerge, type IconType } from "@blueai/ui"
 import { useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { NavLink as DefaultNavLink, NavLinkProps, useLocation } from "react-router-dom"

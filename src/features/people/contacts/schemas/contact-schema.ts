@@ -1,5 +1,5 @@
 //#region Import
-import { isPossiblePhoneNumber } from "@package/ui"
+import { isPossiblePhoneNumber } from "@blueai/ui"
 import * as z from "zod"
 
 import { REGEX_EMAIL, REGEX_NO_SPECIAL_CHARACTERS, REGEX_ONE_WORD } from "@/core/constants/regex"

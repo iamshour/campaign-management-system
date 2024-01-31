@@ -1,5 +1,5 @@
 //#region Import
-import type { OptionType } from "@package/ui"
+import type { OptionType } from "@blueai/ui"
 
 import type { SegmentConditionType } from "@/features/people/segments/types"
 //#endregion

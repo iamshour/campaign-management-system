@@ -1,5 +1,5 @@
 //#region Import
-import { OptionType } from "@package/ui"
+import type { OptionType } from "@blueai/ui"
 //#endregion
 
 interface SegmentRuleReadonlyProps extends OptionType {

@@ -1,8 +1,6 @@
 //#region Import
-import { type OptionType } from "@package/ui"
-import NotFoundError from "@package/ui/src/errors/notfound-error"
-import Skeleton from "@package/ui/src/skeleton"
-import Spinner from "@package/ui/src/spinner"
+import { type OptionType, NotFoundError, Skeleton,
+	Spinner } from "@blueai/ui"
 import { Suspense, lazy, useEffect, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 

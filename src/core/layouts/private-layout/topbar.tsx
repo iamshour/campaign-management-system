@@ -1,10 +1,9 @@
 //#region Import
-import Avatar from "@package/ui/src/avatar"
-import Button from "@package/ui/src/button"
-import Dropdown from "@package/ui/src/dropdown"
-import SearchInput from "@package/ui/src/input/search-Input"
-import Separator from "@package/ui/src/separator"
-import Tooltip from "@package/ui/src/tooltip"
+import { Avatar, Button,
+	Dropdown,
+	SearchInput,
+	Separator,
+	Tooltip } from "@blueai/ui"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 

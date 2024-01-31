@@ -1,5 +1,5 @@
 //#region Import
-import Dropdown from "@package/ui/src/dropdown"
+import {Dropdown} from "@blueai/ui"
 
 import DeleteSingleContactsDialog from "@/features/people/contacts/dialogs/delete-single-contact-dialog"
 import EditContactDialog from "@/features/people/contacts/dialogs/edit-contact-dialog"

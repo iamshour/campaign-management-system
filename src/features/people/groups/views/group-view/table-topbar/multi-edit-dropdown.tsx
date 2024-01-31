@@ -1,5 +1,5 @@
 //#region Import
-import Dropdown from "@package/ui/src/dropdown"
+import { Dropdown } from "@blueai/ui"
 import { useTranslation } from "react-i18next"
 
 import MoveToGroupDialog from "@/features/people/groups/dialogs/move-to-group-dialog"
