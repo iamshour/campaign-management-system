@@ -1,7 +1,6 @@
 {
-	"name": "@app/management",
+	"name": "@blueai/cms",
 	"version": "0.1.0",
-	"private": true,
 	"prettier": "@config/prettier",
 	"scripts": {
 		"dev": "vite --clearScreen false",
