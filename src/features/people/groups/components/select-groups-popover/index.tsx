@@ -1,7 +1,8 @@
 //#region Import
-import { ComboBox } from "@/ui"
 import { lazy } from "react"
 import { useTranslation } from "react-i18next"
+
+import { ComboBox } from "@/ui"
 
 const SelectGroupsPopoverContent = lazy(() => import("./select-groups-popover-content"))
 //#endregion

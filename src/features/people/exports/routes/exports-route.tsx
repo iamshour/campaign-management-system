@@ -1,11 +1,11 @@
 //#region Import
-import { DisplayError, DataTableSkeleton } from "@/ui"
 import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import type { AdvancedTableStateValue } from "@/core/slices/advanced-table-slice"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
+import { DisplayError, DataTableSkeleton } from "@/ui"
 
 import { useGetExportsQuery } from "../api"
 import type { ContactExports } from "../types"
@@ -61,7 +61,7 @@ const ExportsRoute = () => {
 
 	if (isEmptyView) return <EmptyExportsView />
 
-	if (isError) return <DisplayError error={error} />
+	if (isError) return <DisplayError error={error as any} />
 
 	if (isReady) return <ExportsView list={list || []} count={count || 0} isFetching={isFetching} />
 }

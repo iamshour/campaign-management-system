@@ -1,9 +1,9 @@
 //#region Import
-import { DropFileArea, ErrorBoundary } from "@/ui"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 import fileMimeTypes from "@/core/constants/file-mime-types"
+import { DropFileArea, ErrorBoundary } from "@/ui"
 
 import { useImportContactsDialogContext } from "../import-contacts-dialog-context"
 //#endregion

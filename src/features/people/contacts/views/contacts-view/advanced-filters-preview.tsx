@@ -1,9 +1,9 @@
 //#region Import
-import { Tooltip } from "@/ui"
 import { useTranslation } from "react-i18next"
 import { v4 as newId } from "uuid"
 
 import useSelector from "@/core/hooks/useSelector"
+import { Tooltip } from "@/ui"
 //#endregion
 
 const AdvancedFiltersPreview = () => {

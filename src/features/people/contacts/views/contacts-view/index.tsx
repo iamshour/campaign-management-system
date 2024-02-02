@@ -1,5 +1,4 @@
 //#region Import
-import { Button, type ColumnType } from "@/ui"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -10,6 +9,7 @@ import contactsTableColumns from "@/features/people/contacts/constants/contacts-
 import AdvancedFiltersDialog from "@/features/people/contacts/dialogs/advanced-filters-dialog"
 import ViewContactDialog from "@/features/people/contacts/dialogs/view-contact-dialog"
 import type { Contact } from "@/features/people/contacts/types"
+import { Button, type ColumnType } from "@/ui"
 
 const TableTopbar = lazy(() => import("./table-topbar"))
 const FiltersContent = lazy(() => import("./filters-content"))

@@ -1,5 +1,4 @@
 //#region Import
-import { Button, Footer, Form, Input, twMerge, useForm, type OptionType } from "@/ui"
 import { zodResolver } from "@hookform/resolvers/zod"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -7,6 +6,7 @@ import { useTranslation } from "react-i18next"
 import { ErrorObject } from "@/core/lib/redux-toolkit/helpers"
 import GroupSchema, { type GroupSchemaType } from "@/features/people/groups/schemas/group-schema"
 import type { Group } from "@/features/people/groups/types"
+import { Button, Footer, Form, Input, twMerge, useForm, type OptionType } from "@/ui"
 
 import { useCreateGroupMutation, useEditGroupMutation } from "../api"
 //#endregion

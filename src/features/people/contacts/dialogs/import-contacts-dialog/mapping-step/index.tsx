@@ -1,11 +1,11 @@
 //#region Import
-import { Button, Checkbox, Label, type OptionType } from "@/ui"
-import { getListOfKey } from "@/utils"
 import { lazy, useCallback } from "react"
 import { useTranslation } from "react-i18next"
 
 import SelectTagsPopover from "@/features/people/contacts/components/select-tags-popover"
 import SelectGroupsWithCreatePopover from "@/features/people/groups/components/select-groups-with-create-popover"
+import { Button, Checkbox, Label, type OptionType } from "@/ui"
+import { getListOfKey } from "@/utils"
 
 import { useImportContactsDialogContext } from "../import-contacts-dialog-context"
 

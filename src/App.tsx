@@ -1,5 +1,4 @@
 //#region Import
-import { DirectionProvider, ErrorBoundary, Spinner } from "@/ui"
 import { Suspense } from "react"
 import { Toaster } from "react-hot-toast"
 import { I18nextProvider, useTranslation } from "react-i18next"
@@ -9,6 +8,7 @@ import { PersistGate } from "redux-persist/integration/react"
 
 import reduxStore from "@/core/lib/redux-toolkit/store"
 import AppRoutes from "@/core/routes/app.routes"
+import { DirectionProvider, ErrorBoundary, Spinner } from "@/ui"
 //#endregion
 
 const App = () => {

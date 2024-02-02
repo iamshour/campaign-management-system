@@ -1,12 +1,12 @@
 //#region Import
-import type { OptionType, DateRange, TableState } from "@/ui"
-import { getObjectSize } from "@/utils"
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 import type { Contact } from "@/features/people/contacts/types"
 import type { ContactExportStatusOption, ContactExports } from "@/features/people/exports/types"
 import type { Group } from "@/features/people/groups/types"
 import type { SegmentConditionType } from "@/features/people/segments/types"
+import type { OptionType, DateRange, TableState } from "@/ui"
+import { getObjectSize } from "@/utils"
 //#endregion
 
 export type ListGridView = "List View" | "Grid View"

@@ -1,8 +1,8 @@
 //#region Import
-import { Button } from "@/ui"
 import { useTranslation } from "react-i18next"
 
 import SegmentsFunnelEditable from "@/features/people/segments/components/segments-funnel-editable"
+import { Button } from "@/ui"
 
 import { useAdvancedFiltersDialogContext } from "../advanced-filters-dialog-context"
 

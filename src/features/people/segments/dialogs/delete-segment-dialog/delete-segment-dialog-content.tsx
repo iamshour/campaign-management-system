@@ -1,9 +1,9 @@
 //#region Import
-import { Button, Footer } from "@/ui"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 import { useDeleteSegmentMutation } from "@/features/people/segments/api"
+import { Button, Footer } from "@/ui"
 //#endregion
 
 export interface DeleteSegmentDialogContentProps {

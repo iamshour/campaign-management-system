@@ -1,7 +1,7 @@
 {
 	"name": "@blueai/cms",
-	"version": "0.1.0",
-	"prettier": "@blueai/configs/prettier",
+	"version": "0.1.1",
+	"type": "module",
 	"scripts": {
 		"dev": "vite --clearScreen false",
 		"server": "json-server src/api/db.json --port 5000",
@@ -72,6 +72,7 @@
 		"@types/react-dom": "18.2.18",
 		"@types/uuid": "9.0.8",
 		"@typescript-eslint/eslint-plugin": "6.20.0",
+		"@typescript-eslint/parser": "6.20.0",
 		"@vitejs/plugin-react": "^4.2.1",
 		"autoprefixer": "10.4.17",
 		"cssnano": "6.0.3",

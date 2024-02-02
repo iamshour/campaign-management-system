@@ -1,11 +1,11 @@
 //#region Import
-import type { OptionType } from "@/ui"
-
 import type {
 	ImportFileMappingArgs,
 	ImportFileMappingReturnType,
 	UploadContactsMutationReturnType,
 } from "@/features/people/contacts/types"
+import type { OptionType } from "@/ui"
+
 //#endregion
 
 /**

@@ -1,10 +1,10 @@
 //#region Import
-import { Slot } from "@/ui"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 import { useDownloadExportMutation } from "@/features/people/exports/api"
 import type { ContactExports } from "@/features/people/exports/types"
+import { Slot } from "@/ui"
 //#endregion
 
 interface ExportTableActionsDownloadProps extends Pick<ContactExports, "id" | "fileName" | "contactExportStatus"> {

@@ -1,7 +1,8 @@
 //#region Import
-import { Label, Select, Skeleton } from "@/ui"
 import { Suspense, lazy, useCallback } from "react"
 import { useTranslation } from "react-i18next"
+
+import { Label, Select, Skeleton } from "@/ui"
 
 import segmentRuleAttributeFields from "../../constants/segment-rule-attribute-fields"
 import type { SegmentRuleAttribute, SegmentRuleCondition, SegmentRuleType } from "../../types"

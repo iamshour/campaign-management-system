@@ -1,5 +1,4 @@
 //#region Import
-import { Button, Spinner, Tooltip } from "@/ui"
 import { useMemo, useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -8,6 +7,7 @@ import { useUpdateSegmentMutation } from "@/features/people/segments/api"
 import SegmentsFunnelEditable from "@/features/people/segments/components/segments-funnel-editable"
 import type { SegmentConditionType, createSegmentArgsType } from "@/features/people/segments/types"
 import { areConditionsValid } from "@/features/people/segments/utils"
+import { Button, Spinner, Tooltip } from "@/ui"
 
 import { useAdvancedFiltersDialogContext } from "../advanced-filters-dialog-context"
 

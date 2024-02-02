@@ -3,14 +3,14 @@ import { Suspense, createContext, useContext, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
-import Badge from "../badge"
-import Button from "../button"
-import Command from "../command"
-import Label from "../label"
-import Popover from "../popover"
-import Skeleton from "../skeleton"
-import Spinner from "../spinner"
-import type { OptionType } from "../types"
+import Badge from "./badge"
+import Button from "./button"
+import Command from "./command"
+import Label from "./label"
+import Popover from "./popover"
+import Skeleton from "./skeleton"
+import Spinner from "./spinner"
+import type { OptionType } from "./types"
 
 import LucideCheck from "~icons/lucide/check"
 import LucideChevronDown from "~icons/lucide/chevron-down"
@@ -29,14 +29,14 @@ type ComboBoxMultiProps = {
 	maxLimit?: number
 }
 
-export type ComboBoxContextType = Partial<Pick<React.ComponentPropsWithoutRef<typeof Button>, "size">> & {
+export type ComboBoxContextType = Pick<React.ComponentPropsWithoutRef<typeof Button>, "size"> & {
 	isCreatable?: boolean
 } & (ComboBoxSingleProps | ComboBoxMultiProps)
 
 const ComboBoxContextProvider = createContext<ComboBoxContextType>({} as ComboBoxContextType)
 const useComboBoxContext = () => useContext(ComboBoxContextProvider)
 
-type ComboBoxProps = Partial<Pick<React.ComponentPropsWithoutRef<typeof Button>, "className" | "children">> & {
+type ComboBoxProps = Pick<React.ComponentPropsWithoutRef<typeof Button>, "className" | "children"> & {
 	label?: string
 } & ComboBoxContextType
 

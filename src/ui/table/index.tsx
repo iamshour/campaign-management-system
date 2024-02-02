@@ -11,8 +11,10 @@ const Checkbox = lazy(() => import("../checkbox"))
 const TableColumnHeader = lazy(() => import("./table-column-header"))
 //#endregion
 
-const TableCell = ({ className, ...props }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
-	<td className={twMerge("h-max min-h-12 border-none p-2 align-middle", className)} {...props} />
+const TableCell = ({ className, children, ...props }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
+	<td className={twMerge("h-max min-h-12 border-none p-2 align-middle", className)} {...props}>
+		<Suspense fallback={<Skeleton className='h-full min-h-12 w-full rounded-xl' />}>{children}</Suspense>
+	</td>
 )
 
 const Table = <TData extends RowData>({
@@ -25,7 +27,7 @@ const Table = <TData extends RowData>({
 	isFetching = false,
 	highlightOnHover,
 	onRowClick,
-	className,
+	classNames,
 }: TableProps<TData>) => {
 	const { t } = useTranslation("ui")
 
@@ -48,16 +50,20 @@ const Table = <TData extends RowData>({
 	)
 
 	return (
-		<div className={twMerge("relative h-full w-full flex-1 overflow-y-auto", className)}>
-			<table className='w-full min-w-max table-fixed caption-bottom text-sm'>
-				<thead className='sticky top-0 z-10 bg-white shadow-sm'>
-					<tr className='h-12'>
+		<div className={twMerge("relative h-full w-full flex-1 overflow-y-auto", classNames?.wrapper)}>
+			<table className={twMerge("w-full table-fixed caption-bottom text-sm", classNames?.table)}>
+				<thead className={twMerge("sticky top-0 z-10 bg-white shadow-sm", classNames?.thead)}>
+					<tr className={twMerge("h-12", classNames?.theadTr)}>
 						{columns?.map(({ accessorKey, rowIdSelector, sortable, header }, idx) =>
 							accessorKey === "selection" && !!updateSelection ? (
 								<th
-									className={twMerge("relative w-[60px]", (isFetching || !list?.length) && "pointer-events-none")}
+									className={twMerge(
+										"relative w-[60px]",
+										(isFetching || !list?.length) && "pointer-events-none",
+										classNames?.theadTh
+									)}
 									key='checkbox-th-cell'>
-									<Suspense fallback={<Skeleton className='h-8 w-full' />}>
+									<Suspense fallback={<Skeleton className='h-8' />}>
 										<Checkbox
 											className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 '
 											checked={selection === "ALL" || (!!list?.length && list?.length === selection?.length)}
@@ -68,9 +74,11 @@ const Table = <TData extends RowData>({
 									</Suspense>
 								</th>
 							) : accessorKey === "actions" ? (
-								<th key={idx + String(accessorKey)} className='!w-[80px]' />
+								<th key={idx + String(accessorKey)} className={twMerge("!w-[80px]", classNames?.theadTh)} />
 							) : (
-								<th className='w-max border-b-0 py-1 pe-12' key={idx + String(accessorKey)}>
+								<th
+									className={twMerge("w-max border-b-0 py-1 pe-12", classNames?.theadTh)}
+									key={idx + String(accessorKey)}>
 									<Suspense fallback={<Skeleton className='h-8 w-full' />}>
 										{!!sortable && typeof header === "string" ? (
 											<TableColumnHeader
@@ -94,9 +102,9 @@ const Table = <TData extends RowData>({
 					</tr>
 				</thead>
 
-				<tbody>
+				<tbody className={classNames?.tbody}>
 					{!count && !list?.length ? (
-						<tr className='h-[calc(100vh-260px)]'>
+						<tr className={twMerge("h-[calc(100vh-260px)]", classNames?.tbodyTr)}>
 							<TableCell colSpan={columns.length}>
 								<h2 className='text-center text-2xl font-light uppercase tracking-widest text-gray-500'>
 									{t("table.message.noResults")}
@@ -115,30 +123,34 @@ const Table = <TData extends RowData>({
 									// Shows Cursor when hovering only when highlightOnHover === TRUE and onRowClick function was passed
 									highlightOnHover && !!onRowClick && "cursor-pointer",
 									// Graying out content if isFetchnig is true
-									isFetching && "pointer-events-none opacity-50"
+									isFetching && "pointer-events-none opacity-50",
+									classNames?.tbodyTr
 
 									// "!h-40"
 								)}>
 								{columns.map(({ accessorKey, rowIdSelector, preventCellClick, cell }, idx) =>
 									accessorKey === "selection" && !!updateSelection ? (
-										<TableCell key='checkbox-td-cell' className='relative'>
-											<Suspense fallback={<Skeleton className='h-full' />}>
-												<Checkbox
-													className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
-													checked={selection === "ALL" || selection?.includes(row[rowIdSelector as keyof typeof row])}
-													onCheckedChange={() => updateSelection(row[rowIdSelector as keyof typeof row])}
-												/>
-											</Suspense>
+										<TableCell key='checkbox-td-cell' className={twMerge("relative", classNames?.tbodyTd)}>
+											<Checkbox
+												className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
+												checked={selection === "ALL" || selection?.includes(row[rowIdSelector as keyof typeof row])}
+												onCheckedChange={() => updateSelection(row[rowIdSelector as keyof typeof row])}
+											/>
 										</TableCell>
 									) : accessorKey === "actions" && !!cell ? (
-										<TableCell key={`actions-row-${idx}`} className='[&>button]:[float:inline-end]'>
-											<Suspense fallback={<Skeleton className='h-full' />}>{cell(row["actions"], row)}</Suspense>
+										<TableCell
+											key={`actions-row-${idx}`}
+											className={twMerge("[&>button]:[float:inline-end]", classNames?.tbodyTd)}>
+											{cell(row["actions"], row)}
 										</TableCell>
 									) : (
 										<TableCell
 											key={idx}
 											onClick={() => !!onRowClick && !preventCellClick && onRowClick(row)}
-											className='min-w-[120px] max-w-[200px] overflow-hidden truncate text-sm text-[#4B4B4B]'>
+											className={twMerge(
+												"min-w-[120px] max-w-[200px] overflow-hidden truncate text-sm text-[#4B4B4B]",
+												classNames?.tbodyTd
+											)}>
 											{cell ? cell(row[accessorKey], row) : row[accessorKey]}
 										</TableCell>
 									)

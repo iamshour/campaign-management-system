@@ -1,1 +1,30 @@
-FROM alpine:node-12.18.3
+FROM node:20.11.0-slim
+
+RUN apt update && apt install -y gettext-base \
+    && apt-get clean
+
+ARG VITE_APP_API_BASE_URL
+ARG VITE_APP_PREFIX
+ARG NPM_READ_TOKEN
+
+ENV VITE_APP_PREFIX="BLUE.AI_CMS"
+ENV VITE_APP_API_BASE_URL="https://omni-core-api.rdev.antwerptechnologies.com"
+ENV NPM_READ_TOKEN="$NPM_READ_TOKEN"
+
+WORKDIR /app
+
+COPY . ./
+
+RUN echo "@blueai:registry=https://gitlab.com/api/v4/groups/a10179/-/packages/npm/" > .npmrc
+RUN echo "//gitlab.com/api/v4/groups/a10179/-/packages/npm/:_authToken=${NPM_READ_TOKEN}" >> .npmrc
+RUN echo "always-auth=true" >> .npmrc
+RUN echo "legacy-peer-deps=true" >> .npmrc
+RUN echo "git-checks=false" >> .npmrc
+
+RUN npm install
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "run", "start"]

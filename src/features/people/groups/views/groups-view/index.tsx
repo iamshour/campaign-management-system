@@ -1,5 +1,4 @@
 //#region Import
-import { DataGridSkeleton, Tabs, Tooltip, type IconType } from "@/ui"
 import { Suspense, lazy } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -10,6 +9,7 @@ import { type AdvancedTableStateValue, type ListGridView, toggleListGridView } f
 import type { SharedListViewProps } from "@/core/types"
 import grouspsTableColumns from "@/features/people/groups/constants/groups-table-columns"
 import type { Group } from "@/features/people/groups/types"
+import { DataGridSkeleton, Tabs, Tooltip, type IconType } from "@/ui"
 
 import FiltersContent from "./filters-content"
 import GroupsTopBar from "./table-topbar"
@@ -60,7 +60,9 @@ const GroupsView = ({ count, list, isFetching, ...tableProps }: SharedListViewPr
 							list={list}
 							columns={grouspsTableColumns}
 							isFetching={isFetching}
-							className='px-4'
+							classNames={{
+								wrapper: "px-4",
+							}}
 							onRowClick={({ groupId }) => navigate(`./${groupId}`)}
 							{...tableProps}
 						/>

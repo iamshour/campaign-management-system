@@ -1,15 +1,16 @@
 //#region Import
-import Icons from "unplugin-icons/vite"
-import svgr from "vite-plugin-svgr"
 import react from "@vitejs/plugin-react"
 import { FontaineTransform } from "fontaine"
 import { visualizer } from "rollup-plugin-visualizer"
 import Unfonts from "unplugin-fonts/vite"
-import { splitVendorChunkPlugin } from "vite"
+import Icons from "unplugin-icons/vite"
+import { splitVendorChunkPlugin, defineConfig } from "vite"
+import svgr from "vite-plugin-svgr"
 import tsconfigPaths from "vite-tsconfig-paths"
+
 //#endregion
 
-const baseConfigs = {
+const baseConfigs = defineConfig({
 	publicDir: "public",
 	build: {
 		outDir: "dist",
@@ -25,6 +26,7 @@ const baseConfigs = {
 			},
 			treeshake: true,
 		},
+
 		chunkSizeWarningLimit: 2000,
 		minify: true,
 		sourcemap: false,
@@ -54,6 +56,6 @@ const baseConfigs = {
 	],
 	server: { port: 3000, host: true },
 	preview: { port: 3000 },
-}
+})
 
 export default baseConfigs

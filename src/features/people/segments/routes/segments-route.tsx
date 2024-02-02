@@ -1,10 +1,10 @@
 //#region Import
-import { DisplayError, DataTableSkeleton } from "@/ui"
 import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { AdvancedTableStateValue } from "@/core/slices/advanced-table-slice"
+import { DisplayError, DataTableSkeleton } from "@/ui"
 
 import { getContactSearchFilter } from "../../contacts/utils"
 import { useGetSegmentsQuery } from "../api"
@@ -50,7 +50,7 @@ const SegmentsRoute = () => {
 	// If no entries were found at all
 	if (isEmptyView) return <EmptySegmentsView />
 
-	if (isError) return <DisplayError error={error} />
+	if (isError) return <DisplayError error={error as any} />
 
 	if (isReady) return <SegmentsView list={list || []} count={count || 0} isFetching={isFetching} />
 }

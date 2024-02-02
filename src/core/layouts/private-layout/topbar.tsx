@@ -1,11 +1,11 @@
 //#region Import
-import { Avatar, Button, Dropdown, SearchInput, Separator, Tooltip } from "@/ui"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 
 import userAvatar from "@/assets/user-avatar.png"
 import reduxStore from "@/core/lib/redux-toolkit/store"
 import getInitials from "@/core/utils/get-initials"
+import { Avatar, Button, Dropdown, SearchInput, Separator, Tooltip } from "@/ui"
 
 import LucideChevronRight from "~icons/lucide/chevron-right"
 import RadixIconsBell from "~icons/radix-icons/bell"

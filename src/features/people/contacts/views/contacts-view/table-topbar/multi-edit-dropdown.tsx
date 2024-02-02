@@ -1,9 +1,9 @@
 //#region Import
-import { Dropdown } from "@/ui"
 import { useTranslation } from "react-i18next"
 
 import DeleteMultipleContactsDialog from "@/features/people/contacts/dialogs/delete-multiple-contacts-dialog"
 import EditMultipleContactsDialog from "@/features/people/contacts/dialogs/edit-multiple-contacts-dialog"
+import { Dropdown } from "@/ui"
 //#endregion
 
 const MultiEditDropdown = () => {

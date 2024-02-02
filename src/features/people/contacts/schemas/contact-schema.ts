@@ -1,9 +1,9 @@
 //#region Import
-import { isPossiblePhoneNumber } from "@/ui"
 import * as z from "zod"
 
 import { REGEX_EMAIL, REGEX_NO_SPECIAL_CHARACTERS, REGEX_ONE_WORD } from "@/core/constants/regex"
 import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option-type-schema"
+import { isPossiblePhoneNumber } from "@/ui"
 
 import TagSchema from "./tag-schema"
 //#endregion

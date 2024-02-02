@@ -1,7 +1,8 @@
 //#region Import
-import { formatBytes } from "@/utils"
 import { lazy, useMemo } from "react"
 import { useTranslation } from "react-i18next"
+
+import { formatBytes } from "@/utils"
 
 import Button from "../button"
 import Tooltip from "../tooltip"

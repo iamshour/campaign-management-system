@@ -23,7 +23,6 @@
 		"jsx": "react-jsx",
 		"module": "ESNext",
 		"target": "ESNext",
-		"types": ["vite/client"],
 		"noEmit": true,
 		"esModuleInterop": false,
 		"allowImportingTsExtensions": true,

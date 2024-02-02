@@ -1,6 +1,4 @@
 //#region Import
-import { DataTableSkeleton } from "@/ui"
-import { getListOfKey } from "@/utils"
 import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
@@ -9,6 +7,8 @@ import type { AdvancedTableStateValue } from "@/core/slices/advanced-table-slice
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import type { Contact } from "@/features/people/contacts/types"
 import { getContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
+import { DataTableSkeleton } from "@/ui"
+import { getListOfKey } from "@/utils"
 
 import { useGetContactsQuery } from "../api"
 
@@ -59,7 +59,7 @@ const ContactsRoute = () => {
 
 	if (isEmptyView) return <EmptyContactsView />
 
-	if (isError) return <DisplayError error={error} />
+	if (isError) return <DisplayError error={error as any} />
 
 	if (isReady) return <ContactsView list={list || []} count={count || 0} isFetching={isFetching} />
 }

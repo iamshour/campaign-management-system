@@ -1,8 +1,8 @@
 //#region Import
-import { twMerge, Dialog } from "@/ui"
 import { lazy, useState } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
+import { twMerge, Dialog } from "@/ui"
 
 const EditMultipleContactsDialogContent = lazy(() => import("./edit-multiple-contacts-dialog-content"))
 //#endregion

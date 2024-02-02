@@ -1,7 +1,8 @@
 //#region Import
-import { Dialog } from "@/ui"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
+
+import { Dialog } from "@/ui"
 
 const CreateContactDialogContent = lazy(() => import("./create-contact-dialog-content"))
 //#endregion

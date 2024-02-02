@@ -5,7 +5,6 @@ import Button from "../button"
 
 import RadixIconsReload from "~icons/radix-icons/reload"
 //#endregion
-
 interface ServerErrorProps {
 	className?: string
 }

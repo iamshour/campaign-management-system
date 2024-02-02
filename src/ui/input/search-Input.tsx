@@ -1,12 +1,12 @@
 //#region Import
-import { debounce } from "@/utils"
 import { forwardRef, useEffect, useState } from "react"
+
+import { debounce } from "@/utils"
 
 import Input, { type InputProps } from "."
 
 import TablerSearch from "~icons/tabler/search"
 //#endregion
-
 export interface SearchInputProps extends Omit<InputProps, "onChange" | "value"> {
 	delay?: number
 	value?: string

@@ -1,6 +1,4 @@
 //#region Import
-import { useForm, Button, Footer, Form, Input } from "@/ui"
-import { cleanObject } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -13,6 +11,8 @@ import { clearSelection } from "@/core/slices/advanced-table-slice"
 import { useDeleteContactsMutation } from "@/features/people/contacts/api"
 import type { ContactFilters } from "@/features/people/contacts/types"
 import { getContactFilterAndContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
+import { useForm, Button, Footer, Form, Input } from "@/ui"
+import { cleanObject } from "@/utils"
 //#endregion
 
 export interface DeleteContactsDialogContent {

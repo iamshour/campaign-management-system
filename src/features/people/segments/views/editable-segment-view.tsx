@@ -1,5 +1,4 @@
 //#region Import
-import { Button, Footer, Form, Input, useForm } from "@/ui"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMemo, useState } from "react"
 import toast from "react-hot-toast"
@@ -7,6 +6,7 @@ import { useTranslation } from "react-i18next"
 import { useLocation, useNavigate } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"
+import { Button, Footer, Form, Input, useForm } from "@/ui"
 
 import { useCreateSegmentMutation, useUpdateSegmentMutation } from "../api"
 import SegmentCollapsible from "../components/segment-collapsible"

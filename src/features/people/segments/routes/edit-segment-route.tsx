@@ -1,8 +1,8 @@
 //#region Import
-import { NotFoundError } from "@/ui"
 import { useParams } from "react-router-dom"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
+import { NotFoundError } from "@/ui"
 
 import { useGetSegmentByIdQuery } from "../api"
 import SegmentFunnelSkeleton from "../components/segment-funnel-skeleton"

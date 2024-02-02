@@ -1,5 +1,4 @@
 //#region Import
-import { Button, Footer, RadioGroup, Skeleton } from "@/ui"
 import { Suspense, lazy, useMemo } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -8,6 +7,7 @@ import useDispatch from "@/core/hooks/useDispatch"
 import { updateFilters } from "@/core/slices/advanced-table-slice"
 import CreateSegmentPopover from "@/features/people/segments/components/create-segment-popover"
 import { areConditionsValid } from "@/features/people/segments/utils"
+import { Button, Footer, RadioGroup, Skeleton } from "@/ui"
 
 import { useAdvancedFiltersDialogContext } from "./advanced-filters-dialog-context"
 import type { AdvancedFiltersTab } from "./types"

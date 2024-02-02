@@ -1,9 +1,9 @@
 //#region Import
-import { Button } from "@/ui"
 import { useTranslation } from "react-i18next"
 
 import ContactsEmptySvg from "@/assets/contacts-empty.svg?react"
 import LabelledHints from "@/core/components/labelled-hints"
+import { Button } from "@/ui"
 
 import CreateContactDialog from "../dialogs/create-contact-dialog"
 import ImportContactsDialog from "../dialogs/import-contacts-dialog"

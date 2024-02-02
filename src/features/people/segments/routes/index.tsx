@@ -1,7 +1,8 @@
 //#region Import
-import { DataTableSkeleton } from "@/ui"
 import { Suspense, lazy } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
+
+import { DataTableSkeleton } from "@/ui"
 
 import SegmentFunnelSkeleton from "../components/segment-funnel-skeleton"
 import SegmentViewSkeleton from "../views/segment-view/segment-view-skeleton"

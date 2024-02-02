@@ -1,10 +1,10 @@
 //#region Import
-import { Dropdown } from "@/ui"
 import { useState } from "react"
 
 import CreateGroupDialog from "@/features/people/groups/dialogs/create-group-dialog"
 import DeleteGroupDialog from "@/features/people/groups/dialogs/delete-group-dialog"
 import type { Group } from "@/features/people/groups/types"
+import { Dropdown } from "@/ui"
 
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 //#endregion

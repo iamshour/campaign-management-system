@@ -1,7 +1,6 @@
 //#region Import
-import type { TableState } from "@/ui"
-
 import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
+import type { TableState } from "@/ui"
 
 import type { Contact, ContactFilters, GetContactsArgs } from "../contacts/types"
 //#endregion

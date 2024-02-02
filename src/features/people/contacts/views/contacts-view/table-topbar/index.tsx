@@ -1,5 +1,4 @@
 //#region Import
-import { Button, Skeleton } from "@/ui"
 import { Suspense } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -7,6 +6,7 @@ import useSelector from "@/core/hooks/useSelector"
 import CreateContactDialog from "@/features/people/contacts/dialogs/create-contact-dialog"
 import ImportContactsDialog from "@/features/people/contacts/dialogs/import-contacts-dialog"
 import ExportFieldsDialog from "@/features/people/exports/dialogs/export-fields-dialog"
+import { Button, Skeleton } from "@/ui"
 
 import MultiEditDropdown from "./multi-edit-dropdown"
 
