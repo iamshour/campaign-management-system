@@ -61,7 +61,7 @@ const SegmentConditionsEditContent = ({ setView, segment }: SegmentSelectionRend
 	}
 
 	return (
-		<div className='relative flex flex-1 flex-col gap-4 overflow-hidden rounded-xl bg-[#F7F7F7] p-4'>
+		<div className='relative flex flex-1 flex-col gap-4 overflow-hidden rounded-xl bg-[#F7F7F7]'>
 			<div className='flex w-full flex-col overflow-y-auto'>
 				<div className='flex flex-row'>
 					<div className='flex w-full flex-1 items-start justify-start gap-4 prevent-selection [&>svg:nth-of-type(2)]:me-4 [&>svg:nth-of-type(2)]:ms-auto [&>svg:nth-of-type(2)]:h-6 [&>svg:nth-of-type(2)]:w-6 [&>svg:nth-of-type(2)]:self-center'>
@@ -102,7 +102,7 @@ const SegmentConditionsEditContent = ({ setView, segment }: SegmentSelectionRend
 
 						<Tooltip key='tooltip'>
 							<Tooltip.Trigger asChild>
-								<span>
+								<span className='w-max'>
 									<MdiInformationVariantCircle className='text-lg text-[#054060]' />
 								</span>
 							</Tooltip.Trigger>
@@ -111,7 +111,7 @@ const SegmentConditionsEditContent = ({ setView, segment }: SegmentSelectionRend
 					</div>
 				</div>
 
-				<div className='mt-6 flex flex-col gap-6'>
+				<div className='mt-4 flex flex-col gap-6'>
 					<SegmentsFunnelEditable
 						conditions={editableConditions}
 						setConditions={setEditableConditions}

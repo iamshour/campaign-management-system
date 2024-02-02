@@ -1,8 +1,9 @@
 //#region Import
+import { parsePhoneNumber } from "react-phone-number-input"
+
 import type { FiltersFields } from "@/core/slices/advanced-table-slice"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
-import { parsePhoneNumber } from "@/ui"
-import { createObjtWithCommonValue, getListOfKey, cleanObject } from "@/utils"
+import { cleanObject, createObjtWithCommonValue, getListOfKey } from "@/utils"
 
 import type { ContactFilters } from "./types"
 //#endregion
@@ -104,11 +105,7 @@ export const getContactFilterAndContactSearchFilter = (
 			tags: filters?.tags,
 			groups: getListOfKey(filters?.groups, "value"),
 			// Using below utility Function so that we won't send either date range values if any one is undefined
-			// eslint-disable-next-line
-			// @ts-ignore
 			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
-			// eslint-disable-next-line
-			// @ts-ignore
 			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
 		},
 		contactSearchFilter: getContactSearchFilter(searchTerm),

@@ -3,6 +3,7 @@ const appPaths = {
 	DASHBOARD: "/dashboard",
 	INBOX: "/inbox",
 	INTEGRATIONS: "/integrations",
+
 	// #start People
 	CONTACTS: "/people/contacts",
 
@@ -16,8 +17,14 @@ const appPaths = {
 	SEGMENT_VIEW: "/people/segments/:id",
 	SEGMENT_EDIT: "/people/segments/:id/edit-segment",
 	// #end People
+
+	// #start Templates
+	SMS_TEMPLATES: "/templates/sms-templates",
+	SMS_TEMPLATES_MY_TEMPLATES: "/templates/sms-templates/my-templates",
+	SMS_TEMPLATES_PREBUILT_TEMPLATES: "/templates/sms-templates/prebuilt-templates",
+	// #end Templates
+
 	CAMPAIGNS_MANAGER: "/campaigns-manager",
-	TEMPLATE_MANAGER: "/template-manager",
 	CHANNELS: "/channels",
 	CHATBOT: "/chatbot",
 }

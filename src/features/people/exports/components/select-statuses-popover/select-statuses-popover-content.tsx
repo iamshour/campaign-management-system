@@ -10,8 +10,6 @@ const SelectStatusesPopoverContent = () => {
 
 	return (
 		<ComboBoxPopper
-			// eslint-disable-next-line
-			// @ts-ignore
 			options={Object.entries(exportStatusOptions)?.map(([value, label]) => ({ value, label: t(label) }))}
 		/>
 	)

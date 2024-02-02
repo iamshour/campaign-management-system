@@ -23,8 +23,6 @@ const FiltersContent = () => {
 	return (
 		<>
 			<DateRangePicker
-				// eslint-disable-next-line
-				// @ts-ignore
 				dateRange={filters?.dateRange}
 				updateDateRange={(dateRange) => dispatch(updateFilters({ [tableKey]: { dateRange } }))}
 			/>

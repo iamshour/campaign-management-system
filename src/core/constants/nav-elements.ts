@@ -89,21 +89,21 @@ const navElements: NavElementProps[] = [
 		],
 	},
 	{
-		type: "nav-link",
-		label: "navbar.nav-elements.campaigns",
-		path: appPaths.CAMPAIGNS_MANAGER,
-		Icon: IcBaselineCampaign,
-	},
-	{
 		type: "accordion",
 		label: "navbar.nav-elements.templates.title",
 		Icon: IcBaselineInsertDriveFile,
 		content: [
 			{
-				label: "navbar.nav-elements.templates.elements.templates",
-				path: appPaths.TEMPLATE_MANAGER,
+				label: "navbar.nav-elements.templates.elements.smsTemplates",
+				path: appPaths.SMS_TEMPLATES,
 			},
 		],
+	},
+	{
+		type: "nav-link",
+		label: "navbar.nav-elements.campaigns",
+		path: appPaths.CAMPAIGNS_MANAGER,
+		Icon: IcBaselineCampaign,
 	},
 	{
 		type: "accordion",

@@ -5,6 +5,7 @@ import type { Contact } from "@/features/people/contacts/types"
 import type { ContactExportStatusOption, ContactExports } from "@/features/people/exports/types"
 import type { Group } from "@/features/people/groups/types"
 import type { SegmentConditionType } from "@/features/people/segments/types"
+import type { SmsTemplatesTableFilter } from "@/features/templates/sms-templates/types"
 import type { OptionType, DateRange, TableState } from "@/ui"
 import { getObjectSize } from "@/utils"
 //#endregion
@@ -18,6 +19,7 @@ export type TableKey =
 	| "groups"
 	| "contacts-exports"
 	| "segments"
+	| "sms-templates"
 
 export type FiltersFields = {
 	dateRange?: DateRange
@@ -29,7 +31,7 @@ export type FiltersFields = {
 		segment?: OptionType
 		conditions: SegmentConditionType[]
 	}
-}
+} & Partial<SmsTemplatesTableFilter>
 
 export type AdvancedTableStateValue<TData> = TableState<TData> & {
 	searchTerm?: string
@@ -50,6 +52,7 @@ const defaultDataTableState = {
 	limit: 25,
 }
 const defaultGroupsDataTableState = { ...defaultDataTableState, view: "List View" as ListGridView, limit: 10 }
+const defaultSmsTemplatesDataTableState = { ...defaultDataTableState, limit: 10 }
 
 const initialState: AdvancedTableState = {
 	contacts: defaultDataTableState,
@@ -58,6 +61,7 @@ const initialState: AdvancedTableState = {
 	groups: defaultGroupsDataTableState,
 	"contacts-exports": defaultDataTableState,
 	segments: defaultDataTableState,
+	"sms-templates": defaultSmsTemplatesDataTableState,
 }
 
 const advancedTableSlice = createSlice({

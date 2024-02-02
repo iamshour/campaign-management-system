@@ -68,13 +68,10 @@ export { default as Spinner } from "./spinner"
 export { default as Tabs } from "./tabs"
 export { default as Textarea } from "./textarea"
 export { default as Tooltip } from "./tooltip"
-export { default as ComboBoxPopper } from "./combo-box"
+export * from "./combo-box"
 
+export type { DateRange } from "./date-range-picker"
 export type { TablePaginationProps } from "./table/table-pagination"
 export * from "./table/types"
-
-export type { DateRange } from "react-day-picker"
-
-export type { ComboBoxContextType } from "./combo-box"
 
 export { default as SelectCountryPopover } from "./select-country-popover"

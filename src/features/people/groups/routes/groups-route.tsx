@@ -20,11 +20,7 @@ const GroupsRoute = () => {
 		AdvancedTableStateValue<Group>
 	>(({ advancedTable }) => advancedTable["groups"])
 
-	// eslint-disable-next-line
-	// @ts-ignore
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetGroupsQuery(
-		// eslint-disable-next-line
-		// @ts-ignore
 		{
 			limit,
 			offset,
@@ -32,11 +28,7 @@ const GroupsRoute = () => {
 			order,
 			name: searchTerm,
 			// date range filter:
-			// eslint-disable-next-line
-			// @ts-ignore
 			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
-			// eslint-disable-next-line
-			// @ts-ignore
 			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
 		},
 		{

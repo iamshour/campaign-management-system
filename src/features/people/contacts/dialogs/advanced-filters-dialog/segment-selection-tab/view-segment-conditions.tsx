@@ -40,7 +40,7 @@ const SegmentConditionsViewContent = ({ setView, segment }: SegmentSelectionRend
 
 						<Tooltip key={"tooltip"}>
 							<Tooltip.Trigger asChild>
-								<span>
+								<span className='w-max'>
 									<MdiInformationVariantCircle className='text-lg text-[#054060]' />
 								</span>
 							</Tooltip.Trigger>
@@ -49,7 +49,7 @@ const SegmentConditionsViewContent = ({ setView, segment }: SegmentSelectionRend
 					</div>
 				</div>
 
-				<div className='mt-6 flex flex-col gap-6'>
+				<div className='mt-6 flex flex-col gap-6 pe-3'>
 					<SegmentsFunnelReadonly conditions={segment.conditions} />
 				</div>
 			</div>

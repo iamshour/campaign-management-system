@@ -1,9 +1,10 @@
 //#region Import
 import { lazy } from "react"
 
+import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateValue } from "@/core/slices/advanced-table-slice"
+import { clearFilters, type AdvancedTableStateValue } from "@/core/slices/advanced-table-slice"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import type { Contact } from "@/features/people/contacts/types"
 import { getContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
@@ -18,12 +19,12 @@ const DisplayError = lazy(() => import("@/ui").then((mod) => ({ default: mod.Dis
 //#endregion
 
 const ContactsRoute = () => {
+	const dispatch = useDispatch()
+
 	const { offset, limit, order, sort, filters, appliedFiltersCount, searchTerm } = useSelector<
 		AdvancedTableStateValue<Contact>
 	>(({ advancedTable }) => advancedTable["contacts"])
 
-	// eslint-disable-next-line
-	// @ts-ignore
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetContactsQuery(
 		{
 			limit,
@@ -32,11 +33,7 @@ const ContactsRoute = () => {
 			order,
 			tags: filters?.tags,
 			groups: getListOfKey(filters?.groups, "value"),
-			// eslint-disable-next-line
-			// @ts-ignore
 			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
-			// eslint-disable-next-line
-			// @ts-ignore
 			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
 			...getContactSearchFilter(searchTerm),
 			...getContactAdvancedFilter(filters?.advancedFilters),
@@ -59,7 +56,7 @@ const ContactsRoute = () => {
 
 	if (isEmptyView) return <EmptyContactsView />
 
-	if (isError) return <DisplayError error={error as any} />
+	if (isError) return <DisplayError error={error as any} onReset={() => dispatch(clearFilters("contacts"))} />
 
 	if (isReady) return <ContactsView list={list || []} count={count || 0} isFetching={isFetching} />
 }

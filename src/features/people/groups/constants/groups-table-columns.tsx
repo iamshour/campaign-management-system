@@ -1,11 +1,15 @@
 //#region Import
+import { lazy } from "react"
+
 import type { ColumnType } from "@/ui"
 import { format } from "@/utils"
 
 import type { Group } from "../types"
-import GroupsTableActions from "../views/groups-view/groups-table-actions"
 
 import groupFieldsMap from "./group-fields-map"
+
+// eslint-disable-next-line react-refresh/only-export-components
+const GroupsTableActions = lazy(() => import("../views/groups-view/groups-table-actions"))
 //#endregion
 
 const grouspsTableColumns: ColumnType<Group>[] = [

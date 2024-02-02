@@ -18,11 +18,7 @@ const FiltersContent = () => {
 	return (
 		<>
 			<DateRangePicker
-				// eslint-disable-next-line
-				// @ts-ignore
 				dateRange={filters?.dateRange}
-				// eslint-disable-next-line
-				// @ts-ignore
 				updateDateRange={(dateRange) => dispatch(updateFilters({ ["contacts-exports"]: { dateRange } }))}
 			/>
 			<SelectStatusesPopover

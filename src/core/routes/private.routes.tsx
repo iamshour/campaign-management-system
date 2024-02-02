@@ -26,6 +26,8 @@ const privateRoutes: RouteObject[] = [
 			{ path: "people/exports/*", element: <ExportsFeatureRoutes /> },
 			{ path: "templates/sms-templates/*", element: <SmsTemplatesFeatureRoutes /> },
 
+			{ path: "templates/sms-templates/*", element: <SmsTemplatesFeatureRoutes /> },
+
 			{ path: "/", element: <Navigate to={appPaths.DASHBOARD} /> },
 			{
 				path: appPaths.DASHBOARD,
@@ -37,7 +39,6 @@ const privateRoutes: RouteObject[] = [
 			},
 			{ path: appPaths.INTEGRATIONS, element: <div className='text-4xl'>Integrations Route</div> },
 			{ path: appPaths.CAMPAIGNS_MANAGER, element: <div className='text-4xl'>Campaign Manager Route</div> },
-			{ path: appPaths.TEMPLATE_MANAGER, element: <div className='text-4xl'>Template Manager Route</div> },
 			{ path: appPaths.CHANNELS, element: <div className='text-4xl'>Channels Route</div> },
 			{ path: appPaths.CHATBOT, element: <div className='text-4xl'>Chatbot Route</div> },
 

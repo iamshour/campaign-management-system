@@ -58,10 +58,8 @@ const AdvancedFiltersDialogContext = ({ children }: { children: React.ReactNode 
 		[clearConditions]
 	)
 
-	const onSegmentSelection = useCallback((segment: OptionType) => {
-		if (!segment) {
-			clearConditions()
-		}
+	const onSegmentSelection = useCallback((segment?: OptionType) => {
+		if (!segment) clearConditions()
 
 		setSelectedSegmentOption(segment)
 		// eslint-disable-next-line

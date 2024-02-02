@@ -32,7 +32,7 @@ i18n
 		},
 
 		defaultNS,
-		ns: ["common", "contacts", "groups", "exports", "segments", "campaigns", "ui"],
+		ns: ["common", "contacts", "groups", "exports", "segments", "campaigns", "ui", "sms-templates"],
 
 		supportedLngs: ["en", "ar"],
 

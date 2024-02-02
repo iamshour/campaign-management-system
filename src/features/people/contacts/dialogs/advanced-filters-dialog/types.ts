@@ -43,7 +43,7 @@ export interface AdvancedFiltersDialogContextValue {
 	 * Callback function used when selecting an option from the fetched segments in segments popover (2nd tab of dialog)
 	 * @param segmentOption
 	 */
-	onSegmentSelection: (segmentOption: OptionType) => void
+	onSegmentSelection: (segmentOption?: OptionType) => void
 
 	/**
 	 * Bool check which returns true if conditions are empty (Or has the default preset condition only)
