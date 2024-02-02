@@ -1,5 +1,5 @@
 //#region Import
-import { DropFileArea, ErrorBoundary } from "@blueai/ui"
+import { DropFileArea, ErrorBoundary } from "@/ui"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 

@@ -1,6 +1,6 @@
 //#region Import
-import { Badge, type ColumnType } from "@blueai/ui"
-import { format } from "@blueai/utils"
+import { Badge, type ColumnType } from "@/ui"
+import { format } from "@/utils"
 
 import type { Contact } from "../types"
 

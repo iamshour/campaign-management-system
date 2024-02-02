@@ -1,5 +1,5 @@
 //#region Import
-import { useForm, Button, Footer, Form, Input } from "@blueai/ui"
+import { useForm, Button, Footer, Form, Input } from "@/ui"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMemo } from "react"
 import toast from "react-hot-toast"

@@ -1,5 +1,5 @@
 //#region Import
-import { DataGridSkeleton, Tabs, Tooltip, type IconType } from "@blueai/ui"
+import { DataGridSkeleton, Tabs, Tooltip, type IconType } from "@/ui"
 import { Suspense, lazy } from "react"
 import { useNavigate } from "react-router-dom"
 

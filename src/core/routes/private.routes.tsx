@@ -1,5 +1,5 @@
 //#region Import
-import { NotFoundError } from "@blueai/ui"
+import { NotFoundError } from "@/ui"
 import { Navigate, RouteObject } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"

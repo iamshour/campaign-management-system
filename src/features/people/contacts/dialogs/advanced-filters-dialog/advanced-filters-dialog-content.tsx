@@ -1,5 +1,5 @@
 //#region Import
-import { Button, Footer, RadioGroup, Skeleton } from "@blueai/ui"
+import { Button, Footer, RadioGroup, Skeleton } from "@/ui"
 import { Suspense, lazy, useMemo } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"

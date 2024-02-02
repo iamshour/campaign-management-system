@@ -1,5 +1,5 @@
 //#region Import
-import { Button, NotFoundError, Skeleton, type UseFormReturn } from "@blueai/ui"
+import { Button, NotFoundError, Skeleton, type UseFormReturn } from "@/ui"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 

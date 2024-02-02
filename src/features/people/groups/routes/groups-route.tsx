@@ -12,7 +12,7 @@ import GroupsViewSkeleton from "../views/groups-view/skeleton"
 
 const GroupsView = lazy(() => import("../views/groups-view"))
 const EmptyGroupsView = lazy(() => import("../views/empty-groups-view"))
-const DisplayError = lazy(() => import("@blueai/ui").then((mod) => ({ default: mod.DisplayError })))
+const DisplayError = lazy(() => import("@/ui").then((mod) => ({ default: mod.DisplayError })))
 //#endregion
 
 const GroupsRoute = () => {

@@ -1,5 +1,5 @@
 //#region Import
-import type { OptionType } from "@blueai/ui"
+import type { OptionType } from "@/ui"
 import { createContext, useCallback, useContext, useLayoutEffect, useMemo, useState } from "react"
 
 import useSelector from "@/core/hooks/useSelector"

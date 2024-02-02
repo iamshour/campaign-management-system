@@ -1,5 +1,5 @@
 //#region Import
-import { Dropdown } from "@blueai/ui"
+import { Dropdown } from "@/ui"
 import { useTranslation } from "react-i18next"
 
 import EditContactDialog from "@/features/people/contacts/dialogs/edit-contact-dialog"

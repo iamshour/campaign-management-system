@@ -1,5 +1,5 @@
 //#region Import
-import { Tabs, type IconType } from "@blueai/ui"
+import { Tabs, type IconType } from "@/ui"
 import { lazy } from "react"
 import { useTranslation } from "react-i18next"
 

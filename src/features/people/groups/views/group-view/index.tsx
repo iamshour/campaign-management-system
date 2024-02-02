@@ -1,5 +1,5 @@
 //#region Import
-import type { ColumnType } from "@blueai/ui"
+import type { ColumnType } from "@/ui"
 import { lazy, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 

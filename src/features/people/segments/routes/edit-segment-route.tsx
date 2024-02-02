@@ -1,5 +1,5 @@
 //#region Import
-import { NotFoundError } from "@blueai/ui"
+import { NotFoundError } from "@/ui"
 import { useParams } from "react-router-dom"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"

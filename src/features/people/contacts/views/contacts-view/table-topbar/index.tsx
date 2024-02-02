@@ -1,5 +1,5 @@
 //#region Import
-import { Button, Skeleton } from "@blueai/ui"
+import { Button, Skeleton } from "@/ui"
 import { Suspense } from "react"
 import { useTranslation } from "react-i18next"
 

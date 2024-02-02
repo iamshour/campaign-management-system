@@ -1,6 +1,6 @@
 //#region Import
-import { useForm, Button, Footer, Form, Skeleton, type OptionType } from "@blueai/ui"
-import { cleanObject, getListOfKey } from "@blueai/utils"
+import { useForm, Button, Footer, Form, Skeleton, type OptionType } from "@/ui"
+import { cleanObject, getListOfKey } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Suspense, lazy } from "react"
 import toast from "react-hot-toast"
@@ -17,7 +17,7 @@ import type { UpdateMultipleContactsArgs } from "@/features/people/contacts/type
 import { getContactFilterAndContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
 import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option-type-schema"
 
-const Input = lazy(() => import("@blueai/ui").then((mod) => ({ default: mod.Input })))
+const Input = lazy(() => import("@/ui").then((mod) => ({ default: mod.Input })))
 const SelectTagsPopover = lazy(() => import("@/features/people/contacts/components/select-tags-popover"))
 const SelectGroupsWithCreatePopover = lazy(
 	() => import("@/features/people/groups/components/select-groups-with-create-popover")

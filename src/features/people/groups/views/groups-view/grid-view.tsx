@@ -1,6 +1,6 @@
 //#region Import
-import { Button, DataGridSkeleton } from "@blueai/ui"
-import { format } from "@blueai/utils"
+import { Button, DataGridSkeleton } from "@/ui"
+import { format } from "@/utils"
 import { useNavigate } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"

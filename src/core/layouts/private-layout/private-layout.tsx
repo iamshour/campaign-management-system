@@ -1,5 +1,5 @@
 //#region Import
-import { twMerge, Skeleton } from "@blueai/ui"
+import { twMerge, Skeleton } from "@/ui"
 import { Suspense, lazy } from "react"
 import { Outlet } from "react-router-dom"
 

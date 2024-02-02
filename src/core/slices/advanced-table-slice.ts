@@ -1,6 +1,6 @@
 //#region Import
-import type { OptionType, DateRange, TableState } from "@blueai/ui"
-import { getObjectSize } from "@blueai/utils"
+import type { OptionType, DateRange, TableState } from "@/ui"
+import { getObjectSize } from "@/utils"
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 import type { Contact } from "@/features/people/contacts/types"

@@ -1,5 +1,5 @@
 //#region Import
-import { Dialog } from "@blueai/ui"
+import { Dialog } from "@/ui"
 import { lazy } from "react"
 
 const ViewContactDialogContent = lazy(() => import("./view-contact-dialog-content"))

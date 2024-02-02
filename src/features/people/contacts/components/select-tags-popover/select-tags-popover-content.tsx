@@ -1,5 +1,5 @@
 //#region Import
-import { ComboBoxPopper, Button, type ComboBoxContextType, type OptionType } from "@blueai/ui"
+import { ComboBoxPopper, Button, type ComboBoxContextType, type OptionType } from "@/ui"
 import { useState } from "react"
 
 import { useGetTagsListQuery } from "@/features/people/contacts/api"

@@ -1,5 +1,5 @@
 //#region Import
-import { DirectionProvider, ErrorBoundary, Spinner } from "@blueai/ui"
+import { DirectionProvider, ErrorBoundary, Spinner } from "@/ui"
 import { Suspense } from "react"
 import { Toaster } from "react-hot-toast"
 import { I18nextProvider, useTranslation } from "react-i18next"

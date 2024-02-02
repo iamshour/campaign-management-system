@@ -1,5 +1,5 @@
 //#region Import
-import { ComboBoxPopper } from "@blueai/ui"
+import { ComboBoxPopper } from "@/ui"
 import { useState } from "react"
 
 import { useGetSegmentsQuery } from "@/features/people/segments/api"

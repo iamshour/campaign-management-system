@@ -1,6 +1,6 @@
 //#region Import
-import type { ColumnType } from "@blueai/ui"
-import { format } from "@blueai/utils"
+import type { ColumnType } from "@/ui"
+import { format } from "@/utils"
 
 import type { ContactExportStatusOption, ContactExports } from "../types"
 import ExportsTableActions from "../views/exports-view/exports-table-actions"

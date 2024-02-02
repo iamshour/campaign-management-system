@@ -1,6 +1,6 @@
 //#region Import
 //#region Import
-import { Button, type IconType } from "@blueai/ui"
+import { Button, type IconType } from "@/ui"
 import { useTranslation } from "react-i18next"
 import { useLocation, useNavigate } from "react-router-dom"
 

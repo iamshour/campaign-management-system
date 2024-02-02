@@ -1,5 +1,5 @@
 //#region Import
-import { twMerge, Button } from "@blueai/ui"
+import { twMerge, Button } from "@/ui"
 import { createContext, useContext, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 

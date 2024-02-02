@@ -1,5 +1,5 @@
 //#region Import
-import { twMerge, Button, Transition, Skeleton, Tooltip } from "@blueai/ui"
+import { twMerge, Button, Transition, Skeleton, Tooltip } from "@/ui"
 import { Suspense, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { useLocation } from "react-router-dom"

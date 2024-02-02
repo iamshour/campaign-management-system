@@ -1,5 +1,5 @@
 //#region Import
-import { Button, Footer } from "@blueai/ui"
+import { Button, Footer } from "@/ui"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 

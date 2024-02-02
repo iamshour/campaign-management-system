@@ -1,6 +1,6 @@
 //#region Import
-import { UseFormReturn, useForm, Footer, Form, Input, PhoneInput, Textarea } from "@blueai/ui"
-import { cleanObject, getListOfKey } from "@blueai/utils"
+import { UseFormReturn, useForm, Footer, Form, Input, PhoneInput, Textarea } from "@/ui"
+import { cleanObject, getListOfKey } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslation } from "react-i18next"
 

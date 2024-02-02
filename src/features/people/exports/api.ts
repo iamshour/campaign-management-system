@@ -1,5 +1,5 @@
 //#region Import
-import { downloadFile } from "@blueai/utils"
+import { downloadFile } from "@/utils"
 
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"

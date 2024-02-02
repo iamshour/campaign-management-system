@@ -4,12 +4,12 @@ import { useTranslation } from "react-i18next"
 
 import type { SegmentRuleType } from "@/features/people/segments/types"
 
-const Input = lazy(() => import("@blueai/ui").then((mod) => ({ default: mod.Input })))
-const Label = lazy(() => import("@blueai/ui").then((mod) => ({ default: mod.Label })))
+const Input = lazy(() => import("@/ui").then((mod) => ({ default: mod.Input })))
+const Label = lazy(() => import("@/ui").then((mod) => ({ default: mod.Label })))
 const SelectTagsPopover = lazy(() => import("@/features/people/contacts/components/select-tags-popover"))
 const SelectGroupsPopover = lazy(() => import("@/features/people/groups/components/select-groups-popover"))
 const SelectSegmentsPopover = lazy(() => import("../select-segments-popover"))
-const SelectCountryPopover = lazy(() => import("@blueai/ui").then((mod) => ({ default: mod.SelectCountryPopover })))
+const SelectCountryPopover = lazy(() => import("@/ui").then((mod) => ({ default: mod.SelectCountryPopover })))
 //#endregion
 
 type SegmentSpecificationProps = Omit<SegmentRuleType, "contactSegmentRuleCondition"> &

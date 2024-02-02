@@ -1,5 +1,5 @@
 //#region Import
-import { NotFoundError, Skeleton, Spinner } from "@blueai/ui"
+import { NotFoundError, Skeleton, Spinner } from "@/ui"
 import { Suspense, lazy, useEffect, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 

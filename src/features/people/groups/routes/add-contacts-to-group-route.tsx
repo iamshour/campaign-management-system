@@ -1,6 +1,6 @@
 //#region Import
-import { DisplayError, DataTableSkeleton } from "@blueai/ui"
-import { getListOfKey } from "@blueai/utils"
+import { DisplayError, DataTableSkeleton } from "@/ui"
+import { getListOfKey } from "@/utils"
 import { lazy } from "react"
 import { useParams } from "react-router-dom"
 

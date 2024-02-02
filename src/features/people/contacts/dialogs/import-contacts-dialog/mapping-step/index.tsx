@@ -1,6 +1,6 @@
 //#region Import
-import { Button, Checkbox, Label, type OptionType } from "@blueai/ui"
-import { getListOfKey } from "@blueai/utils"
+import { Button, Checkbox, Label, type OptionType } from "@/ui"
+import { getListOfKey } from "@/utils"
 import { lazy, useCallback } from "react"
 import { useTranslation } from "react-i18next"
 

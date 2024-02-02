@@ -1,5 +1,5 @@
 //#region Import
-import { Avatar, Button, Dropdown, SearchInput, Separator, Tooltip } from "@blueai/ui"
+import { Avatar, Button, Dropdown, SearchInput, Separator, Tooltip } from "@/ui"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 

@@ -1,6 +1,6 @@
 //#region Import
-import { twMerge, useForm, Button, Checkbox, Footer, Form, Input } from "@blueai/ui"
-import { cleanObject } from "@blueai/utils"
+import { twMerge, useForm, Button, Checkbox, Footer, Form, Input } from "@/ui"
+import { cleanObject } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMemo } from "react"
 import toast from "react-hot-toast"

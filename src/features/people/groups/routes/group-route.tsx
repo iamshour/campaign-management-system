@@ -1,6 +1,6 @@
 //#region Import
-import { DataTableSkeleton } from "@blueai/ui"
-import { getListOfKey } from "@blueai/utils"
+import { DataTableSkeleton } from "@/ui"
+import { getListOfKey } from "@/utils"
 import { lazy } from "react"
 import { useParams } from "react-router-dom"
 
@@ -13,7 +13,7 @@ import { getContactSearchFilter } from "@/features/people/contacts/utils"
 
 import { useGetGroupByIdQuery } from "../api"
 const GroupView = lazy(() => import("../views/group-view"))
-const DisplayError = lazy(() => import("@blueai/ui").then((mod) => ({ default: mod.DisplayError })))
+const DisplayError = lazy(() => import("@/ui").then((mod) => ({ default: mod.DisplayError })))
 //#endregion
 
 const GroupRoute = () => {

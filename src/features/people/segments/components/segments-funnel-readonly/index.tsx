@@ -1,5 +1,5 @@
 //#region Import
-import { twMerge } from "@blueai/ui"
+import { twMerge } from "@/ui"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
 

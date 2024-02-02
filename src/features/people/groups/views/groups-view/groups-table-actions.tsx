@@ -1,5 +1,5 @@
 //#region Import
-import { Dropdown } from "@blueai/ui"
+import { Dropdown } from "@/ui"
 import { useState } from "react"
 
 import CreateGroupDialog from "@/features/people/groups/dialogs/create-group-dialog"

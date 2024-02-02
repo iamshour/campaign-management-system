@@ -1,5 +1,5 @@
 //#region Import
-import { Button, Tooltip } from "@blueai/ui"
+import { Button, Tooltip } from "@/ui"
 import { Fragment, memo } from "react"
 import { useTranslation } from "react-i18next"
 

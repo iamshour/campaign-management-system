@@ -1,6 +1,6 @@
 //#region Import
-import { Button, BackButton, Footer } from "@blueai/ui"
-import { getListOfKey, useStep } from "@blueai/utils"
+import { Button, BackButton, Footer } from "@/ui"
+import { getListOfKey, useStep } from "@/utils"
 import { createContext, useCallback, useContext, useMemo, useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"

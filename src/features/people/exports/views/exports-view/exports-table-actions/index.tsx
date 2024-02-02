@@ -1,5 +1,5 @@
 //#region Import
-import { Dropdown } from "@blueai/ui"
+import { Dropdown } from "@/ui"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 

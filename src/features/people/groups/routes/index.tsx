@@ -1,5 +1,5 @@
 //#region Import
-import { DataTableSkeleton } from "@blueai/ui"
+import { DataTableSkeleton } from "@/ui"
 import { Suspense, lazy } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 

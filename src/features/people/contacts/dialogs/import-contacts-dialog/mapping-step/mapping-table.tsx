@@ -1,5 +1,5 @@
 //#region Import
-import { twMerge, CompactTable, Select } from "@blueai/ui"
+import { twMerge, CompactTable, Select } from "@/ui"
 import { useTranslation } from "react-i18next"
 import { v4 as newId } from "uuid"
 

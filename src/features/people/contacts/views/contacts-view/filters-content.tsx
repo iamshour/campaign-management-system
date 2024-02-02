@@ -1,6 +1,6 @@
 //#region Import
-import { DateRangePicker } from "@blueai/ui"
-import { getListOfKey } from "@blueai/utils"
+import { DateRangePicker } from "@/ui"
+import { getListOfKey } from "@/utils"
 
 import { useAdvancedTableContext } from "@/core/components/advanced-table"
 import useDispatch from "@/core/hooks/useDispatch"

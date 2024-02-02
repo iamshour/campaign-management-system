@@ -1,5 +1,5 @@
 //#region Import
-import { Slot } from "@blueai/ui"
+import { Slot } from "@/ui"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 

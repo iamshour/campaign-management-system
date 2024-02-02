@@ -1,6 +1,6 @@
 //#region Import
-import { BackButton, Button, Footer, type OptionType } from "@blueai/ui"
-import { useStep } from "@blueai/utils"
+import { BackButton, Button, Footer, type OptionType } from "@/ui"
+import { useStep } from "@/utils"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"

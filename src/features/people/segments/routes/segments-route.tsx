@@ -1,5 +1,5 @@
 //#region Import
-import { DisplayError, DataTableSkeleton } from "@blueai/ui"
+import { DisplayError, DataTableSkeleton } from "@/ui"
 import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
