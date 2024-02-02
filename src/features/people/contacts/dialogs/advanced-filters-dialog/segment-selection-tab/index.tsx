@@ -24,8 +24,6 @@ const SegmentSelectionTab = () => {
 		setSegmentSelectionTabView,
 	} = useAdvancedFiltersDialogContext()
 
-	const RenderedView = useMemo(() => views[segmentSelectionTabView], [segmentSelectionTabView])
-
 	const { segment, isError, isFetching, isSuccess } = useGetSegmentByIdQuery(selectedSegmentOption?.value, {
 		skip: !selectedSegmentOption?.value,
 		selectFromResult: ({ data, ...rest }) => ({
@@ -59,6 +57,8 @@ const SegmentSelectionTab = () => {
 		// eslint-disable-next-line
 	}, [isFetching, isSuccess, setConditions])
 
+	const RenderedView = useMemo(() => views[segmentSelectionTabView], [segmentSelectionTabView])
+
 	return (
 		<>
 			<p>{t("selectSegment")}</p>
@@ -67,8 +67,6 @@ const SegmentSelectionTab = () => {
 				label='Segment *'
 				isMulti={false}
 				selection={selectedSegmentOption}
-				// eslint-disable-next-line
-				// @ts-ignore
 				updateSelection={onSegmentSelection}
 			/>
 

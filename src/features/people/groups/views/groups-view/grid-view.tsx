@@ -11,7 +11,6 @@ import GroupsTableActions from "./groups-table-actions"
 
 import IcRoundGroup from "~icons/ic/round-group"
 import IcRoundGroups from "~icons/ic/round-groups"
-
 //#endregion
 
 const GroupsGridView = ({ list, isFetching, count }: SharedListViewProps<Group>) => {

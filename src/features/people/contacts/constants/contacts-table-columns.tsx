@@ -1,10 +1,15 @@
 //#region Import
-import { Badge, type ColumnType } from "@/ui"
+import { lazy } from "react"
+
+import type { ColumnType } from "@/ui"
 import { format } from "@/utils"
 
 import type { Contact } from "../types"
 
 import contactFieldsMap from "./contact-fields-map"
+
+// eslint-disable-next-line react-refresh/only-export-components
+const ContactsTableTagsRow = lazy(() => import("../components/contacts-table-tags-row"))
 //#endregion
 
 const contactsTableColumns: ColumnType<Contact>[] = [
@@ -40,16 +45,7 @@ const contactsTableColumns: ColumnType<Contact>[] = [
 	{
 		accessorKey: "tags",
 		header: contactFieldsMap.tags,
-		cell: (tags: string[]) =>
-			!!tags?.length && (
-				<span className='flex gap-1 overflow-x-auto pb-0.5 scrollbar scrollbar-track-transparent scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg scrollbar-h-0.5'>
-					{tags?.map((tag) => (
-						<Badge key={tag} className='rounded-md px-2'>
-							{tag}
-						</Badge>
-					))}
-				</span>
-			),
+		cell: (tags: string[]) => !!tags?.length && <ContactsTableTagsRow tags={tags} />,
 	},
 ]
 

@@ -1,12 +1,16 @@
 //#region Import
+import { lazy } from "react"
+
 import type { ColumnType } from "@/ui"
 import { format } from "@/utils"
 
 import type { ContactExportStatusOption, ContactExports } from "../types"
-import ExportsTableActions from "../views/exports-view/exports-table-actions"
 
 import exportsFieldsMap from "./exports-fields-map"
 import exportStatusesColorsMap from "./statuses-colors-map"
+
+// eslint-disable-next-line react-refresh/only-export-components
+const ExportsTableActions = lazy(() => import("../views/exports-view/exports-table-actions"))
 //#endregion
 
 const exportsTableColumns: ColumnType<ContactExports>[] = [

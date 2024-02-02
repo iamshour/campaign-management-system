@@ -91,16 +91,21 @@ const ImportContactsDialogContext = ({ children, onClose }: ImportContactsDialog
 	 * would move user to next step: Headers Mapping Step
 	 */
 	const onFileUploadSubmit = async () => {
-		if (!isDataValid || !importType) return
+		if (!isDataValid) return
+
+		// Skips re-uploading file/content if they were already uploaded previously, and go to next step directly
+		if (
+			((importType === "file" && !!file) || (importType === "copyPaste" && !!pastedContent?.length)) &&
+			!!fileName?.length
+		)
+			return goToNextStep()
 
 		const formData = new FormData()
 
 		if (importType === "file") {
 			formData.append("contactsFile", file as Blob)
 		} else {
-			if (!pastedContent) return
-
-			const blob = new Blob([pastedContent], { type: "text/plain" })
+			const blob = new Blob([pastedContent!], { type: "text/plain" })
 			formData.append("contactsFile", blob)
 		}
 

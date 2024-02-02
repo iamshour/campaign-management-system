@@ -20,11 +20,7 @@ const SelectGroupsPopoverContent = () => {
 		}
 	)
 
-	return (
-		// eslint-disable-next-line
-		// @ts-ignore
-		<ComboBoxPopper options={list as any} loading={fetchLoading} searchTerm={searchTerm} onSearch={setSearchTerm} />
-	)
+	return <ComboBoxPopper options={list} loading={fetchLoading} searchTerm={searchTerm} onSearch={setSearchTerm} />
 }
 
 export default SelectGroupsPopoverContent

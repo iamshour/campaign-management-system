@@ -38,7 +38,9 @@ const AdvancedFiltersDialogContent = ({ onClose }: AdvancedFiltersDialogContentP
 
 	const areContextConditionsValid = useMemo(() => areConditionsValid(conditions), [conditions])
 
-	const onFormSubmit = () => {
+	const onSubmit = (e: React.FormEvent) => {
+		e.preventDefault()
+
 		if (areContextConditionsEmpty) {
 			dispatch(updateFilters({ contacts: { advancedFilters: undefined } }))
 		}
@@ -46,14 +48,14 @@ const AdvancedFiltersDialogContent = ({ onClose }: AdvancedFiltersDialogContentP
 		if (areContextConditionsValid) {
 			if (selectedTab == "newConditions") {
 				dispatch(updateFilters({ contacts: { advancedFilters: { segment: undefined, conditions } } }))
-			}
-
-			// TODO: handle submit in segment selection tab
-			if (!!selectedSegmentOption && selectedTab == "segmentSelection") {
+			} else {
 				dispatch(
 					updateFilters({
 						contacts: {
-							advancedFilters: { segment: selectedSegmentOption, conditions },
+							advancedFilters: {
+								segment: selectedSegmentOption,
+								conditions,
+							},
 						},
 					})
 				)
@@ -61,12 +63,11 @@ const AdvancedFiltersDialogContent = ({ onClose }: AdvancedFiltersDialogContentP
 		}
 
 		onClose()
-
 		toast.success(t("appliedSuccessMessage"))
 	}
 
 	return (
-		<form onSubmit={(e) => e.preventDefault} className='flex h-full flex-col justify-between gap-6 overflow-hidden p-2'>
+		<form onSubmit={onSubmit} className='flex h-full flex-col justify-between gap-6 overflow-hidden p-2'>
 			<div className='flex flex-col gap-4 overflow-hidden'>
 				<p>{t("radioGroup.label")}</p>
 
@@ -95,12 +96,11 @@ const AdvancedFiltersDialogContent = ({ onClose }: AdvancedFiltersDialogContentP
 						{t("actions.cancel")}
 					</Button>
 					<Button
-						type='button'
+						type='submit'
 						disabled={
-							(!areContextConditionsEmpty && !areContextConditionsValid) ||
-							segmentSelectionTabView === "editSegmentConditions"
-						}
-						onClick={onFormSubmit}>
+							segmentSelectionTabView === "editSegmentConditions" ||
+							(!areContextConditionsEmpty && !areContextConditionsValid)
+						}>
 						{t("actions.applyFilter")}
 					</Button>
 				</div>

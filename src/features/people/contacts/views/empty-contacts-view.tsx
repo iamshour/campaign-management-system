@@ -7,7 +7,6 @@ import { Button } from "@/ui"
 
 import CreateContactDialog from "../dialogs/create-contact-dialog"
 import ImportContactsDialog from "../dialogs/import-contacts-dialog"
-
 //#endregion
 
 const EmptyContactsView = () => {

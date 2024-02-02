@@ -22,8 +22,6 @@ const AddContactsToGroupRoute = () => {
 		AdvancedTableStateValue<Contact>
 	>(({ advancedTable }) => advancedTable["add-contacts-to-group"])
 
-	// eslint-disable-next-line
-	// @ts-ignore
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetContactsQuery(
 		{
 			excludedGroupsList: [groupId!],
@@ -33,11 +31,7 @@ const AddContactsToGroupRoute = () => {
 			order,
 			tags: filters?.tags,
 			groups: getListOfKey(filters?.groups, "value"),
-			// eslint-disable-next-line
-			// @ts-ignore
 			startDate: getValueFromSafeObject("startDate", filters?.dateRange), // TODO: function to generate startDate and endDate filters
-			// eslint-disable-next-line
-			// @ts-ignore
 			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
 			...getContactSearchFilter(searchTerm),
 		},

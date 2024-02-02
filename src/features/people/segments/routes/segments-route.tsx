@@ -19,11 +19,7 @@ const SegmentsRoute = () => {
 		({ advancedTable }) => advancedTable["segments"]
 	)
 
-	// eslint-disable-next-line
-	// @ts-ignore
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetSegmentsQuery(
-		// eslint-disable-next-line
-		// @ts-ignore
 		{
 			limit,
 			offset,
