@@ -1,5 +1,4 @@
 //#region Import
-import { useForm, Button, Footer, Form, Input } from "@/ui"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMemo } from "react"
 import toast from "react-hot-toast"
@@ -10,6 +9,7 @@ import { useCreateSegmentMutation } from "@/features/people/segments/api"
 import SegmentSchema, { type SegmentSchemaType } from "@/features/people/segments/schemas/segment-schema"
 import { createSegmentArgsType } from "@/features/people/segments/types"
 import { areConditionsValid } from "@/features/people/segments/utils"
+import { useForm, Button, Footer, Form, Input } from "@/ui"
 //#endregion
 
 export interface CreateSegmentPopoverContentProps {

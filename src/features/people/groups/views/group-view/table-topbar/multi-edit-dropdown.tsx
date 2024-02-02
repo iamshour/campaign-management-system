@@ -1,9 +1,9 @@
 //#region Import
-import { Dropdown } from "@/ui"
 import { useTranslation } from "react-i18next"
 
 import MoveToGroupDialog from "@/features/people/groups/dialogs/move-to-group-dialog"
 import RemoveFromGroupDialog from "@/features/people/groups/dialogs/remove-from-group-dialog"
+import { Dropdown } from "@/ui"
 //#endregion
 
 const MultiEditDropdown = () => {

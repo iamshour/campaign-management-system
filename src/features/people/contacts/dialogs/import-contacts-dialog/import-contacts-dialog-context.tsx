@@ -1,6 +1,4 @@
 //#region Import
-import { Button, BackButton, Footer } from "@/ui"
-import { getListOfKey, useStep } from "@/utils"
 import { createContext, useCallback, useContext, useMemo, useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -11,6 +9,8 @@ import {
 	useUploadContactsContentDataMutation,
 } from "@/features/people/contacts/api"
 import type { ContactScreamSnakeCaseKey, ImportFileMappingArgs } from "@/features/people/contacts/types"
+import { Button, BackButton, Footer } from "@/ui"
+import { getListOfKey, useStep } from "@/utils"
 
 import type { ImportContactsDialogContextProps, ImportContactsDialogContextValueType, ImportsDataType } from "./types"
 

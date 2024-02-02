@@ -1,6 +1,4 @@
 //#region Import
-import { useForm, Button, Footer, Form, Skeleton } from "@/ui"
-import { cleanObject } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Suspense, lazy } from "react"
 import toast from "react-hot-toast"
@@ -15,6 +13,8 @@ import { clearSelection } from "@/core/slices/advanced-table-slice"
 import { getContactFilterAndContactSearchFilter } from "@/features/people/contacts/utils"
 import { useRemoveContactsFromGroupMutation } from "@/features/people/groups/api"
 import type { RemoveContactsFromGroupArgs } from "@/features/people/groups/types"
+import { useForm, Button, Footer, Form, Skeleton } from "@/ui"
+import { cleanObject } from "@/utils"
 
 const Input = lazy(() => import("@/ui").then((mod) => ({ default: mod.Input })))
 //#endregion

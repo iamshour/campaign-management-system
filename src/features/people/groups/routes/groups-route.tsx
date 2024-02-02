@@ -57,7 +57,7 @@ const GroupsRoute = () => {
 
 	if (isEmptyView) return <EmptyGroupsView />
 
-	if (isError) return <DisplayError error={error} />
+	if (isError) return <DisplayError error={error as any} />
 
 	if (isReady) return <GroupsView list={list || []} count={count || 0} isFetching={isFetching} />
 }

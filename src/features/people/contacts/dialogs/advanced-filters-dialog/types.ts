@@ -1,7 +1,7 @@
 //#region Import
+import type { SegmentConditionType } from "@/features/people/segments/types"
 import type { OptionType } from "@/ui"
 
-import type { SegmentConditionType } from "@/features/people/segments/types"
 //#endregion
 
 export type AdvancedFiltersTab = "newConditions" | "segmentSelection"

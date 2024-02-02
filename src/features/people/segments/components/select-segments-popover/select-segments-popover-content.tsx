@@ -1,8 +1,8 @@
 //#region Import
-import { ComboBoxPopper } from "@/ui"
 import { useState } from "react"
 
 import { useGetSegmentsQuery } from "@/features/people/segments/api"
+import { ComboBoxPopper } from "@/ui"
 //#endregion
 
 const SelectSegmentsPopoverContent = () => {

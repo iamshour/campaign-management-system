@@ -1,11 +1,11 @@
 //#region Import
-import { Button, DataGridSkeleton } from "@/ui"
-import { format } from "@/utils"
 import { useNavigate } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"
 import type { SharedListViewProps } from "@/core/types"
 import type { Group } from "@/features/people/groups/types"
+import { Button, DataGridSkeleton } from "@/ui"
+import { format } from "@/utils"
 
 import GroupsTableActions from "./groups-table-actions"
 

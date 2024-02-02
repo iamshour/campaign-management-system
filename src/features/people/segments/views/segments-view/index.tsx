@@ -1,5 +1,4 @@
 //#region Import
-import { Button } from "@/ui"
 import { lazy } from "react"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
@@ -9,6 +8,7 @@ import appPaths from "@/core/constants/app-paths"
 import type { SharedListViewProps } from "@/core/types"
 import segmentsTableColumns from "@/features/people/segments/constants/segments-table-columns"
 import type { Segment } from "@/features/people/segments/types"
+import { Button } from "@/ui"
 
 import PhPlusBold from "~icons/ph/plus-bold"
 
@@ -41,7 +41,9 @@ const SegmentsView = ({ list, count, ...tableProps }: SharedListViewProps<Segmen
 					list={list}
 					columns={segmentsTableColumns}
 					onRowClick={({ id }) => navigate(`./${id}`)}
-					className='px-4'
+					classNames={{
+						wrapper: "px-4",
+					}}
 					{...tableProps}
 				/>
 				<AdvancedTable.Pagination />

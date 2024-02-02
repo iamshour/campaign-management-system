@@ -1,9 +1,9 @@
 //#region Import
-import { Button } from "@/ui"
 import { useTranslation } from "react-i18next"
 
 import GroupsEmptySvg from "@/assets/groups-empty.svg?react"
 import LabelledHints from "@/core/components/labelled-hints"
+import { Button } from "@/ui"
 //#endregion
 
 const EmptySegmentsView = () => {

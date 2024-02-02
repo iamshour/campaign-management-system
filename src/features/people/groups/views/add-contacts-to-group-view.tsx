@@ -1,6 +1,4 @@
 //#region Import
-import { Button, Footer } from "@/ui"
-import { cleanObject } from "@/utils"
 import { lazy } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -15,6 +13,8 @@ import type { SharedListViewProps } from "@/core/types"
 import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
 import type { Contact } from "@/features/people/contacts/types"
 import { getContactFilterAndContactSearchFilter } from "@/features/people/contacts/utils"
+import { Button, Footer } from "@/ui"
+import { cleanObject } from "@/utils"
 
 import { useAddContactsToGroupMutation } from "../api"
 import { AddContactsToGroupArgs } from "../types"
@@ -80,7 +80,9 @@ const AddContactsToGroupView = ({ list, count, ...tableProps }: SharedListViewPr
 					list={list}
 					columns={contactsTableColumns}
 					onRowClick={({ id }) => dispatch(updateSelection({ "add-contacts-to-group": id }))}
-					className='[&_td]:!prevent-selection'
+					classNames={{
+						wrapper: "px-4",
+					}}
 					{...tableProps}
 				/>
 				<AdvancedTable.Pagination>

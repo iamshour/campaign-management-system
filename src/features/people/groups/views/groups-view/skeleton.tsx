@@ -1,7 +1,7 @@
 //#region Import
+import useSelector from "@/core/hooks/useSelector"
 import { Skeleton, DataGridSkeleton, HorizontalSkeleton, TableSkeleton } from "@/ui"
 
-import useSelector from "@/core/hooks/useSelector"
 //#endregion
 
 const GroupsViewSkeleton = () => {

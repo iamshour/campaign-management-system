@@ -1,7 +1,8 @@
 //#region Import
-import { Dialog } from "@/ui"
 import { useState, lazy } from "react"
 import { useTranslation } from "react-i18next"
+
+import { Dialog } from "@/ui"
 
 const AdvancedFiltersDialogContext = lazy(() => import("./advanced-filters-dialog-context"))
 const AdvancedFiltersDialogContent = lazy(() => import("./advanced-filters-dialog-content"))

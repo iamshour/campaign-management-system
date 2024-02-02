@@ -1,6 +1,7 @@
 //#region Import
-import { twMerge } from "@/ui"
 import { NavLink, Outlet, useLocation } from "react-router-dom"
+
+import { twMerge } from "@/ui"
 //#endregion
 
 const SmsTemplatesLayout = () => {

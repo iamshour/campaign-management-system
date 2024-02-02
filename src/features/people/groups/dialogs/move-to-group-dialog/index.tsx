@@ -1,9 +1,9 @@
 //#region Import
-import { twMerge, Dialog } from "@/ui"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import useSelector from "@/core/hooks/useSelector"
+import { twMerge, Dialog } from "@/ui"
 
 const MoveToGroupDialogContent = lazy(() => import("./move-to-group-dialog-content"))
 //#endregion

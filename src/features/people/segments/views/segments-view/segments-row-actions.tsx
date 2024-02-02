@@ -1,10 +1,10 @@
 //#region Import
-import { Dropdown } from "@/ui"
 import { useLocation, useNavigate } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"
 import ExportFieldsDialog from "@/features/people/exports/dialogs/export-fields-dialog"
 import DeleteSegmentDialog from "@/features/people/segments/dialogs/delete-segment-dialog"
+import { Dropdown } from "@/ui"
 
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 //#endregion

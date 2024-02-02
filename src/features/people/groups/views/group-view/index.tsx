@@ -1,5 +1,4 @@
 //#region Import
-import type { ColumnType } from "@/ui"
 import { lazy, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -10,6 +9,7 @@ import type { SharedListViewProps } from "@/core/types"
 import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
 import ViewContactDialog from "@/features/people/contacts/dialogs/view-contact-dialog"
 import type { Contact } from "@/features/people/contacts/types"
+import type { ColumnType } from "@/ui"
 
 import GroupTableActions from "./group-table-actions"
 

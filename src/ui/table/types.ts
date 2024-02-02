@@ -77,7 +77,7 @@ export interface TableState<TData> {
 	selection?: string[] | "ALL"
 }
 
-export type TableProps<TData> = Pick<React.HTMLAttributes<HTMLTableElement>, "className"> & {
+export type TableProps<TData> = {
 	/**
 	 * Passed data to be used for each column/row
 	 */
@@ -124,4 +124,11 @@ export type TableProps<TData> = Pick<React.HTMLAttributes<HTMLTableElement>, "cl
 	 * @returns void
 	 */
 	onRowClick?: (rowData: TData) => void
+
+	/**
+	 * classNames object, used to pass classNames for each element in Table
+	 */
+	classNames?: Partial<
+		Record<"wrapper" | "table" | "thead" | "theadTr" | "theadTh" | "tbody" | "tbodyTr" | "tbodyTd", string>
+	>
 }

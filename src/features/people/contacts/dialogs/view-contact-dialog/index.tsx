@@ -1,6 +1,7 @@
 //#region Import
-import { Dialog } from "@/ui"
 import { lazy } from "react"
+
+import { Dialog } from "@/ui"
 
 const ViewContactDialogContent = lazy(() => import("./view-contact-dialog-content"))
 //#endregion

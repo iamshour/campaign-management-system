@@ -1,6 +1,4 @@
 //#region Import
-import { DataTableSkeleton } from "@/ui"
-import { getListOfKey } from "@/utils"
 import { lazy } from "react"
 import { useParams } from "react-router-dom"
 
@@ -10,6 +8,8 @@ import type { AdvancedTableStateValue } from "@/core/slices/advanced-table-slice
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import type { Contact } from "@/features/people/contacts/types"
 import { getContactSearchFilter } from "@/features/people/contacts/utils"
+import { DataTableSkeleton } from "@/ui"
+import { getListOfKey } from "@/utils"
 
 import { useGetGroupByIdQuery } from "../api"
 const GroupView = lazy(() => import("../views/group-view"))
@@ -66,7 +66,7 @@ const GroupRoute = () => {
 
 	if (isEmptyView) return <div className='h-full w-full flex-center'>No Contacts in group available!</div>
 
-	if (isError) return <DisplayError error={error} />
+	if (isError) return <DisplayError error={error as any} />
 
 	// TODO: Show group name in page header (to be added to RTK)
 	if (isReady) return <GroupView list={list || []} count={count || 0} isFetching={isFetching} />

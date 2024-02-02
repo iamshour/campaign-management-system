@@ -1,7 +1,6 @@
 //#region Import
-import type { DateRange } from "@/ui"
-
 import type { CommonListArguments } from "@/core/lib/redux-toolkit/types"
+import type { DateRange } from "@/ui"
 
 import type { ParsedPhoneNumberDto } from "./utils"
 //#endregion

@@ -1,14 +1,4 @@
 //#region Import
-import {
-	Button,
-	Skeleton,
-	Table,
-	TableSkeleton,
-	twMerge,
-	type TablePaginationProps,
-	type RowData,
-	type TableProps,
-} from "@/ui"
 import { Suspense, createContext, lazy, useContext, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -23,6 +13,16 @@ import {
 	type AdvancedTableStateValue,
 	type TableKey,
 } from "@/core/slices/advanced-table-slice"
+import {
+	Button,
+	Skeleton,
+	Table,
+	TableSkeleton,
+	twMerge,
+	type TablePaginationProps,
+	type RowData,
+	type TableProps,
+} from "@/ui"
 
 const SearchInput = lazy(() => import("@/ui").then((mod) => ({ default: mod.SearchInput })))
 const TablePagination = lazy(() => import("@/ui").then((mod) => ({ default: mod.TablePagination })))

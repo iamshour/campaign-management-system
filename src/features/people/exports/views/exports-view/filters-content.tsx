@@ -1,6 +1,4 @@
 //#region Import
-import { DateRangePicker } from "@/ui"
-import { getListOfKey } from "@/utils"
 
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
@@ -8,6 +6,8 @@ import { updateFilters } from "@/core/slices/advanced-table-slice"
 import SelectExportedByPopover from "@/features/people/exports/components/select-exported-by-popover"
 import SelectStatusesPopover from "@/features/people/exports/components/select-statuses-popover"
 import type { ContactExportStatusOption } from "@/features/people/exports/types"
+import { DateRangePicker } from "@/ui"
+import { getListOfKey } from "@/utils"
 //#endregion
 
 const FiltersContent = () => {

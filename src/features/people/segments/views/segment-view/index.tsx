@@ -1,8 +1,9 @@
 //#region Import
 //#region Import
-import { Button, type IconType } from "@/ui"
 import { useTranslation } from "react-i18next"
 import { useLocation, useNavigate } from "react-router-dom"
+
+import { Button, type IconType } from "@/ui"
 
 import SegmentsFunnelReadonly from "../../components/segments-funnel-readonly"
 import type { Segment, SegmentConditionType } from "../../types"

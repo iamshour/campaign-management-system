@@ -1,7 +1,8 @@
 //#region Import
-import { Tabs, type IconType } from "@/ui"
 import { lazy } from "react"
 import { useTranslation } from "react-i18next"
+
+import { Tabs, type IconType } from "@/ui"
 
 import { useImportContactsDialogContext } from "../import-contacts-dialog-context"
 import type { ImportType } from "../types"

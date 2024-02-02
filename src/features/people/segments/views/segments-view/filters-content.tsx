@@ -1,9 +1,9 @@
 //#region Import
-import { DateRangePicker } from "@/ui"
 
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { updateFilters } from "@/core/slices/advanced-table-slice"
+import { DateRangePicker } from "@/ui"
 //#endregion
 
 const FiltersContent = () => {

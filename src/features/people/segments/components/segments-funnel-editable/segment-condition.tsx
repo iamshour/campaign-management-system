@@ -1,10 +1,10 @@
 //#region Import
-import { Button, Tooltip } from "@/ui"
 import { Fragment, memo } from "react"
 import { useTranslation } from "react-i18next"
 
 import { emptySegmentRule } from "@/features/people/segments/constants/preset-segments"
 import type { SegmentRuleType } from "@/features/people/segments/types"
+import { Button, Tooltip } from "@/ui"
 
 import SegmentRule from "./segment-rule"
 

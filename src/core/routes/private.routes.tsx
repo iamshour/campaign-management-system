@@ -1,5 +1,4 @@
 //#region Import
-import { NotFoundError } from "@/ui"
 import { Navigate, RouteObject } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"
@@ -9,6 +8,7 @@ import ExportsFeatureRoutes from "@/features/people/exports/routes"
 import GroupsFeatureRoutes from "@/features/people/groups/routes"
 import SegmentsFeatureRoutes from "@/features/people/segments/routes"
 import SmsTemplatesFeatureRoutes from "@/features/templates/sms-templates/routes"
+import { NotFoundError } from "@/ui"
 //#endregion
 
 /**

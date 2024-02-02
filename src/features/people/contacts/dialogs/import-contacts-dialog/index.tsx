@@ -1,6 +1,7 @@
 //#region Import
-import { Dialog } from "@/ui"
 import { lazy, useState } from "react"
+
+import { Dialog } from "@/ui"
 
 const ImportContactsDialogContext = lazy(() => import("./import-contacts-dialog-context"))
 const ImportContactsDialogContent = lazy(() => import("./import-contacts-dialog-content"))

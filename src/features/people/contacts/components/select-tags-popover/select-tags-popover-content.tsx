@@ -1,8 +1,8 @@
 //#region Import
-import { ComboBoxPopper, Button, type ComboBoxContextType, type OptionType } from "@/ui"
 import { useState } from "react"
 
 import { useGetTagsListQuery } from "@/features/people/contacts/api"
+import { ComboBoxPopper, Button, type ComboBoxContextType, type OptionType } from "@/ui"
 //#endregion
 
 const SelectTagsPopoverContent = ({ isCreatable, isMulti, selection, updateSelection }: ComboBoxContextType) => {

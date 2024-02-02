@@ -1,9 +1,9 @@
 //#region Import
-import { twMerge, Skeleton } from "@/ui"
 import { Suspense, lazy } from "react"
 import { Outlet } from "react-router-dom"
 
 import useSelector from "@/core/hooks/useSelector"
+import { twMerge, Skeleton } from "@/ui"
 
 const Navbar = lazy(() => import("./navbar"))
 const Topbar = lazy(() => import("./topbar"))

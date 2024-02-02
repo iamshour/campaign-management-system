@@ -1,7 +1,8 @@
 //#region Import
-import { Button, twMerge, Popover, PopoverSkeleton, Tooltip } from "@/ui"
 import { useState, Suspense, lazy } from "react"
 import { useTranslation } from "react-i18next"
+
+import { Button, twMerge, Popover, PopoverSkeleton, Tooltip } from "@/ui"
 
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
 

@@ -1,9 +1,9 @@
 //#region Import
-import { downloadFile } from "@/utils"
 
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
 import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
+import { downloadFile } from "@/utils"
 
 import type { ContactExports, DownloadExportArgs, GetExportsArgs, SubmitExportsFileArgs } from "./types"
 //#endregion

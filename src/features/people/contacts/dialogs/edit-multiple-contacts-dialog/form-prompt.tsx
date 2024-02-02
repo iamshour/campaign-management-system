@@ -1,5 +1,6 @@
-import { Form, Input } from "@/ui"
 import { useTranslation } from "react-i18next"
+
+import { Form, Input } from "@/ui"
 
 type DialogFormData = { prompt?: number; tags: string[]; groups: string[] }
 

@@ -1,7 +1,8 @@
 //#region Import
-import { twMerge, Popover, PopoverSkeleton } from "@/ui"
 import { Suspense, lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
+
+import { twMerge, Popover, PopoverSkeleton } from "@/ui"
 
 import SelectGroupsPopover from "../select-groups-popover"
 

@@ -1,6 +1,4 @@
 //#region Import
-import { DisplayError, DataTableSkeleton } from "@/ui"
-import { getListOfKey } from "@/utils"
 import { lazy } from "react"
 import { useParams } from "react-router-dom"
 
@@ -11,6 +9,8 @@ import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetContactsQuery } from "@/features/people/contacts/api"
 import type { Contact } from "@/features/people/contacts/types"
 import { getContactSearchFilter } from "@/features/people/contacts/utils"
+import { DisplayError, DataTableSkeleton } from "@/ui"
+import { getListOfKey } from "@/utils"
 
 const AddContactsToGroupView = lazy(() => import("../views/add-contacts-to-group-view"))
 //#endregion
@@ -63,7 +63,7 @@ const AddContactsToGroupRoute = () => {
 	// TODO: Create EmprtyView Component here
 	if (isEmptyView) return <div className='h-full w-full flex-center'>No Contacts to be added to this group!</div>
 
-	if (isError) return <DisplayError error={error} />
+	if (isError) return <DisplayError error={error as any} />
 
 	if (isReady) return <AddContactsToGroupView list={list || []} count={count || 0} isFetching={isFetching} />
 }

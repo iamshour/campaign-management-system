@@ -1,10 +1,10 @@
 //#region Import
-import { downloadFile } from "@/utils"
 import type { TagDescription } from "@reduxjs/toolkit/query"
 
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
 import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
+import { downloadFile } from "@/utils"
 
 import type {
 	Contact,

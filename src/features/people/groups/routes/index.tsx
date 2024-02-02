@@ -1,7 +1,8 @@
 //#region Import
-import { DataTableSkeleton } from "@/ui"
 import { Suspense, lazy } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
+
+import { DataTableSkeleton } from "@/ui"
 
 import GroupsViewSkeleton from "../views/groups-view/skeleton"
 

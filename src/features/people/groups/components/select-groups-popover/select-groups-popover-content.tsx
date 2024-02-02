@@ -1,8 +1,8 @@
 //#region Import
-import { ComboBoxPopper } from "@/ui"
 import { useState } from "react"
 
 import { useGetGroupsQuery } from "@/features/people/groups/api"
+import { ComboBoxPopper } from "@/ui"
 //#endregion
 
 const SelectGroupsPopoverContent = () => {
