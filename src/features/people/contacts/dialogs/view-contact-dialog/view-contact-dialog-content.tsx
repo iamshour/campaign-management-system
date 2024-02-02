@@ -1,6 +1,5 @@
 //#region Import
-import { twMerge, Badge, NotFoundError, Input, Label, PhoneInputReadonly, Skeleton,
-	Textarea } from "@blueai/ui"
+import { twMerge, Badge, NotFoundError, Input, Label, PhoneInputReadonly, Skeleton, Textarea } from "@blueai/ui"
 import { format, getListOfKey } from "@blueai/utils"
 import { useTranslation } from "react-i18next"
 

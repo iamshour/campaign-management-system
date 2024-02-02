@@ -1,10 +1,7 @@
 //#region Import
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Button,
-	Footer,
-	Form,
-	Skeleton, useForm, type OptionType } from "@blueai/ui"
+import { Button, Footer, Form, Skeleton, useForm, type OptionType } from "@blueai/ui"
 import { cleanObject } from "@blueai/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Suspense, lazy } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -20,7 +17,7 @@ import { useMoveContactsToGroupMutation } from "@/features/people/groups/api"
 import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option-type-schema"
 import type { MoveContactsToGroupArgs } from "@/features/people/groups/types"
 
-const Input = lazy(() => import("@blueai/ui").then(mod => ({ default: mod.Input })))
+const Input = lazy(() => import("@blueai/ui").then((mod) => ({ default: mod.Input })))
 const SelectGroupsPopover = lazy(() => import("@/features/people/groups/components/select-groups-popover"))
 //#endregion
 
@@ -36,7 +33,7 @@ export interface MoveToGroupDialogContentProps {
 	id?: string
 }
 
-type DialogFormData = { prompt: number; group: OptionType }
+type DialogFormData = { prompt: number; group?: OptionType }
 
 const MoveToGroupDialogContent = ({ id, onClose }: MoveToGroupDialogContentProps) => {
 	const { t } = useTranslation("groups")
@@ -53,10 +50,12 @@ const MoveToGroupDialogContent = ({ id, onClose }: MoveToGroupDialogContentProps
 
 	const form = useForm<DialogFormData>({
 		resolver: getResolvedFormSchema(nbOfContactsToMove),
-		defaultValues: { prompt: 0, group: {} },
+		defaultValues: { prompt: 0 },
 	})
 
 	const onSubmit = async ({ group }: DialogFormData) => {
+		if (!group?.value) return
+
 		const contactsIdsToBeMoved = id ? [id] : !!selection && selection !== "ALL" ? selection : undefined
 
 		const body: MoveContactsToGroupArgs = {
@@ -93,10 +92,9 @@ const MoveToGroupDialogContent = ({ id, onClose }: MoveToGroupDialogContentProps
 						<Form.Item>
 							<Suspense fallback={<Skeleton className='h-[72px] w-[340px]' />}>
 								<SelectGroupsPopover
-									selectedOptions={field.value?.value?.length ? [field.value] : []}
-									updateSelectedOptions={(options) =>
-										form.setValue("group", options?.find((op) => op?.value !== field.value?.value) as OptionType)
-									}
+									isMulti={false}
+									selection={field.value}
+									updateSelection={(group) => form.setValue("group", group)}
 									size='lg'
 								/>
 							</Suspense>

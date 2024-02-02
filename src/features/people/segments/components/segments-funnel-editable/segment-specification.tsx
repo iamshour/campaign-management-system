@@ -1,7 +1,7 @@
 //#region Import
 import { lazy, memo } from "react"
 import { useTranslation } from "react-i18next"
-import type { OptionType } from "@blueai/ui"
+
 import type { SegmentRuleType } from "@/features/people/segments/types"
 
 const Input = lazy(() => import("@blueai/ui").then((mod) => ({ default: mod.Input })))
@@ -28,14 +28,11 @@ const SegmentSpecification = memo(
 			case "TAGS":
 				return (
 					<SelectTagsPopover
-						creatable
+						// creatable
+						isMulti={false}
 						label={`${t("label")} *`}
-						// TODO: Fix parent ComboBox to accept single entries
-						// isMulti={false}
-						selectedOptions={specification ? [specification as string] : []}
-						updateSelectedOptions={(options) =>
-							onSelectValueChange({ specification: options?.find((op) => op !== specification) })
-						}
+						selection={specification ? { label: specification, value: specification } : undefined}
+						updateSelection={(option) => onSelectValueChange({ specification: option?.value })}
 					/>
 				)
 
@@ -43,19 +40,16 @@ const SegmentSpecification = memo(
 				return (
 					<SelectGroupsPopover
 						label={`${t("label")} *`}
-						// TODO: Fix parent ComboBox to accept single entries
-						// isMulti={false}
-						selectedOptions={group?.value ? ([group] as OptionType[]) : []}
-						updateSelectedOptions={(options) =>
-							onSelectValueChange({ group: options?.find((op) => op?.value !== group?.value) })
-						}
+						isMulti={false}
+						selection={group}
+						updateSelection={(group) => onSelectValueChange({ group })}
 					/>
 				)
 			case "COUNTRY":
 				return (
 					<SelectCountryPopover
 						value={country as any}
-						onChange={(country) => onSelectValueChange({ country })}
+						onChange={(country: string) => onSelectValueChange({ country })}
 						withCountryCode={false}
 						label={`${t("label")} *`}
 					/>
@@ -65,12 +59,9 @@ const SegmentSpecification = memo(
 				return (
 					<SelectSegmentsPopover
 						label={`${t("label")} *`}
-						// TODO: Fix parent ComboBox to accept single entries
-						// isMulti={false}
-						selectedOptions={segment?.value ? ([segment] as OptionType[]) : []}
-						updateSelectedOptions={(options) =>
-							onSelectValueChange({ segment: options?.find((op) => op?.value !== segment?.value) })
-						}
+						isMulti={false}
+						selection={segment}
+						updateSelection={(segment) => onSelectValueChange({ segment })}
 					/>
 				)
 

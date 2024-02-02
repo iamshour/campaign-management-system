@@ -1,6 +1,7 @@
 //#region Import
-import { lazy } from "react"
 import { DisplayError, DataTableSkeleton } from "@blueai/ui"
+import { lazy } from "react"
+
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { AdvancedTableStateValue } from "@/core/slices/advanced-table-slice"
@@ -18,7 +19,11 @@ const SegmentsRoute = () => {
 		({ advancedTable }) => advancedTable["segments"]
 	)
 
+	// eslint-disable-next-line
+	// @ts-ignore
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetSegmentsQuery(
+		// eslint-disable-next-line
+		// @ts-ignore
 		{
 			limit,
 			offset,

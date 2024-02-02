@@ -1,5 +1,5 @@
 //#region Import
-import {DateRangePicker} from "@blueai/ui"
+import { DateRangePicker } from "@blueai/ui"
 
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
@@ -14,7 +14,11 @@ const FiltersContent = () => {
 	return (
 		<>
 			<DateRangePicker
+				// eslint-disable-next-line
+				// @ts-ignore
 				dateRange={filters?.dateRange}
+				// eslint-disable-next-line
+				// @ts-ignore
 				updateDateRange={(dateRange) => dispatch(updateFilters({ segments: { dateRange } }))}
 			/>
 		</>

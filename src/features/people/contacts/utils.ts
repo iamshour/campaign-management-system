@@ -105,7 +105,11 @@ export const getContactFilterAndContactSearchFilter = (
 			tags: filters?.tags,
 			groups: getListOfKey(filters?.groups, "value"),
 			// Using below utility Function so that we won't send either date range values if any one is undefined
+			// eslint-disable-next-line
+			// @ts-ignore
 			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
+			// eslint-disable-next-line
+			// @ts-ignore
 			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
 		},
 		contactSearchFilter: getContactSearchFilter(searchTerm),

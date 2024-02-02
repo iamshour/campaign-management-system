@@ -1,7 +1,7 @@
 //#region Import
+import { Button, Tooltip } from "@blueai/ui"
 import { Fragment, memo } from "react"
 import { useTranslation } from "react-i18next"
-import { Button, Tooltip } from "@blueai/ui"
 
 import { emptySegmentRule } from "@/features/people/segments/constants/preset-segments"
 import type { SegmentRuleType } from "@/features/people/segments/types"

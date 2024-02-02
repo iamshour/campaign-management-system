@@ -1,5 +1,5 @@
 //#region Import
-import {downloadFile} from "@blueai/utils"
+import { downloadFile } from "@blueai/utils"
 import type { TagDescription } from "@reduxjs/toolkit/query"
 
 import api from "@/core/lib/redux-toolkit/api"

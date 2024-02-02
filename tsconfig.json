@@ -1,17 +1,18 @@
 {
-	"extends": "@config/ts/vite-app.json",
+	"extends": "@blueai/configs/ts/vite-app",
 	"compilerOptions": {
 		"rootDir": ".",
 		"outDir": "dist",
 		"baseUrl": ".",
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
-		"types": ["@package/icons"],
+		"moduleResolution": "Bundler",
 		"paths": {
 			"@/*": ["./src/*"],
 			"@/public/*": ["./public/*"],
 		},
 	},
+	"files": ["./node_modules/@blueai/ui/icons.d.ts"],
 	"include": ["src"],
 	"exclude": ["dist", "build", "node_modules"],
 }

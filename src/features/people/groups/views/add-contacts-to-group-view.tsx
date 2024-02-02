@@ -1,5 +1,5 @@
 //#region Import
-import { Button, Footer} from "@blueai/ui"
+import { Button, Footer } from "@blueai/ui"
 import { cleanObject } from "@blueai/utils"
 import { lazy } from "react"
 import toast from "react-hot-toast"

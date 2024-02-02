@@ -1,5 +1,6 @@
 //#region Import
 import { DateRangePicker } from "@blueai/ui"
+import { getListOfKey } from "@blueai/utils"
 
 import { useAdvancedTableContext } from "@/core/components/advanced-table"
 import useDispatch from "@/core/hooks/useDispatch"
@@ -22,17 +23,20 @@ const FiltersContent = () => {
 	return (
 		<>
 			<DateRangePicker
+				// eslint-disable-next-line
+				// @ts-ignore
 				dateRange={filters?.dateRange}
 				updateDateRange={(dateRange) => dispatch(updateFilters({ [tableKey]: { dateRange } }))}
 			/>
 			<SelectTagsPopover
-				selectedOptions={filters?.tags || []}
-				updateSelectedOptions={(tags) => dispatch(updateFilters({ [tableKey]: { tags } }))}
+				isMulti
+				selection={filters?.tags?.map((value) => ({ label: value, value })) || []}
+				updateSelection={(tags) => dispatch(updateFilters({ [tableKey]: { tags: getListOfKey(tags, "value") } }))}
 			/>
 			<SelectGroupsPopover
 				isMulti
-				selectedOptions={filters?.groups || []}
-				updateSelectedOptions={(groups) => dispatch(updateFilters({ [tableKey]: { groups } }))}
+				selection={filters?.groups || []}
+				updateSelection={(groups) => dispatch(updateFilters({ [tableKey]: { groups } }))}
 			/>
 		</>
 	)

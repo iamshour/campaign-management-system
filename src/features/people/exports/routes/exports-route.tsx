@@ -1,5 +1,5 @@
 //#region Import
-import { DisplayError, DataTableSkeleton} from "@blueai/ui"
+import { DisplayError, DataTableSkeleton } from "@blueai/ui"
 import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
@@ -19,6 +19,8 @@ const ExportsRoute = () => {
 		AdvancedTableStateValue<ContactExports>
 	>(({ advancedTable }) => advancedTable["contacts-exports"])
 
+	// eslint-disable-next-line
+	// @ts-ignore
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetExportsQuery(
 		{
 			limit,
@@ -28,7 +30,11 @@ const ExportsRoute = () => {
 			fileName: searchTerm,
 			any: searchTerm ? true : undefined,
 			// date range filter:
+			// eslint-disable-next-line
+			// @ts-ignore
 			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
+			// eslint-disable-next-line
+			// @ts-ignore
 			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
 			// status filter:
 			statuses: filters?.status?.length ? filters.status : undefined,

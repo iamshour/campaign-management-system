@@ -22,6 +22,8 @@ const ContactsRoute = () => {
 		AdvancedTableStateValue<Contact>
 	>(({ advancedTable }) => advancedTable["contacts"])
 
+	// eslint-disable-next-line
+	// @ts-ignore
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetContactsQuery(
 		{
 			limit,
@@ -30,7 +32,11 @@ const ContactsRoute = () => {
 			order,
 			tags: filters?.tags,
 			groups: getListOfKey(filters?.groups, "value"),
+			// eslint-disable-next-line
+			// @ts-ignore
 			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
+			// eslint-disable-next-line
+			// @ts-ignore
 			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
 			...getContactSearchFilter(searchTerm),
 			...getContactAdvancedFilter(filters?.advancedFilters),

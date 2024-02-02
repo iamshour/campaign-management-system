@@ -1,5 +1,5 @@
 //#region Import
-import {Tooltip} from "@blueai/ui"
+import { Tooltip } from "@blueai/ui"
 import { useTranslation } from "react-i18next"
 import { v4 as newId } from "uuid"
 

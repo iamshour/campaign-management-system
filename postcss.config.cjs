@@ -1,1 +1,1 @@
-module.exports = require("@config/tailwind/postcss.config")
+module.exports = require("./node_modules/@blueai/configs/tailwind/postcss.config.js")

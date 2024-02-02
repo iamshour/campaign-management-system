@@ -1,5 +1,5 @@
 //#region Import
-import { Button} from "@blueai/ui"
+import { Button } from "@blueai/ui"
 import { useTranslation } from "react-i18next"
 
 import GroupsEmptySvg from "@/assets/groups-empty.svg?react"

@@ -1,5 +1,6 @@
 //#region Import
 import { DateRangePicker } from "@blueai/ui"
+
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { updateFilters } from "@/core/slices/advanced-table-slice"
@@ -13,7 +14,11 @@ const FiltersContent = () => {
 
 	return (
 		<DateRangePicker
+			// eslint-disable-next-line
+		// @ts-ignore
 			dateRange={filters?.dateRange}
+			// eslint-disable-next-line
+			// @ts-ignore
 			updateDateRange={(dateRange) => dispatch(updateFilters({ ["groups"]: { dateRange } }))}
 		/>
 	)

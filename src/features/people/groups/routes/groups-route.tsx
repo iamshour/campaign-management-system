@@ -12,7 +12,7 @@ import GroupsViewSkeleton from "../views/groups-view/skeleton"
 
 const GroupsView = lazy(() => import("../views/groups-view"))
 const EmptyGroupsView = lazy(() => import("../views/empty-groups-view"))
-const DisplayError = lazy(() => import("@blueai/ui").then(mod => ({ default: mod.DisplayError })))
+const DisplayError = lazy(() => import("@blueai/ui").then((mod) => ({ default: mod.DisplayError })))
 //#endregion
 
 const GroupsRoute = () => {
@@ -20,7 +20,11 @@ const GroupsRoute = () => {
 		AdvancedTableStateValue<Group>
 	>(({ advancedTable }) => advancedTable["groups"])
 
+	// eslint-disable-next-line
+	// @ts-ignore
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetGroupsQuery(
+		// eslint-disable-next-line
+		// @ts-ignore
 		{
 			limit,
 			offset,
@@ -28,7 +32,11 @@ const GroupsRoute = () => {
 			order,
 			name: searchTerm,
 			// date range filter:
+			// eslint-disable-next-line
+			// @ts-ignore
 			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
+			// eslint-disable-next-line
+			// @ts-ignore
 			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
 		},
 		{

@@ -1,7 +1,7 @@
 //#region Import
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, Button, Footer, Form, Skeleton, type OptionType } from "@blueai/ui"
 import { cleanObject, getListOfKey } from "@blueai/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Suspense, lazy } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -17,7 +17,7 @@ import type { UpdateMultipleContactsArgs } from "@/features/people/contacts/type
 import { getContactFilterAndContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
 import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option-type-schema"
 
-const Input = lazy(() => import("@blueai/ui").then(mod => ({ default: mod.Input })))
+const Input = lazy(() => import("@blueai/ui").then((mod) => ({ default: mod.Input })))
 const SelectTagsPopover = lazy(() => import("@/features/people/contacts/components/select-tags-popover"))
 const SelectGroupsWithCreatePopover = lazy(
 	() => import("@/features/people/groups/components/select-groups-with-create-popover")
@@ -110,24 +110,24 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 							<Suspense fallback={<Skeleton className='h-[72px] w-[340px]' />}>
 								{actionType === "addTags" ? (
 									<SelectTagsPopover
+										// creatable
 										isMulti
-										creatable
-										selectedOptions={field.value as string[]}
-										updateSelectedOptions={(items) => form.setValue("tags", items)}
+										selection={(field.value?.map((value) => ({ label: value, value })) as OptionType[]) || []}
+										updateSelection={(items) => form.setValue("tags", getListOfKey(items, "value")!)}
 										size='lg'
 									/>
 								) : actionType === "removeTags" ? (
 									<SelectTagsPopover
 										isMulti
-										selectedOptions={field.value as string[]}
-										updateSelectedOptions={(items) => form.setValue("tags", items)}
+										selection={(field.value?.map((value) => ({ label: value, value })) as OptionType[]) || []}
+										updateSelection={(items) => form.setValue("tags", getListOfKey(items, "value")!)}
 										size='lg'
 									/>
 								) : actionType === "addToGroups" ? (
 									<SelectGroupsWithCreatePopover
 										isMulti
-										selectedOptions={field.value as OptionType[]}
-										updateSelectedOptions={(items) => form.setValue("groups", items)}
+										selection={field.value as OptionType[]}
+										updateSelection={(items) => form.setValue("groups", items)}
 										onCreateSuccess={(newGroup) =>
 											form.setValue(
 												"groups",
@@ -141,8 +141,8 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 								) : actionType === "removeFromGroups" ? (
 									<SelectGroupsPopover
 										isMulti
-										selectedOptions={field.value as OptionType[]}
-										updateSelectedOptions={(items) => form.setValue("groups", items)}
+										selection={field.value as OptionType[]}
+										updateSelection={(items) => form.setValue("groups", items)}
 										size='lg'
 									/>
 								) : null}

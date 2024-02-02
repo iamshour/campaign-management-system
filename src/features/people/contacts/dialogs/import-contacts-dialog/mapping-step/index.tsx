@@ -1,5 +1,6 @@
 //#region Import
 import { Button, Checkbox, Label, type OptionType } from "@blueai/ui"
+import { getListOfKey } from "@blueai/utils"
 import { lazy, useCallback } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -67,22 +68,24 @@ const MappingStep = () => {
 
 				<div className='flex flex-wrap gap-6'>
 					<SelectGroupsWithCreatePopover
-						// isMulti
 						// maxLimit={10}
+						isMulti
 						className='w-[340px]'
-						selectedOptions={groups || []}
-						updateSelectedOptions={(updatedGroups) =>
+						selection={groups || []}
+						updateSelection={(updatedGroups) =>
 							!!groups && groups?.length < 10 && updateData({ groups: updatedGroups })
 						}
 						onCreateSuccess={onCreateGroupSuccess}
 					/>
 					<SelectTagsPopover
-						// isMulti
+						// creatable
 						// maxLimit={10}
-						creatable
+						isMulti
 						className='w-[340px]'
-						selectedOptions={tags || []}
-						updateSelectedOptions={(updatedtags) => !!tags && tags?.length < 10 && updateData({ tags: updatedtags })}
+						selection={tags?.map((value) => ({ value, label: value })) || []}
+						updateSelection={(updatedtags) =>
+							!!tags && tags?.length < 10 && updateData({ tags: getListOfKey(updatedtags, "value") })
+						}
 					/>
 				</div>
 			</div>

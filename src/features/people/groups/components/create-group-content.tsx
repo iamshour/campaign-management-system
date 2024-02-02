@@ -1,9 +1,6 @@
 //#region Import
+import { Button, Footer, Form, Input, twMerge, useForm, type OptionType } from "@blueai/ui"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Button,
-	Footer,
-	Form,
-	Input, twMerge, useForm, type OptionType } from "@blueai/ui"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 

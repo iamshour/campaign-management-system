@@ -1,5 +1,5 @@
 //#region Import
-import type {  DateRange, TableState } from "@blueai/ui"
+import type { DateRange, TableState } from "@blueai/ui"
 //#endregion
 
 export interface ListDataReturnType<T> {

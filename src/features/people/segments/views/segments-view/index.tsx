@@ -1,5 +1,5 @@
 //#region Import
-import {Button} from "@blueai/ui"
+import { Button } from "@blueai/ui"
 import { lazy } from "react"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"

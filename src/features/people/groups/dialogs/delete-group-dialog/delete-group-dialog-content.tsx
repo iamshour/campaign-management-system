@@ -1,7 +1,5 @@
 //#region Import
-import { BackButton,
-	Button,
-	Footer, type OptionType } from "@blueai/ui"
+import { BackButton, Button, Footer, type OptionType } from "@blueai/ui"
 import { useStep } from "@blueai/utils"
 import { useState } from "react"
 import toast from "react-hot-toast"
@@ -77,10 +75,9 @@ const DeleteGroupDialogContent = ({
 				<SelectGroupsPopover
 					size='lg'
 					className='!w-full !max-w-full'
-					selectedOptions={selectedGroupToMoveTo ? [selectedGroupToMoveTo] : []}
-					updateSelectedOptions={(options) =>
-						setSelectedGroupToMoveTo(options?.find((op) => op?.value !== selectedGroupToMoveTo?.value) as OptionType)
-					}
+					isMulti={false}
+					selection={selectedGroupToMoveTo}
+					updateSelection={setSelectedGroupToMoveTo}
 				/>
 			)}
 

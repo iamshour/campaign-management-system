@@ -1,18 +1,19 @@
 //#region Import
-import { type OptionType, ComboBoxPopper } from "@blueai/ui"
+import { ComboBoxPopper, Button, type ComboBoxContextType, type OptionType } from "@blueai/ui"
 import { useState } from "react"
 
 import { useGetTagsListQuery } from "@/features/people/contacts/api"
 //#endregion
 
-// { creatable }: { creatable?: boolean }
-const SelectTagsPopoverContent = () => {
+const SelectTagsPopoverContent = ({ isCreatable, isMulti, selection, updateSelection }: ComboBoxContextType) => {
 	const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined)
 
-	// const [options, setOptions] = useState<OptionType[] | undefined>(undefined)
-
 	// TODO: Handle Infinite Loading in Component to handle changing offset/limit Values
+	// eslint-disable-next-line
+	// @ts-ignore
 	const { list, loading } = useGetTagsListQuery(
+		// eslint-disable-next-line
+		// @ts-ignore
 		{ offset: 0, limit: 100, name: searchTerm },
 		{
 			selectFromResult: ({ data, isLoading, ...rest }) => ({
@@ -23,34 +24,36 @@ const SelectTagsPopoverContent = () => {
 		}
 	)
 
-	// useEffect(() => {
-	// 	if (creatable) {
-	// 		setOptions(list!)
-	// 	}
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [creatable])
+	const onCreate = () => {
+		if (!searchTerm || !isCreatable) return
 
-	// const handleInputChange = (inputText?: string | undefined) => {
-	// 	setSearchTerm(inputText)
+		const newEnrty = { label: searchTerm, value: searchTerm }
 
-	// 	if (!creatable) return
+		if (isMulti) {
+			updateSelection([...selection, newEnrty])
+		} else {
+			updateSelection(newEnrty)
+		}
 
-	// 	// Check if the input text matches any existing items
-	// 	const existingItem = list?.find((item) => item.label.toLowerCase() === inputText?.toLowerCase())
-
-	// 	// If the input text doesn't match any existing items, add a new item to the list
-	// 	if (!existingItem && !!inputText && inputText.trim() !== "") {
-	// 		setOptions([...list, { label: inputText.trim(), value: inputText?.trim() }])
-	// 	}
-	// }
+		setSearchTerm("")
+	}
 
 	return (
 		<ComboBoxPopper
-			options={list as OptionType[] | undefined}
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			options={(isMulti ? [...list, ...selection] : [...list, selection]) as OptionType[] | undefined}
 			loading={loading}
 			searchTerm={searchTerm}
-			onSearch={setSearchTerm}
-		/>
+			onSearch={setSearchTerm}>
+			{isCreatable && searchTerm?.length && !list?.length && (
+				<div className='bg-primary-50/50'>
+					<Button variant='ghost' size='sm' className='w-full justify-start' onClick={onCreate}>
+						Create: <span className='max-w-full truncate font-light'>{searchTerm}</span>
+					</Button>
+				</div>
+			)}
+		</ComboBoxPopper>
 	)
 }
 

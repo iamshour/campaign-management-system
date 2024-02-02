@@ -1,7 +1,5 @@
 //#region Import
-import { Skeleton, DataGridSkeleton,
-	HorizontalSkeleton,
-	TableSkeleton } from "@blueai/ui"
+import { Skeleton, DataGridSkeleton, HorizontalSkeleton, TableSkeleton } from "@blueai/ui"
 
 import useSelector from "@/core/hooks/useSelector"
 //#endregion

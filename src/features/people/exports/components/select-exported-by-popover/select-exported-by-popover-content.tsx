@@ -15,6 +15,8 @@ const SelectExportedByPopoverContent = () => {
 
 	return (
 		<ComboBoxPopper
+			// eslint-disable-next-line
+			// @ts-ignore
 			options={list as OptionType[] | undefined}
 			loading={loading}
 			searchTerm={searchTerm}

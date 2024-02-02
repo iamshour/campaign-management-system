@@ -1,6 +1,5 @@
 //#region Import
-import { type OptionType, NotFoundError, Skeleton,
-	Spinner } from "@blueai/ui"
+import { NotFoundError, Skeleton, Spinner } from "@blueai/ui"
 import { Suspense, lazy, useEffect, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -66,17 +65,15 @@ const SegmentSelectionTab = () => {
 
 			<SelectSegmentsPopover
 				label='Segment *'
-				// TODO: Fix parent ComboBox to accept single entries
-				// isMulti={false}
-				selectedOptions={selectedSegmentOption ? ([selectedSegmentOption] as OptionType[]) : []}
-				updateSelectedOptions={(options) => {
-					const selection = options?.filter((op) => op?.value !== (selectedSegmentOption as OptionType)?.value)
-					return onSegmentSelection(selection[0] as OptionType)
-				}}
+				isMulti={false}
+				selection={selectedSegmentOption}
+				// eslint-disable-next-line
+				// @ts-ignore
+				updateSelection={onSegmentSelection}
 			/>
 
 			{!!selectedSegmentOption?.value && (
-				<div className='relative flex flex-1 flex-col gap-4 overflow-hidden rounded-xl bg-[#F7F7F7] p-4 before:transition-basic'>
+				<div className='relative flex flex-1 flex-col gap-4 overflow-hidden rounded-xl bg-[#F7F7F7] p-4'>
 					<div className='flex w-full flex-col overflow-y-auto'>
 						{isFetching && (
 							<div className='h-full w-full flex-center'>

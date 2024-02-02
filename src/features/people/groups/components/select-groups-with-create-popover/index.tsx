@@ -33,7 +33,7 @@ const SelectGroupsWithCreatePopover = ({ onCreateSuccess, className, ...props }:
 				</Popover.Content>
 			</Popover>
 
-			<SelectGroupsPopover {...props} />
+			<SelectGroupsPopover className='' {...props} />
 		</div>
 	)
 }

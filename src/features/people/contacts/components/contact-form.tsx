@@ -1,13 +1,7 @@
 //#region Import
-import { zodResolver } from "@hookform/resolvers/zod"
-import { UseFormReturn, useForm, 
-	Footer,
-	Form,
-	Input,
-	PhoneInput,
-	Textarea
-} from "@blueai/ui"
+import { UseFormReturn, useForm, Footer, Form, Input, PhoneInput, Textarea } from "@blueai/ui"
 import { cleanObject, getListOfKey } from "@blueai/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslation } from "react-i18next"
 
 import SelectGroupsWithCreatePopover from "@/features/people/groups/components/select-groups-with-create-popover"
@@ -130,9 +124,9 @@ const ContactForm = ({ children, onSubmit, defaultValues }: ContactFormProps) =>
 						render={({ field }) => (
 							<Form.Item>
 								<SelectGroupsWithCreatePopover
-									// isMulti
-									selectedOptions={field.value || []}
-									updateSelectedOptions={(items) => form.setValue("groups", items)}
+									isMulti
+									selection={field.value || []}
+									updateSelection={(items) => form.setValue("groups", items)}
 									onCreateSuccess={(newGroup) =>
 										form.setValue("groups", field?.value?.length ? [...field.value, newGroup] : [newGroup])
 									}
@@ -149,12 +143,16 @@ const ContactForm = ({ children, onSubmit, defaultValues }: ContactFormProps) =>
 						render={({ field }) => (
 							<Form.Item>
 								<SelectTagsPopover
-									// isMulti
-									// creatable
-									selectedOptions={field.value || []}
-									updateSelectedOptions={(items) => form.setValue("tags", items)}
+									isCreatable
+									isMulti
+									selection={field.value?.map((value) => ({ label: value, value })) || []}
+									updateSelection={(items) =>
+										form.setValue(
+											"tags",
+											items?.map(({ value }) => value)
+										)
+									}
 									size='lg'
-									// className='!w-[340px]'
 								/>
 								<Form.Message />
 							</Form.Item>

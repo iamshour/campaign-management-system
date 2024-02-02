@@ -1,5 +1,5 @@
 //#region Import
-import {Dropdown} from "blueai/ui"
+import { Dropdown } from "@blueai/ui"
 import { useLocation, useNavigate } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"

@@ -1,7 +1,5 @@
 //#region Import
-import { Button, twMerge, Popover,
-	PopoverSkeleton,
-	Tooltip } from "@blueai/ui"
+import { Button, twMerge, Popover, PopoverSkeleton, Tooltip } from "@blueai/ui"
 import { useState, Suspense, lazy } from "react"
 import { useTranslation } from "react-i18next"
 

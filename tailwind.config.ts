@@ -1,4 +1,4 @@
-import sharedConfig from "@config/tailwind"
+import sharedConfig from "@blueai/configs/tailwind"
 import type { Config } from "tailwindcss"
 
 const config: Partial<Config> = {

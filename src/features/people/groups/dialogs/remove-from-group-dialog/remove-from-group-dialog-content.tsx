@@ -1,10 +1,7 @@
 //#region Import
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm, Button,
-	Footer,
-	Form,
-	Skeleton } from "@blueai/ui"
+import { useForm, Button, Footer, Form, Skeleton } from "@blueai/ui"
 import { cleanObject } from "@blueai/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Suspense, lazy } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -19,7 +16,7 @@ import { getContactFilterAndContactSearchFilter } from "@/features/people/contac
 import { useRemoveContactsFromGroupMutation } from "@/features/people/groups/api"
 import type { RemoveContactsFromGroupArgs } from "@/features/people/groups/types"
 
-const Input = lazy(() => import("@blueai/ui").then(mod => ({ default: mod.Input })))
+const Input = lazy(() => import("@blueai/ui").then((mod) => ({ default: mod.Input })))
 //#endregion
 
 export interface RemoveFromGroupDialogContentProps {
