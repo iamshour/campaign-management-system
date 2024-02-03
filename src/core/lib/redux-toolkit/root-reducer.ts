@@ -12,7 +12,8 @@ import type { AuthSliceState } from "@/features/authentication/types"
 import api from "./api"
 //#endregion
 
-const APP_PREFIX = `${import.meta.env.VITE_APP_PREFIX}_`
+// const APP_PREFIX = `${import.meta.env.VITE_APP_PREFIX}_`
+const APP_PREFIX = "BLUE.AI_CMS"
 
 export type RootState = {
 	auth: AuthSliceState
