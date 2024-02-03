@@ -17,6 +17,14 @@ variables:
   # Assign which kubernetes agent to use
   KUBE_CONTEXT: a10179/kubernetes-agent:kubernetes-agent
 
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+    - .npm/
+    - .cache/
+    - dist/
+
 stages:
   - build
   - version-check
@@ -25,6 +33,16 @@ stages:
   - release
   - containerize
   - deploy
+
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+    - if: '$CI_COMMIT_BRANCH == "staging"'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: '$CI_COMMIT_BRANCH =~ /CMS*/'
+    - if: '$CI_COMMIT_BRANCH =~ /DEVO*/'
+    - if: '$CI_COMMIT_BRANCH =~ /hotfix*/'
+    - if: '$CI_COMMIT_BRANCH == "updates-on-latest-features"'
 
 .before_script:
   get_tool:
@@ -106,12 +124,12 @@ stages:
   npmrc-publish:
     # The publish will fail if the package name and version combination already exists in the registry.
     # npmrc configuration for the npm package registry
-    - echo "@blueai:registry=https://gitlab.com/api/v4/groups/a10179/-/packages/npm/" > .npmrc
-    - echo "//gitlab.com/api/v4/groups/a10179/-/packages/npm/:_authToken=${NPM_READ_TOKEN}" >> .npmrc
-    - echo "always-auth=true" >> .npmrc
+    - echo "@blueai:registry=https://${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/" > .npmrc
+    - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
     # Disable git checks to avoid gitlab ci pipeline failure
     - echo "git-checks=false" >> .npmrc
     - cat .npmrc
+
 build:
   image: node:18-alpine
   rules:
@@ -140,6 +158,10 @@ version-check:
   needs:
     - job: build
   rules:
+    - changes: 
+        - package.json
+        - package-lock.json
+        - yarn.lock
     - if: $CI_COMMIT_TAG
       when: never
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
@@ -253,6 +275,8 @@ build-docker-image:
       when: on_success
     - if: $CI_COMMIT_BRANCH =~ /hotfix*/
       when: manual
+    - if: $CI_MERGE_REQUEST_EVENT_TYPE == "merge_request"
+      when: never
     - when: manual
   services:
     - docker:dind
@@ -261,6 +285,7 @@ build-docker-image:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - echo $DOCKER_TAG
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
     - docker build --build-arg NPM_READ_TOKEN="${NPM_READ_TOKEN}" -f Dockerfile.ci -t $DOCKER_TAG .
     - docker push $DOCKER_TAG
     - echo "VERSION=$VERSION" > variables.env
@@ -337,6 +362,7 @@ release:
   create_tls:
     - export SECRET_NAME="$CI_PROJECT_NAME-tls"
     - apk add openssl
+    - apk add openssl
     - |
         if kubectl get secret $SECRET_NAME --namespace=$NAMESPACE &> /dev/null; then
             echo "Secret $SECRET_NAME already exists. Skipping creation."
@@ -348,6 +374,7 @@ release:
                 --key=$CI_PROJECT_NAME.key \
                 --namespace=$NAMESPACE
         fi
+
 
   deploy_to_environment:
     - echo $DOCKER_TAG
@@ -389,6 +416,9 @@ release:
       elif [ -f ./deployments/deployment.tmpl ]; then
         envsubst < ./deployments/deployment.tmpl > ./deployments/deployment.yaml
         kubectl apply -f ./deployments/deployment.yaml
+      elif [ -f ./deployments/deployment.tmpl ]; then
+        envsubst < ./deployments/deployment.tmpl > ./deployments/deployment.yaml
+        kubectl apply -f ./deployments/deployment.yaml
         kubectl rollout restart deployment "${CI_PROJECT_NAME}" -n "$NAMESPACE"
         if kubectl rollout status deployment "${CI_PROJECT_NAME}" -n "$NAMESPACE" --timeout=300s; then
           echo "Deployment succeeded"
@@ -418,6 +448,7 @@ deploy-to-develop:
     VITE_APP_PREFIX: ${VITE_APP_PREFIX}
     VITE_APP_API_BASE_URL: ${VITE_APP_API_BASE_URL}
     HOST: cms.develop.rdev.antwerptechnologies.com
+    HOST: cms.develop.rdev.antwerptechnologies.com
   image:
     # Use helm and kubectl image
     name: dtzar/helm-kubectl:3.13
@@ -428,14 +459,16 @@ deploy-to-develop:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: manual
     - if: $CI_COMMIT_BRANCH =~ /DEVO*/
-      when: manual  
+      when: manual
     - when: never
   before_script:
     # This job needs the before_script from .kube-requirments to run
     - if [ -n "$KUBE_CONTEXT" ]; then kubectl config use-context "$KUBE_CONTEXT"; fi
     - !reference [.deploy, create_tls]
+    - !reference [.deploy, create_tls]
   script:
-    - !reference [.deploy, deploy_to_environment]
+    #- !reference [.deploy, deploy_to_environment]
+    - ./deployments/scripts/deploy-to-environment.sh
 
 deploy-to-qa:
   stage: deploy
@@ -449,6 +482,7 @@ deploy-to-qa:
     NAMESPACE: $CI_PROJECT_NAME-qa
     VITE_APP_PREFIX: ${VITE_APP_PREFIX}
     VITE_APP_API_BASE_URL: ${VITE_APP_API_BASE_URL}
+    HOST: cms.qa.rdev.antwerptechnologies.com
     HOST: cms.qa.rdev.antwerptechnologies.com
   image:
     # Use helm and kubectl image
@@ -466,8 +500,10 @@ deploy-to-qa:
     # This job needs the before_script from .kube-requirments to run
     - if [ -n "$KUBE_CONTEXT" ]; then kubectl config use-context "$KUBE_CONTEXT"; fi
     - !reference [.deploy, create_tls]
+    - !reference [.deploy, create_tls]
   script:
-    - !reference [.deploy, deploy_to_environment]
+    #- !reference [.deploy, deploy_to_environment]
+    - ./deployments/scripts/deploy-to-environment.sh
 
 deploy-to-dev:
   stage: deploy
@@ -482,6 +518,7 @@ deploy-to-dev:
     VITE_APP_PREFIX: ${VITE_APP_PREFIX}
     VITE_APP_API_BASE_URL: ${VITE_APP_API_BASE_URL}
     HOST: 'cms.${NAMESPACE}.rdev.antwerptechnologies.com'
+    HOST: 'cms.${NAMESPACE}.rdev.antwerptechnologies.com'
   image:
     # Use helm and kubectl image
     name: dtzar/helm-kubectl:3.13
@@ -489,14 +526,14 @@ deploy-to-dev:
     entrypoint: [""]
   rules:
     # This job will only run if branch name is master
-    - if: $CI_COMMIT_BRANCH =~ /CMS*/
-      when: manual
-    - if: $CI_COMMIT_BRANCH =~ /DEVO*/
-      when: manual  
-    - when: never
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: never
+    - when: manual
   before_script:
     # This job needs the before_script from .kube-requirments to run
     - if [ -n "$KUBE_CONTEXT" ]; then kubectl config use-context "$KUBE_CONTEXT"; fi
     - !reference [.deploy, create_tls]
+    - !reference [.deploy, create_tls]
   script:
-    - !reference [.deploy, deploy_to_environment]
+    # - !reference [.deploy, deploy_to_environment]
+    - ./deployments/scripts/deploy-to-environment.sh
