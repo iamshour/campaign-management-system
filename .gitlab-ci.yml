@@ -27,7 +27,6 @@ cache:
 
 stages:
   - build
-  - version-check
   - sonarqube-check
   - package
   - release
@@ -94,7 +93,7 @@ workflow:
       elif expr "$CI_COMMIT_REF_NAME" : ".*hotfix.*" > /dev/null ; then
         VERSION="$VAR-hf";
         export VERSION;
-        jq '.version = "'"${VERSION}"'"' package.json > temp.json && mv temp.json package.json;   
+        jq '.version = "'"${VERSION}"'"' package.json > temp.json && mv temp.json package.json;
         DOCKER_TAG="$CI_REGISTRY_IMAGE:$VERSION-$TICKET_ID";
         export DOCKER_TAG;
         POD_NAME="$CI_PROJECT_NAME-$TICKET_ID";
@@ -136,7 +135,7 @@ build:
     - if: $CI_COMMIT_TAG
       when: never
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: always 
+      when: always
     - when: manual
   allow_failure: false
   stage: build
@@ -155,8 +154,6 @@ build:
 
 version-check:
   image: node:18-alpine
-  needs:
-    - job: build
   rules:
     - changes: 
         - package.json
@@ -170,7 +167,7 @@ version-check:
       when: never
     - when: manual
   allow_failure: false
-  stage: version-check
+  stage: build
   before_script:
     - !reference [.before_script, parse_version]
     - apk add git
@@ -362,7 +359,6 @@ release:
   create_tls:
     - export SECRET_NAME="$CI_PROJECT_NAME-tls"
     - apk add openssl
-    - apk add openssl
     - |
         if kubectl get secret $SECRET_NAME --namespace=$NAMESPACE &> /dev/null; then
             echo "Secret $SECRET_NAME already exists. Skipping creation."
@@ -416,9 +412,6 @@ release:
       elif [ -f ./deployments/deployment.tmpl ]; then
         envsubst < ./deployments/deployment.tmpl > ./deployments/deployment.yaml
         kubectl apply -f ./deployments/deployment.yaml
-      elif [ -f ./deployments/deployment.tmpl ]; then
-        envsubst < ./deployments/deployment.tmpl > ./deployments/deployment.yaml
-        kubectl apply -f ./deployments/deployment.yaml
         kubectl rollout restart deployment "${CI_PROJECT_NAME}" -n "$NAMESPACE"
         if kubectl rollout status deployment "${CI_PROJECT_NAME}" -n "$NAMESPACE" --timeout=300s; then
           echo "Deployment succeeded"
@@ -448,7 +441,6 @@ deploy-to-develop:
     VITE_APP_PREFIX: ${VITE_APP_PREFIX}
     VITE_APP_API_BASE_URL: ${VITE_APP_API_BASE_URL}
     HOST: cms.develop.rdev.antwerptechnologies.com
-    HOST: cms.develop.rdev.antwerptechnologies.com
   image:
     # Use helm and kubectl image
     name: dtzar/helm-kubectl:3.13
@@ -464,7 +456,6 @@ deploy-to-develop:
   before_script:
     # This job needs the before_script from .kube-requirments to run
     - if [ -n "$KUBE_CONTEXT" ]; then kubectl config use-context "$KUBE_CONTEXT"; fi
-    - !reference [.deploy, create_tls]
     - !reference [.deploy, create_tls]
   script:
     #- !reference [.deploy, deploy_to_environment]
@@ -483,7 +474,6 @@ deploy-to-qa:
     VITE_APP_PREFIX: ${VITE_APP_PREFIX}
     VITE_APP_API_BASE_URL: ${VITE_APP_API_BASE_URL}
     HOST: cms.qa.rdev.antwerptechnologies.com
-    HOST: cms.qa.rdev.antwerptechnologies.com
   image:
     # Use helm and kubectl image
     name: dtzar/helm-kubectl:3.13
@@ -494,12 +484,11 @@ deploy-to-qa:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: manual
     - if: $CI_COMMIT_BRANCH =~ /DEVO*/
-      when: manual  
+      when: manual
     - when: never
   before_script:
     # This job needs the before_script from .kube-requirments to run
     - if [ -n "$KUBE_CONTEXT" ]; then kubectl config use-context "$KUBE_CONTEXT"; fi
-    - !reference [.deploy, create_tls]
     - !reference [.deploy, create_tls]
   script:
     #- !reference [.deploy, deploy_to_environment]
@@ -518,7 +507,6 @@ deploy-to-dev:
     VITE_APP_PREFIX: ${VITE_APP_PREFIX}
     VITE_APP_API_BASE_URL: ${VITE_APP_API_BASE_URL}
     HOST: 'cms.${NAMESPACE}.rdev.antwerptechnologies.com'
-    HOST: 'cms.${NAMESPACE}.rdev.antwerptechnologies.com'
   image:
     # Use helm and kubectl image
     name: dtzar/helm-kubectl:3.13
@@ -532,7 +520,6 @@ deploy-to-dev:
   before_script:
     # This job needs the before_script from .kube-requirments to run
     - if [ -n "$KUBE_CONTEXT" ]; then kubectl config use-context "$KUBE_CONTEXT"; fi
-    - !reference [.deploy, create_tls]
     - !reference [.deploy, create_tls]
   script:
     # - !reference [.deploy, deploy_to_environment]
