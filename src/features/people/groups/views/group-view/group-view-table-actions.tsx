@@ -9,7 +9,7 @@ import { Dropdown } from "@/ui"
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 //#endregion
 
-const GroupTableActions = ({ id }: { id: string }) => {
+const GroupViewTableActions = ({ id }: { id: string }) => {
 	const { t } = useTranslation("groups", { keyPrefix: "components.groupContactsTable.actionsDropdown" })
 
 	return (
@@ -38,4 +38,4 @@ const GroupTableActions = ({ id }: { id: string }) => {
 	)
 }
 
-export default GroupTableActions
+export default GroupViewTableActions

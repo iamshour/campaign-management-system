@@ -68,7 +68,7 @@ const MappingStep = () => {
 
 				<div className='flex flex-wrap gap-6'>
 					<SelectGroupsWithCreatePopover
-						// maxLimit={10}
+						maxLimit={10}
 						isMulti
 						className='w-[340px]'
 						selection={groups || []}
@@ -78,8 +78,8 @@ const MappingStep = () => {
 						onCreateSuccess={onCreateGroupSuccess}
 					/>
 					<SelectTagsPopover
-						// creatable
-						// maxLimit={10}
+						isCreatable
+						maxLimit={10}
 						isMulti
 						className='w-[340px]'
 						selection={tags?.map((value) => ({ value, label: value })) || []}

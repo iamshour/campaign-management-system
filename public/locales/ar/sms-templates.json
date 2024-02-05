@@ -1,0 +1,13 @@
+{
+	"fields": {
+		"name": "اسم القالب",
+		"type": "نوع القالب ",
+		"language": "لغة القالب ",
+		"updatedAt": "آخر تاريخ / وقت التحديث ",
+		"status": "حالة القالب"
+	},
+	"components": {},
+	"table": {},
+	"dialogs": {},
+	"views": {}
+}

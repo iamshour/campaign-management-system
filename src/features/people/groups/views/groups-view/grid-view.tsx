@@ -7,7 +7,7 @@ import type { Group } from "@/features/people/groups/types"
 import { Button, DataGridSkeleton } from "@/ui"
 import { format } from "@/utils"
 
-import GroupsTableActions from "./groups-table-actions"
+import GroupsTableActions from "./groups-view-table-actions"
 
 import IcRoundGroup from "~icons/ic/round-group"
 import IcRoundGroups from "~icons/ic/round-groups"

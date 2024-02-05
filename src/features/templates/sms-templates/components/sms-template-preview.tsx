@@ -13,9 +13,9 @@ interface SmsTemplatePreview {
 
 const SmsTemplatePreview = ({ smsTemplate }: SmsTemplatePreview) => {
 	return (
-		<div className='m-6 flex h-full w-full flex-col'>
+		<div className='flex h-full w-full flex-col overflow-y-auto p-6'>
 			<h1 className='mb-6 text-xl font-bold'>View {smsTemplate.name}</h1>
-			<div className=' flex flex-1 flex-row justify-between rounded-xl bg-[#F7F7F7] p-6 px-12'>
+			<div className=' flex flex-1 flex-row flex-wrap justify-between rounded-xl bg-[#F7F7F7] p-6 px-12 lg:flex-nowrap'>
 				<div className='ml-8 max-w-[700px]'>
 					<div>
 						<h1 className='relative mb-5 text-xl font-bold'>

@@ -5,8 +5,6 @@ export { isPossiblePhoneNumber, parsePhoneNumber } from "react-phone-number-inpu
 // Exported Utils
 export { twMerge } from "tailwind-merge"
 
-import "./styles.css"
-
 // re-exported modules
 export { DirectionProvider, type Direction } from "@radix-ui/react-direction"
 

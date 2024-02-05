@@ -110,7 +110,7 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 							<Suspense fallback={<Skeleton className='h-[72px] w-[340px]' />}>
 								{actionType === "addTags" ? (
 									<SelectTagsPopover
-										// creatable
+										isCreatable
 										isMulti
 										selection={(field.value?.map((value) => ({ label: value, value })) as OptionType[]) || []}
 										updateSelection={(items) => form.setValue("tags", getListOfKey(items, "value")!)}
@@ -192,8 +192,8 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 
 export default EditMultipleContactsDialogContent
 
-const tagsSchema = { tags: array(TagSchema) }
-const groupsSchema = { groups: array(GroupOptionTypeSchema) }
+const tagsSchema = { tags: array(TagSchema).max(50, { message: "Can't select more than 10 Tags" }) }
+const groupsSchema = { groups: array(GroupOptionTypeSchema).max(50, { message: "Can't select more than 10 Groups" }) }
 
 /**
  * Object map used to get Corresponding Zod Schema Type

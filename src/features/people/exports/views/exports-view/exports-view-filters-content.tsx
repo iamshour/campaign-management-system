@@ -10,7 +10,7 @@ import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
 //#endregion
 
-const FiltersContent = () => {
+const ExportsViewFiltersContent = () => {
 	const dispatch = useDispatch()
 
 	const { filters } = useSelector(({ advancedTable }) => advancedTable["contacts-exports"])
@@ -43,4 +43,4 @@ const FiltersContent = () => {
 	)
 }
 
-export default FiltersContent
+export default ExportsViewFiltersContent

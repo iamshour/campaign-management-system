@@ -15,7 +15,7 @@ const SelectTagsPopover = ({ label, ...props }: React.ComponentPropsWithoutRef<t
 			<ComboBox.Trigger>{t(props?.isMulti ? "placeholder.multi" : "placeholder.single")}</ComboBox.Trigger>
 
 			<ComboBox.Content>
-				<SelectTagsPopoverContent {...props} />
+				<SelectTagsPopoverContent />
 			</ComboBox.Content>
 		</ComboBox>
 	)

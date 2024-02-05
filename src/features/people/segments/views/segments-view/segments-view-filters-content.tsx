@@ -6,7 +6,7 @@ import { updateFilters } from "@/core/slices/advanced-table-slice"
 import { DateRangePicker } from "@/ui"
 //#endregion
 
-const FiltersContent = () => {
+const SegmentsViewFiltersContent = () => {
 	const dispatch = useDispatch()
 
 	const { filters } = useSelector(({ advancedTable }) => advancedTable["segments"])
@@ -21,4 +21,4 @@ const FiltersContent = () => {
 	)
 }
 
-export default FiltersContent
+export default SegmentsViewFiltersContent

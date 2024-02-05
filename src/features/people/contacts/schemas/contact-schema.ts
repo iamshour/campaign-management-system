@@ -34,7 +34,7 @@ const ContactSchema = z.object({
 		})
 		.optional(),
 	groups: z.array(GroupOptionTypeSchema).optional(),
-	tags: z.array(TagSchema).optional(),
+	tags: z.array(TagSchema).max(50, { message: "Maximum 50 Tags per contact allowed." }).optional(),
 	note: z.string().max(500, { message: "Maximum 500 Characters allowed" }).optional(),
 })
 

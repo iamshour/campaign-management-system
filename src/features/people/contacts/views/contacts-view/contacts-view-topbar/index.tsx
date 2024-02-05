@@ -14,7 +14,7 @@ import PajamasImport from "~icons/pajamas/import"
 import PhUserPlus from "~icons/ph/user-plus"
 //#endregion
 
-const TableTopbar = () => {
+const ContactsViewTopbar = () => {
 	const { t } = useTranslation("contacts")
 
 	const { selection } = useSelector(({ advancedTable }) => advancedTable["contacts"])
@@ -56,4 +56,4 @@ const TableTopbar = () => {
 	)
 }
 
-export default TableTopbar
+export default ContactsViewTopbar

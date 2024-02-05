@@ -4,12 +4,14 @@ import { useTranslation } from "react-i18next"
 
 import type { SegmentRuleType } from "@/features/people/segments/types"
 
-const Input = lazy(() => import("@/ui").then((mod) => ({ default: mod.Input })))
-const Label = lazy(() => import("@/ui").then((mod) => ({ default: mod.Label })))
+const Input = lazy(() => import("@/ui").then(({ Input }) => ({ default: Input })))
+const Label = lazy(() => import("@/ui").then(({ Label }) => ({ default: Label })))
 const SelectTagsPopover = lazy(() => import("@/features/people/contacts/components/select-tags-popover"))
 const SelectGroupsPopover = lazy(() => import("@/features/people/groups/components/select-groups-popover"))
 const SelectSegmentsPopover = lazy(() => import("../select-segments-popover"))
-const SelectCountryPopover = lazy(() => import("@/ui").then((mod) => ({ default: mod.SelectCountryPopover })))
+const SelectCountryPopover = lazy(() =>
+	import("@/ui").then(({ SelectCountryPopover }) => ({ default: SelectCountryPopover }))
+)
 //#endregion
 
 type SegmentSpecificationProps = Omit<SegmentRuleType, "contactSegmentRuleCondition"> &
@@ -28,7 +30,7 @@ const SegmentSpecification = memo(
 			case "TAGS":
 				return (
 					<SelectTagsPopover
-						// creatable
+						isCreatable
 						isMulti={false}
 						label={`${t("label")} *`}
 						selection={specification ? { label: specification, value: specification } : undefined}
@@ -49,7 +51,7 @@ const SegmentSpecification = memo(
 				return (
 					<SelectCountryPopover
 						value={country as any}
-						onChange={(country: string) => onSelectValueChange({ country })}
+						onChange={(country) => onSelectValueChange({ country })}
 						withCountryCode={false}
 						label={`${t("label")} *`}
 					/>

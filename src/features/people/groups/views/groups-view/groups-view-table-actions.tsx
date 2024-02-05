@@ -9,7 +9,7 @@ import { Dropdown } from "@/ui"
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 //#endregion
 
-const GroupsTableActions = (props: Pick<Group, "groupId" | "groupName" | "description">) => {
+const GroupsViewTableActions = (props: Pick<Group, "groupId" | "groupName" | "description">) => {
 	const [dropDownOpen, setDropDownOpen] = useState<boolean>(false)
 	const closeActionsDropDown = () => setDropDownOpen(false)
 
@@ -38,4 +38,4 @@ const GroupsTableActions = (props: Pick<Group, "groupId" | "groupName" | "descri
 	)
 }
 
-export default GroupsTableActions
+export default GroupsViewTableActions

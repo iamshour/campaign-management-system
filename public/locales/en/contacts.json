@@ -72,6 +72,12 @@
 			"everything-already-selected-message": "All Contacts in the server are selected.",
 			"select-all-button": "Select All {{count}} Contacts",
 			"clear-all-button": "Clear all Selection?"
+		},
+		"rows": {
+			"tagsRows": {
+				"remainingTags": "1 more tag",
+				"remainingTags_other": "{{count}} more tags"
+			}
 		}
 	},
 	"dialogs": {

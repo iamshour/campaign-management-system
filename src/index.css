@@ -3,5 +3,29 @@
 @tailwind utilities;
 
 body {
+	min-height: 100vh;
 	font-family: "Roboto", sans-serif;
+}
+
+/* Firefox */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+	@apply h-1.5 w-1.5;
+}
+
+*::-webkit-scrollbar-track {
+	@apply bg-transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+	@apply rounded-lg bg-[rgba(0,0,0,0.2)];
+
+	&:hover {
+		@apply bg-[rgba(0,0,0,0.3)];
+	}
 }

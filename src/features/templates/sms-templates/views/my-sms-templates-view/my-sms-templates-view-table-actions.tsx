@@ -1,13 +1,14 @@
 //#region Import
 import { useNavigate } from "react-router-dom"
 
+import DeleteTemplateDialog from "@/features/templates/sms-templates/dialogs/delete-template-dialog"
 import type { SmsTemplate } from "@/features/templates/sms-templates/types"
 import { Dropdown } from "@/ui"
 
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 //#endregion
 
-const MySmsTemplatesTableActions = ({ id }: Pick<SmsTemplate, "id">) => {
+const MySmsTemplatesViewTableActions = ({ id }: Pick<SmsTemplate, "id">) => {
 	const navigate = useNavigate()
 
 	return (
@@ -21,10 +22,12 @@ const MySmsTemplatesTableActions = ({ id }: Pick<SmsTemplate, "id">) => {
 
 				<Dropdown.Separator />
 
-				<Dropdown.Item>Delete</Dropdown.Item>
+				<DeleteTemplateDialog ids={[id]}>
+					<Dropdown.Item>Delete</Dropdown.Item>
+				</DeleteTemplateDialog>
 			</Dropdown.Content>
 		</Dropdown>
 	)
 }
 
-export default MySmsTemplatesTableActions
+export default MySmsTemplatesViewTableActions

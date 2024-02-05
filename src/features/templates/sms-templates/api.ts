@@ -1,10 +1,9 @@
 //#region Import
-
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
 import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
 
-import type { SmsTemplate, GetSmsTemplatesArgs, GetSmsTemplateBytIdReturnType } from "./types"
+import type { SmsTemplate, GetSmsTemplatesArgs, GetSmsTemplateBytIdReturnType, DeleteSmsTemplatesArgs } from "./types"
 //#endregion
 
 const smsTemplatesApi = api.injectEndpoints({
@@ -24,7 +23,13 @@ const smsTemplatesApi = api.injectEndpoints({
 			providesTags: (result) => [{ type: "MySmsTemplate", id: result?.id }],
 			// transformResponse,
 		}),
+
+		deleteSmsTemplates: builder.mutation<any, DeleteSmsTemplatesArgs>({
+			query: (templatesIds) => ({ url: `/templates/delete`, method: "POST", body: { templatesIds } }),
+
+			invalidatesTags: (res) => (res ? [{ type: "MySmsTemplate", id: "LIST" }] : []),
+		}),
 	}),
 })
 
-export const { useGetSmsTemplatesQuery, useGetSmsTemplateByIdQuery } = smsTemplatesApi
+export const { useGetSmsTemplatesQuery, useGetSmsTemplateByIdQuery, useDeleteSmsTemplatesMutation } = smsTemplatesApi

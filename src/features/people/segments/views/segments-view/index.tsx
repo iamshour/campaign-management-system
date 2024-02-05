@@ -12,7 +12,7 @@ import { Button } from "@/ui"
 
 import PhPlusBold from "~icons/ph/plus-bold"
 
-const FiltersContent = lazy(() => import("./filters-content"))
+const SegmentsViewFiltersContent = lazy(() => import("./segments-view-filters-content"))
 //#endregion
 
 const SegmentsView = ({ list, count, ...tableProps }: SharedListViewProps<Segment>) => {
@@ -24,7 +24,7 @@ const SegmentsView = ({ list, count, ...tableProps }: SharedListViewProps<Segmen
 			<AdvancedTable.FiltersBar>
 				<AdvancedTable.FiltersBar.Header />
 				<AdvancedTable.FiltersBar.Content>
-					<FiltersContent />
+					<SegmentsViewFiltersContent />
 				</AdvancedTable.FiltersBar.Content>
 				<AdvancedTable.FiltersBar.Footer />
 			</AdvancedTable.FiltersBar>

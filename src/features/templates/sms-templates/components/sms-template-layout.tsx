@@ -1,12 +1,14 @@
 //#region Import
 import { NavLink, Outlet } from "react-router-dom"
-import { twMerge } from "tailwind-merge"
+
+import { twMerge } from "@/ui"
 //#endregion
 
 const SmsTemplatesLayout = () => {
 	return (
 		<div className='flex h-full w-full flex-col'>
 			<div className='flex w-full items-center gap-4 px-6'>
+				{/* TODO: Use Translated Text  */}
 				<SmsTemplatesNavLink to='/templates/sms-templates/my-templates'>SMS Templates</SmsTemplatesNavLink>
 				<SmsTemplatesNavLink to='/templates/sms-templates/prebuilt-templates'>Prebuilt Templates</SmsTemplatesNavLink>
 			</div>

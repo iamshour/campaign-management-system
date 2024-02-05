@@ -13,7 +13,7 @@ import { getListOfKey } from "@/utils"
 /**
  * Filter fields (content) used in All Pages that fetches Contacts ("./contacts", "./groups/:id", "./groups/:id/add-contacts")
  */
-const FiltersContent = () => {
+const ContactsViewFiltersContent = () => {
 	const dispatch = useDispatch()
 
 	const { tableKey } = useAdvancedTableContext()
@@ -40,4 +40,4 @@ const FiltersContent = () => {
 	)
 }
 
-export default FiltersContent
+export default ContactsViewFiltersContent

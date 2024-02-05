@@ -12,7 +12,7 @@ import MultiEditDropdown from "./multi-edit-dropdown"
 import PhUserPlus from "~icons/ph/user-plus"
 //#endregion
 
-const TableTopbar = () => {
+const GroupViewTopbar = () => {
 	const { t } = useTranslation("contacts")
 
 	const navigate = useNavigate()
@@ -42,4 +42,4 @@ const TableTopbar = () => {
 	)
 }
 
-export default TableTopbar
+export default GroupViewTopbar
