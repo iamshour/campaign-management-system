@@ -24,13 +24,13 @@
 					"segments": "Segments"
 				}
 			},
-			"campaigns": "Campaigns Manager",
 			"templates": {
 				"title": "Templates Manager",
 				"elements": {
-					"templates": "Templates"
+					"smsTemplates": "SMS Templates"
 				}
 			},
+			"campaigns": "Campaigns Manager",
 			"channels": {
 				"title": "Channels",
 				"elements": {

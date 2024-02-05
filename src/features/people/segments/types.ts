@@ -1,7 +1,6 @@
 //#region Import
 import type { CommonListArguments } from "@/core/lib/redux-toolkit/types"
 import type { OptionType } from "@/ui"
-
 //#endregion
 
 export type Segment = {

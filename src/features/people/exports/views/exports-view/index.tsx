@@ -6,7 +6,7 @@ import type { SharedListViewProps } from "@/core/types"
 import exportsTableColumns from "@/features/people/exports/constants/exports-table-columns"
 import type { ContactExports } from "@/features/people/exports/types"
 
-const FiltersContent = lazy(() => import("./filters-content"))
+const ExportsViewFiltersContent = lazy(() => import("./exports-view-filters-content"))
 //#endregion
 
 const ExportsView = ({ count, ...tableProps }: SharedListViewProps<ContactExports>) => (
@@ -14,7 +14,7 @@ const ExportsView = ({ count, ...tableProps }: SharedListViewProps<ContactExport
 		<AdvancedTable.FiltersBar>
 			<AdvancedTable.FiltersBar.Header />
 			<AdvancedTable.FiltersBar.Content>
-				<FiltersContent />
+				<ExportsViewFiltersContent />
 			</AdvancedTable.FiltersBar.Content>
 			<AdvancedTable.FiltersBar.Footer />
 		</AdvancedTable.FiltersBar>

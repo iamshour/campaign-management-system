@@ -6,12 +6,12 @@ import DeleteExportsDialog from "@/features/people/exports/dialogs/delete-export
 import type { ContactExports } from "@/features/people/exports/types"
 import { Dropdown } from "@/ui"
 
-import ExportsTableActionsDownload from "./exports-table-actions-dowload"
+import ExportViewDownloadActionWrapper from "./exports-view-dowload-action-wrapper"
 
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 //#endregion
 
-function ExportsTableActions(props: Pick<ContactExports, "id" | "fileName" | "contactExportStatus">) {
+const ExportsViewTableActions = (props: Pick<ContactExports, "id" | "fileName" | "contactExportStatus">) => {
 	const { t } = useTranslation("exports", { keyPrefix: "components.exportTableActions" })
 	const [dropDownOpen, setDropDownOpen] = useState<boolean>(false)
 
@@ -24,9 +24,9 @@ function ExportsTableActions(props: Pick<ContactExports, "id" | "fileName" | "co
 			</Dropdown.Trigger>
 
 			<Dropdown.Content sideOffset={0} align='end'>
-				<ExportsTableActionsDownload {...props} closeActionsDropDown={closeActionsDropDown}>
+				<ExportViewDownloadActionWrapper {...props} closeActionsDropDown={closeActionsDropDown}>
 					<Dropdown.Item>{t("download")}</Dropdown.Item>
-				</ExportsTableActionsDownload>
+				</ExportViewDownloadActionWrapper>
 
 				<Dropdown.Separator />
 
@@ -38,4 +38,4 @@ function ExportsTableActions(props: Pick<ContactExports, "id" | "fileName" | "co
 	)
 }
 
-export default ExportsTableActions
+export default ExportsViewTableActions

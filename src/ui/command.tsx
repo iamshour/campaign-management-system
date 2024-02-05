@@ -41,7 +41,7 @@ const CommandDialog = ({ children, ...props }: DialogProps) => (
 const CommandInput = forwardRef<
 	React.ElementRef<typeof CommandPrimitive.Input>,
 	React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
 	<div ref={ref} className='group relative flex h-max w-full items-center'>
 		<TablerSearch className='pointer-events-none absolute inset-y-1/2 start-3 h-4 w-4 shrink-0 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-primary-600' />
 		<CommandPrimitive.Input
@@ -51,6 +51,7 @@ const CommandInput = forwardRef<
 			)}
 			{...props}
 		/>
+		{children}
 	</div>
 ))
 CommandInput.displayName = "CommandInput"

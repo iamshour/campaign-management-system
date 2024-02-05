@@ -1,12 +1,15 @@
 //#region Import
+import { lazy } from "react"
+
 import type { ColumnType } from "@/ui"
 import { format } from "@/utils"
 
 import type { Segment } from "../types"
-import SegmentsRowActions from "../views/segments-view/segments-row-actions"
 
 import segmentFieldsMap from "./segment-fields-map"
 
+// eslint-disable-next-line react-refresh/only-export-components
+const SegmentsViewTableActions = lazy(() => import("../views/segments-view/segments-view-table-actions"))
 //#endregion
 
 const segmentsTableColumns: ColumnType<Segment>[] = [
@@ -26,7 +29,7 @@ const segmentsTableColumns: ColumnType<Segment>[] = [
 	},
 	{
 		accessorKey: "actions",
-		cell: (_, { id }) => <SegmentsRowActions id={id} />,
+		cell: (_, { id }) => <SegmentsViewTableActions id={id} />,
 	},
 ]
 

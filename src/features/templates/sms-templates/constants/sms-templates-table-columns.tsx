@@ -1,17 +1,18 @@
 //#region Import
-import { format } from "date-fns"
 import { lazy } from "react"
 
-import { Badge, ColumnType } from "@/ui"
+import { Badge, type ColumnType } from "@/ui"
+import { format } from "@/utils"
 
 import type { SmsTemplate, SmsTemplateStatusOption } from "../types"
-// import MySmsTemplatesTableActions from "../views/my-sms-templates-view/my-sms-templates-table-actions"
 
 import smsTemplatesFieldsMap from "./sms-templates-fields-map"
 import smsTemplatesStatusesColorsMap from "./statuses-colors-map"
 
 // eslint-disable-next-line react-refresh/only-export-components
-const MySmsTemplatesTableActions = lazy(() => import("../views/my-sms-templates-view/my-sms-templates-table-actions"))
+const MySmsTemplatesViewTableActions = lazy(
+	() => import("../views/my-sms-templates-view/my-sms-templates-view-table-actions")
+)
 //#endregion
 
 const smsTemplatesTableColumns: ColumnType<SmsTemplate>[] = [
@@ -49,7 +50,7 @@ const smsTemplatesTableColumns: ColumnType<SmsTemplate>[] = [
 	},
 	{
 		accessorKey: "actions",
-		cell: (_, { id }) => <MySmsTemplatesTableActions id={id} />,
+		cell: (_, { id }) => <MySmsTemplatesViewTableActions id={id} />,
 	},
 ]
 

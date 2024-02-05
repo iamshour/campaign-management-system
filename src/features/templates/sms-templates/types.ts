@@ -49,6 +49,11 @@ export type GetSmsTemplatesArgs = Omit<TableState<SmsTemplate>, "selection" | "c
 export type GetSmsTemplateBytIdReturnType = SmsTemplate
 
 /**
+ * Arguments used for the `getSmsTemplates` query, passed for the server as params when fetching SMS Templates List
+ */
+export type DeleteSmsTemplatesArgs = string[]
+
+/**
  * Filters that are applied in sms templates table, to be used in advanced-table-slice
  */
 export type SmsTemplatesTableFilter = Omit<TableState<SmsTemplate>, "selection" | "count"> & {

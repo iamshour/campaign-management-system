@@ -11,12 +11,11 @@ import grouspsTableColumns from "@/features/people/groups/constants/groups-table
 import type { Group } from "@/features/people/groups/types"
 import { DataGridSkeleton, Tabs, Tooltip, type IconType } from "@/ui"
 
-import FiltersContent from "./filters-content"
-import GroupsTopBar from "./table-topbar"
-
 import MaterialSymbolsFormatListBulletedRounded from "~icons/material-symbols/format-list-bulleted-rounded"
 import TeenyiconsGridLayoutSolid from "~icons/teenyicons/grid-layout-solid"
 
+const GroupsViewFiltersContent = lazy(() => import("./groups-view-filters-content"))
+const GroupsViewTopBar = lazy(() => import("./groups-view-topbar"))
 const GroupsGridView = lazy(() => import("./grid-view"))
 //#endregion
 
@@ -36,14 +35,14 @@ const GroupsView = ({ count, list, isFetching, ...tableProps }: SharedListViewPr
 			<AdvancedTable.FiltersBar>
 				<AdvancedTable.FiltersBar.Header />
 				<AdvancedTable.FiltersBar.Content>
-					<FiltersContent />
+					<GroupsViewFiltersContent />
 				</AdvancedTable.FiltersBar.Content>
 				<AdvancedTable.FiltersBar.Footer />
 			</AdvancedTable.FiltersBar>
 
 			<AdvancedTable.Content>
 				<AdvancedTable.TopBar>
-					<GroupsTopBar />
+					<GroupsViewTopBar />
 				</AdvancedTable.TopBar>
 
 				<Tabs

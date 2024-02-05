@@ -7,7 +7,7 @@ import { Button } from "@/ui"
 import PhPlusBold from "~icons/ph/plus-bold"
 //#endregion
 
-const GroupsTopBar = () => {
+const GroupsViewTopBar = () => {
 	const { t } = useTranslation("groups")
 
 	return (
@@ -22,4 +22,4 @@ const GroupsTopBar = () => {
 	)
 }
 
-export default GroupsTopBar
+export default GroupsViewTopBar

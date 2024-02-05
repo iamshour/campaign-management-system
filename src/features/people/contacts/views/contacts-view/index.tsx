@@ -11,10 +11,10 @@ import ViewContactDialog from "@/features/people/contacts/dialogs/view-contact-d
 import type { Contact } from "@/features/people/contacts/types"
 import { Button, type ColumnType } from "@/ui"
 
-const TableTopbar = lazy(() => import("./table-topbar"))
-const FiltersContent = lazy(() => import("./filters-content"))
-const ContactsTableActions = lazy(() => import("./contacts-table-actions"))
-const AdvancedFiltersPreview = lazy(() => import("./advanced-filters-preview"))
+const ContactsViewTopbar = lazy(() => import("./contacts-view-topbar"))
+const ContactsViewFiltersContent = lazy(() => import("./contacts-view-filters-content"))
+const ContactsViewTableActions = lazy(() => import("./contacts-view-table-actions"))
+const ContactsViewFiltersPreview = lazy(() => import("./contacts-view-filters-preview"))
 //#endregion
 
 const ContactsView = ({ count, ...tableProps }: SharedListViewProps<Contact>) => {
@@ -40,16 +40,16 @@ const ContactsView = ({ count, ...tableProps }: SharedListViewProps<Contact>) =>
 						</AdvancedFiltersDialog>
 					</AdvancedTable.FiltersBar.Header>
 					<AdvancedTable.FiltersBar.Content>
-						<FiltersContent />
+						<ContactsViewFiltersContent />
 
-						{isAdvancedFiltersApplied && <AdvancedFiltersPreview />}
+						{isAdvancedFiltersApplied && <ContactsViewFiltersPreview />}
 					</AdvancedTable.FiltersBar.Content>
 					<AdvancedTable.FiltersBar.Footer />
 				</AdvancedTable.FiltersBar>
 
 				<AdvancedTable.Content>
 					<AdvancedTable.TopBar>
-						<TableTopbar />
+						<ContactsViewTopbar />
 					</AdvancedTable.TopBar>
 
 					<AdvancedTable.Table columns={tableColumns} onRowClick={({ id }) => setViewContactId(id)} {...tableProps} />
@@ -75,6 +75,6 @@ const tableColumns: ColumnType<Contact>[] = [
 	...contactsTableColumns,
 	{
 		accessorKey: "actions",
-		cell: (_, { id }) => <ContactsTableActions id={id} />,
+		cell: (_, { id }) => <ContactsViewTableActions id={id} />,
 	},
 ]

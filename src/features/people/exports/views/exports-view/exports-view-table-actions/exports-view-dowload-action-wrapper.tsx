@@ -7,7 +7,7 @@ import type { ContactExports } from "@/features/people/exports/types"
 import { Slot } from "@/ui"
 //#endregion
 
-interface ExportTableActionsDownloadProps extends Pick<ContactExports, "id" | "fileName" | "contactExportStatus"> {
+interface ExportViewDownloadActionWrapperProps extends Pick<ContactExports, "id" | "fileName" | "contactExportStatus"> {
 	/**
 	 * Closes the actions dropdown in table row
 	 */
@@ -19,13 +19,13 @@ interface ExportTableActionsDownloadProps extends Pick<ContactExports, "id" | "f
 	children: React.ReactElement
 }
 
-function ExportTableActionsDownload({
+function ExportViewDownloadActionWrapper({
 	id,
 	fileName,
 	contactExportStatus,
 	closeActionsDropDown,
 	children,
-}: ExportTableActionsDownloadProps) {
+}: ExportViewDownloadActionWrapperProps) {
 	const { t } = useTranslation("exports", { keyPrefix: "components.exportTableActions" })
 	const [triggerDownloadExportMutation] = useDownloadExportMutation()
 
@@ -48,4 +48,4 @@ function ExportTableActionsDownload({
 	)
 }
 
-export default ExportTableActionsDownload
+export default ExportViewDownloadActionWrapper

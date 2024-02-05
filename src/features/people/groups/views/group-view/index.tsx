@@ -11,13 +11,14 @@ import ViewContactDialog from "@/features/people/contacts/dialogs/view-contact-d
 import type { Contact } from "@/features/people/contacts/types"
 import type { ColumnType } from "@/ui"
 
-import GroupTableActions from "./group-table-actions"
-
-const TableTopbar = lazy(() => import("./table-topbar"))
-const FiltersContent = lazy(() => import("@/features/people/contacts/views/contacts-view/filters-content"))
+const GroupViewTableActions = lazy(() => import("./group-view-table-actions"))
+const GroupViewTopbar = lazy(() => import("./group-view-topbar"))
+const ContactsViewFiltersContent = lazy(
+	() => import("@/features/people/contacts/views/contacts-view/contacts-view-filters-content")
+)
 //#endregion
 
-const GroupView = ({ list, count, ...tableProps }: SharedListViewProps<Contact>) => {
+const GroupView = ({ count, ...tableProps }: SharedListViewProps<Contact>) => {
 	const dispatch = useDispatch()
 
 	const { t } = useTranslation("contacts")
@@ -37,22 +38,17 @@ const GroupView = ({ list, count, ...tableProps }: SharedListViewProps<Contact>)
 				<AdvancedTable.FiltersBar>
 					<AdvancedTable.FiltersBar.Header />
 					<AdvancedTable.FiltersBar.Content>
-						<FiltersContent />
+						<ContactsViewFiltersContent />
 					</AdvancedTable.FiltersBar.Content>
 					<AdvancedTable.FiltersBar.Footer />
 				</AdvancedTable.FiltersBar>
 
 				<AdvancedTable.Content>
 					<AdvancedTable.TopBar>
-						<TableTopbar />
+						<GroupViewTopbar />
 					</AdvancedTable.TopBar>
 
-					<AdvancedTable.Table
-						list={list}
-						columns={tableColumns}
-						onRowClick={({ id }) => setViewContactId(id)}
-						{...tableProps}
-					/>
+					<AdvancedTable.Table columns={tableColumns} onRowClick={({ id }) => setViewContactId(id)} {...tableProps} />
 					<AdvancedTable.Pagination>
 						<AdvancedTable.Pagination.Message />
 					</AdvancedTable.Pagination>
@@ -75,6 +71,6 @@ const tableColumns: ColumnType<Contact>[] = [
 	...contactsTableColumns,
 	{
 		accessorKey: "actions",
-		cell: (_, { id }) => <GroupTableActions id={id} />,
+		cell: (_, { id }) => <GroupViewTableActions id={id} />,
 	},
 ]

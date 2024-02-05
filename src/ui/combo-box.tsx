@@ -1,5 +1,5 @@
 //#region Import
-import { Suspense, createContext, useContext, useMemo } from "react"
+import { Suspense, createContext, useCallback, useContext, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
@@ -99,11 +99,10 @@ const ComboBoxContent = ({ children }: { children: React.ReactNode }) => (
 
 // TODO: Handle Infinite Loading in Component to handle changing offset/limit Values
 export function ComboBoxPopper({
-	options,
+	options = [],
 	searchTerm,
 	onSearch,
 	loading,
-	children,
 }: {
 	options?: OptionType[]
 	searchTerm?: string
@@ -124,10 +123,13 @@ export function ComboBoxPopper({
 		[isMulti, maxLimit, selection]
 	)
 
-	const isSelected = (entry: string) => {
-		if (isMulti) return selection?.some((obj) => obj?.value === entry)
-		return selection?.value === entry
-	}
+	const isSelected = useCallback(
+		(entry: string) => {
+			if (isMulti) return selection?.some((obj) => obj?.value === entry)
+			return selection?.value === entry
+		},
+		[isMulti, selection]
+	)
 
 	const onSelect = (option: OptionType) => {
 		if (isSelected(option?.value)) {
@@ -148,6 +150,31 @@ export function ComboBoxPopper({
 		return updateSelection(option)
 	}
 
+	const onCreate = () => {
+		if (!searchTerm || !onSearch || !isCreatable) return
+
+		onSelect({ label: searchTerm, value: searchTerm })
+		onSearch("")
+	}
+
+	const optionsList = useMemo(() => {
+		if (!isCreatable) return options
+
+		let listToRender = []
+
+		if (!selection) {
+			listToRender = options
+		} else if (isMulti) {
+			listToRender = [...options, ...selection]
+		} else {
+			listToRender = [...options, selection]
+		}
+
+		const renderedSet = new Set(listToRender.map((item) => JSON.stringify(item)))
+
+		return Array.from(renderedSet).map((item) => JSON.parse(item))
+	}, [options, isMulti, selection, isCreatable])
+
 	return (
 		<Command shouldFilter={onSearch === undefined}>
 			<Command.Input placeholder={t("comboBox.placeholder")} value={searchTerm} onValueChange={onSearch} />
@@ -164,10 +191,18 @@ export function ComboBoxPopper({
 					<Command.Empty className='h-[195px] flex-center'>{t("comboBox.message.noResults")}</Command.Empty>
 				)}
 
+				{Boolean(isCreatable && searchTerm?.length && !options?.length) && (
+					<div className='bg-primary-50/50'>
+						<Button variant='ghost' size='sm' className='w-full justify-start' onClick={onCreate}>
+							Create: <span className='max-w-full truncate font-light'>{searchTerm}</span>
+						</Button>
+					</div>
+				)}
+
 				<Command.Group>
-					{options
+					{optionsList
 						?.sort((a, b) => (isSelected(b.value) ? 1 : -1) - (isSelected(a.value) ? 1 : -1))
-						.map((op) => (
+						?.map((op) => (
 							<Command.Item
 								key={op?.value}
 								onSelect={() => onSelect(op)}
@@ -183,21 +218,23 @@ export function ComboBoxPopper({
 							</Command.Item>
 						))}
 				</Command.Group>
-
-				{children}
 			</Command.List>
-			{!!isMulti && !!selection?.length && (
-				<>
-					<Command.Separator />
-					<Command.Group>
-						<Command.Item
-							onSelect={() => updateSelection([])}
-							className='cursor-pointer justify-center text-center hover:text-primary-900'>
-							{t("comboBox.clearButton")}
-						</Command.Item>
-					</Command.Group>
-				</>
-			)}
+
+			{
+				// Clear All Entries. Shown only for Multi-selection, and if entries were already selected
+				!!isMulti && !!selection?.length && (
+					<>
+						<Command.Separator />
+						<Command.Group>
+							<Command.Item
+								onSelect={() => updateSelection([])}
+								className='cursor-pointer justify-center text-center hover:text-primary-900'>
+								{t("comboBox.clearButton")}
+							</Command.Item>
+						</Command.Group>
+					</>
+				)
+			}
 		</Command>
 	)
 }

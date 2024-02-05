@@ -9,7 +9,7 @@ import type { Group } from "../types"
 import groupFieldsMap from "./group-fields-map"
 
 // eslint-disable-next-line react-refresh/only-export-components
-const GroupsTableActions = lazy(() => import("../views/groups-view/groups-table-actions"))
+const GroupsViewTableActions = lazy(() => import("../views/groups-view/groups-view-table-actions"))
 //#endregion
 
 const grouspsTableColumns: ColumnType<Group>[] = [
@@ -33,7 +33,7 @@ const grouspsTableColumns: ColumnType<Group>[] = [
 	{
 		accessorKey: "actions",
 		cell: (_, { groupId, groupName, description }) => (
-			<GroupsTableActions groupId={groupId} groupName={groupName} description={description} />
+			<GroupsViewTableActions groupId={groupId} groupName={groupName} description={description} />
 		),
 	},
 ]

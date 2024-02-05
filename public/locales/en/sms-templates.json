@@ -1,0 +1,13 @@
+{
+	"fields": {
+		"name": "Template Name",
+		"type": "Template Type",
+		"language": "Template Language",
+		"updatedAt": "Last Update Date / Time",
+		"status": "Template Status"
+	},
+	"components": {},
+	"table": {},
+	"dialogs": {},
+	"views": {}
+}

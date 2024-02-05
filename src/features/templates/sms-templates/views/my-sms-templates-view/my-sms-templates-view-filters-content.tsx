@@ -1,23 +1,21 @@
 //#region Import
-
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { AdvancedTableStateValue, updateFilters } from "@/core/slices/advanced-table-slice"
-import { DateRangePicker } from "@/ui"
-
-import SelectLanguagesPopover from "../../components/select-languages-popover"
-import SelectStatusesPopover from "../../components/select-statuses-popover"
-import SelectTypesPopover from "../../components/select-types-popover"
+import SelectLanguagesPopover from "@/features/templates/sms-templates/components/select-languages-popover"
+import SelectStatusesPopover from "@/features/templates/sms-templates/components/select-statuses-popover"
+import SelectTypesPopover from "@/features/templates/sms-templates/components/select-types-popover"
 import type {
 	SmsTemplate,
 	SmsTemplateLanguageOption,
 	SmsTemplateStatusOption,
 	SmsTemplateTypeOption,
-} from "../../types"
-
+} from "@/features/templates/sms-templates/types"
+import { DateRangePicker } from "@/ui"
+import { getListOfKey } from "@/utils"
 //#endregion
 
-const FiltersContent = () => {
+const MySmsTemplatesViewFiltersContent = () => {
 	const dispatch = useDispatch()
 
 	const { filters } = useSelector<AdvancedTableStateValue<SmsTemplate>>(
@@ -29,7 +27,7 @@ const FiltersContent = () => {
 			<DateRangePicker
 				label='Last updated date'
 				dateRange={filters?.dateRange}
-				updateDateRange={(dateRange) => dispatch(updateFilters({ ["sms-templates"]: { dateRange } }))}
+				updateDateRange={(dateRange) => dispatch(updateFilters({ "sms-templates": { dateRange } }))}
 			/>
 			<SelectStatusesPopover
 				isMulti
@@ -37,7 +35,7 @@ const FiltersContent = () => {
 				updateSelection={(selection) =>
 					dispatch(
 						updateFilters({
-							["sms-templates"]: { templateStatus: selection?.map(({ value }) => value) as SmsTemplateStatusOption[] },
+							"sms-templates": { templateStatus: getListOfKey(selection, "value") as SmsTemplateStatusOption[] },
 						})
 					)
 				}
@@ -48,7 +46,7 @@ const FiltersContent = () => {
 				updateSelection={(selection) =>
 					dispatch(
 						updateFilters({
-							["sms-templates"]: { templateType: selection?.map(({ value }) => value) as SmsTemplateTypeOption[] },
+							"sms-templates": { templateType: getListOfKey(selection, "value") as SmsTemplateTypeOption[] },
 						})
 					)
 				}
@@ -59,8 +57,8 @@ const FiltersContent = () => {
 				updateSelection={(selection) =>
 					dispatch(
 						updateFilters({
-							["sms-templates"]: {
-								templateLanguage: selection?.map(({ value }) => value) as SmsTemplateLanguageOption[],
+							"sms-templates": {
+								templateLanguage: getListOfKey(selection, "value") as SmsTemplateLanguageOption[],
 							},
 						})
 					)
@@ -70,4 +68,4 @@ const FiltersContent = () => {
 	)
 }
 
-export default FiltersContent
+export default MySmsTemplatesViewFiltersContent

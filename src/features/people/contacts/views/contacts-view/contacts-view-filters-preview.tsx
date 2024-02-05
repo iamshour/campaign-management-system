@@ -6,7 +6,10 @@ import useSelector from "@/core/hooks/useSelector"
 import { Tooltip } from "@/ui"
 //#endregion
 
-const AdvancedFiltersPreview = () => {
+/**
+ * Component used to display Applied advanced Filters inside Filters bar of Contacts View Component
+ */
+const ContactsViewFiltersPreview = () => {
 	const { t } = useTranslation("contacts")
 
 	const advancedFilters = useSelector(({ advancedTable }) => advancedTable["contacts"]?.filters?.advancedFilters)
@@ -61,4 +64,4 @@ const AdvancedFiltersPreview = () => {
 	)
 }
 
-export default AdvancedFiltersPreview
+export default ContactsViewFiltersPreview

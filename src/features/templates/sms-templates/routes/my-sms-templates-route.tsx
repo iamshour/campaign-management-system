@@ -8,11 +8,10 @@ import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { DataTableSkeleton } from "@/ui"
 
 import { useGetSmsTemplatesQuery } from "../api"
-import { SmsTemplate } from "../types"
+import type { SmsTemplate } from "../types"
 
 const MySmsTemplatesView = lazy(() => import("../views/my-sms-templates-view"))
 const EmptyMySmsTemplatesView = lazy(() => import("../views/empty-my-sms-templates-view"))
-
 const DisplayError = lazy(() => import("@/ui").then(({ DisplayError }) => ({ default: DisplayError })))
 //#endregion
 

@@ -10,7 +10,7 @@ import exportsFieldsMap from "./exports-fields-map"
 import exportStatusesColorsMap from "./statuses-colors-map"
 
 // eslint-disable-next-line react-refresh/only-export-components
-const ExportsTableActions = lazy(() => import("../views/exports-view/exports-table-actions"))
+const ExportsViewTableActions = lazy(() => import("../views/exports-view/exports-view-table-actions"))
 //#endregion
 
 const exportsTableColumns: ColumnType<ContactExports>[] = [
@@ -41,7 +41,7 @@ const exportsTableColumns: ColumnType<ContactExports>[] = [
 	{
 		accessorKey: "actions",
 		cell: (_, { id, fileName, contactExportStatus }) => (
-			<ExportsTableActions id={id} fileName={fileName} contactExportStatus={contactExportStatus} />
+			<ExportsViewTableActions id={id} fileName={fileName} contactExportStatus={contactExportStatus} />
 		),
 	},
 ]

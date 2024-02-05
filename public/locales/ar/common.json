@@ -24,13 +24,13 @@
 					"segments": "شرائح"
 				}
 			},
-			"campaigns": "مدير الحملات",
 			"templates": {
 				"title": "مدير القوالب",
 				"elements": {
-					"templates": "قوالب"
+					"smsTemplates": "قوالب الرسائل القصيرة"
 				}
 			},
+			"campaigns": "مدير الحملات",
 			"channels": {
 				"title": "القنوات",
 				"elements": {

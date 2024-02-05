@@ -19,7 +19,9 @@ import { cleanObject } from "@/utils"
 import { useAddContactsToGroupMutation } from "../api"
 import { AddContactsToGroupArgs } from "../types"
 
-const FiltersContent = lazy(() => import("@/features/people/contacts/views/contacts-view/filters-content"))
+const ContactsViewFiltersContent = lazy(
+	() => import("@/features/people/contacts/views/contacts-view/contacts-view-filters-content")
+)
 //#endregion
 
 const AddContactsToGroupView = ({ list, count, ...tableProps }: SharedListViewProps<Contact>) => {
@@ -67,7 +69,7 @@ const AddContactsToGroupView = ({ list, count, ...tableProps }: SharedListViewPr
 			<AdvancedTable.FiltersBar>
 				<AdvancedTable.FiltersBar.Header />
 				<AdvancedTable.FiltersBar.Content>
-					<FiltersContent />
+					<ContactsViewFiltersContent />
 				</AdvancedTable.FiltersBar.Content>
 				<AdvancedTable.FiltersBar.Footer />
 			</AdvancedTable.FiltersBar>
