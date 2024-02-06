@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 
 import AdvancedTable from "@/core/components/advanced-table"
 import useSelector from "@/core/hooks/useSelector"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import type { SharedListViewProps } from "@/core/types"
 import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
 import AdvancedFiltersDialog from "@/features/people/contacts/dialogs/advanced-filters-dialog"
@@ -22,7 +23,7 @@ const ContactsView = ({ count, ...tableProps }: SharedListViewProps<Contact>) =>
 
 	const [viewContactId, setViewContactId] = useState<string | undefined>(undefined)
 
-	const { filters } = useSelector(({ advancedTable }) => advancedTable["contacts"])
+	const { filters } = useSelector<AdvancedTableStateType<"contacts">>(({ advancedTable }) => advancedTable["contacts"])
 	const isAdvancedFiltersApplied = filters?.advancedFilters
 
 	return (

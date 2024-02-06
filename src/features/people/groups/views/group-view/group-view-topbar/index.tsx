@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 
 import useSelector from "@/core/hooks/useSelector"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import ExportFieldsDialog from "@/features/people/exports/dialogs/export-fields-dialog"
 import { Button, Skeleton } from "@/ui"
 
@@ -16,7 +17,9 @@ const GroupViewTopbar = () => {
 	const { t } = useTranslation("contacts")
 
 	const navigate = useNavigate()
-	const { selection } = useSelector(({ advancedTable }) => advancedTable["contacts-in-group"])
+	const { selection } = useSelector<AdvancedTableStateType<"contacts-in-group">>(
+		({ advancedTable }) => advancedTable["contacts-in-group"]
+	)
 
 	return (
 		<div className='flex flex-1 justify-between'>

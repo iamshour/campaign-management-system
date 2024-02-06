@@ -3,6 +3,7 @@ import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import useSelector from "@/core/hooks/useSelector"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import { twMerge, Dialog } from "@/ui"
 
 const RemoveFromGroupDialogContent = lazy(() => import("./remove-from-group-dialog-content"))
@@ -20,7 +21,9 @@ const RemoveFromGroupDialog = ({ children, id }: RemoveFromGroupDialogProps) => 
 	const { t } = useTranslation("groups", { keyPrefix: "dialogs.remove-from-group" })
 	const [open, setOpen] = useState(false)
 
-	const { selection } = useSelector(({ advancedTable }) => advancedTable["contacts-in-group"])
+	const { selection } = useSelector<AdvancedTableStateType<"contacts-in-group">>(
+		({ advancedTable }) => advancedTable["contacts-in-group"]
+	)
 
 	const isRemovingMultipleContacts = !id && (selection === "ALL" || (selection?.length && selection?.length > 1))
 

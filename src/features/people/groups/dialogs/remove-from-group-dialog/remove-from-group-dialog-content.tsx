@@ -9,7 +9,8 @@ import { any, object, string } from "zod"
 import { useAdvancedTableContext } from "@/core/components/advanced-table"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/advanced-table-slice"
+import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import { getContactFilterAndContactSearchFilter } from "@/features/people/contacts/utils"
 import { useRemoveContactsFromGroupMutation } from "@/features/people/groups/api"
 import type { RemoveContactsFromGroupArgs } from "@/features/people/groups/types"
@@ -37,7 +38,9 @@ const RemoveMultiContactsFromGroup = ({ id, onClose }: RemoveFromGroupDialogCont
 
 	const dispatch = useDispatch()
 
-	const { selection, filters, searchTerm } = useSelector(({ advancedTable }) => advancedTable["contacts-in-group"])
+	const { selection, filters, searchTerm } = useSelector<AdvancedTableStateType<"contacts-in-group">>(
+		({ advancedTable }) => advancedTable["contacts-in-group"]
+	)
 	const { count } = useAdvancedTableContext()
 
 	const [triggerRemoveContactsFromGroup, { isLoading }] = useRemoveContactsFromGroupMutation()

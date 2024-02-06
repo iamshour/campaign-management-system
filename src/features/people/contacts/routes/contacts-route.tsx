@@ -4,9 +4,9 @@ import { lazy } from "react"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { clearFilters, type AdvancedTableStateValue } from "@/core/slices/advanced-table-slice"
+import { clearFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
-import type { Contact } from "@/features/people/contacts/types"
 import { getContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
 import { DataTableSkeleton } from "@/ui"
 import { getListOfKey } from "@/utils"
@@ -22,7 +22,7 @@ const ContactsRoute = () => {
 	const dispatch = useDispatch()
 
 	const { offset, limit, order, sort, filters, appliedFiltersCount, searchTerm } = useSelector<
-		AdvancedTableStateValue<Contact>
+		AdvancedTableStateType<"contacts">
 	>(({ advancedTable }) => advancedTable["contacts"])
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetContactsQuery(

@@ -3,21 +3,20 @@ import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateValue } from "@/core/slices/advanced-table-slice"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { DataTableSkeleton } from "@/ui"
 
 import { useGetSmsTemplatesQuery } from "../api"
-import type { SmsTemplate } from "../types"
 
-const MySmsTemplatesView = lazy(() => import("../views/my-sms-templates-view"))
-const EmptyMySmsTemplatesView = lazy(() => import("../views/empty-my-sms-templates-view"))
+const SmsTemplatesView = lazy(() => import("../views/sms-templates-view/sms-templates-view"))
+const EmptySmsTemplatesView = lazy(() => import("../views/empty-sms-templates-view"))
 const DisplayError = lazy(() => import("@/ui").then(({ DisplayError }) => ({ default: DisplayError })))
 //#endregion
 
-const MySmsTemplatesRoute = () => {
+const SmsTemplatesRoute = () => {
 	const { offset, limit, order, sort, filters, searchTerm, appliedFiltersCount } = useSelector<
-		AdvancedTableStateValue<SmsTemplate>
+		AdvancedTableStateType<"sms-templates">
 	>(({ advancedTable }) => advancedTable["sms-templates"])
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetSmsTemplatesQuery(
@@ -28,20 +27,16 @@ const MySmsTemplatesRoute = () => {
 			order,
 			name: searchTerm,
 			any: searchTerm ? true : undefined,
-			// date range filter:
 			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
 			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
-			// status filter:
-			statuses: filters?.templateStatus?.length ? filters.templateStatus : undefined,
-			// type filter:
-			types: filters?.templateType?.length ? filters.templateType : undefined,
-			// language filter:
-			languages: filters?.templateLanguage?.length ? filters.templateLanguage : undefined,
+			statuses: filters?.templateStatus,
+			types: filters?.templateType,
+			languages: filters?.templateLanguage,
 		},
 		{
 			selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => {
 				return {
-					list: data?.list,
+					list: data?.list?.slice(offset, limit),
 					count: data?.count,
 					isInitialLoading: !data && isLoading,
 					isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
@@ -56,11 +51,11 @@ const MySmsTemplatesRoute = () => {
 
 	if (isInitialLoading) return <DataTableSkeleton />
 
-	if (isEmptyView) return <EmptyMySmsTemplatesView />
+	if (isEmptyView) return <EmptySmsTemplatesView />
 
 	if (isError) return <DisplayError error={error as any} />
 
-	if (isReady) return <MySmsTemplatesView list={list || []} count={count || 0} isFetching={isFetching} />
+	if (isReady) return <SmsTemplatesView list={list || []} count={count || 0} isFetching={isFetching} />
 }
 
-export default MySmsTemplatesRoute
+export default SmsTemplatesRoute

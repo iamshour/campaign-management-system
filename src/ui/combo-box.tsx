@@ -9,7 +9,6 @@ import Command from "./command"
 import Label from "./label"
 import Popover from "./popover"
 import Skeleton from "./skeleton"
-import Spinner from "./spinner"
 import type { OptionType } from "./types"
 
 import LucideCheck from "~icons/lucide/check"
@@ -91,8 +90,11 @@ const ComboBoxTrigger = ({ className, children, ...props }: React.ComponentProps
 	)
 }
 
-const ComboBoxContent = ({ children }: { children: React.ReactNode }) => (
-	<Popover.Content className='h-[250px] w-[300px] border border-gray-300 p-0 flex-center' align='start'>
+const ComboBoxContent = ({ children, className, ...props }: React.ComponentPropsWithoutRef<typeof Popover.Content>) => (
+	<Popover.Content
+		className={twMerge("h-[250px] w-[300px] border border-gray-300 p-0 flex-center", className)}
+		align='start'
+		{...props}>
 		<Suspense fallback={<Skeleton className='h-[90%] w-[90%] rounded-lg' />}>{children}</Suspense>
 	</Popover.Content>
 )
@@ -150,10 +152,16 @@ export function ComboBoxPopper({
 		return updateSelection(option)
 	}
 
-	const onCreate = () => {
-		if (!searchTerm || !onSearch || !isCreatable) return
+	const canShowCreatable = Boolean(
+		isCreatable &&
+			searchTerm?.length &&
+			((!isMulti && selection?.value !== searchTerm) || (isMulti && selection?.every((op) => op?.value !== searchTerm)))
+	)
 
-		onSelect({ label: searchTerm, value: searchTerm })
+	const onCreate = () => {
+		if (!canShowCreatable || !onSearch) return
+
+		onSelect({ label: searchTerm!, value: searchTerm! })
 		onSearch("")
 	}
 
@@ -170,28 +178,36 @@ export function ComboBoxPopper({
 			listToRender = [...options, selection]
 		}
 
-		const renderedSet = new Set(listToRender.map((item) => JSON.stringify(item)))
+		// Stringifying entries so that duplicated would be nicely removed using Set
+		const stringifiedSet = new Set(listToRender.map((item) => JSON.stringify(item)))
+		// Parsing entries back to objects
+		const parsedArray: OptionType[] = Array.from(stringifiedSet).map((item) => JSON.parse(item))
+		// remove entries not found after search operation
+		if (!!searchTerm?.length && !options?.length)
+			return parsedArray?.filter((op) => op?.value?.toLocaleLowerCase()?.includes(searchTerm?.toLocaleLowerCase()))
 
-		return Array.from(renderedSet).map((item) => JSON.parse(item))
-	}, [options, isMulti, selection, isCreatable])
+		return parsedArray
+	}, [options, isMulti, selection, isCreatable, searchTerm])
 
 	return (
-		<Command shouldFilter={onSearch === undefined}>
+		<Command shouldFilter={onSearch === undefined} className='!h-full'>
 			<Command.Input placeholder={t("comboBox.placeholder")} value={searchTerm} onValueChange={onSearch} />
-			<Command.List className='h-full flex-1'>
+
+			<Command.List className='h-full [&>div]:!h-full'>
 				{loading && (
-					<Command.Loading>
-						<div className='h-[195px] flex-center'>
-							<Spinner size='md' />
-						</div>
+					<Command.Loading className='h-full w-full p-2 pb-0 [&>div]:space-y-2'>
+						<Skeleton className='h-8 w-full rounded-lg' />
+						<Skeleton className='h-8 w-full rounded-lg' />
 					</Command.Loading>
 				)}
 
-				{!isCreatable && (
-					<Command.Empty className='h-[195px] flex-center'>{t("comboBox.message.noResults")}</Command.Empty>
+				{!isCreatable && !loading && (
+					<Command.Empty className='h-full uppercase text-gray-500 flex-center'>
+						{t("comboBox.message.noResults")}
+					</Command.Empty>
 				)}
 
-				{Boolean(isCreatable && searchTerm?.length && !options?.length) && (
+				{canShowCreatable && (
 					<div className='bg-primary-50/50'>
 						<Button variant='ghost' size='sm' className='w-full justify-start' onClick={onCreate}>
 							Create: <span className='max-w-full truncate font-light'>{searchTerm}</span>

@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom"
 import AdvancedTable from "@/core/components/advanced-table"
 import type { SharedListViewProps } from "@/core/types"
 import smsTemplatesTableColumns from "@/features/templates/sms-templates/constants/sms-templates-table-columns"
-import type { SmsTemplate } from "@/features/templates/sms-templates/types"
+import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 import type { TableProps } from "@/ui"
 
-const MySmsTemplatesViewTopbar = lazy(() => import("./my-sms-templates-view-topbar"))
-const MySmsTemplatesViewFiltersContent = lazy(() => import("./my-sms-templates-view-filters-content"))
+const SmsTemplatesViewTopbar = lazy(() => import("./sms-templates-view-topbar"))
+const SmsTemplatesViewFiltersContent = lazy(() => import("./sms-templates-view-filters-content"))
 //#endregion
 
-const MySmsTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsTemplate>) => {
+const SmsTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsTemplateType>) => {
 	const navigate = useNavigate()
 
 	return (
@@ -20,14 +20,14 @@ const MySmsTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsTem
 			<AdvancedTable.FiltersBar>
 				<AdvancedTable.FiltersBar.Header />
 				<AdvancedTable.FiltersBar.Content>
-					<MySmsTemplatesViewFiltersContent />
+					<SmsTemplatesViewFiltersContent />
 				</AdvancedTable.FiltersBar.Content>
 				<AdvancedTable.FiltersBar.Footer />
 			</AdvancedTable.FiltersBar>
 
 			<AdvancedTable.Content>
 				<AdvancedTable.TopBar>
-					<MySmsTemplatesViewTopbar />
+					<SmsTemplatesViewTopbar />
 				</AdvancedTable.TopBar>
 
 				<AdvancedTable.Table
@@ -44,12 +44,12 @@ const MySmsTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsTem
 	)
 }
 
-export default MySmsTemplatesView
+export default SmsTemplatesView
 
 /**
- * Custom classNames passed to style AdvancedTable used in `MySmsTemplatesView`
+ * Custom classNames passed to style AdvancedTable used in `SmsTemplatesView`
  */
-const classNames: TableProps<SmsTemplate>["classNames"] = {
+const classNames: TableProps<SmsTemplateType>["classNames"] = {
 	wrapper: "px-4",
 	table: "border-separate border-spacing-y-[20px] -mt-[20px]",
 	tbodyTr: "bg-[#F7F7F7] cursor-pointer ",

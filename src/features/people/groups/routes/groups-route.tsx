@@ -3,11 +3,10 @@ import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateValue } from "@/core/slices/advanced-table-slice"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 
 import { useGetGroupsQuery } from "../api"
-import type { Group } from "../types"
 import GroupsViewSkeleton from "../views/groups-view/skeleton"
 
 const GroupsView = lazy(() => import("../views/groups-view"))
@@ -17,7 +16,7 @@ const DisplayError = lazy(() => import("@/ui").then((mod) => ({ default: mod.Dis
 
 const GroupsRoute = () => {
 	const { offset, limit, sort, order, filters, searchTerm, appliedFiltersCount } = useSelector<
-		AdvancedTableStateValue<Group>
+		AdvancedTableStateType<"groups">
 	>(({ advancedTable }) => advancedTable["groups"])
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetGroupsQuery(

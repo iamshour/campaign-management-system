@@ -2,7 +2,8 @@
 
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/advanced-table-slice"
+import { updateFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import SelectExportedByPopover from "@/features/people/exports/components/select-exported-by-popover"
 import SelectStatusesPopover from "@/features/people/exports/components/select-statuses-popover"
 import type { ContactExportStatusOption } from "@/features/people/exports/types"
@@ -13,7 +14,9 @@ import { getListOfKey } from "@/utils"
 const ExportsViewFiltersContent = () => {
 	const dispatch = useDispatch()
 
-	const { filters } = useSelector(({ advancedTable }) => advancedTable["contacts-exports"])
+	const { filters } = useSelector<AdvancedTableStateType<"contacts-exports">>(
+		({ advancedTable }) => advancedTable["contacts-exports"]
+	)
 
 	return (
 		<>

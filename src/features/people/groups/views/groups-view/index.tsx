@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom"
 import AdvancedTable from "@/core/components/advanced-table"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { type AdvancedTableStateValue, type ListGridView, toggleListGridView } from "@/core/slices/advanced-table-slice"
+import { toggleListGridView } from "@/core/slices/advanced-table-slice/advanced-table-slice"
+import type { AdvancedTableListGridView, AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import type { SharedListViewProps } from "@/core/types"
 import grouspsTableColumns from "@/features/people/groups/constants/groups-table-columns"
 import type { Group } from "@/features/people/groups/types"
@@ -19,7 +20,7 @@ const GroupsViewTopBar = lazy(() => import("./groups-view-topbar"))
 const GroupsGridView = lazy(() => import("./grid-view"))
 //#endregion
 
-const VIEWS: Record<ListGridView, ListGridView> = {
+const VIEWS: Record<AdvancedTableListGridView, AdvancedTableListGridView> = {
 	"List View": "List View",
 	"Grid View": "Grid View",
 }
@@ -28,7 +29,7 @@ const GroupsView = ({ count, list, isFetching, ...tableProps }: SharedListViewPr
 
 	const navigate = useNavigate()
 
-	const { view } = useSelector<AdvancedTableStateValue<Group>>(({ advancedTable }) => advancedTable["groups"])
+	const { view } = useSelector<AdvancedTableStateType<"groups">>(({ advancedTable }) => advancedTable["groups"])
 
 	return (
 		<AdvancedTable tableKey='groups' count={count}>
@@ -83,7 +84,7 @@ const GroupsView = ({ count, list, isFetching, ...tableProps }: SharedListViewPr
 export default GroupsView
 
 interface ViewTriggerProps extends React.ComponentPropsWithRef<typeof Tabs.Trigger> {
-	value: ListGridView
+	value: AdvancedTableListGridView
 	icon: IconType
 }
 

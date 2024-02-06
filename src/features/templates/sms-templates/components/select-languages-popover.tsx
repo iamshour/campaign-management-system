@@ -1,6 +1,7 @@
 //#region Import
-import smsTemplatesLanguageOptions from "@/features/templates/sms-templates/constants/sms-templates-language-options"
 import { ComboBox, ComboBoxPopper } from "@/ui"
+
+import smsTemplateLanguagesOptions from "../constants/sms-template-languages-options"
 //#endregion
 
 const SelectLanguagesPopover = ({
@@ -14,12 +15,10 @@ const SelectLanguagesPopover = ({
 			{...props}>
 			<ComboBox.Trigger>Select languages</ComboBox.Trigger>
 
-			<ComboBox.Content>
+			<ComboBox.Content className='h-[119px]'>
 				<ComboBoxPopper
-					options={Object.entries(smsTemplatesLanguageOptions)?.map(([value, label]) => ({
-						value,
-						label: label, // label: t(label) // TODO: add translation
-					}))}
+					// label: t(label) // TODO: add translation
+					options={smsTemplateLanguagesOptions}
 				/>
 			</ComboBox.Content>
 		</ComboBox>

@@ -1,7 +1,7 @@
 //#region Import
 import { parsePhoneNumber } from "react-phone-number-input"
 
-import type { FiltersFields } from "@/core/slices/advanced-table-slice"
+import type { FiltersFieldMappingType } from "@/core/slices/advanced-table-slice/types"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { cleanObject, createObjtWithCommonValue, getListOfKey } from "@/utils"
 
@@ -97,7 +97,7 @@ export const getContactSearchFilter = (searchTerm?: string): ContactFilters["con
  * @returns
  */
 export const getContactFilterAndContactSearchFilter = (
-	filters?: FiltersFields,
+	filters?: FiltersFieldMappingType["contacts-in-group"],
 	searchTerm?: string
 ): Omit<ContactFilters, "contactsIds" | "contactAdvancedFilter"> => {
 	return {
@@ -118,7 +118,7 @@ export const getContactFilterAndContactSearchFilter = (
  * @returns
  */
 export const getContactAdvancedFilter = (
-	advancedFilters?: FiltersFields["advancedFilters"]
+	advancedFilters?: FiltersFieldMappingType["contacts"]["advancedFilters"]
 ): ContactFilters["contactAdvancedFilter"] | undefined => {
 	if (!advancedFilters) return {}
 

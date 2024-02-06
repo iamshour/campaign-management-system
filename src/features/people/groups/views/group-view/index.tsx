@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next"
 
 import AdvancedTable from "@/core/components/advanced-table"
 import useDispatch from "@/core/hooks/useDispatch"
-import { clearState } from "@/core/slices/advanced-table-slice"
+import { clearState } from "@/core/slices/advanced-table-slice/advanced-table-slice"
 import type { SharedListViewProps } from "@/core/types"
 import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
 import ViewContactDialog from "@/features/people/contacts/dialogs/view-contact-dialog"

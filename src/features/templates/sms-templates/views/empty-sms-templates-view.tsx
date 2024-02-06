@@ -3,7 +3,7 @@ import MySmsTemplatesEmptySvg from "@/assets/my-sms-templates-empty.svg?react"
 import LabelledHints from "@/core/components/labelled-hints"
 //#endregion
 
-const EmptyMySmsTemplatesView = () => {
+const EmptySmsTemplatesView = () => {
 	return (
 		<div className='flex h-full w-full flex-col p-4'>
 			<LabelledHints
@@ -23,4 +23,4 @@ const EmptyMySmsTemplatesView = () => {
 	)
 }
 
-export default EmptyMySmsTemplatesView
+export default EmptySmsTemplatesView

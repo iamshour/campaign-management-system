@@ -2,14 +2,15 @@
 import { lazy, Suspense } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 
-import { DataTableSkeleton } from "@/ui"
+import { DataTableSkeleton, FullViewSkeleton } from "@/ui"
 
 const SmsTemplatesLayout = lazy(() => import("../components/sms-template-layout"))
-const MySmsTemplatesRoute = lazy(() => import("@/features/templates/sms-templates/routes/my-sms-templates-route"))
-const MySmsTemplateRoute = lazy(() => import("@/features/templates/sms-templates/routes/my-sms-template-route"))
-const PrebuiltSmsTemplatesRoute = lazy(
-	() => import("@/features/templates/sms-templates/routes/prebuilt-sms-templates-route")
+const SmsTemplatesRoute = lazy(() => import("@/features/templates/sms-templates/routes/sms-templates-route"))
+const SmsTemplateRoute = lazy(() => import("@/features/templates/sms-templates/routes/sms-template-route"))
+const SmsPrebuiltTemplatesRoute = lazy(
+	() => import("@/features/templates/sms-templates/routes/sms-prebuilt-templates-route")
 )
+const SmsPrebuiltTemplateRoute = lazy(() => import("./sms-prebuilt-template-route"))
 //#endregion
 
 const SmsTemplatesFeatureRoutes = () => (
@@ -20,16 +21,24 @@ const SmsTemplatesFeatureRoutes = () => (
 					<SmsTemplatesLayout />
 				</Suspense>
 			}>
-			<Route path='my-templates' element={<MySmsTemplatesRoute />} />
-
-			<Route path='prebuilt-templates' element={<PrebuiltSmsTemplatesRoute />} />
+			<Route path='my-templates' element={<SmsTemplatesRoute />} />
+			<Route path='prebuilt-templates' element={<SmsPrebuiltTemplatesRoute />} />
 		</Route>
 
 		<Route
 			path='my-templates/:id'
 			element={
-				<Suspense fallback={<DataTableSkeleton />}>
-					<MySmsTemplateRoute />
+				<Suspense fallback={<FullViewSkeleton />}>
+					<SmsTemplateRoute />
+				</Suspense>
+			}
+		/>
+
+		<Route
+			path='prebuilt-templates/:id'
+			element={
+				<Suspense fallback={<FullViewSkeleton />}>
+					<SmsPrebuiltTemplateRoute />
 				</Suspense>
 			}
 		/>

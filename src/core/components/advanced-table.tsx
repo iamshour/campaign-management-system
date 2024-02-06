@@ -10,9 +10,7 @@ import {
 	clearSelection,
 	updateAdvancedTableState,
 	updateSelection,
-	type AdvancedTableStateValue,
-	type TableKey,
-} from "@/core/slices/advanced-table-slice"
+} from "@/core/slices/advanced-table-slice/advanced-table-slice"
 import {
 	Button,
 	Skeleton,
@@ -23,6 +21,8 @@ import {
 	type RowData,
 	type TableProps,
 } from "@/ui"
+
+import type { TableKey } from "../slices/advanced-table-slice/types"
 
 const SearchInput = lazy(() => import("@/ui").then((mod) => ({ default: mod.SearchInput })))
 const TablePagination = lazy(() => import("@/ui").then((mod) => ({ default: mod.TablePagination })))
@@ -120,9 +120,7 @@ function TableContent<TData extends RowData>(
 
 	const { tableKey, count } = useAdvancedTableContext()
 
-	const { offset, limit, sort, order, selection } = useSelector<AdvancedTableStateValue<TData>>(
-		({ advancedTable }) => advancedTable[tableKey]
-	)
+	const { offset, limit, sort, order, selection } = useSelector(({ advancedTable }) => advancedTable[tableKey])
 
 	return (
 		<Suspense fallback={<TableSkeleton colsLength={props?.columns?.length} className='mb-4 flex-1 px-0' />}>

@@ -5,8 +5,8 @@ import { useLocation, useNavigate } from "react-router-dom"
 
 import { Button, type IconType } from "@/ui"
 
-import SegmentsFunnelReadonly from "../../components/segments-funnel-readonly"
-import type { Segment, SegmentConditionType } from "../../types"
+import SegmentsFunnelReadonly from "../components/segments-funnel-readonly"
+import type { Segment, SegmentConditionType } from "../types"
 
 import MaterialSymbolsEdit from "~icons/material-symbols/edit"
 import MdiFileDocument from "~icons/mdi/file-document"

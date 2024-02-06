@@ -2,14 +2,15 @@
 
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/advanced-table-slice"
+import { updateFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import { DateRangePicker } from "@/ui"
 //#endregion
 
 const SegmentsViewFiltersContent = () => {
 	const dispatch = useDispatch()
 
-	const { filters } = useSelector(({ advancedTable }) => advancedTable["segments"])
+	const { filters } = useSelector<AdvancedTableStateType<"segments">>(({ advancedTable }) => advancedTable["segments"])
 
 	return (
 		<>

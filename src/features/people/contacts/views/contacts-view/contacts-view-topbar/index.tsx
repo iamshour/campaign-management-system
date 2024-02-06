@@ -3,6 +3,7 @@ import { Suspense } from "react"
 import { useTranslation } from "react-i18next"
 
 import useSelector from "@/core/hooks/useSelector"
+import { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import CreateContactDialog from "@/features/people/contacts/dialogs/create-contact-dialog"
 import ImportContactsDialog from "@/features/people/contacts/dialogs/import-contacts-dialog"
 import ExportFieldsDialog from "@/features/people/exports/dialogs/export-fields-dialog"
@@ -17,7 +18,9 @@ import PhUserPlus from "~icons/ph/user-plus"
 const ContactsViewTopbar = () => {
 	const { t } = useTranslation("contacts")
 
-	const { selection } = useSelector(({ advancedTable }) => advancedTable["contacts"])
+	const { selection } = useSelector<AdvancedTableStateType<"contacts">>(
+		({ advancedTable }) => advancedTable["contacts"]
+	)
 
 	return (
 		<>

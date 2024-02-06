@@ -1,12 +1,11 @@
 //#region Import
 import useSelector from "@/core/hooks/useSelector"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import { Skeleton, DataGridSkeleton, HorizontalSkeleton, TableSkeleton } from "@/ui"
-
 //#endregion
 
 const GroupsViewSkeleton = () => {
-	// TODO: Fix `view` prop in slice
-	const view = useSelector(({ advancedTable }) => (advancedTable["groups"] as any)?.view)
+	const { view } = useSelector<AdvancedTableStateType<"groups">>(({ advancedTable }) => advancedTable["groups"])
 
 	return (
 		<div className='flex w-full flex-col'>

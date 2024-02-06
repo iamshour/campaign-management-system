@@ -2,13 +2,13 @@
 import { useNavigate } from "react-router-dom"
 
 import DeleteTemplateDialog from "@/features/templates/sms-templates/dialogs/delete-template-dialog"
-import type { SmsTemplate } from "@/features/templates/sms-templates/types"
+import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 import { Dropdown } from "@/ui"
 
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 //#endregion
 
-const MySmsTemplatesViewTableActions = ({ id }: Pick<SmsTemplate, "id">) => {
+const SmsTemplatesViewTableActions = ({ id }: Pick<SmsTemplateType, "id">) => {
 	const navigate = useNavigate()
 
 	return (
@@ -30,4 +30,4 @@ const MySmsTemplatesViewTableActions = ({ id }: Pick<SmsTemplate, "id">) => {
 	)
 }
 
-export default MySmsTemplatesViewTableActions
+export default SmsTemplatesViewTableActions

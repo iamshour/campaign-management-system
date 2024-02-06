@@ -34,7 +34,13 @@ const DisplayError = ({ error, className, onReset }: DisplayErrorProps) => {
 				</h1>
 
 				{!!onReset && (
-					<Button variant='outline-secondary' onClick={onReset} title='Reset'>
+					<Button
+						variant='outline-secondary'
+						onClick={() => {
+							window.location.reload()
+							onReset()
+						}}
+						title='Reset'>
 						<RadixIconsReload />
 					</Button>
 				)}

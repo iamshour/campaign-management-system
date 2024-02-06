@@ -2,10 +2,9 @@
 import { Suspense, lazy } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 
-import { DataTableSkeleton } from "@/ui"
+import { DataTableSkeleton, FullViewSkeleton } from "@/ui"
 
 import SegmentFunnelSkeleton from "../components/segment-funnel-skeleton"
-import SegmentViewSkeleton from "../views/segment-view/segment-view-skeleton"
 
 const SegmentsRoute = lazy(() => import("@/features/people/segments/routes/segments-route"))
 const SegmentRoute = lazy(() => import("@/features/people/segments/routes/segment-route"))
@@ -36,7 +35,7 @@ const SegmentsFeatureRoutes = () => (
 		<Route
 			path=':id'
 			element={
-				<Suspense fallback={<SegmentViewSkeleton />}>
+				<Suspense fallback={<FullViewSkeleton />}>
 					<SegmentRoute />
 				</Suspense>
 			}

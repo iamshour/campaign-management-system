@@ -3,21 +3,20 @@ import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { AdvancedTableStateValue } from "@/core/slices/advanced-table-slice"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import { DisplayError, DataTableSkeleton } from "@/ui"
 
 import { getContactSearchFilter } from "../../contacts/utils"
 import { useGetSegmentsQuery } from "../api"
-import { Segment } from "../types"
 
 const SegmentsView = lazy(() => import("../views/segments-view"))
 const EmptySegmentsView = lazy(() => import("../views/empty-segments-view"))
 //#endregion
 
 const SegmentsRoute = () => {
-	const { offset, limit, order, sort, appliedFiltersCount, searchTerm } = useSelector<AdvancedTableStateValue<Segment>>(
-		({ advancedTable }) => advancedTable["segments"]
-	)
+	const { offset, limit, order, sort, appliedFiltersCount, searchTerm } = useSelector<
+		AdvancedTableStateType<"segments">
+	>(({ advancedTable }) => advancedTable["segments"])
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetSegmentsQuery(
 		{

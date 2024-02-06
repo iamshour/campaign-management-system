@@ -1,6 +1,7 @@
 //#region Import
-import smsTemplatesStatusOptions from "@/features/templates/sms-templates/constants/sms-templates-status-options"
 import { ComboBox, ComboBoxPopper } from "@/ui"
+
+import smsTemplateStatusesOptions from "../constants/sms-template-statuses-options"
 //#endregion
 
 const SelectStatusesPopover = ({
@@ -13,13 +14,8 @@ const SelectStatusesPopover = ({
 			{...props}>
 			<ComboBox.Trigger>Select status</ComboBox.Trigger>
 
-			<ComboBox.Content>
-				<ComboBoxPopper
-					options={Object.entries(smsTemplatesStatusOptions)?.map(([value, label]) => ({
-						value,
-						label: label, // label: t(label) // TODO: add translation
-					}))}
-				/>
+			<ComboBox.Content className='h-[151px]'>
+				<ComboBoxPopper options={smsTemplateStatusesOptions} />
 			</ComboBox.Content>
 		</ComboBox>
 	)

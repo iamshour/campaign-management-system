@@ -4,10 +4,9 @@ import { useParams } from "react-router-dom"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateValue } from "@/core/slices/advanced-table-slice"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetContactsQuery } from "@/features/people/contacts/api"
-import type { Contact } from "@/features/people/contacts/types"
 import { getContactSearchFilter } from "@/features/people/contacts/utils"
 import { DisplayError, DataTableSkeleton } from "@/ui"
 import { getListOfKey } from "@/utils"
@@ -19,7 +18,7 @@ const AddContactsToGroupRoute = () => {
 	const { id: groupId } = useParams()
 
 	const { offset, limit, sort, order, filters, searchTerm, appliedFiltersCount } = useSelector<
-		AdvancedTableStateValue<Contact>
+		AdvancedTableStateType<"contacts-in-group">
 	>(({ advancedTable }) => advancedTable["add-contacts-to-group"])
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetContactsQuery(
