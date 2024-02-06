@@ -1,60 +1,29 @@
 //#region Import
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
-import type { Contact } from "@/features/people/contacts/types"
-import type { ContactExportStatusOption, ContactExports } from "@/features/people/exports/types"
-import type { Group } from "@/features/people/groups/types"
-import type { SegmentConditionType } from "@/features/people/segments/types"
-import type { SmsTemplatesTableFilter } from "@/features/templates/sms-templates/types"
-import type { OptionType, DateRange, TableState } from "@/ui"
 import { getObjectSize } from "@/utils"
+
+import type {
+	AdvancedTableListGridView,
+	AdvancedTableSliceStateType,
+	AdvancedTableStateType,
+	FiltersFieldMappingType,
+	TableKey,
+} from "./types"
 //#endregion
-
-export type ListGridView = "List View" | "Grid View"
-
-export type TableKey =
-	| "contacts"
-	| "contacts-in-group"
-	| "add-contacts-to-group"
-	| "groups"
-	| "contacts-exports"
-	| "segments"
-	| "sms-templates"
-
-export type FiltersFields = {
-	dateRange?: DateRange
-	tags?: string[]
-	groups?: OptionType[]
-	status?: ContactExportStatusOption[]
-	exportedBy?: string[]
-	advancedFilters?: {
-		segment?: OptionType
-		conditions: SegmentConditionType[]
-	}
-} & Partial<SmsTemplatesTableFilter>
-
-export type AdvancedTableStateValue<TData> = TableState<TData> & {
-	searchTerm?: string
-
-	filters?: FiltersFields
-
-	appliedFiltersCount?: number
-
-	view?: ListGridView
-}
-
-export type AdvancedTableState = {
-	[K in TableKey]: AdvancedTableStateValue<unknown>
-}
 
 const defaultDataTableState = {
 	offset: 0,
 	limit: 25,
 }
-const defaultGroupsDataTableState = { ...defaultDataTableState, view: "List View" as ListGridView, limit: 10 }
+const defaultGroupsDataTableState = {
+	...defaultDataTableState,
+	view: "List View" as AdvancedTableListGridView,
+	limit: 10,
+}
 const defaultSmsTemplatesDataTableState = { ...defaultDataTableState, limit: 10 }
 
-const initialState: AdvancedTableState = {
+const initialState: AdvancedTableSliceStateType = {
 	contacts: defaultDataTableState,
 	"contacts-in-group": defaultDataTableState,
 	"add-contacts-to-group": defaultDataTableState,
@@ -62,6 +31,7 @@ const initialState: AdvancedTableState = {
 	"contacts-exports": defaultDataTableState,
 	segments: defaultDataTableState,
 	"sms-templates": defaultSmsTemplatesDataTableState,
+	"sms-prebuilt-templates": defaultSmsTemplatesDataTableState,
 }
 
 const advancedTableSlice = createSlice({
@@ -75,13 +45,7 @@ const advancedTableSlice = createSlice({
 		 */
 		updateAdvancedTableState: (
 			state,
-			{
-				payload,
-			}: PayloadAction<{
-				[K in TableKey]?: Partial<
-					AdvancedTableStateValue<K extends "groups" ? Group : K extends "contacts-exports" ? ContactExports : Contact>
-				>
-			}>
+			{ payload }: PayloadAction<{ [K in TableKey]?: Partial<AdvancedTableStateType<K>> }>
 		) => {
 			const tableKey = Object.keys(payload)[0] as TableKey
 			const payloadValue = Object.values(payload)[0]
@@ -137,7 +101,7 @@ const advancedTableSlice = createSlice({
 			state[tableKey].selection = []
 		},
 
-		updateFilters: (state, { payload }: PayloadAction<{ [K in TableKey]?: FiltersFields }>) => {
+		updateFilters: (state, { payload }: PayloadAction<{ [K in TableKey]?: Partial<FiltersFieldMappingType[K]> }>) => {
 			const tableKey = Object.keys(payload)[0] as TableKey
 			const payloadValue = Object.values(payload)[0]
 
@@ -170,7 +134,7 @@ const advancedTableSlice = createSlice({
 			}
 		},
 
-		toggleListGridView: (state, { payload }: PayloadAction<{ [K in TableKey]?: ListGridView }>) => {
+		toggleListGridView: (state, { payload }: PayloadAction<{ [K in TableKey]?: AdvancedTableListGridView }>) => {
 			const tableKey = Object.keys(payload)[0] as TableKey
 			const payloadValue = Object.values(payload)[0]
 

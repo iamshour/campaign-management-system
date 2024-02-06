@@ -1,9 +1,10 @@
 {
 	"name": "@blueai/cms",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"type": "module",
 	"scripts": {
-		"dev": "vite --clearScreen false",
+		"dev": "concurrently \"npm run vite-dev\"  \"npm run server\"",
+		"vite-dev": "vite --clearScreen false",
 		"server": "json-server src/api/db.json --port 5000",
 		"build": "npm run clean && tsc && vite build",
 		"start": "vite preview --port 3000 --host",
@@ -15,7 +16,6 @@
 		"test:watch": "vitest"
 	},
 	"dependencies": {
-		"@blueai/ui": "file:../packages/ui",
 		"@hookform/resolvers": "3.3.4",
 		"@radix-ui/react-avatar": "1.0.4",
 		"@radix-ui/react-checkbox": "1.0.4",

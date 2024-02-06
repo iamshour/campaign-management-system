@@ -2,6 +2,7 @@
 import { Suspense, lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import { Button, Skeleton } from "@/ui"
 
 import PhUserPlus from "~icons/ph/user-plus"
@@ -9,8 +10,10 @@ import PhUserPlus from "~icons/ph/user-plus"
 const DeleteTemplateDialog = lazy(() => import("@/features/templates/sms-templates/dialogs/delete-template-dialog"))
 //#endregion
 
-const MySmsTemplatesViewTopbar = () => {
-	const { selection } = useSelector(({ advancedTable }) => advancedTable["sms-templates"])
+const SmsTemplatesViewTopbar = () => {
+	const { selection } = useSelector<AdvancedTableStateType<"sms-templates">>(
+		({ advancedTable }) => advancedTable["sms-templates"]
+	)
 
 	return (
 		<>
@@ -34,4 +37,4 @@ const MySmsTemplatesViewTopbar = () => {
 	)
 }
 
-export default MySmsTemplatesViewTopbar
+export default SmsTemplatesViewTopbar

@@ -1,5 +1,6 @@
 //#region Import
 import type { CommonListArguments } from "@/core/lib/redux-toolkit/types"
+import type { DateRange } from "@/ui"
 
 import type { ContactFilters } from "../contacts/types"
 //#endregion
@@ -19,6 +20,15 @@ export interface ContactExports {
 	createdAt: string
 	contactExportStatus: ContactExportStatusOption
 	id: string
+}
+
+/**
+ * Filters used in Filters bar (Internally / Only Client-Side - Not sent to the server)
+ */
+export type ContactExportsTableFiltersType = {
+	dateRange?: DateRange
+	status?: ContactExportStatusOption[]
+	exportedBy?: string[]
 }
 
 /**

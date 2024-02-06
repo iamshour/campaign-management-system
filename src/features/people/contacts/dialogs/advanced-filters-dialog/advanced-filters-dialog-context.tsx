@@ -2,8 +2,7 @@
 import { createContext, useCallback, useContext, useLayoutEffect, useMemo, useState } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
-import type { AdvancedTableStateValue } from "@/core/slices/advanced-table-slice"
-import type { Contact } from "@/features/people/contacts/types"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import { emptySegmentCondition } from "@/features/people/segments/constants/preset-segments"
 import type { SegmentConditionType } from "@/features/people/segments/types"
 import { areConditionsEmpty } from "@/features/people/segments/utils"
@@ -21,7 +20,7 @@ export const useAdvancedFiltersDialogContext = (): AdvancedFiltersDialogContextV
 	useContext(AdvancedFiltersDialogContextProvider)
 
 const AdvancedFiltersDialogContext = ({ children }: { children: React.ReactNode }) => {
-	const { filters } = useSelector<AdvancedTableStateValue<Contact>>(({ advancedTable }) => advancedTable["contacts"])
+	const { filters } = useSelector<AdvancedTableStateType<"contacts">>(({ advancedTable }) => advancedTable["contacts"])
 	const persistedSegmentOption = filters?.advancedFilters?.segment
 	const persistedConditions = filters?.advancedFilters?.conditions
 

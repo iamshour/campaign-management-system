@@ -63,7 +63,7 @@ const Navbar = () => {
 
 					<div
 						className={twMerge(
-							"flex w-full flex-1 flex-col gap-1.5 overflow-y-auto overflow-x-hidden px-[7px] py-3 scrollbar scrollbar-track-transparent scrollbar-thumb-white/30 scrollbar-thumb-rounded-lg scrollbar-w-1",
+							"flex w-full flex-1 flex-col gap-1.5 overflow-y-auto overflow-x-hidden px-[7px] py-3",
 							!isNavbarOpen && "scrollbar-none"
 						)}
 						data-menubar-list
@@ -173,36 +173,29 @@ interface NavCollapsibleProps {
 	hasActiveChild?: boolean
 }
 
-const NavCollapsible = ({ Icon, label, isNavbarOpen, openSidebar, hasActiveChild, children }: NavCollapsibleProps) => {
-	const onCollapsibleClick = () => {
-		// Fucntion used if sidebar is closed, and one of the collapsibles was triggered
-		return !isNavbarOpen && openSidebar()
-	}
-
-	return (
-		<Collapsible
-			open={!isNavbarOpen ? false : undefined}
-			onClick={onCollapsibleClick}
-			className={twMerge(
-				"w-full overflow-hidden rounded-md bg-transparent !bg-opacity-5 text-start text-white transition-basic data-[state=open]:bg-white hover:bg-white",
-				hasActiveChild && "bg-white data-[state=closed]:!bg-opacity-20"
-			)}>
-			<Collapsible.Trigger showArrow={isNavbarOpen} className='p-3'>
-				<Icon className='h-[22px] w-[22px] text-white' />
-				<span
-					className={twMerge(
-						"flex-1 whitespace-nowrap text-start transition-[opacity] duration-300 ease-in-out",
-						!isNavbarOpen && "opacity-0"
-					)}>
-					{label}
-				</span>
-			</Collapsible.Trigger>
-			<Collapsible.Content className='ms-6'>
-				<div className='mt-0.5 flex flex-col gap-0.5 p-2 !pt-0'>{children}</div>
-			</Collapsible.Content>
-		</Collapsible>
-	)
-}
+const NavCollapsible = ({ Icon, label, isNavbarOpen, openSidebar, hasActiveChild, children }: NavCollapsibleProps) => (
+	<Collapsible
+		open={!isNavbarOpen ? false : undefined}
+		onClick={() => !isNavbarOpen && openSidebar()}
+		className={twMerge(
+			"w-full overflow-hidden rounded-md bg-transparent !bg-opacity-5 text-start text-white transition-basic data-[state=open]:bg-white hover:bg-white",
+			hasActiveChild && "bg-white data-[state=closed]:!bg-opacity-20"
+		)}>
+		<Collapsible.Trigger showArrow={isNavbarOpen} className='p-3 prevent-selection'>
+			<Icon className='h-[22px] w-[22px] text-white' />
+			<span
+				className={twMerge(
+					"flex-1 whitespace-nowrap text-start transition-[opacity] duration-300 ease-in-out",
+					!isNavbarOpen && "opacity-0"
+				)}>
+				{label}
+			</span>
+		</Collapsible.Trigger>
+		<Collapsible.Content className='ms-6'>
+			<div className='mt-0.5 flex flex-col gap-0.5 p-2 !pt-0'>{children}</div>
+		</Collapsible.Content>
+	</Collapsible>
+)
 
 const NavLink = ({ className, ...props }: { className: string } & Omit<NavLinkProps, "className">) => (
 	<DefaultNavLink

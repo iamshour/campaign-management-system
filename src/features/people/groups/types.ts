@@ -19,7 +19,7 @@ export interface Group {
 /**
  * Arguments used for the `getGroupsQuery` query, passed for the server as params when fetching Groups List
  */
-export type GroupsArgs = Omit<TableState<Group>, "selection" | "count"> & {
+export type GroupsArgs = Omit<TableState<Group>, "selection"> & {
 	name?: string
 	startDate?: string
 	endDate?: string

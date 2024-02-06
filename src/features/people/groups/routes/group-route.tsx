@@ -4,14 +4,14 @@ import { useParams } from "react-router-dom"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateValue } from "@/core/slices/advanced-table-slice"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
-import type { Contact } from "@/features/people/contacts/types"
 import { getContactSearchFilter } from "@/features/people/contacts/utils"
 import { DataTableSkeleton } from "@/ui"
 import { getListOfKey } from "@/utils"
 
 import { useGetGroupByIdQuery } from "../api"
+
 const GroupView = lazy(() => import("../views/group-view"))
 const DisplayError = lazy(() => import("@/ui").then((mod) => ({ default: mod.DisplayError })))
 //#endregion
@@ -20,7 +20,7 @@ const GroupRoute = () => {
 	const { id: groupId } = useParams()
 
 	const { offset, limit, sort, order, filters, searchTerm, appliedFiltersCount } = useSelector<
-		AdvancedTableStateValue<Contact>
+		AdvancedTableStateType<"contacts-in-group">
 	>(({ advancedTable }) => advancedTable["contacts-in-group"])
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetGroupByIdQuery(

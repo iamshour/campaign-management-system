@@ -8,7 +8,8 @@ import { Link } from "react-router-dom"
 import appPaths from "@/core/constants/app-paths"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection, type TableKey } from "@/core/slices/advanced-table-slice"
+import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
+import type { FiltersFieldMappingType, TableKey } from "@/core/slices/advanced-table-slice/types"
 import { getContactFilterAndContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
 import { useSubmitExportsFileMutation } from "@/features/people/exports/api"
 import exportFields from "@/features/people/exports/constants/export-fields"
@@ -19,7 +20,7 @@ import { twMerge, useForm, Button, Checkbox, Footer, Form, Input } from "@/ui"
 import { cleanObject } from "@/utils"
 //#endregion
 
-export type ExportsType = Omit<TableKey, "add-contacts-to-group" | "groups">
+export type ExportsType = Extract<TableKey, "contacts" | "contacts-in-group" | "segments">
 
 export interface ExportFieldsDialogContentProps {
 	/**
@@ -38,7 +39,9 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 
 	const dispatch = useDispatch()
 
-	const { selection, filters, searchTerm } = useSelector((state) => state.advancedTable[exportsType as TableKey])
+	const { selection, filters, searchTerm } = useSelector(
+		({ advancedTable }) => advancedTable[exportsType as ExportsType]
+	)
 
 	const form = useForm<ExportSchemaType>({
 		resolver: zodResolver(exportSchema),
@@ -70,12 +73,25 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 	}
 
 	const onSubmit = async ({ fileName, exportedFields }: ExportSchemaType) => {
-		const body: SubmitExportsFileArgs = {
+		let body: SubmitExportsFileArgs = {
 			fileName,
 			contactsIds: !!selection && selection !== "ALL" ? selection : undefined,
 			exportedFields,
-			...getContactFilterAndContactSearchFilter(filters, searchTerm),
-			...getContactAdvancedFilter(filters?.advancedFilters),
+		}
+
+		if (exportsType === "contacts") {
+			body = {
+				...body,
+				// Statically inferring type of Filters to Its Origin -- Contacts Filters used only in Contacts Table, In order to find advancedFilters without TS erros
+				...getContactAdvancedFilter((filters as FiltersFieldMappingType["contacts"])?.advancedFilters),
+			}
+		}
+
+		if (exportsType !== "segments") {
+			body = {
+				...body,
+				...getContactFilterAndContactSearchFilter(filters, searchTerm),
+			}
 		}
 
 		// Cleaning Body from all undefined values, empty objects, and nested objects with undefined values
@@ -135,11 +151,11 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 												<Form.Control>
 													<Checkbox
 														checked={field.value?.includes(value)}
-														onCheckedChange={(checked) => {
-															return checked
+														onCheckedChange={(checked) =>
+															checked
 																? field.onChange([...field.value, value])
 																: field.onChange(field.value?.filter((i) => i !== value))
-														}}
+														}
 													/>
 												</Form.Control>
 												<Form.Label

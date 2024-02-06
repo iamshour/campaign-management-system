@@ -3,9 +3,9 @@ import { lazy } from "react"
 import { useParams } from "react-router-dom"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
+import { FullViewSkeleton } from "@/ui"
 
 import { useGetSegmentByIdQuery } from "../api"
-import SegmentViewSkeleton from "../views/segment-view/segment-view-skeleton"
 
 const SegmentView = lazy(() => import("../views/segment-view"))
 const NotFoundError = lazy(() => import("@/ui").then((mod) => ({ default: mod.NotFoundError })))
@@ -42,7 +42,7 @@ const SegmentRoute = () => {
 		...baseQueryConfigs,
 	})
 
-	if (isInitialLoading) return <SegmentViewSkeleton />
+	if (isInitialLoading) return <FullViewSkeleton />
 	if (isError || !name?.length) return <NotFoundError className='h-full w-full' />
 	if (isReady) return <SegmentView name={name} description={description} conditions={conditions} />
 }

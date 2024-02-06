@@ -1,6 +1,6 @@
 //#region Import
 import type { CommonListArguments } from "@/core/lib/redux-toolkit/types"
-import type { DateRange } from "@/ui"
+import type { DateRange, OptionType } from "@/ui"
 
 import type { ParsedPhoneNumberDto } from "./utils"
 //#endregion
@@ -33,6 +33,18 @@ export type Contact = {
 	note?: string
 }
 
+/**
+ * Filters used in Filters bar (Internally / Only Client-Side - Not sent to the server)
+ */
+export type ContactTableFiltersType = {
+	dateRange?: DateRange
+	tags?: string[]
+	groups?: OptionType[]
+}
+
+/**
+ * Filters Sent to the server, using any Fetch Contacts Endpoint
+ */
 export type ContactFilters = {
 	/**
 	 * List of contact Ids. Could be empty if no entries are selected, meaning that filtering would be applied on other additional filters

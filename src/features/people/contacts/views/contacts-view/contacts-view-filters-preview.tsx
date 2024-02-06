@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next"
 import { v4 as newId } from "uuid"
 
 import useSelector from "@/core/hooks/useSelector"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import { Tooltip } from "@/ui"
 //#endregion
 
@@ -12,9 +13,9 @@ import { Tooltip } from "@/ui"
 const ContactsViewFiltersPreview = () => {
 	const { t } = useTranslation("contacts")
 
-	const advancedFilters = useSelector(({ advancedTable }) => advancedTable["contacts"]?.filters?.advancedFilters)
-	const appliedSegment = advancedFilters?.segment?.label
-	const appliedConditions = advancedFilters?.conditions
+	const { filters } = useSelector<AdvancedTableStateType<"contacts">>(({ advancedTable }) => advancedTable["contacts"])
+	const appliedSegment = filters?.advancedFilters?.segment?.label
+	const appliedConditions = filters?.advancedFilters?.conditions
 
 	return (
 		<div className='pt-3'>

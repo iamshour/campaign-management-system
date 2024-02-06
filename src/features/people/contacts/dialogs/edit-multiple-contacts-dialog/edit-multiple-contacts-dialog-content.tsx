@@ -8,7 +8,8 @@ import { array, object, string, any } from "zod"
 import { useAdvancedTableContext } from "@/core/components/advanced-table"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/advanced-table-slice"
+import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import { useUpdateMultipleContactsMutation } from "@/features/people/contacts/api"
 import TagSchema from "@/features/people/contacts/schemas/tag-schema"
 import type { UpdateMultipleContactsArgs } from "@/features/people/contacts/types"
@@ -45,7 +46,9 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 	const { t } = useTranslation("contacts")
 	const dispatch = useDispatch()
 
-	const { selection, filters, searchTerm } = useSelector(({ advancedTable }) => advancedTable["contacts"])
+	const { selection, filters, searchTerm } = useSelector<AdvancedTableStateType<"contacts">>(
+		({ advancedTable }) => advancedTable["contacts"]
+	)
 	const { count } = useAdvancedTableContext()
 
 	/**

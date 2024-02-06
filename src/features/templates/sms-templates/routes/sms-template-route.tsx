@@ -2,13 +2,13 @@
 import { useParams } from "react-router-dom"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { DisplayError, Skeleton } from "@/ui"
+import { DisplayError, FullViewSkeleton } from "@/ui"
 
 import { useGetSmsTemplateByIdQuery } from "../api"
 import SmsTemplatePreview from "../components/sms-template-preview"
 //#endregion
 
-const MySmsTemplateRoute = () => {
+const SmsTemplateRoute = () => {
 	const { id: mySmsTemplateId } = useParams()
 
 	const { data, isFetching, isError, error } = useGetSmsTemplateByIdQuery(mySmsTemplateId!, {
@@ -16,11 +16,11 @@ const MySmsTemplateRoute = () => {
 		...baseQueryConfigs,
 	})
 
-	if (isFetching) return <Skeleton className='h-full' />
+	if (isFetching) return <FullViewSkeleton />
 
-	if (!isFetching && isError) return <DisplayError error={error as any} />
+	if ((!isFetching && isError) || !data) return <DisplayError error={error as any} />
 
-	return <SmsTemplatePreview smsTemplate={data!} />
+	return <SmsTemplatePreview {...data} />
 }
 
-export default MySmsTemplateRoute
+export default SmsTemplateRoute

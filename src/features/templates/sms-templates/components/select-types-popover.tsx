@@ -1,6 +1,7 @@
 //#region Import
-import smsTemplatesTypeOptions from "@/features/templates/sms-templates/constants/sms-templates-type-options"
 import { ComboBox, ComboBoxPopper } from "@/ui"
+
+import smsTemplateTypesOptions from "../constants/sms-template-types-options"
 //#endregion
 
 const SelectTypesPopover = ({
@@ -13,13 +14,8 @@ const SelectTypesPopover = ({
 			{...props}>
 			<ComboBox.Trigger>Select types</ComboBox.Trigger>
 
-			<ComboBox.Content>
-				<ComboBoxPopper
-					options={Object.entries(smsTemplatesTypeOptions)?.map(([value, label]) => ({
-						value,
-						label: label, // label: t(label) // TODO: add translation
-					}))}
-				/>
+			<ComboBox.Content className='h-[151px]'>
+				<ComboBoxPopper options={smsTemplateTypesOptions} />
 			</ComboBox.Content>
 		</ComboBox>
 	)

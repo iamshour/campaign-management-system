@@ -4,7 +4,8 @@ import { persistReducer, type PersistConfig } from "redux-persist"
 import storage from "redux-persist/lib/storage"
 import { createBlacklistFilter } from "redux-persist-transform-filter"
 
-import advancedTableReducer, { type AdvancedTableState, type TableKey } from "@/core/slices/advanced-table-slice"
+import advancedTableReducer from "@/core/slices/advanced-table-slice/advanced-table-slice"
+import type { AdvancedTableSliceStateType, TableKey } from "@/core/slices/advanced-table-slice/types"
 import AppReducer, { type AppSliceState } from "@/core/slices/app-slice"
 import authReducer from "@/features/authentication/slice"
 import type { AuthSliceState } from "@/features/authentication/types"
@@ -18,7 +19,7 @@ const APP_PREFIX = "BLUE.AI_CMS"
 export type RootState = {
 	auth: AuthSliceState
 	app: AppSliceState
-	advancedTable: AdvancedTableState
+	advancedTable: AdvancedTableSliceStateType
 }
 
 const rootPersistConfig = {

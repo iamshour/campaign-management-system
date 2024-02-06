@@ -3,12 +3,11 @@ import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateValue } from "@/core/slices/advanced-table-slice"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { DisplayError, DataTableSkeleton } from "@/ui"
 
 import { useGetExportsQuery } from "../api"
-import type { ContactExports } from "../types"
 
 const ExportsView = lazy(() => import("../views/exports-view"))
 const EmptyExportsView = lazy(() => import("../views/empty-exports-view"))
@@ -16,7 +15,7 @@ const EmptyExportsView = lazy(() => import("../views/empty-exports-view"))
 
 const ExportsRoute = () => {
 	const { offset, limit, order, sort, filters, searchTerm, appliedFiltersCount } = useSelector<
-		AdvancedTableStateValue<ContactExports>
+		AdvancedTableStateType<"contacts-exports">
 	>(({ advancedTable }) => advancedTable["contacts-exports"])
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetExportsQuery(

@@ -1,12 +1,12 @@
 //#region Import
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { AdvancedTableStateValue, updateFilters } from "@/core/slices/advanced-table-slice"
+import { updateFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import SelectLanguagesPopover from "@/features/templates/sms-templates/components/select-languages-popover"
 import SelectStatusesPopover from "@/features/templates/sms-templates/components/select-statuses-popover"
 import SelectTypesPopover from "@/features/templates/sms-templates/components/select-types-popover"
 import type {
-	SmsTemplate,
 	SmsTemplateLanguageOption,
 	SmsTemplateStatusOption,
 	SmsTemplateTypeOption,
@@ -15,10 +15,10 @@ import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
 //#endregion
 
-const MySmsTemplatesViewFiltersContent = () => {
+const SmsTemplatesViewFiltersContent = () => {
 	const dispatch = useDispatch()
 
-	const { filters } = useSelector<AdvancedTableStateValue<SmsTemplate>>(
+	const { filters } = useSelector<AdvancedTableStateType<"sms-templates">>(
 		({ advancedTable }) => advancedTable["sms-templates"]
 	)
 
@@ -68,4 +68,4 @@ const MySmsTemplatesViewFiltersContent = () => {
 	)
 }
 
-export default MySmsTemplatesViewFiltersContent
+export default SmsTemplatesViewFiltersContent

@@ -1,6 +1,6 @@
-import type { SmsTemplate } from "../types"
+import type { SmsTemplateType } from "../types"
 
-const smsTemplatesFieldsMap: Partial<Record<keyof SmsTemplate, string>> = {
+const smsTemplateFieldsLocaleMap: Partial<Record<keyof SmsTemplateType, string>> = {
 	name: "sms-templates:fields.name",
 	type: "sms-templates:fields.type",
 	language: "sms-templates:fields.language",
@@ -8,4 +8,4 @@ const smsTemplatesFieldsMap: Partial<Record<keyof SmsTemplate, string>> = {
 	status: "sms-templates:fields.status",
 }
 
-export default smsTemplatesFieldsMap
+export default smsTemplateFieldsLocaleMap

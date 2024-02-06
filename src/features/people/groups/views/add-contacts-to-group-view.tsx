@@ -8,7 +8,12 @@ import AdvancedTable from "@/core/components/advanced-table"
 import appPaths from "@/core/constants/app-paths"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection, resetAdvancedTableState, updateSelection } from "@/core/slices/advanced-table-slice"
+import {
+	clearSelection,
+	resetAdvancedTableState,
+	updateSelection,
+} from "@/core/slices/advanced-table-slice/advanced-table-slice"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import type { SharedListViewProps } from "@/core/types"
 import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
 import type { Contact } from "@/features/people/contacts/types"
@@ -17,7 +22,7 @@ import { Button, Footer } from "@/ui"
 import { cleanObject } from "@/utils"
 
 import { useAddContactsToGroupMutation } from "../api"
-import { AddContactsToGroupArgs } from "../types"
+import type { AddContactsToGroupArgs } from "../types"
 
 const ContactsViewFiltersContent = lazy(
 	() => import("@/features/people/contacts/views/contacts-view/contacts-view-filters-content")
@@ -34,7 +39,9 @@ const AddContactsToGroupView = ({ list, count, ...tableProps }: SharedListViewPr
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
-	const { selection, filters, searchTerm } = useSelector(({ advancedTable }) => advancedTable["add-contacts-to-group"])
+	const { selection, filters, searchTerm } = useSelector<AdvancedTableStateType<"add-contacts-to-group">>(
+		({ advancedTable }) => advancedTable["add-contacts-to-group"]
+	)
 
 	const onBack = () => {
 		dispatch(resetAdvancedTableState("add-contacts-to-group"))
