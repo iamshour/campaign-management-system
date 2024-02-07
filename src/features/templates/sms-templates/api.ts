@@ -11,6 +11,7 @@ import type {
 	DeleteSmsTemplatesArgs,
 	SmsPrebuiltTemplateType,
 	GetSmsPrebuiltTemplatesByIndustryIdArgs,
+	AddNewSmsTemplateArgs,
 } from "./types"
 //#endregion
 
@@ -26,6 +27,11 @@ const smsTemplatesApi = api.injectEndpoints({
 			query: (id) => `/templatesById/${id}`,
 			providesTags: (result) => [{ type: "SmsTemplate", id: result?.id }],
 			// transformResponse,
+		}),
+
+		addNewSmsTemplate: builder.mutation<any, AddNewSmsTemplateArgs>({
+			query: (body) => ({ url: "/templatesById", method: "POST", body }),
+			invalidatesTags: (res) => (res ? [{ type: "SmsTemplate", id: "LIST" }] : []),
 		}),
 
 		deleteSmsTemplates: builder.mutation<any, DeleteSmsTemplatesArgs>({
@@ -55,7 +61,8 @@ const smsTemplatesApi = api.injectEndpoints({
 
 export const {
 	useGetSmsTemplatesQuery,
-	useGetSmsPrebuiltTemplatesByIndustryIdQuery,
 	useGetSmsTemplateByIdQuery,
+	useAddNewSmsTemplateMutation,
 	useDeleteSmsTemplatesMutation,
+	useGetSmsPrebuiltTemplatesByIndustryIdQuery,
 } = smsTemplatesApi

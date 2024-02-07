@@ -83,7 +83,10 @@ const SelectTrigger = ({
 		{...props}
 		data-hasvalue={hasValue}
 		className={twMerge(
-			"flex h-10 w-full items-center justify-between gap-2 rounded-md border-0 bg-transparent !py-1.5 px-3 text-sm text-gray-800 text-opacity-40 !outline-none ring-1 !ring-inset ring-primary-300 transition-basic focus-within:ring-2 focus-within:ring-primary-500 data-[hasvalue=true]:text-opacity-100 focus:ring-2 focus:ring-primary-500 active:ring-2 active:ring-primary-500 [&>span]:inline [&>span]:flex-1 [&>span]:truncate [&>span]:text-start [&>span]:text-opacity-30 [&>svg]:text-base [&>svg]:text-current",
+			`flex h-10 w-full items-center justify-between gap-2 rounded-md border-0 bg-transparent !py-1.5 px-3 text-sm text-gray-800 text-opacity-40 !outline-none 
+			ring-1 !ring-inset ring-primary-300 transition-basic focus-within:ring-2 focus-within:ring-primary-500 
+			data-[hasvalue=true]:text-opacity-100 focus:ring-2 focus:ring-primary-500 active:ring-2 active:ring-primary-500
+			[&>span]:inline [&>span]:flex-1 [&>span]:truncate [&>span]:text-start [&>span]:text-opacity-30 [&>svg]:text-base [&>svg]:text-current`,
 			className
 		)}>
 		{children}

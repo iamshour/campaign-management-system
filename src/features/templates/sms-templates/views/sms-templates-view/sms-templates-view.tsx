@@ -33,7 +33,7 @@ const SmsTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsTempl
 				<AdvancedTable.Table
 					columns={smsTemplatesTableColumns}
 					classNames={classNames}
-					onRowClick={({ id }) => navigate(`./${id}`)}
+					onRowClick={({ id }) => navigate(id)}
 					{...tableProps}
 				/>
 				<AdvancedTable.Pagination pageLimits={[10, 20, 30]}>

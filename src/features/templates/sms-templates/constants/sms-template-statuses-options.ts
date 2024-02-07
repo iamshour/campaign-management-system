@@ -6,7 +6,6 @@ import type { SmsTemplateStatusOption } from "../types"
 const smsTemplateStatusesLocaleMap: Record<SmsTemplateStatusOption, string> = {
 	DRAFT: "Draft",
 	PUBLISHED: "Published",
-	DELETED: "Deleted",
 }
 
 const smsTemplateStatusesOptions = (

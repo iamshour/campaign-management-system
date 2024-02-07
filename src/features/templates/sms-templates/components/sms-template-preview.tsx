@@ -11,13 +11,13 @@ const SmsTemplatePreview = ({ name, type, language, body }: SmsTemplateType) => 
 	<div className='flex h-full w-full flex-col overflow-y-auto p-6'>
 		<h1 className='mb-6 text-xl font-bold'>View {name}</h1>
 		<div className=' flex flex-1 flex-row flex-wrap justify-between rounded-xl bg-[#F7F7F7] p-6 px-12 lg:flex-nowrap'>
-			<div className='ml-8 max-w-[700px]'>
+			<div className='ml-8 max-w-full md:max-w-[700px]'>
 				<div>
-					<h1 className='relative mb-5 text-xl font-bold'>
+					<h1 className='relative text-xl font-bold'>
 						<MdiInformationVariantCircle className='absolute -left-9 top-1 text-[#2daef5]' />
 						Template Basic Info
 					</h1>
-					<p className='mb-2'>
+					<p className='mb-2 mt-5'>
 						<strong className='mr-2 font-medium'>Template Name:</strong>
 						{name}
 					</p>
@@ -32,11 +32,11 @@ const SmsTemplatePreview = ({ name, type, language, body }: SmsTemplateType) => 
 				</div>
 
 				<div className='mt-8'>
-					<h1 className='relative mb-5 text-xl font-bold'>
+					<h1 className='relative text-xl font-bold'>
 						<MdiMessageProcessing className='absolute -left-9 top-1 text-[#2daef5]' />
 						Message Text
 					</h1>
-					<p className='mb-2'>
+					<p className='mb-2 mt-5'>
 						<strong className='font-medium'>Template Body:</strong>
 					</p>
 					<p>{body}</p>

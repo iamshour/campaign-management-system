@@ -11,9 +11,7 @@ import smsTemplateFieldsLocaleMap from "./sms-template-fields-locale-map"
 import smsTemplateStatusesColorsMap from "./sms-template-statuses-colors-map"
 
 // eslint-disable-next-line react-refresh/only-export-components
-const MySmsTemplatesViewTableActions = lazy(
-	() => import("../views/sms-templates-view/sms-templates-view-table-actions")
-)
+const SmsTemplatesViewTableActions = lazy(() => import("../views/sms-templates-view/sms-templates-view-table-actions"))
 //#endregion
 
 const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
@@ -58,7 +56,7 @@ const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
 	},
 	{
 		accessorKey: "actions",
-		cell: (_, { id }) => <MySmsTemplatesViewTableActions id={id} />,
+		cell: (_, { id }) => <SmsTemplatesViewTableActions id={id} />,
 	},
 ]
 

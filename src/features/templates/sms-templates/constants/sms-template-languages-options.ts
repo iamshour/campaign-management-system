@@ -8,8 +8,8 @@ const smsTemplateLanguagesLocaleMap: Record<SmsTemplateLanguageOption, string> =
 	UNICODE: "Unicode",
 }
 
-const smsTemplateLanguagesOptions = (
+export const smsTemplateLanguagesOptions = (
 	Object.entries(smsTemplateLanguagesLocaleMap) as [SmsTemplateLanguageOption, string][]
-)?.map(([value, label]) => ({ value, label: label }))
+)?.map(([value, label]) => ({ value, label }))
 
 export default smsTemplateLanguagesOptions

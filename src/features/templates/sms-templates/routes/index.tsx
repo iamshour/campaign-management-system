@@ -7,6 +7,8 @@ import { DataTableSkeleton, FullViewSkeleton } from "@/ui"
 const SmsTemplatesLayout = lazy(() => import("../components/sms-template-layout"))
 const SmsTemplatesRoute = lazy(() => import("@/features/templates/sms-templates/routes/sms-templates-route"))
 const SmsTemplateRoute = lazy(() => import("@/features/templates/sms-templates/routes/sms-template-route"))
+const CreateSmsTemplateRoute = lazy(() => import("@/features/templates/sms-templates/routes/create-sms-template-route"))
+const EditSmsTemplateRoute = lazy(() => import("@/features/templates/sms-templates/routes/edit-sms-template-route"))
 const SmsPrebuiltTemplatesRoute = lazy(
 	() => import("@/features/templates/sms-templates/routes/sms-prebuilt-templates-route")
 )
@@ -30,6 +32,24 @@ const SmsTemplatesFeatureRoutes = () => (
 			element={
 				<Suspense fallback={<FullViewSkeleton />}>
 					<SmsTemplateRoute />
+				</Suspense>
+			}
+		/>
+
+		<Route
+			path='my-templates/new-template'
+			element={
+				<Suspense fallback={<DataTableSkeleton />}>
+					<CreateSmsTemplateRoute />
+				</Suspense>
+			}
+		/>
+
+		<Route
+			path='my-templates/:id/edit-template'
+			element={
+				<Suspense fallback={<DataTableSkeleton />}>
+					<EditSmsTemplateRoute />
 				</Suspense>
 			}
 		/>
