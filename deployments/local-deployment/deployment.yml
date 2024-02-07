@@ -5,8 +5,6 @@ metadata:
   namespace: dev-ops-shams
 spec:
   replicas: 1
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
       app: cms
@@ -17,7 +15,7 @@ spec:
     spec:
       containers:
         - name: cms
-          image: registry.gitlab.com/a10179/campaign-system/frontend/cms:0.1.1-beta-cms-377
+          image: registry.gitlab.com/a10179/campaign-system/frontend/cms:0.1.6-beta
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
@@ -49,16 +47,23 @@ spec:
   type: ClusterIP
 
 ---
+
 apiVersion: networking.k8s.io/v1
+
 kind: Ingress
 metadata:
   name: cms-ingress
+  namespace: dev-ops-shams
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-staging
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+    nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-response-headers: "X-Forwarded-User,X-Forwarded-Email,X-Forwarded-Preferred-Username,X-Auth-Request-User, X-Auth-Request-Email"
   labels:
     name: cms-ingress
 spec:
+  ingressClassName: nginx
   rules:
   - host: cms.dev-ops-shams.rdev.antwerptechnologies.com
     http:
@@ -76,6 +81,7 @@ spec:
       secretName: cms-tls
 
 ---
+
 apiVersion: v1
 kind: ConfigMap
 metadata:

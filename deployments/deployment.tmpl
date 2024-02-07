@@ -5,8 +5,6 @@ metadata:
   namespace: ${NAMESPACE}
 spec:
   replicas: 1
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
       app: ${CI_PROJECT_NAME}
@@ -24,8 +22,8 @@ spec:
                 name: ${CI_PROJECT_NAME}-configmap
           resources:
             limits:
-              memory: "128Mi"
-              cpu: "500m"
+              memory: "256Mi"
+              cpu: "1000m"
           ports:
             - containerPort: 3000
               protocol: TCP
@@ -59,6 +57,11 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-staging
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+    nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-response-headers: "X-Forwarded-User,X-Forwarded-Email,X-Forwarded-Preferred-Username,X-Auth-Request-User, X-Auth-Request-Email"
+  labels:
+    name: ${CI_PROJECT_NAME}-ingress
 spec:
   ingressClassName: nginx
   rules:

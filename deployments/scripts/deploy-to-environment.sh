@@ -21,7 +21,9 @@ deploy_with_helm() {
   local template_path="./deployments/${CI_PROJECT_NAME}/values.tmpl"
   local values_path="./deployments/${CI_PROJECT_NAME}/values.yaml"
 
-  if ! envsubst < "${template_path}" > "${values_path}"; then
+  local vars_to_subst='${CI_PROJECT_NAME},${NAMESPACE},${DOCKER_TAG},${HOST},${VITE_APP_PREFIX},${VITE_APP_API_BASE_URL}'
+
+  if ! envsubst "$vars_to_subst" < "${template_path}" > "${values_path}"; then
     printf "%s\n" "Failed to generate values.yaml from template" >&2
     return 1
   fi
@@ -60,7 +62,9 @@ deploy_with_kubectl() {
   local template_path="./deployments/deployment.tmpl"
   local deployment_path="./deployments/deployment.yaml"
 
-  if ! envsubst < "${template_path}" > "${deployment_path}"; then
+  local vars_to_subst='${CI_PROJECT_NAME},${NAMESPACE},${DOCKER_TAG},${HOST},${VITE_APP_PREFIX},${VITE_APP_API_BASE_URL}'
+
+  if ! envsubst "$vars_to_subst" < "${template_path}" > "${deployment_path}"; then
     printf "%s\n" "Failed to generate deployment.yaml from template" >&2
     return 1
   fi
