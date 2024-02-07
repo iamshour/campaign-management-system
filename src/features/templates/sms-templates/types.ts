@@ -16,7 +16,7 @@ export type SmsTemplateLanguageOption = "ENGLISH" | "UNICODE"
 /**
  * Status options for the SMS Template
  */
-export type SmsTemplateStatusOption = "PUBLISHED" | "DRAFT" | "DELETED"
+export type SmsTemplateStatusOption = "PUBLISHED" | "DRAFT"
 
 /**
  * Shape of fetched SMS Template
@@ -46,6 +46,15 @@ export type GetSmsTemplatesArgs = CommonListArguments<SmsTemplateType> & {
  * Returned data shape from the `getSmsTemplateById` query
  */
 export type GetSmsTemplateBytIdReturnType = SmsTemplateType
+
+/**
+ * Arguments passed to the server whilst using the `AddNewSmsTemplate` mutation to post a new contact entry
+ */
+export type AddNewSmsTemplateArgs = Pick<SmsTemplateType, "name" | "type" | "language" | "status"> & {
+	properties: {
+		smsContent: string
+	}
+}
 
 /**
  * Arguments used for the `getSmsTemplates` query, passed for the server as params when fetching SMS Templates List

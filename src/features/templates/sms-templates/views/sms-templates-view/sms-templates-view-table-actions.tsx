@@ -18,7 +18,7 @@ const SmsTemplatesViewTableActions = ({ id }: Pick<SmsTemplateType, "id">) => {
 			</Dropdown.Trigger>
 
 			<Dropdown.Content sideOffset={0} align='end'>
-				<Dropdown.Item onClick={() => navigate(`./${id}`)}>View Template</Dropdown.Item>
+				<Dropdown.Item onClick={() => navigate(id)}>View Template</Dropdown.Item>
 
 				<Dropdown.Separator />
 
