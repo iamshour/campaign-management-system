@@ -1,8 +1,8 @@
 //#region Import
 import { useTranslation } from "react-i18next"
 
-import MoveToGroupDialog from "@/features/people/groups/dialogs/move-to-group-dialog"
-import RemoveFromGroupDialog from "@/features/people/groups/dialogs/remove-from-group-dialog"
+import MoveToGroupDialog from "@/features/people/groups/dialogs/move-to-group-dialog/move-to-group-dialog"
+import RemoveFromGroupDialog from "@/features/people/groups/dialogs/remove-from-group-dialog/remove-from-group-dialog"
 import { Dropdown } from "@/ui"
 //#endregion
 

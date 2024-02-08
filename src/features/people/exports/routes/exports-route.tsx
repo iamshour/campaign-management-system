@@ -14,7 +14,7 @@ const EmptyExportsView = lazy(() => import("../views/empty-exports-view"))
 //#endregion
 
 const ExportsRoute = () => {
-	const { offset, limit, order, sort, filters, searchTerm, appliedFiltersCount } = useSelector<
+	const { offset, limit, filters, searchTerm, appliedFiltersCount } = useSelector<
 		AdvancedTableStateType<"contacts-exports">
 	>(({ advancedTable }) => advancedTable["contacts-exports"])
 
@@ -22,16 +22,13 @@ const ExportsRoute = () => {
 		{
 			limit,
 			offset,
-			sort,
-			order,
+			sort: "createdAt",
+			order: "desc",
 			fileName: searchTerm,
 			any: searchTerm ? true : undefined,
-			// date range filter:
 			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
 			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
-			// status filter:
 			statuses: filters?.status?.length ? filters.status : undefined,
-			// exported by filter:
 			exportedBy: filters?.exportedBy?.length ? filters.exportedBy : undefined,
 		},
 		{

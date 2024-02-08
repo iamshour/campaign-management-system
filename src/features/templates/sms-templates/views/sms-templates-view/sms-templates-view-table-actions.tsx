@@ -1,8 +1,8 @@
 //#region Import
 import { useNavigate } from "react-router-dom"
 
-import DeleteTemplateDialog from "@/features/templates/sms-templates/dialogs/delete-template-dialog"
-import type { SmsTemplateType, CreateSmsTemplateLocationType } from "@/features/templates/sms-templates/types"
+import DeleteTemplateDialog from "@/features/templates/sms-templates/dialogs/delete-template-dialog/delete-template-dialog"
+import type { CreateSmsTemplateLocationType, SmsTemplateType } from "@/features/templates/sms-templates/types"
 import { Dropdown } from "@/ui"
 
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"

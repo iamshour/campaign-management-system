@@ -1,9 +1,9 @@
 //#region Import
 import { useTranslation } from "react-i18next"
 
-import EditContactDialog from "@/features/people/contacts/dialogs/edit-contact-dialog"
-import MoveToGroupDialog from "@/features/people/groups/dialogs/move-to-group-dialog"
-import RemoveFromGroupDialog from "@/features/people/groups/dialogs/remove-from-group-dialog"
+import EditContactDialog from "@/features/people/contacts/dialogs/edit-contact-dialog/edit-contact-dialog"
+import MoveToGroupDialog from "@/features/people/groups/dialogs/move-to-group-dialog/move-to-group-dialog"
+import RemoveFromGroupDialog from "@/features/people/groups/dialogs/remove-from-group-dialog/remove-from-group-dialog"
 import { Dropdown } from "@/ui"
 
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"

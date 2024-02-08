@@ -1,66 +1,71 @@
 //#region Import
-import { useState } from "react"
+import { useCallback } from "react"
 
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { updateFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
 import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import { useGetIndustryListQuery } from "@/features/industries/api"
+import { IndustryType } from "@/features/industries/types"
 import smsTemplateLanguagesOptions from "@/features/templates/sms-templates/constants/sms-template-languages-options"
+import smsTemplateTypesOptions from "@/features/templates/sms-templates/constants/sms-template-types-options"
 import type {
 	SmsPrebuiltTemplatesTableFiltersType,
 	SmsTemplateLanguageOption,
 	SmsTemplateTypeOption,
 } from "@/features/templates/sms-templates/types"
-import {
-	DisplayError,
-	SearchInput,
-	Skeleton,
-	Separator,
-	Button,
-	Collapsible,
-	Label,
-	Checkbox,
-	type CheckedState,
-} from "@/ui"
-
-import smsTemplateTypesOptions from "../../constants/sms-template-types-options"
+import { SearchInput, Separator, Button, Label, Checkbox, Collapsible, type CheckedState } from "@/ui"
 //#endregion
+
+interface SmsPrebuiltTemplatesFiltersContentProps {
+	list: IndustryType[]
+
+	onIndustrySearch: (searchTerm?: string) => void
+}
 
 type OnCheckPayloadType =
 	| { key: "templateType"; value: SmsTemplateTypeOption }
 	| { key: "templateLanguage"; value: SmsTemplateLanguageOption }
 
-const SmsPrebuiltTemplatesViewFiltersBar = () => {
+const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebuiltTemplatesFiltersContentProps) => {
 	const dispatch = useDispatch()
-	const [searchTerm, setSearchTerm] = useState<string>()
+
+	// Getting Default User's Industry from User info in authSlice (Token))
+	const defaultUserIndustryId = useSelector(({ auth }) => auth?.user?.industryId)
 
 	const { filters } = useSelector<AdvancedTableStateType<"sms-prebuilt-templates">>(
 		({ advancedTable }) => advancedTable["sms-prebuilt-templates"]
 	)
 
-	const { data, isLoading, isError, error } = useGetIndustryListQuery(
-		{ name: searchTerm, offset: 0, limit: 50 },
-		baseQueryConfigs
+	/**
+	 * Callback Function passed for both `templateType` & `templateLanguage` filters (checkboxes)
+	 * @param checked Boolean check for whether the checkbox is checked or not
+	 * @param param1.key Key referreing to where the checkbox is clicked:  `templateType` or `templateLanguage`
+	 * @param param1.value Value of filter, to be sent to the server
+	 *	("PROMOTIONAL" | "TRANSACTIONAL" | "OTP" in case key is templateType) or ("ENGLISH" | "UNICODE" in case key is templateLanguage)
+	 */
+	const onFilterCheckboxClick = useCallback(
+		(checked: CheckedState, { key, value }: OnCheckPayloadType) => {
+			let updatedFilter: (typeof value)[] = []
+
+			if (!filters?.[key]) {
+				updatedFilter = [value]
+			} else if (checked) {
+				updatedFilter = filters?.[key] ? [...filters[key]!, value] : [value]
+			} else {
+				updatedFilter = filters?.[key]?.filter((item) => item !== value) || []
+			}
+
+			dispatch(updateFilters({ "sms-prebuilt-templates": { [key]: updatedFilter } }))
+		},
+		[dispatch, filters]
 	)
 
-	const onCheckTemplateType = (checked: CheckedState, { key, value }: OnCheckPayloadType) => {
-		let updatedFilter: (typeof value)[] = []
-
-		if (!filters?.[key]) {
-			updatedFilter = [value]
-		} else if (checked) {
-			updatedFilter = filters?.[key] ? [...filters[key]!, value] : [value]
-		} else {
-			updatedFilter = filters?.[key]?.filter((item) => item !== value) || []
-		}
-
-		dispatch(updateFilters({ "sms-prebuilt-templates": { [key]: updatedFilter } }))
-	}
-
-	if (isLoading) return <Skeleton className='h-full bg-white' />
-	if (isError) return <DisplayError error={error as any} />
+	const onFilterClick = useCallback(
+		(updatedFilters: Partial<SmsPrebuiltTemplatesTableFiltersType>) => {
+			dispatch(updateFilters({ "sms-prebuilt-templates": updatedFilters }))
+		},
+		[dispatch]
+	)
 
 	return (
 		<div className='z-10 flex h-full w-[300px] flex-col overflow-hidden bg-[#edf3f7]'>
@@ -70,8 +75,8 @@ const SmsPrebuiltTemplatesViewFiltersBar = () => {
 						key={label}
 						variant='ghost'
 						active={(!filters?.filterBy && idx === 0) || filterBy === filters?.filterBy}
-						className='w-full justify-start font-normal data-[active=true]:bg-primary-600 data-[active=true]:font-semibold data-[active=true]:text-white'
-						onClick={() => dispatch(updateFilters({ "sms-prebuilt-templates": { filterBy } }))}>
+						className='w-full justify-start font-normal transition-all will-change-[font-weight,background-color] data-[active=true]:bg-primary-600 data-[active=true]:font-semibold data-[active=true]:text-white'
+						onClick={() => onFilterClick({ filterBy })}>
 						{label}
 					</Button>
 				))}
@@ -81,17 +86,17 @@ const SmsPrebuiltTemplatesViewFiltersBar = () => {
 
 			<div className='h-[calc(100%-168px)] overflow-y-auto border-b'>
 				<CollapsibleButton label='Industries'>
-					<SearchInput className='overflow-visible' variant='underlined' value={searchTerm} onChange={setSearchTerm} />
+					<SearchInput className='overflow-visible' variant='underlined' onChange={onIndustrySearch} />
 
 					<div className='flex max-h-[300px] w-full flex-col gap-1 overflow-y-auto'>
-						{data?.list?.map(({ id, name: industryId }) => (
+						{[{ id: "ALL", name: "All Industries" }, ...list]?.map(({ id: industryId, name }) => (
 							<Button
-								key={id}
+								key={industryId}
 								variant='ghost'
-								active={filters?.industryId === industryId}
-								className='h-max w-full max-w-[80%] shrink-0 justify-start whitespace-break-spaces p-2 text-start font-normal data-[active=true]:bg-primary-600/20'
-								onClick={() => dispatch(updateFilters({ "sms-prebuilt-templates": { industryId } }))}>
-								{industryId}
+								active={filters?.industryId ? industryId === filters?.industryId : industryId === defaultUserIndustryId}
+								className='h-max w-full max-w-[80%] shrink-0 justify-start whitespace-break-spaces p-2 text-start font-normal text-[#054060] data-[active=true]:bg-[#C8E0EE] data-[active=true]:text-[#054060] hover:bg-[#C8E0EE]'
+								onClick={() => onFilterClick({ industryId })}>
+								{name}
 							</Button>
 						))}
 					</div>
@@ -102,7 +107,7 @@ const SmsPrebuiltTemplatesViewFiltersBar = () => {
 							<Checkbox
 								id={value}
 								checked={filters?.templateType?.includes(value)}
-								onCheckedChange={(checked) => onCheckTemplateType(checked, { key: "templateType", value })}
+								onCheckedChange={(checked) => onFilterCheckboxClick(checked, { key: "templateType", value })}
 							/>
 							<Label className='cursor-pointer p-0 transition-basic hover:text-primary-900' htmlFor={value}>
 								{label}
@@ -116,7 +121,7 @@ const SmsPrebuiltTemplatesViewFiltersBar = () => {
 							<Checkbox
 								id={value}
 								checked={filters?.templateLanguage?.includes(value)}
-								onCheckedChange={(checked) => onCheckTemplateType(checked, { key: "templateLanguage", value })}
+								onCheckedChange={(checked) => onFilterCheckboxClick(checked, { key: "templateLanguage", value })}
 							/>
 							<Label className='cursor-pointer p-0 transition-basic hover:text-primary-900' htmlFor={value}>
 								{label}
@@ -129,7 +134,7 @@ const SmsPrebuiltTemplatesViewFiltersBar = () => {
 	)
 }
 
-export default SmsPrebuiltTemplatesViewFiltersBar
+export default SmsPrebuiltTemplatesFiltersContent
 
 const sortButtonsLabels: { filterBy?: SmsPrebuiltTemplatesTableFiltersType["filterBy"]; label: string }[] = [
 	{ label: "All Templates" },

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 import useSelector from "@/core/hooks/useSelector"
 import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import ExportFieldsDialog from "@/features/people/exports/dialogs/export-fields-dialog"
+import ExportFieldsDialog from "@/features/people/exports/dialogs/export-fields-dialog/export-fields-dialog"
 import { Button, Skeleton } from "@/ui"
 
 import MultiEditDropdown from "./multi-edit-dropdown"

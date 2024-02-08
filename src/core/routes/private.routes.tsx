@@ -26,8 +26,6 @@ const privateRoutes: RouteObject[] = [
 			{ path: "people/exports/*", element: <ExportsFeatureRoutes /> },
 			{ path: "templates/sms-templates/*", element: <SmsTemplatesFeatureRoutes /> },
 
-			{ path: "templates/sms-templates/*", element: <SmsTemplatesFeatureRoutes /> },
-
 			{ path: "/", element: <Navigate to={appPaths.DASHBOARD} /> },
 			{
 				path: appPaths.DASHBOARD,

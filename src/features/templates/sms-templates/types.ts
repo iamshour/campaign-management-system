@@ -96,8 +96,8 @@ export type SmsPrebuiltTemplateType = {
 /**
  * Arguments used for the `getSmsTemplates` query, passed for the server as params when fetching SMS Prebuilt Templates List
  */
-export type GetSmsPrebuiltTemplatesByIndustryIdArgs = Omit<TableState<SmsPrebuiltTemplateType>, "selection"> & {
-	industryId: string
+export type GetSmsPrebuiltTemplatesArgs = Omit<TableState<SmsPrebuiltTemplateType>, "selection"> & {
+	industryId?: string
 	name?: string
 	any?: boolean
 	type?: SmsTemplateTypeOption[]
@@ -112,7 +112,7 @@ export type SmsPrebuiltTemplatesTableFiltersType = {
 	filterBy?: "POPULAR" | "RECENT"
 	templateType?: SmsTemplateTypeOption[]
 	templateLanguage?: SmsTemplateLanguageOption[]
-	industryId?: string
+	industryId?: string | "ALL"
 }
 
 /**

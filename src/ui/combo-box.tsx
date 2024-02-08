@@ -152,19 +152,6 @@ export function ComboBoxPopper({
 		return updateSelection(option)
 	}
 
-	const canShowCreatable = Boolean(
-		isCreatable &&
-			searchTerm?.length &&
-			((!isMulti && selection?.value !== searchTerm) || (isMulti && selection?.every((op) => op?.value !== searchTerm)))
-	)
-
-	const onCreate = () => {
-		if (!canShowCreatable || !onSearch) return
-
-		onSelect({ label: searchTerm!, value: searchTerm! })
-		onSearch("")
-	}
-
 	const optionsList = useMemo(() => {
 		if (!isCreatable) return options
 
@@ -189,24 +176,26 @@ export function ComboBoxPopper({
 		return parsedArray
 	}, [options, isMulti, selection, isCreatable, searchTerm])
 
+	const canShowCreatable = Boolean(
+		isCreatable &&
+			searchTerm?.length &&
+			((!isMulti && selection?.value !== searchTerm) ||
+				(isMulti && selection?.every((op) => op?.value !== searchTerm))) &&
+			(!optionsList || optionsList?.every((op) => op?.value !== searchTerm))
+	)
+
+	const onCreate = () => {
+		if (!canShowCreatable || !onSearch) return
+
+		onSelect({ label: searchTerm!, value: searchTerm! })
+		onSearch("")
+	}
+
 	return (
 		<Command shouldFilter={onSearch === undefined} className='!h-full'>
 			<Command.Input placeholder={t("comboBox.placeholder")} value={searchTerm} onValueChange={onSearch} />
 
-			<Command.List className='h-full [&>div]:!h-full'>
-				{loading && (
-					<Command.Loading className='h-full w-full p-2 pb-0 [&>div]:space-y-2'>
-						<Skeleton className='h-8 w-full rounded-lg' />
-						<Skeleton className='h-8 w-full rounded-lg' />
-					</Command.Loading>
-				)}
-
-				{!isCreatable && !loading && (
-					<Command.Empty className='h-full uppercase text-gray-500 flex-center'>
-						{t("comboBox.message.noResults")}
-					</Command.Empty>
-				)}
-
+			<Command.List className='flex-1 [&>div]:flex [&>div]:!h-full [&>div]:flex-col'>
 				{canShowCreatable && (
 					<div className='bg-primary-50/50'>
 						<Button variant='ghost' size='sm' className='w-full justify-start' onClick={onCreate}>
@@ -215,33 +204,43 @@ export function ComboBoxPopper({
 					</div>
 				)}
 
-				<Command.Group>
-					{optionsList
-						?.sort((a, b) => (isSelected(b.value) ? 1 : -1) - (isSelected(a.value) ? 1 : -1))
-						?.map((op) => (
-							<Command.Item
-								key={op?.value}
-								onSelect={() => onSelect(op)}
-								disabled={!isSelected(op?.value) && maxLimitReached}>
-								<div
-									className={twMerge(
-										"me-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary transition-all duration-100",
-										isSelected(op?.value) ? "bg-primary text-white" : "opacity-50 [&_svg]:invisible"
-									)}>
-									<LucideCheck className='h-4 w-4' />
-								</div>
-								<span className='truncate'>{op?.label}</span>
-							</Command.Item>
-						))}
-				</Command.Group>
+				{loading ? (
+					<Command.Loading className='w-full flex-1 p-2 pb-0 [&>div]:space-y-2'>
+						<Skeleton className='h-8 w-full rounded-lg' />
+						<Skeleton className='h-8 w-full rounded-lg' />
+					</Command.Loading>
+				) : !optionsList?.length ? (
+					<div className='flex-1 overflow-hidden uppercase text-gray-500 flex-center'>
+						{t("comboBox.message.noResults")}
+					</div>
+				) : (
+					<Command.Group className='h-full flex-1 overflow-y-auto'>
+						{optionsList
+							?.sort((a, b) => (isSelected(b.value) ? 1 : -1) - (isSelected(a.value) ? 1 : -1))
+							?.map((op) => (
+								<Command.Item
+									key={op?.value}
+									onSelect={() => onSelect(op)}
+									disabled={!isSelected(op?.value) && maxLimitReached}>
+									<div
+										className={twMerge(
+											"me-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary transition-all duration-100",
+											isSelected(op?.value) ? "bg-primary text-white" : "opacity-50 [&_svg]:invisible"
+										)}>
+										<LucideCheck className='h-4 w-4' />
+									</div>
+									<span className='truncate'>{op?.label}</span>
+								</Command.Item>
+							))}
+					</Command.Group>
+				)}
 			</Command.List>
 
 			{
 				// Clear All Entries. Shown only for Multi-selection, and if entries were already selected
-				!!isMulti && !!selection?.length && (
+				!!isMulti && !!selection?.length && !!optionsList?.length && (
 					<>
-						<Command.Separator />
-						<Command.Group>
+						<Command.Group className='border-t'>
 							<Command.Item
 								onSelect={() => updateSelection([])}
 								className='cursor-pointer justify-center text-center hover:text-primary-900'>

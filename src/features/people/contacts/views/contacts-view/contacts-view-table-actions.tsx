@@ -1,6 +1,6 @@
 //#region Import
-import DeleteSingleContactsDialog from "@/features/people/contacts/dialogs/delete-single-contact-dialog"
-import EditContactDialog from "@/features/people/contacts/dialogs/edit-contact-dialog"
+import DeleteSingleContactsDialog from "@/features/people/contacts/dialogs/delete-single-contact-dialog/delete-single-contact-dialog"
+import EditContactDialog from "@/features/people/contacts/dialogs/edit-contact-dialog/edit-contact-dialog"
 import { Dropdown } from "@/ui"
 
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
