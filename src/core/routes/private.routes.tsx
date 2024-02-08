@@ -7,7 +7,7 @@ import ContactsFeatureRoutes from "@/features/people/contacts/routes"
 import ExportsFeatureRoutes from "@/features/people/exports/routes"
 import GroupsFeatureRoutes from "@/features/people/groups/routes"
 import SegmentsFeatureRoutes from "@/features/people/segments/routes"
-import SmsTemplatesFeatureRoutes from "@/features/templates/sms-templates/routes"
+import SmsTemplatesFeatureRoutes from "@/features/templates/sms-templates/routes/sms-templates-feature-routes"
 import { NotFoundError } from "@/ui"
 //#endregion
 

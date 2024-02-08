@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useNavigate, useLocation } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"
-import { Form, Select, useForm, Footer, Button, Checkbox, Tooltip, Input } from "@/ui"
+import { Form, Select, useForm, Footer, Button, Checkbox, Tooltip, Input, Dialog } from "@/ui"
 
 import { smsTemplateLanguagesOptions } from "../../constants/sms-template-languages-options"
 import { smsTemplateTypesOptions } from "../../constants/sms-template-types-options"
@@ -28,25 +28,25 @@ export interface SmsTemplateBuilderProps {
 	 * Children Nodes to be rendered
 	 */
 	children: React.ReactNode
+
+	/**
+	 * Form default values, will be passed in case of edit, clone and use template. ANd will be undefined in case of create template
+	 */
+	defaultValue?: SmsTemplateSchemaType
 }
 
-const SmsTemplateBuilder = ({ onSubmit, children }: SmsTemplateBuilderProps) => {
+const SmsTemplateBuilder = ({ onSubmit, children, defaultValue }: SmsTemplateBuilderProps) => {
 	const navigate = useNavigate()
 	const { state } = useLocation()
 
 	const form = useForm<SmsTemplateSchemaType>({
 		resolver: zodResolver(SmsTemplateSchema),
-		// values: {}, // TODO: set defaultValues form edit, clone, createFrom froms
+		values: defaultValue,
 	})
 	const { control, watch } = form
 
-	const onFormSubmit = ({ body, ...data }: SmsTemplateSchemaType) => {
-		const requestBody: Omit<AddNewSmsTemplateArgs, "status"> = {
-			...data,
-			properties: { smsContent: body },
-		}
-
-		onSubmit(requestBody)
+	const onFormSubmit = (data: SmsTemplateSchemaType) => {
+		onSubmit(data)
 	}
 
 	return (
@@ -184,9 +184,26 @@ const SmsTemplateBuilder = ({ onSubmit, children }: SmsTemplateBuilderProps) => 
 					</div>
 
 					<Footer className='mt-5 flex flex-row items-end md:justify-between'>
-						<Button variant='outline' className='px-10' onClick={() => navigate(state?.from || appPaths.SMS_TEMPLATES)}>
-							Cancel
-						</Button>
+						<Dialog>
+							<Dialog.Trigger asChild>
+								<Button variant='outline' className='px-10'>
+									Cancel
+								</Button>
+							</Dialog.Trigger>
+
+							<Dialog.Content
+								title='Discard Changes'
+								className='flex h-[220px] w-[390px] flex-col justify-between p-[30px]'
+								onInteractOutside={(e) => e.preventDefault()}>
+								Are you sure you want to cancel and discard the changes you made on this template?
+								<Button
+									variant='default'
+									className='ms-auto w-[150px]'
+									onClick={() => navigate(state?.from || appPaths.SMS_TEMPLATES)}>
+									Confirm
+								</Button>
+							</Dialog.Content>
+						</Dialog>
 
 						<div className='flex flex-row space-x-4'>{children}</div>
 					</Footer>
