@@ -2,9 +2,8 @@
 import { Link } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
 
+import { smsTemplateTypesLocaleMap } from "@/features/templates/sms-templates/constants/sms-template-types-options"
 import type { SmsPrebuiltTemplateType } from "@/features/templates/sms-templates/types"
-
-import { smsTemplateTypesLocaleMap } from "../../constants/sms-template-types-options"
 //#endregion
 
 const SmsPrebuiltTemplateCard = ({

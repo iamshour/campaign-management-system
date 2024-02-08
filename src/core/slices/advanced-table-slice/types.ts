@@ -1,4 +1,5 @@
 //#region Import
+import type { IndustryType } from "@/features/industries/types"
 import type { Contact, ContactTableFiltersType } from "@/features/people/contacts/types"
 import type { ContactExports, ContactExportsTableFiltersType } from "@/features/people/exports/types"
 import type { Group } from "@/features/people/groups/types"
@@ -23,6 +24,7 @@ export type TableKey =
 	| "segments"
 	| "sms-templates"
 	| "sms-prebuilt-templates"
+	| "industries"
 
 type TableDataMappingType = {
 	contacts: Contact
@@ -33,6 +35,7 @@ type TableDataMappingType = {
 	segments: Segment
 	"sms-templates": SmsTemplateType
 	"sms-prebuilt-templates": SmsPrebuiltTemplateType
+	industries: IndustryType
 }
 
 export type FiltersFieldMappingType = {
@@ -44,6 +47,7 @@ export type FiltersFieldMappingType = {
 	segments: { dateRange?: DateRange }
 	"sms-templates": SmsTemplatesTableFiltersType
 	"sms-prebuilt-templates": SmsPrebuiltTemplatesTableFiltersType
+	industries: { dateRange?: DateRange }
 }
 
 export type AdvancedTableStateType<K extends TableKey> = TableState<TableDataMappingType[K]> & {

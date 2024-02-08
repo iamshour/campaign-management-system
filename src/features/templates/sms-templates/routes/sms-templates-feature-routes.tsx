@@ -9,7 +9,7 @@ const SmsTemplateRoute = lazy(() => import("@/features/templates/sms-templates/r
 const CreateSmsTemplateRoute = lazy(() => import("@/features/templates/sms-templates/routes/create-sms-template-route"))
 const EditSmsTemplateRoute = lazy(() => import("@/features/templates/sms-templates/routes/edit-sms-template-route"))
 const SmsPrebuiltTemplatesRoute = lazy(
-	() => import("@/features/templates/sms-templates/routes/sms-prebuilt-templates-route")
+	() => import("@/features/templates/sms-templates/views/sms-prebuilt-templates-view/sms-prebuilt-templates-view")
 )
 const SmsPrebuiltTemplateRoute = lazy(() => import("./sms-prebuilt-template-route"))
 //#endregion

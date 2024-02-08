@@ -1,8 +1,8 @@
 //#region Import
 import { useTranslation } from "react-i18next"
 
-import DeleteMultipleContactsDialog from "@/features/people/contacts/dialogs/delete-multiple-contacts-dialog"
-import EditMultipleContactsDialog from "@/features/people/contacts/dialogs/edit-multiple-contacts-dialog"
+import DeleteMultipleContactsDialog from "@/features/people/contacts/dialogs/delete-multiple-contacts-dialog/delete-multiple-contacts-dialog"
+import EditMultipleContactsDialog from "@/features/people/contacts/dialogs/edit-multiple-contacts-dialog/edit-multiple-contacts-dialog"
 import { Dropdown } from "@/ui"
 //#endregion
 

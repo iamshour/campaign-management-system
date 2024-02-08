@@ -2,7 +2,7 @@
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import DeleteExportsDialog from "@/features/people/exports/dialogs/delete-exports-dialog"
+import DeleteExportsDialog from "@/features/people/exports/dialogs/delete-exports-dialog/delete-exports-dialog"
 import type { ContactExports } from "@/features/people/exports/types"
 import { Dropdown } from "@/ui"
 

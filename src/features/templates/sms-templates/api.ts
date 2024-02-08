@@ -9,7 +9,7 @@ import type {
 	GetSmsTemplateBytIdReturnType,
 	DeleteSmsTemplatesArgs,
 	SmsPrebuiltTemplateType,
-	GetSmsPrebuiltTemplatesByIndustryIdArgs,
+	GetSmsPrebuiltTemplatesArgs,
 	AddNewSmsTemplateArgs,
 	UpdateSmsTemplateArgs,
 	GetSmsPrebuiltTemplateBytIdReturnType,
@@ -51,12 +51,9 @@ const smsTemplatesApi = api.injectEndpoints({
 
 		// ALL API'S RELATED TO SMS PREBUILT TEMPLATES BELOW
 
-		getSmsPrebuiltTemplatesByIndustryId: builder.query<
-			ListDataReturnType<SmsPrebuiltTemplateType>,
-			GetSmsPrebuiltTemplatesByIndustryIdArgs
-		>({
-			// query: ({ industryId, ...params }) => ({ url: `/template/prebuilt/${industryId}/list`, params }),
-			// TODO: Will Use the above endpoint enstead of the one below, which is only a mock
+		getSmsPrebuiltTemplates: builder.query<ListDataReturnType<SmsPrebuiltTemplateType>, GetSmsPrebuiltTemplatesArgs>({
+			// TODO: Below url would be the one to use to integrate with server
+			// query: (params) => ({ url: "/template/prebuilt", params }),
 			query: (params) => ({ url: "/prebuilt-templates", params }),
 			providesTags: (result) =>
 				providesList(
@@ -80,6 +77,6 @@ export const {
 	useAddNewSmsTemplateMutation,
 	useUpdateSmsTemplateMutation,
 	useDeleteSmsTemplatesMutation,
-	useGetSmsPrebuiltTemplatesByIndustryIdQuery,
+	useGetSmsPrebuiltTemplatesQuery,
 	useGetSmsPrebuiltTemplateByIdQuery,
 } = smsTemplatesApi

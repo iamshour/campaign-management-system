@@ -12,26 +12,27 @@ import type {
 } from "./types"
 //#endregion
 
-const defaultDataTableState = {
-	offset: 0,
-	limit: 25,
-}
-const defaultGroupsDataTableState = {
-	...defaultDataTableState,
-	view: "List View" as AdvancedTableListGridView,
+/**
+ * Initial Data Table State passed for each
+ */
+const initialDataTableStateBase = { offset: 0, limit: 25 }
+const initialDataTableStateCompact = { ...initialDataTableStateBase, limit: 10 }
+const initialDataTableStateCompactWithGrids: AdvancedTableStateType<"groups" | "industries"> = {
+	...initialDataTableStateBase,
+	view: "List View",
 	limit: 10,
 }
-const defaultSmsTemplatesDataTableState = { ...defaultDataTableState, limit: 10 }
 
 const initialState: AdvancedTableSliceStateType = {
-	contacts: defaultDataTableState,
-	"contacts-in-group": defaultDataTableState,
-	"add-contacts-to-group": defaultDataTableState,
-	groups: defaultGroupsDataTableState,
-	"contacts-exports": defaultDataTableState,
-	segments: defaultDataTableState,
-	"sms-templates": defaultSmsTemplatesDataTableState,
-	"sms-prebuilt-templates": defaultSmsTemplatesDataTableState,
+	contacts: initialDataTableStateBase,
+	"contacts-in-group": initialDataTableStateBase,
+	"add-contacts-to-group": initialDataTableStateBase,
+	groups: initialDataTableStateCompactWithGrids,
+	"contacts-exports": initialDataTableStateBase,
+	segments: initialDataTableStateBase,
+	"sms-templates": initialDataTableStateCompact,
+	"sms-prebuilt-templates": initialDataTableStateCompact,
+	industries: initialDataTableStateCompactWithGrids,
 }
 
 const advancedTableSlice = createSlice({
@@ -152,22 +153,22 @@ const advancedTableSlice = createSlice({
 		 * @param param1 tablekey Prop, Can be one of the following: "contacts" | "contacts-in-group" | "add-contacts-to-group" | "groups"
 		 */
 		resetAdvancedTableState: (state, { payload: tableKey }: PayloadAction<TableKey>) => {
-			if (tableKey === "groups")
+			if (tableKey === "groups" || tableKey === "industries")
 				return {
 					...state,
-					groups: defaultGroupsDataTableState,
+					[tableKey]: initialDataTableStateCompactWithGrids,
 				}
 
 			return {
 				...state,
-				[tableKey]: defaultDataTableState,
+				[tableKey]: initialDataTableStateBase,
 			}
 		},
 
 		clearState: (state, { payload }: PayloadAction<TableKey>) => {
 			return {
 				...state,
-				[payload]: payload === "groups" ? defaultGroupsDataTableState : defaultDataTableState,
+				[payload]: payload === "groups" ? initialDataTableStateCompactWithGrids : initialDataTableStateBase,
 			}
 		},
 	},

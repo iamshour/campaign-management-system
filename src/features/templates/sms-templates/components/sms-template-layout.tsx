@@ -7,7 +7,7 @@ import { twMerge } from "@/ui"
 const SmsTemplatesLayout = () => {
 	return (
 		<div className='flex h-full w-full flex-col'>
-			<div className='flex w-full items-center gap-4 px-6'>
+			<div className='flex w-full items-center gap-4 border-b border-b-[#E9E9E9] px-6'>
 				{/* TODO: Use Translated Text  */}
 				<SmsTemplatesNavLink to='/templates/sms-templates/my-templates'>SMS Templates</SmsTemplatesNavLink>
 				<SmsTemplatesNavLink to='/templates/sms-templates/prebuilt-templates'>Prebuilt Templates</SmsTemplatesNavLink>
@@ -25,7 +25,7 @@ const SmsTemplatesNavLink = (props: React.ComponentPropsWithoutRef<typeof NavLin
 		{...props}
 		className={({ isActive }) =>
 			twMerge(
-				"w-max border-b-2 border-transparent px-4 py-3 text-[#054060] transition-basic hover:font-bold",
+				"w-max border-b-2 border-transparent px-4 py-3 pt-[14px] text-[#054060] transition-all will-change-[font-weight] prevent-selection hover:font-bold",
 				isActive && "border-b-[#2daef5] font-bold"
 			)
 		}

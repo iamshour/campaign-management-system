@@ -1,39 +1,68 @@
-import useDispatch from "@/core/hooks/useDispatch"
+//#region Import
+import { lazy } from "react"
+
 import useSelector from "@/core/hooks/useSelector"
-import { updateAdvancedTableState } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import { SharedListViewProps } from "@/core/types"
-import type { SmsPrebuiltTemplateType } from "@/features/templates/sms-templates/types"
-import { SearchInput } from "@/ui"
+import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import { useGetSmsPrebuiltTemplatesQuery } from "@/features/templates/sms-templates/api"
+import { DataGridSkeleton } from "@/ui"
 
-import SmsPrebuiltTemplateCard from "./sms-prebuilt-template-card"
-import SmsPrebuiltTemplatesViewFilters from "./sms-prebuilt-templates-view-filters-bar"
+const DisplayError = lazy(() => import("@/ui").then(({ DisplayError }) => ({ default: DisplayError })))
+const SmsPrebuiltTemplatesViewContent = lazy(
+	() => import("./sms-prebuilt-templates-grid-view-content/sms-prebuilt-templates-view-content")
+)
+//#endregion
 
-const SmsPrebuiltTemplatesView = ({ list, isFetching }: SharedListViewProps<SmsPrebuiltTemplateType>) => {
-	const dispatch = useDispatch()
+const SmsPrebuiltTemplatesView = ({
+	headerChildren,
+}: Pick<React.ComponentPropsWithoutRef<typeof SmsPrebuiltTemplatesViewContent>, "headerChildren">) => {
+	// Getting Default User's Industry from User info in authSlice (Token))
+	const defaultUserIndustryId = useSelector(({ auth }) => auth?.user?.industryId)
 
-	const searchTerm = useSelector(({ advancedTable }) => advancedTable["sms-prebuilt-templates"]?.searchTerm)
+	const { offset, limit, filters, searchTerm } = useSelector<AdvancedTableStateType<"sms-prebuilt-templates">>(
+		({ advancedTable }) => advancedTable["sms-prebuilt-templates"]
+	)
+
+	const { list, count, isInitialLoading, isFetching, isError, error } = useGetSmsPrebuiltTemplatesQuery(
+		{
+			industryId: !filters?.industryId
+				? defaultUserIndustryId
+				: filters?.industryId !== "ALL"
+					? filters?.industryId
+					: undefined,
+			limit,
+			offset,
+			sort: !!filters?.filterBy && filters?.filterBy === "RECENT" ? "createdAt" : undefined,
+			order: !!filters?.filterBy && filters?.filterBy === "RECENT" ? "desc" : undefined,
+			name: searchTerm,
+			any: searchTerm ? true : undefined,
+			type: filters?.templateType,
+			language: filters?.templateLanguage,
+			mostPopular: Boolean(!!filters?.filterBy && filters?.filterBy === "POPULAR") ?? undefined,
+		},
+		{
+			selectFromResult: ({ data, isLoading, isFetching, ...rest }) => ({
+				list: data?.list?.slice(offset, limit),
+				count: data?.count,
+				isInitialLoading: !data && isLoading,
+				isFetching,
+				...rest,
+			}),
+			...baseQueryConfigs,
+		}
+	)
+
+	if (isInitialLoading) return <DataGridSkeleton className='px-8' />
+
+	if (isError) return <DisplayError error={error as any} />
 
 	return (
-		<div className='flex h-full w-full flex-1 overflow-hidden'>
-			<SmsPrebuiltTemplatesViewFilters />
-
-			<div className='flex h-full w-full flex-1 flex-col gap-4 overflow-hidden p-4 pb-0'>
-				<SearchInput
-					value={searchTerm}
-					onChange={(searchTerm) => dispatch(updateAdvancedTableState({ "sms-prebuilt-templates": { searchTerm } }))}
-				/>
-
-				<div className='grid flex-1 justify-evenly gap-6 overflow-y-auto p-4 [grid-template-columns:repeat(auto-fit,377px)]'>
-					{list?.map((prebuiltTemplate) => (
-						<SmsPrebuiltTemplateCard
-							className={isFetching ? "opacity-50" : undefined}
-							key={prebuiltTemplate?.id}
-							{...prebuiltTemplate}
-						/>
-					))}
-				</div>
-			</div>
-		</div>
+		<SmsPrebuiltTemplatesViewContent
+			list={list || []}
+			count={count || 0}
+			isFetching={isFetching}
+			headerChildren={headerChildren}
+		/>
 	)
 }
 

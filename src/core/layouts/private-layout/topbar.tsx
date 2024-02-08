@@ -51,7 +51,6 @@ const Topbar = () => {
 				<SearchInput
 					className='w-max'
 					inputClassName='ring-[#054060]/30'
-					value={undefined}
 					onChange={(searchTerm) => console.log(searchTerm)}
 					placeholder={t("top-bar.search")}
 				/>

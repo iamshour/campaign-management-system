@@ -1,11 +1,14 @@
 //#region Import
+import { lazy } from "react"
 import { useParams } from "react-router-dom"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { DisplayError, FullViewSkeleton } from "@/ui"
+import { FullViewSkeleton } from "@/ui"
 
 import { useGetSmsTemplateByIdQuery } from "../api"
-import SmsTemplatePreview from "../components/sms-template-preview"
+
+const DisplayError = lazy(() => import("@/ui").then(({ DisplayError }) => ({ default: DisplayError })))
+const SmsTemplatePreview = lazy(() => import("../components/sms-template-preview"))
 //#endregion
 
 const SmsTemplateRoute = () => {

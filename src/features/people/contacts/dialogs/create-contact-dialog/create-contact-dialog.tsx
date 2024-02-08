@@ -24,7 +24,7 @@ const CreateContactDialog = ({ children }: CreateContactDialogProps) => {
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 			<Dialog.Content
 				title={t("title")}
-				className='h-[813px] w-[382px] sm:h-[553px] sm:w-[746px] '
+				className='h-[813px] w-[382px] sm:h-[553px] sm:w-[746px]'
 				onInteractOutside={(e) => e.preventDefault()}>
 				<CreateContactDialogContent onClose={() => setOpen(false)} />
 			</Dialog.Content>

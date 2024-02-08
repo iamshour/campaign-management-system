@@ -5,6 +5,7 @@ import type { AuthSliceState } from "./types"
 const initialState: AuthSliceState = {
 	user: {
 		company: "Blue.Ai Technologies",
+		industryId: "6",
 	},
 }
 
@@ -21,7 +22,7 @@ const authSlice = createSlice({
 		},
 
 		clearAuth: (state) => {
-			state.user = undefined
+			state.user = undefined!
 			state.token = ""
 		},
 	},

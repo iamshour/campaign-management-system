@@ -1,5 +1,5 @@
 //#region Import
-import { Suspense, createContext, lazy, useContext, useEffect } from "react"
+import { Suspense, createContext, lazy, useCallback, useContext, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 
 import DefaultFiltersBar from "@/core/components/filters-bar"
@@ -86,26 +86,22 @@ const TopBar = ({ withFilters = true, children }: TopBarProps) => {
 
 	const { tableKey } = useAdvancedTableContext()
 
-	const { searchTerm, appliedFiltersCount } = useSelector(({ advancedTable }) => advancedTable[tableKey])
+	const { appliedFiltersCount } = useSelector(({ advancedTable }) => advancedTable[tableKey])
+
+	const onSearchChange = useCallback(
+		(searchTerm?: string) => {
+			dispatch(updateAdvancedTableState({ [tableKey]: { searchTerm } }))
+		},
+		[dispatch, tableKey]
+	)
 
 	return (
-		<Suspense
-			fallback={
-				<div className='h-[72px] p-4'>
-					<Skeleton className='h-full' />
-				</div>
-			}>
+		<Suspense fallback={<HorizontalSkeleton />}>
 			<div className='flex w-full items-center justify-between gap-2 py-4'>
 				<div className='flex gap-2'>
 					{withFilters && <DefaultFiltersBar.Trigger appliedFiltersCount={appliedFiltersCount} />}
 
-					<SearchInput
-						value={searchTerm}
-						onChange={(searchTerm) =>
-							dispatch(updateAdvancedTableState({ [tableKey]: { searchTerm: !searchTerm ? undefined : searchTerm } }))
-						}
-						className='max-w-[14rem] md:max-w-[18rem]'
-					/>
+					<SearchInput onChange={onSearchChange} className='max-w-[14rem] md:max-w-[18rem]' />
 				</div>
 				{children}
 			</div>
@@ -144,12 +140,7 @@ const AdvancedTablePagination = (props: Pick<TablePaginationProps, "children" | 
 	const { offset, limit } = useSelector(({ advancedTable }) => advancedTable[tableKey])
 
 	return (
-		<Suspense
-			fallback={
-				<div className='h-[72px] p-4'>
-					<Skeleton className='h-full' />
-				</div>
-			}>
+		<Suspense fallback={<HorizontalSkeleton />}>
 			<TablePagination
 				pagination={{ offset, limit }}
 				count={count}
@@ -201,6 +192,12 @@ const PaginationMessage = () => {
 		</div>
 	)
 }
+
+const HorizontalSkeleton = () => (
+	<div className='h-[72px] p-4'>
+		<Skeleton className='h-full' />
+	</div>
+)
 
 // Exposing Components on AdvancedTable.FiltersBar: Header and Content from DefaultFiltersBar, and a custom Footer created above (FiltersBarFooter)
 FiltersBar.Header = DefaultFiltersBar.Header
