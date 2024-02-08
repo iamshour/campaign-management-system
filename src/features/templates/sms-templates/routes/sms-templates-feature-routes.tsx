@@ -3,7 +3,6 @@ import { lazy, Suspense } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 
 import { DataTableSkeleton, FullViewSkeleton } from "@/ui"
-
 const SmsTemplatesLayout = lazy(() => import("../components/sms-template-layout"))
 const SmsTemplatesRoute = lazy(() => import("@/features/templates/sms-templates/routes/sms-templates-route"))
 const SmsTemplateRoute = lazy(() => import("@/features/templates/sms-templates/routes/sms-template-route"))

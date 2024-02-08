@@ -48,13 +48,14 @@ export type GetSmsTemplatesArgs = CommonListArguments<SmsTemplateType> & {
 export type GetSmsTemplateBytIdReturnType = SmsTemplateType
 
 /**
- * Arguments passed to the server whilst using the `AddNewSmsTemplate` mutation to post a new contact entry
+ * Arguments passed to the server whilst using the `addNewSmsTemplate` mutation to post a new contact entry
  */
-export type AddNewSmsTemplateArgs = Pick<SmsTemplateType, "name" | "type" | "language" | "status"> & {
-	properties: {
-		smsContent: string
-	}
-}
+export type AddNewSmsTemplateArgs = Pick<SmsTemplateType, "name" | "type" | "language" | "status" | "body">
+
+/**
+ * Arguments passed to the server whilst using the `updateSmsTemplate` mutation to post a new contact entry
+ */
+export type UpdateSmsTemplateArgs = AddNewSmsTemplateArgs & Pick<SmsTemplateType, "id">
 
 /**
  * Arguments used for the `getSmsTemplates` query, passed for the server as params when fetching SMS Templates List
@@ -112,4 +113,21 @@ export type SmsPrebuiltTemplatesTableFiltersType = {
 	templateType?: SmsTemplateTypeOption[]
 	templateLanguage?: SmsTemplateLanguageOption[]
 	industryId?: string
+}
+
+/**
+ * Returned data shape from the `getSmsPrebuiltTemplateById` query
+ */
+export type GetSmsPrebuiltTemplateBytIdReturnType = Pick<
+	SmsTemplateType,
+	"id" | "name" | "language" | "type" | "updatedAt" | "status"
+> & {
+	body: string
+}
+
+export type CreateSmsTemplateLocationType = {
+	state: {
+		id: string
+		type: "smsTemplate" | "prebuiltSmsTemplate"
+	}
 }

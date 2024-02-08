@@ -2,6 +2,8 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
 
+import useDispatch from "@/core/hooks/useDispatch"
+import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
 import { useDeleteSmsTemplatesMutation } from "@/features/templates/sms-templates/api"
 import { Button, Footer, Input, Label } from "@/ui"
 //#endregion
@@ -19,6 +21,8 @@ export interface DeleteTemplateDialogContentProps {
 }
 
 const DeleteTemplateDialogContent = ({ ids, onClose }: DeleteTemplateDialogContentProps) => {
+	const dispatch = useDispatch()
+
 	const [triggerDeleteSmsTemplates, { isLoading }] = useDeleteSmsTemplatesMutation()
 	const [promptInputValue, setPromptInputValue] = useState<string>()
 
@@ -33,6 +37,7 @@ const DeleteTemplateDialogContent = ({ ids, onClose }: DeleteTemplateDialogConte
 			.then(() => {
 				onClose()
 				toast.success("Template deleted successfully.")
+				dispatch(clearSelection("sms-templates"))
 			})
 	}
 
