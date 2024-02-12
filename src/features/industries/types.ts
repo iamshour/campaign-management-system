@@ -1,7 +1,10 @@
+//#region Import
 import { CommonListArguments } from "@/core/lib/redux-toolkit/types"
+import type { DateRange } from "@/ui"
+//#endregion
 
 /**
- * Fetched Industry Type
+ * Shape of fetched Industry
  */
 export type IndustryType = {
 	id: string
@@ -13,8 +16,21 @@ export type IndustryType = {
 }
 
 /**
- * Arguments passed to the server whilst using the `getIndustryList` query to fetch Industry List
+ * Arguments used for the `getIndustries` query, passed for the server as params when fetching Industries
  */
-export type GetIndustryListArgs = CommonListArguments<IndustryType> & {
+export type GetIndustriesArgs = CommonListArguments<IndustryType> & {
 	name?: string
+	any?: boolean
 }
+
+/**
+ * Filters used in Filters bar (Internally / Only Client-Side - Not sent to the server)
+ */
+export type IndustriesTableFiltersType = {
+	dateRange?: DateRange
+}
+
+/**
+ * Arguments passed to the server whilst using the `addNewIndustry` mutation to post a new industry entry
+ */
+export type AddNewIndustryArgs = Pick<IndustryType, "name" | "description" | "icon" | "color">

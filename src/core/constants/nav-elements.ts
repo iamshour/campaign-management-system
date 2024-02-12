@@ -7,6 +7,7 @@ import IcBaselineCampaign from "~icons/ic/baseline-campaign"
 import IcBaselineInsertDriveFile from "~icons/ic/baseline-insert-drive-file"
 import IcRoundMoveToInbox from "~icons/ic/round-move-to-inbox"
 import IcRoundPermContactCalendar from "~icons/ic/round-perm-contact-calendar"
+import MaterialSymbolsLightLabProfileSharp from "~icons/material-symbols-light/lab-profile-sharp"
 import MdiVirus from "~icons/mdi/virus"
 import RiRobot2Fill from "~icons/ri/robot-2-fill"
 import TablerAppsFilled from "~icons/tabler/apps-filled"
@@ -64,6 +65,12 @@ const navElements: NavElementProps[] = [
 		label: "navbar.nav-elements.integrations",
 		path: appPaths.INTEGRATIONS,
 		Icon: TablerAppsFilled,
+	},
+	{
+		type: "nav-link",
+		label: "navbar.nav-elements.industies",
+		path: appPaths.INDUSTRIES,
+		Icon: MaterialSymbolsLightLabProfileSharp,
 	},
 	{
 		type: "accordion",

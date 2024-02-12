@@ -3,6 +3,7 @@ import { Navigate, RouteObject } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"
 import PrivateLayout from "@/core/layouts/private-layout/private-layout"
+import IndustriesRoute from "@/features/industries/routes/industries-route"
 import ContactsFeatureRoutes from "@/features/people/contacts/routes"
 import ExportsFeatureRoutes from "@/features/people/exports/routes"
 import GroupsFeatureRoutes from "@/features/people/groups/routes"
@@ -36,6 +37,7 @@ const privateRoutes: RouteObject[] = [
 				element: <div className='text-4xl'>Inbox Route</div>,
 			},
 			{ path: appPaths.INTEGRATIONS, element: <div className='text-4xl'>Integrations Route</div> },
+			{ path: appPaths.INDUSTRIES, element: <IndustriesRoute /> },
 			{ path: appPaths.CAMPAIGNS_MANAGER, element: <div className='text-4xl'>Campaign Manager Route</div> },
 			{ path: appPaths.CHANNELS, element: <div className='text-4xl'>Channels Route</div> },
 			{ path: appPaths.CHATBOT, element: <div className='text-4xl'>Chatbot Route</div> },

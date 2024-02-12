@@ -19,6 +19,8 @@ const appPaths = {
 	// #end People
 
 	// #start Templates
+	INDUSTRIES: "/industries",
+
 	SMS_TEMPLATES: "/templates/sms-templates",
 	SMS_TEMPLATES_MY_TEMPLATES: "/templates/sms-templates/my-templates",
 	SMS_TEMPLATES_PREBUILT_TEMPLATES: "/templates/sms-templates/prebuilt-templates",

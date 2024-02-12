@@ -7,9 +7,9 @@ import { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { Skeleton } from "@/ui"
 
-import { useGetIndustryListQuery } from "../api"
+import { useGetIndustriesQuery } from "../api"
 
-const IndustriesView = lazy(() => import("../views/industries-view"))
+const IndustriesView = lazy(() => import("../views/industries-view/industries-view"))
 const DisplayError = lazy(() => import("@/ui").then(({ DisplayError }) => ({ default: DisplayError })))
 //#endregion
 
@@ -18,7 +18,7 @@ const IndustriesRoute = () => {
 		({ advancedTable }) => advancedTable["industries"]
 	)
 
-	const { list, count, isLoading, isError, error, isFetching } = useGetIndustryListQuery(
+	const { list, count, isLoading, isError, error, isFetching } = useGetIndustriesQuery(
 		{
 			offset,
 			limit,
