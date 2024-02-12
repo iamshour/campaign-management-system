@@ -1,9 +1,10 @@
 //#region Import
+
 import AdvancedTable from "@/core/components/advanced-table"
 import type { SharedListViewProps } from "@/core/types"
-
-import industriesTableColumns from "../constants/industries-table-columns"
-import type { IndustryType } from "../types"
+import industriesTableColumns from "@/features/industries/constants/industries-table-columns"
+import CreateIndustryDialog from "@/features/industries/dialogs/create-industry-dialog/create-industry-dialog"
+import type { IndustryType } from "@/features/industries/types"
 //#endregion
 
 const IndustriesView = ({ count, ...tableProps }: SharedListViewProps<IndustryType>) => {
@@ -17,7 +18,9 @@ const IndustriesView = ({ count, ...tableProps }: SharedListViewProps<IndustryTy
 				</AdvancedTable.FiltersBar>
 
 				<AdvancedTable.Content>
-					<AdvancedTable.TopBar />
+					<AdvancedTable.TopBar>
+						<CreateIndustryDialog />
+					</AdvancedTable.TopBar>
 
 					<AdvancedTable.Table columns={industriesTableColumns} {...tableProps} />
 					<AdvancedTable.Pagination />

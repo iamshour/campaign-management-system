@@ -2,7 +2,7 @@
 import { lazy, useCallback, useState } from "react"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { useGetIndustryListQuery } from "@/features/industries/api"
+import { useGetIndustriesQuery } from "@/features/industries/api"
 import { Skeleton } from "@/ui"
 
 const DisplayError = lazy(() => import("@/ui").then(({ DisplayError }) => ({ default: DisplayError })))
@@ -12,7 +12,7 @@ const SmsPrebuiltTemplatesFiltersContent = lazy(() => import("./sms-prebuilt-tem
 const SmsPrebuiltTemplatesFilters = () => {
 	const [industrySearchTerm, setIndustrySearchTerm] = useState<string>()
 
-	const { list, isLoading, isError, error } = useGetIndustryListQuery(
+	const { list, isLoading, isError, error } = useGetIndustriesQuery(
 		{ name: industrySearchTerm, offset: 0, limit: 50 },
 		{
 			selectFromResult: ({ data, ...rest }) => ({ list: data?.list, ...rest }),

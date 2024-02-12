@@ -26,7 +26,7 @@ function SmsTemplatePreview<T extends TemplateType>(smsTemplate: T) {
 						</h1>
 
 						{Object.entries(smsTemplateInfo).map(([key, val]) => (
-							<SmsTemplateInfoItem itemName={key} itemValue={val} />
+							<SmsTemplateInfoItem key={key} itemName={key} itemValue={val} />
 						))}
 					</div>
 

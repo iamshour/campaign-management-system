@@ -4,17 +4,22 @@ import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helper
 import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
 import { getListOfKey } from "@/utils"
 
-import { GetIndustryListArgs, IndustryType } from "./types"
+import type { IndustryType, GetIndustriesArgs, AddNewIndustryArgs } from "./types"
 //#endregion
 
-const industryApi = api.injectEndpoints({
+const industriesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getIndustryList: builder.query<ListDataReturnType<IndustryType>, GetIndustryListArgs>({
+		getIndustries: builder.query<ListDataReturnType<IndustryType>, GetIndustriesArgs>({
 			query: (params) => ({ url: "/industry", params }),
 			providesTags: (result) => providesList(getListOfKey(result?.list, "id"), "Industry"),
 			transformResponse,
 		}),
+
+		addNewIndustry: builder.mutation<any, AddNewIndustryArgs>({
+			query: (body) => ({ url: "/industryById", method: "POST", body }),
+			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
+		}),
 	}),
 })
 
-export const { useGetIndustryListQuery } = industryApi
+export const { useGetIndustriesQuery, useAddNewIndustryMutation } = industriesApi
