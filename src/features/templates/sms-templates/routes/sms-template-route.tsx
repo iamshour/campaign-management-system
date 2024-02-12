@@ -16,6 +16,16 @@ const SmsTemplateRoute = () => {
 
 	const { data, isFetching, isError, error } = useGetSmsTemplateByIdQuery(mySmsTemplateId!, {
 		skip: !mySmsTemplateId,
+		selectFromResult: ({ data, ...rest }) => ({
+			data: data && {
+				// addUnsubscribeLink: data?.addUnsubscribeLink,  // TODO: enable when supported on backend
+				body: data.body,
+				name: data.name,
+				type: data.type,
+				language: data.language,
+			},
+			...rest,
+		}),
 		...baseQueryConfigs,
 	})
 
