@@ -118,12 +118,7 @@ export type SmsPrebuiltTemplatesTableFiltersType = {
 /**
  * Returned data shape from the `getSmsPrebuiltTemplateById` query
  */
-export type GetSmsPrebuiltTemplateBytIdReturnType = Pick<
-	SmsTemplateType,
-	"id" | "name" | "language" | "type" | "updatedAt" | "status"
-> & {
-	body: string
-}
+export type GetSmsPrebuiltTemplateBytIdReturnType = SmsPrebuiltTemplateType
 
 export type CreateSmsTemplateLocationType = {
 	state: {

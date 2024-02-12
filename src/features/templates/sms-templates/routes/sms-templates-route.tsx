@@ -34,17 +34,15 @@ const SmsTemplatesRoute = () => {
 			languages: filters?.templateLanguage,
 		},
 		{
-			selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => {
-				return {
-					list: data?.list?.slice(offset, limit),
-					count: data?.count,
-					isInitialLoading: !data && isLoading,
-					isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-					isEmptyView: !isFetching && !!isSuccess && !data && !(appliedFiltersCount || !!searchTerm?.length),
-					isFetching,
-					...rest,
-				}
-			},
+			selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => ({
+				list: data?.list?.slice(offset, limit),
+				count: data?.count,
+				isInitialLoading: !data && isLoading,
+				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
+				isEmptyView: !isFetching && !!isSuccess && !data && !(appliedFiltersCount || !!searchTerm?.length),
+				isFetching,
+				...rest,
+			}),
 			...baseQueryConfigs,
 		}
 	)

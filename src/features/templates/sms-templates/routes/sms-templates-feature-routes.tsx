@@ -8,7 +8,7 @@ const SmsTemplatesRoute = lazy(() => import("@/features/templates/sms-templates/
 const SmsTemplateRoute = lazy(() => import("@/features/templates/sms-templates/routes/sms-template-route"))
 const CreateSmsTemplateRoute = lazy(() => import("@/features/templates/sms-templates/routes/create-sms-template-route"))
 const EditSmsTemplateRoute = lazy(() => import("@/features/templates/sms-templates/routes/edit-sms-template-route"))
-const SmsPrebuiltTemplatesRoute = lazy(
+const SmsPrebuiltTemplatesView = lazy(
 	() => import("@/features/templates/sms-templates/views/sms-prebuilt-templates-view/sms-prebuilt-templates-view")
 )
 const SmsPrebuiltTemplateRoute = lazy(() => import("./sms-prebuilt-template-route"))
@@ -23,7 +23,7 @@ const SmsTemplatesFeatureRoutes = () => (
 				</Suspense>
 			}>
 			<Route path='my-templates' element={<SmsTemplatesRoute />} />
-			<Route path='prebuilt-templates' element={<SmsPrebuiltTemplatesRoute />} />
+			<Route path='prebuilt-templates' element={<SmsPrebuiltTemplatesView />} />
 		</Route>
 
 		<Route

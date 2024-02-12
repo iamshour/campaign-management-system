@@ -64,7 +64,7 @@ const smsTemplatesApi = api.injectEndpoints({
 		}),
 
 		getSmsPrebuiltTemplateById: builder.query<GetSmsPrebuiltTemplateBytIdReturnType, string>({
-			query: (id) => `/prebuilt-templates/${id}`,
+			query: (id) => `/prebuiltTemplatesById/${id}`,
 			providesTags: (result) => [{ type: "SmsPrebuiltTemplate", id: result?.id }],
 			// transformResponse,
 		}),
