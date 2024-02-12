@@ -2,12 +2,14 @@
 import { lazy } from "react"
 
 import type { ColumnType } from "@/ui"
-import { format } from "@/utils"
 
 import type { ContactExportStatusOption, ContactExports } from "../types"
 
 import exportsFieldsMap from "./exports-fields-map"
 import exportStatusesColorsMap from "./statuses-colors-map"
+
+// eslint-disable-next-line react-refresh/only-export-components
+const AdvancedTableDateCell = lazy(() => import("@/core/components/advanced-table-date-cell"))
 
 // eslint-disable-next-line react-refresh/only-export-components
 const ExportsViewTableActions = lazy(() => import("../views/exports-view/exports-view-table-actions"))
@@ -29,7 +31,7 @@ const exportsTableColumns: ColumnType<ContactExports>[] = [
 	{
 		accessorKey: "createdAt",
 		header: exportsFieldsMap.createdAt,
-		cell: (createdAt) => <>{format(new Date(createdAt), "MM-dd-yyyy")}</>,
+		cell: (date) => <AdvancedTableDateCell date={date} />,
 	},
 	{
 		accessorKey: "contactExportStatus",

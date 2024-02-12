@@ -5,11 +5,11 @@ import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
+import { DataTableSkeleton } from "@/ui"
 
 import { useGetGroupsQuery } from "../api"
-import GroupsViewSkeleton from "../views/groups-view/skeleton"
 
-const GroupsView = lazy(() => import("../views/groups-view"))
+const GroupsView = lazy(() => import("../views/groups-view/groups-view"))
 const EmptyGroupsView = lazy(() => import("../views/empty-groups-view"))
 const DisplayError = lazy(() => import("@/ui").then((mod) => ({ default: mod.DisplayError })))
 //#endregion
@@ -44,7 +44,7 @@ const GroupsRoute = () => {
 		}
 	)
 
-	if (isInitialLoading) return <GroupsViewSkeleton />
+	if (isInitialLoading) return <DataTableSkeleton />
 
 	if (isEmptyView) return <EmptyGroupsView />
 

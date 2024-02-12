@@ -10,7 +10,7 @@ const IndustriesRoute = lazy(() => import("./industries-route"))
 const IndustriesFeatureRoutes = () => (
 	<Routes>
 		<Route
-			path='.'
+			path=''
 			element={
 				<Suspense fallback={<DataTableSkeleton />}>
 					<IndustriesRoute />

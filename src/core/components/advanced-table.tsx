@@ -8,27 +8,20 @@ import useSelector from "@/core/hooks/useSelector"
 import {
 	clearFilters,
 	clearSelection,
+	toggleListGridView,
 	updateAdvancedTableState,
 	updateSelection,
 } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import {
-	Button,
-	Skeleton,
-	Table,
-	TableSkeleton,
-	twMerge,
-	type TablePaginationProps,
-	type RowData,
-	type TableProps,
-} from "@/ui"
+import { Button, DataGridSkeleton, Skeleton, Table, TableSkeleton, Tooltip, twMerge } from "@/ui"
+import type { TablePaginationProps, RowData, TableProps, IconType } from "@/ui"
 
-import type { TableKey } from "../slices/advanced-table-slice/types"
+import type { AdvancedTableListGridView, TableKey } from "../slices/advanced-table-slice/types"
 
-const SearchInput = lazy(() => import("@/ui").then((mod) => ({ default: mod.SearchInput })))
-const TablePagination = lazy(() => import("@/ui").then((mod) => ({ default: mod.TablePagination })))
+const SearchInput = lazy(() => import("@/ui/input/search-Input"))
+const TablePagination = lazy(() => import("@/ui/table/table-pagination"))
 //#endregion
 
-type AdvancedTableContextValue = { tableKey: TableKey; count: number }
+type AdvancedTableContextValue = Required<Pick<AdvancedTableProps, "tableKey" | "count">>
 const AdvancedTableContext = createContext({} as AdvancedTableContextValue)
 
 // eslint-disable-next-line
@@ -109,26 +102,80 @@ const TopBar = ({ withFilters = true, children }: TopBarProps) => {
 	)
 }
 
-function TableContent<TData extends RowData>(
-	props: Omit<TableProps<TData>, "count" | "state" | "updateState" | "updateSelection">
-) {
+type TableBodyProps<TData extends RowData> = Pick<
+	TableProps<TData>,
+	"list" | "columns" | "classNames" | "highlightOnHover" | "isFetching" | "onRowClick"
+> & {
+	GridCard?: (props: TData) => JSX.Element
+}
+
+const TableBody = <TData extends RowData>({ list, GridCard, ...props }: TableBodyProps<TData>) => {
 	const dispatch = useDispatch()
 
 	const { tableKey, count } = useAdvancedTableContext()
+	const { view, offset, limit, sort, order, selection } = useSelector(({ advancedTable }) => advancedTable[tableKey])
 
-	const { offset, limit, sort, order, selection } = useSelector(({ advancedTable }) => advancedTable[tableKey])
+	return view === "GRID" ? (
+		<Suspense fallback={<DataGridSkeleton />}>
+			{!list?.length ? (
+				<div className='h-full w-full p-4 flex-center'>
+					<p className='text-center text-3xl font-bold'>Nothing Found</p>
+				</div>
+			) : (
+				<div className='grid max-w-full flex-1 justify-evenly gap-6 overflow-y-auto p-4 [grid-template-columns:repeat(auto-fit,480px)]'>
+					{!GridCard ? (
+						<>Please pass a Grid Card to render Grid view properly</>
+					) : (
+						list.map((item, idx) => <GridCard key={idx} {...item} />)
+					)}
+				</div>
+			)}
+		</Suspense>
+	) : (
+		<>
+			<Suspense fallback={<TableSkeleton colsLength={props?.columns?.length} className='mb-4 flex-1 px-0' />}>
+				<Table<TData>
+					list={list}
+					count={count}
+					state={{ offset, limit, sort, order, selection }}
+					updateState={(tableState) => dispatch(updateAdvancedTableState({ [tableKey]: tableState }))}
+					updateSelection={(selection) => dispatch(updateSelection({ [tableKey]: selection }))}
+					{...props}
+				/>
+			</Suspense>
+		</>
+	)
+}
+
+const MultiViewLayout = ({ children }: { children: React.ReactNode }) => {
+	const dispatch = useDispatch()
+
+	const { tableKey } = useAdvancedTableContext()
+	const { view } = useSelector(({ advancedTable }) => advancedTable[tableKey])
 
 	return (
-		<Suspense fallback={<TableSkeleton colsLength={props?.columns?.length} className='mb-4 flex-1 px-0' />}>
-			<Table<TData>
-				count={count}
-				state={{ offset, limit, sort, order, selection }}
-				updateState={(tableState) => dispatch(updateAdvancedTableState({ [tableKey]: tableState }))}
-				updateSelection={(selection) => dispatch(updateSelection({ [tableKey]: selection }))}
-				highlightOnHover
-				{...props}
-			/>
-		</Suspense>
+		<div className='flex h-full w-full flex-col overflow-hidden'>
+			<div className='mb-4 inline-flex w-max gap-2.5 place-self-end'>
+				{viewsTriggerButtons.map(({ key, title, icon: Icon }) => (
+					<Tooltip key={key}>
+						<Tooltip.Trigger asChild>
+							<Button
+								active={key === view}
+								variant='outline-secondary'
+								className='flex h-[40px] w-[40px] rounded-md'
+								onClick={() => dispatch(toggleListGridView({ [tableKey]: key }))}>
+								<Icon className='text-lg' />
+								<p className='sr-only'>{title}</p>
+							</Button>
+						</Tooltip.Trigger>
+
+						<Tooltip.Content side='bottom' align='end' sideOffset={8} content={title} />
+					</Tooltip>
+				))}
+			</div>
+
+			{children}
+		</div>
 	)
 }
 
@@ -206,11 +253,22 @@ FiltersBar.Footer = FiltersBarFooter
 AdvancedTable.FiltersBar = FiltersBar
 
 AdvancedTable.Content = Content
+AdvancedTable.MultiViewLayout = MultiViewLayout
+AdvancedTable.Body = TableBody
+
 AdvancedTable.TopBar = TopBar
-AdvancedTable.Table = TableContent
 
 // Exposing PaginationMessage on AdvancedTable.Pasgination.Message
 AdvancedTablePagination.Message = PaginationMessage
 AdvancedTable.Pagination = AdvancedTablePagination
 
 export default AdvancedTable
+
+const viewsTriggerButtons: {
+	key: AdvancedTableListGridView
+	title: string
+	icon: React.LazyExoticComponent<IconType>
+}[] = [
+	{ key: "LIST", title: "List View", icon: lazy(() => import("~icons/material-symbols/format-list-bulleted-rounded")) },
+	{ key: "GRID", title: "Grid View", icon: lazy(() => import("~icons/teenyicons/grid-layout-solid")) },
+]

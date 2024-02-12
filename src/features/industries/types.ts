@@ -18,7 +18,7 @@ export type IndustryType = {
 /**
  * Arguments used for the `getIndustries` query, passed for the server as params when fetching Industries
  */
-export type GetIndustriesArgs = CommonListArguments<IndustryType> & {
+export type GetIndustriesListArgs = CommonListArguments<IndustryType> & {
 	name?: string
 	any?: boolean
 }

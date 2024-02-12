@@ -13,7 +13,7 @@ import type {
 import type { DateRange, OptionType, TableState } from "@/ui"
 //#endregion
 
-export type AdvancedTableListGridView = "List View" | "Grid View"
+export type AdvancedTableListGridView = "LIST" | "GRID"
 
 export type TableKey =
 	| "contacts"

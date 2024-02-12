@@ -1,0 +1,15 @@
+{
+	"fields": {
+		"icon": "Icon",
+		"name": "Industry Name",
+		"description": "Industry Description",
+		"createdAt": "Creation date"
+	},
+	"table": {
+		"toolbar": {
+			"actions": {
+				"create-industry": "Create Industry"
+			}
+		}
+	}
+}

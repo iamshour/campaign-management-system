@@ -2,11 +2,13 @@
 import { lazy } from "react"
 
 import type { ColumnType } from "@/ui"
-import { format } from "@/utils"
 
 import type { Group } from "../types"
 
 import groupFieldsMap from "./group-fields-map"
+
+// eslint-disable-next-line react-refresh/only-export-components
+const AdvancedTableDateCell = lazy(() => import("@/core/components/advanced-table-date-cell"))
 
 // eslint-disable-next-line react-refresh/only-export-components
 const GroupsViewTableActions = lazy(() => import("../views/groups-view/groups-view-table-actions"))
@@ -28,7 +30,7 @@ const grouspsTableColumns: ColumnType<Group>[] = [
 	{
 		accessorKey: "createdAt",
 		header: groupFieldsMap.createdAt,
-		cell: (createdAt) => <>{format(new Date(createdAt), "MM-dd-yyyy")}</>,
+		cell: (date) => <AdvancedTableDateCell date={date} />,
 	},
 	{
 		accessorKey: "actions",

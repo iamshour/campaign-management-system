@@ -12,6 +12,7 @@ declare module "i18next" {
 			campaigns: typeof unknown
 			ui: typeof unknown
 			"sms-templates": typeof unknown
+			industries: typeof unknown
 		}
 	}
 }
