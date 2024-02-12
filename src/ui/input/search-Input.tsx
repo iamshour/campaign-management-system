@@ -19,7 +19,7 @@ const SearchInput = forwardRef<React.ElementRef<typeof Input>, SearchInputProps>
 		return (
 			<Input
 				ref={ref}
-				placeholder='Search by any field'
+				placeholder='Search'
 				leftIcon={TablerSearch}
 				spellCheck={false}
 				value={input || ""}

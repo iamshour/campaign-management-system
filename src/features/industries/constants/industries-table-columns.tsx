@@ -2,13 +2,18 @@
 //#region Import
 import { lazy } from "react"
 
+import type { IndustryType } from "@/features/industries/types"
 import type { ColumnType } from "@/ui"
-
-import type { IndustryType } from "../types"
 
 import industryFieldsMap from "./industry-fields-map"
 
-const IndustriesViewTableIcon = lazy(() => import("../views/industries-view/industries-view-table-icon"))
+const AdvancedTableDateCell = lazy(() => import("@/core/components/advanced-table-date-cell"))
+const IndustriesViewTableIcon = lazy(
+	() => import("@/features/industries/views/industries-view/industries-view-table-icon")
+)
+const IndustriesViewTableActions = lazy(
+	() => import("@/features/industries/views/industries-view/industries-view-table-actions")
+)
 //#endregion
 
 const industriesTableColumns: ColumnType<IndustryType>[] = [
@@ -25,6 +30,16 @@ const industriesTableColumns: ColumnType<IndustryType>[] = [
 	{
 		accessorKey: "description",
 		header: industryFieldsMap.description,
+	},
+	{
+		accessorKey: "createdAt",
+		header: industryFieldsMap.createdAt,
+		cell: (date) => <AdvancedTableDateCell date={date} />,
+		sortable: true,
+	},
+	{
+		accessorKey: "actions",
+		cell: (_, { id }) => <IndustriesViewTableActions id={id} />,
 	},
 ]
 

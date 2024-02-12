@@ -1,14 +1,15 @@
 //#region Import
 import { lazy } from "react"
 
-import removeSpaces from "@/core/utils/remove-spaces"
 import { Badge, type ColumnType } from "@/ui"
-import { format } from "@/utils"
 
 import type { SmsTemplateType, SmsTemplateStatusOption } from "../types"
 
 import smsTemplateFieldsLocaleMap from "./sms-template-fields-locale-map"
 import smsTemplateStatusesColorsMap from "./sms-template-statuses-colors-map"
+
+// eslint-disable-next-line react-refresh/only-export-components
+const AdvancedTableDateCell = lazy(() => import("@/core/components/advanced-table-date-cell"))
 
 // eslint-disable-next-line react-refresh/only-export-components
 const SmsTemplatesViewTableActions = lazy(() => import("../views/sms-templates-view/sms-templates-view-table-actions"))
@@ -36,14 +37,7 @@ const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
 		accessorKey: "updatedAt",
 		header: smsTemplateFieldsLocaleMap.updatedAt,
 		sortable: true,
-		cell: (updatedAt) => {
-			const isoDate = removeSpaces(updatedAt)
-			const jsDateObject = new Date(isoDate)
-
-			if (!jsDateObject) return <>INVALID DATE</>
-
-			return format(jsDateObject, "MM-dd-yyyy | hh:mm aaa")
-		},
+		cell: (date) => <AdvancedTableDateCell date={date} dateFormat='MM-dd-yyyy | hh:mm aaa' />,
 	},
 	{
 		accessorKey: "status",

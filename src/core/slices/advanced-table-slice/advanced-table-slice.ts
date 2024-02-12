@@ -15,24 +15,19 @@ import type {
 /**
  * Initial Data Table State passed for each
  */
-const initialDataTableStateBase = { offset: 0, limit: 25 }
+const initialDataTableStateBase = { offset: 0, limit: 25, view: "LIST" as AdvancedTableListGridView }
 const initialDataTableStateCompact = { ...initialDataTableStateBase, limit: 10 }
-const initialDataTableStateCompactWithGrids: AdvancedTableStateType<"groups" | "industries"> = {
-	...initialDataTableStateBase,
-	view: "List View",
-	limit: 10,
-}
 
 const initialState: AdvancedTableSliceStateType = {
 	contacts: initialDataTableStateBase,
 	"contacts-in-group": initialDataTableStateBase,
 	"add-contacts-to-group": initialDataTableStateBase,
-	groups: initialDataTableStateCompactWithGrids,
+	groups: initialDataTableStateCompact,
 	"contacts-exports": initialDataTableStateBase,
 	segments: initialDataTableStateBase,
 	"sms-templates": initialDataTableStateCompact,
 	"sms-prebuilt-templates": initialDataTableStateCompact,
-	industries: initialDataTableStateCompactWithGrids,
+	industries: initialDataTableStateBase,
 }
 
 const advancedTableSlice = createSlice({
@@ -156,7 +151,7 @@ const advancedTableSlice = createSlice({
 			if (tableKey === "groups" || tableKey === "industries")
 				return {
 					...state,
-					[tableKey]: initialDataTableStateCompactWithGrids,
+					[tableKey]: initialDataTableStateCompact,
 				}
 
 			return {
@@ -168,7 +163,7 @@ const advancedTableSlice = createSlice({
 		clearState: (state, { payload }: PayloadAction<TableKey>) => {
 			return {
 				...state,
-				[payload]: payload === "groups" ? initialDataTableStateCompactWithGrids : initialDataTableStateBase,
+				[payload]: payload === "groups" ? initialDataTableStateCompact : initialDataTableStateBase,
 			}
 		},
 	},

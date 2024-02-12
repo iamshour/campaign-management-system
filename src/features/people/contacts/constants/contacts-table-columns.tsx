@@ -2,11 +2,13 @@
 import { lazy } from "react"
 
 import type { ColumnType } from "@/ui"
-import { format } from "@/utils"
 
 import type { Contact } from "../types"
 
 import contactFieldsMap from "./contact-fields-map"
+
+// eslint-disable-next-line react-refresh/only-export-components
+const AdvancedTableDateCell = lazy(() => import("@/core/components/advanced-table-date-cell"))
 
 // eslint-disable-next-line react-refresh/only-export-components
 const ContactsTableTagsRow = lazy(() => import("../components/contacts-table-tags-row"))
@@ -39,7 +41,7 @@ const contactsTableColumns: ColumnType<Contact>[] = [
 	{
 		accessorKey: "createdAt",
 		header: contactFieldsMap.createdAt,
-		cell: (createdAt) => !!createdAt && <>{format(new Date(createdAt), "MM-dd-yyyy")}</>,
+		cell: (date) => <AdvancedTableDateCell date={date} />,
 		sortable: true,
 	},
 	{

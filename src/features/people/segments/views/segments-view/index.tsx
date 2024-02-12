@@ -15,7 +15,7 @@ import PhPlusBold from "~icons/ph/plus-bold"
 const SegmentsViewFiltersContent = lazy(() => import("./segments-view-filters-content"))
 //#endregion
 
-const SegmentsView = ({ list, count, ...tableProps }: SharedListViewProps<Segment>) => {
+const SegmentsView = ({ count, ...tableProps }: SharedListViewProps<Segment>) => {
 	const navigate = useNavigate()
 	const { t } = useTranslation("segments")
 
@@ -37,13 +37,10 @@ const SegmentsView = ({ list, count, ...tableProps }: SharedListViewProps<Segmen
 					</Button>
 				</AdvancedTable.TopBar>
 
-				<AdvancedTable.Table
-					list={list}
+				<AdvancedTable.Body
 					columns={segmentsTableColumns}
 					onRowClick={({ id }) => navigate(`./${id}`)}
-					classNames={{
-						wrapper: "px-4",
-					}}
+					classNames={{ wrapper: "px-4" }}
 					{...tableProps}
 				/>
 				<AdvancedTable.Pagination />

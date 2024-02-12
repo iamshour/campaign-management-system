@@ -51,19 +51,19 @@ const SmsPrebuiltTemplatesViewContent = ({
 					{headerChildren}
 				</header>
 
-				<div className='grid flex-1 justify-evenly gap-6 overflow-y-auto p-4 pt-0 [grid-template-columns:repeat(auto-fit,377px)]'>
-					{!list?.length ? (
-						<DisplayError />
-					) : (
-						list.map((prebuiltTemplate) => (
+				{!list?.length ? (
+					<DisplayError />
+				) : (
+					<div className='grid flex-1 justify-evenly gap-6 overflow-y-auto p-4 pt-0 [grid-template-columns:repeat(auto-fit,377px)]'>
+						{list.map((prebuiltTemplate) => (
 							<SmsPrebuiltTemplateCard
 								className={isFetching ? "opacity-50" : undefined}
 								key={prebuiltTemplate?.id}
 								{...prebuiltTemplate}
 							/>
-						))
-					)}
-				</div>
+						))}
+					</div>
+				)}
 
 				<Suspense
 					fallback={

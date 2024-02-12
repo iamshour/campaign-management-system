@@ -12,7 +12,7 @@ import type { Contact } from "@/features/people/contacts/types"
 import type { ColumnType } from "@/ui"
 
 const GroupViewTableActions = lazy(() => import("./group-view-table-actions"))
-const GroupViewTopbar = lazy(() => import("./group-view-topbar"))
+const GroupViewTopbar = lazy(() => import("./group-view-topbar/group-view-topbar"))
 const ContactsViewFiltersContent = lazy(
 	() => import("@/features/people/contacts/views/contacts-view/contacts-view-filters-content")
 )
@@ -48,7 +48,7 @@ const GroupView = ({ count, ...tableProps }: SharedListViewProps<Contact>) => {
 						<GroupViewTopbar />
 					</AdvancedTable.TopBar>
 
-					<AdvancedTable.Table columns={tableColumns} onRowClick={({ id }) => setViewContactId(id)} {...tableProps} />
+					<AdvancedTable.Body columns={tableColumns} onRowClick={({ id }) => setViewContactId(id)} {...tableProps} />
 					<AdvancedTable.Pagination>
 						<AdvancedTable.Pagination.Message />
 					</AdvancedTable.Pagination>

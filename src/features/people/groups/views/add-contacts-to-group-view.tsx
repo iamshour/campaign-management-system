@@ -29,7 +29,7 @@ const ContactsViewFiltersContent = lazy(
 )
 //#endregion
 
-const AddContactsToGroupView = ({ list, count, ...tableProps }: SharedListViewProps<Contact>) => {
+const AddContactsToGroupView = ({ count, ...tableProps }: SharedListViewProps<Contact>) => {
 	const { t } = useTranslation("groups", { keyPrefix: "views.addToGroup" })
 
 	const { id: groupId } = useParams()
@@ -85,13 +85,10 @@ const AddContactsToGroupView = ({ list, count, ...tableProps }: SharedListViewPr
 				<h3 className='pt-4 text-[21px] font-medium'>{t("title")}</h3>
 
 				<AdvancedTable.TopBar />
-				<AdvancedTable.Table
-					list={list}
+				<AdvancedTable.Body
 					columns={contactsTableColumns}
 					onRowClick={({ id }) => dispatch(updateSelection({ "add-contacts-to-group": id }))}
-					classNames={{
-						wrapper: "px-4",
-					}}
+					classNames={{ wrapper: "px-4" }}
 					{...tableProps}
 				/>
 				<AdvancedTable.Pagination>

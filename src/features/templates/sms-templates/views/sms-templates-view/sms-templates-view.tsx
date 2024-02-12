@@ -30,7 +30,7 @@ const SmsTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsTempl
 					<SmsTemplatesViewTopbar />
 				</AdvancedTable.TopBar>
 
-				<AdvancedTable.Table
+				<AdvancedTable.Body
 					columns={smsTemplatesTableColumns}
 					classNames={classNames}
 					onRowClick={({ id }) => navigate(id)}

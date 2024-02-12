@@ -22,13 +22,7 @@ const ExportsView = ({ count, ...tableProps }: SharedListViewProps<ContactExport
 		<AdvancedTable.Content>
 			<AdvancedTable.TopBar />
 
-			<AdvancedTable.Table
-				columns={exportsTableColumns}
-				classNames={{
-					wrapper: "px-4",
-				}}
-				{...tableProps}
-			/>
+			<AdvancedTable.Body columns={exportsTableColumns} classNames={{ wrapper: "px-4" }} {...tableProps} />
 			<AdvancedTable.Pagination />
 		</AdvancedTable.Content>
 	</AdvancedTable>

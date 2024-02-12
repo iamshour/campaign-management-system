@@ -4,8 +4,6 @@ import { Navigate, Route, Routes } from "react-router-dom"
 
 import { DataTableSkeleton } from "@/ui"
 
-import GroupsViewSkeleton from "../views/groups-view/skeleton"
-
 const GroupRoute = lazy(() => import("@/features/people/groups/routes/group-route"))
 const GroupsRoute = lazy(() => import("@/features/people/groups/routes/groups-route"))
 const AddContactsToGroupRoute = lazy(() => import("@/features/people/groups/routes/add-contacts-to-group-route"))
@@ -16,7 +14,7 @@ const GroupsFeatureRoutes = () => (
 		<Route
 			path=''
 			element={
-				<Suspense fallback={<GroupsViewSkeleton />}>
+				<Suspense fallback={<DataTableSkeleton />}>
 					<GroupsRoute />
 				</Suspense>
 			}

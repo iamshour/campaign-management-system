@@ -31,6 +31,7 @@
 					"smsTemplates": "SMS Templates"
 				}
 			},
+			"industries": "Industries",
 			"campaigns": "Campaigns Manager",
 			"channels": {
 				"title": "Channels",

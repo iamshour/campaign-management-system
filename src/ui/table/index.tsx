@@ -25,7 +25,7 @@ const Table = <TData extends RowData>({
 	updateState,
 	updateSelection,
 	isFetching = false,
-	highlightOnHover,
+	highlightOnHover = true,
 	onRowClick,
 	classNames,
 }: TableProps<TData>) => {

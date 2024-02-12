@@ -12,7 +12,7 @@ import { getListOfKey } from "@/utils"
 
 import { useGetGroupByIdQuery } from "../api"
 
-const GroupView = lazy(() => import("../views/group-view"))
+const GroupView = lazy(() => import("../views/group-view/group-view"))
 const DisplayError = lazy(() => import("@/ui").then((mod) => ({ default: mod.DisplayError })))
 //#endregion
 

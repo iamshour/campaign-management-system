@@ -53,7 +53,8 @@ const ContactsView = ({ count, ...tableProps }: SharedListViewProps<Contact>) =>
 						<ContactsViewTopbar />
 					</AdvancedTable.TopBar>
 
-					<AdvancedTable.Table columns={tableColumns} onRowClick={({ id }) => setViewContactId(id)} {...tableProps} />
+					<AdvancedTable.Body columns={tableColumns} onRowClick={({ id }) => setViewContactId(id)} {...tableProps} />
+
 					<AdvancedTable.Pagination>
 						<AdvancedTable.Pagination.Message />
 					</AdvancedTable.Pagination>

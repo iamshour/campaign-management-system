@@ -1,3 +1,4 @@
+//#region Import
 import type { IconType } from "@/ui"
 
 import appPaths from "./app-paths"
@@ -11,6 +12,7 @@ import MaterialSymbolsLightLabProfileSharp from "~icons/material-symbols-light/l
 import MdiVirus from "~icons/mdi/virus"
 import RiRobot2Fill from "~icons/ri/robot-2-fill"
 import TablerAppsFilled from "~icons/tabler/apps-filled"
+//#endregion
 
 type NavElementProps = {
 	/**
@@ -67,12 +69,6 @@ const navElements: NavElementProps[] = [
 		Icon: TablerAppsFilled,
 	},
 	{
-		type: "nav-link",
-		label: "navbar.nav-elements.industies",
-		path: appPaths.INDUSTRIES,
-		Icon: MaterialSymbolsLightLabProfileSharp,
-	},
-	{
 		type: "accordion",
 		label: "navbar.nav-elements.people.title",
 		Icon: IcRoundPermContactCalendar,
@@ -105,6 +101,12 @@ const navElements: NavElementProps[] = [
 				path: appPaths.SMS_TEMPLATES,
 			},
 		],
+	},
+	{
+		type: "nav-link",
+		label: "navbar.nav-elements.industries",
+		path: appPaths.INDUSTRIES,
+		Icon: MaterialSymbolsLightLabProfileSharp,
 	},
 	{
 		type: "nav-link",
