@@ -1,6 +1,7 @@
 //#region Import
 import { memo, useState } from "react"
 
+import DeleteIndustryDialog from "@/features/industries/dialogs/delete-industry-dialog/delete-industry-dialog"
 import EditIndustryDialog from "@/features/industries/dialogs/edit-industry-dialog/edit-industry-dialog"
 import type { IndustryType } from "@/features/industries/types"
 import { Dropdown } from "@/ui"
@@ -22,9 +23,9 @@ const IndustriesViewTableActions = memo((industry: IndustryType) => {
 					<Dropdown.Item>Edit</Dropdown.Item>
 				</EditIndustryDialog>
 
-				<Dropdown.Item onClick={() => console.log("Delete Industry with Id: ", industry.id)}>
-					<span>Delete</span>
-				</Dropdown.Item>
+				<DeleteIndustryDialog {...industry}>
+					<Dropdown.Item>Delete</Dropdown.Item>
+				</DeleteIndustryDialog>
 			</Dropdown.Content>
 		</Dropdown>
 	)

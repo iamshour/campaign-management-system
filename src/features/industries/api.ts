@@ -20,11 +20,25 @@ const industriesApi = api.injectEndpoints({
 			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
 		}),
 
-		updateSmsTemplate: builder.mutation<any, UpdateIndustryArgs>({
+		updateIndustry: builder.mutation<any, UpdateIndustryArgs>({
 			query: ({ id, ...body }) => ({ url: `/industryById/${id}`, method: "PUT", body }),
 			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
+		}),
+
+		deleteIndustry: builder.mutation<any, string>({
+			query: (id) => ({ url: `/industryById/${id}`, method: "DELETE" }),
+			invalidatesTags: (res, error, id) => {
+				if (!res) return []
+
+				return [{ type: "Industry", id }]
+			},
 		}),
 	}),
 })
 
-export const { useGetIndustriesQuery, useAddNewIndustryMutation, useUpdateSmsTemplateMutation } = industriesApi
+export const {
+	useGetIndustriesQuery,
+	useAddNewIndustryMutation,
+	useUpdateIndustryMutation,
+	useDeleteIndustryMutation,
+} = industriesApi
