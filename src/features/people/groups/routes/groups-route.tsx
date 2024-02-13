@@ -10,8 +10,8 @@ import { DataTableSkeleton } from "@/ui"
 import { useGetGroupsQuery } from "../api"
 
 const GroupsView = lazy(() => import("../views/groups-view/groups-view"))
-const EmptyGroupsView = lazy(() => import("../views/empty-groups-view"))
-const DisplayError = lazy(() => import("@/ui").then((mod) => ({ default: mod.DisplayError })))
+const GroupsEmptyView = lazy(() => import("../views/groups-empty-view"))
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const GroupsRoute = () => {
@@ -46,9 +46,9 @@ const GroupsRoute = () => {
 
 	if (isInitialLoading) return <DataTableSkeleton />
 
-	if (isEmptyView) return <EmptyGroupsView />
+	if (isEmptyView) return <GroupsEmptyView />
 
-	if (isError) return <DisplayError error={error as any} />
+	if (isError) return <DisplayError error={error as any} showReloadButton />
 
 	if (isReady) return <GroupsView list={list || []} count={count || 0} isFetching={isFetching} />
 }

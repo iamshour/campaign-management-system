@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetContactByIdQuery } from "@/features/people/contacts/api"
-import { twMerge, Badge, NotFoundError, Input, Label, PhoneInputReadonly, Skeleton, Textarea } from "@/ui"
+import { twMerge, Badge, Input, Label, PhoneInputReadonly, Skeleton, Textarea, DisplayError } from "@/ui"
 import { format, getListOfKey } from "@/utils"
 //#endregion
 
@@ -14,7 +14,7 @@ const ViewContactDialogContent = ({ id }: { id: string }) => {
 
 	if (isFetching) return <Skeleton className='h-full' />
 
-	if (!isFetching && (isError || !data)) return <NotFoundError />
+	if (!isFetching && (isError || !data)) return <DisplayError />
 
 	return (
 		<div className='space-y-2 overflow-y-auto p-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 sm:p-4'>

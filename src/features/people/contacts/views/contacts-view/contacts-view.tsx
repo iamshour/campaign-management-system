@@ -13,7 +13,7 @@ import type { Contact } from "@/features/people/contacts/types"
 import { Button, type ColumnType } from "@/ui"
 
 const ContactsViewTopbar = lazy(() => import("./contacts-view-topbar"))
-const ContactsViewFiltersContent = lazy(() => import("./contacts-view-filters-content"))
+const ContactsFiltersContent = lazy(() => import("@/features/people/contacts/components/contacts-filters-content"))
 const ContactsViewTableActions = lazy(() => import("./contacts-view-table-actions"))
 const ContactsViewFiltersPreview = lazy(() => import("./contacts-view-filters-preview"))
 //#endregion
@@ -41,7 +41,7 @@ const ContactsView = ({ count, ...tableProps }: SharedListViewProps<Contact>) =>
 						</AdvancedFiltersDialog>
 					</AdvancedTable.FiltersBar.Header>
 					<AdvancedTable.FiltersBar.Content>
-						<ContactsViewFiltersContent />
+						<ContactsFiltersContent />
 
 						{isAdvancedFiltersApplied && <ContactsViewFiltersPreview />}
 					</AdvancedTable.FiltersBar.Content>

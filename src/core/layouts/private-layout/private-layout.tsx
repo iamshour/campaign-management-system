@@ -3,7 +3,7 @@ import { Suspense, lazy } from "react"
 import { Outlet } from "react-router-dom"
 
 import useSelector from "@/core/hooks/useSelector"
-import { twMerge, Skeleton } from "@/ui"
+import { twMerge, Skeleton, DataTableSkeleton } from "@/ui"
 
 const Navbar = lazy(() => import("./navbar"))
 const Topbar = lazy(() => import("./topbar"))
@@ -36,7 +36,9 @@ const PrivateLayout = () => {
 				</Suspense>
 
 				<section className='relative flex h-full flex-1 overflow-hidden'>
-					<Outlet />
+					<Suspense fallback={<DataTableSkeleton />}>
+						<Outlet />
+					</Suspense>
 				</section>
 			</main>
 		</main>

@@ -2,11 +2,10 @@
 import toast from "react-hot-toast"
 import { Trans, useTranslation } from "react-i18next"
 
-import { isoCountryOptions, twMerge, NotFoundError, type IconType } from "@/ui"
+import { useGetInvalidContactsFileMutation } from "@/features/people/contacts/api"
+import type { ContactScreamSnakeCaseKey } from "@/features/people/contacts/types"
+import { isoCountryOptions, twMerge, type IconType, DisplayError } from "@/ui"
 import { getListOfKey } from "@/utils"
-
-import { useGetInvalidContactsFileMutation } from "../../api"
-import { ContactScreamSnakeCaseKey } from "../../types"
 
 import { useImportContactsDialogContext } from "./import-contacts-dialog-context"
 
@@ -24,7 +23,7 @@ const ReviewStep = () => {
 
 	const [triggerGetInvalidContactsFile] = useGetInvalidContactsFileMutation()
 
-	if (!validationResponse) return <NotFoundError />
+	if (!validationResponse) return <DisplayError />
 
 	const {
 		totalSuccessCount,

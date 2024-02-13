@@ -6,19 +6,21 @@ import AdvancedTable from "@/core/components/advanced-table"
 import type { SharedListViewProps } from "@/core/types"
 import smsTemplatesTableClassNames from "@/features/templates/sms-templates/constants/sms-templates-table-classnames"
 import smsTemplatesTableColumns from "@/features/templates/sms-templates/constants/sms-templates-table-columns"
-import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
+import type { SmsPrebuiltTemplateType, SmsTemplateType } from "@/features/templates/sms-templates/types"
 import type { ColumnType } from "@/ui"
 
-const SmsTemplatesViewTopbar = lazy(() => import("./sms-templates-view-topbar"))
-const SmsTemplatesFiltersContent = lazy(() => import("../../components/sms-templates-filters-content"))
-const SmsTemplatesViewTableActions = lazy(() => import("./sms-templates-view-table-actions"))
+const IndustryTemplatesViewTopbar = lazy(() => import("./industry-templates-view-topbar"))
+const IndustryTemplatesViewTableActions = lazy(() => import("./industry-templates-view-table-actions"))
+const SmsTemplatesFiltersContent = lazy(
+	() => import("@/features/templates/sms-templates/components/sms-templates-filters-content")
+)
 //#endregion
 
-const SmsTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsTemplateType>) => {
+const IndustrySmsPrebuiltTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsPrebuiltTemplateType>) => {
 	const navigate = useNavigate()
 
 	return (
-		<AdvancedTable tableKey='sms-templates' count={count}>
+		<AdvancedTable tableKey='templates-in-industry' count={count}>
 			<AdvancedTable.FiltersBar>
 				<AdvancedTable.FiltersBar.Header />
 				<AdvancedTable.FiltersBar.Content>
@@ -29,7 +31,7 @@ const SmsTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsTempl
 
 			<AdvancedTable.Content>
 				<AdvancedTable.TopBar>
-					<SmsTemplatesViewTopbar />
+					<IndustryTemplatesViewTopbar />
 				</AdvancedTable.TopBar>
 
 				<AdvancedTable.Body
@@ -46,12 +48,12 @@ const SmsTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsTempl
 	)
 }
 
-export default SmsTemplatesView
+export default IndustrySmsPrebuiltTemplatesView
 
 const columns: ColumnType<SmsTemplateType>[] = [
 	...smsTemplatesTableColumns,
 	{
 		accessorKey: "actions",
-		cell: (_, { id }) => <SmsTemplatesViewTableActions id={id} />,
+		cell: (_, { id }) => <IndustryTemplatesViewTableActions id={id} />,
 	},
 ]

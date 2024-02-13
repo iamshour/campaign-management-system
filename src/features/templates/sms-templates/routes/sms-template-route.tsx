@@ -7,7 +7,7 @@ import { FullViewSkeleton } from "@/ui"
 
 import { useGetSmsTemplateByIdQuery } from "../api"
 
-const DisplayError = lazy(() => import("@/ui").then(({ DisplayError }) => ({ default: DisplayError })))
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 const SmsTemplatePreview = lazy(() => import("../components/sms-template-preview"))
 //#endregion
 
@@ -31,7 +31,7 @@ const SmsTemplateRoute = () => {
 
 	if (isFetching) return <FullViewSkeleton />
 
-	if ((!isFetching && isError) || !data) return <DisplayError error={error as any} />
+	if ((!isFetching && isError) || !data) return <DisplayError error={error as any} showReloadButton />
 
 	return <SmsTemplatePreview {...data} />
 }

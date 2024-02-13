@@ -1,8 +1,6 @@
 //#region Import
-import { Suspense, lazy } from "react"
+import { lazy } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
-
-import { DataTableSkeleton } from "@/ui"
 
 const GroupRoute = lazy(() => import("@/features/people/groups/routes/group-route"))
 const GroupsRoute = lazy(() => import("@/features/people/groups/routes/groups-route"))
@@ -11,31 +9,11 @@ const AddContactsToGroupRoute = lazy(() => import("@/features/people/groups/rout
 
 const GroupsFeatureRoutes = () => (
 	<Routes>
-		<Route
-			path=''
-			element={
-				<Suspense fallback={<DataTableSkeleton />}>
-					<GroupsRoute />
-				</Suspense>
-			}
-		/>
-		<Route
-			path=':id'
-			element={
-				<Suspense fallback={<DataTableSkeleton />}>
-					<GroupRoute />
-				</Suspense>
-			}
-		/>
+		<Route path='' element={<GroupsRoute />} />
 
-		<Route
-			path=':id/add-contacts'
-			element={
-				<Suspense fallback={<DataTableSkeleton />}>
-					<AddContactsToGroupRoute />
-				</Suspense>
-			}
-		/>
+		<Route path=':id' element={<GroupRoute />} />
+
+		<Route path=':id/add-contacts' element={<AddContactsToGroupRoute />} />
 
 		<Route path='*' element={<Navigate to='.' />} />
 	</Routes>

@@ -1,6 +1,6 @@
 import { Component } from "react"
 
-import ServerError from "./server-error"
+import DisplayError from "./display-error"
 
 interface Props {
 	children: React.ReactNode
@@ -33,7 +33,15 @@ class ErrorBoundary extends Component<Props, State> {
 
 	public render() {
 		if (this.state.hasError) {
-			return this.props.fallback || <ServerError className={this.props.className} />
+			return (
+				this.props.fallback || (
+					<DisplayError
+						error={{ data: { message: "Component Render Error", statusCode: 500 }, status: 500 }}
+						className={this.props.className}
+						showReloadButton
+					/>
+				)
+			)
 		}
 
 		return this.props.children

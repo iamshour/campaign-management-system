@@ -10,7 +10,7 @@ import { DataTableSkeleton } from "@/ui"
 import { useGetIndustriesQuery } from "../api"
 
 const IndustriesView = lazy(() => import("../views/industries-view/industries-view"))
-const DisplayError = lazy(() => import("@/ui").then(({ DisplayError }) => ({ default: DisplayError })))
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const IndustriesRoute = () => {
@@ -46,7 +46,7 @@ const IndustriesRoute = () => {
 
 	if (isEmptyView) return <>Industries Empty View</>
 
-	if (isError) return <DisplayError error={error as any} />
+	if (isError) return <DisplayError error={error as any} showReloadButton />
 
 	if (isReady) return <IndustriesView list={list || []} count={count || 0} isFetching={isFetching} />
 }

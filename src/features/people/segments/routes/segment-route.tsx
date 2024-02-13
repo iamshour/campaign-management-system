@@ -8,7 +8,7 @@ import { FullViewSkeleton } from "@/ui"
 import { useGetSegmentByIdQuery } from "../api"
 
 const SegmentView = lazy(() => import("../views/segment-view"))
-const NotFoundError = lazy(() => import("@/ui").then((mod) => ({ default: mod.NotFoundError })))
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const SegmentRoute = () => {
@@ -43,7 +43,7 @@ const SegmentRoute = () => {
 	})
 
 	if (isInitialLoading) return <FullViewSkeleton />
-	if (isError || !name?.length) return <NotFoundError className='h-full w-full' />
+	if (isError || !name?.length) return <DisplayError className='h-full w-full' showReloadButton />
 	if (isReady) return <SegmentView name={name} description={description} conditions={conditions} />
 }
 

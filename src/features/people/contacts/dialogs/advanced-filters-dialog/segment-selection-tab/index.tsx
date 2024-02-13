@@ -6,7 +6,7 @@ import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetSegmentByIdQuery } from "@/features/people/segments/api"
 import SelectSegmentsPopover from "@/features/people/segments/components/select-segments-popover"
 import type { Segment, SegmentConditionType } from "@/features/people/segments/types"
-import { NotFoundError, Skeleton, Spinner } from "@/ui"
+import { DisplayError, Skeleton, Spinner } from "@/ui"
 
 import { useAdvancedFiltersDialogContext } from "../advanced-filters-dialog-context"
 //#endregion
@@ -79,7 +79,7 @@ const SegmentSelectionTab = () => {
 							</div>
 						)}
 
-						{isError && <NotFoundError />}
+						{isError && <DisplayError />}
 
 						{isSuccess && (
 							<Suspense fallback={<Skeleton className='h-full w-full' />}>

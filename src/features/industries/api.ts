@@ -4,12 +4,18 @@ import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helper
 import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
 import { getListOfKey } from "@/utils"
 
-import type { IndustryType, GetIndustriesArgs, AddNewIndustryArgs, UpdateIndustryArgs } from "./types"
+import type {
+	IndustryType,
+	GetIndustriesListArgs,
+	AddNewIndustryArgs,
+	DeleteIndustryTemplatesArgs,
+	UpdateIndustryArgs,
+} from "./types"
 //#endregion
 
 const industriesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getIndustries: builder.query<ListDataReturnType<IndustryType>, GetIndustriesArgs>({
+		getIndustries: builder.query<ListDataReturnType<IndustryType>, GetIndustriesListArgs>({
 			query: (params) => ({ url: "/industry", params }),
 			providesTags: (result) => providesList(getListOfKey(result?.list, "id"), "Industry"),
 			transformResponse,
@@ -33,6 +39,11 @@ const industriesApi = api.injectEndpoints({
 				return [{ type: "Industry", id }]
 			},
 		}),
+
+		deleteIndustryTemplates: builder.mutation<any, DeleteIndustryTemplatesArgs>({
+			query: ({ id, templatesIds }) => ({ url: `/templates/delete/${id}`, method: "POST", body: { templatesIds } }),
+			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
+		}),
 	}),
 })
 
@@ -41,4 +52,5 @@ export const {
 	useAddNewIndustryMutation,
 	useUpdateIndustryMutation,
 	useDeleteIndustryMutation,
+	useDeleteIndustryTemplatesMutation,
 } = industriesApi

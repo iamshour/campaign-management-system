@@ -17,7 +17,7 @@ import type { RemoveContactsFromGroupArgs } from "@/features/people/groups/types
 import { useForm, Button, Footer, Form, Skeleton } from "@/ui"
 import { cleanObject } from "@/utils"
 
-const Input = lazy(() => import("@/ui").then((mod) => ({ default: mod.Input })))
+const Input = lazy(() => import("@/ui/input"))
 //#endregion
 
 export interface RemoveFromGroupDialogContentProps {

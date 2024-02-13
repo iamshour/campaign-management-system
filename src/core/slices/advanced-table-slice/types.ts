@@ -25,6 +25,7 @@ export type TableKey =
 	| "sms-templates"
 	| "sms-prebuilt-templates"
 	| "industries"
+	| "templates-in-industry"
 
 type TableDataMappingType = {
 	contacts: Contact
@@ -36,6 +37,7 @@ type TableDataMappingType = {
 	"sms-templates": SmsTemplateType
 	"sms-prebuilt-templates": SmsPrebuiltTemplateType
 	industries: IndustryType
+	"templates-in-industry": SmsPrebuiltTemplateType
 }
 
 export type FiltersFieldMappingType = {
@@ -48,6 +50,7 @@ export type FiltersFieldMappingType = {
 	"sms-templates": SmsTemplatesTableFiltersType
 	"sms-prebuilt-templates": SmsPrebuiltTemplatesTableFiltersType
 	industries: { dateRange?: DateRange }
+	"templates-in-industry": SmsTemplatesTableFiltersType
 }
 
 export type AdvancedTableStateType<K extends TableKey> = TableState<TableDataMappingType[K]> & {

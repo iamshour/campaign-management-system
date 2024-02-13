@@ -9,8 +9,8 @@ import { DisplayError, DataTableSkeleton } from "@/ui"
 
 import { useGetExportsQuery } from "../api"
 
-const ExportsView = lazy(() => import("../views/exports-view"))
-const EmptyExportsView = lazy(() => import("../views/empty-exports-view"))
+const ExportsView = lazy(() => import("../views/exports-view/exports-view"))
+const ExportsEmptyView = lazy(() => import("../views/exports-empty-view"))
 //#endregion
 
 const ExportsRoute = () => {
@@ -49,9 +49,9 @@ const ExportsRoute = () => {
 
 	if (isInitialLoading) return <DataTableSkeleton />
 
-	if (isEmptyView) return <EmptyExportsView />
+	if (isEmptyView) return <ExportsEmptyView />
 
-	if (isError) return <DisplayError error={error as any} />
+	if (isError) return <DisplayError error={error as any} showReloadButton />
 
 	if (isReady) return <ExportsView list={list || []} count={count || 0} isFetching={isFetching} />
 }

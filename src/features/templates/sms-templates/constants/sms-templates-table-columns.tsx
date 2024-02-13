@@ -10,9 +10,6 @@ import smsTemplateStatusesColorsMap from "./sms-template-statuses-colors-map"
 
 // eslint-disable-next-line react-refresh/only-export-components
 const AdvancedTableDateCell = lazy(() => import("@/core/components/advanced-table-date-cell"))
-
-// eslint-disable-next-line react-refresh/only-export-components
-const SmsTemplatesViewTableActions = lazy(() => import("../views/sms-templates-view/sms-templates-view-table-actions"))
 //#endregion
 
 const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
@@ -47,10 +44,6 @@ const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
 				{status}
 			</Badge>
 		),
-	},
-	{
-		accessorKey: "actions",
-		cell: (_, { id }) => <SmsTemplatesViewTableActions id={id} />,
 	},
 ]
 

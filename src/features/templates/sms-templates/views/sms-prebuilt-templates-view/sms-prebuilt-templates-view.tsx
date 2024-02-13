@@ -7,7 +7,7 @@ import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/
 import { useGetSmsPrebuiltTemplatesQuery } from "@/features/templates/sms-templates/api"
 import { DataGridSkeleton } from "@/ui"
 
-const DisplayError = lazy(() => import("@/ui").then(({ DisplayError }) => ({ default: DisplayError })))
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 const SmsPrebuiltTemplatesViewContent = lazy(
 	() => import("./sms-prebuilt-templates-grid-view-content/sms-prebuilt-templates-view-content")
 )
@@ -54,7 +54,7 @@ const SmsPrebuiltTemplatesView = ({
 
 	if (isInitialLoading) return <DataGridSkeleton className='px-8' />
 
-	if (isError) return <DisplayError error={error as any} />
+	if (isError) return <DisplayError error={error as any} showReloadButton />
 
 	return (
 		<SmsPrebuiltTemplatesViewContent

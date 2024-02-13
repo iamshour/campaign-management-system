@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
 
+import appPaths from "@/core/constants/app-paths"
 import { smsTemplateTypesLocaleMap } from "@/features/templates/sms-templates/constants/sms-template-types-options"
 import type { SmsPrebuiltTemplateType } from "@/features/templates/sms-templates/types"
 //#endregion
@@ -18,7 +19,8 @@ const SmsPrebuiltTemplateCard = ({
 }: SmsPrebuiltTemplateType & { className?: string }) => {
 	return (
 		<Link
-			to={`./${id}`}
+			// to={`./${id}`}
+			to={`${appPaths.SMS_TEMPLATES_PREBUILT_TEMPLATES}/${id}`}
 			className={twMerge(
 				"relative h-[285px] w-[377px] cursor-pointer overflow-hidden rounded-2xl border-2 prevent-selection transition-basic hover:border-primary-600 focus-visible:ring-2 focus-visible:ring-primary-600",
 				className

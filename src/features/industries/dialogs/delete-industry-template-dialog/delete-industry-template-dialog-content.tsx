@@ -1,17 +1,18 @@
 //#region Import
 import { useState } from "react"
 import toast from "react-hot-toast"
+import { useParams } from "react-router-dom"
 
 import { useAdvancedTableContext } from "@/core/components/advanced-table"
 import useDispatch from "@/core/hooks/useDispatch"
 import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import { useDeleteSmsTemplatesMutation } from "@/features/templates/sms-templates/api"
+import { useDeleteIndustryTemplatesMutation } from "@/features/industries/api"
 import { Button, Footer, Input, Label } from "@/ui"
 //#endregion
 
-export interface DeleteTemplateDialogContentProps {
+export interface DeleteIndustryTemplateDialogContentProps {
 	/**
-	 * list of sms template Ids to be deleted
+	 * list of Industry template Ids to be deleted
 	 */
 	ids: string[]
 
@@ -21,10 +22,15 @@ export interface DeleteTemplateDialogContentProps {
 	onClose: () => void
 }
 
-const DeleteTemplateDialogContent = ({ ids, onClose }: DeleteTemplateDialogContentProps) => {
+const DeleteIndustryTemplateDialogContent = ({ ids, onClose }: DeleteIndustryTemplateDialogContentProps) => {
+	/**
+	 * Industry Id from the URL Params
+	 */
+	const { id: industryId } = useParams()
+
 	const dispatch = useDispatch()
 
-	const [triggerDeleteSmsTemplates, { isLoading }] = useDeleteSmsTemplatesMutation()
+	const [triggerDeleteIndustryTemplates, { isLoading }] = useDeleteIndustryTemplatesMutation()
 	const [promptInputValue, setPromptInputValue] = useState<string>()
 
 	const { count } = useAdvancedTableContext()
@@ -38,7 +44,7 @@ const DeleteTemplateDialogContent = ({ ids, onClose }: DeleteTemplateDialogConte
 		// TODO: handle deletion when selection="ALL", to be done based on endpoint when integrating with BE
 
 		// NOTE: deleting endpoint is currently failing because we're using json server
-		await triggerDeleteSmsTemplates(ids)
+		await triggerDeleteIndustryTemplates({ id: industryId || "", templatesIds: ids })
 			.unwrap()
 			.then(() => {
 				onClose()
@@ -79,7 +85,7 @@ const DeleteTemplateDialogContent = ({ ids, onClose }: DeleteTemplateDialogConte
 	)
 }
 
-export default DeleteTemplateDialogContent
+export default DeleteIndustryTemplateDialogContent
 
 // //#region Import
 // import { useState } from "react"
@@ -93,7 +99,7 @@ export default DeleteTemplateDialogContent
 // import { Button, Footer, Input, Label } from "@/ui"
 // //#endregion
 
-// export interface DeleteTemplateDialogContentProps {
+// export interface DeleteIndustryTemplateDialogContentProps {
 // 	/**
 // 	 * Template Id to corresponding to the template be deleted
 // 	 */
@@ -105,7 +111,7 @@ export default DeleteTemplateDialogContent
 // 	onClose: () => void
 // }
 
-// const DeleteTemplateDialogContent = ({ id, onClose }: DeleteTemplateDialogContentProps) => {
+// const DeleteIndustryTemplateDialogContent = ({ id, onClose }: DeleteIndustryTemplateDialogContentProps) => {
 // 	const dispatch = useDispatch()
 
 // 	const { count } = useAdvancedTableContext()
@@ -165,4 +171,4 @@ export default DeleteTemplateDialogContent
 // 	)
 // }
 
-// export default DeleteTemplateDialogContent
+// export default DeleteIndustryTemplateDialogContent

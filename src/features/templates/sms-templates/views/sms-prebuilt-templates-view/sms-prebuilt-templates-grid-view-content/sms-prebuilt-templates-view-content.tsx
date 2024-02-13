@@ -12,7 +12,7 @@ import SmsPrebuiltTemplateCard from "./sms-prebuilt-template-card"
 const SmsPrebuiltTemplatesFiltersContent = lazy(
 	() => import("./sms-prebuilt-templates-filters/sms-prebuilt-templates-filters")
 )
-const TablePagination = lazy(() => import("@/ui").then((mod) => ({ default: mod.TablePagination })))
+const TablePagination = lazy(() => import("@/ui/table/table-pagination"))
 //#endregion
 
 export interface SmsPrebuiltTemplatesViewContentProps extends SharedListViewProps<SmsPrebuiltTemplateType> {
@@ -54,7 +54,7 @@ const SmsPrebuiltTemplatesViewContent = ({
 				{!list?.length ? (
 					<DisplayError />
 				) : (
-					<div className='grid flex-1 justify-evenly gap-6 overflow-y-auto p-4 pt-0 [grid-template-columns:repeat(auto-fit,377px)]'>
+					<div className='grid flex-1 justify-evenly gap-6 overflow-y-auto p-4 pt-0 [grid-template-columns:repeat(auto-fit,377px)] [grid-template-rows:repeat(auto-fit,285px)]'>
 						{list.map((prebuiltTemplate) => (
 							<SmsPrebuiltTemplateCard
 								className={isFetching ? "opacity-50" : undefined}
