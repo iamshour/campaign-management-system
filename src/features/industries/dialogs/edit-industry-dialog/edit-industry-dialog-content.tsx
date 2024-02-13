@@ -1,14 +1,14 @@
 //#region Import
 import toast from "react-hot-toast"
 
-import { useUpdateSmsTemplateMutation } from "@/features/industries/api"
+import { useUpdateIndustryMutation } from "@/features/industries/api"
 import IndustryForm from "@/features/industries/components/industry-form"
 import type { AddNewIndustryArgs, IndustryType } from "@/features/industries/types"
 import { Button } from "@/ui"
 //#endregion
 
 export interface EditIndustryDialogContentProps
-	extends Pick<IndustryType, "name" | "description" | "icon" | "color" | "id"> {
+	extends Pick<IndustryType, "id" | "name" | "description" | "icon" | "color"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
@@ -16,9 +16,7 @@ export interface EditIndustryDialogContentProps
 }
 
 const EditIndustryDialogContent = ({ onClose, id, ...formDefaultValues }: EditIndustryDialogContentProps) => {
-	const [updatedIndustry, { isLoading }] = useUpdateSmsTemplateMutation()
-
-	// tracking which button was clicked to show appropriate loader
+	const [updatedIndustry, { isLoading }] = useUpdateIndustryMutation()
 
 	/**
 	 * Used to send validated data from the `IndustryForm` component to the server, for updating the industry entry
