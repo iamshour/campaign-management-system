@@ -16,13 +16,18 @@ interface DisplayErrorProps extends Pick<React.HTMLAttributes<HTMLDivElement>, "
 	}
 
 	/**
+	 * Bool check that handles whether to render a reload/reset button
+	 */
+	showReloadButton?: boolean
+
+	/**
 	 *
 	 * @returns Custom callback function passed to reload button
 	 */
-	onReset?: () => void
+	onReload?: () => void
 }
 
-const DisplayError = ({ error, className, onReset }: DisplayErrorProps) => {
+const DisplayError = ({ error, className, showReloadButton, onReload }: DisplayErrorProps) => {
 	console.log("Error From Display Error Component: ", error)
 
 	return (
@@ -33,12 +38,13 @@ const DisplayError = ({ error, className, onReset }: DisplayErrorProps) => {
 					{!!error?.status && error?.status !== 404 ? "Server Error" : "Not found"}
 				</h1>
 
-				{!!onReset && (
+				{/* Render a Reload Button, only if the bool check was passed OR a callback function: `onReload` was passed    */}
+				{(!!showReloadButton || !!onReload) && (
 					<Button
 						variant='outline-secondary'
 						onClick={() => {
 							window.location.reload()
-							onReset()
+							!!onReload && onReload()
 						}}
 						title='Reset'>
 						<RadixIconsReload />

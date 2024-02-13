@@ -13,9 +13,7 @@ import type { ColumnType } from "@/ui"
 
 const GroupViewTableActions = lazy(() => import("./group-view-table-actions"))
 const GroupViewTopbar = lazy(() => import("./group-view-topbar/group-view-topbar"))
-const ContactsViewFiltersContent = lazy(
-	() => import("@/features/people/contacts/views/contacts-view/contacts-view-filters-content")
-)
+const ContactsFiltersContent = lazy(() => import("@/features/people/contacts/components/contacts-filters-content"))
 //#endregion
 
 const GroupView = ({ count, ...tableProps }: SharedListViewProps<Contact>) => {
@@ -38,7 +36,7 @@ const GroupView = ({ count, ...tableProps }: SharedListViewProps<Contact>) => {
 				<AdvancedTable.FiltersBar>
 					<AdvancedTable.FiltersBar.Header />
 					<AdvancedTable.FiltersBar.Content>
-						<ContactsViewFiltersContent />
+						<ContactsFiltersContent />
 					</AdvancedTable.FiltersBar.Content>
 					<AdvancedTable.FiltersBar.Footer />
 				</AdvancedTable.FiltersBar>

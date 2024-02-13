@@ -58,7 +58,7 @@ export type AddNewSmsTemplateArgs = Pick<SmsTemplateType, "name" | "type" | "lan
 export type UpdateSmsTemplateArgs = AddNewSmsTemplateArgs & Pick<SmsTemplateType, "id">
 
 /**
- * Arguments used for the `getSmsTemplates` query, passed for the server as params when fetching SMS Templates List
+ * Arguments used for the `deleteSmsTemplates` query, passed for the server as params when deleting SMS Template/s
  */
 export type DeleteSmsTemplatesArgs = string[]
 
@@ -79,18 +79,11 @@ export type SmsTemplatesTableFiltersType = {
 /**
  * Shape of fetched Prebuilt SMS Template
  */
-export type SmsPrebuiltTemplateType = {
-	id: string
+export type SmsPrebuiltTemplateType = SmsTemplateType & {
 	industryId: string
-	name: string
-	language: SmsTemplateLanguageOption
-	type: SmsTemplateTypeOption
 	createdAt: string
-	updatedAt: string
-	status: SmsTemplateStatusOption
 	mostPopular: boolean
 	background: string
-	body: string
 }
 
 /**

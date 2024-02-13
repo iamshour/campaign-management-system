@@ -18,7 +18,7 @@ import type { MoveContactsToGroupArgs } from "@/features/people/groups/types"
 import { Button, Footer, Form, Skeleton, useForm, type OptionType } from "@/ui"
 import { cleanObject } from "@/utils"
 
-const Input = lazy(() => import("@/ui").then((mod) => ({ default: mod.Input })))
+const Input = lazy(() => import("@/ui/input"))
 const SelectGroupsPopover = lazy(() => import("@/features/people/groups/components/select-groups-popover"))
 //#endregion
 

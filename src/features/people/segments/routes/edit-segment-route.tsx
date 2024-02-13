@@ -2,7 +2,7 @@
 import { useParams } from "react-router-dom"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { NotFoundError } from "@/ui"
+import { DisplayError } from "@/ui"
 
 import { useGetSegmentByIdQuery } from "../api"
 import SegmentFunnelSkeleton from "../components/segment-funnel-skeleton"
@@ -46,7 +46,7 @@ const EditSegmentRoute = () => {
 	})
 
 	if (isInitialLoading) return <SegmentFunnelSkeleton />
-	if (isError || !id || !defaultValues?.name) return <NotFoundError className='h-full w-full' />
+	if (isError || !id || !defaultValues?.name) return <DisplayError className='h-full w-full' />
 
 	if (isReady)
 		return (

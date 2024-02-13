@@ -3,13 +3,14 @@ import { Navigate, RouteObject } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"
 import PrivateLayout from "@/core/layouts/private-layout/private-layout"
-import IndustriesFeatureRoutes from "@/features/industries/routes/industries-feature-routes"
-import ContactsFeatureRoutes from "@/features/people/contacts/routes"
-import ExportsFeatureRoutes from "@/features/people/exports/routes"
-import GroupsFeatureRoutes from "@/features/people/groups/routes"
-import SegmentsFeatureRoutes from "@/features/people/segments/routes"
-import SmsTemplatesFeatureRoutes from "@/features/templates/sms-templates/routes/sms-templates-feature-routes"
-import { NotFoundError } from "@/ui"
+// TODO: LAZY LOAD ALL BELOW
+import IndustriesFeatureRoutes from "@/features/industries/routes/industries.feature-routes"
+import ContactsFeatureRoutes from "@/features/people/contacts/routes/contacts.feature-routes"
+import ExportsFeatureRoutes from "@/features/people/exports/routes/exports.feature-routes"
+import GroupsFeatureRoutes from "@/features/people/groups/routes/groups.feature-routes"
+import SegmentsFeatureRoutes from "@/features/people/segments/routes/segments.feature-routes"
+import SmsTemplatesFeatureRoutes from "@/features/templates/sms-templates/routes/sms-templates.feature-routes"
+import { DisplayError } from "@/ui"
 //#endregion
 
 /**
@@ -43,7 +44,7 @@ const privateRoutes: RouteObject[] = [
 			{ path: appPaths.CHANNELS, element: <div className='text-4xl'>Channels Route</div> },
 			{ path: appPaths.CHATBOT, element: <div className='text-4xl'>Chatbot Route</div> },
 
-			{ path: "*", element: <NotFoundError /> },
+			{ path: "*", element: <DisplayError /> },
 		],
 	},
 ]

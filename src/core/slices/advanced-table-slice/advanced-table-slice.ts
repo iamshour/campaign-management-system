@@ -28,6 +28,7 @@ const initialState: AdvancedTableSliceStateType = {
 	"sms-templates": initialDataTableStateCompact,
 	"sms-prebuilt-templates": initialDataTableStateCompact,
 	industries: initialDataTableStateBase,
+	"templates-in-industry": initialDataTableStateBase,
 }
 
 const advancedTableSlice = createSlice({

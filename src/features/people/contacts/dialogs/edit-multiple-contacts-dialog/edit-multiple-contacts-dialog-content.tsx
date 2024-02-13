@@ -18,7 +18,7 @@ import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option
 import { useForm, Button, Footer, Form, Skeleton, type OptionType } from "@/ui"
 import { cleanObject, getListOfKey } from "@/utils"
 
-const Input = lazy(() => import("@/ui").then((mod) => ({ default: mod.Input })))
+const Input = lazy(() => import("@/ui/input"))
 const SelectTagsPopover = lazy(() => import("@/features/people/contacts/components/select-tags-popover"))
 const SelectGroupsWithCreatePopover = lazy(
 	() => import("@/features/people/groups/components/select-groups-with-create-popover")

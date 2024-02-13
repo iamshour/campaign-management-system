@@ -24,8 +24,6 @@ export { default as DropFileArea } from "./drop-file-area"
 // #regionErrors
 export { default as DisplayError } from "./errors/display-error"
 export { default as ErrorBoundary } from "./errors/error-boundary"
-export { default as NotFoundError } from "./errors/notfound-error"
-export { default as ServerError } from "./errors/server-error"
 // #region end
 
 export { default as Input } from "./input"

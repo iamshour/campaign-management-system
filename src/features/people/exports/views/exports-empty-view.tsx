@@ -2,7 +2,7 @@
 import ContactsEmptySvg from "@/assets/contacts-empty.svg?react"
 //#endregion
 
-const EmptyExportsView = () => {
+const ExportsEmptyView = () => {
 	return (
 		<div className='flex h-full w-full flex-col p-4'>
 			<div className='h-full flex-1 flex-col gap-[14px] flex-center'>
@@ -14,4 +14,4 @@ const EmptyExportsView = () => {
 	)
 }
 
-export default EmptyExportsView
+export default ExportsEmptyView

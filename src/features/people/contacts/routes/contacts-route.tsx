@@ -13,9 +13,9 @@ import { getListOfKey } from "@/utils"
 
 import { useGetContactsQuery } from "../api"
 
-const ContactsView = lazy(() => import("../views/contacts-view"))
-const EmptyContactsView = lazy(() => import("../views/empty-contacts-view"))
-const DisplayError = lazy(() => import("@/ui").then((mod) => ({ default: mod.DisplayError })))
+const ContactsView = lazy(() => import("../views/contacts-view/contacts-view"))
+const ContactsEmptyView = lazy(() => import("../views/contacts-empty-view"))
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const ContactsRoute = () => {
@@ -54,9 +54,9 @@ const ContactsRoute = () => {
 
 	if (isInitialLoading) return <DataTableSkeleton />
 
-	if (isEmptyView) return <EmptyContactsView />
+	if (isEmptyView) return <ContactsEmptyView />
 
-	if (isError) return <DisplayError error={error as any} onReset={() => dispatch(clearFilters("contacts"))} />
+	if (isError) return <DisplayError error={error as any} onReload={() => dispatch(clearFilters("contacts"))} />
 
 	if (isReady) return <ContactsView list={list || []} count={count || 0} isFetching={isFetching} />
 }

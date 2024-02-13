@@ -3,10 +3,9 @@ import { useTranslation } from "react-i18next"
 
 import ContactsEmptySvg from "@/assets/contacts-empty.svg?react"
 import LabelledHints from "@/core/components/labelled-hints"
+import CreateContactDialog from "@/features/people/contacts/dialogs/create-contact-dialog/create-contact-dialog"
+import ImportContactsDialog from "@/features/people/contacts/dialogs/import-contacts-dialog/import-contacts-dialog"
 import { Button } from "@/ui"
-
-import CreateContactDialog from "../dialogs/create-contact-dialog/create-contact-dialog"
-import ImportContactsDialog from "../dialogs/import-contacts-dialog/import-contacts-dialog"
 //#endregion
 
 const EmptyContactsView = () => {

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 //#region Import
 import { lazy } from "react"
 
@@ -8,11 +9,11 @@ import type { ContactExportStatusOption, ContactExports } from "../types"
 import exportsFieldsMap from "./exports-fields-map"
 import exportStatusesColorsMap from "./statuses-colors-map"
 
-// eslint-disable-next-line react-refresh/only-export-components
 const AdvancedTableDateCell = lazy(() => import("@/core/components/advanced-table-date-cell"))
 
-// eslint-disable-next-line react-refresh/only-export-components
-const ExportsViewTableActions = lazy(() => import("../views/exports-view/exports-view-table-actions"))
+const ExportsViewTableActions = lazy(
+	() => import("../views/exports-view/exports-view-table-actions/exports-view-table-actions")
+)
 //#endregion
 
 const exportsTableColumns: ColumnType<ContactExports>[] = [

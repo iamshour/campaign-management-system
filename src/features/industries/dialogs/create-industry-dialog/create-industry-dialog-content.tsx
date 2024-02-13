@@ -17,7 +17,7 @@ interface CreateIndustryDialogContentProps {
 const CreateIndustryDialogContent = ({ onClose }: CreateIndustryDialogContentProps) => {
 	const [addIndustry, { isLoading }] = useAddNewIndustryMutation()
 
-	// tracking which button was clicked to show appropriate loader
+	//  tracking which button was clicked to show appropriate loader
 
 	/**
 	 * Used to send validated data from the `IndustryForm` component to the server, for adding the industry entry

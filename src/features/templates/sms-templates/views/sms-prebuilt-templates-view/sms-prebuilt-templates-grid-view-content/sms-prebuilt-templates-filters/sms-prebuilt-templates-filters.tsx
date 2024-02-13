@@ -5,7 +5,7 @@ import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetIndustriesQuery } from "@/features/industries/api"
 import { Skeleton } from "@/ui"
 
-const DisplayError = lazy(() => import("@/ui").then(({ DisplayError }) => ({ default: DisplayError })))
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 const SmsPrebuiltTemplatesFiltersContent = lazy(() => import("./sms-prebuilt-templates-filters-content"))
 //#endregion
 
@@ -23,7 +23,7 @@ const SmsPrebuiltTemplatesFilters = () => {
 	const onIndustrySearch = useCallback((searchTerm?: string) => setIndustrySearchTerm(searchTerm), [])
 
 	if (isLoading) return <Skeleton className='h-full bg-white' />
-	if (!!isError || !list) return <DisplayError error={error as any} />
+	if (!!isError || !list) return <DisplayError error={error as any} showReloadButton />
 
 	return <SmsPrebuiltTemplatesFiltersContent list={list} onIndustrySearch={onIndustrySearch} />
 }

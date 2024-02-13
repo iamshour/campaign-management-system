@@ -1,8 +1,8 @@
 //#region Import
+import { useAdvancedTableContext } from "@/core/components/advanced-table"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { updateFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import SelectLanguagesPopover from "@/features/templates/sms-templates/components/select-languages-popover"
 import SelectStatusesPopover from "@/features/templates/sms-templates/components/select-statuses-popover"
 import SelectTypesPopover from "@/features/templates/sms-templates/components/select-types-popover"
@@ -10,17 +10,20 @@ import type {
 	SmsTemplateLanguageOption,
 	SmsTemplateStatusOption,
 	SmsTemplateTypeOption,
+	SmsTemplatesTableFiltersType,
 } from "@/features/templates/sms-templates/types"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
 //#endregion
 
-const SmsTemplatesViewFiltersContent = () => {
+const SmsTemplatesFiltersContent = () => {
 	const dispatch = useDispatch()
 
-	const { filters } = useSelector<AdvancedTableStateType<"sms-templates">>(
-		({ advancedTable }) => advancedTable["sms-templates"]
-	)
+	const { tableKey } = useAdvancedTableContext()
+
+	// Statically Inferring Filters Type because tableKey could be either "sms-templates" or "templates-in-industries",
+	// but type of Passed Data Type is different (first is SmsTemplateType and second is SmsPrebuiltTemplateType)
+	const filters = useSelector(({ advancedTable }) => advancedTable[tableKey]?.filters) as SmsTemplatesTableFiltersType
 
 	return (
 		<>
@@ -68,4 +71,4 @@ const SmsTemplatesViewFiltersContent = () => {
 	)
 }
 
-export default SmsTemplatesViewFiltersContent
+export default SmsTemplatesFiltersContent

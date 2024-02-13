@@ -10,8 +10,8 @@ import { DataTableSkeleton } from "@/ui"
 import { useGetSmsTemplatesQuery } from "../api"
 
 const SmsTemplatesView = lazy(() => import("../views/sms-templates-view/sms-templates-view"))
-const EmptySmsTemplatesView = lazy(() => import("../views/empty-sms-templates-view"))
-const DisplayError = lazy(() => import("@/ui").then(({ DisplayError }) => ({ default: DisplayError })))
+const SmsTemplatesEmptyView = lazy(() => import("../views/sms-templates-empty-view"))
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const SmsTemplatesRoute = () => {
@@ -49,9 +49,9 @@ const SmsTemplatesRoute = () => {
 
 	if (isInitialLoading) return <DataTableSkeleton />
 
-	if (isEmptyView) return <EmptySmsTemplatesView />
+	if (isEmptyView) return <SmsTemplatesEmptyView />
 
-	if (isError) return <DisplayError error={error as any} />
+	if (isError) return <DisplayError error={error as any} showReloadButton />
 
 	if (isReady) return <SmsTemplatesView list={list || []} count={count || 0} isFetching={isFetching} />
 }

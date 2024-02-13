@@ -7,7 +7,7 @@ import ContactForm from "@/features/people/contacts/components/contact-form"
 import type { ContactSchemaType } from "@/features/people/contacts/schemas/contact-schema"
 import type { AddNewContactArgs } from "@/features/people/contacts/types"
 import { addLeadingPlusToPhoneNumber } from "@/features/people/contacts/utils"
-import { Button, NotFoundError, Skeleton, type UseFormReturn } from "@/ui"
+import { Button, DisplayError, Skeleton, type UseFormReturn } from "@/ui"
 //#endregion
 
 export interface EditContactDialogContentProps {
@@ -60,7 +60,7 @@ const EditContactDialogContent = ({ onClose, id }: EditContactDialogContentProps
 	}
 
 	if (isFetching) return <Skeleton className='h-full' />
-	if (isFetchError) return <NotFoundError />
+	if (isFetchError) return <DisplayError />
 
 	return (
 		<ContactForm onSubmit={onSubmit} defaultValues={values}>

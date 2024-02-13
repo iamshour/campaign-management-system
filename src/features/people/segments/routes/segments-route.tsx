@@ -9,8 +9,8 @@ import { DisplayError, DataTableSkeleton } from "@/ui"
 import { getContactSearchFilter } from "../../contacts/utils"
 import { useGetSegmentsQuery } from "../api"
 
-const SegmentsView = lazy(() => import("../views/segments-view"))
-const EmptySegmentsView = lazy(() => import("../views/empty-segments-view"))
+const SegmentsView = lazy(() => import("../views/segments-view/segments-view"))
+const SegmentsEmptyView = lazy(() => import("../views/segments-empty-view"))
 //#endregion
 
 const SegmentsRoute = () => {
@@ -43,9 +43,9 @@ const SegmentsRoute = () => {
 	if (isInitialLoading) return <DataTableSkeleton />
 
 	// If no entries were found at all
-	if (isEmptyView) return <EmptySegmentsView />
+	if (isEmptyView) return <SegmentsEmptyView />
 
-	if (isError) return <DisplayError error={error as any} />
+	if (isError) return <DisplayError error={error as any} showReloadButton />
 
 	if (isReady) return <SegmentsView list={list || []} count={count || 0} isFetching={isFetching} />
 }
