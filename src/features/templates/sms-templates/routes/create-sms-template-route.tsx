@@ -9,17 +9,17 @@ import { Button, DisplayError, FullViewSkeleton } from "@/ui"
 
 import { useGetSmsTemplateByIdQuery, useGetSmsPrebuiltTemplateByIdQuery, useAddNewSmsTemplateMutation } from "../api"
 import SmsTemplateBuilder from "../components/sms-template-builder/sms-template-builder"
-import type { CreateSmsTemplateLocationType, AddNewSmsTemplateArgs, SmsTemplateStatusOption } from "../types"
+import type { AddNewSmsTemplateArgs, SmsTemplateStatusOption } from "../types"
 //#endregion
 
 const CreateSmsTemplateRoute = () => {
 	const navigate = useNavigate()
-	const location: CreateSmsTemplateLocationType = useLocation()
 
 	/** Fetch SMS Template Data in case of Clone template and Use prebuilt template: */
-
-	const { id: smsTemplateId, type } = location?.state || {}
-	const useFetchHook = type === "smsTemplate" ? useGetSmsTemplateByIdQuery : useGetSmsPrebuiltTemplateByIdQuery
+	const { search } = useLocation()
+	const [smsTemplateType, smsTemplateId] = search ? search.split(/[?&]/)[1]!.split("=") : []
+	const useFetchHook =
+		smsTemplateType === "smsTemplate" ? useGetSmsTemplateByIdQuery : useGetSmsPrebuiltTemplateByIdQuery
 
 	const { data, isFetching, isError, error } = useFetchHook(smsTemplateId!, {
 		skip: !smsTemplateId,
@@ -68,7 +68,7 @@ const CreateSmsTemplateRoute = () => {
 				loading={isLoading && smsTemplateStatus == "DRAFT"}
 				disabled={isLoading && smsTemplateStatus == "PUBLISHED"}
 				onClick={() => SetSmsTemplateStatus("DRAFT")}>
-				Update Draft
+				Save as Draft
 			</Button>
 
 			<Button
