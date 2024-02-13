@@ -4,12 +4,12 @@ import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helper
 import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
 import { getListOfKey } from "@/utils"
 
-import type { IndustryType, GetIndustriesListArgs, AddNewIndustryArgs } from "./types"
+import type { IndustryType, GetIndustriesArgs, AddNewIndustryArgs, UpdateIndustryArgs } from "./types"
 //#endregion
 
 const industriesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getIndustriesList: builder.query<ListDataReturnType<IndustryType>, GetIndustriesListArgs>({
+		getIndustries: builder.query<ListDataReturnType<IndustryType>, GetIndustriesArgs>({
 			query: (params) => ({ url: "/industry", params }),
 			providesTags: (result) => providesList(getListOfKey(result?.list, "id"), "Industry"),
 			transformResponse,
@@ -19,7 +19,12 @@ const industriesApi = api.injectEndpoints({
 			query: (body) => ({ url: "/industryById", method: "POST", body }),
 			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
 		}),
+
+		updateSmsTemplate: builder.mutation<any, UpdateIndustryArgs>({
+			query: ({ id, ...body }) => ({ url: `/industryById/${id}`, method: "PUT", body }),
+			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
+		}),
 	}),
 })
 
-export const { useGetIndustriesListQuery, useAddNewIndustryMutation } = industriesApi
+export const { useGetIndustriesQuery, useAddNewIndustryMutation, useUpdateSmsTemplateMutation } = industriesApi

@@ -15658,20 +15658,18 @@
 	],
 	"industryById": [
 		{
-			"id": "65b8b65a0003057193680999",
 			"name": "Rental Services",
+			"description": "Industry description goes44 here...",
 			"icon": "FlatColorIconsFactory",
-			"description": "Industry description goes here...",
 			"color": "#E0FFFF",
-			"createdAt": "2017-06-03T03:19:52-03:00"
+			"id": "65b8b65a0003057193680999"
 		},
 		{
-			"id": "65b8b65a0003057asdfs80999",
 			"name": "Salons & Spas",
-			"icon": "FlatColorIconsHighPriority",
 			"description": "Industry description goes here...",
-			"color": "#F0FFF0",
-			"createdAt": "2017-06-03T03:19:52-03:00"
+			"icon": "FlatColorIconsHighPriority",
+			"color": "#3f6e3f",
+			"id": "65b8b65a0003057asdfs80999"
 		},
 		{
 			"id": "65b8b65aasas57193680999",
@@ -15774,6 +15772,20 @@
 			"description": "456",
 			"icon": "IonAnalytics",
 			"color": "#cf8c8c"
+		},
+		{
+			"id": "ed0b",
+			"name": "h  n",
+			"description": "456",
+			"icon": "FlatColorIconsBadDecision",
+			"color": "#b97979"
+		},
+		{
+			"id": "22b5",
+			"name": "123",
+			"description": "456",
+			"icon": "FlatColorIconsEngineering",
+			"color": "#a21010"
 		}
 	]
 }

@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import industriesIconsMap from "@/features/industries/constants/industries-icons-map"
-import type { AddNewIndustryArgs } from "@/features/industries/types"
+import type { AddNewIndustryArgs, IndustryType } from "@/features/industries/types"
 import { useForm, Footer, Form, Input, Select, Button, ColorInput } from "@/ui"
 import type { IconType } from "@/ui"
 import { cleanObject } from "@/utils"
@@ -16,17 +16,13 @@ interface IndustryFormProps {
 
 	children: React.ReactNode
 
-	defaultValues?: IndustrySchemaType
+	defaultValues?: Pick<IndustryType, "name" | "description" | "icon" | "color">
 }
 
-const IndustryForm = ({
-	children,
-	onSubmit,
-	// defaultValues
-}: IndustryFormProps) => {
+const IndustryForm = ({ children, onSubmit, defaultValues }: IndustryFormProps) => {
 	const form = useForm<IndustrySchemaType>({
 		resolver: zodResolver(IndustrySchema),
-		// values: defaultValues ?? {},  // TODO: add defaultValues to be used in edit form
+		values: defaultValues,
 	})
 
 	/**

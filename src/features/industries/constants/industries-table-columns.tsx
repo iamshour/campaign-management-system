@@ -39,7 +39,7 @@ const industriesTableColumns: ColumnType<IndustryType>[] = [
 	},
 	{
 		accessorKey: "actions",
-		cell: (_, { id }) => <IndustriesViewTableActions id={id} />,
+		cell: (_, row) => <IndustriesViewTableActions {...row} />,
 	},
 ]
 

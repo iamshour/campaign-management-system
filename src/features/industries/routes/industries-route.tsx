@@ -7,7 +7,7 @@ import { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { DataTableSkeleton } from "@/ui"
 
-import { useGetIndustriesListQuery } from "../api"
+import { useGetIndustriesQuery } from "../api"
 
 const IndustriesView = lazy(() => import("../views/industries-view/industries-view"))
 const DisplayError = lazy(() => import("@/ui").then(({ DisplayError }) => ({ default: DisplayError })))
@@ -18,7 +18,7 @@ const IndustriesRoute = () => {
 		AdvancedTableStateType<"industries">
 	>(({ advancedTable }) => advancedTable["industries"])
 
-	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetIndustriesListQuery(
+	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetIndustriesQuery(
 		{
 			offset,
 			limit,
