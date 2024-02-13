@@ -1,9 +1,10 @@
 //#region Import
 import { lazy } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useLocation, useNavigate } from "react-router-dom"
 
+import appPaths from "@/core/constants/app-paths"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { FullViewSkeleton } from "@/ui"
+import { Button, FullViewSkeleton } from "@/ui"
 
 import { useGetSmsPrebuiltTemplateByIdQuery } from "../api"
 
@@ -13,6 +14,8 @@ const SmsTemplatePreview = lazy(() => import("../components/sms-template-preview
 
 const SmsPrebuiltTemplateRoute = () => {
 	const { id: smsPrebuiltTemplateId } = useParams()
+	const { state } = useLocation()
+	const navigate = useNavigate()
 
 	const { data, isFetching, isError, error } = useGetSmsPrebuiltTemplateByIdQuery(smsPrebuiltTemplateId!, {
 		skip: !smsPrebuiltTemplateId,
@@ -34,7 +37,25 @@ const SmsPrebuiltTemplateRoute = () => {
 
 	if ((!isFetching && isError) || !data) return <DisplayError error={error as any} showReloadButton />
 
-	return <SmsTemplatePreview {...data} />
+	return (
+		<SmsTemplatePreview {...data} additionalTemplateInfo={[{ label: "IndustryId", value: data.industryId }]}>
+			<div className='mt-5 flex flex-row justify-end space-x-4'>
+				<Button
+					variant='outline'
+					className='px-10'
+					onClick={() => navigate(state?.from || appPaths.SMS_TEMPLATES_PREBUILT_TEMPLATES)}>
+					Back
+				</Button>
+				<Button
+					className='px-10'
+					onClick={() =>
+						navigate(`${appPaths.SMS_TEMPLATES_MY_TEMPLATES}/new-template?prebuiltSmsTemplate=${smsPrebuiltTemplateId}`)
+					}>
+					Use Template
+				</Button>
+			</div>
+		</SmsTemplatePreview>
+	)
 }
 
 export default SmsPrebuiltTemplateRoute

@@ -96,6 +96,7 @@ const SmsTemplateBuilder = ({ onSubmit, children, defaultValue }: SmsTemplateBui
 																<Select.Item
 																	key={value}
 																	value={value}
+																	showCheck={false}
 																	className='static flex w-full flex-row items-center justify-between'>
 																	<Select.Text className='flex-1 '>{label}</Select.Text>
 																	<MdiInformationVariantCircle className='text-sm text-primary-600' />
@@ -127,7 +128,7 @@ const SmsTemplateBuilder = ({ onSubmit, children, defaultValue }: SmsTemplateBui
 													</Select.Trigger>
 													<Select.Content sideOffset={8}>
 														{smsTemplateLanguagesOptions.map(({ value, label }) => (
-															<Select.Item key={value} value={value}>
+															<Select.Item key={value} value={value} showCheck={false}>
 																<Select.Text>{label}</Select.Text>
 															</Select.Item>
 														))}

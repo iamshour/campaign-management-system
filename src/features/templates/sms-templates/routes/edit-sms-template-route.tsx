@@ -67,7 +67,7 @@ const CreateSmsTemplateRoute = () => {
 					loading={isLoading && smsTemplateStatus == "DRAFT"}
 					disabled={isLoading && smsTemplateStatus == "PUBLISHED"}
 					onClick={() => SetSmsTemplateStatus("DRAFT")}>
-					Save as Draft
+					Update Draft
 				</Button>
 			)}
 

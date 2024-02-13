@@ -12,7 +12,7 @@ import { rearrangePlaceholders } from "../../utils/sms-template-body-utils"
 
 const SmsTemplateBodyTextarea = ({ form }: { form: UseFormReturn<SmsTemplateSchemaType> }) => {
 	const textareaRef = useRef<HTMLTextAreaElement>(null)
-	const currentBody: string = form.watch("body")
+	const currentBody: string = form.watch("body") ?? ""
 
 	const { maxCharactersPerPart, charactersCountInCurrentPart, partsCount, placeholdersCount } =
 		useSmsTemplateBody(currentBody)

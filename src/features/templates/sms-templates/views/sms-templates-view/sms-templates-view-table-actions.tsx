@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom"
 
 import DeleteTemplateDialog from "@/features/templates/sms-templates/dialogs/delete-template-dialog/delete-template-dialog"
-import type { CreateSmsTemplateLocationType, SmsTemplateType } from "@/features/templates/sms-templates/types"
+import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 import { Dropdown } from "@/ui"
 
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
@@ -11,8 +11,6 @@ import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 const SmsTemplatesViewTableActions = ({ id }: Pick<SmsTemplateType, "id">) => {
 	const navigate = useNavigate()
 
-	const cloneSmsTemplateLocation: CreateSmsTemplateLocationType = { state: { id, type: "smsTemplate" } }
-
 	return (
 		<Dropdown>
 			<Dropdown.Trigger showArrow={false} variant='ghost' className='h-max w-max p-1.5'>
@@ -20,7 +18,7 @@ const SmsTemplatesViewTableActions = ({ id }: Pick<SmsTemplateType, "id">) => {
 			</Dropdown.Trigger>
 
 			<Dropdown.Content sideOffset={0} align='end'>
-				<Dropdown.Item onClick={() => navigate("new-template", cloneSmsTemplateLocation)}>Clone</Dropdown.Item>
+				<Dropdown.Item onClick={() => navigate(`new-template?smsTemplate=${id}`)}>Clone</Dropdown.Item>
 
 				<Dropdown.Separator />
 

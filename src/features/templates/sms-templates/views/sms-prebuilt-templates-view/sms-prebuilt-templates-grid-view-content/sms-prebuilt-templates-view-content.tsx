@@ -1,6 +1,8 @@
 //#region Import
 import { Suspense, lazy, useCallback } from "react"
+import { Link } from "react-router-dom"
 
+import appPaths from "@/core/constants/app-paths"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { updateAdvancedTableState } from "@/core/slices/advanced-table-slice/advanced-table-slice"
@@ -55,12 +57,13 @@ const SmsPrebuiltTemplatesViewContent = ({
 					<DisplayError />
 				) : (
 					<div className='grid flex-1 justify-evenly gap-6 overflow-y-auto p-4 pt-0 [grid-template-columns:repeat(auto-fit,377px)] [grid-template-rows:repeat(auto-fit,285px)]'>
-						{list.map((prebuiltTemplate) => (
-							<SmsPrebuiltTemplateCard
-								className={isFetching ? "opacity-50" : undefined}
-								key={prebuiltTemplate?.id}
-								{...prebuiltTemplate}
-							/>
+						{list.map(({ id, ...prebuiltTemplateDetails }) => (
+							<Link key={id} to={`${appPaths.SMS_TEMPLATES_PREBUILT_TEMPLATES}/${id}`}>
+								<SmsPrebuiltTemplateCard
+									className={isFetching ? "opacity-50" : undefined}
+									{...prebuiltTemplateDetails}
+								/>
+							</Link>
 						))}
 					</div>
 				)}

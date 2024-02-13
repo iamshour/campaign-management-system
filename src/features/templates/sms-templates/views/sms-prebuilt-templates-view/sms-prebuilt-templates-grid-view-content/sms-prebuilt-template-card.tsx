@@ -1,8 +1,6 @@
 //#region Import
-import { Link } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
 
-import appPaths from "@/core/constants/app-paths"
 import { smsTemplateTypesLocaleMap } from "@/features/templates/sms-templates/constants/sms-template-types-options"
 import type { SmsPrebuiltTemplateType } from "@/features/templates/sms-templates/types"
 //#endregion
@@ -15,12 +13,11 @@ const SmsPrebuiltTemplateCard = ({
 	background,
 	body,
 	className,
-	id,
-}: SmsPrebuiltTemplateType & { className?: string }) => {
+}: Omit<SmsPrebuiltTemplateType, "id"> & {
+	className?: string
+}) => {
 	return (
-		<Link
-			// to={`./${id}`}
-			to={`${appPaths.SMS_TEMPLATES_PREBUILT_TEMPLATES}/${id}`}
+		<div
 			className={twMerge(
 				"relative h-[285px] w-[377px] cursor-pointer overflow-hidden rounded-2xl border-2 prevent-selection transition-basic hover:border-primary-600 focus-visible:ring-2 focus-visible:ring-primary-600",
 				className
@@ -47,7 +44,7 @@ const SmsPrebuiltTemplateCard = ({
 				<h4 className='relative z-10 text-primary-700'>{name}</h4>
 				<p className='relative z-10 line-clamp-2 w-full'>{body}</p>
 			</div>
-		</Link>
+		</div>
 	)
 }
 

@@ -1,22 +1,45 @@
 //#region Import
-import { SmsTemplateType, SmsPrebuiltTemplateType } from "../types"
+import { lazy } from "react"
+
+import { Button, Dialog } from "@/ui"
+
+import { SmsPrebuiltTemplateType, SmsTemplateType } from "../types"
 
 import MobileSmsPreview from "./mobile-sms-preview"
 
+import MaterialSymbolsImagesmodeRounded from "~icons/material-symbols/imagesmode-rounded"
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
 import MdiMessageProcessing from "~icons/mdi/message-processing"
+
+const SmsPrebuiltTemplateCard = lazy(
+	() =>
+		import(
+			"@/features/templates/sms-templates/views/sms-prebuilt-templates-view/sms-prebuilt-templates-grid-view-content/sms-prebuilt-template-card"
+		)
+)
 //#endregion
 
-type TemplateType =
-	| Pick<SmsTemplateType, "name" | "type" | "language" | "body">
-	| Pick<SmsPrebuiltTemplateType, "name" | "type" | "language" | "body" | "industryId">
+interface SmsTemplatePreviewProps extends Pick<SmsTemplateType, "name" | "type" | "language" | "body"> {
+	industryId?: string
+	background?: string
 
-function SmsTemplatePreview<T extends TemplateType>(smsTemplate: T) {
-	const { body, ...smsTemplateInfo } = smsTemplate
+	/**
+	 * Page footer to be passed as child
+	 */
+	children?: React.ReactNode
+
+	/**
+	 * Additional info to be displayed under "Template Basic Info" section
+	 */
+	additionalTemplateInfo?: { label: string; value: string }[]
+}
+
+function SmsTemplatePreview({ children, additionalTemplateInfo, ...smsTemplate }: SmsTemplatePreviewProps) {
+	const { name, type, language, body, background } = smsTemplate
 
 	return (
 		<div className='flex h-full w-full flex-col overflow-y-auto p-6'>
-			<h1 className='mb-6 text-xl font-bold'>View {smsTemplate.name}</h1>
+			<h1 className='mb-6 text-xl font-bold'>View {name}</h1>
 			<div className=' flex flex-1 flex-row flex-wrap justify-between rounded-xl bg-[#F7F7F7] p-6 px-12 lg:flex-nowrap'>
 				<div className='ml-8 max-w-full md:max-w-[700px]'>
 					<div>
@@ -25,8 +48,11 @@ function SmsTemplatePreview<T extends TemplateType>(smsTemplate: T) {
 							Template Basic Info
 						</h1>
 
-						{Object.entries(smsTemplateInfo).map(([key, val]) => (
-							<SmsTemplateInfoItem key={key} itemName={key} itemValue={val} />
+						<SmsTemplateInfoItem itemName='name' itemValue={name} />
+						<SmsTemplateInfoItem itemName='type' itemValue={type} />
+						<SmsTemplateInfoItem itemName='language' itemValue={language} />
+						{additionalTemplateInfo?.map(({ label, value }) => (
+							<SmsTemplateInfoItem key={label} itemName={label} itemValue={value} />
 						))}
 					</div>
 
@@ -40,10 +66,42 @@ function SmsTemplatePreview<T extends TemplateType>(smsTemplate: T) {
 						</p>
 						<p>{body}</p>
 					</div>
+
+					{background && (
+						<div className='mt-8'>
+							<h1 className='relative mb-5 text-xl font-bold'>
+								<MaterialSymbolsImagesmodeRounded className='absolute -left-9 top-1 h-[28px] w-[28px] text-[#2daef5]' />
+								Template Background
+							</h1>
+							<div className='flex h-[80px] max-w-[470px] flex-row space-x-3 rounded-lg border border-[#25A4EA] bg-[#E9F7FE] p-[16px]'>
+								<img
+									src={background}
+									alt='backgroung image'
+									className='h-[46px] w-[46px] rounded-lg border border-[#054060]'
+								/>
+								<div className='overflow-hidden'>
+									<p className='text-md truncate'>file_name_here.txt</p>
+									<p className='truncate text-sm text-[#9899A7]'>size KB</p>
+								</div>
+							</div>
+
+							<Dialog>
+								<Dialog.Trigger asChild>
+									<Button variant='link' type='button' className='p-0'>
+										Preview Card
+									</Button>
+								</Dialog.Trigger>
+								<Dialog.Content title='Preview Card' className='h-[358px] w-[403px] sm:h-[366px] sm:w-[411px]'>
+									<SmsPrebuiltTemplateCard {...(smsTemplate as Omit<SmsPrebuiltTemplateType, "id">)} />
+								</Dialog.Content>
+							</Dialog>
+						</div>
+					)}
 				</div>
 
 				<MobileSmsPreview message={body} />
 			</div>
+			{children}
 		</div>
 	)
 }
