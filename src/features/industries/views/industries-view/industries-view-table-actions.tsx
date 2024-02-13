@@ -1,13 +1,14 @@
 //#region Import
 import { memo, useState } from "react"
 
+import EditIndustryDialog from "@/features/industries/dialogs/edit-industry-dialog/edit-industry-dialog"
 import type { IndustryType } from "@/features/industries/types"
 import { Dropdown } from "@/ui"
 
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 //#endregion
 
-const IndustriesViewTableActions = memo(({ id }: Pick<IndustryType, "id">) => {
+const IndustriesViewTableActions = memo((industry: IndustryType) => {
 	const [dropDownOpen, setDropDownOpen] = useState<boolean>(false)
 
 	return (
@@ -17,11 +18,11 @@ const IndustriesViewTableActions = memo(({ id }: Pick<IndustryType, "id">) => {
 			</Dropdown.Trigger>
 
 			<Dropdown.Content sideOffset={0} align='end'>
-				<Dropdown.Item onClick={() => console.log("Edit Industry with Id: ", id)}>
-					<span>Edit</span>
-				</Dropdown.Item>
+				<EditIndustryDialog {...industry}>
+					<Dropdown.Item>Edit</Dropdown.Item>
+				</EditIndustryDialog>
 
-				<Dropdown.Item onClick={() => console.log("Delete Industry with Id: ", id)}>
+				<Dropdown.Item onClick={() => console.log("Delete Industry with Id: ", industry.id)}>
 					<span>Delete</span>
 				</Dropdown.Item>
 			</Dropdown.Content>

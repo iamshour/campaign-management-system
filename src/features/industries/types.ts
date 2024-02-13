@@ -18,7 +18,7 @@ export type IndustryType = {
 /**
  * Arguments used for the `getIndustries` query, passed for the server as params when fetching Industries
  */
-export type GetIndustriesListArgs = CommonListArguments<IndustryType> & {
+export type GetIndustriesArgs = CommonListArguments<IndustryType> & {
 	name?: string
 	any?: boolean
 }
@@ -34,3 +34,8 @@ export type IndustriesTableFiltersType = {
  * Arguments passed to the server whilst using the `addNewIndustry` mutation to post a new industry entry
  */
 export type AddNewIndustryArgs = Pick<IndustryType, "name" | "description" | "icon" | "color">
+
+/**
+ * Arguments passed to the server whilst using the `updateIndustry` mutation to post a new industry entry
+ */
+export type UpdateIndustryArgs = AddNewIndustryArgs & Pick<IndustryType, "id">

@@ -16,7 +16,9 @@ const IndustriesViewTableActions = lazy(
 )
 //#endregion
 
-const IndustryCard = ({ id, createdAt, color, icon, name, description }: IndustryType) => {
+const IndustryCard = (industry: IndustryType) => {
+	const { id, createdAt, color, icon, name, description } = industry
+
 	const navigate = useNavigate()
 
 	return (
@@ -27,7 +29,7 @@ const IndustryCard = ({ id, createdAt, color, icon, name, description }: Industr
 					<p className='flex-1 truncate text-base font-bold'>{name}</p>
 				</div>
 
-				<IndustriesViewTableActions id={id} />
+				<IndustriesViewTableActions {...industry} />
 			</div>
 
 			<ul className='w-full flex-1 space-y-2 p-4'>
