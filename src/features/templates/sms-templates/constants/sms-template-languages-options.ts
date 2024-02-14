@@ -5,7 +5,8 @@ import type { SmsTemplateLanguageOption } from "../types"
 // TODO: add translation
 const smsTemplateLanguagesLocaleMap: Record<SmsTemplateLanguageOption, string> = {
 	ENGLISH: "English",
-	UNICODE: "Unicode",
+	ARABIC: "Arabic",
+	OTHER: "Other",
 }
 
 export const smsTemplateLanguagesOptions = (
