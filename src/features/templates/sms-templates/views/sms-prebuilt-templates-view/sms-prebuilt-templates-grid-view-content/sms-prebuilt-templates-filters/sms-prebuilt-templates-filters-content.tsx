@@ -89,7 +89,7 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 					<SearchInput className='overflow-visible' variant='underlined' onChange={onIndustrySearch} />
 
 					<div className='flex max-h-[300px] w-full flex-col gap-1 overflow-y-auto'>
-						{[{ id: "ALL", name: "All Industries" }, ...list]?.map(({ id: industryId, name }) => (
+						{list?.map(({ id: industryId, name }) => (
 							<Button
 								key={industryId}
 								variant='ghost'

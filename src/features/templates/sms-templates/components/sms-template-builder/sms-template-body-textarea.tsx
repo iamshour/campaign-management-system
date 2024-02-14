@@ -1,18 +1,19 @@
 //#region Import
 import { useRef } from "react"
+import { useFormContext } from "react-hook-form"
 
-import type { UseFormReturn } from "@/ui"
+import { MAX_PARTS } from "@/features/templates/sms-templates/constants/sms-template-body-constants"
+import useSmsTemplateBody from "@/features/templates/sms-templates/utils/sms-template-body-hook"
+import { rearrangePlaceholders } from "@/features/templates/sms-templates/utils/sms-template-body-utils"
 import { Form, Textarea, Button } from "@/ui"
 
-import { MAX_PARTS } from "../../constants/sms-template-body-constants"
-import { SmsTemplateSchemaType } from "../../schemas/sms-template-schema"
-import useSmsTemplateBody from "../../utils/sms-template-body-hook"
-import { rearrangePlaceholders } from "../../utils/sms-template-body-utils"
 //#endregion
 
-const SmsTemplateBodyTextarea = ({ form }: { form: UseFormReturn<SmsTemplateSchemaType> }) => {
+const SmsTemplateBodyTextarea = () => {
+	const { control, watch, setValue } = useFormContext()
+
 	const textareaRef = useRef<HTMLTextAreaElement>(null)
-	const currentBody: string = form.watch("body") ?? ""
+	const currentBody: string = watch("body") ?? ""
 
 	const { maxCharactersPerPart, charactersCountInCurrentPart, partsCount, placeholdersCount } =
 		useSmsTemplateBody(currentBody)
@@ -61,7 +62,7 @@ const SmsTemplateBodyTextarea = ({ form }: { form: UseFormReturn<SmsTemplateSche
 	 * @param updatedCursorPostion: position to place cursor after setting textarea value
 	 */
 	const updateTextarea = (updatedText: string, updatedCursorPostion: number) => {
-		form.setValue("body", rearrangePlaceholders(updatedText))
+		setValue("body", rearrangePlaceholders(updatedText))
 		setTimeout(() => {
 			// Note: using setTimeout since setSelectionRange does not work right after setValue
 			textareaRef.current?.focus()
@@ -70,9 +71,9 @@ const SmsTemplateBodyTextarea = ({ form }: { form: UseFormReturn<SmsTemplateSche
 	}
 
 	return (
-		<>
+		<div>
 			<Form.Field
-				control={form.control}
+				control={control}
 				name='body'
 				render={({ field }) => (
 					<Form.Item className='col-span-2'>
@@ -92,8 +93,8 @@ const SmsTemplateBodyTextarea = ({ form }: { form: UseFormReturn<SmsTemplateSche
 				)}
 			/>
 
-			<div className='mt-2 flex flex-row items-stretch justify-between'>
-				<div className='flex flex-row items-stretch text-xs'>
+			<div className='mt-2 flex flex-row items-start justify-between'>
+				<div className='flex flex-row text-xs'>
 					<p className='my-auto pr-3'>
 						<span className='mr-1 text-[#8F8F8F]'>Charcters:</span>
 						{charactersCountInCurrentPart}/{maxCharactersPerPart}
@@ -102,11 +103,11 @@ const SmsTemplateBodyTextarea = ({ form }: { form: UseFormReturn<SmsTemplateSche
 						<span className='mr-1 text-[#8F8F8F]'>SMS Parts:</span>({partsCount}/{MAX_PARTS})
 					</p>
 				</div>
-				<Button variant='secondary' type='button' onClick={handleOnAddPlaceholderClick}>
+				<Button variant='secondary' size='sm' type='button' onClick={handleOnAddPlaceholderClick}>
 					Add Placeholder
 				</Button>
 			</div>
-		</>
+		</div>
 	)
 }
 

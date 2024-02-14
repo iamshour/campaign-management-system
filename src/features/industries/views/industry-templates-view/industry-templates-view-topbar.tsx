@@ -9,7 +9,7 @@ import { Button, Skeleton } from "@/ui"
 import PhUserPlus from "~icons/ph/user-plus"
 
 const DeleteIndustryTemplateDialog = lazy(
-	() => import("@/features/industries/dialogs/delete-industry-template-dialog/delete-industry-template-dialog-dialog")
+	() => import("@/features/industries/dialogs/delete-industry-template-dialog/delete-industry-template-dialog")
 )
 //#endregion
 

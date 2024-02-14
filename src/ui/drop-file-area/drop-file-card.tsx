@@ -7,23 +7,15 @@ import { formatBytes } from "@/utils"
 import Button from "../button"
 import Tooltip from "../tooltip"
 
+import { ImagePreview } from "./drop-file-card-image-preview"
+
 import RadixIconsCross2 from "~icons/radix-icons/cross-2"
 //#endregion
 // import TeenyiconsCsvSolid from '~icons/teenyicons/csv-solid'
 
-const fileIconsMapper = {
-	"text/plain": lazy(() => import("~icons/ant-design/file-pdf-filled")),
-	"image/png": lazy(() => import("~icons/ant-design/file-text-outlined")),
-	"image/jpeg": lazy(() => import("~icons/ion/image-sharp")),
-	"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": lazy(
-		() => import("~icons/tabler/file-spreadsheet")
-	),
-	"text/csv": lazy(() => import("~icons/teenyicons/csv-solid")),
-}
-
 const fallbackIcon = lazy(() => import("~icons/material-symbols/unknown-document-sharp"))
 
-interface DropFileCardProps {
+export interface DropFileCardProps {
 	/**
 	 * An accepted Uploaded File by the user
 	 */
@@ -34,18 +26,25 @@ interface DropFileCardProps {
 	 * @returns void
 	 */
 	onRemove: () => void
+
+	/**
+	 * String literal to handle preview component for the card
+	 */
+	preview?: "icon" | "image"
 }
 
-const DropFileCard = ({ file, onRemove }: DropFileCardProps) => {
+const DropFileCard = ({ file, onRemove, preview = "icon" }: DropFileCardProps) => {
 	const { t } = useTranslation("ui", { keyPrefix: "drop-file-area" })
 	const { name, size, type } = file
 
-	// const fileExtension = useMemo(() => getFileExtension(name), [name])
-	const Icon = useMemo(() => fileIconsMapper[type as keyof typeof fileIconsMapper] || fallbackIcon, [type])
+	const PreviewComponent = useMemo(
+		() => (preview === "icon" ? fileIconsMapper[type as keyof typeof fileIconsMapper] || fallbackIcon : ImagePreview),
+		[preview, type]
+	)
 
 	return (
-		<div className='flex h-max w-[400px] max-w-full gap-4 rounded-xl border-2 border-primary-600 bg-primary-50/30 p-4 transition-basic'>
-			<Icon className='shrink-0 text-3xl text-primary-600' />
+		<div className='flex h-max w-full max-w-[400px] gap-4 rounded-xl border-2 border-primary-600 bg-primary-50/30 p-4 transition-basic'>
+			<PreviewComponent file={preview === "image" ? file : undefined} className='shrink-0 text-3xl text-primary-600' />
 
 			<div className='flex-1 truncate'>
 				<p className='mb-1 truncate text-black'>{name}</p>
@@ -66,3 +65,13 @@ const DropFileCard = ({ file, onRemove }: DropFileCardProps) => {
 }
 
 export default DropFileCard
+
+const fileIconsMapper = {
+	"text/plain": lazy(() => import("~icons/ant-design/file-pdf-filled")),
+	"image/png": lazy(() => import("~icons/ant-design/file-text-outlined")),
+	"image/jpeg": lazy(() => import("~icons/ion/image-sharp")),
+	"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": lazy(
+		() => import("~icons/tabler/file-spreadsheet")
+	),
+	"text/csv": lazy(() => import("~icons/teenyicons/csv-solid")),
+}

@@ -1,38 +1,28 @@
 //#region Import
-import { lazy } from "react"
+import { Button } from "@/ui"
 
-import { Button, Dialog } from "@/ui"
-
-import { SmsPrebuiltTemplateType, SmsTemplateType } from "../types"
+import PreviewTemplateCardDialog from "../dialogs/preview-template-card-dialog/preview-template-card-dialog"
+import type { SmsPrebuiltTemplateType } from "../types"
 
 import MobileSmsPreview from "./mobile-sms-preview"
 
 import MaterialSymbolsImagesmodeRounded from "~icons/material-symbols/imagesmode-rounded"
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
 import MdiMessageProcessing from "~icons/mdi/message-processing"
-
-const SmsPrebuiltTemplateCard = lazy(
-	() =>
-		import(
-			"@/features/templates/sms-templates/views/sms-prebuilt-templates-view/sms-prebuilt-templates-grid-view-content/sms-prebuilt-template-card"
-		)
-)
 //#endregion
 
-interface SmsTemplatePreviewProps extends Pick<SmsTemplateType, "name" | "type" | "language" | "body"> {
-	industryId?: string
-	background?: string
+type SmsTemplatePreviewProps = Pick<SmsPrebuiltTemplateType, "name" | "type" | "language" | "body"> &
+	Partial<Pick<SmsPrebuiltTemplateType, "background" | "industryId">> & {
+		/**
+		 * Page footer to be passed as child
+		 */
+		children?: React.ReactNode
 
-	/**
-	 * Page footer to be passed as child
-	 */
-	children?: React.ReactNode
-
-	/**
-	 * Additional info to be displayed under "Template Basic Info" section
-	 */
-	additionalTemplateInfo?: { label: string; value: string }[]
-}
+		/**
+		 * Additional info to be displayed under "Template Basic Info" section
+		 */
+		additionalTemplateInfo?: { label: string; value: string }[]
+	}
 
 function SmsTemplatePreview({ children, additionalTemplateInfo, ...smsTemplate }: SmsTemplatePreviewProps) {
 	const { name, type, language, body, background } = smsTemplate
@@ -85,16 +75,11 @@ function SmsTemplatePreview({ children, additionalTemplateInfo, ...smsTemplate }
 								</div>
 							</div>
 
-							<Dialog>
-								<Dialog.Trigger asChild>
-									<Button variant='link' type='button' className='p-0'>
-										Preview Card
-									</Button>
-								</Dialog.Trigger>
-								<Dialog.Content title='Preview Card' className='h-[358px] w-[403px] sm:h-[366px] sm:w-[411px]'>
-									<SmsPrebuiltTemplateCard {...(smsTemplate as Omit<SmsPrebuiltTemplateType, "id">)} />
-								</Dialog.Content>
-							</Dialog>
+							<PreviewTemplateCardDialog {...(smsTemplate as Omit<SmsPrebuiltTemplateType, "id">)}>
+								<Button variant='link' type='button' className='p-0'>
+									Preview Card
+								</Button>
+							</PreviewTemplateCardDialog>
 						</div>
 					)}
 				</div>

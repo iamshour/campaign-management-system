@@ -1,6 +1,8 @@
 //#region Import
 import { CommonListArguments } from "@/core/lib/redux-toolkit/types"
 import type { DateRange } from "@/ui"
+
+import { SmsPrebuiltTemplateType } from "../templates/sms-templates/types"
 //#endregion
 
 /**
@@ -48,3 +50,11 @@ export type DeleteIndustryTemplatesArgs = {
  * Arguments passed to the server whilst using the `updateIndustry` mutation to post a new industry entry
  */
 export type UpdateIndustryArgs = AddNewIndustryArgs & Pick<IndustryType, "id">
+
+/**
+ * Arguments passed to the server whilst using the `addNewSmsIndustryTemplate` mutation to post a new Template for an Industry
+ */
+export type AddNewSmsIndustryTemplateArgs = Pick<
+	SmsPrebuiltTemplateType,
+	"name" | "type" | "language" | "status" | "body" | "background" | "industryId" | "mostPopular"
+>

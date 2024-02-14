@@ -1,13 +1,14 @@
 //#region Import
+import { lazy } from "react"
 import Dropzone from "react-dropzone"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
 import Spinner from "../spinner"
 
-import DropFileCard from "./drop-file-card"
-
 import PajamasImport from "~icons/pajamas/import"
+
+const DropFileCard = lazy(() => import("./drop-file-card"))
 //#endregion
 
 interface DropFileAreaProps extends React.ComponentPropsWithoutRef<typeof Dropzone> {
@@ -29,17 +30,27 @@ interface DropFileAreaProps extends React.ComponentPropsWithoutRef<typeof Dropzo
 	onRemove: (i: number) => void
 
 	/**
-	 * className attribute used to style component
+	 * classNames object, used to pass classNames for each element in DropFileArea
 	 */
-	className?: string
+	classNames?: Partial<Record<"wrapper" | "droparea" | "dropareaButton", string>>
 
 	/**
 	 * Boolean used if an asychronous action is pending
 	 */
 	loading?: boolean
+
+	preview?: React.ComponentPropsWithoutRef<typeof DropFileCard>["preview"]
 }
 
-const DropFileArea = ({ name, acceptedFiles, onRemove, className, loading = false, ...props }: DropFileAreaProps) => {
+const DropFileArea = ({
+	name,
+	acceptedFiles,
+	onRemove,
+	loading = false,
+	preview,
+	classNames,
+	...props
+}: DropFileAreaProps) => {
 	const { t } = useTranslation("ui", { keyPrefix: "drop-file-area" })
 
 	return (
@@ -47,9 +58,9 @@ const DropFileArea = ({ name, acceptedFiles, onRemove, className, loading = fals
 			{({ getRootProps, getInputProps, isDragActive }) => (
 				<section
 					className={twMerge(
-						"h-full w-full max-w-full overflow-hidden rounded-xl border-2 border-dashed border-gray-300 bg-white text-gray-400 transition-basic",
+						"group h-full w-full max-w-full overflow-hidden rounded-xl border-2 border-dashed border-gray-300 bg-white text-[#888888] transition-basic",
 						!props?.disabled && !loading && "hover:border-primary-600 hover:text-primary-600",
-						className
+						classNames?.wrapper
 					)}>
 					{loading ? (
 						<div className='h-full w-full px-4 text-inherit flex-center'>
@@ -58,25 +69,33 @@ const DropFileArea = ({ name, acceptedFiles, onRemove, className, loading = fals
 					) : acceptedFiles?.length ? (
 						<div className='mt-1 flex h-[calc(100%-8px)] w-[calc(100%-4px)] flex-wrap gap-4 overflow-y-auto p-4'>
 							{acceptedFiles.map((file, i) => (
-								<DropFileCard key={`${file.name}-${i}`} file={file} onRemove={() => onRemove(i)} />
+								<DropFileCard key={`${file.name}-${i}`} file={file} onRemove={() => onRemove(i)} preview={preview} />
 							))}
 						</div>
 					) : (
 						<div
 							className={twMerge(
-								"h-full w-full cursor-pointer px-4 py-6 text-inherit flex-center",
+								"flex h-full w-full cursor-pointer flex-col items-center justify-center gap-4 px-4 py-6 text-inherit",
 								isDragActive && "bg-primary-600",
-								(!!props?.disabled || loading) && "pointer-events-none"
+								(!!props?.disabled || loading) && "pointer-events-none",
+								classNames?.droparea
 							)}
 							{...getRootProps()}>
 							<input id={name} name={name} {...getInputProps()} />
 							<div
 								className={twMerge(
-									"flex items-center gap-4 text-inherit prevent-selection",
+									"flex items-center gap-2 text-inherit prevent-selection",
 									props?.disabled && "opacity-40"
 								)}>
-								<PajamasImport className='inline text-2xl' />
+								<PajamasImport className='inline text-base' />
 								<p className='inline'>{t("message")}</p>
+							</div>
+							<div
+								className={twMerge(
+									"h-max whitespace-nowrap rounded-md bg-primary-700 bg-opacity-90 px-4 py-2 text-center text-sm text-white transition-basic group-hover:bg-opacity-100",
+									classNames?.dropareaButton
+								)}>
+								Choose File
 							</div>
 						</div>
 					)}
@@ -87,56 +106,3 @@ const DropFileArea = ({ name, acceptedFiles, onRemove, className, loading = fals
 }
 
 export default DropFileArea
-
-// const fileIconMap = {
-// 	""
-// }
-
-// import { Controller, useFormContext } from "react-hook-form";
-// import { useDropzone } from "react-dropzone";
-// import { ChangeEventHandler, FC } from "react";
-
-// export const DropzoneField: FC<{ name: string; multiple?: boolean }> = ({
-//     name,
-//     multiple,
-//     ...rest
-// }) => {
-//     const { control } = useFormContext();
-
-//     return (
-//         <Controller
-//             render={({ field: { onChange } }) => (
-//                 <Dropzone
-//                     multiple={multiple}
-//                     onChange={(e) =>
-//                         onChange(
-//                             multiple
-//                                 ? e.target.files
-//                                 : e.target.files?.[0] ?? null
-//                         )
-//                     }
-//                     {...rest}
-//                 />
-//             )}
-//             name={name}
-//             control={control}
-//             defaultValue=""
-//         />
-//     );
-// };
-
-// const Dropzone: FC<{
-//     multiple?: boolean;
-//     onChange?: ChangeEventHandler<HTMLInputElement>;
-// }> = ({ multiple, onChange, ...rest }) => {
-//     const { getRootProps, getInputProps } = useDropzone({
-//         multiple,
-//         ...rest,
-//     });
-
-//     return (
-//         <div {...getRootProps()}>
-//             <input {...getInputProps({ onChange })} />
-//         </div>
-//     );
-// };

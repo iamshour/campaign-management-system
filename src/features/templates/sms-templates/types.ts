@@ -50,7 +50,9 @@ export type GetSmsTemplateBytIdReturnType = SmsTemplateType
 /**
  * Arguments passed to the server whilst using the `addNewSmsTemplate` mutation to post a new contact entry
  */
-export type AddNewSmsTemplateArgs = Pick<SmsTemplateType, "name" | "type" | "language" | "status" | "body">
+export type AddNewSmsTemplateArgs = Pick<SmsTemplateType, "name" | "type" | "language" | "status" | "body"> & {
+	addUnsubscribeLink: boolean
+}
 
 /**
  * Arguments passed to the server whilst using the `updateSmsTemplate` mutation to post a new contact entry
@@ -72,6 +74,13 @@ export type SmsTemplatesTableFiltersType = {
 	templateLanguage?: SmsTemplateLanguageOption[]
 }
 
+export type CreateSmsTemplateLocationType = {
+	state: {
+		id: string
+		type: "smsTemplate" | "prebuiltSmsTemplate"
+	}
+}
+
 // ---------------------------------------------
 // ALL TYPES RELATED TO PREBUILT TEMPLATES BELOW
 // ---------------------------------------------
@@ -87,7 +96,7 @@ export type SmsPrebuiltTemplateType = SmsTemplateType & {
 }
 
 /**
- * Arguments used for the `getSmsTemplates` query, passed for the server as params when fetching SMS Prebuilt Templates List
+ * Arguments used for the `getSmsPrebuiltTemplates` query, passed for the server as params when fetching SMS Prebuilt Templates List
  */
 export type GetSmsPrebuiltTemplatesArgs = Omit<TableState<SmsPrebuiltTemplateType>, "selection"> & {
 	industryId?: string
@@ -96,6 +105,7 @@ export type GetSmsPrebuiltTemplatesArgs = Omit<TableState<SmsPrebuiltTemplateTyp
 	type?: SmsTemplateTypeOption[]
 	language?: SmsTemplateLanguageOption[]
 	mostPopular?: boolean
+	background?: string
 }
 
 /**

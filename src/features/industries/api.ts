@@ -10,6 +10,7 @@ import type {
 	AddNewIndustryArgs,
 	DeleteIndustryTemplatesArgs,
 	UpdateIndustryArgs,
+	AddNewSmsIndustryTemplateArgs,
 } from "./types"
 //#endregion
 
@@ -40,6 +41,11 @@ const industriesApi = api.injectEndpoints({
 			},
 		}),
 
+		addNewSmsIndustryTemplate: builder.mutation<any, AddNewSmsIndustryTemplateArgs>({
+			query: (body) => ({ url: "/templatesById", method: "POST", body }),
+			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
+		}),
+
 		deleteIndustryTemplates: builder.mutation<any, DeleteIndustryTemplatesArgs>({
 			query: ({ id, templatesIds }) => ({ url: `/templates/delete/${id}`, method: "POST", body: { templatesIds } }),
 			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
@@ -52,5 +58,6 @@ export const {
 	useAddNewIndustryMutation,
 	useUpdateIndustryMutation,
 	useDeleteIndustryMutation,
+	useAddNewSmsIndustryTemplateMutation,
 	useDeleteIndustryTemplatesMutation,
 } = industriesApi

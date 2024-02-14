@@ -6,7 +6,22 @@
 		"updatedAt": "Last Update Date / Time",
 		"status": "Template Status"
 	},
-	"components": {},
+	"components": {
+		"templateBuilder": {
+			"createTemplate": {
+				"title": "Create New Template"
+			},
+			"editTemplate": {
+				"title": "Edit Template"
+			},
+			"actions": {
+				"saveAsDraft": "Save as Draft",
+				"publish": "Publish Template",
+				"updateDraft": "Update Draft",
+				"saveAndPublish": "Save & Publish Template"
+			}
+		}
+	},
 	"table": {},
 	"dialogs": {},
 	"views": {}

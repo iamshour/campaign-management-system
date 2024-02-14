@@ -5242,6 +5242,26 @@
       "body": "excepteur culpa cillum quis deserunt exercitation cupidatat et aliqua veniam",
       "addUnsubscribeLink": true,
       "status": "PUBLISHED"
+    },
+    {
+      "id": "d1ec",
+      "name": "nostrud",
+      "type": "OTP",
+      "language": "ENGLISH",
+      "body": "Nisi consectetur tempor dolore pariatur do proident laboris. Non est aute do adipisicing voluptate ut est do cillum deserunt duis. Laborum tempor cupidatat voluptate aliqua reprehenderit ullamco officia enim ipsum nisi laborum nisi do.\r\n",
+      "addUnsubscribeLink": false,
+      "status": "DRAFT"
+    },
+    {
+      "id": "60db",
+      "industryId": "65b8b65a0003057asdfs80999",
+      "name": "Ali Shour",
+      "type": "PROMOTIONAL",
+      "language": "ENGLISH",
+      "body": "asdfgf",
+      "addUnsubscribeLink": true,
+      "background": "",
+      "status": "PUBLISHED"
     }
   ],
   "prebuilt-templates": {

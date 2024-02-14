@@ -14,7 +14,7 @@ interface MobileSmsPreviewProps {
 }
 const MobileSmsPreview = ({ message, showOptOutLink = false }: MobileSmsPreviewProps) => {
 	return (
-		<div className='m-2 flex h-[600px] min-w-[355px] flex-col rounded-[40px] border-2 border-[#8F8F8F] bg-white'>
+		<div className='m-2 flex h-[600px] min-w-[355px] flex-col self-center rounded-[40px] border-2 border-[#8F8F8F] bg-white'>
 			<div className='relative flex h-[100px] w-full flex-col items-center justify-center rounded-t-[40px] border-b border-[#D9D9D9] bg-[#F6F6F6] pb-[5px] pt-[8px]'>
 				<IcTwotoneArrowBackIosNew className='absolute left-[20px] top-[40%] text-[25px] text-[#0c74ef]' />
 				<IcBaselineAccountCircle className='text-[50px] text-[#999999]' />
