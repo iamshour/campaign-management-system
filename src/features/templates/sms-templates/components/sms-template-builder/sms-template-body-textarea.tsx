@@ -1,12 +1,10 @@
 //#region Import
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useFormContext } from "react-hook-form"
 
 import { MAX_PARTS } from "@/features/templates/sms-templates/constants/sms-template-body-constants"
 import useSmsTemplateBody from "@/features/templates/sms-templates/utils/sms-template-body-hook"
-import { rearrangePlaceholders } from "@/features/templates/sms-templates/utils/sms-template-body-utils"
 import { Form, Textarea, Button } from "@/ui"
-
 //#endregion
 
 const SmsTemplateBodyTextarea = () => {
@@ -15,8 +13,24 @@ const SmsTemplateBodyTextarea = () => {
 	const textareaRef = useRef<HTMLTextAreaElement>(null)
 	const currentBody: string = watch("body") ?? ""
 
-	const { maxCharactersPerPart, charactersCountInCurrentPart, partsCount, placeholdersCount } =
+	const { maxCharactersPerPart, charactersCountInCurrentPart, partsCount, placeholdersCount, getReformattedBody } =
 		useSmsTemplateBody(currentBody)
+
+	/**
+	 * Debounce for textarea to reformat value when user stops typing
+	 */
+	useEffect(() => {
+		if (currentBody !== undefined) {
+			const handler = setTimeout(() => {
+				if (getReformattedBody(currentBody) !== currentBody) {
+					setValue("body", getReformattedBody(currentBody))
+				}
+			}, 700)
+
+			return () => clearTimeout(handler)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentBody])
 
 	/**
 	 * Function that adds a new placeholder to textarea when user inputs {{ in textarea
@@ -62,7 +76,7 @@ const SmsTemplateBodyTextarea = () => {
 	 * @param updatedCursorPostion: position to place cursor after setting textarea value
 	 */
 	const updateTextarea = (updatedText: string, updatedCursorPostion: number) => {
-		setValue("body", rearrangePlaceholders(updatedText))
+		setValue("body", updatedText)
 		setTimeout(() => {
 			// Note: using setTimeout since setSelectionRange does not work right after setValue
 			textareaRef.current?.focus()

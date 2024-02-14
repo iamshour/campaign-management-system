@@ -1,9 +1,9 @@
 //#region Import
 import * as z from "zod"
 
-import { MAX_TOTAL_CHARS, MAX_PLACEHOLDERS, PLACEHOLDER_REGEX } from "../constants/sms-template-body-constants"
+import { MAX_PLACEHOLDERS, PLACEHOLDER_REGEX } from "../constants/sms-template-body-constants"
 import type { SmsTemplateLanguageOption, SmsTemplateTypeOption } from "../types"
-import { rearrangePlaceholders } from "../utils/sms-template-body-utils"
+import { getTotalCharactersCount, getMaxTotalCharacters } from "../utils/sms-template-body-utils"
 //#endregion
 
 const SmsTemplateSchema = z.object({
@@ -12,7 +12,6 @@ const SmsTemplateSchema = z.object({
 	language: z.custom<SmsTemplateLanguageOption>((val) => !!val, "Required"),
 	body: z
 		.string()
-		.max(MAX_TOTAL_CHARS, { message: "Maximum 800 Characters allowed" })
 		.refine(
 			(body) => {
 				const placeholdersCount = body?.match(PLACEHOLDER_REGEX)?.length ?? 0
@@ -20,8 +19,17 @@ const SmsTemplateSchema = z.object({
 			},
 			{ message: "Maximum 5 placeholders allowed" }
 		)
-		.transform((body) => {
-			return rearrangePlaceholders(body)
+		.superRefine((body, ctx) => {
+			if (getTotalCharactersCount(body) > getMaxTotalCharacters(body)) {
+				ctx.addIssue({
+					code: z.ZodIssueCode.too_big,
+					maximum: getMaxTotalCharacters(body),
+					type: "string",
+					inclusive: true,
+				})
+
+				return z.NEVER
+			}
 		}),
 	addUnsubscribeLink: z.boolean().default(false),
 })

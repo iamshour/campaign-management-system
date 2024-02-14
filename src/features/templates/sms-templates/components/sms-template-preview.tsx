@@ -63,17 +63,11 @@ function SmsTemplatePreview({ children, additionalTemplateInfo, ...smsTemplate }
 								<MaterialSymbolsImagesmodeRounded className='absolute -left-9 top-1 h-[28px] w-[28px] text-[#2daef5]' />
 								Template Background
 							</h1>
-							<div className='flex h-[80px] max-w-[470px] flex-row space-x-3 rounded-lg border border-[#25A4EA] bg-[#E9F7FE] p-[16px]'>
-								<img
-									src={background}
-									alt='backgroung image'
-									className='h-[46px] w-[46px] rounded-lg border border-[#054060]'
-								/>
-								<div className='overflow-hidden'>
-									<p className='text-md truncate'>file_name_here.txt</p>
-									<p className='truncate text-sm text-[#9899A7]'>size KB</p>
-								</div>
-							</div>
+							<img
+								src={background}
+								alt='backgroung image'
+								className='h-[200px] w-[377px] rounded-lg border border-[#054060] object-cover'
+							/>
 
 							<PreviewTemplateCardDialog {...(smsTemplate as Omit<SmsPrebuiltTemplateType, "id">)}>
 								<Button variant='link' type='button' className='p-0'>

@@ -11,7 +11,7 @@ export type SmsTemplateTypeOption = "PROMOTIONAL" | "TRANSACTIONAL" | "OTP"
 /**
  * Language options for the SMS Template
  */
-export type SmsTemplateLanguageOption = "ENGLISH" | "UNICODE"
+export type SmsTemplateLanguageOption = "ENGLISH" | "ARABIC" | "OTHER"
 
 /**
  * Status options for the SMS Template
