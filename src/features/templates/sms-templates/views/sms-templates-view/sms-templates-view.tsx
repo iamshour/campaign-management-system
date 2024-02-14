@@ -10,7 +10,7 @@ import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 import type { ColumnType } from "@/ui"
 
 const SmsTemplatesViewTopbar = lazy(() => import("./sms-templates-view-topbar"))
-const SmsTemplatesFiltersContent = lazy(() => import("../../components/sms-templates-filters-content"))
+const SmsTemplatesViewFiltersContent = lazy(() => import("./sms-templates-view-filters-content"))
 const SmsTemplatesViewTableActions = lazy(() => import("./sms-templates-view-table-actions"))
 //#endregion
 
@@ -22,7 +22,7 @@ const SmsTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsTempl
 			<AdvancedTable.FiltersBar>
 				<AdvancedTable.FiltersBar.Header />
 				<AdvancedTable.FiltersBar.Content>
-					<SmsTemplatesFiltersContent />
+					<SmsTemplatesViewFiltersContent />
 				</AdvancedTable.FiltersBar.Content>
 				<AdvancedTable.FiltersBar.Footer />
 			</AdvancedTable.FiltersBar>

@@ -1,14 +1,14 @@
 //#region Import
 import { useNavigate } from "react-router-dom"
 
-import DeleteTemplateDialog from "@/features/templates/sms-templates/dialogs/delete-template-dialog/delete-template-dialog"
-import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
+import DeleteIndustryTemplateDialog from "@/features/industries/dialogs/delete-industry-template-dialog/delete-industry-template-dialog"
+import type { SmsPrebuiltTemplateType } from "@/features/templates/sms-templates/types"
 import { Dropdown } from "@/ui"
 
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 //#endregion
 
-const IndustryTemplatesViewTableActions = ({ id }: Pick<SmsTemplateType, "id">) => {
+const IndustryTemplatesViewTableActions = ({ id }: Pick<SmsPrebuiltTemplateType, "id">) => {
 	const navigate = useNavigate()
 
 	return (
@@ -18,7 +18,7 @@ const IndustryTemplatesViewTableActions = ({ id }: Pick<SmsTemplateType, "id">) 
 			</Dropdown.Trigger>
 
 			<Dropdown.Content sideOffset={0} align='end'>
-				<Dropdown.Item onClick={() => {}}>Clone</Dropdown.Item>
+				<Dropdown.Item onClick={() => navigate(`new-template?templateId=${id}`)}>Clone</Dropdown.Item>
 
 				<Dropdown.Separator />
 
@@ -30,9 +30,9 @@ const IndustryTemplatesViewTableActions = ({ id }: Pick<SmsTemplateType, "id">) 
 
 				<Dropdown.Separator />
 
-				<DeleteTemplateDialog ids={[id]}>
+				<DeleteIndustryTemplateDialog ids={[id]}>
 					<Dropdown.Item>Delete</Dropdown.Item>
-				</DeleteTemplateDialog>
+				</DeleteIndustryTemplateDialog>
 			</Dropdown.Content>
 		</Dropdown>
 	)

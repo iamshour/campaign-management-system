@@ -1,7 +1,7 @@
 //#region Import
 import { useNavigate } from "react-router-dom"
 
-import DeleteTemplateDialog from "@/features/templates/sms-templates/dialogs/delete-template-dialog/delete-template-dialog"
+import DeleteSmsTemplateDialog from "@/features/templates/sms-templates/dialogs/delete-sms-template-dialog/delete-sms-template-dialog"
 import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 import { Dropdown } from "@/ui"
 
@@ -18,7 +18,7 @@ const SmsTemplatesViewTableActions = ({ id }: Pick<SmsTemplateType, "id">) => {
 			</Dropdown.Trigger>
 
 			<Dropdown.Content sideOffset={0} align='end'>
-				<Dropdown.Item onClick={() => navigate(`new-template?smsTemplate=${id}`)}>Clone</Dropdown.Item>
+				<Dropdown.Item onClick={() => navigate(`new-template?templateId=${id}`)}>Clone</Dropdown.Item>
 
 				<Dropdown.Separator />
 
@@ -30,9 +30,9 @@ const SmsTemplatesViewTableActions = ({ id }: Pick<SmsTemplateType, "id">) => {
 
 				<Dropdown.Separator />
 
-				<DeleteTemplateDialog ids={[id]}>
+				<DeleteSmsTemplateDialog ids={[id]}>
 					<Dropdown.Item>Delete</Dropdown.Item>
-				</DeleteTemplateDialog>
+				</DeleteSmsTemplateDialog>
 			</Dropdown.Content>
 		</Dropdown>
 	)

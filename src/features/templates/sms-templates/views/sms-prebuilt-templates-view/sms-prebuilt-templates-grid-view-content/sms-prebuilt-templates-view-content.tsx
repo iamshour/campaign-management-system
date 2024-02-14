@@ -6,7 +6,8 @@ import appPaths from "@/core/constants/app-paths"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { updateAdvancedTableState } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import { SharedListViewProps } from "@/core/types"
+import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import type { SharedListViewProps } from "@/core/types"
 import type { SmsPrebuiltTemplateType } from "@/features/templates/sms-templates/types"
 import { DisplayError, SearchInput, Skeleton } from "@/ui"
 
@@ -32,11 +33,13 @@ const SmsPrebuiltTemplatesViewContent = ({
 }: SmsPrebuiltTemplatesViewContentProps) => {
 	const dispatch = useDispatch()
 
-	const { offset, limit } = useSelector(({ advancedTable }) => advancedTable["sms-prebuilt-templates"])
+	const { offset, limit } = useSelector<AdvancedTableStateType<"sms-prebuilt-templates">>(
+		({ advancedTable }) => advancedTable["sms-prebuilt-templates"]
+	)
 
-	const onTemplatesSearch = useCallback(
-		(searchTerm?: string) => {
-			dispatch(updateAdvancedTableState({ "sms-prebuilt-templates": { searchTerm } }))
+	const updateState = useCallback(
+		(newState: Partial<AdvancedTableStateType<"sms-prebuilt-templates">>) => {
+			dispatch(updateAdvancedTableState({ "sms-prebuilt-templates": newState }))
 		},
 		[dispatch]
 	)
@@ -49,7 +52,7 @@ const SmsPrebuiltTemplatesViewContent = ({
 
 			<div className='flex h-full w-full flex-1 flex-col overflow-hidden p-4 pb-0'>
 				<header className='mb-4 flex w-full items-center justify-between'>
-					<SearchInput onChange={onTemplatesSearch} />
+					<SearchInput onChange={(searchTerm) => updateState({ searchTerm })} />
 					{headerChildren}
 				</header>
 
@@ -78,9 +81,7 @@ const SmsPrebuiltTemplatesViewContent = ({
 						pageLimits={[10, 20, 30]}
 						pagination={{ offset, limit }}
 						count={count}
-						updatePagination={(pagination) =>
-							dispatch(updateAdvancedTableState({ "sms-prebuilt-templates": pagination }))
-						}
+						updatePagination={updateState}
 					/>
 				</Suspense>
 			</div>

@@ -11,9 +11,7 @@ import type { ColumnType } from "@/ui"
 
 const IndustryTemplatesViewTopbar = lazy(() => import("./industry-templates-view-topbar"))
 const IndustryTemplatesViewTableActions = lazy(() => import("./industry-templates-view-table-actions"))
-const SmsTemplatesFiltersContent = lazy(
-	() => import("@/features/templates/sms-templates/components/sms-templates-filters-content")
-)
+const IndustryTemplatesViewFiltersContent = lazy(() => import("./industry-templates-view-filters-content"))
 //#endregion
 
 const IndustrySmsPrebuiltTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsPrebuiltTemplateType>) => {
@@ -24,7 +22,7 @@ const IndustrySmsPrebuiltTemplatesView = ({ count, ...tableProps }: SharedListVi
 			<AdvancedTable.FiltersBar>
 				<AdvancedTable.FiltersBar.Header />
 				<AdvancedTable.FiltersBar.Content>
-					<SmsTemplatesFiltersContent />
+					<IndustryTemplatesViewFiltersContent />
 				</AdvancedTable.FiltersBar.Content>
 				<AdvancedTable.FiltersBar.Footer />
 			</AdvancedTable.FiltersBar>
@@ -40,7 +38,7 @@ const IndustrySmsPrebuiltTemplatesView = ({ count, ...tableProps }: SharedListVi
 					onRowClick={({ id }) => navigate(id)}
 					{...tableProps}
 				/>
-				<AdvancedTable.Pagination pageLimits={[10, 20, 30]}>
+				<AdvancedTable.Pagination>
 					<AdvancedTable.Pagination.Message />
 				</AdvancedTable.Pagination>
 			</AdvancedTable.Content>

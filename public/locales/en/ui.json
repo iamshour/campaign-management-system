@@ -42,7 +42,7 @@
 		"cancel": "Cancel"
 	},
 	"drop-file-area": {
-		"message": "Drag and drop some files here, or click to select files",
+		"message": "Drag and drop here or choose a file",
 		"buttons": {
 			"remove": "Remove File"
 		}
