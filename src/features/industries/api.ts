@@ -26,7 +26,7 @@ const industriesApi = api.injectEndpoints({
 		}),
 
 		addNewIndustry: builder.mutation<any, AddNewIndustryArgs>({
-			query: (body) => ({ url: "/industryById", method: "POST", body }),
+			query: (body) => ({ url: "/industry", method: "POST", body }),
 			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
 		}),
 
