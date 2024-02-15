@@ -107,9 +107,11 @@ type TableBodyProps<TData extends RowData> = Pick<
 	"list" | "columns" | "classNames" | "highlightOnHover" | "isFetching" | "onRowClick"
 > & {
 	GridCard?: (props: TData) => JSX.Element
+	gridClassName?: string
 }
 
-const TableBody = <TData extends RowData>({ list, GridCard, ...props }: TableBodyProps<TData>) => {
+const TableBody = <TData extends RowData>({ list, GridCard, gridClassName, ...props }: TableBodyProps<TData>) => {
+	const { t } = useTranslation("ui")
 	const dispatch = useDispatch()
 
 	const { tableKey, count } = useAdvancedTableContext()
@@ -119,10 +121,12 @@ const TableBody = <TData extends RowData>({ list, GridCard, ...props }: TableBod
 		<Suspense fallback={<DataGridSkeleton />}>
 			{!list?.length ? (
 				<div className='h-full w-full p-4 flex-center'>
-					<p className='text-center text-3xl font-bold'>Nothing Found</p>
+					<h2 className='text-center text-2xl font-light uppercase tracking-widest text-gray-500'>
+						{t("table.message.noResults")}
+					</h2>
 				</div>
 			) : (
-				<div className='grid max-w-full flex-1 justify-evenly gap-6 overflow-y-auto p-4 [grid-template-columns:repeat(auto-fit,480px)]'>
+				<div className={twMerge("grid max-w-full flex-1 justify-evenly gap-6 overflow-y-auto p-4", gridClassName)}>
 					{!GridCard ? (
 						<>Please pass a Grid Card to render Grid view properly</>
 					) : (
