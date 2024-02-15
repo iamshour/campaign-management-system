@@ -26,7 +26,7 @@ const SmsTemplatesRoute = () => {
 			offset,
 			sort,
 			order,
-			name: searchTerm,
+			name: searchTerm || undefined,
 			any: searchTerm ? true : undefined,
 			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
 			endDate: getValueFromSafeObject("endDate", filters?.dateRange),

@@ -15,7 +15,7 @@ import type {
 const smsTemplatesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getSmsTemplates: builder.query<ListDataReturnType<SmsTemplateType>, GetSmsTemplatesArgs>({
-			query: (params) => ({ url: "/templates", params }),
+			query: (params) => ({ url: "/template/sms", params }),
 			providesTags: (result) =>
 				providesList(
 					result?.list?.map(({ id }) => id),
