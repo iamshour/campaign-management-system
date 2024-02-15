@@ -1,5 +1,5 @@
 //#region Import
-import type { CommonListArguments } from "@/core/lib/redux-toolkit/types"
+import type { BaseFetchListArgs } from "@/core/lib/redux-toolkit/types"
 import type { DateRange } from "@/ui"
 
 import type { ContactFilters } from "../contacts/types"
@@ -44,7 +44,7 @@ type ExportsSearchFilters = {
 /**
  * Arguments passed to the server whilst using the `getExports` query to fetch for export files
  */
-export type GetExportsArgs = CommonListArguments<ContactExports> & ExportsSearchFilters
+export type GetExportsArgs = BaseFetchListArgs<ContactExports> & DateRange & ExportsSearchFilters
 
 /**
  * Arguments passed to the server whilst using the `downloadExport` mutation function to download an exported file

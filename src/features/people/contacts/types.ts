@@ -1,5 +1,5 @@
 //#region Import
-import type { CommonListArguments } from "@/core/lib/redux-toolkit/types"
+import type { BaseFetchListArgs } from "@/core/lib/redux-toolkit/types"
 import type { DateRange, OptionType } from "@/ui"
 
 import type { ParsedPhoneNumberDto } from "./utils"
@@ -70,12 +70,13 @@ export type ContactFilters = {
 /**
  * Arguments passed to the server whilst using the `getContactsQuery` query to fetch Contacts List
  */
-export type GetContactsArgs = CommonListArguments<Contact> & {
-	excludedGroupsList?: string[]
-	tags?: string[]
-	groups?: string[]
-	segmentId?: string
-} & ContactFilters["contactSearchFilter"]
+export type GetContactsArgs = BaseFetchListArgs<Contact> &
+	DateRange & {
+		excludedGroupsList?: string[]
+		tags?: string[]
+		groups?: string[]
+		segmentId?: string
+	} & ContactFilters["contactSearchFilter"]
 
 /**
  * Arguments passed to the server whilst using the `addNewContact` mutation to post a new contact entry
@@ -96,7 +97,7 @@ export type GetContactBytIdReturnType = Omit<Contact, "groups"> & {
 /**
  * Arguments passed to the server whilst using the `getTagsList` query to fetch Tags List
  */
-export type GetTagsListArgs = CommonListArguments<string> & { name?: string }
+export type GetTagsListArgs = BaseFetchListArgs<string> & { name?: string }
 
 /**
  * Arguments passed to the server whilst using the `updateMultipleContacts` mutation to update multiple contacts

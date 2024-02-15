@@ -1,6 +1,6 @@
 {
 	"name": "@blueai/cms",
-	"version": "0.2.10",
+	"version": "0.3.10",
 	"type": "module",
 	"scripts": {
 		"dev": "concurrently \"npm run vite-dev\"  \"npm run server\"",

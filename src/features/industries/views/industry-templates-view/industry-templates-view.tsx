@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom"
 
 import AdvancedTable from "@/core/components/advanced-table"
 import type { SharedListViewProps } from "@/core/types"
+import type { SmsIndustryTemplateType } from "@/features/industries/types"
 import smsTemplatesTableClassNames from "@/features/templates/sms-templates/constants/sms-templates-table-classnames"
 import smsTemplatesTableColumns from "@/features/templates/sms-templates/constants/sms-templates-table-columns"
-import type { SmsPrebuiltTemplateType, SmsTemplateType } from "@/features/templates/sms-templates/types"
+import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 import type { ColumnType } from "@/ui"
 
 const IndustryTemplatesViewTopbar = lazy(() => import("./industry-templates-view-topbar"))
@@ -14,11 +15,11 @@ const IndustryTemplatesViewTableActions = lazy(() => import("./industry-template
 const IndustryTemplatesViewFiltersContent = lazy(() => import("./industry-templates-view-filters-content"))
 //#endregion
 
-const IndustrySmsPrebuiltTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsPrebuiltTemplateType>) => {
+const IndustrySmsPrebuiltTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsIndustryTemplateType>) => {
 	const navigate = useNavigate()
 
 	return (
-		<AdvancedTable tableKey='templates-in-industry' count={count}>
+		<AdvancedTable tableKey='sms-industry-templates' count={count}>
 			<AdvancedTable.FiltersBar>
 				<AdvancedTable.FiltersBar.Header />
 				<AdvancedTable.FiltersBar.Content>

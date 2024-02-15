@@ -129,6 +129,9 @@ export type TableProps<TData> = {
 	 * classNames object, used to pass classNames for each element in Table
 	 */
 	classNames?: Partial<
-		Record<"wrapper" | "table" | "thead" | "theadTr" | "theadTh" | "tbody" | "tbodyTr" | "tbodyTd", string>
+		Record<
+			"wrapper" | "table" | "thead" | "theadTr" | "theadTh" | "tbody" | "tbodyTr" | "tbodyTd" | "emptyTableCell",
+			string
+		>
 	>
 }

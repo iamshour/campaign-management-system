@@ -1,8 +1,8 @@
 //#region Import
+import type { SmsIndustryTemplateType } from "@/features/industries/types"
 import { Button } from "@/ui"
 
 import PreviewTemplateCardDialog from "../dialogs/preview-template-card-dialog/preview-template-card-dialog"
-import type { SmsPrebuiltTemplateType } from "../types"
 
 import MobileSmsPreview from "./mobile-sms-preview"
 
@@ -11,8 +11,8 @@ import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
 import MdiMessageProcessing from "~icons/mdi/message-processing"
 //#endregion
 
-type SmsTemplatePreviewProps = Pick<SmsPrebuiltTemplateType, "name" | "type" | "language" | "body"> &
-	Partial<Pick<SmsPrebuiltTemplateType, "background" | "industryId">> & {
+type SmsTemplatePreviewProps = Pick<SmsIndustryTemplateType, "name" | "type" | "language" | "body"> &
+	Partial<Pick<SmsIndustryTemplateType, "background" | "industryId">> & {
 		/**
 		 * Page footer to be passed as child
 		 */
@@ -69,7 +69,7 @@ function SmsTemplatePreview({ children, additionalTemplateInfo, ...smsTemplate }
 								className='h-[200px] w-[377px] rounded-lg border border-[#054060] object-cover'
 							/>
 
-							<PreviewTemplateCardDialog {...(smsTemplate as Omit<SmsPrebuiltTemplateType, "id">)}>
+							<PreviewTemplateCardDialog {...(smsTemplate as Omit<SmsIndustryTemplateType, "id">)}>
 								<Button variant='link' type='button' className='p-0'>
 									Preview Card
 								</Button>

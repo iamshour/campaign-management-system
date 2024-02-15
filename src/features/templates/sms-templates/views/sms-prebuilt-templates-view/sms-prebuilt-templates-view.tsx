@@ -4,7 +4,7 @@ import { lazy } from "react"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import { useGetSmsPrebuiltTemplatesQuery } from "@/features/templates/sms-templates/api"
+import { useGetSmsIndustryTemplatesQuery } from "@/features/industries/api"
 import { DataGridSkeleton } from "@/ui"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
@@ -23,7 +23,7 @@ const SmsPrebuiltTemplatesView = ({
 		({ advancedTable }) => advancedTable["sms-prebuilt-templates"]
 	)
 
-	const { list, count, isInitialLoading, isFetching, isError, error } = useGetSmsPrebuiltTemplatesQuery(
+	const { list, count, isInitialLoading, isFetching, isError, error } = useGetSmsIndustryTemplatesQuery(
 		{
 			industryId: !filters?.industryId
 				? defaultUserIndustryId

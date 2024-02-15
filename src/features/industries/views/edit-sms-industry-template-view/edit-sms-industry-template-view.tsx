@@ -5,29 +5,28 @@ import { useTranslation } from "react-i18next"
 import { useNavigate, useParams } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"
-import { useAddNewSmsIndustryTemplateMutation } from "@/features/industries/api"
+import { useUpdateSmsIndustryTemplateMutation } from "@/features/industries/api"
+import SmsIndustryTemplateBuilderContent from "@/features/industries/components/sms-industry-template-builder-content/sms-industry-template-builder-content"
 import SmsIndustryTemplateSchema, {
 	type SmsIndustryTemplateSchemaType,
 } from "@/features/industries/schemas/sms-industry-template-schema"
-import type { AddNewSmsIndustryTemplateArgs } from "@/features/industries/types"
+import type { UpdateSmsIndustryTemplateArgs } from "@/features/industries/types"
 import SmsTemplateBuilder from "@/features/templates/sms-templates/components/sms-template-builder/sms-template-builder"
 import type { SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
 import { Button } from "@/ui"
-
-import SmsIndustryTemplateBuilderContent from "../../components/sms-industry-template-builder-content/sms-industry-template-builder-content"
 //#endregion
 
-interface CreateSmsIndustryTemplateViewProps {
-	defaultValues?: SmsIndustryTemplateSchemaType
+interface EditSmsIndustryTemplateViewProps {
+	defaultValues?: SmsIndustryTemplateSchemaType & { status?: SmsTemplateStatusOption }
 }
 
-const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTemplateViewProps) => {
+const EditSmsIndustryTemplateView = ({ defaultValues }: EditSmsIndustryTemplateViewProps) => {
 	const { t } = useTranslation("sms-templates", { keyPrefix: "components.templateBuilder" })
 
 	const navigate = useNavigate()
-	const { id: industryId } = useParams()
+	const { id: industryId, templatedId } = useParams()
 
-	const [triggerAddSmsIndustryTemplate, { isLoading }] = useAddNewSmsIndustryTemplateMutation()
+	const [triggerUpdateSmsIndustryTemplate, { isLoading }] = useUpdateSmsIndustryTemplateMutation()
 
 	const [smsTemplateStatus, SetSmsTemplateStatus] = useState<SmsTemplateStatusOption | undefined>()
 
@@ -37,15 +36,16 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 		// TODO: While integrating with DB, transform File above (background) to Blob, and send accordingly
 		console.log(background)
 
-		const body: AddNewSmsIndustryTemplateArgs = {
-			industryId: industryId!,
+		const body: UpdateSmsIndustryTemplateArgs = {
+			id: templatedId ?? "",
+			industryId: industryId ?? "",
 			...requestBody,
 			status: smsTemplateStatus,
 			// TODO: Send Valid Background
 			background: backgroundUrl ?? "",
 		}
 
-		await triggerAddSmsIndustryTemplate(body)
+		await triggerUpdateSmsIndustryTemplate(body)
 			.unwrap()
 			.then(() => {
 				toast.success("Template added successfully to the industry.")
@@ -56,7 +56,7 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 
 	return (
 		<SmsTemplateBuilder
-			label={t("createTemplate.title")}
+			label={t("editTemplate.title")}
 			onSubmit={onSubmit}
 			defaultValues={defaultValues}
 			schema={SmsIndustryTemplateSchema}>
@@ -65,15 +65,17 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 			</SmsTemplateBuilder.Body>
 
 			<SmsTemplateBuilder.Footer>
-				<Button
-					variant='outline'
-					type='submit'
-					className='px-10'
-					loading={isLoading && smsTemplateStatus == "DRAFT"}
-					disabled={isLoading && smsTemplateStatus == "PUBLISHED"}
-					onClick={() => SetSmsTemplateStatus("DRAFT")}>
-					{t("actions.updateDraft")}
-				</Button>
+				{defaultValues?.status === "DRAFT" && (
+					<Button
+						variant='outline'
+						type='submit'
+						className='px-10'
+						loading={isLoading && smsTemplateStatus == "DRAFT"}
+						disabled={isLoading && smsTemplateStatus == "PUBLISHED"}
+						onClick={() => SetSmsTemplateStatus("DRAFT")}>
+						{t("actions.updateDraft")}
+					</Button>
+				)}
 
 				<Button
 					type='submit'
@@ -88,4 +90,4 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 	)
 }
 
-export default CreateSmsIndustryTemplateView
+export default EditSmsIndustryTemplateView

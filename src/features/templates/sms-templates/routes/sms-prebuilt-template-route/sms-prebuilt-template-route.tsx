@@ -4,7 +4,7 @@ import { useParams, useLocation, useNavigate } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { useGetSmsPrebuiltTemplateByIdQuery } from "@/features/templates/sms-templates/api"
+import { useGetSmsIndustryTemplateByIdQuery } from "@/features/industries/api"
 import { Button, FullViewSkeleton } from "@/ui"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
@@ -16,7 +16,7 @@ const SmsPrebuiltTemplateRoute = () => {
 	const { state } = useLocation()
 	const navigate = useNavigate()
 
-	const { data, isFetching, isError, error } = useGetSmsPrebuiltTemplateByIdQuery(smsPrebuiltTemplateId!, {
+	const { data, isFetching, isError, error } = useGetSmsIndustryTemplateByIdQuery(smsPrebuiltTemplateId!, {
 		skip: !smsPrebuiltTemplateId,
 		selectFromResult: ({ data, ...rest }) => ({
 			data: data && {

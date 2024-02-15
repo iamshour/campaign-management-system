@@ -2,13 +2,13 @@
 import { useNavigate } from "react-router-dom"
 
 import DeleteIndustryTemplateDialog from "@/features/industries/dialogs/delete-industry-template-dialog/delete-industry-template-dialog"
-import type { SmsPrebuiltTemplateType } from "@/features/templates/sms-templates/types"
+import type { SmsIndustryTemplateType } from "@/features/industries/types"
 import { Dropdown } from "@/ui"
 
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 //#endregion
 
-const IndustryTemplatesViewTableActions = ({ id }: Pick<SmsPrebuiltTemplateType, "id">) => {
+const IndustryTemplatesViewTableActions = ({ id }: Pick<SmsIndustryTemplateType, "id">) => {
 	const navigate = useNavigate()
 
 	return (

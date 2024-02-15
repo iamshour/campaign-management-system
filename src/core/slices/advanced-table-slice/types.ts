@@ -1,15 +1,14 @@
 //#region Import
-import type { IndustryType } from "@/features/industries/types"
+import type {
+	IndustryType,
+	SmsIndustryTemplateType,
+	SmsIndustryTemplatesTableFiltersType,
+} from "@/features/industries/types"
 import type { Contact, ContactTableFiltersType } from "@/features/people/contacts/types"
 import type { ContactExports, ContactExportsTableFiltersType } from "@/features/people/exports/types"
 import type { Group } from "@/features/people/groups/types"
 import type { Segment, SegmentConditionType } from "@/features/people/segments/types"
-import type {
-	SmsPrebuiltTemplateType,
-	SmsPrebuiltTemplatesTableFiltersType,
-	SmsTemplateType,
-	SmsTemplatesTableFiltersType,
-} from "@/features/templates/sms-templates/types"
+import type { SmsTemplateType, SmsTemplatesTableFiltersType } from "@/features/templates/sms-templates/types"
 import type { DateRange, OptionType, TableState } from "@/ui"
 //#endregion
 
@@ -24,8 +23,8 @@ export type TableKey =
 	| "segments"
 	| "sms-templates"
 	| "sms-prebuilt-templates"
+	| "sms-industry-templates"
 	| "industries"
-	| "templates-in-industry"
 
 type TableDataMappingType = {
 	contacts: Contact
@@ -35,9 +34,9 @@ type TableDataMappingType = {
 	"contacts-exports": ContactExports
 	segments: Segment
 	"sms-templates": SmsTemplateType
-	"sms-prebuilt-templates": SmsPrebuiltTemplateType
+	"sms-prebuilt-templates": SmsIndustryTemplateType
+	"sms-industry-templates": SmsIndustryTemplateType
 	industries: IndustryType
-	"templates-in-industry": SmsPrebuiltTemplateType
 }
 
 export type FiltersFieldMappingType = {
@@ -48,9 +47,9 @@ export type FiltersFieldMappingType = {
 	"contacts-exports": ContactExportsTableFiltersType
 	segments: { dateRange?: DateRange }
 	"sms-templates": SmsTemplatesTableFiltersType
-	"sms-prebuilt-templates": SmsPrebuiltTemplatesTableFiltersType
+	"sms-prebuilt-templates": SmsIndustryTemplatesTableFiltersType
+	"sms-industry-templates": SmsIndustryTemplatesTableFiltersType
 	industries: { dateRange?: DateRange }
-	"templates-in-industry": SmsTemplatesTableFiltersType
 }
 
 export type AdvancedTableStateType<K extends TableKey> = TableState<TableDataMappingType[K]> & {

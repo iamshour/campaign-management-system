@@ -14,7 +14,7 @@ const SelectTypesPopover = ({
 			{...props}>
 			<ComboBox.Trigger>Select types</ComboBox.Trigger>
 
-			<ComboBox.Content className='h-[151px]'>
+			<ComboBox.Content className='h-[193px]'>
 				<ComboBoxPopper options={smsTemplateTypesOptions} />
 			</ComboBox.Content>
 		</ComboBox>

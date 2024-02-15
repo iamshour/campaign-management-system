@@ -6,13 +6,9 @@ import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
 import type {
 	SmsTemplateType,
 	GetSmsTemplatesArgs,
-	GetSmsTemplateBytIdReturnType,
 	DeleteSmsTemplatesArgs,
-	SmsPrebuiltTemplateType,
-	GetSmsPrebuiltTemplatesArgs,
 	AddNewSmsTemplateArgs,
 	UpdateSmsTemplateArgs,
-	GetSmsPrebuiltTemplateBytIdReturnType,
 } from "./types"
 //#endregion
 
@@ -28,7 +24,7 @@ const smsTemplatesApi = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		getSmsTemplateById: builder.query<GetSmsTemplateBytIdReturnType, string>({
+		getSmsTemplateById: builder.query<SmsTemplateType, string>({
 			query: (id) => `/templatesById/${id}`,
 			providesTags: (result) => [{ type: "SmsTemplate", id: result?.id }],
 			// transformResponse,
@@ -48,26 +44,6 @@ const smsTemplatesApi = api.injectEndpoints({
 			query: (templatesIds) => ({ url: `/templates/delete`, method: "POST", body: { templatesIds } }),
 			invalidatesTags: (res) => (res ? [{ type: "SmsTemplate", id: "LIST" }] : []),
 		}),
-
-		// ALL API'S RELATED TO SMS PREBUILT TEMPLATES BELOW
-
-		getSmsPrebuiltTemplates: builder.query<ListDataReturnType<SmsPrebuiltTemplateType>, GetSmsPrebuiltTemplatesArgs>({
-			// TODO: Below url would be the one to use to integrate with server
-			// query: (params) => ({ url: "/template/prebuilt", params }),
-			query: (params) => ({ url: "/prebuilt-templates", params }),
-			providesTags: (result) =>
-				providesList(
-					result?.list?.map(({ id }) => id),
-					"SmsPrebuiltTemplate"
-				),
-			transformResponse,
-		}),
-
-		getSmsPrebuiltTemplateById: builder.query<GetSmsPrebuiltTemplateBytIdReturnType, string>({
-			query: (id) => `/prebuiltTemplatesById/${id}`,
-			providesTags: (result) => [{ type: "SmsPrebuiltTemplate", id: result?.id }],
-			// transformResponse,
-		}),
 	}),
 })
 
@@ -77,6 +53,4 @@ export const {
 	useAddNewSmsTemplateMutation,
 	useUpdateSmsTemplateMutation,
 	useDeleteSmsTemplatesMutation,
-	useGetSmsPrebuiltTemplatesQuery,
-	useGetSmsPrebuiltTemplateByIdQuery,
 } = smsTemplatesApi
