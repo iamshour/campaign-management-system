@@ -4,21 +4,11 @@ import { Navigate, Outlet, Route, Routes } from "react-router-dom"
 
 import { FullViewSkeleton } from "@/ui"
 const SmsTemplatesLayout = lazy(() => import("../components/sms-template-layout"))
-const SmsTemplatesRoute = lazy(
-	() => import("@/features/templates/sms-templates/routes/sms-templates-route/sms-templates-route")
-)
-const SmsTemplateRoute = lazy(
-	() => import("@/features/templates/sms-templates/routes/sms-template-route/sms-template-route")
-)
-const CreateSmsTemplateRoute = lazy(
-	() => import("@/features/templates/sms-templates/routes/create-sms-template-route/create-sms-template-route")
-)
-const EditSmsTemplateRoute = lazy(
-	() => import("@/features/templates/sms-templates/routes/edit-sms-template-route/edit-sms-template-route")
-)
-const SmsPrebuiltTemplatesView = lazy(
-	() => import("@/features/templates/sms-templates/views/sms-prebuilt-templates-view/sms-prebuilt-templates-view")
-)
+const SmsTemplatesRoute = lazy(() => import("./sms-templates-route/sms-templates-route"))
+const SmsTemplateRoute = lazy(() => import("./sms-template-route/sms-template-route"))
+const CreateSmsTemplateRoute = lazy(() => import("./create-sms-template-route/create-sms-template-route"))
+const EditSmsTemplateRoute = lazy(() => import("./edit-sms-template-route/edit-sms-template-route"))
+const SmsPrebuiltTemplatesRoute = lazy(() => import("./sms-prebuilt-templates-route/sms-prebuilt-templates-route"))
 const SmsPrebuiltTemplateRoute = lazy(() => import("./sms-prebuilt-template-route/sms-prebuilt-template-route"))
 //#endregion
 
@@ -26,7 +16,7 @@ const SmsTemplatesRoutes = () => (
 	<Routes>
 		<Route element={<SmsTemplatesLayout />}>
 			<Route path='my-templates' element={<SmsTemplatesRoute />} />
-			<Route path='prebuilt-templates' element={<SmsPrebuiltTemplatesView />} />
+			<Route path='prebuilt-templates' element={<SmsPrebuiltTemplatesRoute />} />
 		</Route>
 
 		<Route element={<SuspenseWrapper />}>
