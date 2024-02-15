@@ -17,8 +17,7 @@ const SmsTemplateRoute = () => {
 		skip: !mySmsTemplateId,
 		selectFromResult: ({ data, ...rest }) => ({
 			data: data && {
-				// TODO: enable when supported on backend
-				// addUnsubscribeLink: data?.addUnsubscribeLink,
+				body: data.body,
 
 				// TODO: properties to be replaced by "body" (+remove following ignore comments):
 				// eslint-disable-next-line

@@ -31,7 +31,6 @@ const SmsTemplateSchema = z.object({
 				return z.NEVER
 			}
 		}),
-	addUnsubscribeLink: z.boolean().default(false),
 })
 
 export default SmsTemplateSchema

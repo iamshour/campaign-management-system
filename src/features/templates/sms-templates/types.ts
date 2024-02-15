@@ -56,12 +56,12 @@ export type GetSmsTemplatesArgs = BaseFetchListArgs<SmsTemplateType> &
 /**
  * Arguments passed to the server whilst using the `addNewSmsTemplate` mutation to create a new SMS Template entry
  */
-export type AddNewSmsTemplateArgs = Omit<SmsTemplateType, "updatedAt" | "id"> & { addUnsubscribeLink: boolean }
+export type AddNewSmsTemplateArgs = Omit<SmsTemplateType, "updatedAt" | "id">
 
 /**
  * Arguments passed to the server whilst using the `updateSmsTemplate` mutation to update a SMS Template
  */
-export type UpdateSmsTemplateArgs = Omit<SmsTemplateType, "updatedAt"> & { addUnsubscribeLink: boolean }
+export type UpdateSmsTemplateArgs = Omit<SmsTemplateType, "updatedAt">
 
 /**
  * Arguments used for the `deleteSmsTemplates` query, passed for the server as params when deleting SMS Template/s

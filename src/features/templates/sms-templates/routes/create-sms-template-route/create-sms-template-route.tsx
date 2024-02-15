@@ -32,8 +32,6 @@ const CreateSmsTemplateRoute = () => {
 				language: data.language,
 				status: data.status,
 				body: data?.body,
-				// TODO: set actual value when support is added on Backend, currently generating random boolean
-				addUnsubscribeLink: Math.random() < 0.5,
 			},
 			...rest,
 		}),

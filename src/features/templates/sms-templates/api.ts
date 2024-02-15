@@ -36,8 +36,8 @@ const smsTemplatesApi = api.injectEndpoints({
 		}),
 
 		updateSmsTemplate: builder.mutation<any, UpdateSmsTemplateArgs>({
-			query: ({ id, ...body }) => ({ url: `/templatesById/${id}`, method: "PUT", body }),
-			invalidatesTags: (res) => (res ? [{ type: "SmsTemplate", id: "LIST" }] : []),
+			query: ({ id, ...body }) => ({ url: `/template/sms/${id}`, method: "PATCH", body }),
+			invalidatesTags: (res) => (res ? [{ type: "SmsTemplate", id: res?.id }] : []),
 		}),
 
 		deleteSmsTemplates: builder.mutation<any, DeleteSmsTemplatesArgs>({

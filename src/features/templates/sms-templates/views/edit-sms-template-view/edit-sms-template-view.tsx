@@ -28,7 +28,17 @@ const EditSmsTemplateView = ({ defaultValues }: EditSmsTemplateViewProps) => {
 
 	const onSubmit = async (requestBody: Omit<AddNewSmsTemplateArgs, "status">) => {
 		if (!requestBody || !smsTemplateId || !smsTemplateStatus) return
-		await updateSmsTemplate({ id: smsTemplateId, ...requestBody, status: smsTemplateStatus })
+		await updateSmsTemplate({
+			id: smsTemplateId,
+
+			// TODO: properties to be replaced by "body" (to remove following 3 lines):
+			// eslint-disable-next-line
+			// @ts-expect-error
+			properties: { smsContent: requestBody.body },
+
+			...requestBody,
+			status: smsTemplateStatus,
+		})
 			.unwrap()
 			.then(() => {
 				toast.success("Template added successfully")
