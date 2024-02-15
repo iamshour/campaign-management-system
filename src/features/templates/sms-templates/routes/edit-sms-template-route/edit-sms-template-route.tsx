@@ -24,9 +24,12 @@ const CreateSmsTemplateRoute = () => {
 				type: data.type,
 				language: data.language,
 				status: data.status,
-				body: data.body,
-				// TODO: set actual value when support is added on Backend, currently generating random boolean
-				addUnsubscribeLink: Math.random() < 0.5,
+
+				// TODO: properties to be replaced by "body" (+remove following ignore comments):
+				// eslint-disable-next-line
+				// @ts-expect-error
+				body: data?.properties?.smsContent,
+				// body: data.body,
 			},
 			...rest,
 		}),

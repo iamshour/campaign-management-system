@@ -24,7 +24,6 @@ const EditSmsIndustryTemplateRoute = () => {
 				language: data.language,
 				status: data.status,
 				body: data?.body,
-				addUnsubscribeLink: Math.random() < 0.5,
 				backgroundUrl: data.background,
 				mostPopular: data.mostPopular,
 			},

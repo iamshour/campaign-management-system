@@ -8,7 +8,7 @@ import { smsTemplateLanguagesOptions } from "@/features/templates/sms-templates/
 import { smsTemplateTypesOptions } from "@/features/templates/sms-templates/constants/sms-template-types-options"
 import DiscardTemplateChangesDialog from "@/features/templates/sms-templates/dialogs/discard-template-changes-dialog/discard-template-changes-dialog"
 import SmsTemplateSchema from "@/features/templates/sms-templates/schemas/sms-template-schema"
-import { Form, Select, useForm, Footer, Button, Checkbox, Tooltip, Input, Separator, twMerge } from "@/ui"
+import { Form, Select, useForm, Footer, Button, Input, Separator } from "@/ui"
 import SectionHeading from "@/ui/section-heading/section-heading"
 
 import MobileSmsPreview from "../mobile-sms-preview"
@@ -166,43 +166,10 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 
 				<SmsTemplateBodyTextarea />
 
-				<Form.Field
-					control={control}
-					name='addUnsubscribeLink'
-					render={({ field }) => (
-						<Form.Item className='flex flex-row items-center space-x-2'>
-							<Form.Control>
-								<Checkbox checked={field.value} onCheckedChange={(checked) => field.onChange(checked)} />
-							</Form.Control>
-							<Form.Label
-								className={twMerge(
-									"flex cursor-pointer flex-row items-center pb-0 transition-basic hover:text-primary-900",
-									!!field.value && "text-primary-900"
-								)}>
-								Add Unsubscribe link
-								<Tooltip key='tooltip'>
-									<Tooltip.Trigger asChild>
-										<span>
-											<MdiInformationVariantCircle className='ml-1 text-sm text-primary-600' />
-										</span>
-									</Tooltip.Trigger>
-									<Tooltip.Content
-										content='End-users may click this link to stop receiving promotional messages'
-										side='top'
-										align='start'
-										sideOffset={10}
-									/>
-								</Tooltip>
-							</Form.Label>
-							<Form.Message />
-						</Form.Item>
-					)}
-				/>
-
 				{children}
 			</div>
 
-			<MobileSmsPreview message={watch("body")} showOptOutLink={watch("addUnsubscribeLink")} />
+			<MobileSmsPreview message={watch("body")} />
 		</div>
 	)
 }

@@ -17,7 +17,6 @@ const IndustryTemplateRoute = () => {
 		skip: !templatedId,
 		selectFromResult: ({ data, ...rest }) => ({
 			data: data && {
-				// addUnsubscribeLink: data?.addUnsubscribeLink,  // TODO: enable when supported on backend
 				body: data.body,
 				name: data.name,
 				type: data.type,

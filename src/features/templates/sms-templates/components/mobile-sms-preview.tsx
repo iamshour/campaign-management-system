@@ -10,9 +10,8 @@ import RiAppStoreFill from "~icons/ri/app-store-fill"
 
 interface MobileSmsPreviewProps {
 	message: string
-	showOptOutLink?: boolean
 }
-const MobileSmsPreview = ({ message, showOptOutLink = false }: MobileSmsPreviewProps) => {
+const MobileSmsPreview = ({ message }: MobileSmsPreviewProps) => {
 	return (
 		<div className='m-2 flex h-[600px] min-w-[355px] flex-col self-center rounded-[40px] border-2 border-[#8F8F8F] bg-white'>
 			<div className='relative flex h-[100px] w-full flex-col items-center justify-center rounded-t-[40px] border-b border-[#D9D9D9] bg-[#F6F6F6] pb-[5px] pt-[8px]'>
@@ -29,7 +28,6 @@ const MobileSmsPreview = ({ message, showOptOutLink = false }: MobileSmsPreviewP
 							`
 					)}>
 					{message}
-					{showOptOutLink && <span className='ml-1 text-primary-600 underline'>Opt-out</span>}
 				</p>
 			</div>
 			<div className='flex h-[70px] w-full flex-row flex-nowrap items-center justify-between space-x-2 rounded-b-[40px] px-[20px]'>
