@@ -25,9 +25,9 @@ const smsTemplatesApi = api.injectEndpoints({
 		}),
 
 		getSmsTemplateById: builder.query<SmsTemplateType, string>({
-			query: (id) => `/templatesById/${id}`,
+			query: (id) => `/template/sms/${id}`,
 			providesTags: (result) => [{ type: "SmsTemplate", id: result?.id }],
-			// transformResponse,
+			transformResponse,
 		}),
 
 		addNewSmsTemplate: builder.mutation<any, AddNewSmsTemplateArgs>({
