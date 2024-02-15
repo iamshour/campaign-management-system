@@ -32,10 +32,10 @@ const DisplayError = ({ error, className, showReloadButton, onReload }: DisplayE
 
 	return (
 		<div className={twMerge("grid h-full w-full place-content-center gap-4 bg-white px-4", className)}>
-			<h1 className='uppercase tracking-widest text-gray-500'>
+			<h4 className='uppercase tracking-widest text-gray-500'>
 				<span>{error?.status || "404"}</span> |{" "}
 				{!!error?.status && error?.status !== 404 ? "Server Error" : "Not found"}
-			</h1>
+			</h4>
 
 			{/* Render a Reload Button, only if the bool check was passed OR a callback function: `onReload` was passed    */}
 			{(!!showReloadButton || !!onReload) && (

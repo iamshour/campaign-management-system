@@ -36,6 +36,7 @@ const GroupsView = ({ count, ...tableProps }: SharedListViewProps<Group>) => {
 					<AdvancedTable.Body
 						GridCard={GroupCard}
 						columns={grouspsTableColumns}
+						gridClassName='[grid-template-columns:repeat(auto-fit,470px)] 3xl:[grid-template-columns:repeat(auto-fit,480px)] [grid-template-rows:repeat(auto-fit,250px)]'
 						classNames={{ wrapper: "px-4" }}
 						onRowClick={({ groupId }) => navigate(groupId)}
 						{...tableProps}

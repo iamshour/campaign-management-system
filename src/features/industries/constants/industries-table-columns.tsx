@@ -14,6 +14,7 @@ const IndustriesViewTableIcon = lazy(
 const IndustriesViewTableActions = lazy(
 	() => import("@/features/industries/views/industries-view/industries-view-table-actions")
 )
+import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 //#endregion
 
 const industriesTableColumns: ColumnType<IndustryType>[] = [
@@ -40,7 +41,12 @@ const industriesTableColumns: ColumnType<IndustryType>[] = [
 	{
 		accessorKey: "actions",
 		// Hide Actions if Industry is default one (named `others` from server)
-		cell: (_, row) => row?.name.toLocaleLowerCase() !== "others" && <IndustriesViewTableActions {...row} />,
+		cell: (_, row) =>
+			row?.name.toLocaleLowerCase() !== "others" && (
+				<IndustriesViewTableActions {...row}>
+					<BiThreeDotsVertical />
+				</IndustriesViewTableActions>
+			),
 	},
 ]
 
