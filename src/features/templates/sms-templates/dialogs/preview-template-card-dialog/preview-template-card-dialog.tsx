@@ -1,7 +1,7 @@
 //#region Import
 import { lazy } from "react"
 
-import type { SmsPrebuiltTemplateType } from "@/features/templates/sms-templates/types"
+import type { SmsIndustryTemplateType } from "@/features/industries/types"
 import { Dialog } from "@/ui"
 
 const SmsPrebuiltTemplateCard = lazy(
@@ -13,7 +13,7 @@ const SmsPrebuiltTemplateCard = lazy(
 //#endregion
 
 interface PreviewTemplateCardDialogProps
-	extends Partial<Pick<SmsPrebuiltTemplateType, "name" | "type" | "language" | "body" | "industryId" | "background">> {
+	extends Partial<Pick<SmsIndustryTemplateType, "name" | "type" | "language" | "body" | "industryId" | "background">> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */

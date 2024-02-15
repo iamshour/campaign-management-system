@@ -67,7 +67,7 @@ const DeleteSmsTemplateDialogContent = ({ ids, onClose }: DeleteSmsTemplateDialo
 					</div>
 				</>
 			) : (
-				<p className='w-full overflow-x-auto text-base'>Are you sure you want to delete this template</p>
+				<p className='w-full overflow-x-auto text-base'>Are you sure you want to delete this template?</p>
 			)}
 
 			<Footer>

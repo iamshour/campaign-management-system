@@ -60,7 +60,7 @@ const baseQueryWrapper: BaseQueryFn = async (args, api, otherOptions) => {
 const api = createApi({
 	reducerPath: "api",
 	baseQuery: baseQueryWrapper,
-	tagTypes: ["Contact", "Tag", "Group", "Segment", "Export", "SmsTemplate", "SmsPrebuiltTemplate", "Industry"],
+	tagTypes: ["Contact", "Tag", "Group", "Segment", "Export", "SmsTemplate", "Industry", "SmsIndustryTemplate"],
 	endpoints: () => ({}),
 	refetchOnReconnect: true,
 })

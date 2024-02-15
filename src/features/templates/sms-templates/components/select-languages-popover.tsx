@@ -15,7 +15,7 @@ const SelectLanguagesPopover = ({
 			{...props}>
 			<ComboBox.Trigger>Select languages</ComboBox.Trigger>
 
-			<ComboBox.Content className='h-[119px]'>
+			<ComboBox.Content className='h-[193px]'>
 				<ComboBoxPopper
 					// label: t(label) // TODO: add translation
 					options={smsTemplateLanguagesOptions}

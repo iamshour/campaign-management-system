@@ -16,8 +16,8 @@ const DeleteIndustryTemplateDialog = lazy(
 const IndustryTemplatesViewTopbar = () => {
 	const navigate = useNavigate()
 
-	const { selection } = useSelector<AdvancedTableStateType<"templates-in-industry">>(
-		({ advancedTable }) => advancedTable["templates-in-industry"]
+	const { selection } = useSelector<AdvancedTableStateType<"sms-industry-templates">>(
+		({ advancedTable }) => advancedTable["sms-industry-templates"]
 	)
 
 	return (

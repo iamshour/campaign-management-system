@@ -15,7 +15,7 @@ const BuilderPreviewBackgroundSection = lazy(() => import("./builder-preview-bac
 const BuilderDropareaSection = lazy(() => import("./builder-droparea-section"))
 //#endregion
 
-const BuilderBackgroundSection = () => {
+const SmsIndustryTemplateBuilderContent = () => {
 	const { t } = useTranslation("industries", { keyPrefix: "components.templateBuilder.backgroundField" })
 
 	const { control, getValues } = useFormContext<SmsIndustryTemplateSchemaType>()
@@ -78,4 +78,4 @@ const BuilderBackgroundSection = () => {
 	)
 }
 
-export default BuilderBackgroundSection
+export default SmsIndustryTemplateBuilderContent

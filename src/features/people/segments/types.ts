@@ -1,5 +1,5 @@
 //#region Import
-import type { CommonListArguments } from "@/core/lib/redux-toolkit/types"
+import type { BaseFetchListArgs } from "@/core/lib/redux-toolkit/types"
 import type { OptionType } from "@/ui"
 //#endregion
 
@@ -55,7 +55,7 @@ export type SegmentConditionType = {
 /**
  * Arguments passed to the server whilst using the `getSegments` query to fetch Segments List
  */
-export type GetSegmentArgs = Omit<CommonListArguments<Segment>, "startDate" | "endDate">
+export type GetSegmentArgs = BaseFetchListArgs<Segment>
 
 /**
  * Arguments passed to the server whilst using the `createSegment` mutation to post a new created segment entry

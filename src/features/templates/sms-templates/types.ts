@@ -1,6 +1,6 @@
 //#region Import
-import { CommonListArguments } from "@/core/lib/redux-toolkit/types"
-import type { DateRange, TableState } from "@/ui"
+import type { BaseFetchListArgs } from "@/core/lib/redux-toolkit/types"
+import type { DateRange } from "@/ui"
 //#endregion
 
 /**
@@ -32,39 +32,6 @@ export interface SmsTemplateType {
 }
 
 /**
- * Arguments used for the `getSmsTemplates` query, passed for the server as params when fetching SMS Templates List
- */
-export type GetSmsTemplatesArgs = CommonListArguments<SmsTemplateType> & {
-	name?: string
-	statuses?: SmsTemplateStatusOption[]
-	types?: SmsTemplateTypeOption[]
-	languages?: SmsTemplateLanguageOption[]
-	any?: boolean
-}
-
-/**
- * Returned data shape from the `getSmsTemplateById` query
- */
-export type GetSmsTemplateBytIdReturnType = SmsTemplateType
-
-/**
- * Arguments passed to the server whilst using the `addNewSmsTemplate` mutation to post a new contact entry
- */
-export type AddNewSmsTemplateArgs = Pick<SmsTemplateType, "name" | "type" | "language" | "status" | "body"> & {
-	addUnsubscribeLink: boolean
-}
-
-/**
- * Arguments passed to the server whilst using the `updateSmsTemplate` mutation to post a new contact entry
- */
-export type UpdateSmsTemplateArgs = AddNewSmsTemplateArgs & Pick<SmsTemplateType, "id">
-
-/**
- * Arguments used for the `deleteSmsTemplates` query, passed for the server as params when deleting SMS Template/s
- */
-export type DeleteSmsTemplatesArgs = string[]
-
-/**
  * Filters used in Filters bar (Internally / Only Client-Side - Not sent to the server)
  */
 export type SmsTemplatesTableFiltersType = {
@@ -74,51 +41,29 @@ export type SmsTemplatesTableFiltersType = {
 	templateLanguage?: SmsTemplateLanguageOption[]
 }
 
-export type CreateSmsTemplateLocationType = {
-	state: {
-		id: string
-		type: "smsTemplate" | "prebuiltSmsTemplate"
+/**
+ * Arguments used for the `getSmsTemplates` query, passed for the server as params when fetching SMS Templates List
+ */
+export type GetSmsTemplatesArgs = BaseFetchListArgs<SmsTemplateType> &
+	DateRange & {
+		name?: string
+		statuses?: SmsTemplateStatusOption[]
+		types?: SmsTemplateTypeOption[]
+		languages?: SmsTemplateLanguageOption[]
+		any?: boolean
 	}
-}
-
-// ---------------------------------------------
-// ALL TYPES RELATED TO PREBUILT TEMPLATES BELOW
-// ---------------------------------------------
 
 /**
- * Shape of fetched Prebuilt SMS Template
+ * Arguments passed to the server whilst using the `addNewSmsTemplate` mutation to create a new SMS Template entry
  */
-export type SmsPrebuiltTemplateType = SmsTemplateType & {
-	industryId: string
-	createdAt: string
-	mostPopular: boolean
-	background: string
-}
+export type AddNewSmsTemplateArgs = Omit<SmsTemplateType, "updatedAt" | "id"> & { addUnsubscribeLink: boolean }
 
 /**
- * Arguments used for the `getSmsPrebuiltTemplates` query, passed for the server as params when fetching SMS Prebuilt Templates List
+ * Arguments passed to the server whilst using the `updateSmsTemplate` mutation to update a SMS Template
  */
-export type GetSmsPrebuiltTemplatesArgs = Omit<TableState<SmsPrebuiltTemplateType>, "selection"> & {
-	industryId?: string
-	name?: string
-	any?: boolean
-	type?: SmsTemplateTypeOption[]
-	language?: SmsTemplateLanguageOption[]
-	mostPopular?: boolean
-	background?: string
-}
+export type UpdateSmsTemplateArgs = Omit<SmsTemplateType, "updatedAt"> & { addUnsubscribeLink: boolean }
 
 /**
- * Filters used in Filters bar (Internally / Only Client-Side - Not sent to the server)
+ * Arguments used for the `deleteSmsTemplates` query, passed for the server as params when deleting SMS Template/s
  */
-export type SmsPrebuiltTemplatesTableFiltersType = {
-	filterBy?: "POPULAR" | "RECENT"
-	templateType?: SmsTemplateTypeOption[]
-	templateLanguage?: SmsTemplateLanguageOption[]
-	industryId?: string | "ALL"
-}
-
-/**
- * Returned data shape from the `getSmsPrebuiltTemplateById` query
- */
-export type GetSmsPrebuiltTemplateBytIdReturnType = SmsPrebuiltTemplateType
+export type DeleteSmsTemplatesArgs = string[]

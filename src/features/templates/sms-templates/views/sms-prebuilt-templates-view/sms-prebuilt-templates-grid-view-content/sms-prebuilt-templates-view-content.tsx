@@ -8,7 +8,7 @@ import useSelector from "@/core/hooks/useSelector"
 import { updateAdvancedTableState } from "@/core/slices/advanced-table-slice/advanced-table-slice"
 import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import type { SharedListViewProps } from "@/core/types"
-import type { SmsPrebuiltTemplateType } from "@/features/templates/sms-templates/types"
+import type { SmsIndustryTemplateType } from "@/features/industries/types"
 import { DisplayError, SearchInput, Skeleton } from "@/ui"
 
 import SmsPrebuiltTemplateCard from "./sms-prebuilt-template-card"
@@ -18,7 +18,7 @@ const SmsPrebuiltTemplatesFiltersContent = lazy(
 const TablePagination = lazy(() => import("@/ui/table/table-pagination"))
 //#endregion
 
-export interface SmsPrebuiltTemplatesViewContentProps extends SharedListViewProps<SmsPrebuiltTemplateType> {
+export interface SmsPrebuiltTemplatesViewContentProps extends SharedListViewProps<SmsIndustryTemplateType> {
 	/**
 	 * Optional prop used to append additional children to the header component, along the `SearchInput` component, such as a CTA Button
 	 */

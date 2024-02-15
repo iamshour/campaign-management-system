@@ -11,6 +11,9 @@ import type {
 	DeleteIndustryTemplatesArgs,
 	UpdateIndustryArgs,
 	AddNewSmsIndustryTemplateArgs,
+	SmsIndustryTemplateType,
+	GetSmsIndustryTemplatesArgs,
+	UpdateSmsIndustryTemplateArgs,
 } from "./types"
 //#endregion
 
@@ -41,9 +44,34 @@ const industriesApi = api.injectEndpoints({
 			},
 		}),
 
+		// SMS Industry Templates Queries/Mutations
+
+		getSmsIndustryTemplates: builder.query<ListDataReturnType<SmsIndustryTemplateType>, GetSmsIndustryTemplatesArgs>({
+			// TODO: Below url would be the one to use to integrate with server
+			// query: (params) => ({ url: "/template/prebuilt", params }),
+			query: (params) => ({ url: "/prebuilt-templates", params }),
+			providesTags: (result) =>
+				providesList(
+					result?.list?.map(({ id }) => id),
+					"SmsIndustryTemplate"
+				),
+			transformResponse,
+		}),
+
+		getSmsIndustryTemplateById: builder.query<SmsIndustryTemplateType, string>({
+			query: (id) => `/prebuiltTemplatesById/${id}`,
+			providesTags: (result) => [{ type: "SmsIndustryTemplate", id: result?.id }],
+			// transformResponse,
+		}),
+
 		addNewSmsIndustryTemplate: builder.mutation<any, AddNewSmsIndustryTemplateArgs>({
 			query: (body) => ({ url: "/templatesById", method: "POST", body }),
 			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
+		}),
+
+		updateSmsIndustryTemplate: builder.mutation<any, UpdateSmsIndustryTemplateArgs>({
+			query: ({ id, ...body }) => ({ url: `/templatesById/${id}`, method: "PUT", body }),
+			invalidatesTags: (res) => (res ? [{ type: "SmsTemplate", id: "LIST" }] : []),
 		}),
 
 		deleteIndustryTemplates: builder.mutation<any, DeleteIndustryTemplatesArgs>({
@@ -58,6 +86,10 @@ export const {
 	useAddNewIndustryMutation,
 	useUpdateIndustryMutation,
 	useDeleteIndustryMutation,
+	// SMS Industry Templates hooks
+	useGetSmsIndustryTemplatesQuery,
+	useGetSmsIndustryTemplateByIdQuery,
 	useAddNewSmsIndustryTemplateMutation,
+	useUpdateSmsIndustryTemplateMutation,
 	useDeleteIndustryTemplatesMutation,
 } = industriesApi

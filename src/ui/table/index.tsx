@@ -104,8 +104,10 @@ const Table = <TData extends RowData>({
 
 				<tbody className={classNames?.tbody}>
 					{!count && !list?.length ? (
-						<tr className={twMerge("h-[calc(100vh-260px)]", classNames?.tbodyTr)}>
-							<TableCell colSpan={columns.length}>
+						<tr className={classNames?.tbodyTr}>
+							<TableCell
+								colSpan={columns.length}
+								className={twMerge("h-[calc(100vh-260px)]", classNames?.emptyTableCell)}>
 								<h2 className='text-center text-2xl font-light uppercase tracking-widest text-gray-500'>
 									{t("table.message.noResults")}
 								</h2>

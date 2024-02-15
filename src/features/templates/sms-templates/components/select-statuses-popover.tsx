@@ -14,7 +14,7 @@ const SelectStatusesPopover = ({
 			{...props}>
 			<ComboBox.Trigger>Select status</ComboBox.Trigger>
 
-			<ComboBox.Content className='h-[119px]'>
+			<ComboBox.Content className='h-[161px]'>
 				<ComboBoxPopper options={smsTemplateStatusesOptions} />
 			</ComboBox.Content>
 		</ComboBox>

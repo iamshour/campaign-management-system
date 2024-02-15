@@ -5,14 +5,10 @@ import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { updateFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
 import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import { IndustryType } from "@/features/industries/types"
+import type { IndustryType, SmsIndustryTemplatesTableFiltersType } from "@/features/industries/types"
 import smsTemplateLanguagesOptions from "@/features/templates/sms-templates/constants/sms-template-languages-options"
 import smsTemplateTypesOptions from "@/features/templates/sms-templates/constants/sms-template-types-options"
-import type {
-	SmsPrebuiltTemplatesTableFiltersType,
-	SmsTemplateLanguageOption,
-	SmsTemplateTypeOption,
-} from "@/features/templates/sms-templates/types"
+import type { SmsTemplateLanguageOption, SmsTemplateTypeOption } from "@/features/templates/sms-templates/types"
 import { SearchInput, Separator, Button, Label, Checkbox, Collapsible, type CheckedState } from "@/ui"
 //#endregion
 
@@ -61,7 +57,7 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 	)
 
 	const onFilterClick = useCallback(
-		(updatedFilters: Partial<SmsPrebuiltTemplatesTableFiltersType>) => {
+		(updatedFilters: Partial<SmsIndustryTemplatesTableFiltersType>) => {
 			dispatch(updateFilters({ "sms-prebuilt-templates": updatedFilters }))
 		},
 		[dispatch]
@@ -136,7 +132,7 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 
 export default SmsPrebuiltTemplatesFiltersContent
 
-const sortButtonsLabels: { filterBy?: SmsPrebuiltTemplatesTableFiltersType["filterBy"]; label: string }[] = [
+const sortButtonsLabels: { filterBy?: SmsIndustryTemplatesTableFiltersType["filterBy"]; label: string }[] = [
 	{ label: "All Templates" },
 	{ filterBy: "RECENT", label: "Recently Added" },
 	{ filterBy: "POPULAR", label: "Most Popular" },

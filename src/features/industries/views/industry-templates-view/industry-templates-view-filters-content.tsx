@@ -20,13 +20,13 @@ import { getListOfKey } from "@/utils"
 const IndustryTemplatesViewFiltersContent = () => {
 	const dispatch = useDispatch()
 
-	const { filters } = useSelector<AdvancedTableStateType<"templates-in-industry">>(
-		({ advancedTable }) => advancedTable["templates-in-industry"]
+	const { filters } = useSelector<AdvancedTableStateType<"sms-industry-templates">>(
+		({ advancedTable }) => advancedTable["sms-industry-templates"]
 	)
 
 	const updateSelection = useCallback(
-		(newFilters: Partial<FiltersFieldMappingType["templates-in-industry"]>) => {
-			dispatch(updateFilters({ "templates-in-industry": newFilters }))
+		(newFilters: Partial<FiltersFieldMappingType["sms-industry-templates"]>) => {
+			dispatch(updateFilters({ "sms-industry-templates": newFilters }))
 		},
 		[dispatch]
 	)

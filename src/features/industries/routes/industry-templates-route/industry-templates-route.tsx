@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import { useGetSmsPrebuiltTemplatesQuery } from "@/features/templates/sms-templates/api"
+import { useGetSmsIndustryTemplatesQuery } from "@/features/industries/api"
 import { DataTableSkeleton } from "@/ui"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
@@ -15,15 +15,15 @@ const IndustryTemplatesView = lazy(
 )
 //#endregion
 
-const IndustryPrebuiltTemplatesRoute = () => {
+const IndustryTemplatesRoute = () => {
 	const { id: industryId } = useParams()
 
 	const { offset, limit, filters, appliedFiltersCount, searchTerm } = useSelector<
-		AdvancedTableStateType<"sms-prebuilt-templates">
-	>(({ advancedTable }) => advancedTable["sms-prebuilt-templates"])
+		AdvancedTableStateType<"sms-industry-templates">
+	>(({ advancedTable }) => advancedTable["sms-industry-templates"])
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } =
-		useGetSmsPrebuiltTemplatesQuery(
+		useGetSmsIndustryTemplatesQuery(
 			{
 				industryId,
 				limit,
@@ -58,4 +58,4 @@ const IndustryPrebuiltTemplatesRoute = () => {
 	if (isReady) return <IndustryTemplatesView list={list || []} count={count || 0} isFetching={isFetching} />
 }
 
-export default IndustryPrebuiltTemplatesRoute
+export default IndustryTemplatesRoute

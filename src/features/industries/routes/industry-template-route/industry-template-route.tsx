@@ -3,7 +3,7 @@ import { lazy } from "react"
 import { useParams } from "react-router-dom"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { useGetSmsPrebuiltTemplateByIdQuery } from "@/features/templates/sms-templates/api"
+import { useGetSmsIndustryTemplateByIdQuery } from "@/features/industries/api"
 import { FullViewSkeleton } from "@/ui"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
@@ -11,10 +11,10 @@ const SmsTemplatePreview = lazy(() => import("@/features/templates/sms-templates
 //#endregion
 
 const IndustryTemplateRoute = () => {
-	const { templatedId: prebuiltTemplateId } = useParams()
+	const { templatedId } = useParams()
 
-	const { data, isFetching, isError, error } = useGetSmsPrebuiltTemplateByIdQuery(prebuiltTemplateId!, {
-		skip: !prebuiltTemplateId,
+	const { data, isFetching, isError, error } = useGetSmsIndustryTemplateByIdQuery(templatedId!, {
+		skip: !templatedId,
 		selectFromResult: ({ data, ...rest }) => ({
 			data: data && {
 				// addUnsubscribeLink: data?.addUnsubscribeLink,  // TODO: enable when supported on backend

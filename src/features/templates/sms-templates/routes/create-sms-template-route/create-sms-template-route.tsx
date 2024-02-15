@@ -3,7 +3,8 @@ import { lazy } from "react"
 import { useSearchParams } from "react-router-dom"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { useGetSmsTemplateByIdQuery, useGetSmsPrebuiltTemplateByIdQuery } from "@/features/templates/sms-templates/api"
+import { useGetSmsIndustryTemplateByIdQuery } from "@/features/industries/api"
+import { useGetSmsTemplateByIdQuery } from "@/features/templates/sms-templates/api"
 import { FullViewSkeleton } from "@/ui"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
@@ -19,7 +20,7 @@ const CreateSmsTemplateRoute = () => {
 	const templateId = searchParams.get("templateId")
 
 	const useFetchHook =
-		templateType === "smsPrebuiltTemplate" ? useGetSmsPrebuiltTemplateByIdQuery : useGetSmsTemplateByIdQuery
+		templateType === "smsPrebuiltTemplate" ? useGetSmsIndustryTemplateByIdQuery : useGetSmsTemplateByIdQuery
 
 	const { defaultValues, isFetching, isError, error } = useFetchHook(templateId!, {
 		skip: !templateId,
