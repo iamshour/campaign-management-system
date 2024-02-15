@@ -31,8 +31,12 @@ const industriesApi = api.injectEndpoints({
 		}),
 
 		updateIndustry: builder.mutation<any, UpdateIndustryArgs>({
-			query: ({ id, ...body }) => ({ url: `/industryById/${id}`, method: "PUT", body }),
-			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
+			query: ({ id, ...body }) => ({ url: `/industry/${id}`, method: "PATCH", body }),
+			invalidatesTags: (res, error, { id }) => {
+				if (!res) return []
+
+				return [{ type: "Industry", id }]
+			},
 		}),
 
 		deleteIndustry: builder.mutation<any, string>({

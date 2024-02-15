@@ -87,7 +87,7 @@ const IndustryForm = ({ children, onSubmit, defaultValues }: IndustryFormProps) 
 										<Form.Control>
 											<Select value={field.value}>
 												<Select.Trigger
-													className='h-[50px] bg-white  ring-[#d1d5db] data-[state=open]:ring-primary-300 [&>svg]:!text-[#d1d5db] [&>svg]:data-[state=open]:!text-primary-300'
+													className='h-[50px] bg-white  ring-[#d1d5db] data-[hasvalue=true]:ring-primary-500 data-[state=open]:ring-primary-300 [&>svg]:!text-[#d1d5db] [&>svg]:data-[state=open]:!text-primary-300'
 													hasValue={!!field.value?.length}>
 													<Select.Value placeholder='Select type'>
 														{!!field.value?.length && <SelectedIcon className='h-[26px] w-[26px]' />}

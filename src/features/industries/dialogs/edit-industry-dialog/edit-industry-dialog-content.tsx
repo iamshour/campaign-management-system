@@ -16,18 +16,17 @@ export interface EditIndustryDialogContentProps
 }
 
 const EditIndustryDialogContent = ({ onClose, id, ...formDefaultValues }: EditIndustryDialogContentProps) => {
-	const [updatedIndustry, { isLoading }] = useUpdateIndustryMutation()
+	const [triggerUpdateIndustry, { isLoading }] = useUpdateIndustryMutation()
 
 	/**
 	 * Used to send validated data from the `IndustryForm` component to the server, for updating the industry entry
 	 *
 	 * @param body Validated data passed back from the `IndustryForm` component
 	 */
-
 	const onSubmit = async (body: AddNewIndustryArgs) => {
 		if (!body) return
 
-		await updatedIndustry({ id, ...body })
+		await triggerUpdateIndustry({ id, ...body })
 			.unwrap()
 			.then(() => {
 				toast.success("Industry updated successfully")
