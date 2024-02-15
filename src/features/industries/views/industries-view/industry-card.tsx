@@ -29,7 +29,8 @@ const IndustryCard = (industry: IndustryType) => {
 					<p className='flex-1 truncate text-base font-bold'>{name}</p>
 				</div>
 
-				<IndustriesViewTableActions {...industry} />
+				{/* Hide Actions if Industry is default one (named `others` from server)  */}
+				{name?.toLocaleLowerCase() !== "others" && <IndustriesViewTableActions {...industry} />}
 			</div>
 
 			<ul className='w-full flex-1 space-y-2 p-4'>

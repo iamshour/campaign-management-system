@@ -36,7 +36,7 @@ const industriesApi = api.injectEndpoints({
 		}),
 
 		deleteIndustry: builder.mutation<any, string>({
-			query: (id) => ({ url: `/industryById/${id}`, method: "DELETE" }),
+			query: (id) => ({ url: `/industry/${id}`, method: "DELETE" }),
 			invalidatesTags: (res, error, id) => {
 				if (!res) return []
 

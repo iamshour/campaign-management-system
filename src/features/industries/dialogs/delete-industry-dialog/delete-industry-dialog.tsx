@@ -20,7 +20,7 @@ const DeleteIndustryDialog = ({ children, ...industry }: DeleteIndustryDialogPro
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
-			<Dialog.Content title='Delete Industry' className='h-[400px] w-[288px] sm:h-[385px] sm:w-[390px]'>
+			<Dialog.Content title='Delete Industry' className='w-[400px] sm:h-[390px]'>
 				<DeleteIndustryDialogContent {...industry} onClose={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>

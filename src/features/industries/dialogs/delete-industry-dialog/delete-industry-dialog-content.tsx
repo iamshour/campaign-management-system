@@ -32,7 +32,7 @@ const DeleteIndustryDialogContent = ({ id, name, onClose }: DeleteIndustryDialog
 	}
 
 	return (
-		<div className='flex flex-col gap-6 overflow-y-auto p-2'>
+		<div className='flex h-full flex-col justify-between gap-6 overflow-y-auto p-2'>
 			<p className='w-full text-base'>
 				Are you sure you want to delete <strong>{`"${name}"`}</strong> from the industries list? Please note that this
 				will affect all related templates. Deleting industry is permanent and cannot be undone

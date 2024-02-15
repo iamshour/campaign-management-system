@@ -17,35 +17,33 @@ const IndustriesView = ({ count, ...tableProps }: SharedListViewProps<IndustryTy
 	const navigate = useNavigate()
 
 	return (
-		<>
-			<AdvancedTable tableKey='industries' count={count}>
-				<AdvancedTable.FiltersBar>
-					<AdvancedTable.FiltersBar.Header />
-					<AdvancedTable.FiltersBar.Content>
-						<IndustriesViewFiltersContent />
-					</AdvancedTable.FiltersBar.Content>
-					<AdvancedTable.FiltersBar.Footer />
-				</AdvancedTable.FiltersBar>
+		<AdvancedTable tableKey='industries' count={count}>
+			<AdvancedTable.FiltersBar>
+				<AdvancedTable.FiltersBar.Header />
+				<AdvancedTable.FiltersBar.Content>
+					<IndustriesViewFiltersContent />
+				</AdvancedTable.FiltersBar.Content>
+				<AdvancedTable.FiltersBar.Footer />
+			</AdvancedTable.FiltersBar>
 
-				<AdvancedTable.Content>
-					<AdvancedTable.TopBar>
-						<IndustriesViewTopBar />
-					</AdvancedTable.TopBar>
+			<AdvancedTable.Content>
+				<AdvancedTable.TopBar>
+					<IndustriesViewTopBar />
+				</AdvancedTable.TopBar>
 
-					<AdvancedTable.MultiViewLayout>
-						<AdvancedTable.Body
-							GridCard={IndustryCard}
-							columns={industriesTableColumns}
-							classNames={{ wrapper: "px-4" }}
-							onRowClick={({ id }) => navigate(id)}
-							{...tableProps}
-						/>
-					</AdvancedTable.MultiViewLayout>
+				<AdvancedTable.MultiViewLayout>
+					<AdvancedTable.Body
+						GridCard={IndustryCard}
+						columns={industriesTableColumns}
+						classNames={{ wrapper: "px-4" }}
+						onRowClick={({ id }) => navigate(id)}
+						{...tableProps}
+					/>
+				</AdvancedTable.MultiViewLayout>
 
-					<AdvancedTable.Pagination />
-				</AdvancedTable.Content>
-			</AdvancedTable>
-		</>
+				<AdvancedTable.Pagination />
+			</AdvancedTable.Content>
+		</AdvancedTable>
 	)
 }
 
