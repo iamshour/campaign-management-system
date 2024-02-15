@@ -3,9 +3,7 @@
 	"version": "0.4.10",
 	"type": "module",
 	"scripts": {
-		"dev": "concurrently \"npm run vite-dev\"  \"npm run server\"",
-		"vite-dev": "vite --clearScreen false",
-		"server": "json-server src/api/db.json --port 5000",
+		"dev": "vite --clearScreen false",
 		"build": "npm run clean && tsc && vite build",
 		"start": "vite preview --port 3000 --host",
 		"clean": "rm -rf dist",

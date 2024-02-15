@@ -17,11 +17,8 @@ interface CreateIndustryDialogContentProps {
 const CreateIndustryDialogContent = ({ onClose }: CreateIndustryDialogContentProps) => {
 	const [addIndustry, { isLoading }] = useAddNewIndustryMutation()
 
-	//  tracking which button was clicked to show appropriate loader
-
 	/**
 	 * Used to send validated data from the `IndustryForm` component to the server, for adding the industry entry
-	 *
 	 * @param body Validated data passed back from the `IndustryForm` component
 	 */
 
@@ -32,7 +29,6 @@ const CreateIndustryDialogContent = ({ onClose }: CreateIndustryDialogContentPro
 			.unwrap()
 			.then(() => {
 				toast.success("Industry created successfully")
-
 				onClose()
 			})
 	}
