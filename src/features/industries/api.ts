@@ -49,7 +49,7 @@ const industriesApi = api.injectEndpoints({
 		getSmsIndustryTemplates: builder.query<ListDataReturnType<SmsIndustryTemplateType>, GetSmsIndustryTemplatesArgs>({
 			// TODO: Below url would be the one to use to integrate with server
 			// query: (params) => ({ url: "/template/prebuilt", params }),
-			query: (params) => ({ url: "/prebuilt-templates", params }),
+			query: (params) => ({ url: "/template/prebuilt", params }),
 			providesTags: (result) =>
 				providesList(
 					result?.list?.map(({ id }) => id),

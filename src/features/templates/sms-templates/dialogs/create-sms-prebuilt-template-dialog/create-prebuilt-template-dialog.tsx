@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom"
 
 import { Button, Dialog } from "@/ui"
 
-const SmsPrebuiltTemplatesView = lazy(
-	() => import("@/features/templates/sms-templates/views/sms-prebuilt-templates-view/sms-prebuilt-templates-view")
+const SmsPrebuiltTemplatesRoute = lazy(
+	() => import("@/features/templates/sms-templates/routes/sms-prebuilt-templates-route/sms-prebuilt-templates-route")
 )
 //#endregion
 
@@ -24,9 +24,10 @@ const CreateSmsPrebuiltTemplateDialog = ({ children }: CreateSmsPrebuiltTemplate
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
 			<Dialog.Content title='Prebuilt Templates' className='h-[817px] w-[1600px] gap-0 !px-0 !pb-0'>
-				<SmsPrebuiltTemplatesView
-					headerChildren={<Button onClick={() => navigate("new-template")}>+ Create From Scratch</Button>}
-				/>
+				<SmsPrebuiltTemplatesRoute />
+				<Button className='absolute end-4 top-16' onClick={() => navigate("new-template")} size='sm'>
+					+ Create From Scratch
+				</Button>
 			</Dialog.Content>
 		</Dialog>
 	)

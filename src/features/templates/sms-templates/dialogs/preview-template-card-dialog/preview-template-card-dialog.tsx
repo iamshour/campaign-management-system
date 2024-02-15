@@ -5,10 +5,7 @@ import type { SmsIndustryTemplateType } from "@/features/industries/types"
 import { Dialog } from "@/ui"
 
 const SmsPrebuiltTemplateCard = lazy(
-	() =>
-		import(
-			"@/features/templates/sms-templates/views/sms-prebuilt-templates-view/sms-prebuilt-templates-grid-view-content/sms-prebuilt-template-card"
-		)
+	() => import("@/features/templates/sms-templates/views/sms-prebuilt-templates-view/sms-prebuilt-template-card")
 )
 //#endregion
 

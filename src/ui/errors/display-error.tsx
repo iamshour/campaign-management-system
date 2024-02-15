@@ -31,27 +31,25 @@ const DisplayError = ({ error, className, showReloadButton, onReload }: DisplayE
 	console.log("Error From Display Error Component: ", error)
 
 	return (
-		<>
-			<div className={twMerge("grid h-full w-full place-content-center gap-4 bg-white px-4", className)}>
-				<h1 className='uppercase tracking-widest text-gray-500'>
-					<span>{error?.status || "404"}</span> |{" "}
-					{!!error?.status && error?.status !== 404 ? "Server Error" : "Not found"}
-				</h1>
+		<div className={twMerge("grid h-full w-full place-content-center gap-4 bg-white px-4", className)}>
+			<h1 className='uppercase tracking-widest text-gray-500'>
+				<span>{error?.status || "404"}</span> |{" "}
+				{!!error?.status && error?.status !== 404 ? "Server Error" : "Not found"}
+			</h1>
 
-				{/* Render a Reload Button, only if the bool check was passed OR a callback function: `onReload` was passed    */}
-				{(!!showReloadButton || !!onReload) && (
-					<Button
-						variant='outline-secondary'
-						onClick={() => {
-							window.location.reload()
-							!!onReload && onReload()
-						}}
-						title='Reset'>
-						<RadixIconsReload />
-					</Button>
-				)}
-			</div>
-		</>
+			{/* Render a Reload Button, only if the bool check was passed OR a callback function: `onReload` was passed    */}
+			{(!!showReloadButton || !!onReload) && (
+				<Button
+					variant='outline-secondary'
+					onClick={() => {
+						window.location.reload()
+						!!onReload && onReload()
+					}}
+					title='Reset'>
+					<RadixIconsReload />
+				</Button>
+			)}
+		</div>
 	)
 }
 

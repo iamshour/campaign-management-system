@@ -1,68 +1,76 @@
 //#region Import
-import { lazy } from "react"
+import { Suspense, lazy, useCallback } from "react"
+import { Link } from "react-router-dom"
 
+import appPaths from "@/core/constants/app-paths"
+import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
+import { updateAdvancedTableState } from "@/core/slices/advanced-table-slice/advanced-table-slice"
 import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import { useGetSmsIndustryTemplatesQuery } from "@/features/industries/api"
-import { DataGridSkeleton } from "@/ui"
+import type { SharedListViewProps } from "@/core/types"
+import type { SmsIndustryTemplateType } from "@/features/industries/types"
+import { DisplayError, SearchInput, Skeleton } from "@/ui"
 
-const DisplayError = lazy(() => import("@/ui/errors/display-error"))
-const SmsPrebuiltTemplatesViewContent = lazy(
-	() => import("./sms-prebuilt-templates-grid-view-content/sms-prebuilt-templates-view-content")
+import SmsPrebuiltTemplateCard from "./sms-prebuilt-template-card"
+const SmsPrebuiltTemplatesFiltersContent = lazy(
+	() => import("./sms-prebuilt-templates-filters/sms-prebuilt-templates-filters")
 )
+const TablePagination = lazy(() => import("@/ui/table/table-pagination"))
 //#endregion
 
-const SmsPrebuiltTemplatesView = ({
-	headerChildren,
-}: Pick<React.ComponentPropsWithoutRef<typeof SmsPrebuiltTemplatesViewContent>, "headerChildren">) => {
-	// Getting Default User's Industry from User info in authSlice (Token))
-	const defaultUserIndustryId = useSelector(({ auth }) => auth?.user?.industryId)
+const SmsPrebuiltTemplatesView = ({ list, isFetching, count }: SharedListViewProps<SmsIndustryTemplateType>) => {
+	const dispatch = useDispatch()
 
-	const { offset, limit, filters, searchTerm } = useSelector<AdvancedTableStateType<"sms-prebuilt-templates">>(
+	const { offset, limit } = useSelector<AdvancedTableStateType<"sms-prebuilt-templates">>(
 		({ advancedTable }) => advancedTable["sms-prebuilt-templates"]
 	)
 
-	const { list, count, isInitialLoading, isFetching, isError, error } = useGetSmsIndustryTemplatesQuery(
-		{
-			industryId: !filters?.industryId
-				? defaultUserIndustryId
-				: filters?.industryId !== "ALL"
-					? filters?.industryId
-					: undefined,
-			limit,
-			offset,
-			sort: !!filters?.filterBy && filters?.filterBy === "RECENT" ? "createdAt" : undefined,
-			order: !!filters?.filterBy && filters?.filterBy === "RECENT" ? "desc" : undefined,
-			name: searchTerm,
-			any: searchTerm ? true : undefined,
-			type: filters?.templateType,
-			language: filters?.templateLanguage,
-			mostPopular: Boolean(!!filters?.filterBy && filters?.filterBy === "POPULAR") ?? undefined,
+	const updateState = useCallback(
+		(newState: Partial<AdvancedTableStateType<"sms-prebuilt-templates">>) => {
+			dispatch(updateAdvancedTableState({ "sms-prebuilt-templates": newState }))
 		},
-		{
-			selectFromResult: ({ data, isLoading, isFetching, ...rest }) => ({
-				list: data?.list?.slice(offset, limit),
-				count: data?.count,
-				isInitialLoading: !data && isLoading,
-				isFetching,
-				...rest,
-			}),
-			...baseQueryConfigs,
-		}
+		[dispatch]
 	)
 
-	if (isInitialLoading) return <DataGridSkeleton className='px-8' />
-
-	if (isError) return <DisplayError error={error as any} showReloadButton />
-
 	return (
-		<SmsPrebuiltTemplatesViewContent
-			list={list || []}
-			count={count || 0}
-			isFetching={isFetching}
-			headerChildren={headerChildren}
-		/>
+		<div className='flex h-full w-full flex-1 overflow-hidden'>
+			<Suspense fallback={<Skeleton className='h-full w-[300px]' />}>
+				<SmsPrebuiltTemplatesFiltersContent />
+			</Suspense>
+
+			<div className='flex h-full w-full flex-1 flex-col overflow-hidden p-4 pb-0'>
+				<SearchInput className='mb-4' onChange={(searchTerm) => updateState({ searchTerm })} />
+
+				{!list?.length ? (
+					<DisplayError className='flex-1' />
+				) : (
+					<div className='grid flex-1 justify-evenly gap-6 overflow-y-auto p-4 pt-0 [grid-template-columns:repeat(auto-fit,377px)] [grid-template-rows:repeat(auto-fit,285px)]'>
+						{list.map(({ id, ...prebuiltTemplateDetails }) => (
+							<Link key={id} to={`${appPaths.SMS_TEMPLATES_PREBUILT_TEMPLATES}/${id}`}>
+								<SmsPrebuiltTemplateCard
+									className={isFetching ? "opacity-50" : undefined}
+									{...prebuiltTemplateDetails}
+								/>
+							</Link>
+						))}
+					</div>
+				)}
+
+				<Suspense
+					fallback={
+						<div className='h-[72px] p-4'>
+							<Skeleton className='h-full' />
+						</div>
+					}>
+					<TablePagination
+						pageLimits={[10, 20, 30]}
+						pagination={{ offset, limit }}
+						count={count}
+						updatePagination={updateState}
+					/>
+				</Suspense>
+			</div>
+		</div>
 	)
 }
 
