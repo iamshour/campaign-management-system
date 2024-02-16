@@ -39,7 +39,7 @@ function DataTableColumnHeader<TData>({ children, order, prevSort, newSort, onSo
 				) : null}
 			</Dropdown.Trigger>
 
-			<Dropdown.Content align='start'>
+			<Dropdown.Content align='start' alignOffset={2}>
 				<Dropdown.Item
 					active={prevSort === newSort && order === "asc"}
 					onClick={() => onSort({ sort: newSort, order: "asc" })}>

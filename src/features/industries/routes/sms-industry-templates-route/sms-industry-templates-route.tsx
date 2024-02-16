@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetSmsIndustryTemplatesQuery } from "@/features/industries/api"
 import { DataTableSkeleton } from "@/ui"
 
@@ -15,10 +16,10 @@ const IndustryTemplatesView = lazy(
 )
 //#endregion
 
-const IndustryTemplatesRoute = () => {
-	const { id: industryId } = useParams()
+const SmsIndustryTemplatesRoute = () => {
+	const { industryId } = useParams()
 
-	const { offset, limit, filters, appliedFiltersCount, searchTerm } = useSelector<
+	const { sort, order, offset, limit, filters, appliedFiltersCount, searchTerm } = useSelector<
 		AdvancedTableStateType<"sms-industry-templates">
 	>(({ advancedTable }) => advancedTable["sms-industry-templates"])
 
@@ -28,12 +29,15 @@ const IndustryTemplatesRoute = () => {
 				industryId,
 				limit,
 				offset,
-				sort: !!filters?.filterBy && filters?.filterBy === "RECENT" ? "createdAt" : undefined,
-				order: !!filters?.filterBy && filters?.filterBy === "RECENT" ? "desc" : undefined,
+				sort,
+				order,
 				name: searchTerm,
 				any: searchTerm ? true : undefined,
+				status: filters?.templateStatus,
 				type: filters?.templateType,
 				language: filters?.templateLanguage,
+				updatedAfter: getValueFromSafeObject("startDate", filters?.dateRange),
+				updatedBefore: getValueFromSafeObject("endDate", filters?.dateRange),
 			},
 			{
 				selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => ({
@@ -41,7 +45,8 @@ const IndustryTemplatesRoute = () => {
 					count: data?.count,
 					isInitialLoading: !data && isLoading,
 					isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-					isEmptyView: !isFetching && !!isSuccess && !data && !(appliedFiltersCount || !!searchTerm?.length),
+					isEmptyView:
+						!isFetching && !!isSuccess && !data?.list?.length && !(appliedFiltersCount || !!searchTerm?.length),
 					isFetching,
 					...rest,
 				}),
@@ -58,4 +63,4 @@ const IndustryTemplatesRoute = () => {
 	if (isReady) return <IndustryTemplatesView list={list || []} count={count || 0} isFetching={isFetching} />
 }
 
-export default IndustryTemplatesRoute
+export default SmsIndustryTemplatesRoute

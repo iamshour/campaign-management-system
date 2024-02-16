@@ -1,5 +1,5 @@
 //#region Import
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { NavLink as DefaultNavLink, NavLinkProps, useLocation } from "react-router-dom"
 
@@ -173,29 +173,37 @@ interface NavCollapsibleProps {
 	hasActiveChild?: boolean
 }
 
-const NavCollapsible = ({ Icon, label, isNavbarOpen, openSidebar, hasActiveChild, children }: NavCollapsibleProps) => (
-	<Collapsible
-		open={!isNavbarOpen ? false : undefined}
-		onClick={() => !isNavbarOpen && openSidebar()}
-		className={twMerge(
-			"w-full overflow-hidden rounded-md bg-transparent !bg-opacity-5 text-start text-white transition-basic data-[state=open]:bg-white hover:bg-white",
-			hasActiveChild && "bg-white data-[state=closed]:!bg-opacity-20"
-		)}>
-		<Collapsible.Trigger showArrow={isNavbarOpen} className='p-3 prevent-selection'>
-			<Icon className='h-[22px] w-[22px] text-white' />
-			<span
-				className={twMerge(
-					"flex-1 whitespace-nowrap text-start transition-[opacity] duration-300 ease-in-out",
-					!isNavbarOpen && "opacity-0"
-				)}>
-				{label}
-			</span>
-		</Collapsible.Trigger>
-		<Collapsible.Content className='ms-6'>
-			<div className='mt-0.5 flex flex-col gap-0.5 p-2 !pt-0'>{children}</div>
-		</Collapsible.Content>
-	</Collapsible>
-)
+const NavCollapsible = ({ Icon, label, isNavbarOpen, openSidebar, hasActiveChild, children }: NavCollapsibleProps) => {
+	const [collapsibleOpen, setCollapsibleOpen] = useState(false)
+
+	return (
+		<Collapsible
+			open={!isNavbarOpen ? false : collapsibleOpen}
+			onClick={() => !isNavbarOpen && openSidebar()}
+			onOpenChange={(openState) => {
+				setCollapsibleOpen(openState)
+				if (!isNavbarOpen) openSidebar()
+			}}
+			className={twMerge(
+				"w-full overflow-hidden rounded-md bg-transparent !bg-opacity-5 text-start text-white transition-basic data-[state=open]:bg-white hover:bg-white",
+				hasActiveChild && "bg-white data-[state=closed]:!bg-opacity-20"
+			)}>
+			<Collapsible.Trigger showArrow={isNavbarOpen} className='p-3 prevent-selection'>
+				<Icon className='h-[22px] w-[22px] text-white' />
+				<span
+					className={twMerge(
+						"flex-1 whitespace-nowrap text-start transition-[opacity] duration-300 ease-in-out",
+						!isNavbarOpen && "opacity-0"
+					)}>
+					{label}
+				</span>
+			</Collapsible.Trigger>
+			<Collapsible.Content className='ms-6'>
+				<div className='mt-0.5 flex flex-col gap-0.5 p-2 !pt-0'>{children}</div>
+			</Collapsible.Content>
+		</Collapsible>
+	)
+}
 
 const NavLink = ({ className, ...props }: { className: string } & Omit<NavLinkProps, "className">) => (
 	<DefaultNavLink

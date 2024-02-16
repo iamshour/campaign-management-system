@@ -13,11 +13,11 @@ const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const IndustriesRoute = () => {
-	const { offset, limit, sort, order, searchTerm, filters, appliedFiltersCount } = useSelector<
-		AdvancedTableStateType<"industries">
-	>(({ advancedTable }) => advancedTable["industries"])
+	const { offset, limit, sort, order, searchTerm, filters } = useSelector<AdvancedTableStateType<"industries">>(
+		({ advancedTable }) => advancedTable["industries"]
+	)
 
-	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetIndustriesQuery(
+	const { list, count, isInitialLoading, isReady, isFetching, isError, error } = useGetIndustriesQuery(
 		{
 			offset,
 			limit,
@@ -28,12 +28,11 @@ const IndustriesRoute = () => {
 			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
 		},
 		{
-			selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => ({
+			selectFromResult: ({ data, isLoading, isFetching, ...rest }) => ({
 				list: data?.list,
 				count: data?.count,
 				isInitialLoading: !data && isLoading,
 				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-				isEmptyView: !isFetching && !!isSuccess && !data && !(appliedFiltersCount || !!searchTerm?.length),
 				isFetching,
 				...rest,
 			}),
@@ -42,8 +41,6 @@ const IndustriesRoute = () => {
 	)
 
 	if (isInitialLoading) return <DataTableSkeleton />
-
-	if (isEmptyView) return <>Industries Empty View</>
 
 	if (isError) return <DisplayError error={error as any} showReloadButton />
 

@@ -4,6 +4,7 @@ import type { DateRange } from "@/ui"
 
 import type {
 	SmsTemplateLanguageOption,
+	SmsTemplateStatusOption,
 	SmsTemplateType,
 	SmsTemplateTypeOption,
 	SmsTemplatesTableFiltersType,
@@ -71,10 +72,13 @@ export type GetSmsIndustryTemplatesArgs = BaseFetchListArgs<SmsIndustryTemplateT
 	industryId?: string
 	name?: string
 	any?: boolean
+	status?: SmsTemplateStatusOption[]
 	type?: SmsTemplateTypeOption[]
 	language?: SmsTemplateLanguageOption[]
 	mostPopular?: boolean
 	background?: string
+	updatedAfter?: string
+	updatedBefore?: string
 }
 
 /**

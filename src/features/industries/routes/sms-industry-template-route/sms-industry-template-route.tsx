@@ -10,7 +10,7 @@ const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 const SmsTemplatePreview = lazy(() => import("@/features/templates/sms-templates/components/sms-template-preview"))
 //#endregion
 
-const IndustryTemplateRoute = () => {
+const SmsIndustryTemplateRoute = () => {
 	const { templatedId } = useParams()
 
 	const { data, isFetching, isError, error } = useGetSmsIndustryTemplateByIdQuery(templatedId!, {
@@ -36,4 +36,4 @@ const IndustryTemplateRoute = () => {
 	return <SmsTemplatePreview {...data} />
 }
 
-export default IndustryTemplateRoute
+export default SmsIndustryTemplateRoute
