@@ -18,9 +18,9 @@ const BuilderDropareaSection = lazy(() => import("./builder-droparea-section"))
 const SmsIndustryTemplateBuilderContent = () => {
 	const { t } = useTranslation("industries", { keyPrefix: "components.templateBuilder.backgroundField" })
 
-	const { control, getValues } = useFormContext<SmsIndustryTemplateSchemaType>()
+	const { control, watch } = useFormContext<SmsIndustryTemplateSchemaType>()
 
-	const smsTemplate = getValues()
+	const smsTemplate = watch()
 
 	const backgroundUrl = smsTemplate?.backgroundUrl
 

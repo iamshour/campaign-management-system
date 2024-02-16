@@ -49,7 +49,7 @@ const EditSmsTemplateView = ({ defaultValues }: EditSmsTemplateViewProps) => {
 						loading={isLoading && smsTemplateStatus == "DRAFT"}
 						disabled={isLoading && smsTemplateStatus == "PUBLISHED"}
 						onClick={() => SetSmsTemplateStatus("DRAFT")}>
-						{t("actions.saveAsDraft")}
+						{t("actions.updateDraft")}
 					</Button>
 				)}
 

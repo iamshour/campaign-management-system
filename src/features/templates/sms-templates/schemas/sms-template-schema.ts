@@ -7,11 +7,16 @@ import { getTotalCharactersCount, getMaxTotalCharacters } from "../utils/sms-tem
 //#endregion
 
 const SmsTemplateSchema = z.object({
-	name: z.string().max(50, { message: "Maximum 50 characters allowed" }),
+	name: z
+		.string()
+		.min(1, { message: "Required" })
+		.min(4, { message: "Minimum 4 characters required" })
+		.max(50, { message: "Maximum 50 characters allowed" }),
 	type: z.custom<SmsTemplateTypeOption>((val) => !!val, "Required"),
 	language: z.custom<SmsTemplateLanguageOption>((val) => !!val, "Required"),
 	body: z
 		.string()
+		.min(1, { message: "Required" })
 		.refine(
 			(body) => {
 				const placeholdersCount = body?.match(PLACEHOLDER_REGEX)?.length ?? 0
