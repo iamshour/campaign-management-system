@@ -11,24 +11,19 @@ const SmsTemplatePreview = lazy(() => import("@/features/templates/sms-templates
 //#endregion
 
 const SmsTemplateRoute = () => {
-	const { id: mySmsTemplateId } = useParams()
+	const { templateId } = useParams()
 
-	const { data, isFetching, isError, error } = useGetSmsTemplateByIdQuery(mySmsTemplateId!, {
-		skip: !mySmsTemplateId,
-		selectFromResult: ({ data, ...rest }) => ({
+	const { data, isFetching, showError, error } = useGetSmsTemplateByIdQuery(templateId!, {
+		skip: !templateId,
+		selectFromResult: ({ data, isFetching, isError, ...rest }) => ({
 			data: data && {
 				body: data.body,
-
-				// TODO: properties to be replaced by "body" (+remove following ignore comments):
-				// eslint-disable-next-line
-				// @ts-expect-error
-				body: data.properties.smsContent,
-				// body: data.body,
-
 				name: data.name,
 				type: data.type,
 				language: data.language,
 			},
+			showError: !isFetching && !!isError && !data,
+			isFetching,
 			...rest,
 		}),
 		...baseQueryConfigs,
@@ -36,9 +31,10 @@ const SmsTemplateRoute = () => {
 
 	if (isFetching) return <FullViewSkeleton />
 
-	if ((!isFetching && isError) || !data) return <DisplayError error={error as any} showReloadButton />
+	if (showError) return <DisplayError error={error as any} showReloadButton />
 
-	return <SmsTemplatePreview {...data} />
+	// Adding `!` becasue TS comiler comlains that data may be undefined, but its alread handle above, hence its never so
+	return <SmsTemplatePreview {...data!} />
 }
 
 export default SmsTemplateRoute

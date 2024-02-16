@@ -55,7 +55,7 @@ const ComboBoxTrigger = ({ className, children, ...props }: React.ComponentProps
 	return (
 		<Popover.Trigger asChild>
 			<Button
-				variant='outline-secondary'
+				variant='outline-grey'
 				hasValue={(isMulti && !!selection?.length) || (!isMulti && !!selection?.value?.length)}
 				size={size}
 				{...props}

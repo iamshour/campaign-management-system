@@ -36,7 +36,7 @@ const SmsTemplatesRoute = () => {
 		},
 		{
 			selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => ({
-				list: data?.list?.slice(offset, limit),
+				list: data?.list,
 				count: data?.count,
 				isInitialLoading: !data && isLoading,
 				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,

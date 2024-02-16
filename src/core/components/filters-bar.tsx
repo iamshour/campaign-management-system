@@ -41,7 +41,7 @@ const Trigger = ({ appliedFiltersCount = 0 }: { appliedFiltersCount?: number }) 
 		<Tooltip>
 			<Tooltip.Trigger asChild>
 				<Button
-					variant={appliedFiltersCount > 0 ? "secondary" : "outline-secondary"}
+					variant={appliedFiltersCount > 0 ? "secondary" : "outline-grey"}
 					onClick={() => dispatch(toggleFiltersBar(pathname))}
 					className='relative z-10 w-10 !overflow-visible px-0'>
 					<IconoirFilter />

@@ -13,7 +13,6 @@ import {
 	ItemText,
 	Group,
 	type SelectProps as DefaultSelectProps,
-	type SelectTriggerProps,
 	type SelectValueProps,
 	type SelectLabelProps,
 	type SelectItemProps,
@@ -22,6 +21,8 @@ import {
 } from "@radix-ui/react-select"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
+
+import Button from "./button"
 
 import LucideCheck from "~icons/lucide/check"
 import LucideChevronDown from "~icons/lucide/chevron-down"
@@ -76,21 +77,19 @@ const SelectTrigger = ({
 	className,
 	children,
 	showArrow = true,
-	hasValue = false,
 	...props
-}: SelectTriggerProps & { showArrow?: boolean; hasValue?: boolean }) => (
-	<Trigger
-		{...props}
-		data-hasvalue={hasValue}
-		className={twMerge(
-			`flex h-10 w-full items-center justify-between gap-2 rounded-md border-0 bg-transparent !py-1.5 px-3 text-sm text-gray-800 text-opacity-40 !outline-none 
-			ring-1 !ring-inset ring-primary-300 transition-basic focus-within:ring-2 focus-within:ring-primary-500 
-			data-[hasvalue=true]:text-opacity-100 focus:ring-2 focus:ring-primary-500 active:ring-2 active:ring-primary-500
-			[&>span]:inline [&>span]:flex-1 [&>span]:truncate [&>span]:text-start [&>span]:text-opacity-30 [&>svg]:text-base [&>svg]:text-current`,
-			className
-		)}>
-		{children}
-		{showArrow && <LucideChevronDown className='h-4 w-4 shrink-0 !text-primary-600' />}
+}: React.ComponentPropsWithoutRef<typeof Button> & { showArrow?: boolean }) => (
+	<Trigger asChild>
+		<Button
+			variant='outline-grey'
+			className={twMerge(
+				`group justify-between text-opacity-90 [&>span]:inline [&>span]:flex-1 [&>span]:truncate [&>span]:text-start`,
+				className
+			)}
+			{...props}>
+			{children}
+			{showArrow && <LucideChevronDown className='h-4 w-4 shrink-0 text-gray-500 group-hover:text-primary-800' />}
+		</Button>
 	</Trigger>
 )
 const SelectValue = ({ placeholder, ...props }: SelectValueProps) => {

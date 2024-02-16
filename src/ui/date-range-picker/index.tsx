@@ -80,7 +80,7 @@ const DateRangePicker = ({
 					<Popover.Trigger asChild>
 						<Button
 							id='date'
-							variant='outline-secondary'
+							variant='outline-grey'
 							hasValue={!objHasFalseyValues(dateRange)}
 							{...triggerProps}
 							className={twMerge("w-full justify-start text-start font-normal", triggerProps?.className)}>

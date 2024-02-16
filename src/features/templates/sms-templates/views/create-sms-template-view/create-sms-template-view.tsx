@@ -27,6 +27,7 @@ const CreateSmsTemplateView = ({ defaultValues }: CreateSmsTemplateViewProps) =>
 
 	const onSubmit = async (requestBody: SmsTemplateSchemaType) => {
 		if (!requestBody || !smsTemplateStatus) return
+
 		await triggerAddNewSmsTemplate({ ...requestBody, status: smsTemplateStatus })
 			.unwrap()
 			.then(() => {

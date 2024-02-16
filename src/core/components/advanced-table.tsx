@@ -165,7 +165,7 @@ const MultiViewLayout = ({ children }: { children: React.ReactNode }) => {
 						<Tooltip.Trigger asChild>
 							<Button
 								active={key === view}
-								variant='outline-secondary'
+								variant='outline-grey'
 								className='flex h-[40px] w-[40px] rounded-md'
 								onClick={() => dispatch(toggleListGridView({ [tableKey]: key }))}>
 								<Icon className='text-lg' />

@@ -13,10 +13,10 @@ const EditSmsTemplateView = lazy(
 //#endregion
 
 const CreateSmsTemplateRoute = () => {
-	const { id: smsTemplateId } = useParams()
+	const { templateId } = useParams()
 
-	const { defaultValues, isFetching, isError, error } = useGetSmsTemplateByIdQuery(smsTemplateId!, {
-		skip: !smsTemplateId,
+	const { defaultValues, isFetching, isError, error } = useGetSmsTemplateByIdQuery(templateId!, {
+		skip: !templateId,
 		...baseQueryConfigs,
 		selectFromResult: ({ data, ...rest }) => ({
 			defaultValues: data && {
@@ -24,20 +24,15 @@ const CreateSmsTemplateRoute = () => {
 				type: data.type,
 				language: data.language,
 				status: data.status,
-
-				// TODO: properties to be replaced by "body" (+remove following ignore comments):
-				// eslint-disable-next-line
-				// @ts-expect-error
-				body: data?.properties?.smsContent,
-				// body: data.body,
+				body: data.body,
 			},
 			...rest,
 		}),
 	})
 
-	if (!!smsTemplateId && isFetching) return <FullViewSkeleton />
+	if (!!templateId && isFetching) return <FullViewSkeleton />
 
-	if (!!smsTemplateId && ((!isFetching && isError) || !defaultValues)) return <DisplayError error={error as any} />
+	if (!!templateId && ((!isFetching && isError) || !defaultValues)) return <DisplayError error={error as any} />
 
 	return <EditSmsTemplateView defaultValues={defaultValues} />
 }
