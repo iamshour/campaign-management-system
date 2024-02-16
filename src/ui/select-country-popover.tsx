@@ -57,7 +57,7 @@ const SelectCountryPopover = ({
 
 			<Popover open={open} onOpenChange={setOpen}>
 				<Popover.Trigger asChild>
-					<Button variant='outline-secondary' hasValue={!!value?.length} className='w-full px-2' size={size}>
+					<Button variant='outline-grey' hasValue={!!value?.length} className='w-full px-2' size={size}>
 						<Suspense fallback={<Skeleton className='h-5 w-5' />}>
 							<FlagIcon value={value} label={options.find((c) => c?.value === value)?.label ?? value} />
 						</Suspense>

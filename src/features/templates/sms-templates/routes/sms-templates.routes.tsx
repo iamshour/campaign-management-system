@@ -22,10 +22,10 @@ const SmsTemplatesRoutes = () => (
 		</Route>
 
 		<Route element={<SuspenseWrapper />}>
-			<Route path='my-templates/:id' element={<SmsTemplateRoute />} />
+			<Route path='my-templates/:templateId' element={<SmsTemplateRoute />} />
 			<Route path='my-templates/new-template' element={<CreateSmsTemplateRoute />} />
-			<Route path='my-templates/:id/edit-template' element={<EditSmsTemplateRoute />} />
-			<Route path='prebuilt-templates/:id' element={<SmsPrebuiltTemplateRoute />} />
+			<Route path='my-templates/:templateId/edit-template' element={<EditSmsTemplateRoute />} />
+			<Route path='prebuilt-templates/:templateId' element={<SmsPrebuiltTemplateRoute />} />
 		</Route>
 
 		<Route path='*' element={<Navigate to='my-templates' />} />

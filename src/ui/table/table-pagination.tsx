@@ -43,7 +43,7 @@ function TablePagination({
 					<Select
 						value={String(limit)}
 						onValueChange={(limit) => updatePagination({ offset: 0, limit: Number(limit) })}>
-						<Select.Trigger className='h-max w-[80px]'>
+						<Select.Trigger className='h-[32px] w-[80px]' hasValue={!!String(limit)?.length}>
 							<Select.Value />
 						</Select.Trigger>
 						<Select.Content sideOffset={8}>

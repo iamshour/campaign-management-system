@@ -30,7 +30,7 @@ const SmsPrebuiltTemplatesRoute = () => {
 			? filters?.industryId
 			: undefined
 
-	const { list, count, isInitialLoading, isFetching, isError, error } = useGetSmsIndustryTemplatesQuery(
+	const { list, count, isInitialLoading, isReady, isFetching, isError, error } = useGetSmsIndustryTemplatesQuery(
 		{
 			industryId,
 			limit,
@@ -45,9 +45,10 @@ const SmsPrebuiltTemplatesRoute = () => {
 		},
 		{
 			selectFromResult: ({ data, isLoading, isFetching, ...rest }) => ({
-				list: data?.list?.slice(offset, limit),
+				list: data?.list?.filter((template) => template?.status !== "DRAFT"),
 				count: data?.count,
 				isInitialLoading: !data && isLoading,
+				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
 				isFetching,
 				...rest,
 			}),
@@ -59,7 +60,7 @@ const SmsPrebuiltTemplatesRoute = () => {
 
 	if (isError) return <DisplayError error={error as any} showReloadButton />
 
-	return <SmsPrebuiltTemplatesView list={list || []} count={count || 0} isFetching={isFetching} />
+	if (isReady) return <SmsPrebuiltTemplatesView list={list || []} count={count || 0} isFetching={isFetching} />
 }
 
 export default SmsPrebuiltTemplatesRoute

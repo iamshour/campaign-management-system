@@ -11,7 +11,7 @@ const SmsPrebuiltTemplateView = (
 	data: Pick<SmsIndustryTemplateType, "name" | "type" | "language" | "body" | "industryId">
 ) => {
 	const { state } = useLocation()
-	const { id: smsPrebuiltTemplateId } = useParams()
+	const { templateId } = useParams()
 	const navigate = useNavigate()
 
 	return (
@@ -31,7 +31,7 @@ const SmsPrebuiltTemplateView = (
 					className='px-10'
 					onClick={() =>
 						navigate(
-							`${appPaths.SMS_TEMPLATES_MY_TEMPLATES}/new-template?templateId=${smsPrebuiltTemplateId}&templateType=smsPrebuiltTemplate`
+							`${appPaths.SMS_TEMPLATES_MY_TEMPLATES}/new-template?templateId=${templateId}&templateType=smsPrebuiltTemplate`
 						)
 					}>
 					Use Template

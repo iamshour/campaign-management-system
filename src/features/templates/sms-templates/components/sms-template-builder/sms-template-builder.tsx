@@ -108,9 +108,7 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 									<Form.Label>Template Type *</Form.Label>
 									<Form.Control>
 										<Select value={field.value} onValueChange={(selectedType) => field.onChange(selectedType)}>
-											<Select.Trigger
-												className='h-[50px] w-full bg-white !p-4 ring-[#d1d5db] data-[state=open]:ring-primary-300 [&>svg]:!text-[#d1d5db] [&>svg]:data-[state=open]:!text-primary-300'
-												hasValue={!!field.value?.length}>
+											<Select.Trigger className='h-[50px] w-full !p-4 font-normal' hasValue={!!field.value?.length}>
 												<Select.Value placeholder='Select type' />
 											</Select.Trigger>
 											<Select.Content sideOffset={8}>
@@ -139,9 +137,7 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 									<Form.Label>Template Language *</Form.Label>
 									<Form.Control>
 										<Select value={field.value} onValueChange={(selectedLanguage) => field.onChange(selectedLanguage)}>
-											<Select.Trigger
-												className='h-[50px] w-full bg-white !p-4 ring-[#d1d5db] data-[state=open]:ring-primary-300 [&>svg]:!text-[#d1d5db] [&>svg]:data-[state=open]:!text-primary-300'
-												hasValue={!!field.value?.length}>
+											<Select.Trigger className='h-[50px] w-full !p-4 font-normal' hasValue={!!field.value?.length}>
 												<Select.Value placeholder='Select language' />
 											</Select.Trigger>
 											<Select.Content sideOffset={8}>

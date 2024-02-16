@@ -19,7 +19,7 @@ interface EditSmsTemplateViewProps {
 const EditSmsTemplateView = ({ defaultValues }: EditSmsTemplateViewProps) => {
 	const { t } = useTranslation("sms-templates", { keyPrefix: "components.templateBuilder" })
 
-	const { id: smsTemplateId } = useParams()
+	const { templateId } = useParams()
 	const navigate = useNavigate()
 
 	const [updateSmsTemplate, { isLoading }] = useUpdateSmsTemplateMutation()
@@ -27,18 +27,8 @@ const EditSmsTemplateView = ({ defaultValues }: EditSmsTemplateViewProps) => {
 	const [smsTemplateStatus, SetSmsTemplateStatus] = useState<SmsTemplateStatusOption | undefined>()
 
 	const onSubmit = async (requestBody: Omit<AddNewSmsTemplateArgs, "status">) => {
-		if (!requestBody || !smsTemplateId || !smsTemplateStatus) return
-		await updateSmsTemplate({
-			id: smsTemplateId,
-
-			// TODO: properties to be replaced by "body" (to remove following 3 lines):
-			// eslint-disable-next-line
-			// @ts-expect-error
-			properties: { smsContent: requestBody.body },
-
-			...requestBody,
-			status: smsTemplateStatus,
-		})
+		if (!requestBody || !templateId || !smsTemplateStatus) return
+		await updateSmsTemplate({ id: templateId, ...requestBody, status: smsTemplateStatus })
 			.unwrap()
 			.then(() => {
 				toast.success("Template added successfully")

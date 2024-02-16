@@ -13,11 +13,11 @@ const SmsPrebuiltTemplateView = lazy(
 //#endregion
 
 const SmsPrebuiltTemplateRoute = () => {
-	const { id: smsPrebuiltTemplateId } = useParams()
+	const { templateId } = useParams()
 
-	const { data, isFetching, isError, error } = useGetSmsIndustryTemplateByIdQuery(smsPrebuiltTemplateId!, {
-		skip: !smsPrebuiltTemplateId,
-		selectFromResult: ({ data, ...rest }) => ({
+	const { data, isFetching, showError, error } = useGetSmsIndustryTemplateByIdQuery(templateId!, {
+		skip: !templateId,
+		selectFromResult: ({ data, isFetching, isError, ...rest }) => ({
 			data: data && {
 				body: data.body,
 				name: data.name,
@@ -25,6 +25,8 @@ const SmsPrebuiltTemplateRoute = () => {
 				language: data.language,
 				industryId: data.industryId,
 			},
+			showError: !isFetching && !!isError && !data,
+			isFetching,
 			...rest,
 		}),
 		...baseQueryConfigs,
@@ -32,8 +34,9 @@ const SmsPrebuiltTemplateRoute = () => {
 
 	if (isFetching) return <FullViewSkeleton />
 
-	if ((!isFetching && isError) || !data) return <DisplayError error={error as any} showReloadButton />
+	if (showError) return <DisplayError error={error as any} showReloadButton />
 
+	// Adding `!` becasue TS comiler comlains that data may be undefined, but its alread handle above, hence its never so
 	return <SmsPrebuiltTemplateView {...data!} />
 }
 

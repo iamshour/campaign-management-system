@@ -31,7 +31,7 @@ const smsTemplatesApi = api.injectEndpoints({
 		}),
 
 		addNewSmsTemplate: builder.mutation<any, AddNewSmsTemplateArgs>({
-			query: (body) => ({ url: "/templatesById", method: "POST", body }),
+			query: (body) => ({ url: "/template/sms", method: "POST", body }),
 			invalidatesTags: (res) => (res ? [{ type: "SmsTemplate", id: "LIST" }] : []),
 		}),
 

@@ -40,7 +40,7 @@ const DisplayError = ({ error, className, showReloadButton, onReload }: DisplayE
 			{/* Render a Reload Button, only if the bool check was passed OR a callback function: `onReload` was passed    */}
 			{(!!showReloadButton || !!onReload) && (
 				<Button
-					variant='outline-secondary'
+					variant='outline-grey'
 					onClick={() => {
 						window.location.reload()
 						!!onReload && onReload()

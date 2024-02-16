@@ -26,8 +26,9 @@ const SmsPrebuiltTemplatesFilters = () => {
 
 	const onIndustrySearch = useCallback((searchTerm?: string) => setIndustrySearchTerm(searchTerm), [])
 
-	if (isLoading) return <Skeleton className='h-full bg-white' />
-	if (!!isError || !list) return <DisplayError error={error as any} showReloadButton />
+	if (isLoading) return <Skeleton className='h-full w-[300px] bg-[#edf3f7]' />
+	if (!!isError || !list)
+		return <DisplayError className=' w-[300px] bg-[#edf3f7]' error={error as any} showReloadButton />
 
 	return <SmsPrebuiltTemplatesFiltersContent list={list} onIndustrySearch={onIndustrySearch} />
 }

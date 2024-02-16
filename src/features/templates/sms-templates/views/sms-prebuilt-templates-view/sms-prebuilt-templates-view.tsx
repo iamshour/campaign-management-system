@@ -1,5 +1,5 @@
 //#region Import
-import { Suspense, lazy, useCallback } from "react"
+import { lazy, useCallback } from "react"
 import { Link } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"
@@ -9,10 +9,10 @@ import { updateAdvancedTableState } from "@/core/slices/advanced-table-slice/adv
 import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import type { SharedListViewProps } from "@/core/types"
 import type { SmsIndustryTemplateType } from "@/features/industries/types"
-import { DisplayError, SearchInput, Skeleton } from "@/ui"
+import { DisplayError, SearchInput } from "@/ui"
 
 import SmsPrebuiltTemplateCard from "./sms-prebuilt-template-card"
-const SmsPrebuiltTemplatesFiltersContent = lazy(
+const SmsPrebuiltTemplatesFilters = lazy(
 	() => import("./sms-prebuilt-templates-filters/sms-prebuilt-templates-filters")
 )
 const TablePagination = lazy(() => import("@/ui/table/table-pagination"))
@@ -34,9 +34,7 @@ const SmsPrebuiltTemplatesView = ({ list, isFetching, count }: SharedListViewPro
 
 	return (
 		<div className='flex h-full w-full flex-1 overflow-hidden'>
-			<Suspense fallback={<Skeleton className='h-full w-[300px]' />}>
-				<SmsPrebuiltTemplatesFiltersContent />
-			</Suspense>
+			<SmsPrebuiltTemplatesFilters />
 
 			<div className='flex h-full w-full flex-1 flex-col overflow-hidden p-4 pb-0'>
 				<SearchInput className='mb-4' onChange={(searchTerm) => updateState({ searchTerm })} />
@@ -56,19 +54,12 @@ const SmsPrebuiltTemplatesView = ({ list, isFetching, count }: SharedListViewPro
 					</div>
 				)}
 
-				<Suspense
-					fallback={
-						<div className='h-[72px] p-4'>
-							<Skeleton className='h-full' />
-						</div>
-					}>
-					<TablePagination
-						pageLimits={[10, 20, 30]}
-						pagination={{ offset, limit }}
-						count={count}
-						updatePagination={updateState}
-					/>
-				</Suspense>
+				<TablePagination
+					pageLimits={[10, 20, 30]}
+					pagination={{ offset, limit }}
+					count={count}
+					updatePagination={updateState}
+				/>
 			</div>
 		</div>
 	)
