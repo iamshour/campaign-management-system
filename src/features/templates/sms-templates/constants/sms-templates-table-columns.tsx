@@ -39,11 +39,12 @@ const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
 	{
 		accessorKey: "status",
 		header: smsTemplateFieldsLocaleMap.status,
-		cell: (status: SmsTemplateStatusOption) => (
-			<Badge key={status} className='rounded-md' style={{ backgroundColor: smsTemplateStatusesColorsMap[status] }}>
-				{status}
-			</Badge>
-		),
+		cell: (status: SmsTemplateStatusOption) =>
+			!!status?.length && (
+				<Badge key={status} className='rounded-md' style={{ backgroundColor: smsTemplateStatusesColorsMap[status] }}>
+					{status}
+				</Badge>
+			),
 	},
 ]
 

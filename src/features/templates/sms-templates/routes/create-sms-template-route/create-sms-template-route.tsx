@@ -24,7 +24,6 @@ const CreateSmsTemplateRoute = () => {
 
 	const { defaultValues, isFetching, isError, error } = useFetchHook(templateId!, {
 		skip: !templateId,
-		...baseQueryConfigs,
 		selectFromResult: ({ data, ...rest }) => ({
 			defaultValues: data && {
 				name: data.name,
@@ -35,6 +34,7 @@ const CreateSmsTemplateRoute = () => {
 			},
 			...rest,
 		}),
+		...baseQueryConfigs,
 	})
 
 	if (!!templateId && isFetching) return <FullViewSkeleton />

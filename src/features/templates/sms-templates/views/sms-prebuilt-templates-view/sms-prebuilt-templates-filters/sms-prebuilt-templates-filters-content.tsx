@@ -9,7 +9,7 @@ import type { IndustryType, SmsIndustryTemplatesTableFiltersType } from "@/featu
 import smsTemplateLanguagesOptions from "@/features/templates/sms-templates/constants/sms-template-languages-options"
 import smsTemplateTypesOptions from "@/features/templates/sms-templates/constants/sms-template-types-options"
 import type { SmsTemplateLanguageOption, SmsTemplateTypeOption } from "@/features/templates/sms-templates/types"
-import { SearchInput, Separator, Button, Label, Checkbox, Collapsible, type CheckedState } from "@/ui"
+import { SearchInput, Separator, Button, Label, Checkbox, Collapsible } from "@/ui"
 //#endregion
 
 interface SmsPrebuiltTemplatesFiltersContentProps {
@@ -17,10 +17,6 @@ interface SmsPrebuiltTemplatesFiltersContentProps {
 
 	onIndustrySearch: (searchTerm?: string) => void
 }
-
-type OnCheckPayloadType =
-	| { key: "templateType"; value: SmsTemplateTypeOption }
-	| { key: "templateLanguage"; value: SmsTemplateLanguageOption }
 
 const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebuiltTemplatesFiltersContentProps) => {
 	const dispatch = useDispatch()
@@ -32,35 +28,35 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 		({ advancedTable }) => advancedTable["sms-prebuilt-templates"]
 	)
 
-	/**
-	 * Callback Function passed for both `templateType` & `templateLanguage` filters (checkboxes)
-	 * @param checked Boolean check for whether the checkbox is checked or not
-	 * @param param1.key Key referreing to where the checkbox is clicked:  `templateType` or `templateLanguage`
-	 * @param param1.value Value of filter, to be sent to the server
-	 *	("PROMOTIONAL" | "TRANSACTIONAL" | "OTP" in case key is templateType) or ("ENGLISH" | "UNICODE" in case key is templateLanguage)
-	 */
-	const onFilterCheckboxClick = useCallback(
-		(checked: CheckedState, { key, value }: OnCheckPayloadType) => {
-			let updatedFilter: (typeof value)[] = []
-
-			if (!filters?.[key]) {
-				updatedFilter = [value]
-			} else if (checked) {
-				updatedFilter = filters?.[key] ? [...filters[key]!, value] : [value]
-			} else {
-				updatedFilter = filters?.[key]?.filter((item) => item !== value) || []
-			}
-
-			dispatch(updateFilters({ "sms-prebuilt-templates": { [key]: updatedFilter } }))
-		},
-		[dispatch, filters]
-	)
-
 	const onFilterClick = useCallback(
 		(updatedFilters: Partial<SmsIndustryTemplatesTableFiltersType>) => {
 			dispatch(updateFilters({ "sms-prebuilt-templates": updatedFilters }))
 		},
 		[dispatch]
+	)
+
+	const onTemplateTypeCheck = useCallback(
+		(value: SmsTemplateTypeOption) => {
+			const prevTemplateTypes = filters?.templateType || []
+			const updatedTemplateTypes = prevTemplateTypes?.includes(value)
+				? prevTemplateTypes?.filter((v) => v !== value)
+				: [...prevTemplateTypes, value]
+
+			onFilterClick({ templateType: updatedTemplateTypes })
+		},
+		[filters?.templateType, onFilterClick]
+	)
+
+	const onTemplateLanguageCheck = useCallback(
+		(value: SmsTemplateLanguageOption) => {
+			const prevTemplateLanguage = filters?.templateLanguage || []
+			const updatedTemplateLanguages = prevTemplateLanguage?.includes(value)
+				? prevTemplateLanguage?.filter((v) => v !== value)
+				: [...prevTemplateLanguage, value]
+
+			onFilterClick({ templateLanguage: updatedTemplateLanguages })
+		},
+		[filters?.templateLanguage, onFilterClick]
 	)
 
 	return (
@@ -80,11 +76,11 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 
 			<Separator />
 
-			<div className='h-[calc(100%-168px)] overflow-y-auto border-b'>
-				<CollapsibleButton label='Industries'>
+			<div className='h-[calc(100%-168px)] space-y-1 overflow-y-auto'>
+				<CollapsibleSection label='Industries'>
 					<SearchInput className='overflow-visible' variant='underlined' onChange={onIndustrySearch} />
 
-					<div className='flex max-h-[300px] w-full flex-col gap-1 overflow-y-auto'>
+					<div className='flex h-[250px] w-full flex-col gap-1 overflow-y-auto'>
 						{list?.map(({ id: industryId, name }) => (
 							<Button
 								key={industryId}
@@ -96,35 +92,35 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 							</Button>
 						))}
 					</div>
-				</CollapsibleButton>
-				<CollapsibleButton label='Type'>
+				</CollapsibleSection>
+				<CollapsibleSection label='Type'>
 					{smsTemplateTypesOptions?.map(({ label, value }) => (
 						<div key={value} className='flex flex-row items-center space-x-3 space-y-0 ps-3'>
 							<Checkbox
 								id={value}
 								checked={filters?.templateType?.includes(value)}
-								onCheckedChange={(checked) => onFilterCheckboxClick(checked, { key: "templateType", value })}
+								onCheckedChange={() => onTemplateTypeCheck(value)}
 							/>
 							<Label className='cursor-pointer p-0 transition-basic hover:text-primary-900' htmlFor={value}>
 								{label}
 							</Label>
 						</div>
 					))}
-				</CollapsibleButton>
-				<CollapsibleButton label='Language'>
+				</CollapsibleSection>
+				<CollapsibleSection label='Language'>
 					{smsTemplateLanguagesOptions?.map(({ label, value }) => (
 						<div key={value} className='flex flex-row items-center space-x-3 space-y-0 ps-3'>
 							<Checkbox
 								id={value}
 								checked={filters?.templateLanguage?.includes(value)}
-								onCheckedChange={(checked) => onFilterCheckboxClick(checked, { key: "templateLanguage", value })}
+								onCheckedChange={() => onTemplateLanguageCheck(value)}
 							/>
 							<Label className='cursor-pointer p-0 transition-basic hover:text-primary-900' htmlFor={value}>
 								{label}
 							</Label>
 						</div>
 					))}
-				</CollapsibleButton>
+				</CollapsibleSection>
 			</div>
 		</div>
 	)
@@ -138,9 +134,9 @@ const sortButtonsLabels: { filterBy?: SmsIndustryTemplatesTableFiltersType["filt
 	{ filterBy: "POPULAR", label: "Most Popular" },
 ]
 
-const CollapsibleButton = ({ label, children }: { label: string; children: React.ReactNode }) => (
-	<Collapsible className='w-full overflow-hidden px-4 text-start'>
-		<Collapsible.Trigger showArrow className='p-3'>
+const CollapsibleSection = ({ label, children }: { label: string; children: React.ReactNode }) => (
+	<Collapsible className='w-full overflow-hidden rounded-lg px-4 text-start transition-basic data-[state=open]:bg-primary-50/10'>
+		<Collapsible.Trigger showArrow className='rounded-md p-3 transition-basic hover:bg-primary-50/20'>
 			<span className='flex-1 whitespace-nowrap text-start transition-[opacity] duration-300 ease-in-out'>{label}</span>
 		</Collapsible.Trigger>
 		<Collapsible.Content>

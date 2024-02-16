@@ -19,6 +19,8 @@ const SmsPrebuiltTemplateCard = memo(
 	}: Partial<Pick<SmsIndustryTemplateType, "name" | "type" | "language" | "body" | "industryId" | "background">> & {
 		className?: string
 	}) => {
+		const backgroundImage = background?.length ? `url('${background}')` : "#4cb0e6"
+
 		return (
 			<div
 				className={twMerge(
@@ -26,7 +28,7 @@ const SmsPrebuiltTemplateCard = memo(
 					className
 				)}>
 				<div
-					style={{ backgroundImage: `url('${background}')` }}
+					style={{ background: backgroundImage }}
 					className='h-[70%] w-full bg-cover p-4 before:absolute before:left-0 before:right-0 before:top-0 before:h-36 before:w-full before:bg-gradient-to-t before:from-black/0 before:to-black/60 before:[content:""]'>
 					<p className='relative z-10 text-white'>
 						<span className='font-light'>Industry: </span>

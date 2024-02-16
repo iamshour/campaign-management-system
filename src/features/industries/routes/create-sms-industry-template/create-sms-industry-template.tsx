@@ -17,6 +17,7 @@ const CreateSmsIndustryTemplateRoute = () => {
 	const templateId = searchParams.get("templateId") ?? ""
 
 	const { defaultValues, isFetching, isError, error } = useGetSmsIndustryTemplateByIdQuery(templateId, {
+		skip: !templateId?.length,
 		selectFromResult: ({ data, ...rest }) => ({
 			defaultValues: data && {
 				name: data.name,

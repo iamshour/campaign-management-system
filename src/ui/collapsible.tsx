@@ -7,7 +7,6 @@ import {
 	type CollapsibleContentProps,
 	type CollapsibleTriggerProps,
 } from "@radix-ui/react-collapsible"
-import { useEffect, useState } from "react"
 import { twMerge } from "tailwind-merge"
 
 import LucideChevronDown from "~icons/lucide/chevron-down"
@@ -34,21 +33,9 @@ import LucideChevronDown from "~icons/lucide/chevron-down"
  * @param props.onOpenChange - Optional function to use to trigger Dialog's presence in a controlled component
  * @param props.disabled - Boolean for disabling component (Optional)
  */
-const Collapsible = ({ children, ...props }: CollapsibleProps) => {
-	const [open, setOpen] = useState(props?.open || false)
-
-	useEffect(() => {
-		if (props?.open !== undefined) {
-			setOpen(props.open)
-		}
-	}, [props.open])
-
-	return (
-		<Root {...props} open={open} onOpenChange={setOpen} className={twMerge("h-max", props?.className)}>
-			{children}
-		</Root>
-	)
-}
+const Collapsible = ({ className, ...props }: CollapsibleProps) => (
+	<Root className={twMerge("h-max", className)} {...props} />
+)
 
 const CollapsibleTrigger = ({
 	className,

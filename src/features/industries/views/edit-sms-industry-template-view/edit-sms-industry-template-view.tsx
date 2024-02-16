@@ -24,7 +24,7 @@ const EditSmsIndustryTemplateView = ({ defaultValues }: EditSmsIndustryTemplateV
 	const { t } = useTranslation("sms-templates", { keyPrefix: "components.templateBuilder" })
 
 	const navigate = useNavigate()
-	const { id: industryId, templatedId } = useParams()
+	const { industryId, templatedId } = useParams()
 
 	const [triggerUpdateSmsIndustryTemplate, { isLoading }] = useUpdateSmsIndustryTemplateMutation()
 

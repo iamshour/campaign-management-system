@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"
 import { useAddNewSmsIndustryTemplateMutation } from "@/features/industries/api"
+import SmsIndustryTemplateBuilderContent from "@/features/industries/components/sms-industry-template-builder-content/sms-industry-template-builder-content"
 import SmsIndustryTemplateSchema, {
 	type SmsIndustryTemplateSchemaType,
 } from "@/features/industries/schemas/sms-industry-template-schema"
@@ -13,8 +14,6 @@ import type { AddNewSmsIndustryTemplateArgs } from "@/features/industries/types"
 import SmsTemplateBuilder from "@/features/templates/sms-templates/components/sms-template-builder/sms-template-builder"
 import type { SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
 import { Button } from "@/ui"
-
-import SmsIndustryTemplateBuilderContent from "../../components/sms-industry-template-builder-content/sms-industry-template-builder-content"
 //#endregion
 
 interface CreateSmsIndustryTemplateViewProps {
@@ -25,7 +24,7 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 	const { t } = useTranslation("sms-templates", { keyPrefix: "components.templateBuilder" })
 
 	const navigate = useNavigate()
-	const { id: industryId } = useParams()
+	const { industryId } = useParams()
 
 	const [triggerAddSmsIndustryTemplate, { isLoading }] = useAddNewSmsIndustryTemplateMutation()
 

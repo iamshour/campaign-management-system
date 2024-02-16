@@ -77,7 +77,10 @@ const Table = <TData extends RowData>({
 								<th key={idx + String(accessorKey)} className={twMerge("!w-[80px]", classNames?.theadTh)} />
 							) : (
 								<th
-									className={twMerge("w-max border-b-0 py-1 pe-12", classNames?.theadTh)}
+									className={twMerge(
+										"w-max border-b-0 py-1 pe-8 [&>button]:-ms-0.5 [&>h2]:-ms-0.5",
+										classNames?.theadTh
+									)}
 									key={idx + String(accessorKey)}>
 									<Suspense fallback={<Skeleton className='h-8 w-full' />}>
 										{!!sortable && typeof header === "string" ? (

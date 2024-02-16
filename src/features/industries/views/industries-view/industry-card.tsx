@@ -55,7 +55,7 @@ const IndustryCard = (industry: IndustryType) => {
 					variant='ghost'
 					size='lg'
 					className='w-full rounded-xl rounded-t-none font-bold text-primary-700 hover:text-primary-800'
-					onClick={() => navigate(id)}>
+					onClick={() => navigate(`${id}/sms`)}>
 					<MdiCardText />
 					<span>View Templates</span>
 				</Button>
