@@ -4,7 +4,6 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useNavigate, useParams } from "react-router-dom"
 
-import appPaths from "@/core/constants/app-paths"
 import { useAddNewSmsIndustryTemplateMutation } from "@/features/industries/api"
 import SmsIndustryTemplateBuilderContent from "@/features/industries/components/sms-industry-template-builder-content/sms-industry-template-builder-content"
 import SmsIndustryTemplateSchema, {
@@ -33,23 +32,30 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 	const onSubmit = async ({ background, backgroundUrl, ...requestBody }: SmsIndustryTemplateSchemaType) => {
 		if (!requestBody || !smsTemplateStatus) return
 
-		// TODO: While integrating with DB, transform File above (background) to Blob, and send accordingly
-		console.log(background)
-
 		const body: AddNewSmsIndustryTemplateArgs = {
-			industryId: industryId!,
 			...requestBody,
+			channel: "SMS",
+			industryId: industryId!,
 			status: smsTemplateStatus,
-			// TODO: Send Valid Background
 			background: backgroundUrl ?? "",
 		}
 
-		await triggerAddSmsIndustryTemplate(body)
+		const formData = new FormData()
+
+		// add template info to request body
+		const jsonBlob = new Blob([JSON.stringify(body)], {
+			type: "application/json",
+		})
+		formData.append("prebuiltTemplateRequest", jsonBlob)
+
+		// add background image to request body
+		if (background) formData.append("background", background as Blob)
+
+		await triggerAddSmsIndustryTemplate({ industryId: industryId!, body: formData })
 			.unwrap()
 			.then(() => {
 				toast.success("Template added successfully to the industry.")
-				navigate(appPaths.SMS_TEMPLATES, { replace: true })
-				console.log({ requestBody })
+				navigate(`/industries/${industryId}`, { replace: true })
 			})
 	}
 
@@ -71,7 +77,7 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 					loading={isLoading && smsTemplateStatus == "DRAFT"}
 					disabled={isLoading && smsTemplateStatus == "PUBLISHED"}
 					onClick={() => SetSmsTemplateStatus("DRAFT")}>
-					{t("actions.updateDraft")}
+					{t("actions.saveAsDraft")}
 				</Button>
 
 				<Button

@@ -1,6 +1,6 @@
 //#region Import
 import { Suspense, lazy } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 
 import useSelector from "@/core/hooks/useSelector"
 import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
@@ -15,6 +15,7 @@ const DeleteIndustryTemplateDialog = lazy(
 
 const SmsIndustryTemplatesViewTopbar = () => {
 	const navigate = useNavigate()
+	const { pathname } = useLocation()
 
 	const { selection } = useSelector<AdvancedTableStateType<"sms-industry-templates">>(
 		({ advancedTable }) => advancedTable["sms-industry-templates"]
@@ -33,7 +34,7 @@ const SmsIndustryTemplatesViewTopbar = () => {
 					)}
 				</div>
 
-				<Button onClick={() => navigate("new-template")}>
+				<Button onClick={() => navigate("new-template", { state: { from: pathname } })}>
 					<PhUserPlus />
 					Create Template
 				</Button>

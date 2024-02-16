@@ -51,6 +51,7 @@ export type UpdateIndustryArgs = Omit<IndustryType, "createdAt">
  * Shape of fetched SMS Industry Template
  */
 export type SmsIndustryTemplateType = SmsTemplateType & {
+	channel: string
 	industryId: string
 	createdAt: string
 	mostPopular: boolean

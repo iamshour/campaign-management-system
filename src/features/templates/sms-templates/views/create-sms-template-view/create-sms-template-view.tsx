@@ -48,7 +48,7 @@ const CreateSmsTemplateView = ({ defaultValues }: CreateSmsTemplateViewProps) =>
 					loading={isLoading && smsTemplateStatus == "DRAFT"}
 					disabled={isLoading && smsTemplateStatus == "PUBLISHED"}
 					onClick={() => SetSmsTemplateStatus("DRAFT")}>
-					{t("actions.updateDraft")}
+					{t("actions.saveAsDraft")}
 				</Button>
 
 				<Button

@@ -10,7 +10,6 @@ import type {
 	AddNewIndustryArgs,
 	DeleteIndustryTemplatesArgs,
 	UpdateIndustryArgs,
-	AddNewSmsIndustryTemplateArgs,
 	SmsIndustryTemplateType,
 	GetSmsIndustryTemplatesArgs,
 	UpdateSmsIndustryTemplateArgs,
@@ -52,11 +51,7 @@ const industriesApi = api.injectEndpoints({
 
 		getSmsIndustryTemplates: builder.query<ListDataReturnType<SmsIndustryTemplateType>, GetSmsIndustryTemplatesArgs>({
 			query: (params) => ({ url: "/template/prebuilt", params }),
-			providesTags: (result) =>
-				providesList(
-					result?.list?.map(({ id }) => id),
-					"SmsIndustryTemplate"
-				),
+			providesTags: (result, error, arg) => [{ type: "Industry", id: arg?.industryId }],
 			transformResponse,
 		}),
 
@@ -66,13 +61,14 @@ const industriesApi = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		addNewSmsIndustryTemplate: builder.mutation<any, AddNewSmsIndustryTemplateArgs>({
-			query: (body) => ({ url: "/templatesById", method: "POST", body }),
-			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
+		addNewSmsIndustryTemplate: builder.mutation<any, { industryId: string; body: FormData }>({
+			query: ({ body }) => ({ url: "/template/prebuilt", method: "POST", body }),
+			invalidatesTags: (res, error, { industryId }) => (res ? [{ type: "Industry", id: industryId }] : []),
 		}),
 
 		updateSmsIndustryTemplate: builder.mutation<any, UpdateSmsIndustryTemplateArgs>({
-			query: ({ id, ...body }) => ({ url: `/templatesById/${id}`, method: "PUT", body }),
+			query: ({ id, ...body }) => ({ url: `/template/prebuilt/${id}`, method: "PUT", body }),
+			// TODO: invalidate Industry by id & SmsIndustryTemplate by id, refer to addContactsToGroup
 			invalidatesTags: (res) => (res ? [{ type: "SmsTemplate", id: "LIST" }] : []),
 		}),
 

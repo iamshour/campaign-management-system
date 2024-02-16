@@ -37,6 +37,7 @@ const EditSmsIndustryTemplateView = ({ defaultValues }: EditSmsIndustryTemplateV
 		console.log(background)
 
 		const body: UpdateSmsIndustryTemplateArgs = {
+			channel: "SMS",
 			id: templatedId ?? "",
 			industryId: industryId ?? "",
 			...requestBody,
