@@ -1,86 +1,59 @@
 //#region Import
-import type { SmsIndustryTemplateType } from "@/features/industries/types"
-import { Button } from "@/ui"
-
-import PreviewTemplateCardDialog from "../dialogs/preview-template-card-dialog/preview-template-card-dialog"
+import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
+import SectionHeading from "@/ui/section-heading/section-heading"
 
 import MobileSmsPreview from "./mobile-sms-preview"
 
-import MaterialSymbolsImagesmodeRounded from "~icons/material-symbols/imagesmode-rounded"
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
 import MdiMessageProcessing from "~icons/mdi/message-processing"
 //#endregion
 
-type SmsTemplatePreviewProps = Pick<SmsIndustryTemplateType, "name" | "type" | "language" | "body"> &
-	Partial<Pick<SmsIndustryTemplateType, "background" | "industryId">> & {
-		/**
-		 * Page footer to be passed as child
-		 */
-		children?: React.ReactNode
+type SmsTemplatePreviewProps = Pick<SmsTemplateType, "name" | "type" | "language" | "body"> & {
+	/**
+	 * Additional Nodes to be added (Ex. Background when using this component to preview prebuilt templates)
+	 */
+	children?: React.ReactNode
 
-		/**
-		 * Additional info to be displayed under "Template Basic Info" section
-		 */
-		additionalTemplateInfo?: { label: string; value: string }[]
-	}
+	/**
+	 * Additional info to be displayed under "Template Basic Info" section
+	 */
+	additionalTemplateInfo?: { label: string; value: string }[]
+}
 
 function SmsTemplatePreview({ children, additionalTemplateInfo, ...smsTemplate }: SmsTemplatePreviewProps) {
-	const { name, type, language, body, background } = smsTemplate
+	const { name, type, language, body } = smsTemplate
 
 	return (
-		<div className='flex h-full w-full flex-col overflow-y-auto p-6'>
-			<h1 className='mb-6 text-xl font-bold'>View {name}</h1>
-			<div className=' flex flex-1 flex-row flex-wrap justify-between rounded-xl bg-[#F7F7F7] p-6 px-12 lg:flex-nowrap'>
-				<div className='ml-8 max-w-full md:max-w-[700px]'>
-					<div>
-						<h1 className='relative mb-5 text-xl font-bold'>
-							<MdiInformationVariantCircle className='absolute -left-9 top-1 text-[#2daef5]' />
-							Template Basic Info
-						</h1>
+		<div className=' flex flex-1 flex-row flex-wrap justify-between rounded-xl bg-[#F7F7F7] p-6 px-12 lg:flex-nowrap'>
+			<div className='ms-8 max-w-full space-y-8 md:max-w-[700px]'>
+				<div>
+					<SectionHeading
+						icon={MdiInformationVariantCircle}
+						label='Template Basic Info'
+						className='relative -start-10 mb-4'
+					/>
 
-						<SmsTemplateInfoItem itemName='name' itemValue={name} />
-						<SmsTemplateInfoItem itemName='type' itemValue={type} />
-						<SmsTemplateInfoItem itemName='language' itemValue={language} />
-						{additionalTemplateInfo?.map(({ label, value }) => (
-							<SmsTemplateInfoItem key={label} itemName={label} itemValue={value} />
-						))}
-					</div>
-
-					<div className='mt-8'>
-						<h1 className='relative mb-5 text-xl font-bold'>
-							<MdiMessageProcessing className='absolute -left-9 top-1 text-[#2daef5]' />
-							Message Text
-						</h1>
-						<p className='mb-2'>
-							<strong className='font-medium'>Template Body:</strong>
-						</p>
-						<p>{body}</p>
-					</div>
-
-					{background && (
-						<div className='mt-8'>
-							<h1 className='relative mb-5 text-xl font-bold'>
-								<MaterialSymbolsImagesmodeRounded className='absolute -left-9 top-1 h-[28px] w-[28px] text-[#2daef5]' />
-								Template Background
-							</h1>
-							<img
-								src={background}
-								alt='backgroung image'
-								className='h-[200px] w-[377px] rounded-lg border border-[#054060] object-cover'
-							/>
-
-							<PreviewTemplateCardDialog {...(smsTemplate as Omit<SmsIndustryTemplateType, "id">)}>
-								<Button variant='link' type='button' className='p-0'>
-									Preview Card
-								</Button>
-							</PreviewTemplateCardDialog>
-						</div>
-					)}
+					<SmsTemplateInfoItem itemName='name' itemValue={name} />
+					<SmsTemplateInfoItem itemName='type' itemValue={type} />
+					<SmsTemplateInfoItem itemName='language' itemValue={language} />
+					{additionalTemplateInfo?.map(({ label, value }) => (
+						<SmsTemplateInfoItem key={label} itemName={label} itemValue={value} />
+					))}
 				</div>
 
-				<MobileSmsPreview message={body} />
+				<div>
+					<SectionHeading icon={MdiMessageProcessing} label='Message Text' className='relative -start-10 mb-4' />
+
+					<p className='mb-2'>
+						<strong className='block pb-2 font-medium'>Template Body:</strong>
+						{body}
+					</p>
+				</div>
+
+				{children}
 			</div>
-			{children}
+
+			<MobileSmsPreview message={body} />
 		</div>
 	)
 }

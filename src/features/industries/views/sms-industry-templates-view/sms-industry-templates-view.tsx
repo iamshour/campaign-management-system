@@ -10,12 +10,12 @@ import smsTemplatesTableColumns from "@/features/templates/sms-templates/constan
 import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 import type { ColumnType } from "@/ui"
 
-const IndustryTemplatesViewTopbar = lazy(() => import("./industry-templates-view-topbar"))
-const IndustryTemplatesViewTableActions = lazy(() => import("./industry-templates-view-table-actions"))
-const IndustryTemplatesViewFiltersContent = lazy(() => import("./industry-templates-view-filters-content"))
+const SmsIndustryTemplatesViewTopbar = lazy(() => import("./sms-industry-templates-view-topbar"))
+const SmsIndustryTemplatesViewTableActions = lazy(() => import("./sms-industry-templates-view-table-actions"))
+const SmsIndustryTemplatesViewFiltersContent = lazy(() => import("./sms-industry-templates-view-filters-content"))
 //#endregion
 
-const IndustrySmsPrebuiltTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsIndustryTemplateType>) => {
+const SmsIndustryTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsIndustryTemplateType>) => {
 	const navigate = useNavigate()
 
 	return (
@@ -23,14 +23,14 @@ const IndustrySmsPrebuiltTemplatesView = ({ count, ...tableProps }: SharedListVi
 			<AdvancedTable.FiltersBar>
 				<AdvancedTable.FiltersBar.Header />
 				<AdvancedTable.FiltersBar.Content>
-					<IndustryTemplatesViewFiltersContent />
+					<SmsIndustryTemplatesViewFiltersContent />
 				</AdvancedTable.FiltersBar.Content>
 				<AdvancedTable.FiltersBar.Footer />
 			</AdvancedTable.FiltersBar>
 
 			<AdvancedTable.Content>
 				<AdvancedTable.TopBar>
-					<IndustryTemplatesViewTopbar />
+					<SmsIndustryTemplatesViewTopbar />
 				</AdvancedTable.TopBar>
 
 				<AdvancedTable.Body
@@ -47,12 +47,12 @@ const IndustrySmsPrebuiltTemplatesView = ({ count, ...tableProps }: SharedListVi
 	)
 }
 
-export default IndustrySmsPrebuiltTemplatesView
+export default SmsIndustryTemplatesView
 
 const columns: ColumnType<SmsTemplateType>[] = [
 	...smsTemplatesTableColumns,
 	{
 		accessorKey: "actions",
-		cell: (_, { id }) => <IndustryTemplatesViewTableActions id={id} />,
+		cell: (_, { id }) => <SmsIndustryTemplatesViewTableActions id={id} />,
 	},
 ]

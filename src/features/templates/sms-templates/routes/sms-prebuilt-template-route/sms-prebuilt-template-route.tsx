@@ -1,20 +1,19 @@
 //#region Import
 import { lazy } from "react"
-import { useParams, useLocation, useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
-import appPaths from "@/core/constants/app-paths"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetSmsIndustryTemplateByIdQuery } from "@/features/industries/api"
-import { Button, FullViewSkeleton } from "@/ui"
+import { FullViewSkeleton } from "@/ui"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
-const SmsTemplatePreview = lazy(() => import("@/features/templates/sms-templates/components/sms-template-preview"))
+const SmsPrebuiltTemplateView = lazy(
+	() => import("@/features/templates/sms-templates/views/sms-prebuilt-template-view/sms-prebuilt-template-view")
+)
 //#endregion
 
 const SmsPrebuiltTemplateRoute = () => {
 	const { id: smsPrebuiltTemplateId } = useParams()
-	const { state } = useLocation()
-	const navigate = useNavigate()
 
 	const { data, isFetching, isError, error } = useGetSmsIndustryTemplateByIdQuery(smsPrebuiltTemplateId!, {
 		skip: !smsPrebuiltTemplateId,
@@ -35,27 +34,7 @@ const SmsPrebuiltTemplateRoute = () => {
 
 	if ((!isFetching && isError) || !data) return <DisplayError error={error as any} showReloadButton />
 
-	return (
-		<SmsTemplatePreview {...data} additionalTemplateInfo={[{ label: "IndustryId", value: data.industryId }]}>
-			<div className='mt-5 flex flex-row justify-end space-x-4'>
-				<Button
-					variant='outline'
-					className='px-10'
-					onClick={() => navigate(state?.from || appPaths.SMS_TEMPLATES_PREBUILT_TEMPLATES)}>
-					Back
-				</Button>
-				<Button
-					className='px-10'
-					onClick={() =>
-						navigate(
-							`${appPaths.SMS_TEMPLATES_MY_TEMPLATES}/new-template?templateId=${smsPrebuiltTemplateId}&templateType=smsPrebuiltTemplate`
-						)
-					}>
-					Use Template
-				</Button>
-			</div>
-		</SmsTemplatePreview>
-	)
+	return <SmsPrebuiltTemplateView {...data!} />
 }
 
 export default SmsPrebuiltTemplateRoute
