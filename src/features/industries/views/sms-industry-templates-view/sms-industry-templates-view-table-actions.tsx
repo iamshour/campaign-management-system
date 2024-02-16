@@ -8,7 +8,7 @@ import { Dropdown } from "@/ui"
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 //#endregion
 
-const IndustryTemplatesViewTableActions = ({ id }: Pick<SmsIndustryTemplateType, "id">) => {
+const SmsIndustryTemplatesViewTableActions = ({ id }: Pick<SmsIndustryTemplateType, "id">) => {
 	const navigate = useNavigate()
 
 	return (
@@ -38,4 +38,4 @@ const IndustryTemplatesViewTableActions = ({ id }: Pick<SmsIndustryTemplateType,
 	)
 }
 
-export default IndustryTemplatesViewTableActions
+export default SmsIndustryTemplatesViewTableActions

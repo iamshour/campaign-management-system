@@ -17,7 +17,7 @@ import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
 //#endregion
 
-const IndustryTemplatesViewFiltersContent = () => {
+const SmsIndustryTemplatesViewFiltersContent = () => {
 	const dispatch = useDispatch()
 
 	const { filters } = useSelector<AdvancedTableStateType<"sms-industry-templates">>(
@@ -63,4 +63,4 @@ const IndustryTemplatesViewFiltersContent = () => {
 	)
 }
 
-export default IndustryTemplatesViewFiltersContent
+export default SmsIndustryTemplatesViewFiltersContent

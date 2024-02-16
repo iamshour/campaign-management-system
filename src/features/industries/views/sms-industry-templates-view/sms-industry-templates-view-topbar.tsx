@@ -13,7 +13,7 @@ const DeleteIndustryTemplateDialog = lazy(
 )
 //#endregion
 
-const IndustryTemplatesViewTopbar = () => {
+const SmsIndustryTemplatesViewTopbar = () => {
 	const navigate = useNavigate()
 
 	const { selection } = useSelector<AdvancedTableStateType<"sms-industry-templates">>(
@@ -42,4 +42,4 @@ const IndustryTemplatesViewTopbar = () => {
 	)
 }
 
-export default IndustryTemplatesViewTopbar
+export default SmsIndustryTemplatesViewTopbar

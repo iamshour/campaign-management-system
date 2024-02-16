@@ -6,16 +6,18 @@ import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetSmsIndustryTemplateByIdQuery } from "@/features/industries/api"
 import { FullViewSkeleton } from "@/ui"
 
+const SmsIndustryTemplateView = lazy(
+	() => import("@/features/industries/views/sms-industry-template-view/sms-industry-template-view")
+)
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
-const SmsTemplatePreview = lazy(() => import("@/features/templates/sms-templates/components/sms-template-preview"))
 //#endregion
 
 const SmsIndustryTemplateRoute = () => {
 	const { templatedId } = useParams()
 
-	const { data, isFetching, isError, error } = useGetSmsIndustryTemplateByIdQuery(templatedId!, {
+	const { data, isFetching, showError, error } = useGetSmsIndustryTemplateByIdQuery(templatedId!, {
 		skip: !templatedId,
-		selectFromResult: ({ data, ...rest }) => ({
+		selectFromResult: ({ data, isFetching, isError, ...rest }) => ({
 			data: data && {
 				body: data.body,
 				name: data.name,
@@ -24,6 +26,8 @@ const SmsIndustryTemplateRoute = () => {
 				background: data.background,
 				industryId: data.industryId,
 			},
+			showError: !isFetching && !!isError && !data,
+			isFetching,
 			...rest,
 		}),
 		...baseQueryConfigs,
@@ -31,9 +35,10 @@ const SmsIndustryTemplateRoute = () => {
 
 	if (isFetching) return <FullViewSkeleton />
 
-	if ((!isFetching && isError) || !data) return <DisplayError error={error as any} showReloadButton />
+	if (showError) return <DisplayError error={error as any} showReloadButton />
 
-	return <SmsTemplatePreview {...data} />
+	// Adding `!` becasue TS comiler comlains that data may be undefined, but its alread handle above, hence its never so
+	return <SmsIndustryTemplateView {...data!} />
 }
 
 export default SmsIndustryTemplateRoute

@@ -61,9 +61,9 @@ const industriesApi = api.injectEndpoints({
 		}),
 
 		getSmsIndustryTemplateById: builder.query<SmsIndustryTemplateType, string>({
-			query: (id) => `/prebuiltTemplatesById/${id}`,
+			query: (prebuiltTemplateId) => `/template/prebuilt/${prebuiltTemplateId}`,
 			providesTags: (result) => [{ type: "SmsIndustryTemplate", id: result?.id }],
-			// transformResponse,
+			transformResponse,
 		}),
 
 		addNewSmsIndustryTemplate: builder.mutation<any, AddNewSmsIndustryTemplateArgs>({

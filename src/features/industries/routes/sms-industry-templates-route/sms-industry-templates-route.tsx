@@ -11,8 +11,8 @@ import { DataTableSkeleton } from "@/ui"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 const SmsTemplatesEmptyView = lazy(() => import("@/features/templates/sms-templates/views/sms-templates-empty-view"))
-const IndustryTemplatesView = lazy(
-	() => import("@/features/industries/views/industry-templates-view/industry-templates-view")
+const SmsIndustryTemplatesView = lazy(
+	() => import("@/features/industries/views/sms-industry-templates-view/sms-industry-templates-view")
 )
 //#endregion
 
@@ -60,7 +60,7 @@ const SmsIndustryTemplatesRoute = () => {
 
 	if (isError) return <DisplayError error={error as any} showReloadButton />
 
-	if (isReady) return <IndustryTemplatesView list={list || []} count={count || 0} isFetching={isFetching} />
+	if (isReady) return <SmsIndustryTemplatesView list={list || []} count={count || 0} isFetching={isFetching} />
 }
 
 export default SmsIndustryTemplatesRoute
