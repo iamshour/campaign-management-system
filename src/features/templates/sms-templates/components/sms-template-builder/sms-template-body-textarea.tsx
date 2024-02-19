@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react"
 import { useFormContext } from "react-hook-form"
 
-import { MAX_PARTS } from "@/features/templates/sms-templates/constants/sms-template-body-regex"
+import { MAX_PARTS } from "@/features/templates/sms-templates/constants/sms-template-body-constants"
 import useSmsTemplateBody from "@/features/templates/sms-templates/hooks/useSmsTemplateBody"
 import { Form, Textarea, Button } from "@/ui"
 //#endregion

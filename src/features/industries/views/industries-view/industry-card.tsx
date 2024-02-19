@@ -27,7 +27,7 @@ const IndustryCard = (industry: IndustryType) => {
 				</div>
 
 				{/* Hide Actions if Industry is default one (named `others` from server)  */}
-				{name?.toLocaleLowerCase() !== "other" && (
+				{name?.toLocaleLowerCase() !== "others" && (
 					<IndustriesViewTableActions {...industry}>
 						<BiThreeDots />
 					</IndustriesViewTableActions>

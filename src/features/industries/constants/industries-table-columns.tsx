@@ -40,9 +40,9 @@ const industriesTableColumns: ColumnType<IndustryType>[] = [
 	},
 	{
 		accessorKey: "actions",
-		// Hide Actions if Industry is default one (named `other` from server)
+		// Hide Actions if Industry is default one (named `others` from server)
 		cell: (_, row) =>
-			row?.name.toLocaleLowerCase() !== "other" && (
+			row?.name.toLocaleLowerCase() !== "others" && (
 				<IndustriesViewTableActions {...row}>
 					<BiThreeDotsVertical />
 				</IndustriesViewTableActions>
