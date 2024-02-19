@@ -17,7 +17,7 @@ const SmsPrebuiltTemplatesRoute = () => {
 	// Getting Default User's Industry from User info in authSlice (Token))
 	const defaultUserIndustryId = useSelector(({ auth }) => auth?.user?.industryId)
 
-	const { offset, limit, filters, searchTerm } = useSelector<DataGridState<"sms-prebuilt-templates">>(
+	const { offset, limit, filters, searchTerm, sort, order } = useSelector<DataGridState<"sms-prebuilt-templates">>(
 		({ dataGrid }) => dataGrid["sms-prebuilt-templates"]
 	)
 
@@ -35,12 +35,15 @@ const SmsPrebuiltTemplatesRoute = () => {
 			industryId,
 			limit,
 			offset,
-			sort: !!filters?.filterBy && filters?.filterBy === "RECENT" ? "createdAt" : undefined,
-			order: !!filters?.filterBy && filters?.filterBy === "RECENT" ? "desc" : undefined,
+			sort: sort,
+			order: order,
 			name: searchTerm,
 			any: searchTerm ? true : undefined,
-			type: filters?.templateType,
-			language: filters?.templateLanguage,
+			types: filters?.types,
+			languages: filters?.languages,
+			statuses: filters?.statuses,
+			updatedAfter: filters?.updatedAfter,
+			updatedBefore: filters?.updatedBefore,
 			mostPopular: Boolean(!!filters?.filterBy && filters?.filterBy === "POPULAR") ?? undefined,
 		},
 		{

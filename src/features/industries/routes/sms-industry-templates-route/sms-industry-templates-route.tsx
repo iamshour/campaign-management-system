@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetSmsIndustryTemplatesQuery } from "@/features/industries/api"
 import { DataTableSkeleton } from "@/ui"
 
@@ -33,11 +32,11 @@ const SmsIndustryTemplatesRoute = () => {
 				order,
 				name: searchTerm,
 				any: searchTerm ? true : undefined,
-				status: filters?.templateStatus,
-				type: filters?.templateType,
-				language: filters?.templateLanguage,
-				updatedAfter: getValueFromSafeObject("startDate", filters?.dateRange),
-				updatedBefore: getValueFromSafeObject("endDate", filters?.dateRange),
+				statuses: filters?.statuses,
+				types: filters?.types,
+				languages: filters?.languages,
+				updatedAfter: filters?.updatedAfter,
+				updatedBefore: filters?.updatedBefore,
 			},
 			{
 				selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => ({

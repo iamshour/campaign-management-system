@@ -1,5 +1,5 @@
 //#region Import
-import type { GetListParams } from "@/core/lib/redux-toolkit/types"
+import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type { DateRange } from "@/ui"
 
 import type { ContactFilters } from "../contacts/types"
@@ -44,7 +44,7 @@ type ExportsSearchFilters = {
 /**
  * Params passed to the `getExports` query, used to fetch export files
  */
-export type GetExportsParams = GetListParams<ContactExports> & DateRange & ExportsSearchFilters
+export type GetExportsParams = PaginationAndSorting<ContactExports> & DateRange & ExportsSearchFilters
 
 /**
  * Params passed to the `downloadExport` mutation function to download an exported file

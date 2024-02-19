@@ -1,5 +1,5 @@
 //#region Import
-import type { GetListParams } from "@/core/lib/redux-toolkit/types"
+import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type { OptionType } from "@/ui"
 //#endregion
 
@@ -55,7 +55,7 @@ export type SegmentConditionType = {
 /**
  * Arguments passed to the getSegments` query, used to fetch Segments List
  */
-export type GetSegmentsParams = GetListParams<Segment>
+export type GetSegmentsParams = PaginationAndSorting<Segment>
 
 /**
  * Body Arguments passed to the `createSegment` mutation, used to post a new created segment entry

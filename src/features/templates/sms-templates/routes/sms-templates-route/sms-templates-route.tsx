@@ -4,7 +4,6 @@ import { lazy } from "react"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetSmsTemplatesQuery } from "@/features/templates/sms-templates/api"
 import { DataTableSkeleton } from "@/ui"
 
@@ -28,11 +27,7 @@ const SmsTemplatesRoute = () => {
 			order,
 			name: searchTerm || undefined,
 			any: searchTerm ? true : undefined,
-			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
-			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
-			statuses: filters?.templateStatus,
-			types: filters?.templateType,
-			languages: filters?.templateLanguage,
+			...filters,
 		},
 		{
 			selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => ({

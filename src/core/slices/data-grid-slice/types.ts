@@ -1,14 +1,10 @@
 //#region Import
-import type {
-	IndustryType,
-	SmsIndustryTemplateType,
-	SmsIndustryTemplatesTableFiltersType,
-} from "@/features/industries/types"
+import type { IndustryType, SmsIndustryTemplateType, PrebuiltTemplateFilter } from "@/features/industries/types"
 import type { Contact, ContactTableFiltersType } from "@/features/people/contacts/types"
 import type { ContactExports, ContactExportsTableFiltersType } from "@/features/people/exports/types"
 import type { Group } from "@/features/people/groups/types"
 import type { Segment, SegmentConditionType } from "@/features/people/segments/types"
-import type { SmsTemplateType, SmsTemplatesTableFiltersType } from "@/features/templates/sms-templates/types"
+import type { SmsTemplateType, TemplateFilter } from "@/features/templates/sms-templates/types"
 import type { DateRange, OptionType, TableState } from "@/ui"
 //#endregion
 
@@ -46,9 +42,9 @@ export type FiltersFieldMappingType = {
 	groups: { dateRange?: DateRange }
 	"contacts-exports": ContactExportsTableFiltersType
 	segments: { dateRange?: DateRange }
-	"sms-templates": SmsTemplatesTableFiltersType
-	"sms-prebuilt-templates": SmsIndustryTemplatesTableFiltersType
-	"sms-industry-templates": SmsIndustryTemplatesTableFiltersType
+	"sms-templates": TemplateFilter
+	"sms-prebuilt-templates": PrebuiltTemplateFilter
+	"sms-industry-templates": PrebuiltTemplateFilter
 	industries: { dateRange?: DateRange }
 }
 

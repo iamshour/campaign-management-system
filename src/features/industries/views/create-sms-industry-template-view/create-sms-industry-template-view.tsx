@@ -55,7 +55,7 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 			.unwrap()
 			.then(() => {
 				toast.success("Template added successfully to the industry.")
-				navigate(`/industries/${industryId}`, { replace: true })
+				navigate(`/industries/${industryId}/sms`, { replace: true })
 			})
 	}
 
