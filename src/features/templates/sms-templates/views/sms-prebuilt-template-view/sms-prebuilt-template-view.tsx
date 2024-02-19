@@ -1,5 +1,5 @@
 //#region Import
-import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"
 import type { SmsIndustryTemplateType } from "@/features/industries/types"
@@ -12,7 +12,6 @@ const SmsPrebuiltTemplateView = (
 ) => {
 	const { state } = useLocation()
 	const { templateId } = useParams()
-	const navigate = useNavigate()
 
 	return (
 		<div className='flex h-full w-full flex-col overflow-y-auto p-6'>
@@ -24,16 +23,14 @@ const SmsPrebuiltTemplateView = (
 				<Button
 					variant='outline'
 					className='px-10'
-					onClick={() => navigate(state?.from || appPaths.SMS_TEMPLATES_PREBUILT_TEMPLATES)}>
+					as='link'
+					to={state?.from || appPaths.SMS_TEMPLATES_PREBUILT_TEMPLATES}>
 					Back
 				</Button>
 				<Button
 					className='px-10'
-					onClick={() =>
-						navigate(
-							`${appPaths.SMS_TEMPLATES_MY_TEMPLATES}/new-template?templateId=${templateId}&templateType=smsPrebuiltTemplate`
-						)
-					}>
+					as='link'
+					to={`${appPaths.SMS_TEMPLATES_MY_TEMPLATES}/new-template?templateId=${templateId}&templateType=smsPrebuiltTemplate`}>
 					Use Template
 				</Button>
 			</Footer>

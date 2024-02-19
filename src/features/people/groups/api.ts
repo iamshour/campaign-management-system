@@ -3,27 +3,27 @@ import type { TagDescription } from "@reduxjs/toolkit/query"
 
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
-import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
+import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 
 import type {
 	Group,
-	GroupsArgs,
-	GroupWithContactsContacts,
-	GroupWithContactsArgs,
-	CreateGroupArgs,
-	EditGroupArgs,
-	AddContactsToGroupArgs,
+	GetGroupsParams,
+	GetGroupByIdReturnType,
+	GetGroupByIdParams,
+	CreateGroupBody,
+	EditGroupBody,
+	AddContactsToGroupBody,
 	AddContactsToGroupReturnType,
-	MoveContactsToGroupArgs,
+	MoveContactsToGroupBody,
 	MoveContactsToGroupReturnType,
-	RemoveContactsFromGroupArgs,
+	RemoveContactsFromGroupBody,
 	RemoveContactsFromGroupReturnType,
 } from "./types"
 //#endregion
 
 const groupsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getGroups: builder.query<ListDataReturnType<Group>, GroupsArgs>({
+		getGroups: builder.query<GetListReturnType<Group>, GetGroupsParams>({
 			query: (params) => ({ url: "/contact/group", params }),
 			providesTags: (result) =>
 				providesList(
@@ -33,19 +33,19 @@ const groupsApi = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		getGroupById: builder.query<GroupWithContactsContacts, GroupWithContactsArgs>({
+		getGroupById: builder.query<GetGroupByIdReturnType, GetGroupByIdParams>({
 			query: ({ groupId, ...params }) => ({ url: `/contact/group/${groupId}`, params }),
 			providesTags: (result) => [{ type: "Group", id: result?.contactGroupDto?.id }],
 			transformResponse,
 		}),
 
-		createGroup: builder.mutation<Pick<Group, "groupName" | "groupId" | "description">, CreateGroupArgs>({
+		createGroup: builder.mutation<Pick<Group, "groupName" | "groupId" | "description">, CreateGroupBody>({
 			query: (body) => ({ url: "/contact/group", method: "POST", body }),
 			invalidatesTags: (response) => (response ? [{ type: "Group", id: "LIST" }] : []),
 			transformResponse,
 		}),
 
-		editGroup: builder.mutation<any, EditGroupArgs>({
+		editGroup: builder.mutation<any, EditGroupBody>({
 			query: ({ groupId, ...body }) => ({ url: `/contact/group/${groupId}`, method: "PATCH", body }),
 			invalidatesTags: (response) => (response ? [{ type: "Group", id: "LIST" }] : []),
 		}),
@@ -55,7 +55,7 @@ const groupsApi = api.injectEndpoints({
 			invalidatesTags: (response) => (response ? [{ type: "Group", id: "LIST" }] : []),
 		}),
 
-		addContactsToGroup: builder.mutation<AddContactsToGroupReturnType, AddContactsToGroupArgs>({
+		addContactsToGroup: builder.mutation<AddContactsToGroupReturnType, AddContactsToGroupBody>({
 			query: (body) => ({ url: "/contact/group/add", method: "POST", body }),
 			invalidatesTags: (res, error, { contactGroupsIds, contactsIds }) => {
 				if (!res) return []
@@ -79,7 +79,7 @@ const groupsApi = api.injectEndpoints({
 			},
 		}),
 
-		moveContactsToGroup: builder.mutation<MoveContactsToGroupReturnType, MoveContactsToGroupArgs>({
+		moveContactsToGroup: builder.mutation<MoveContactsToGroupReturnType, MoveContactsToGroupBody>({
 			query: (body) => ({ url: "/contact/group/move", method: "POST", body }),
 			invalidatesTags: (res, error, { fromGroupId, toGroupId, contactsIds }) => {
 				if (!res) return []
@@ -103,7 +103,7 @@ const groupsApi = api.injectEndpoints({
 			},
 		}),
 
-		removeContactsFromGroup: builder.mutation<RemoveContactsFromGroupReturnType, RemoveContactsFromGroupArgs>({
+		removeContactsFromGroup: builder.mutation<RemoveContactsFromGroupReturnType, RemoveContactsFromGroupBody>({
 			query: (body) => ({ url: "/contact/group/remove", method: "POST", body: body }),
 			invalidatesTags: (res, error, { contactGroupsIds, contactsIds }) => {
 				if (!res) return []

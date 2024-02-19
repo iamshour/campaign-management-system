@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next"
 import { useAdvancedFiltersDialogContext } from "@/features/people/contacts/dialogs/advanced-filters-dialog/advanced-filters-dialog-context"
 import { useCreateSegmentMutation } from "@/features/people/segments/api"
 import SegmentSchema, { type SegmentSchemaType } from "@/features/people/segments/schemas/segment-schema"
-import { createSegmentArgsType } from "@/features/people/segments/types"
+import { CreateSegmentBody } from "@/features/people/segments/types"
 import { areConditionsValid } from "@/features/people/segments/utils"
 import { useForm, Button, Footer, Form, Input } from "@/ui"
 //#endregion
@@ -32,7 +32,7 @@ const CreateSegmentPopoverContent = ({ onClose }: CreateSegmentPopoverContentPro
 	const onSubmit = async ({ name, description }: SegmentSchemaType) => {
 		if (!areEditableConditionsValid) return
 
-		const body: createSegmentArgsType = {
+		const body: CreateSegmentBody = {
 			name,
 			description,
 			contactSegmentConditionList: conditions?.map((condition) => ({

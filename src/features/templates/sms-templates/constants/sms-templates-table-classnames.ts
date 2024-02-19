@@ -3,7 +3,7 @@ import { TableProps } from "@/ui"
 import type { SmsTemplateType } from "../types"
 
 /**
- * Custom classNames passed to style AdvancedTable used in `SmsTemplatesView`
+ * Custom classNames passed to style DataGrid used in `SmsTemplatesView`
  */
 const smsTemplatesTableClassNames: TableProps<SmsTemplateType>["classNames"] = {
 	wrapper: "px-4",

@@ -5,14 +5,14 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { array, object, string, any } from "zod"
 
-import { useAdvancedTableContext } from "@/core/components/advanced-table"
+import { useDataGridContext } from "@/core/components/data-grid"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { useUpdateMultipleContactsMutation } from "@/features/people/contacts/api"
 import TagSchema from "@/features/people/contacts/schemas/tag-schema"
-import type { UpdateMultipleContactsArgs } from "@/features/people/contacts/types"
+import type { UpdateMultipleContactsBody } from "@/features/people/contacts/types"
 import { getContactFilterAndContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
 import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option-type-schema"
 import { useForm, Button, Footer, Form, Skeleton, type OptionType } from "@/ui"
@@ -46,10 +46,10 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 	const { t } = useTranslation("contacts")
 	const dispatch = useDispatch()
 
-	const { selection, filters, searchTerm } = useSelector<AdvancedTableStateType<"contacts">>(
-		({ advancedTable }) => advancedTable["contacts"]
+	const { selection, filters, searchTerm } = useSelector<DataGridState<"contacts">>(
+		({ dataGrid }) => dataGrid["contacts"]
 	)
-	const { count } = useAdvancedTableContext()
+	const { count } = useDataGridContext()
 
 	/**
 	 * Boolean used to quickly & conviniently check if Dialog is strictly used for `Tags`
@@ -75,7 +75,7 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 	const [editMultipleContacts, { isLoading: submitLoading }] = useUpdateMultipleContactsMutation()
 
 	const onSubmit = async ({ tags, groups }: DialogFormData) => {
-		const body: UpdateMultipleContactsArgs = {
+		const body: UpdateMultipleContactsBody = {
 			contactsIds: !!selection && selection !== "ALL" ? selection : undefined,
 			tags: isTagsDialog ? tags : undefined,
 			groups: !isTagsDialog ? getListOfKey(groups, "value") : undefined,

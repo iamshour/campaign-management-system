@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next"
 
 import { useDeleteGroupMutation, useMoveContactsToGroupMutation } from "@/features/people/groups/api"
 import SelectGroupsPopover from "@/features/people/groups/components/select-groups-popover"
-import type { MoveContactsToGroupArgs } from "@/features/people/groups/types"
+import type { MoveContactsToGroupBody } from "@/features/people/groups/types"
 import { BackButton, Button, Footer, type OptionType } from "@/ui"
 import { useStep } from "@/utils"
 //#endregion
@@ -54,7 +54,7 @@ const DeleteGroupDialogContent = ({
 		}
 
 		if (currentStep === 2 && selectedGroupToMoveTo?.value) {
-			const body: MoveContactsToGroupArgs = {
+			const body: MoveContactsToGroupBody = {
 				fromGroupId: groupId,
 				toGroupId: selectedGroupToMoveTo?.value,
 				moveAndDelete: true,

@@ -1,16 +1,15 @@
 //#region Import
-
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { DateRangePicker } from "@/ui"
 //#endregion
 
 const SegmentsViewFiltersContent = () => {
 	const dispatch = useDispatch()
 
-	const { filters } = useSelector<AdvancedTableStateType<"segments">>(({ advancedTable }) => advancedTable["segments"])
+	const { filters } = useSelector<DataGridState<"segments">>(({ dataGrid }) => dataGrid["segments"])
 
 	return (
 		<>

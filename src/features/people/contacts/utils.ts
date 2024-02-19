@@ -1,7 +1,7 @@
 //#region Import
 import { parsePhoneNumber } from "react-phone-number-input"
 
-import type { FiltersFieldMappingType } from "@/core/slices/advanced-table-slice/types"
+import type { FiltersFieldMappingType } from "@/core/slices/data-grid-slice/types"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { cleanObject, createObjtWithCommonValue, getListOfKey } from "@/utils"
 

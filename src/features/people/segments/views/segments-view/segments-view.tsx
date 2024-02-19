@@ -3,7 +3,7 @@ import { lazy } from "react"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 
-import AdvancedTable from "@/core/components/advanced-table"
+import DataGrid from "@/core/components/data-grid"
 import appPaths from "@/core/constants/app-paths"
 import type { SharedListViewProps } from "@/core/types"
 import segmentsTableColumns from "@/features/people/segments/constants/segments-table-columns"
@@ -20,32 +20,32 @@ const SegmentsView = ({ count, ...tableProps }: SharedListViewProps<Segment>) =>
 	const { t } = useTranslation("segments")
 
 	return (
-		<AdvancedTable tableKey='segments' count={count}>
-			<AdvancedTable.FiltersBar>
-				<AdvancedTable.FiltersBar.Header />
-				<AdvancedTable.FiltersBar.Content>
+		<DataGrid dataGridKey='segments' count={count}>
+			<DataGrid.FiltersBar>
+				<DataGrid.FiltersBar.Header />
+				<DataGrid.FiltersBar.Content>
 					<SegmentsViewFiltersContent />
-				</AdvancedTable.FiltersBar.Content>
-				<AdvancedTable.FiltersBar.Footer />
-			</AdvancedTable.FiltersBar>
+				</DataGrid.FiltersBar.Content>
+				<DataGrid.FiltersBar.Footer />
+			</DataGrid.FiltersBar>
 
-			<AdvancedTable.Content>
-				<AdvancedTable.TopBar>
-					<Button onClick={() => navigate(appPaths.SEGMENTS_NEW)}>
+			<DataGrid.Content>
+				<DataGrid.TopBar>
+					<Button as='link' to={appPaths.SEGMENTS_NEW}>
 						<PhPlusBold />
 						{t("table.toolbar.actions.create-segment")}
 					</Button>
-				</AdvancedTable.TopBar>
+				</DataGrid.TopBar>
 
-				<AdvancedTable.Body
+				<DataGrid.Body
 					columns={segmentsTableColumns}
-					onRowClick={({ id }) => navigate(`./${id}`)}
+					onRowClick={({ id }) => navigate(id)}
 					classNames={{ wrapper: "px-4" }}
 					{...tableProps}
 				/>
-				<AdvancedTable.Pagination />
-			</AdvancedTable.Content>
-		</AdvancedTable>
+				<DataGrid.Pagination />
+			</DataGrid.Content>
+		</DataGrid>
 	)
 }
 

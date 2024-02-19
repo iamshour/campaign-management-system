@@ -8,7 +8,7 @@ import {
 	useSubmitImportContactsMutation,
 	useUploadContactsContentDataMutation,
 } from "@/features/people/contacts/api"
-import type { ContactScreamSnakeCaseKey, ImportFileMappingArgs } from "@/features/people/contacts/types"
+import type { ContactScreamSnakeCaseKey, ImportFileMappingBody } from "@/features/people/contacts/types"
 import { Button, BackButton, Footer } from "@/ui"
 import { getListOfKey, useStep } from "@/utils"
 
@@ -129,7 +129,7 @@ const ImportContactsDialogContext = ({ children, onClose }: ImportContactsDialog
 	 *
 	 * @returns
 	 */
-	const getMappingBody = (): ImportFileMappingArgs | undefined => {
+	const getMappingBody = (): ImportFileMappingBody | undefined => {
 		if (!fileName || fileHasHeader == undefined || !columnNameToIndexMapping) {
 			toast.error("dialogs.importContacts.message.invalidData")
 			return

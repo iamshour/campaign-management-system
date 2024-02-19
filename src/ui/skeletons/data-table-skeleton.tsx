@@ -1,5 +1,5 @@
 //#region Import
-import Skeleton from "../skeleton"
+import Skeleton from "../skeleton/skeleton"
 
 import TableSkeleton from "./table-skeleton"
 //#endregion

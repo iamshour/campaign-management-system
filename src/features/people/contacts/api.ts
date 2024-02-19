@@ -3,27 +3,28 @@ import type { TagDescription } from "@reduxjs/toolkit/query"
 
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
-import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
+import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import { downloadFile } from "@/utils"
 
 import type {
 	Contact,
 	GetContactBytIdReturnType,
-	GetContactsArgs,
-	AddNewContactArgs,
+	GetContactsParams,
+	AddNewContactBody,
 	Tag,
-	GetTagsListArgs,
+	GetTagsParams,
 	ContactFilters,
-	UpdateMultipleContactsArgs,
-	ImportFileMappingArgs,
+	UpdateMultipleContactsBody,
+	ImportFileMappingBody,
 	ImportFileMappingReturnType,
 	UploadContactsMutationReturnType,
+	UpdateContactBody,
 } from "./types"
 //#endregion
 
 const contactsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getContacts: builder.query<ListDataReturnType<Contact>, GetContactsArgs>({
+		getContacts: builder.query<GetListReturnType<Contact>, GetContactsParams>({
 			query: (params) => ({ url: "/contact", params }),
 			providesTags: (result) =>
 				providesList(
@@ -39,7 +40,7 @@ const contactsApi = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		getTagsList: builder.query<ListDataReturnType<Tag>, GetTagsListArgs>({
+		getTags: builder.query<GetListReturnType<Tag>, GetTagsParams>({
 			query: (params) => ({ url: "/contact/tag", params }),
 			providesTags: (result) =>
 				providesList(
@@ -49,12 +50,12 @@ const contactsApi = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		addNewContact: builder.mutation<any, AddNewContactArgs>({
+		addNewContact: builder.mutation<any, AddNewContactBody>({
 			query: (body) => ({ url: "/contact", method: "POST", body }),
 			invalidatesTags: (res) => (res ? [{ type: "Contact", id: "LIST" }] : []),
 		}),
 
-		updateContact: builder.mutation<any, AddNewContactArgs & { id: string }>({
+		updateContact: builder.mutation<any, UpdateContactBody>({
 			query: ({ id, ...body }) => ({ url: `/contact/${id}`, method: "PUT", body }),
 			invalidatesTags: (res, error, { id, groups }) => {
 				if (!res) return []
@@ -68,7 +69,7 @@ const contactsApi = api.injectEndpoints({
 			},
 		}),
 
-		updateMultipleContacts: builder.mutation<any, UpdateMultipleContactsArgs>({
+		updateMultipleContacts: builder.mutation<any, UpdateMultipleContactsBody>({
 			query: (body) => ({ url: "/contact", method: "PATCH", body }),
 			invalidatesTags: (res, error, { contactsIds, tags, groups }) => {
 				if (!res) return []
@@ -119,7 +120,7 @@ const contactsApi = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		importFileMapping: builder.mutation<ImportFileMappingReturnType, ImportFileMappingArgs>({
+		importFileMapping: builder.mutation<ImportFileMappingReturnType, ImportFileMappingBody>({
 			query: (body) => ({ url: "/contact/import/validate", method: "POST", body }),
 			transformResponse,
 		}),
@@ -140,7 +141,7 @@ const contactsApi = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		submitImportContacts: builder.mutation<ImportFileMappingReturnType, ImportFileMappingArgs>({
+		submitImportContacts: builder.mutation<ImportFileMappingReturnType, ImportFileMappingBody>({
 			query: (body) => ({ url: "/contact/import", method: "POST", body }),
 			transformResponse,
 			invalidatesTags: (res) => (res ? [{ type: "Contact", id: "LIST" }] : []),
@@ -151,7 +152,7 @@ const contactsApi = api.injectEndpoints({
 export const {
 	useGetContactsQuery,
 	useGetContactByIdQuery,
-	useGetTagsListQuery,
+	useGetTagsQuery,
 	useAddNewContactMutation,
 	useUpdateContactMutation,
 	useUpdateMultipleContactsMutation,

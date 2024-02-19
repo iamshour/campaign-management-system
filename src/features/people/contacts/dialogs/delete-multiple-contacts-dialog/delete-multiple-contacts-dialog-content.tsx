@@ -5,10 +5,10 @@ import { useTranslation } from "react-i18next"
 import { useDispatch } from "react-redux"
 import { object, string } from "zod"
 
-import { useAdvancedTableContext } from "@/core/components/advanced-table"
+import { useDataGridContext } from "@/core/components/data-grid"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { useDeleteContactsMutation } from "@/features/people/contacts/api"
 import type { ContactFilters } from "@/features/people/contacts/types"
 import { getContactFilterAndContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
@@ -28,10 +28,10 @@ const DeleteContactsDialogContent = ({ onClose }: DeleteContactsDialogContent) =
 
 	const dispatch = useDispatch()
 
-	const { selection, filters, searchTerm } = useSelector<AdvancedTableStateType<"contacts">>(
-		({ advancedTable }) => advancedTable["contacts"]
+	const { selection, filters, searchTerm } = useSelector<DataGridState<"contacts">>(
+		({ dataGrid }) => dataGrid["contacts"]
 	)
-	const { count } = useAdvancedTableContext()
+	const { count } = useDataGridContext()
 
 	const nbOfContactsToDelete = selection === "ALL" ? count : selection !== undefined ? selection?.length : 0
 

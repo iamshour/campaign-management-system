@@ -9,7 +9,7 @@ import smsTemplateFieldsLocaleMap from "./sms-template-fields-locale-map"
 import smsTemplateStatusesColorsMap from "./sms-template-statuses-colors-map"
 
 // eslint-disable-next-line react-refresh/only-export-components
-const AdvancedTableDateCell = lazy(() => import("@/core/components/advanced-table-date-cell"))
+const DataGridDateCell = lazy(() => import("@/core/components/data-grid-date-cell"))
 //#endregion
 
 const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
@@ -34,7 +34,7 @@ const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
 		accessorKey: "updatedAt",
 		header: smsTemplateFieldsLocaleMap.updatedAt,
 		sortable: true,
-		cell: (date) => <AdvancedTableDateCell date={date} dateFormat='MM-dd-yyyy | hh:mm aaa' />,
+		cell: (date) => <DataGridDateCell date={date} dateFormat='MM-dd-yyyy | hh:mm aaa' />,
 	},
 	{
 		accessorKey: "status",

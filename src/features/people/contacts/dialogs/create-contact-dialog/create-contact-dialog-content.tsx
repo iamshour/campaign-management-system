@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next"
 import { useAddNewContactMutation } from "@/features/people/contacts/api"
 import ContactForm from "@/features/people/contacts/components/contact-form"
 import type { ContactSchemaType } from "@/features/people/contacts/schemas/contact-schema"
-import type { AddNewContactArgs } from "@/features/people/contacts/types"
+import type { AddNewContactBody } from "@/features/people/contacts/types"
 import { Button, type UseFormReturn } from "@/ui"
 //#endregion
 
@@ -34,7 +34,7 @@ const CreateContactDialogContent = ({ onClose }: CreateContactDialogContentProps
 	 * @param form form passed from the `ContactForm` component, which we can access to reset from data, or handle other
 	 *             actions such as sending back an error on a specific field
 	 */
-	const onSubmit = async (body: AddNewContactArgs, form: UseFormReturn<ContactSchemaType>) => {
+	const onSubmit = async (body: AddNewContactBody, form: UseFormReturn<ContactSchemaType>) => {
 		if (!body) return
 
 		await addContact(body)

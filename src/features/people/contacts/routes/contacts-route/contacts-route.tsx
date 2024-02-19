@@ -4,8 +4,8 @@ import { lazy } from "react"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { clearFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import { clearFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetContactsQuery } from "@/features/people/contacts/api"
 import { getContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
@@ -21,8 +21,8 @@ const ContactsRoute = () => {
 	const dispatch = useDispatch()
 
 	const { offset, limit, order, sort, filters, appliedFiltersCount, searchTerm } = useSelector<
-		AdvancedTableStateType<"contacts">
-	>(({ advancedTable }) => advancedTable["contacts"])
+		DataGridState<"contacts">
+	>(({ dataGrid }) => dataGrid.contacts)
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetContactsQuery(
 		{

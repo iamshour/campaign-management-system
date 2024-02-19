@@ -6,9 +6,11 @@ import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetSegmentByIdQuery } from "@/features/people/segments/api"
 import SelectSegmentsPopover from "@/features/people/segments/components/select-segments-popover"
 import type { Segment, SegmentConditionType } from "@/features/people/segments/types"
-import { DisplayError, Skeleton, Spinner } from "@/ui"
+import { Skeleton, Spinner } from "@/ui"
 
 import { useAdvancedFiltersDialogContext } from "../advanced-filters-dialog-context"
+
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 export type SegmentSelectionRenderedView = "viewSegmentConditions" | "editSegmentConditions"
@@ -73,19 +75,17 @@ const SegmentSelectionTab = () => {
 			{!!selectedSegmentOption?.value && (
 				<div className='relative flex flex-1 flex-col gap-4 overflow-hidden rounded-xl bg-[#F7F7F7] p-4'>
 					<div className='flex w-full flex-col overflow-y-auto'>
-						{isFetching && (
-							<div className='h-full w-full flex-center'>
-								<Spinner size='lg' />
-							</div>
-						)}
+						<Suspense fallback={<Skeleton className='h-full w-full' />}>
+							{isFetching && (
+								<div className='h-full w-full flex-center'>
+									<Spinner size='lg' />
+								</div>
+							)}
 
-						{isError && <DisplayError />}
+							{isError && <DisplayError />}
 
-						{isSuccess && (
-							<Suspense fallback={<Skeleton className='h-full w-full' />}>
-								<RenderedView setView={setSegmentSelectionTabView} segment={segment} />
-							</Suspense>
-						)}
+							{isSuccess && <RenderedView setView={setSegmentSelectionTabView} segment={segment} />}
+						</Suspense>
 					</div>
 				</div>
 			)}

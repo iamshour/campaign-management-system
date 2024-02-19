@@ -1,5 +1,5 @@
 //#region Import
-import type { BaseFetchListArgs } from "@/core/lib/redux-toolkit/types"
+import type { GetListParams } from "@/core/lib/redux-toolkit/types"
 import type { OptionType } from "@/ui"
 //#endregion
 
@@ -53,14 +53,14 @@ export type SegmentConditionType = {
 // <----------------------->
 
 /**
- * Arguments passed to the server whilst using the `getSegments` query to fetch Segments List
+ * Arguments passed to the getSegments` query, used to fetch Segments List
  */
-export type GetSegmentArgs = BaseFetchListArgs<Segment>
+export type GetSegmentsParams = GetListParams<Segment>
 
 /**
- * Arguments passed to the server whilst using the `createSegment` mutation to post a new created segment entry
+ * Body Arguments passed to the `createSegment` mutation, used to post a new created segment entry
  */
-export type createSegmentArgsType = Pick<Segment, "name"> &
+export type CreateSegmentBody = Pick<Segment, "name"> &
 	Partial<Pick<Segment, "id" | "description">> & {
 		contactSegmentConditionList: {
 			id?: string
@@ -77,7 +77,7 @@ export type createSegmentArgsType = Pick<Segment, "name"> &
 	}
 
 /**
- * Returned data shape from the `uploadContactsMutation` mutation function, which runs when users uploads a file
+ * Returned data shape from the `getSegmentById` query, used to get Segment details
  */
 export type GetSegmentByIdReturnValue = Pick<Segment, "id" | "name" | "description"> & {
 	contactSegmentConditionDetailsList: {

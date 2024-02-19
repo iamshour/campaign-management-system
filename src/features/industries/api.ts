@@ -1,35 +1,35 @@
 //#region Import
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
-import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
+import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import { getListOfKey } from "@/utils"
 
 import type {
 	IndustryType,
-	GetIndustriesListArgs,
-	AddNewIndustryArgs,
-	DeleteIndustryTemplatesArgs,
-	UpdateIndustryArgs,
+	GetIndustriesParams,
+	AddNewIndustryBody,
+	DeleteIndustryTemplatesBody,
+	UpdateIndustryBody,
 	SmsIndustryTemplateType,
-	GetSmsIndustryTemplatesArgs,
-	UpdateSmsIndustryTemplateArgs,
+	GetSmsIndustryTemplatesParams,
+	UpdateSmsIndustryTemplateBody,
 } from "./types"
 //#endregion
 
 const industriesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getIndustries: builder.query<ListDataReturnType<IndustryType>, GetIndustriesListArgs>({
+		getIndustries: builder.query<GetListReturnType<IndustryType>, GetIndustriesParams>({
 			query: (params) => ({ url: "/industry", params }),
 			providesTags: (result) => providesList(getListOfKey(result?.list, "id"), "Industry"),
 			transformResponse,
 		}),
 
-		addNewIndustry: builder.mutation<any, AddNewIndustryArgs>({
+		addNewIndustry: builder.mutation<any, AddNewIndustryBody>({
 			query: (body) => ({ url: "/industry", method: "POST", body }),
 			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
 		}),
 
-		updateIndustry: builder.mutation<any, UpdateIndustryArgs>({
+		updateIndustry: builder.mutation<any, UpdateIndustryBody>({
 			query: ({ id, ...body }) => ({ url: `/industry/${id}`, method: "PATCH", body }),
 			invalidatesTags: (res, error, { id }) => {
 				if (!res) return []
@@ -49,7 +49,7 @@ const industriesApi = api.injectEndpoints({
 
 		// SMS Industry Templates Queries/Mutations
 
-		getSmsIndustryTemplates: builder.query<ListDataReturnType<SmsIndustryTemplateType>, GetSmsIndustryTemplatesArgs>({
+		getSmsIndustryTemplates: builder.query<GetListReturnType<SmsIndustryTemplateType>, GetSmsIndustryTemplatesParams>({
 			query: (params) => ({ url: "/template/prebuilt", params }),
 			providesTags: (result, error, arg) => [{ type: "Industry", id: arg?.industryId }],
 			transformResponse,
@@ -66,13 +66,13 @@ const industriesApi = api.injectEndpoints({
 			invalidatesTags: (res, error, { industryId }) => (res ? [{ type: "Industry", id: industryId }] : []),
 		}),
 
-		updateSmsIndustryTemplate: builder.mutation<any, UpdateSmsIndustryTemplateArgs>({
+		updateSmsIndustryTemplate: builder.mutation<any, UpdateSmsIndustryTemplateBody>({
 			query: ({ id, ...body }) => ({ url: `/template/prebuilt/${id}`, method: "PUT", body }),
 			// TODO: invalidate Industry by id & SmsIndustryTemplate by id, refer to addContactsToGroup
 			invalidatesTags: (res) => (res ? [{ type: "SmsTemplate", id: "LIST" }] : []),
 		}),
 
-		deleteIndustryTemplates: builder.mutation<any, DeleteIndustryTemplatesArgs>({
+		deleteIndustryTemplates: builder.mutation<any, DeleteIndustryTemplatesBody>({
 			query: ({ id, templatesIds }) => ({ url: `/templates/delete/${id}`, method: "POST", body: { templatesIds } }),
 			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
 		}),

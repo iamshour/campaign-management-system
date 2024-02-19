@@ -6,16 +6,16 @@ import { twMerge } from "tailwind-merge"
 
 import { formatISO, dateFnsAdd, objHasFalseyValues, type Locale } from "@/utils"
 
-import Button, { type ButtonProps } from "../button"
-import Label from "../label"
-import Popover from "../popover"
-import CalendarSkeleton from "../skeletons/calendar-skeleton"
+import Button from "../button/button"
+import Label from "../label/label"
+import Popover from "../popover/popover"
+import Skeleton from "../skeleton/skeleton"
 
 import DateRangePlaceholder from "./date-range-placeholder"
 
 import RadixIconsCalendar from "~icons/radix-icons/calendar"
 
-const Calendar = lazy(() => import("../calendar"))
+const Calendar = lazy(() => import("../calendar/calendar"))
 //#endregion
 
 export type DateRange = Partial<Record<"startDate" | "endDate", string>>
@@ -27,7 +27,7 @@ export interface DateRangePicker {
 	className?: string
 	label?: string
 	placeholder?: string
-	triggerProps?: ButtonProps
+	triggerProps?: React.ComponentPropsWithoutRef<typeof Button>
 	popoverContentProps?: PopperContentProps
 	calendarProps?: Omit<React.ComponentPropsWithoutRef<typeof Calendar>, "onSelect" | "selected" | "mode">
 }
@@ -125,3 +125,16 @@ const DateRangePicker = ({
 }
 
 export default DateRangePicker
+
+const CalendarSkeleton = () => (
+	<div className='grid h-[350px] w-[544px] grid-cols-2 gap-4 p-4'>
+		<div className='w-/1/2 flex h-full flex-col gap-4'>
+			<Skeleton className='h-[56px] w-full' />
+			<Skeleton className='h-full w-full flex-1' />
+		</div>
+		<div className='w-/1/2 flex h-full flex-col gap-4'>
+			<Skeleton className='h-[56px] w-full' />
+			<Skeleton className='h-full w-full flex-1' />
+		</div>
+	</div>
+)

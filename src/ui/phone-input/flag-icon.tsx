@@ -2,7 +2,7 @@
 import flags from "react-phone-number-input/flags"
 import { twMerge } from "tailwind-merge"
 
-import type { CountryOption } from "../select-country-popover"
+import type { CountryOption } from "../select-country-popover/select-country-popover"
 
 import RadixIconsGlobe from "~icons/radix-icons/globe"
 //#endregion

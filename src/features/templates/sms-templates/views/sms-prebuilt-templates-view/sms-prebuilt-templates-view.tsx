@@ -5,13 +5,15 @@ import { Link } from "react-router-dom"
 import appPaths from "@/core/constants/app-paths"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateAdvancedTableState } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import { updateDataGridState } from "@/core/slices/data-grid-slice/data-grid-slice"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import type { SharedListViewProps } from "@/core/types"
 import type { SmsIndustryTemplateType } from "@/features/industries/types"
-import { DisplayError, SearchInput } from "@/ui"
+import { SearchInput } from "@/ui"
 
 import SmsPrebuiltTemplateCard from "./sms-prebuilt-template-card"
+
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 const SmsPrebuiltTemplatesFilters = lazy(
 	() => import("./sms-prebuilt-templates-filters/sms-prebuilt-templates-filters")
 )
@@ -21,13 +23,13 @@ const TablePagination = lazy(() => import("@/ui/table/table-pagination"))
 const SmsPrebuiltTemplatesView = ({ list, isFetching, count }: SharedListViewProps<SmsIndustryTemplateType>) => {
 	const dispatch = useDispatch()
 
-	const { offset, limit } = useSelector<AdvancedTableStateType<"sms-prebuilt-templates">>(
-		({ advancedTable }) => advancedTable["sms-prebuilt-templates"]
+	const { offset, limit } = useSelector<DataGridState<"sms-prebuilt-templates">>(
+		({ dataGrid }) => dataGrid["sms-prebuilt-templates"]
 	)
 
 	const updateState = useCallback(
-		(newState: Partial<AdvancedTableStateType<"sms-prebuilt-templates">>) => {
-			dispatch(updateAdvancedTableState({ "sms-prebuilt-templates": newState }))
+		(newState: Partial<DataGridState<"sms-prebuilt-templates">>) => {
+			dispatch(updateDataGridState({ "sms-prebuilt-templates": newState }))
 		},
 		[dispatch]
 	)
@@ -42,7 +44,7 @@ const SmsPrebuiltTemplatesView = ({ list, isFetching, count }: SharedListViewPro
 				{!list?.length ? (
 					<DisplayError className='flex-1' />
 				) : (
-					<div className='grid flex-1 justify-evenly gap-6 overflow-y-auto p-4 pt-0 [grid-template-columns:repeat(auto-fit,377px)] [grid-template-rows:repeat(auto-fit,285px)]'>
+					<div className='flex flex-1 flex-wrap gap-6 overflow-y-auto p-4 pt-0'>
 						{list.map(({ id, ...prebuiltTemplateDetails }) => (
 							<Link key={id} to={`${appPaths.SMS_TEMPLATES_PREBUILT_TEMPLATES}/${id}`}>
 								<SmsPrebuiltTemplateCard

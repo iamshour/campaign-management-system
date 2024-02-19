@@ -3,7 +3,7 @@ import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { getContactSearchFilter } from "@/features/people/contacts/utils"
 import { useGetSegmentsQuery } from "@/features/people/segments/api"
 import { DataTableSkeleton } from "@/ui"
@@ -14,9 +14,9 @@ const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const SegmentsRoute = () => {
-	const { offset, limit, order, sort, appliedFiltersCount, searchTerm } = useSelector<
-		AdvancedTableStateType<"segments">
-	>(({ advancedTable }) => advancedTable["segments"])
+	const { offset, limit, order, sort, appliedFiltersCount, searchTerm } = useSelector<DataGridState<"segments">>(
+		({ dataGrid }) => dataGrid["segments"]
+	)
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetSegmentsQuery(
 		{

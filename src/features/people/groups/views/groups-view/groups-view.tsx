@@ -2,7 +2,7 @@
 import { lazy } from "react"
 import { useNavigate } from "react-router-dom"
 
-import AdvancedTable from "@/core/components/advanced-table"
+import DataGrid from "@/core/components/data-grid"
 import type { SharedListViewProps } from "@/core/types"
 import grouspsTableColumns from "@/features/people/groups/constants/groups-table-columns"
 import type { Group } from "@/features/people/groups/types"
@@ -18,22 +18,22 @@ const GroupsView = ({ count, ...tableProps }: SharedListViewProps<Group>) => {
 	const navigate = useNavigate()
 
 	return (
-		<AdvancedTable tableKey='groups' count={count}>
-			<AdvancedTable.FiltersBar>
-				<AdvancedTable.FiltersBar.Header />
-				<AdvancedTable.FiltersBar.Content>
+		<DataGrid dataGridKey='groups' count={count}>
+			<DataGrid.FiltersBar>
+				<DataGrid.FiltersBar.Header />
+				<DataGrid.FiltersBar.Content>
 					<GroupsViewFiltersContent />
-				</AdvancedTable.FiltersBar.Content>
-				<AdvancedTable.FiltersBar.Footer />
-			</AdvancedTable.FiltersBar>
+				</DataGrid.FiltersBar.Content>
+				<DataGrid.FiltersBar.Footer />
+			</DataGrid.FiltersBar>
 
-			<AdvancedTable.Content>
-				<AdvancedTable.TopBar>
+			<DataGrid.Content>
+				<DataGrid.TopBar>
 					<GroupsViewTopBar />
-				</AdvancedTable.TopBar>
+				</DataGrid.TopBar>
 
-				<AdvancedTable.MultiViewLayout>
-					<AdvancedTable.Body
+				<DataGrid.MultiViewLayout>
+					<DataGrid.Body
 						GridCard={GroupCard}
 						columns={grouspsTableColumns}
 						gridClassName='[grid-template-columns:repeat(auto-fit,470px)] 3xl:[grid-template-columns:repeat(auto-fit,480px)] [grid-template-rows:repeat(auto-fit,250px)]'
@@ -41,11 +41,11 @@ const GroupsView = ({ count, ...tableProps }: SharedListViewProps<Group>) => {
 						onRowClick={({ groupId }) => navigate(groupId)}
 						{...tableProps}
 					/>
-				</AdvancedTable.MultiViewLayout>
+				</DataGrid.MultiViewLayout>
 
-				<AdvancedTable.Pagination pageLimits={[10, 20, 30]} />
-			</AdvancedTable.Content>
-		</AdvancedTable>
+				<DataGrid.Pagination pageLimits={[10, 20, 30]} />
+			</DataGrid.Content>
+		</DataGrid>
 	)
 }
 

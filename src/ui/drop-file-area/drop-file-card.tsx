@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next"
 
 import { formatBytes } from "@/utils"
 
-import Button from "../button"
-import Tooltip from "../tooltip"
+import Button from "../button/button"
+import Tooltip from "../tooltip/tooltip"
 
 import { ImagePreview } from "./drop-file-card-image-preview"
 

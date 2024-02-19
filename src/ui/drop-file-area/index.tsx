@@ -4,7 +4,7 @@ import Dropzone from "react-dropzone"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
-import Spinner from "../spinner"
+import Spinner from "../spinner/spinner"
 
 import PajamasImport from "~icons/pajamas/import"
 

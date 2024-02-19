@@ -3,7 +3,7 @@ import { Suspense, lazy } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 
 import useSelector from "@/core/hooks/useSelector"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { Button, Skeleton } from "@/ui"
 
 import PhUserPlus from "~icons/ph/user-plus"
@@ -17,8 +17,8 @@ const SmsIndustryTemplatesViewTopbar = () => {
 	const navigate = useNavigate()
 	const { pathname } = useLocation()
 
-	const { selection } = useSelector<AdvancedTableStateType<"sms-industry-templates">>(
-		({ advancedTable }) => advancedTable["sms-industry-templates"]
+	const { selection } = useSelector<DataGridState<"sms-industry-templates">>(
+		({ dataGrid }) => dataGrid["sms-industry-templates"]
 	)
 
 	return (

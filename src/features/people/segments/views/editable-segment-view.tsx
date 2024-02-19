@@ -13,7 +13,7 @@ import SegmentCollapsible from "../components/segment-collapsible"
 import SegmentsFunnelEditable from "../components/segments-funnel-editable"
 import { emptySegmentCondition } from "../constants/preset-segments"
 import SegmentSchema, { type SegmentSchemaType } from "../schemas/segment-schema"
-import type { Segment, SegmentConditionType, createSegmentArgsType } from "../types"
+import type { Segment, SegmentConditionType, CreateSegmentBody } from "../types"
 import { areConditionsValid } from "../utils"
 
 import MdiFileDocument from "~icons/mdi/file-document"
@@ -69,7 +69,7 @@ const EditableSegmentView = ({ defaultValues, view }: EditableSegmentViewProps) 
 	const onFormSubmit = async (data: SegmentSchemaType) => {
 		if (!areFunnelConditionsValid || !view) return
 
-		const transformedBody: createSegmentArgsType = {
+		const transformedBody: CreateSegmentBody = {
 			...data,
 			contactSegmentConditionList: conditions?.map((condition) => ({
 				id: condition?.id,
@@ -157,7 +157,7 @@ const EditableSegmentView = ({ defaultValues, view }: EditableSegmentViewProps) 
 				</div>
 
 				<Footer className='flex-1 items-end'>
-					<Button type='reset' variant='outline' onClick={() => navigate(state?.from || appPaths.SEGMENTS)}>
+					<Button type='reset' variant='outline' as='link' to={state?.from || appPaths.SEGMENTS}>
 						{t("actions.cancel")}
 					</Button>
 

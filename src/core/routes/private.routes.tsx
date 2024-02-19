@@ -1,4 +1,5 @@
 //#region Import
+import { lazy } from "react"
 import { Navigate, RouteObject } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"
@@ -10,7 +11,9 @@ import ExportsRoutes from "@/features/people/exports/routes/exports.routes"
 import GroupsRoutes from "@/features/people/groups/routes/groups.routes"
 import SegmentsRoutes from "@/features/people/segments/routes/segments.routes"
 import SmsTemplatesRoutes from "@/features/templates/sms-templates/routes/sms-templates.routes"
-import { DisplayError } from "@/ui"
+
+// eslint-disable-next-line react-refresh/only-export-components
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 /**

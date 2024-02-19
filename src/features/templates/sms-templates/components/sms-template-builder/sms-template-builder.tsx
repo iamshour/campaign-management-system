@@ -85,7 +85,7 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 						description='Fill your template basic info'
 					/>
 
-					<div className='flex flex-row flex-wrap gap-6'>
+					<div className='flex flex-row flex-wrap gap-6 ps-2'>
 						<Form.Field
 							control={control}
 							name='name'

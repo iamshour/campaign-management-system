@@ -1,17 +1,11 @@
 //#region Import
-import { lazy } from "react"
-
+import DataGridDateCell from "@/core/components/data-grid-date-cell"
 import type { ColumnType } from "@/ui"
 
 import type { Group } from "../types"
+import GroupsViewTableActions from "../views/groups-view/groups-view-table-actions"
 
 import groupFieldsMap from "./group-fields-map"
-
-// eslint-disable-next-line react-refresh/only-export-components
-const AdvancedTableDateCell = lazy(() => import("@/core/components/advanced-table-date-cell"))
-
-// eslint-disable-next-line react-refresh/only-export-components
-const GroupsViewTableActions = lazy(() => import("../views/groups-view/groups-view-table-actions"))
 //#endregion
 
 const grouspsTableColumns: ColumnType<Group>[] = [
@@ -30,7 +24,7 @@ const grouspsTableColumns: ColumnType<Group>[] = [
 	{
 		accessorKey: "createdAt",
 		header: groupFieldsMap.createdAt,
-		cell: (date) => <AdvancedTableDateCell date={date} />,
+		cell: (date) => <DataGridDateCell date={date} />,
 	},
 	{
 		accessorKey: "actions",

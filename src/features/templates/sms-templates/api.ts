@@ -1,20 +1,20 @@
 //#region Import
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
-import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
+import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 
 import type {
 	SmsTemplateType,
-	GetSmsTemplatesArgs,
-	DeleteSmsTemplatesArgs,
-	AddNewSmsTemplateArgs,
-	UpdateSmsTemplateArgs,
+	GetSmsTemplatesParams,
+	DeleteSmsTemplatesBody,
+	AddNewSmsTemplateBody,
+	UpdateSmsTemplateBody,
 } from "./types"
 //#endregion
 
 const smsTemplatesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getSmsTemplates: builder.query<ListDataReturnType<SmsTemplateType>, GetSmsTemplatesArgs>({
+		getSmsTemplates: builder.query<GetListReturnType<SmsTemplateType>, GetSmsTemplatesParams>({
 			query: (params) => ({ url: "/template/sms", params }),
 			providesTags: (result) =>
 				providesList(
@@ -30,18 +30,18 @@ const smsTemplatesApi = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		addNewSmsTemplate: builder.mutation<any, AddNewSmsTemplateArgs>({
+		addNewSmsTemplate: builder.mutation<any, AddNewSmsTemplateBody>({
 			query: (body) => ({ url: "/template/sms", method: "POST", body }),
 			invalidatesTags: (res) => (res ? [{ type: "SmsTemplate", id: "LIST" }] : []),
 		}),
 
-		updateSmsTemplate: builder.mutation<any, UpdateSmsTemplateArgs>({
+		updateSmsTemplate: builder.mutation<any, UpdateSmsTemplateBody>({
 			query: ({ id, ...body }) => ({ url: `/template/sms/${id}`, method: "PATCH", body }),
 			invalidatesTags: (res) => (res ? [{ type: "SmsTemplate", id: res?.id }] : []),
 		}),
 
-		deleteSmsTemplates: builder.mutation<any, DeleteSmsTemplatesArgs>({
-			query: (templatesIds) => ({ url: `/templates/delete`, method: "POST", body: { templatesIds } }),
+		deleteSmsTemplates: builder.mutation<any, DeleteSmsTemplatesBody>({
+			query: (templatesIds) => ({ url: `/template/sms/delete`, method: "POST", body: { templatesIds } }),
 			invalidatesTags: (res) => (res ? [{ type: "SmsTemplate", id: "LIST" }] : []),
 		}),
 	}),

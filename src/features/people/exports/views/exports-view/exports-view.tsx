@@ -1,7 +1,7 @@
 //#region Import
 import { lazy } from "react"
 
-import AdvancedTable from "@/core/components/advanced-table"
+import DataGrid from "@/core/components/data-grid"
 import type { SharedListViewProps } from "@/core/types"
 import exportsTableColumns from "@/features/people/exports/constants/exports-table-columns"
 import type { ContactExports } from "@/features/people/exports/types"
@@ -10,22 +10,22 @@ const ExportsViewFiltersContent = lazy(() => import("./exports-view-filters-cont
 //#endregion
 
 const ExportsView = ({ count, ...tableProps }: SharedListViewProps<ContactExports>) => (
-	<AdvancedTable tableKey='contacts-exports' count={count}>
-		<AdvancedTable.FiltersBar>
-			<AdvancedTable.FiltersBar.Header />
-			<AdvancedTable.FiltersBar.Content>
+	<DataGrid dataGridKey='contacts-exports' count={count}>
+		<DataGrid.FiltersBar>
+			<DataGrid.FiltersBar.Header />
+			<DataGrid.FiltersBar.Content>
 				<ExportsViewFiltersContent />
-			</AdvancedTable.FiltersBar.Content>
-			<AdvancedTable.FiltersBar.Footer />
-		</AdvancedTable.FiltersBar>
+			</DataGrid.FiltersBar.Content>
+			<DataGrid.FiltersBar.Footer />
+		</DataGrid.FiltersBar>
 
-		<AdvancedTable.Content>
-			<AdvancedTable.TopBar />
+		<DataGrid.Content>
+			<DataGrid.TopBar />
 
-			<AdvancedTable.Body columns={exportsTableColumns} classNames={{ wrapper: "px-4" }} {...tableProps} />
-			<AdvancedTable.Pagination />
-		</AdvancedTable.Content>
-	</AdvancedTable>
+			<DataGrid.Body columns={exportsTableColumns} classNames={{ wrapper: "px-4" }} {...tableProps} />
+			<DataGrid.Pagination />
+		</DataGrid.Content>
+	</DataGrid>
 )
 
 export default ExportsView

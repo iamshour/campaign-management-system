@@ -7,7 +7,7 @@ import type { ColumnType } from "@/ui"
 
 import industryFieldsMap from "./industry-fields-map"
 
-const AdvancedTableDateCell = lazy(() => import("@/core/components/advanced-table-date-cell"))
+const DataGridDateCell = lazy(() => import("@/core/components/data-grid-date-cell"))
 const IndustriesViewTableIcon = lazy(
 	() => import("@/features/industries/views/industries-view/industries-view-table-icon")
 )
@@ -35,14 +35,14 @@ const industriesTableColumns: ColumnType<IndustryType>[] = [
 	{
 		accessorKey: "createdAt",
 		header: industryFieldsMap.createdAt,
-		cell: (date) => <AdvancedTableDateCell date={date} />,
+		cell: (date) => <DataGridDateCell date={date} />,
 		sortable: true,
 	},
 	{
 		accessorKey: "actions",
-		// Hide Actions if Industry is default one (named `others` from server)
+		// Hide Actions if Industry is default one (named `other` from server)
 		cell: (_, row) =>
-			row?.name.toLocaleLowerCase() !== "others" && (
+			row?.name.toLocaleLowerCase() !== "other" && (
 				<IndustriesViewTableActions {...row}>
 					<BiThreeDotsVertical />
 				</IndustriesViewTableActions>

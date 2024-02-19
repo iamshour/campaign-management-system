@@ -1,5 +1,5 @@
 //#region Import
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 import SmsTemplatesEmptySvg from "@/assets/sms-templates-empty.svg?react"
 import LabelledHints from "@/core/components/labelled-hints"
@@ -7,7 +7,6 @@ import { Button } from "@/ui"
 //#endregion
 
 const SmsTemplatesEmptyView = () => {
-	const navigate = useNavigate()
 	const { pathname } = useLocation()
 
 	return (
@@ -26,7 +25,7 @@ const SmsTemplatesEmptyView = () => {
 				<p className='mb-6 text-center'>
 					Create a new template or use our predefined templates to start sending your campaigns
 				</p>
-				<Button onClick={() => navigate("new-template", { state: { from: pathname } })} className='h-min px-10 py-3'>
+				<Button as='link' to='new-template' state={{ from: pathname }} className='h-min px-10 py-3'>
 					Create Template
 				</Button>
 			</div>

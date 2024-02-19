@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetSmsIndustryTemplateByIdQuery } from "@/features/industries/api"
 import { FullViewSkeleton } from "@/ui"
+import incrementNumberSuffix from "@/utils/increment-number-suffix"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 const CreateSmsIndustryTemplateView = lazy(
@@ -20,7 +21,7 @@ const CreateSmsIndustryTemplateRoute = () => {
 		skip: !templateId?.length,
 		selectFromResult: ({ data, ...rest }) => ({
 			defaultValues: data && {
-				name: data.name,
+				name: incrementNumberSuffix(data.name),
 				type: data.type,
 				language: data.language,
 				status: data.status,

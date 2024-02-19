@@ -1,5 +1,5 @@
 //#region Import
-import type { BaseFetchListArgs } from "@/core/lib/redux-toolkit/types"
+import type { GetListParams } from "@/core/lib/redux-toolkit/types"
 import type { DateRange } from "@/ui"
 
 import type { ContactFilters } from "../contacts/types"
@@ -42,14 +42,14 @@ type ExportsSearchFilters = {
 }
 
 /**
- * Arguments passed to the server whilst using the `getExports` query to fetch for export files
+ * Params passed to the `getExports` query, used to fetch export files
  */
-export type GetExportsArgs = BaseFetchListArgs<ContactExports> & DateRange & ExportsSearchFilters
+export type GetExportsParams = GetListParams<ContactExports> & DateRange & ExportsSearchFilters
 
 /**
- * Arguments passed to the server whilst using the `downloadExport` mutation function to download an exported file
+ * Params passed to the `downloadExport` mutation function to download an exported file
  */
-export type DownloadExportArgs = Record<"id" | "fileName", string>
+export type DownloadExportParams = Record<"id" | "fileName", string>
 
 /**
  * Enum of Contact Fields to be exported. Created as enum not string literal to be used in zod validation for exportsSchema
@@ -65,10 +65,9 @@ export enum ContactExportField {
 }
 
 /**
- * Arguments passed to the server whilst using the `submitExportsFile` mutation to export a new contacts file
+ * Body Arguments passed to the `submitExportsFile` mutation, used to export a new contacts file
  */
-
-export type SubmitExportsFileArgs = Pick<ContactExports, "fileName"> &
+export type SubmitExportsFileBody = Pick<ContactExports, "fileName"> &
 	ContactFilters & {
 		exportedFields: ContactExportField[]
 	}

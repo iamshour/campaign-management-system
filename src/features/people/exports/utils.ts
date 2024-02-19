@@ -1,7 +1,7 @@
 //#region Import
 import { format } from "@/utils"
 
-import { ExportsType } from "./dialogs/export-fields-dialog/export-fields-dialog-content"
+import type { ExportsType } from "./dialogs/export-fields-dialog/export-fields-dialog-content"
 //#endregion
 
 /**

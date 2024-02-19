@@ -1,5 +1,5 @@
 //#region Import
-import type { BaseFetchListArgs } from "@/core/lib/redux-toolkit/types"
+import type { GetListParams } from "@/core/lib/redux-toolkit/types"
 import type { DateRange } from "@/ui"
 //#endregion
 
@@ -21,7 +21,7 @@ export type SmsTemplateStatusOption = "PUBLISHED" | "DRAFT"
 /**
  * Shape of fetched SMS Template
  */
-export interface SmsTemplateType {
+export type SmsTemplateType = {
 	id: string
 	name: string
 	type: SmsTemplateTypeOption
@@ -42,9 +42,9 @@ export type SmsTemplatesTableFiltersType = {
 }
 
 /**
- * Arguments used for the `getSmsTemplates` query, passed for the server as params when fetching SMS Templates List
+ * Params passed to the `getSmsTemplates` query, used for fetching SMS Templates List
  */
-export type GetSmsTemplatesArgs = BaseFetchListArgs<SmsTemplateType> &
+export type GetSmsTemplatesParams = GetListParams<SmsTemplateType> &
 	DateRange & {
 		name?: string
 		statuses?: SmsTemplateStatusOption[]
@@ -54,16 +54,16 @@ export type GetSmsTemplatesArgs = BaseFetchListArgs<SmsTemplateType> &
 	}
 
 /**
- * Arguments passed to the server whilst using the `addNewSmsTemplate` mutation to create a new SMS Template entry
+ * Body Arguments passed to the `addNewSmsTemplate` mutation, used to create a new SMS Template entry
  */
-export type AddNewSmsTemplateArgs = Omit<SmsTemplateType, "updatedAt" | "id">
+export type AddNewSmsTemplateBody = Omit<SmsTemplateType, "updatedAt" | "id">
 
 /**
- * Arguments passed to the server whilst using the `updateSmsTemplate` mutation to update a SMS Template
+ * Body Arguments passed to the `updateSmsTemplate` mutation, used to update an existing SMS Template entry
  */
-export type UpdateSmsTemplateArgs = Omit<SmsTemplateType, "updatedAt">
+export type UpdateSmsTemplateBody = Omit<SmsTemplateType, "updatedAt">
 
 /**
- * Arguments used for the `deleteSmsTemplates` query, passed for the server as params when deleting SMS Template/s
+ * Body Arguments passed to the `deleteSmsTemplates` mutation, used for deleting one or more SMS Template/s
  */
-export type DeleteSmsTemplatesArgs = string[]
+export type DeleteSmsTemplatesBody = string[]

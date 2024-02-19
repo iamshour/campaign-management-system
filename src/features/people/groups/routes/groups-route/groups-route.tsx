@@ -3,7 +3,7 @@ import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetGroupsQuery } from "@/features/people/groups/api"
 import { DataTableSkeleton } from "@/ui"
@@ -14,9 +14,9 @@ const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const GroupsRoute = () => {
-	const { offset, limit, sort, order, filters, searchTerm, appliedFiltersCount } = useSelector<
-		AdvancedTableStateType<"groups">
-	>(({ advancedTable }) => advancedTable["groups"])
+	const { offset, limit, sort, order, filters, searchTerm, appliedFiltersCount } = useSelector<DataGridState<"groups">>(
+		({ dataGrid }) => dataGrid["groups"]
+	)
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetGroupsQuery(
 		{

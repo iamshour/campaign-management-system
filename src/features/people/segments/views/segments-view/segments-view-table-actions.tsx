@@ -10,7 +10,7 @@ import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 //#endregion
 
 /**
- * Table Actions Component used inside td of AdvancedTable used in `SegmentsView` Component
+ * Table Actions Component used inside td of DataGrid used in `SegmentsView` Component
  *
  * @param param0.id Row Id that would have edit/delete/eport actions supported
  * @returns

@@ -29,7 +29,7 @@ const SmsPrebuiltTemplateCard = memo(
 				)}>
 				<div
 					style={{ background: backgroundImage }}
-					className='h-[70%] w-full bg-cover p-4 before:absolute before:left-0 before:right-0 before:top-0 before:h-36 before:w-full before:bg-gradient-to-t before:from-black/0 before:to-black/60 before:[content:""]'>
+					className='h-[70%] w-full bg-cover p-4 before:absolute before:left-0 before:right-0 before:top-0 before:h-36 before:bg-gradient-to-t before:from-black/0 before:to-black/60 before:[content:""]   after:absolute after:bottom-0 after:left-0 after:right-0 after:h-32 after:bg-gradient-to-b after:from-black/0 after:to-black/30 after:[content:""]'>
 					<p className='relative z-10 text-white'>
 						<span className='font-light'>Industry: </span>
 						{industryId?.length ? industryId : "N/A"}

@@ -4,13 +4,14 @@ import { persistReducer, type PersistConfig } from "redux-persist"
 import storage from "redux-persist/lib/storage"
 import { createBlacklistFilter } from "redux-persist-transform-filter"
 
-import advancedTableReducer from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableSliceStateType, TableKey } from "@/core/slices/advanced-table-slice/types"
 import AppReducer, { type AppSliceState } from "@/core/slices/app-slice"
+import advancedTableReducer from "@/core/slices/data-grid-slice/data-grid-slice"
+import type { DataGridSliceStateType, DataGridKey } from "@/core/slices/data-grid-slice/types"
 import authReducer from "@/features/authentication/slice"
 import type { AuthSliceState } from "@/features/authentication/types"
 
 import api from "./api"
+
 //#endregion
 
 // const APP_PREFIX = `${import.meta.env.VITE_APP_PREFIX}_`
@@ -19,7 +20,7 @@ const APP_PREFIX = "BLUE.AI_CMS"
 export type RootState = {
 	auth: AuthSliceState
 	app: AppSliceState
-	advancedTable: AdvancedTableSliceStateType
+	dataGrid: DataGridSliceStateType
 }
 
 const rootPersistConfig = {
@@ -36,14 +37,14 @@ const advancedTablePersistConfig: PersistConfig<any> = {
 	keyPrefix: APP_PREFIX,
 	key: "ADVANCED_TABLE",
 	storage,
-	whitelist: ["contacts", "groups"] as Partial<TableKey>[],
+	whitelist: ["contacts", "groups"] as Partial<DataGridKey>[],
 	transforms: [nestedContactsBlacklistedKeys, nestedGroupsBlacklistedKeys],
 }
 
 const reducer = combineReducers({
 	auth: authReducer,
 	app: AppReducer,
-	advancedTable: persistReducer(advancedTablePersistConfig, advancedTableReducer),
+	dataGrid: persistReducer(advancedTablePersistConfig, advancedTableReducer),
 	[api.reducerPath]: api.reducer,
 })
 

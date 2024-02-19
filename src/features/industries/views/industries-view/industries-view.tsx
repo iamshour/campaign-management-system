@@ -2,7 +2,7 @@
 import { lazy } from "react"
 import { useNavigate } from "react-router"
 
-import AdvancedTable from "@/core/components/advanced-table"
+import DataGrid from "@/core/components/data-grid"
 import type { SharedListViewProps } from "@/core/types"
 import industriesTableColumns from "@/features/industries/constants/industries-table-columns"
 import type { IndustryType } from "@/features/industries/types"
@@ -17,22 +17,22 @@ const IndustriesView = ({ count, ...tableProps }: SharedListViewProps<IndustryTy
 	const navigate = useNavigate()
 
 	return (
-		<AdvancedTable tableKey='industries' count={count}>
-			<AdvancedTable.FiltersBar>
-				<AdvancedTable.FiltersBar.Header />
-				<AdvancedTable.FiltersBar.Content>
+		<DataGrid dataGridKey='industries' count={count}>
+			<DataGrid.FiltersBar>
+				<DataGrid.FiltersBar.Header />
+				<DataGrid.FiltersBar.Content>
 					<IndustriesViewFiltersContent />
-				</AdvancedTable.FiltersBar.Content>
-				<AdvancedTable.FiltersBar.Footer />
-			</AdvancedTable.FiltersBar>
+				</DataGrid.FiltersBar.Content>
+				<DataGrid.FiltersBar.Footer />
+			</DataGrid.FiltersBar>
 
-			<AdvancedTable.Content>
-				<AdvancedTable.TopBar>
+			<DataGrid.Content>
+				<DataGrid.TopBar>
 					<IndustriesViewTopBar />
-				</AdvancedTable.TopBar>
+				</DataGrid.TopBar>
 
-				<AdvancedTable.MultiViewLayout>
-					<AdvancedTable.Body
+				<DataGrid.MultiViewLayout>
+					<DataGrid.Body
 						GridCard={IndustryCard}
 						columns={industriesTableColumns}
 						gridClassName='[grid-template-columns:repeat(auto-fit,470px)] 3xl:[grid-template-columns:repeat(auto-fit,480px)] [grid-template-rows:repeat(auto-fit,250px)]'
@@ -40,11 +40,11 @@ const IndustriesView = ({ count, ...tableProps }: SharedListViewProps<IndustryTy
 						onRowClick={({ id }) => navigate(`${id}/sms`)}
 						{...tableProps}
 					/>
-				</AdvancedTable.MultiViewLayout>
+				</DataGrid.MultiViewLayout>
 
-				<AdvancedTable.Pagination />
-			</AdvancedTable.Content>
-		</AdvancedTable>
+				<DataGrid.Pagination />
+			</DataGrid.Content>
+		</DataGrid>
 	)
 }
 

@@ -2,15 +2,22 @@
 import type { SortDirection } from "@/ui"
 //#endregion
 
-export interface ListDataReturnType<T> {
+export interface GetListReturnType<T> {
+	/**
+	 * List of entries fetched
+	 */
 	list: T[]
+
+	/**
+	 * Count of fetched entries
+	 */
 	count: number
 }
 
 /**
  * Base Arguments used to when fetching for list of entries
  */
-export type BaseFetchListArgs<TData> = {
+export type GetListParams<TData> = {
 	/**
 	 * A key of the passed Data used for sorting
 	 */

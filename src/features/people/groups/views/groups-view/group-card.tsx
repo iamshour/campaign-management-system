@@ -1,6 +1,5 @@
 //#region Import
 import { format } from "date-fns"
-import { useNavigate } from "react-router"
 
 import type { Group } from "@/features/people/groups/types"
 import { Button } from "@/ui"
@@ -12,8 +11,6 @@ import IcRoundGroups from "~icons/ic/round-groups"
 //#endregion
 
 const GroupCard = ({ groupId, groupName, description, createdAt, contactsCount }: Group) => {
-	const navigate = useNavigate()
-
 	return (
 		<div className='flex h-[250px] w-full max-w-full flex-col rounded-xl shadow-[0px_0px_6px_#00000021]'>
 			<div className='flex w-full justify-between gap-2 overflow-hidden border-b border-b-gray-200 p-4'>
@@ -46,11 +43,7 @@ const GroupCard = ({ groupId, groupName, description, createdAt, contactsCount }
 			</ul>
 
 			<div className='border-t border-t-gray-200'>
-				<Button
-					variant='ghost'
-					size='lg'
-					className='w-full rounded-xl rounded-t-none'
-					onClick={() => navigate(groupId)}>
+				<Button as='link' to={groupId} variant='ghost' size='lg' className='w-full rounded-xl rounded-t-none'>
 					<IcRoundGroups />
 					<span>View Contacts</span>
 				</Button>

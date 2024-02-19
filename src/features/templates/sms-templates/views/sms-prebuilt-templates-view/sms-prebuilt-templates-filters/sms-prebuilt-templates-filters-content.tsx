@@ -3,8 +3,8 @@ import { useCallback } from "react"
 
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import type { IndustryType, SmsIndustryTemplatesTableFiltersType } from "@/features/industries/types"
 import smsTemplateLanguagesOptions from "@/features/templates/sms-templates/constants/sms-template-languages-options"
 import smsTemplateTypesOptions from "@/features/templates/sms-templates/constants/sms-template-types-options"
@@ -24,8 +24,8 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 	// Getting Default User's Industry from User info in authSlice (Token))
 	const defaultUserIndustryId = useSelector(({ auth }) => auth?.user?.industryId)
 
-	const { filters } = useSelector<AdvancedTableStateType<"sms-prebuilt-templates">>(
-		({ advancedTable }) => advancedTable["sms-prebuilt-templates"]
+	const { filters } = useSelector<DataGridState<"sms-prebuilt-templates">>(
+		({ dataGrid }) => dataGrid["sms-prebuilt-templates"]
 	)
 
 	const onFilterClick = useCallback(

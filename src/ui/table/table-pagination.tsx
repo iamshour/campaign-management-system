@@ -1,8 +1,8 @@
 //#region Import
 import { useTranslation } from "react-i18next"
 
-import Button from "../button"
-import Select from "../select"
+import Button from "../button/button"
+import Select from "../select/select"
 
 import LucideChevronLeft from "~icons/lucide/chevron-left"
 import LucideChevronRight from "~icons/lucide/chevron-right"

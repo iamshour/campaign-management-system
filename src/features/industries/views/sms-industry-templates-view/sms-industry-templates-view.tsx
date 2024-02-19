@@ -2,7 +2,7 @@
 import { lazy } from "react"
 import { useNavigate } from "react-router-dom"
 
-import AdvancedTable from "@/core/components/advanced-table"
+import DataGrid from "@/core/components/data-grid"
 import type { SharedListViewProps } from "@/core/types"
 import type { SmsIndustryTemplateType } from "@/features/industries/types"
 import smsTemplatesTableClassNames from "@/features/templates/sms-templates/constants/sms-templates-table-classnames"
@@ -19,31 +19,31 @@ const SmsIndustryTemplatesView = ({ count, ...tableProps }: SharedListViewProps<
 	const navigate = useNavigate()
 
 	return (
-		<AdvancedTable tableKey='sms-industry-templates' count={count}>
-			<AdvancedTable.FiltersBar>
-				<AdvancedTable.FiltersBar.Header />
-				<AdvancedTable.FiltersBar.Content>
+		<DataGrid dataGridKey='sms-industry-templates' count={count}>
+			<DataGrid.FiltersBar>
+				<DataGrid.FiltersBar.Header />
+				<DataGrid.FiltersBar.Content>
 					<SmsIndustryTemplatesViewFiltersContent />
-				</AdvancedTable.FiltersBar.Content>
-				<AdvancedTable.FiltersBar.Footer />
-			</AdvancedTable.FiltersBar>
+				</DataGrid.FiltersBar.Content>
+				<DataGrid.FiltersBar.Footer />
+			</DataGrid.FiltersBar>
 
-			<AdvancedTable.Content>
-				<AdvancedTable.TopBar>
+			<DataGrid.Content>
+				<DataGrid.TopBar>
 					<SmsIndustryTemplatesViewTopbar />
-				</AdvancedTable.TopBar>
+				</DataGrid.TopBar>
 
-				<AdvancedTable.Body
+				<DataGrid.Body
 					columns={columns}
 					classNames={smsTemplatesTableClassNames}
 					onRowClick={({ id }) => navigate(id)}
 					{...tableProps}
 				/>
-				<AdvancedTable.Pagination>
-					<AdvancedTable.Pagination.Message />
-				</AdvancedTable.Pagination>
-			</AdvancedTable.Content>
-		</AdvancedTable>
+				<DataGrid.Pagination>
+					<DataGrid.Pagination.Message />
+				</DataGrid.Pagination>
+			</DataGrid.Content>
+		</DataGrid>
 	)
 }
 

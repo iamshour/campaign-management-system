@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge"
 
-import Skeleton from "../skeleton"
+import Skeleton from "../skeleton/skeleton"
 
 interface TableSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
 	/**
