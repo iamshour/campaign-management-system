@@ -33,28 +33,30 @@ const SmsTemplatesFiltersContent = () => {
 		<>
 			<DateRangePicker
 				label='Last updated date'
-				dateRange={filters?.dateRange}
-				updateDateRange={(dateRange) => updateSelection({ dateRange })}
+				dateRange={{ startDate: filters?.startDate, endDate: filters?.endDate }}
+				updateDateRange={(dateRange) =>
+					updateSelection({ startDate: dateRange?.startDate, endDate: dateRange?.endDate })
+				}
 			/>
 			<SelectStatusesPopover
 				isMulti
-				selection={filters?.templateStatus?.map((value) => ({ label: value, value })) || []}
+				selection={filters?.statuses?.map((value) => ({ label: value, value })) || []}
 				updateSelection={(selection) =>
-					updateSelection({ templateStatus: getListOfKey(selection, "value") as SmsTemplateStatusOption[] })
+					updateSelection({ statuses: getListOfKey(selection, "value") as SmsTemplateStatusOption[] })
 				}
 			/>
 			<SelectTypesPopover
 				isMulti
-				selection={filters?.templateType?.map((value) => ({ label: value, value })) || []}
+				selection={filters?.types?.map((value) => ({ label: value, value })) || []}
 				updateSelection={(selection) =>
-					updateSelection({ templateType: getListOfKey(selection, "value") as SmsTemplateTypeOption[] })
+					updateSelection({ types: getListOfKey(selection, "value") as SmsTemplateTypeOption[] })
 				}
 			/>
 			<SelectLanguagesPopover
 				isMulti
-				selection={filters?.templateLanguage?.map((value) => ({ label: value, value })) || []}
+				selection={filters?.languages?.map((value) => ({ label: value, value })) || []}
 				updateSelection={(selection) =>
-					updateSelection({ templateLanguage: getListOfKey(selection, "value") as SmsTemplateLanguageOption[] })
+					updateSelection({ languages: getListOfKey(selection, "value") as SmsTemplateLanguageOption[] })
 				}
 			/>
 		</>

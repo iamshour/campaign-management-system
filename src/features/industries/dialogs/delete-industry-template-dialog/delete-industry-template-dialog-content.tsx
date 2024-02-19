@@ -5,10 +5,11 @@ import { useParams } from "react-router-dom"
 
 import { useDataGridContext } from "@/core/components/data-grid"
 import useDispatch from "@/core/hooks/useDispatch"
+import useSelector from "@/core/hooks/useSelector"
 import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { useDeleteIndustryTemplatesMutation } from "@/features/industries/api"
+import type { DeleteIndustryTemplatesBody } from "@/features/industries/types"
 import { Button, Footer, Input, Label } from "@/ui"
-
 //#endregion
 
 export interface DeleteIndustryTemplateDialogContentProps {
@@ -33,6 +34,7 @@ const DeleteIndustryTemplateDialogContent = ({ ids = [], onClose }: DeleteIndust
 
 	const [triggerDeleteIndustryTemplates, { isLoading }] = useDeleteIndustryTemplatesMutation()
 	const [promptInputValue, setPromptInputValue] = useState<string>()
+	const { filters, searchTerm } = useSelector(({ dataGrid }) => dataGrid["sms-industry-templates"])
 
 	const { count } = useDataGridContext()
 
@@ -42,10 +44,14 @@ const DeleteIndustryTemplateDialogContent = ({ ids = [], onClose }: DeleteIndust
 	const onSubmit = async () => {
 		if (!templatesToBeDeletedCount) return
 
-		// TODO: handle deletion when selection="ALL", to be done based on endpoint when integrating with BE
+		const body: DeleteIndustryTemplatesBody = {
+			industryId: industryId!,
+			prebuiltTemplatesIds: ids,
+			prebuiltTemplateFilter: filters,
+			prebuiltTemplateSearchFilter: { name: searchTerm, any: searchTerm?.length ? true : undefined },
+		}
 
-		// NOTE: deleting endpoint is currently failing because we're using json server
-		await triggerDeleteIndustryTemplates({ id: industryId || "", templatesIds: ids })
+		await triggerDeleteIndustryTemplates(body)
 			.unwrap()
 			.then(() => {
 				onClose()

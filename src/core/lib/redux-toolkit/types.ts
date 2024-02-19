@@ -17,7 +17,7 @@ export interface GetListReturnType<T> {
 /**
  * Base Arguments used to when fetching for list of entries
  */
-export type GetListParams<TData> = {
+export type PaginationAndSorting<TData> = {
 	/**
 	 * A key of the passed Data used for sorting
 	 */

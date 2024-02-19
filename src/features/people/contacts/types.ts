@@ -1,5 +1,5 @@
 //#region Import
-import type { GetListParams } from "@/core/lib/redux-toolkit/types"
+import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type { DateRange, OptionType } from "@/ui"
 
 import type { ParsedPhoneNumberDto } from "./utils"
@@ -64,7 +64,7 @@ export type ContactFilters = {
 /**
  * Params passed to the `getContactsQuery` query, used to fetch Contacts List
  */
-export type GetContactsParams = GetListParams<Contact> &
+export type GetContactsParams = PaginationAndSorting<Contact> &
 	DateRange & {
 		excludedGroupsList?: string[]
 		tags?: string[]
@@ -96,7 +96,7 @@ export type GetContactBytIdReturnType = Omit<Contact, "groups"> & {
 /**
  * Params passed to the `getTags` query, used to fetch Tags List
  */
-export type GetTagsParams = GetListParams<string> & { name?: string }
+export type GetTagsParams = PaginationAndSorting<string> & { name?: string }
 
 /**
  * Body Arguments passed to the `updateMultipleContacts` mutation, used to update multiple contacts

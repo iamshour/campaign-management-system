@@ -5,7 +5,7 @@ import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
 import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import type { IndustryType, SmsIndustryTemplatesTableFiltersType } from "@/features/industries/types"
+import type { IndustryType, PrebuiltTemplateFilter } from "@/features/industries/types"
 import smsTemplateLanguagesOptions from "@/features/templates/sms-templates/constants/sms-template-languages-options"
 import smsTemplateTypesOptions from "@/features/templates/sms-templates/constants/sms-template-types-options"
 import type { SmsTemplateLanguageOption, SmsTemplateTypeOption } from "@/features/templates/sms-templates/types"
@@ -29,7 +29,7 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 	)
 
 	const onFilterClick = useCallback(
-		(updatedFilters: Partial<SmsIndustryTemplatesTableFiltersType>) => {
+		(updatedFilters: Partial<PrebuiltTemplateFilter>) => {
 			dispatch(updateFilters({ "sms-prebuilt-templates": updatedFilters }))
 		},
 		[dispatch]
@@ -37,26 +37,26 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 
 	const onTemplateTypeCheck = useCallback(
 		(value: SmsTemplateTypeOption) => {
-			const prevTemplateTypes = filters?.templateType || []
+			const prevTemplateTypes = filters?.types || []
 			const updatedTemplateTypes = prevTemplateTypes?.includes(value)
 				? prevTemplateTypes?.filter((v) => v !== value)
 				: [...prevTemplateTypes, value]
 
-			onFilterClick({ templateType: updatedTemplateTypes })
+			onFilterClick({ types: updatedTemplateTypes })
 		},
-		[filters?.templateType, onFilterClick]
+		[filters?.types, onFilterClick]
 	)
 
 	const onTemplateLanguageCheck = useCallback(
 		(value: SmsTemplateLanguageOption) => {
-			const prevTemplateLanguage = filters?.templateLanguage || []
+			const prevTemplateLanguage = filters?.languages || []
 			const updatedTemplateLanguages = prevTemplateLanguage?.includes(value)
 				? prevTemplateLanguage?.filter((v) => v !== value)
 				: [...prevTemplateLanguage, value]
 
-			onFilterClick({ templateLanguage: updatedTemplateLanguages })
+			onFilterClick({ languages: updatedTemplateLanguages })
 		},
-		[filters?.templateLanguage, onFilterClick]
+		[filters?.languages, onFilterClick]
 	)
 
 	return (
@@ -98,7 +98,7 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 						<div key={value} className='flex flex-row items-center space-x-3 space-y-0 ps-3'>
 							<Checkbox
 								id={value}
-								checked={filters?.templateType?.includes(value)}
+								checked={filters?.types?.includes(value)}
 								onCheckedChange={() => onTemplateTypeCheck(value)}
 							/>
 							<Label className='cursor-pointer p-0 transition-basic hover:text-primary-900' htmlFor={value}>
@@ -112,7 +112,7 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 						<div key={value} className='flex flex-row items-center space-x-3 space-y-0 ps-3'>
 							<Checkbox
 								id={value}
-								checked={filters?.templateLanguage?.includes(value)}
+								checked={filters?.languages?.includes(value)}
 								onCheckedChange={() => onTemplateLanguageCheck(value)}
 							/>
 							<Label className='cursor-pointer p-0 transition-basic hover:text-primary-900' htmlFor={value}>
@@ -128,7 +128,7 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 
 export default SmsPrebuiltTemplatesFiltersContent
 
-const sortButtonsLabels: { filterBy?: SmsIndustryTemplatesTableFiltersType["filterBy"]; label: string }[] = [
+const sortButtonsLabels: { filterBy?: PrebuiltTemplateFilter["filterBy"]; label: string }[] = [
 	{ label: "All Templates" },
 	{ filterBy: "RECENT", label: "Recently Added" },
 	{ filterBy: "POPULAR", label: "Most Popular" },

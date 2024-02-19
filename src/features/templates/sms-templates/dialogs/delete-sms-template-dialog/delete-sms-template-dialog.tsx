@@ -30,9 +30,7 @@ const DeleteSmsTemplateDialog = ({ children, ids }: DeleteSmsTemplateDialogProps
 			<Dialog.Content
 				title='Delete Template'
 				className={
-					ids?.length == 1
-						? "h-[201px] w-[319.5px] sm:h-[209px] sm:w-[350px]"
-						: "h-[343px] w-[319.5px]  sm:h-[327px] sm:w-[350px]"
+					ids?.length == 1 ? "h-[201px] w-[319.5px] sm:h-[209px] sm:w-[350px]" : "w-[390px] xs:h-[295px] sm:h-[303px] "
 				}>
 				<DeleteSmsTemplateDialogContent ids={ids} onClose={() => setOpen(false)} />
 			</Dialog.Content>

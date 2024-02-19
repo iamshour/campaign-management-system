@@ -1,5 +1,5 @@
 //#region Import
-import type { GetListParams } from "@/core/lib/redux-toolkit/types"
+import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type { DateRange } from "@/ui"
 //#endregion
 
@@ -32,26 +32,19 @@ export type SmsTemplateType = {
 }
 
 /**
- * Filters used in Filters bar (Internally / Only Client-Side - Not sent to the server)
+ * Filters used in Filters bar, and in some api calls such as in params of `getSmsTemplates` query, and body of `deleteSmsTemplates` mutation
  */
-export type SmsTemplatesTableFiltersType = {
-	dateRange?: DateRange
-	templateStatus?: SmsTemplateStatusOption[]
-	templateType?: SmsTemplateTypeOption[]
-	templateLanguage?: SmsTemplateLanguageOption[]
+export type TemplateFilter = DateRange & {
+	types?: SmsTemplateTypeOption[]
+	languages?: SmsTemplateLanguageOption[]
+	statuses?: SmsTemplateStatusOption[]
 }
+type TemplateSearchFilter = { name?: string; any?: boolean }
 
 /**
  * Params passed to the `getSmsTemplates` query, used for fetching SMS Templates List
  */
-export type GetSmsTemplatesParams = GetListParams<SmsTemplateType> &
-	DateRange & {
-		name?: string
-		statuses?: SmsTemplateStatusOption[]
-		types?: SmsTemplateTypeOption[]
-		languages?: SmsTemplateLanguageOption[]
-		any?: boolean
-	}
+export type GetSmsTemplatesParams = PaginationAndSorting<SmsTemplateType> & TemplateFilter & TemplateSearchFilter
 
 /**
  * Body Arguments passed to the `addNewSmsTemplate` mutation, used to create a new SMS Template entry
@@ -66,4 +59,8 @@ export type UpdateSmsTemplateBody = Omit<SmsTemplateType, "updatedAt">
 /**
  * Body Arguments passed to the `deleteSmsTemplates` mutation, used for deleting one or more SMS Template/s
  */
-export type DeleteSmsTemplatesBody = string[]
+export type DeleteSmsTemplatesBody = {
+	templatesIds?: string[]
+	templateFilter?: TemplateFilter
+	templateSearchFilter?: TemplateSearchFilter
+}

@@ -1,9 +1,9 @@
 //#region Import
-import { Checkbox } from "@radix-ui/react-checkbox"
 import { Suspense, isValidElement, lazy, useCallback, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
+import Checkbox from "../checkbox/checkbox"
 import Skeleton from "../skeleton/skeleton"
 
 import type { RowData, TableProps } from "./types"
@@ -63,15 +63,11 @@ const Table = <TData extends RowData>({
 										classNames?.theadTh
 									)}
 									key='checkbox-th-cell'>
-									<Suspense fallback={<Skeleton className='h-8' />}>
-										<Checkbox
-											className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 '
-											checked={selection === "ALL" || (!!list?.length && list?.length === selection?.length)}
-											onCheckedChange={() =>
-												updateSelection(list?.map((row) => row[rowIdSelector as keyof typeof row]))
-											}
-										/>
-									</Suspense>
+									<Checkbox
+										className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 '
+										checked={selection === "ALL" || (!!list?.length && list?.length === selection?.length)}
+										onCheckedChange={() => updateSelection(list?.map((row) => row[rowIdSelector as keyof typeof row]))}
+									/>
 								</th>
 							) : accessorKey === "actions" ? (
 								<th key={idx + String(accessorKey)} className={twMerge("!w-[80px]", classNames?.theadTh)} />

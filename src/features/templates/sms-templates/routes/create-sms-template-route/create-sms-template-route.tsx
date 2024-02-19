@@ -24,7 +24,7 @@ const CreateSmsTemplateRoute = () => {
 		templateType === "smsPrebuiltTemplate" ? useGetSmsIndustryTemplateByIdQuery : useGetSmsTemplateByIdQuery
 
 	const { defaultValues, isFetching, isError, error } = useFetchHook(templateId!, {
-		skip: !templateType || !templateId,
+		skip: !templateId,
 		selectFromResult: ({ data, ...rest }) => ({
 			defaultValues: data && {
 				name: templateType !== "smsPrebuiltTemplate" ? incrementNumberSuffix(data.name) : data.name,
