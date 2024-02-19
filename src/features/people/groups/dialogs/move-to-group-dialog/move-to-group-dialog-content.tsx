@@ -6,15 +6,15 @@ import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
 import { object, string, any } from "zod"
 
-import { useAdvancedTableContext } from "@/core/components/advanced-table"
+import { useDataGridContext } from "@/core/components/data-grid"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { getContactFilterAndContactSearchFilter } from "@/features/people/contacts/utils"
 import { useMoveContactsToGroupMutation } from "@/features/people/groups/api"
 import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option-type-schema"
-import type { MoveContactsToGroupArgs } from "@/features/people/groups/types"
+import type { MoveContactsToGroupBody } from "@/features/people/groups/types"
 import { Button, Footer, Form, Skeleton, useForm, type OptionType } from "@/ui"
 import { cleanObject } from "@/utils"
 
@@ -42,10 +42,10 @@ const MoveToGroupDialogContent = ({ id, onClose }: MoveToGroupDialogContentProps
 
 	const dispatch = useDispatch()
 
-	const { selection, filters, searchTerm } = useSelector<AdvancedTableStateType<"contacts-in-group">>(
-		({ advancedTable }) => advancedTable["contacts-in-group"]
+	const { selection, filters, searchTerm } = useSelector<DataGridState<"contacts-in-group">>(
+		({ dataGrid }) => dataGrid["contacts-in-group"]
 	)
-	const { count } = useAdvancedTableContext()
+	const { count } = useDataGridContext()
 
 	const [triggerMoveContactsToGroup, { isLoading }] = useMoveContactsToGroupMutation()
 
@@ -61,7 +61,7 @@ const MoveToGroupDialogContent = ({ id, onClose }: MoveToGroupDialogContentProps
 
 		const contactsIdsToBeMoved = id ? [id] : !!selection && selection !== "ALL" ? selection : undefined
 
-		const body: MoveContactsToGroupArgs = {
+		const body: MoveContactsToGroupBody = {
 			contactsIds: contactsIdsToBeMoved,
 			fromGroupId: currentGroupId!,
 			toGroupId: group?.value,

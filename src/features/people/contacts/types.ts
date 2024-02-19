@@ -1,5 +1,5 @@
 //#region Import
-import type { BaseFetchListArgs } from "@/core/lib/redux-toolkit/types"
+import type { GetListParams } from "@/core/lib/redux-toolkit/types"
 import type { DateRange, OptionType } from "@/ui"
 
 import type { ParsedPhoneNumberDto } from "./utils"
@@ -8,13 +8,7 @@ import type { ParsedPhoneNumberDto } from "./utils"
 /**
  * Fetched Tag entry type (Fetched from `getTagsList` query)
  */
-export type Tag = {
-	// Currently Returned from server, but not needed at all
-	// id: null
-	// count: number
-
-	name: string
-}
+export type Tag = { name: string }
 
 /**
  * Fetched Contact Type
@@ -68,9 +62,9 @@ export type ContactFilters = {
 }
 
 /**
- * Arguments passed to the server whilst using the `getContactsQuery` query to fetch Contacts List
+ * Params passed to the `getContactsQuery` query, used to fetch Contacts List
  */
-export type GetContactsArgs = BaseFetchListArgs<Contact> &
+export type GetContactsParams = GetListParams<Contact> &
 	DateRange & {
 		excludedGroupsList?: string[]
 		tags?: string[]
@@ -79,15 +73,20 @@ export type GetContactsArgs = BaseFetchListArgs<Contact> &
 	} & ContactFilters["contactSearchFilter"]
 
 /**
- * Arguments passed to the server whilst using the `addNewContact` mutation to post a new contact entry
+ * Body Arguments passed to the `addNewContact` mutation, used to post a new contact entry
  */
-export type AddNewContactArgs = Omit<Contact, "id" | "phoneNumber" | "createdAt" | "updatedAt"> & {
+export type AddNewContactBody = Omit<Contact, "id" | "phoneNumber" | "createdAt" | "updatedAt"> & {
 	branchId?: string
 	phoneNumberDto?: ParsedPhoneNumberDto
 }
 
 /**
- * Returned data shape from the `getContactById` query
+ * Body Arguments passed to the `updateContact` mutation, used to update an existing contact entry
+ */
+export type UpdateContactBody = AddNewContactBody & { id: string }
+
+/**
+ * Returned response shape after calling the `getContactById` query
  */
 export type GetContactBytIdReturnType = Omit<Contact, "groups"> & {
 	branchId?: string
@@ -95,20 +94,20 @@ export type GetContactBytIdReturnType = Omit<Contact, "groups"> & {
 }
 
 /**
- * Arguments passed to the server whilst using the `getTagsList` query to fetch Tags List
+ * Params passed to the `getTags` query, used to fetch Tags List
  */
-export type GetTagsListArgs = BaseFetchListArgs<string> & { name?: string }
+export type GetTagsParams = GetListParams<string> & { name?: string }
 
 /**
- * Arguments passed to the server whilst using the `updateMultipleContacts` mutation to update multiple contacts
+ * Body Arguments passed to the `updateMultipleContacts` mutation, used to update multiple contacts
  */
-export type UpdateMultipleContactsArgs = (ContactFilters & { addToContact: boolean }) & {
+export type UpdateMultipleContactsBody = (ContactFilters & { addToContact: boolean }) & {
 	tags?: string[]
 	groups?: string[]
 }
 
 /**
- * Returned data shape from the `uploadContactsMutation` mutation function, which runs when users uploads a file
+ * Returned response shape after calling the `uploadContactsMutation` mutation function, which runs when users uploads a file
  */
 export type UploadContactsMutationReturnType = {
 	/**
@@ -125,9 +124,9 @@ export type UploadContactsMutationReturnType = {
 export type ContactScreamSnakeCaseKey = "FIRST_NAME" | "LAST_NAME" | "EMAIL" | "PHONE_NUMBER" | "NOTE"
 
 /**
- * Arguments passed to the server whilst using the `importFileMapping` mutation to import File mapping by user
+ * Body Arguments passed to the `importFileMapping` mutation, used to import File mapping by user
  */
-export type ImportFileMappingArgs = {
+export type ImportFileMappingBody = {
 	/**
 	 * File of which the data should be retrieved from
 	 */
@@ -154,6 +153,9 @@ export type ImportFileMappingArgs = {
 	columnNameToIndexMapping: Partial<Record<ContactScreamSnakeCaseKey, number>>
 }
 
+/**
+ * Returned response shape after calling the `importFileMapping` mutation function, which runs when users uploads file mapping (submission of 2nd step in import contact dialog)
+ */
 export type ImportFileMappingReturnType = {
 	/**
 	 * Total number of successfully validated contacts.

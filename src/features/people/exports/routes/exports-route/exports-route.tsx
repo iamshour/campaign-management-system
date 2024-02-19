@@ -3,7 +3,7 @@ import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetExportsQuery } from "@/features/people/exports/api"
 import { DataTableSkeleton } from "@/ui"
@@ -14,9 +14,9 @@ const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const ExportsRoute = () => {
-	const { offset, limit, filters, searchTerm, appliedFiltersCount } = useSelector<
-		AdvancedTableStateType<"contacts-exports">
-	>(({ advancedTable }) => advancedTable["contacts-exports"])
+	const { offset, limit, filters, searchTerm, appliedFiltersCount } = useSelector<DataGridState<"contacts-exports">>(
+		({ dataGrid }) => dataGrid["contacts-exports"]
+	)
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetExportsQuery(
 		{

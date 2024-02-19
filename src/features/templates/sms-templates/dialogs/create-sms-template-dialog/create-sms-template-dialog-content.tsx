@@ -1,5 +1,5 @@
 //#region Import
-import { useNavigate, useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 import TmplateSvg1 from "@/assets/template-creation-1.svg?react"
 import { Button } from "@/ui"
@@ -8,7 +8,6 @@ import CreateSmsPrebuiltTemplateDialog from "../create-sms-prebuilt-template-dia
 //#endregion
 
 const CreateSmsTemplateDialogContent = () => {
-	const navigate = useNavigate()
 	const { pathname } = useLocation()
 
 	return (
@@ -46,7 +45,9 @@ const CreateSmsTemplateDialogContent = () => {
 					variant='outline'
 					size='lg'
 					className='min-w-[212px]'
-					onClick={() => navigate("new-template", { state: { from: pathname } })}>
+					as='link'
+					to='new-template'
+					state={{ from: pathname }}>
 					Create Template
 				</Button>
 			</div>

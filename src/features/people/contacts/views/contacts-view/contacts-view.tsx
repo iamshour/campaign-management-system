@@ -2,9 +2,9 @@
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import AdvancedTable from "@/core/components/advanced-table"
+import DataGrid from "@/core/components/data-grid"
 import useSelector from "@/core/hooks/useSelector"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import type { SharedListViewProps } from "@/core/types"
 import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
 import AdvancedFiltersDialog from "@/features/people/contacts/dialogs/advanced-filters-dialog/advanced-filters-dialog"
@@ -23,14 +23,14 @@ const ContactsView = ({ count, ...tableProps }: SharedListViewProps<Contact>) =>
 
 	const [viewContactId, setViewContactId] = useState<string | undefined>(undefined)
 
-	const { filters } = useSelector<AdvancedTableStateType<"contacts">>(({ advancedTable }) => advancedTable["contacts"])
+	const { filters } = useSelector<DataGridState<"contacts">>(({ dataGrid }) => dataGrid["contacts"])
 	const isAdvancedFiltersApplied = filters?.advancedFilters
 
 	return (
 		<>
-			<AdvancedTable tableKey='contacts' count={count}>
-				<AdvancedTable.FiltersBar>
-					<AdvancedTable.FiltersBar.Header>
+			<DataGrid dataGridKey='contacts' count={count}>
+				<DataGrid.FiltersBar>
+					<DataGrid.FiltersBar.Header>
 						<AdvancedFiltersDialog>
 							<Button
 								className='h-max px-1.5 py-0 pb-0.5 text-primary-600 hover:bg-transparent hover:text-primary-900'
@@ -39,27 +39,27 @@ const ContactsView = ({ count, ...tableProps }: SharedListViewProps<Contact>) =>
 								{t("common:filters-bar.advanced-filters.button")}
 							</Button>
 						</AdvancedFiltersDialog>
-					</AdvancedTable.FiltersBar.Header>
-					<AdvancedTable.FiltersBar.Content>
+					</DataGrid.FiltersBar.Header>
+					<DataGrid.FiltersBar.Content>
 						<ContactsFiltersContent />
 
 						{isAdvancedFiltersApplied && <ContactsViewFiltersPreview />}
-					</AdvancedTable.FiltersBar.Content>
-					<AdvancedTable.FiltersBar.Footer />
-				</AdvancedTable.FiltersBar>
+					</DataGrid.FiltersBar.Content>
+					<DataGrid.FiltersBar.Footer />
+				</DataGrid.FiltersBar>
 
-				<AdvancedTable.Content>
-					<AdvancedTable.TopBar>
+				<DataGrid.Content>
+					<DataGrid.TopBar>
 						<ContactsViewTopbar />
-					</AdvancedTable.TopBar>
+					</DataGrid.TopBar>
 
-					<AdvancedTable.Body columns={tableColumns} onRowClick={({ id }) => setViewContactId(id)} {...tableProps} />
+					<DataGrid.Body columns={tableColumns} onRowClick={({ id }) => setViewContactId(id)} {...tableProps} />
 
-					<AdvancedTable.Pagination>
-						<AdvancedTable.Pagination.Message />
-					</AdvancedTable.Pagination>
-				</AdvancedTable.Content>
-			</AdvancedTable>
+					<DataGrid.Pagination>
+						<DataGrid.Pagination.Message />
+					</DataGrid.Pagination>
+				</DataGrid.Content>
+			</DataGrid>
 
 			<ViewContactDialog
 				id={viewContactId}

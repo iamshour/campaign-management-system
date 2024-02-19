@@ -2,9 +2,9 @@
 import { lazy, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import AdvancedTable from "@/core/components/advanced-table"
+import DataGrid from "@/core/components/data-grid"
 import useDispatch from "@/core/hooks/useDispatch"
-import { clearState } from "@/core/slices/advanced-table-slice/advanced-table-slice"
+import { resetAdvancedTableState } from "@/core/slices/data-grid-slice/data-grid-slice"
 import type { SharedListViewProps } from "@/core/types"
 import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
 import ViewContactDialog from "@/features/people/contacts/dialogs/view-contact-dialog"
@@ -26,32 +26,32 @@ const GroupView = ({ count, ...tableProps }: SharedListViewProps<Contact>) => {
 	useEffect(() => {
 		return () => {
 			// Clearing All RTK-Slice data on unmount, to prevent persisting in-app persistance (for selection, filters, etc.)
-			dispatch(clearState("contacts-in-group"))
+			dispatch(resetAdvancedTableState("contacts-in-group"))
 		}
 	}, [dispatch])
 
 	return (
 		<>
-			<AdvancedTable tableKey='contacts-in-group' count={count}>
-				<AdvancedTable.FiltersBar>
-					<AdvancedTable.FiltersBar.Header />
-					<AdvancedTable.FiltersBar.Content>
+			<DataGrid dataGridKey='contacts-in-group' count={count}>
+				<DataGrid.FiltersBar>
+					<DataGrid.FiltersBar.Header />
+					<DataGrid.FiltersBar.Content>
 						<ContactsFiltersContent />
-					</AdvancedTable.FiltersBar.Content>
-					<AdvancedTable.FiltersBar.Footer />
-				</AdvancedTable.FiltersBar>
+					</DataGrid.FiltersBar.Content>
+					<DataGrid.FiltersBar.Footer />
+				</DataGrid.FiltersBar>
 
-				<AdvancedTable.Content>
-					<AdvancedTable.TopBar>
+				<DataGrid.Content>
+					<DataGrid.TopBar>
 						<GroupViewTopbar />
-					</AdvancedTable.TopBar>
+					</DataGrid.TopBar>
 
-					<AdvancedTable.Body columns={tableColumns} onRowClick={({ id }) => setViewContactId(id)} {...tableProps} />
-					<AdvancedTable.Pagination>
-						<AdvancedTable.Pagination.Message />
-					</AdvancedTable.Pagination>
-				</AdvancedTable.Content>
-			</AdvancedTable>
+					<DataGrid.Body columns={tableColumns} onRowClick={({ id }) => setViewContactId(id)} {...tableProps} />
+					<DataGrid.Pagination>
+						<DataGrid.Pagination.Message />
+					</DataGrid.Pagination>
+				</DataGrid.Content>
+			</DataGrid>
 
 			<ViewContactDialog
 				id={viewContactId}

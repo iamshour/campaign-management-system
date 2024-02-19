@@ -23,9 +23,10 @@ const BuilderPreviewBackgroundSection = ({ src }: BuilderPreviewBackgroundSectio
 			<Tooltip>
 				<Tooltip.Trigger asChild>
 					<Button
+						type='reset'
 						variant='ghost'
-						className='absolute end-2 top-2 h-max w-max rounded-full bg-white bg-opacity-20 p-2 hover:bg-white hover:bg-opacity-50'
-						onClick={() => setValue("backgroundUrl", undefined)}>
+						onClick={() => setValue("backgroundUrl", undefined)}
+						className='absolute end-2 top-2 h-max w-max rounded-full bg-white bg-opacity-20 p-2 hover:bg-white hover:bg-opacity-50'>
 						<RadixIconsCross2 />
 					</Button>
 				</Tooltip.Trigger>

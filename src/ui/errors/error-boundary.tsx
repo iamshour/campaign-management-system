@@ -1,6 +1,6 @@
-import { Component } from "react"
+import { Component, lazy } from "react"
 
-import DisplayError from "./display-error"
+const DisplayError = lazy(() => import("./display-error"))
 
 interface Props {
 	children: React.ReactNode

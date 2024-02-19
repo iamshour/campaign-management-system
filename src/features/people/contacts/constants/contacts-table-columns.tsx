@@ -8,7 +8,7 @@ import type { Contact } from "../types"
 import contactFieldsMap from "./contact-fields-map"
 
 // eslint-disable-next-line react-refresh/only-export-components
-const AdvancedTableDateCell = lazy(() => import("@/core/components/advanced-table-date-cell"))
+const DataGridDateCell = lazy(() => import("@/core/components/data-grid-date-cell"))
 
 // eslint-disable-next-line react-refresh/only-export-components
 const ContactsTableTagsRow = lazy(() => import("../components/contacts-table-tags-row"))
@@ -41,7 +41,7 @@ const contactsTableColumns: ColumnType<Contact>[] = [
 	{
 		accessorKey: "createdAt",
 		header: contactFieldsMap.createdAt,
-		cell: (date) => <AdvancedTableDateCell date={date} />,
+		cell: (date) => <DataGridDateCell date={date} />,
 		sortable: true,
 	},
 	{

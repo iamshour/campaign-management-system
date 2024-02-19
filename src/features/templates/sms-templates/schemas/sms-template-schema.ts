@@ -1,9 +1,9 @@
 //#region Import
 import * as z from "zod"
 
-import { MAX_PLACEHOLDERS, PLACEHOLDER_REGEX } from "../constants/sms-template-body-constants"
+import { MAX_PLACEHOLDERS, PLACEHOLDER_REGEX } from "../constants/sms-template-body-regex"
 import type { SmsTemplateLanguageOption, SmsTemplateTypeOption } from "../types"
-import { getTotalCharactersCount, getMaxTotalCharacters } from "../utils/sms-template-body-utils"
+import { getTotalCharactersCount, getMaxTotalCharacters } from "../utils"
 //#endregion
 
 const SmsTemplateSchema = z.object({
@@ -20,7 +20,7 @@ const SmsTemplateSchema = z.object({
 		.refine(
 			(body) => {
 				const placeholdersCount = body?.match(PLACEHOLDER_REGEX)?.length ?? 0
-				return !(placeholdersCount > MAX_PLACEHOLDERS)
+				return placeholdersCount <= MAX_PLACEHOLDERS
 			},
 			{ message: "Maximum 5 placeholders allowed" }
 		)

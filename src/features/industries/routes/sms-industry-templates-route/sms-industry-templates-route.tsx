@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetSmsIndustryTemplatesQuery } from "@/features/industries/api"
 import { DataTableSkeleton } from "@/ui"
@@ -20,8 +20,8 @@ const SmsIndustryTemplatesRoute = () => {
 	const { industryId } = useParams()
 
 	const { sort, order, offset, limit, filters, appliedFiltersCount, searchTerm } = useSelector<
-		AdvancedTableStateType<"sms-industry-templates">
-	>(({ advancedTable }) => advancedTable["sms-industry-templates"])
+		DataGridState<"sms-industry-templates">
+	>(({ dataGrid }) => dataGrid["sms-industry-templates"])
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } =
 		useGetSmsIndustryTemplatesQuery(

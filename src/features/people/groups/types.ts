@@ -1,8 +1,8 @@
 //#region Import
-import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
+import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import type { TableState } from "@/ui"
 
-import type { Contact, ContactFilters, GetContactsArgs } from "../contacts/types"
+import type { Contact, ContactFilters, GetContactsParams } from "../contacts/types"
 //#endregion
 
 /**
@@ -17,48 +17,49 @@ export interface Group {
 }
 
 /**
- * Arguments used for the `getGroupsQuery` query, passed for the server as params when fetching Groups List
+ * Params passed to the `getGroupsQuery` query, used for fetching Groups List
  */
-export type GroupsArgs = Omit<TableState<Group>, "selection"> & {
+export type GetGroupsParams = Omit<TableState<Group>, "selection"> & {
 	name?: string
 	startDate?: string
 	endDate?: string
 }
 
-export interface GroupWithContactsContacts {
-	contactGroupDto: {
-		id: string
-		name: string
-	}
-	contactResponseList: ListDataReturnType<Contact>
+/**
+ * Returned response shape after calling the `getGroupById` query
+ */
+export type GetGroupByIdReturnType = {
+	contactGroupDto: Record<"id" | "name", string>
+	contactResponseList: GetListReturnType<Contact>
 }
 
-export type GroupWithContactsArgs = GetContactsArgs & {
+/**
+ * Params passed to the `getGroupByIdQuery` query, used for fetching single group by ID
+ */
+export type GetGroupByIdParams = GetContactsParams & {
 	groupId: string
 }
 
 /**
- * Arguments used for the `createGroup` query, passed for the server as params when fetching Groups List
+ * Body Arguments passed to the `createGroup` query, used for creating a new group
  */
-export type CreateGroupArgs = {
+export type CreateGroupBody = {
 	name: string
 	description?: string
 }
 
 /**
- * Arguments used for the `editGroup` mutation, passed for the server as body when editing a Group
+ * Body Arguments passed to the `editGroup` mutation, used for editing a Group
  */
-export type EditGroupArgs = CreateGroupArgs & {
-	groupId: string
-}
+export type EditGroupBody = CreateGroupBody & { groupId: string }
 
 /**
- * Arguments passed to the server whilst using the `addContactsToGroup` mutation to add contact/s to groups
+ * Body Arguments passed to the `addContactsToGroup` mutation, used for adding contact/s to groups
  */
-export type AddContactsToGroupArgs = Omit<ContactFilters, "contactAdvancedFilter"> & { contactGroupsIds: string[] }
+export type AddContactsToGroupBody = Omit<ContactFilters, "contactAdvancedFilter"> & { contactGroupsIds: string[] }
 
 /**
- * Returned data shape from the `addContactsToGroup` mutation
+ * Returned response shape after calling the `addContactsToGroup` mutation
  */
 export type AddContactsToGroupReturnType = {
 	message: string
@@ -66,25 +67,25 @@ export type AddContactsToGroupReturnType = {
 }
 
 /**
- * Arguments passed to the server whilst using the `moveContactsToGroup` mutation to add contact/s to groups
+ * Body Arguments passed to the `moveContactsToGroup` mutation, used to move contact/s from a group to one or more groups
  */
-export type MoveContactsToGroupArgs = Omit<ContactFilters, "contactAdvancedFilter"> & {
+export type MoveContactsToGroupBody = Omit<ContactFilters, "contactAdvancedFilter"> & {
 	toGroupId: string
 	fromGroupId: string
 	moveAndDelete: boolean
 }
 
 /**
- * Returned data shape from the `moveContactsToGroup` mutation
+ * Returned response shape after calling the `moveContactsToGroup` mutation
  */
 export type MoveContactsToGroupReturnType = AddContactsToGroupReturnType
 
 /**
- * Arguments passed to the server whilst using the `removeContactsFromGroup` mutation to add contact/s to groups
+ * Body Arguments passed to the `removeContactsFromGroup` mutation, used to remove contact/s from group/s
  */
-export type RemoveContactsFromGroupArgs = AddContactsToGroupArgs
+export type RemoveContactsFromGroupBody = AddContactsToGroupBody
 
 /**
- * Returned data shape from the `removeContactsFromGroup` mutation
+ * Returned response shape after calling the `removeContactsFromGroup` mutation
  */
 export type RemoveContactsFromGroupReturnType = AddContactsToGroupReturnType

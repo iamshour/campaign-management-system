@@ -2,21 +2,20 @@
 
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import SelectExportedByPopover from "@/features/people/exports/components/select-exported-by-popover"
 import SelectStatusesPopover from "@/features/people/exports/components/select-statuses-popover"
 import type { ContactExportStatusOption } from "@/features/people/exports/types"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
+
 //#endregion
 
 const ExportsViewFiltersContent = () => {
 	const dispatch = useDispatch()
 
-	const { filters } = useSelector<AdvancedTableStateType<"contacts-exports">>(
-		({ advancedTable }) => advancedTable["contacts-exports"]
-	)
+	const { filters } = useSelector<DataGridState<"contacts-exports">>(({ dataGrid }) => dataGrid["contacts-exports"])
 
 	return (
 		<>

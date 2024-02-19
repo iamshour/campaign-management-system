@@ -8,19 +8,21 @@ import { Link } from "react-router-dom"
 import appPaths from "@/core/constants/app-paths"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { FiltersFieldMappingType, TableKey } from "@/core/slices/advanced-table-slice/types"
+import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
+import type { FiltersFieldMappingType, DataGridKey } from "@/core/slices/data-grid-slice/types"
 import { getContactFilterAndContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
 import { useSubmitExportsFileMutation } from "@/features/people/exports/api"
 import exportFields from "@/features/people/exports/constants/export-fields"
 import exportSchema, { type ExportSchemaType } from "@/features/people/exports/schemas/export-schema"
-import type { SubmitExportsFileArgs } from "@/features/people/exports/types"
+import type { SubmitExportsFileBody } from "@/features/people/exports/types"
 import { getDefaultExportsFileName } from "@/features/people/exports/utils"
 import { twMerge, useForm, Button, Checkbox, Footer, Form, Input } from "@/ui"
 import { cleanObject } from "@/utils"
 //#endregion
 
-export type ExportsType = Extract<TableKey, "contacts" | "contacts-in-group" | "segments">
+export type ExportsType = Extract<DataGridKey, "contacts" | "contacts-in-group" | "segments">
+
+const companyName = import.meta.env.VITE_APP_PREFIX
 
 export interface ExportFieldsDialogContentProps {
 	/**
@@ -39,14 +41,14 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 
 	const dispatch = useDispatch()
 
-	const { selection, filters, searchTerm } = useSelector(
-		({ advancedTable }) => advancedTable[exportsType as ExportsType]
-	)
+	const { selection, filters, searchTerm } = useSelector(({ dataGrid }) => dataGrid[exportsType as ExportsType])
+
+	const defaultFileName = getDefaultExportsFileName(companyName, exportsType === "segments" ? "segments" : "contacts")
 
 	const form = useForm<ExportSchemaType>({
 		resolver: zodResolver(exportSchema),
 		defaultValues: {
-			fileName: getDefaultExportsFileName("Blue", exportsType === "segments" ? "segments" : "contacts"),
+			fileName: defaultFileName,
 			exportedFields: [],
 		},
 		mode: "onSubmit",
@@ -73,25 +75,25 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 	}
 
 	const onSubmit = async ({ fileName, exportedFields }: ExportSchemaType) => {
-		let body: SubmitExportsFileArgs = {
+		let body: SubmitExportsFileBody = {
 			fileName,
 			contactsIds: !!selection && selection !== "ALL" ? selection : undefined,
 			exportedFields,
 		}
 
 		if (exportsType === "contacts") {
-			body = {
-				...body,
-				// Statically inferring type of Filters to Its Origin -- Contacts Filters used only in Contacts Table, In order to find advancedFilters without TS erros
-				...getContactAdvancedFilter((filters as FiltersFieldMappingType["contacts"])?.advancedFilters),
-			}
+			// Statically inferring type of Filters to Its Origin -- Contacts Filters used only in Contacts Table, In order to find advancedFilters without TS erros
+			const contactAdvancedFilter = getContactAdvancedFilter(
+				(filters as FiltersFieldMappingType["contacts"])?.advancedFilters
+			)
+
+			body = { ...body, ...contactAdvancedFilter }
 		}
 
 		if (exportsType !== "segments") {
-			body = {
-				...body,
-				...getContactFilterAndContactSearchFilter(filters, searchTerm),
-			}
+			const contactFilterAndContactSearchFilter = getContactFilterAndContactSearchFilter(filters, searchTerm)
+
+			body = { ...body, ...contactFilterAndContactSearchFilter }
 		}
 
 		// Cleaning Body from all undefined values, empty objects, and nested objects with undefined values
@@ -101,7 +103,7 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 			.unwrap()
 			.then(() => {
 				// Clearing Selection list if contacts were selected using their Ids
-				if (cleanBody?.contactsIds) dispatch(clearSelection(exportsType as TableKey))
+				if (cleanBody?.contactsIds) dispatch(clearSelection(exportsType as DataGridKey))
 
 				toast.success(({ id }) => <SuccessToast id={id} />)
 				form.reset()

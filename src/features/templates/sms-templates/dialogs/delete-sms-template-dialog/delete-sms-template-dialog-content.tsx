@@ -2,9 +2,9 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
 
-import { useAdvancedTableContext } from "@/core/components/advanced-table"
+import { useDataGridContext } from "@/core/components/data-grid"
 import useDispatch from "@/core/hooks/useDispatch"
-import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
+import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { useDeleteSmsTemplatesMutation } from "@/features/templates/sms-templates/api"
 import { Button, Footer, Input, Label } from "@/ui"
 //#endregion
@@ -21,16 +21,16 @@ export interface DeleteSmsTemplateDialogContentProps {
 	onClose: () => void
 }
 
-const DeleteSmsTemplateDialogContent = ({ ids, onClose }: DeleteSmsTemplateDialogContentProps) => {
+const DeleteSmsTemplateDialogContent = ({ ids = [], onClose }: DeleteSmsTemplateDialogContentProps) => {
 	const dispatch = useDispatch()
 
 	const [triggerDeleteSmsTemplates, { isLoading }] = useDeleteSmsTemplatesMutation()
 	const [promptInputValue, setPromptInputValue] = useState<string>()
 
-	const { count } = useAdvancedTableContext()
+	const { count } = useDataGridContext()
 
-	const templatesToBeDeletedCount = !ids?.length ?? count
-	const deleteButtonDisabled = ids?.length > 1 && promptInputValue !== `${templatesToBeDeletedCount}`
+	const templatesToBeDeletedCount = ids.length ?? count
+	const deleteButtonDisabled = ids.length > 1 && promptInputValue !== `${templatesToBeDeletedCount}`
 
 	const onSubmit = async () => {
 		if (!templatesToBeDeletedCount) return

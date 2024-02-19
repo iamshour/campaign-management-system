@@ -1,10 +1,11 @@
 //#region Import
+import { lazy } from "react"
 import toast from "react-hot-toast"
 import { Trans, useTranslation } from "react-i18next"
 
 import { useGetInvalidContactsFileMutation } from "@/features/people/contacts/api"
 import type { ContactScreamSnakeCaseKey } from "@/features/people/contacts/types"
-import { isoCountryOptions, twMerge, type IconType, DisplayError } from "@/ui"
+import { isoCountryOptions, twMerge, type IconType } from "@/ui"
 import { getListOfKey } from "@/utils"
 
 import { useImportContactsDialogContext } from "./import-contacts-dialog-context"
@@ -12,6 +13,8 @@ import { useImportContactsDialogContext } from "./import-contacts-dialog-context
 import MaterialSymbolsFitbitCheckSmall from "~icons/material-symbols/fitbit-check-small"
 import PhDatabaseBold from "~icons/ph/database-bold"
 import PhWarningCircle from "~icons/ph/warning-circle"
+
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const ReviewStep = () => {

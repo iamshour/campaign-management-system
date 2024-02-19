@@ -6,6 +6,7 @@ import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetSmsIndustryTemplateByIdQuery } from "@/features/industries/api"
 import { useGetSmsTemplateByIdQuery } from "@/features/templates/sms-templates/api"
 import { FullViewSkeleton } from "@/ui"
+import incrementNumberSuffix from "@/utils/increment-number-suffix"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 const CreateSmsTemplateView = lazy(
@@ -23,10 +24,10 @@ const CreateSmsTemplateRoute = () => {
 		templateType === "smsPrebuiltTemplate" ? useGetSmsIndustryTemplateByIdQuery : useGetSmsTemplateByIdQuery
 
 	const { defaultValues, isFetching, isError, error } = useFetchHook(templateId!, {
-		skip: !templateId,
+		skip: !templateType || !templateId,
 		selectFromResult: ({ data, ...rest }) => ({
 			defaultValues: data && {
-				name: data.name,
+				name: templateType !== "smsPrebuiltTemplate" ? incrementNumberSuffix(data.name) : data.name,
 				type: data.type,
 				language: data.language,
 				status: data.status,

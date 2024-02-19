@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next"
 
 import { useUpdateSegmentMutation } from "@/features/people/segments/api"
 import SegmentsFunnelEditable from "@/features/people/segments/components/segments-funnel-editable"
-import type { SegmentConditionType, createSegmentArgsType } from "@/features/people/segments/types"
+import type { SegmentConditionType, CreateSegmentBody } from "@/features/people/segments/types"
 import { areConditionsValid } from "@/features/people/segments/utils"
 import { Button, Spinner, Tooltip } from "@/ui"
 
@@ -33,7 +33,7 @@ const SegmentConditionsEditContent = ({ setView, segment }: SegmentSelectionRend
 	const onSaveChanges = async () => {
 		if (!areEditableConditionsValid || !selectedSegmentOption) return
 
-		const transformedBody: createSegmentArgsType = {
+		const transformedBody: CreateSegmentBody = {
 			name: segment.name,
 			description: segment.description || "",
 			contactSegmentConditionList: editableConditions?.map((condition) => ({

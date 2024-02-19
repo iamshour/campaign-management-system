@@ -9,7 +9,7 @@ import SmsIndustryTemplateBuilderContent from "@/features/industries/components/
 import SmsIndustryTemplateSchema, {
 	type SmsIndustryTemplateSchemaType,
 } from "@/features/industries/schemas/sms-industry-template-schema"
-import type { AddNewSmsIndustryTemplateArgs } from "@/features/industries/types"
+import type { SmsIndustryTemplateType } from "@/features/industries/types"
 import SmsTemplateBuilder from "@/features/templates/sms-templates/components/sms-template-builder/sms-template-builder"
 import type { SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
 import { Button } from "@/ui"
@@ -32,7 +32,7 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 	const onSubmit = async ({ background, backgroundUrl, ...requestBody }: SmsIndustryTemplateSchemaType) => {
 		if (!requestBody || !smsTemplateStatus) return
 
-		const body: AddNewSmsIndustryTemplateArgs = {
+		const body: Omit<SmsIndustryTemplateType, "id" | "createdAt" | "updatedAt"> = {
 			...requestBody,
 			channel: "SMS",
 			industryId: industryId!,

@@ -3,11 +3,12 @@ import { useState } from "react"
 import toast from "react-hot-toast"
 import { useParams } from "react-router-dom"
 
-import { useAdvancedTableContext } from "@/core/components/advanced-table"
+import { useDataGridContext } from "@/core/components/data-grid"
 import useDispatch from "@/core/hooks/useDispatch"
-import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
+import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { useDeleteIndustryTemplatesMutation } from "@/features/industries/api"
 import { Button, Footer, Input, Label } from "@/ui"
+
 //#endregion
 
 export interface DeleteIndustryTemplateDialogContentProps {
@@ -22,7 +23,7 @@ export interface DeleteIndustryTemplateDialogContentProps {
 	onClose: () => void
 }
 
-const DeleteIndustryTemplateDialogContent = ({ ids, onClose }: DeleteIndustryTemplateDialogContentProps) => {
+const DeleteIndustryTemplateDialogContent = ({ ids = [], onClose }: DeleteIndustryTemplateDialogContentProps) => {
 	/**
 	 * Industry Id from the URL Params
 	 */
@@ -33,10 +34,10 @@ const DeleteIndustryTemplateDialogContent = ({ ids, onClose }: DeleteIndustryTem
 	const [triggerDeleteIndustryTemplates, { isLoading }] = useDeleteIndustryTemplatesMutation()
 	const [promptInputValue, setPromptInputValue] = useState<string>()
 
-	const { count } = useAdvancedTableContext()
+	const { count } = useDataGridContext()
 
-	const templatesToBeDeletedCount = !ids?.length ?? count
-	const deleteButtonDisabled = ids?.length > 1 && promptInputValue !== `${templatesToBeDeletedCount}`
+	const templatesToBeDeletedCount = ids.length ?? count
+	const deleteButtonDisabled = ids.length > 1 && promptInputValue !== `${templatesToBeDeletedCount}`
 
 	const onSubmit = async () => {
 		if (!templatesToBeDeletedCount) return

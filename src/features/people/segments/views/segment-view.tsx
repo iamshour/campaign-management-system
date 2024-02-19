@@ -1,7 +1,7 @@
 //#region Import
 //#region Import
 import { useTranslation } from "react-i18next"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 import { Button, type IconType } from "@/ui"
 
@@ -20,7 +20,6 @@ const SegmentView = ({
 }: Pick<Segment, "name" | "description"> & {
 	conditions?: SegmentConditionType[]
 }) => {
-	const navigate = useNavigate()
 	const { pathname } = useLocation()
 	const { t } = useTranslation("segments", { keyPrefix: "views" })
 
@@ -29,7 +28,7 @@ const SegmentView = ({
 			<div className='flex justify-between'>
 				<h2 className='text-[21px] font-medium'>{t(`viewSegment.title`)}</h2>
 
-				<Button variant='link' size='sm' onClick={() => navigate(`./edit-segment`, { state: { from: pathname } })}>
+				<Button variant='link' size='sm' as='link' to='./edit-segment' state={{ from: pathname }}>
 					<MaterialSymbolsEdit />
 					{t("viewSegment.actions.editSegment")}
 				</Button>

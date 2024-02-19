@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import industriesIconsMap from "@/features/industries/constants/industries-icons-map"
-import type { AddNewIndustryArgs, IndustryType } from "@/features/industries/types"
+import type { AddNewIndustryBody, IndustryType } from "@/features/industries/types"
 import { useForm, Footer, Form, Input, Select, Button, ColorInput } from "@/ui"
 import type { IconType } from "@/ui"
 import { cleanObject } from "@/utils"
@@ -12,7 +12,7 @@ import IndustrySchema from "../schemas/industry-schema"
 //#endregion
 
 interface IndustryFormProps {
-	onSubmit: (data: AddNewIndustryArgs) => void
+	onSubmit: (data: AddNewIndustryBody) => void
 
 	children: React.ReactNode
 
@@ -30,7 +30,7 @@ const IndustryForm = ({ children, onSubmit, defaultValues }: IndustryFormProps) 
 	 * @param param0 data collected by react-hook-form, used to be sent to the server. @template IndustrySchemaType
 	 */
 	const onFormSubmit = (data: IndustrySchemaType) => {
-		const cleanBody: AddNewIndustryArgs = cleanObject(data)
+		const cleanBody: AddNewIndustryBody = cleanObject(data)
 
 		onSubmit(cleanBody)
 	}

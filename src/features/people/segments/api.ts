@@ -1,14 +1,14 @@
 //#region Import
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
-import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
+import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 
-import type { GetSegmentArgs, GetSegmentByIdReturnValue, Segment, createSegmentArgsType } from "./types"
+import type { GetSegmentsParams, GetSegmentByIdReturnValue, Segment, CreateSegmentBody } from "./types"
 //#endregion
 
 const segmentsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getSegments: builder.query<ListDataReturnType<Segment>, GetSegmentArgs>({
+		getSegments: builder.query<GetListReturnType<Segment>, GetSegmentsParams>({
 			query: (params) => ({ url: "/contact/segment", params }),
 			providesTags: (result) =>
 				providesList(
@@ -24,12 +24,12 @@ const segmentsApi = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		createSegment: builder.mutation<any, createSegmentArgsType>({
+		createSegment: builder.mutation<any, CreateSegmentBody>({
 			query: (body) => ({ url: "/contact/segment", method: "POST", body }),
 			invalidatesTags: (res) => (res ? [{ type: "Segment", id: "LIST" }] : []),
 		}),
 
-		updateSegment: builder.mutation<any, createSegmentArgsType>({
+		updateSegment: builder.mutation<any, CreateSegmentBody>({
 			query: ({ id, ...body }) => ({ url: `/contact/segment/${id}`, method: "PUT", body }),
 			invalidatesTags: (res, error, { id }) => {
 				if (!res) return []

@@ -3,7 +3,7 @@ import { Suspense } from "react"
 import { useTranslation } from "react-i18next"
 
 import useSelector from "@/core/hooks/useSelector"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import CreateContactDialog from "@/features/people/contacts/dialogs/create-contact-dialog/create-contact-dialog"
 import ImportContactsDialog from "@/features/people/contacts/dialogs/import-contacts-dialog/import-contacts-dialog"
 import ExportFieldsDialog from "@/features/people/exports/dialogs/export-fields-dialog/export-fields-dialog"
@@ -18,9 +18,7 @@ import PhUserPlus from "~icons/ph/user-plus"
 const ContactsViewTopbar = () => {
 	const { t } = useTranslation("contacts")
 
-	const { selection } = useSelector<AdvancedTableStateType<"contacts">>(
-		({ advancedTable }) => advancedTable["contacts"]
-	)
+	const { selection } = useSelector<DataGridState<"contacts">>(({ dataGrid }) => dataGrid["contacts"])
 
 	return (
 		<>

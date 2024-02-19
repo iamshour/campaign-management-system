@@ -8,7 +8,7 @@ import appPaths from "@/core/constants/app-paths"
 import { useUpdateSmsTemplateMutation } from "@/features/templates/sms-templates/api"
 import SmsTemplateBuilder from "@/features/templates/sms-templates/components/sms-template-builder/sms-template-builder"
 import type { SmsTemplateSchemaType } from "@/features/templates/sms-templates/schemas/sms-template-schema"
-import type { AddNewSmsTemplateArgs, SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
+import type { AddNewSmsTemplateBody, SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
 import { Button } from "@/ui"
 //#endregion
 
@@ -26,7 +26,7 @@ const EditSmsTemplateView = ({ defaultValues }: EditSmsTemplateViewProps) => {
 
 	const [smsTemplateStatus, SetSmsTemplateStatus] = useState<SmsTemplateStatusOption | undefined>()
 
-	const onSubmit = async (requestBody: Omit<AddNewSmsTemplateArgs, "status">) => {
+	const onSubmit = async (requestBody: Omit<AddNewSmsTemplateBody, "status">) => {
 		if (!requestBody || !templateId || !smsTemplateStatus) return
 		await updateSmsTemplate({ id: templateId, ...requestBody, status: smsTemplateStatus })
 			.unwrap()

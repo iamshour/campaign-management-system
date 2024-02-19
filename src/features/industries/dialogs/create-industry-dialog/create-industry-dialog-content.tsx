@@ -3,7 +3,7 @@ import toast from "react-hot-toast"
 
 import { useAddNewIndustryMutation } from "@/features/industries/api"
 import IndustryForm from "@/features/industries/components/industry-form"
-import type { AddNewIndustryArgs } from "@/features/industries/types"
+import type { AddNewIndustryBody } from "@/features/industries/types"
 import { Button } from "@/ui"
 //#endregion
 
@@ -22,7 +22,7 @@ const CreateIndustryDialogContent = ({ onClose }: CreateIndustryDialogContentPro
 	 * @param body Validated data passed back from the `IndustryForm` component
 	 */
 
-	const onSubmit = async (body: AddNewIndustryArgs) => {
+	const onSubmit = async (body: AddNewIndustryBody) => {
 		if (!body) return
 
 		await addIndustry(body)

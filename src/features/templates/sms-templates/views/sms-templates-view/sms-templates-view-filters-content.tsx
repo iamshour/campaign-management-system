@@ -3,8 +3,8 @@ import { useCallback } from "react"
 
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType, FiltersFieldMappingType } from "@/core/slices/advanced-table-slice/types"
+import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
+import type { DataGridState, FiltersFieldMappingType } from "@/core/slices/data-grid-slice/types"
 import SelectLanguagesPopover from "@/features/templates/sms-templates/components/select-languages-popover"
 import SelectStatusesPopover from "@/features/templates/sms-templates/components/select-statuses-popover"
 import SelectTypesPopover from "@/features/templates/sms-templates/components/select-types-popover"
@@ -20,9 +20,7 @@ import { getListOfKey } from "@/utils"
 const SmsTemplatesFiltersContent = () => {
 	const dispatch = useDispatch()
 
-	const { filters } = useSelector<AdvancedTableStateType<"sms-templates">>(
-		({ advancedTable }) => advancedTable["sms-templates"]
-	)
+	const { filters } = useSelector<DataGridState<"sms-templates">>(({ dataGrid }) => dataGrid["sms-templates"])
 
 	const updateSelection = useCallback(
 		(newFilters: Partial<Partial<FiltersFieldMappingType["sms-templates"]>>) => {

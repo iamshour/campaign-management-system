@@ -1,5 +1,5 @@
 //#region Import
-import { Suspense, lazy } from "react"
+import { Suspense, lazy, useMemo } from "react"
 import { useFormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
@@ -22,7 +22,12 @@ const SmsIndustryTemplateBuilderContent = () => {
 
 	const smsTemplate = watch()
 
-	const backgroundUrl = smsTemplate?.backgroundUrl
+	const backgroundUrl = smsTemplate?.backgroundUrl ? `data:image/png;base64,${smsTemplate?.backgroundUrl}` : undefined
+
+	const previewCardBackground = useMemo(
+		() => backgroundUrl ?? (smsTemplate?.background ? URL.createObjectURL(smsTemplate.background) : undefined),
+		[backgroundUrl, smsTemplate?.background]
+	)
 
 	return (
 		<>
@@ -65,9 +70,7 @@ const SmsIndustryTemplateBuilderContent = () => {
 					language={smsTemplate?.language}
 					body={smsTemplate?.body}
 					industryId={""}
-					background={
-						backgroundUrl ?? (smsTemplate.background ? URL.createObjectURL(smsTemplate.background) : undefined)
-					}>
+					background={previewCardBackground}>
 					<Button variant='link' type='button' className='p-0'>
 						Preview Card
 						<IconTooltip content={t("dropArea.previewCardIconTooltipContent")} />

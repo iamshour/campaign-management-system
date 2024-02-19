@@ -1,7 +1,7 @@
 //#region Import
 import { useState } from "react"
 
-import { useGetTagsListQuery } from "@/features/people/contacts/api"
+import { useGetTagsQuery } from "@/features/people/contacts/api"
 import { ComboBoxPopper } from "@/ui"
 //#endregion
 
@@ -9,7 +9,7 @@ const SelectTagsPopoverContent = () => {
 	const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined)
 
 	// TODO: Handle Infinite Loading in Component to handle changing offset/limit Values
-	const { list, loading } = useGetTagsListQuery(
+	const { list, loading } = useGetTagsQuery(
 		{ offset: 0, limit: 100, name: searchTerm },
 		{
 			selectFromResult: ({ data, isLoading, ...rest }) => ({

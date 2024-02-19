@@ -5,11 +5,11 @@ import { useTranslation } from "react-i18next"
 import type { SegmentRuleType } from "@/features/people/segments/types"
 
 const Input = lazy(() => import("@/ui/input"))
-const Label = lazy(() => import("@/ui/label"))
+const Label = lazy(() => import("@/ui/label/label"))
 const SelectTagsPopover = lazy(() => import("@/features/people/contacts/components/select-tags-popover"))
 const SelectGroupsPopover = lazy(() => import("@/features/people/groups/components/select-groups-popover"))
 const SelectSegmentsPopover = lazy(() => import("../select-segments-popover"))
-const SelectCountryPopover = lazy(() => import("@/ui/select-country-popover"))
+const SelectCountryPopover = lazy(() => import("@/ui/select-country-popover/select-country-popover"))
 //#endregion
 
 type SegmentSpecificationProps = Omit<SegmentRuleType, "contactSegmentRuleCondition"> &

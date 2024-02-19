@@ -1,13 +1,13 @@
 //#region Import
+import { Checkbox } from "@radix-ui/react-checkbox"
 import { Suspense, isValidElement, lazy, useCallback, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
-import Skeleton from "../skeleton"
+import Skeleton from "../skeleton/skeleton"
 
 import type { RowData, TableProps } from "./types"
 
-const Checkbox = lazy(() => import("../checkbox"))
 const TableColumnHeader = lazy(() => import("./table-column-header"))
 //#endregion
 

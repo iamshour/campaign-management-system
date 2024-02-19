@@ -4,16 +4,12 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useNavigate, useParams } from "react-router-dom"
 
-import AdvancedTable from "@/core/components/advanced-table"
+import DataGrid from "@/core/components/data-grid"
 import appPaths from "@/core/constants/app-paths"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import {
-	clearSelection,
-	resetAdvancedTableState,
-	updateSelection,
-} from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import { clearSelection, resetAdvancedTableState, updateSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import type { SharedListViewProps } from "@/core/types"
 import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
 import type { Contact } from "@/features/people/contacts/types"
@@ -22,7 +18,7 @@ import { Button, Footer } from "@/ui"
 import { cleanObject } from "@/utils"
 
 import { useAddContactsToGroupMutation } from "../api"
-import type { AddContactsToGroupArgs } from "../types"
+import type { AddContactsToGroupBody } from "../types"
 
 const ContactsFiltersContent = lazy(() => import("@/features/people/contacts/components/contacts-filters-content"))
 //#endregion
@@ -37,8 +33,8 @@ const AddContactsToGroupView = ({ count, ...tableProps }: SharedListViewProps<Co
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
-	const { selection, filters, searchTerm } = useSelector<AdvancedTableStateType<"add-contacts-to-group">>(
-		({ advancedTable }) => advancedTable["add-contacts-to-group"]
+	const { selection, filters, searchTerm } = useSelector<DataGridState<"add-contacts-to-group">>(
+		({ dataGrid }) => dataGrid["add-contacts-to-group"]
 	)
 
 	const onBack = () => {
@@ -49,7 +45,7 @@ const AddContactsToGroupView = ({ count, ...tableProps }: SharedListViewProps<Co
 	const onAdd = async () => {
 		const contactsIds = !!selection && selection !== "ALL" ? selection : undefined
 
-		const body: AddContactsToGroupArgs = {
+		const body: AddContactsToGroupBody = {
 			contactGroupsIds: [groupId!],
 			contactsIds,
 			...getContactFilterAndContactSearchFilter(filters, searchTerm),
@@ -70,28 +66,28 @@ const AddContactsToGroupView = ({ count, ...tableProps }: SharedListViewProps<Co
 	}
 
 	return (
-		<AdvancedTable tableKey='add-contacts-to-group' count={count}>
-			<AdvancedTable.FiltersBar>
-				<AdvancedTable.FiltersBar.Header />
-				<AdvancedTable.FiltersBar.Content>
+		<DataGrid dataGridKey='add-contacts-to-group' count={count}>
+			<DataGrid.FiltersBar>
+				<DataGrid.FiltersBar.Header />
+				<DataGrid.FiltersBar.Content>
 					<ContactsFiltersContent />
-				</AdvancedTable.FiltersBar.Content>
-				<AdvancedTable.FiltersBar.Footer />
-			</AdvancedTable.FiltersBar>
+				</DataGrid.FiltersBar.Content>
+				<DataGrid.FiltersBar.Footer />
+			</DataGrid.FiltersBar>
 
-			<AdvancedTable.Content>
+			<DataGrid.Content>
 				<h3 className='pt-4 text-[21px] font-medium'>{t("title")}</h3>
 
-				<AdvancedTable.TopBar />
-				<AdvancedTable.Body
+				<DataGrid.TopBar />
+				<DataGrid.Body
 					columns={contactsTableColumns}
 					onRowClick={({ id }) => dispatch(updateSelection({ "add-contacts-to-group": id }))}
 					classNames={{ wrapper: "px-4" }}
 					{...tableProps}
 				/>
-				<AdvancedTable.Pagination>
-					<AdvancedTable.Pagination.Message />
-				</AdvancedTable.Pagination>
+				<DataGrid.Pagination>
+					<DataGrid.Pagination.Message />
+				</DataGrid.Pagination>
 
 				<Footer className='p-4'>
 					<Button variant='outline' onClick={onBack}>
@@ -102,8 +98,8 @@ const AddContactsToGroupView = ({ count, ...tableProps }: SharedListViewProps<Co
 						{t("actions.submit")}
 					</Button>
 				</Footer>
-			</AdvancedTable.Content>
-		</AdvancedTable>
+			</DataGrid.Content>
+		</DataGrid>
 	)
 }
 

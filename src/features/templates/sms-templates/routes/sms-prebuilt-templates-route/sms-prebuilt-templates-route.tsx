@@ -3,7 +3,7 @@ import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { useGetSmsIndustryTemplatesQuery } from "@/features/industries/api"
 import { DataGridSkeleton } from "@/ui"
 
@@ -17,8 +17,8 @@ const SmsPrebuiltTemplatesRoute = () => {
 	// Getting Default User's Industry from User info in authSlice (Token))
 	const defaultUserIndustryId = useSelector(({ auth }) => auth?.user?.industryId)
 
-	const { offset, limit, filters, searchTerm } = useSelector<AdvancedTableStateType<"sms-prebuilt-templates">>(
-		({ advancedTable }) => advancedTable["sms-prebuilt-templates"]
+	const { offset, limit, filters, searchTerm } = useSelector<DataGridState<"sms-prebuilt-templates">>(
+		({ dataGrid }) => dataGrid["sms-prebuilt-templates"]
 	)
 
 	/**

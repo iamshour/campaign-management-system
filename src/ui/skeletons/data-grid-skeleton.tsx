@@ -1,7 +1,7 @@
 //#region Import
 import { twMerge } from "tailwind-merge"
 
-import Skeleton from "../skeleton"
+import Skeleton from "../skeleton/skeleton"
 //#endregion
 
 const DataGridSkeleton = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (

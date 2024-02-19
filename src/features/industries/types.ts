@@ -1,5 +1,5 @@
 //#region Import
-import type { BaseFetchListArgs } from "@/core/lib/redux-toolkit/types"
+import type { GetListParams } from "@/core/lib/redux-toolkit/types"
 import type { DateRange } from "@/ui"
 
 import type {
@@ -29,19 +29,19 @@ export type IndustryType = {
 export type IndustriesTableFiltersType = { dateRange?: DateRange }
 
 /**
- * Arguments used for the `getIndustries` query, passed for the server as params when fetching Industries
+ * Params passed to the `getIndustries` query, used for fetching Industries
  */
-export type GetIndustriesListArgs = BaseFetchListArgs<IndustryType> & DateRange & { name?: string; any?: boolean }
+export type GetIndustriesParams = GetListParams<IndustryType> & DateRange & { name?: string; any?: boolean }
 
 /**
- * Arguments passed to the server whilst using the `addNewIndustry` mutation to post a new Industry entry
+ * Body Arguments passed to the `addNewIndustry` mutation, used to post a new Industry entry
  */
-export type AddNewIndustryArgs = Omit<IndustryType, "id" | "createdAt">
+export type AddNewIndustryBody = Omit<IndustryType, "id" | "createdAt">
 
 /**
- * Arguments passed to the server whilst using the `updateIndustry` mutation to update an Industry
+ * Body Arguments passed to the `updateIndustry` mutation, used to update an Industry
  */
-export type UpdateIndustryArgs = Omit<IndustryType, "createdAt">
+export type UpdateIndustryBody = Omit<IndustryType, "createdAt">
 
 // ---------------------------------------------
 // ALL TYPES RELATED TO SMS INDUSTRY TEMPLATES
@@ -67,9 +67,9 @@ export type SmsIndustryTemplatesTableFiltersType = SmsTemplatesTableFiltersType 
 }
 
 /**
- * Arguments used for the `getSmsIndustryTemplates` query, passed for the server as params when fetching SMS Industry Templates List
+ * Params passed to the `getSmsIndustryTemplates` query, used for fetching SMS Industry Templates List
  */
-export type GetSmsIndustryTemplatesArgs = BaseFetchListArgs<SmsIndustryTemplateType> & {
+export type GetSmsIndustryTemplatesParams = GetListParams<SmsIndustryTemplateType> & {
 	industryId?: string
 	name?: string
 	any?: boolean
@@ -83,20 +83,14 @@ export type GetSmsIndustryTemplatesArgs = BaseFetchListArgs<SmsIndustryTemplateT
 }
 
 /**
- * Arguments used for the `deleteIndustryTemplates` query, passed for the server as params when deleting Industry Template/s
+ * Body Arguments passed to the `deleteIndustryTemplates` query, used for deleting Industry Template/s
  */
-export type DeleteIndustryTemplatesArgs = {
+export type DeleteIndustryTemplatesBody = {
 	id: string
-
 	templatesIds: string[]
 }
 
 /**
- * Arguments passed to the server whilst using the `addNewSmsIndustryTemplate` mutation to post a new Template for an Industry
+ * Body Arguments passed to the `updateSmsIndustryTemplate` mutation, used to update an Industry Template
  */
-export type AddNewSmsIndustryTemplateArgs = Omit<SmsIndustryTemplateType, "id" | "createdAt" | "updatedAt">
-
-/**
- * Arguments passed to the server whilst using the `updateSmsIndustryTemplate` mutation to update an Industry Template
- */
-export type UpdateSmsIndustryTemplateArgs = Omit<SmsIndustryTemplateType, "createdAt" | "updatedAt">
+export type UpdateSmsIndustryTemplateBody = Omit<SmsIndustryTemplateType, "createdAt" | "updatedAt">

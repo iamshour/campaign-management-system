@@ -2,7 +2,7 @@
 import { Suspense, lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import CreateSmsTemplateDialog from "@/features/templates/sms-templates/dialogs/create-sms-template-dialog/create-sms-template-dialog"
 import { Button, Skeleton } from "@/ui"
 
@@ -14,9 +14,7 @@ const DeleteSmsTemplateDialog = lazy(
 //#endregion
 
 const SmsTemplatesViewTopbar = () => {
-	const { selection } = useSelector<AdvancedTableStateType<"sms-templates">>(
-		({ advancedTable }) => advancedTable["sms-templates"]
-	)
+	const { selection } = useSelector<DataGridState<"sms-templates">>(({ dataGrid }) => dataGrid["sms-templates"])
 
 	return (
 		<>

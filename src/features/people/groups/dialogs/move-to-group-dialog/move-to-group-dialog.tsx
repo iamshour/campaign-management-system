@@ -3,7 +3,7 @@ import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import useSelector from "@/core/hooks/useSelector"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { twMerge, Dialog } from "@/ui"
 
 const MoveToGroupDialogContent = lazy(() => import("./move-to-group-dialog-content"))
@@ -22,9 +22,7 @@ const MoveToGroupDialog = ({ children, id }: MoveToGroupDialogProps) => {
 
 	const [open, setOpen] = useState(false)
 
-	const { selection } = useSelector<AdvancedTableStateType<"contacts-in-group">>(
-		({ advancedTable }) => advancedTable["contacts-in-group"]
-	)
+	const { selection } = useSelector<DataGridState<"contacts-in-group">>(({ dataGrid }) => dataGrid["contacts-in-group"])
 
 	const isMovingMultipleContacts = !id && (selection === "ALL" || (selection?.length && selection?.length > 1))
 

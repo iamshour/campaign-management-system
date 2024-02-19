@@ -35,7 +35,7 @@ const Topbar = () => {
 		<div className='z-20 flex h-max w-full items-center justify-between gap-2 border-b border-b-gray-300/50 bg-[#edf3f7] px-4 py-2'>
 			{/* TODO: REPLCAE WITH BREADCRUMB COMPONENT FROM `@package/Ui`  */}
 			<div className='flex items-center gap-4'>
-				<Button variant='link' size='sm' onClick={() => navigate(-1)}>
+				<Button variant='link' size='sm' as='button' onClick={() => navigate(-1)}>
 					Back (Test)
 				</Button>
 

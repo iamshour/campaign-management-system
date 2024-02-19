@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { v4 as newId } from "uuid"
 
 import useSelector from "@/core/hooks/useSelector"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { Tooltip } from "@/ui"
 //#endregion
 
@@ -13,7 +13,7 @@ import { Tooltip } from "@/ui"
 const ContactsViewFiltersPreview = () => {
 	const { t } = useTranslation("contacts")
 
-	const { filters } = useSelector<AdvancedTableStateType<"contacts">>(({ advancedTable }) => advancedTable["contacts"])
+	const { filters } = useSelector<DataGridState<"contacts">>(({ dataGrid }) => dataGrid["contacts"])
 	const appliedSegment = filters?.advancedFilters?.segment?.label
 	const appliedConditions = filters?.advancedFilters?.conditions
 

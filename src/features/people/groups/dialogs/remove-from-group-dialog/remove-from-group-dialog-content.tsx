@@ -6,14 +6,14 @@ import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
 import { any, object, string } from "zod"
 
-import { useAdvancedTableContext } from "@/core/components/advanced-table"
+import { useDataGridContext } from "@/core/components/data-grid"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { getContactFilterAndContactSearchFilter } from "@/features/people/contacts/utils"
 import { useRemoveContactsFromGroupMutation } from "@/features/people/groups/api"
-import type { RemoveContactsFromGroupArgs } from "@/features/people/groups/types"
+import type { RemoveContactsFromGroupBody } from "@/features/people/groups/types"
 import { useForm, Button, Footer, Form, Skeleton } from "@/ui"
 import { cleanObject } from "@/utils"
 
@@ -38,10 +38,10 @@ const RemoveMultiContactsFromGroup = ({ id, onClose }: RemoveFromGroupDialogCont
 
 	const dispatch = useDispatch()
 
-	const { selection, filters, searchTerm } = useSelector<AdvancedTableStateType<"contacts-in-group">>(
-		({ advancedTable }) => advancedTable["contacts-in-group"]
+	const { selection, filters, searchTerm } = useSelector<DataGridState<"contacts-in-group">>(
+		({ dataGrid }) => dataGrid["contacts-in-group"]
 	)
-	const { count } = useAdvancedTableContext()
+	const { count } = useDataGridContext()
 
 	const [triggerRemoveContactsFromGroup, { isLoading }] = useRemoveContactsFromGroupMutation()
 
@@ -55,7 +55,7 @@ const RemoveMultiContactsFromGroup = ({ id, onClose }: RemoveFromGroupDialogCont
 	const onSubmit = async () => {
 		const contactsIdsToBeRemoved = id ? [id] : !!selection && selection !== "ALL" ? selection : undefined
 
-		const body: RemoveContactsFromGroupArgs = {
+		const body: RemoveContactsFromGroupBody = {
 			contactsIds: contactsIdsToBeRemoved,
 			contactGroupsIds: [currentGroupId!],
 			...getContactFilterAndContactSearchFilter(filters, searchTerm),

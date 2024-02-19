@@ -1,13 +1,12 @@
 //#region Import
 import { lazy } from "react"
-import { useNavigate } from "react-router"
 
-import { IndustryType } from "@/features/industries/types"
+import type { IndustryType } from "@/features/industries/types"
 import { Button } from "@/ui"
 
 import BiThreeDots from "~icons/bi/three-dots"
 import MdiCardText from "~icons/mdi/card-text"
-const AdvancedTableDateCell = lazy(() => import("@/core/components/advanced-table-date-cell"))
+const DataGridDateCell = lazy(() => import("@/core/components/data-grid-date-cell"))
 const IndustriesViewTableIcon = lazy(
 	() => import("@/features/industries/views/industries-view/industries-view-table-icon")
 )
@@ -19,8 +18,6 @@ const IndustriesViewTableActions = lazy(
 const IndustryCard = (industry: IndustryType) => {
 	const { id, createdAt, color, icon, name, description } = industry
 
-	const navigate = useNavigate()
-
 	return (
 		<div className='flex h-[220px] w-full max-w-full flex-col rounded-xl shadow-[0px_0px_6px_#00000021]'>
 			<div className='flex w-full justify-between gap-2 overflow-hidden border-b border-b-gray-200 p-4'>
@@ -30,7 +27,7 @@ const IndustryCard = (industry: IndustryType) => {
 				</div>
 
 				{/* Hide Actions if Industry is default one (named `others` from server)  */}
-				{name?.toLocaleLowerCase() !== "others" && (
+				{name?.toLocaleLowerCase() !== "other" && (
 					<IndustriesViewTableActions {...industry}>
 						<BiThreeDots />
 					</IndustriesViewTableActions>
@@ -46,16 +43,17 @@ const IndustryCard = (industry: IndustryType) => {
 				</li>
 				<li className='flex gap-2 text-base'>
 					<span className='inline whitespace-nowrap text-[#8F8F8F]'>Creation date and time:</span>
-					<AdvancedTableDateCell date={createdAt} />
+					<DataGridDateCell date={createdAt} />
 				</li>
 			</ul>
 
 			<div className='border-t border-t-gray-200'>
 				<Button
+					as='link'
+					to={`${id}/sms`}
 					variant='ghost'
 					size='lg'
-					className='w-full rounded-xl rounded-t-none font-bold text-primary-700 hover:text-primary-800'
-					onClick={() => navigate(`${id}/sms`)}>
+					className='w-full rounded-xl rounded-t-none font-bold text-primary-700 hover:text-primary-800'>
 					<MdiCardText />
 					<span>View Templates</span>
 				</Button>

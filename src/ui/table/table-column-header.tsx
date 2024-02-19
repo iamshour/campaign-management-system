@@ -1,7 +1,7 @@
 //#region Import
 import { useTranslation } from "react-i18next"
 
-import Dropdown from "../dropdown"
+import Dropdown from "../dropdown/dropdown"
 
 import type { SortDirection } from "./types"
 

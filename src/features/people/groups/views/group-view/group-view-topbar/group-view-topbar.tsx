@@ -1,10 +1,9 @@
 //#region Import
 import { Suspense } from "react"
 import { useTranslation } from "react-i18next"
-import { useNavigate } from "react-router-dom"
 
 import useSelector from "@/core/hooks/useSelector"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import ExportFieldsDialog from "@/features/people/exports/dialogs/export-fields-dialog/export-fields-dialog"
 import { Button, Skeleton } from "@/ui"
 
@@ -16,10 +15,7 @@ import PhUserPlus from "~icons/ph/user-plus"
 const GroupViewTopbar = () => {
 	const { t } = useTranslation("contacts")
 
-	const navigate = useNavigate()
-	const { selection } = useSelector<AdvancedTableStateType<"contacts-in-group">>(
-		({ advancedTable }) => advancedTable["contacts-in-group"]
-	)
+	const { selection } = useSelector<DataGridState<"contacts-in-group">>(({ dataGrid }) => dataGrid["contacts-in-group"])
 
 	return (
 		<div className='flex flex-1 justify-between'>
@@ -37,7 +33,7 @@ const GroupViewTopbar = () => {
 				</ExportFieldsDialog>
 			</div>
 
-			<Button onClick={() => navigate("./add-contacts")}>
+			<Button as='link' to='./add-contacts'>
 				<PhUserPlus />
 				{t("table.toolbar.actions.add-contact")}
 			</Button>

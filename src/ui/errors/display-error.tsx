@@ -1,7 +1,7 @@
 //#region Import
 import { twMerge } from "tailwind-merge"
 
-import Button from "../button"
+import Button from "../button/button"
 
 import RadixIconsReload from "~icons/radix-icons/reload"
 //#endregion

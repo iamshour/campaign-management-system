@@ -10,7 +10,7 @@ import SmsIndustryTemplateBuilderContent from "@/features/industries/components/
 import SmsIndustryTemplateSchema, {
 	type SmsIndustryTemplateSchemaType,
 } from "@/features/industries/schemas/sms-industry-template-schema"
-import type { UpdateSmsIndustryTemplateArgs } from "@/features/industries/types"
+import type { UpdateSmsIndustryTemplateBody } from "@/features/industries/types"
 import SmsTemplateBuilder from "@/features/templates/sms-templates/components/sms-template-builder/sms-template-builder"
 import type { SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
 import { Button } from "@/ui"
@@ -36,7 +36,7 @@ const EditSmsIndustryTemplateView = ({ defaultValues }: EditSmsIndustryTemplateV
 		// TODO: While integrating with DB, transform File above (background) to Blob, and send accordingly
 		console.log(background)
 
-		const body: UpdateSmsIndustryTemplateArgs = {
+		const body: UpdateSmsIndustryTemplateBody = {
 			channel: "SMS",
 			id: templatedId ?? "",
 			industryId: industryId ?? "",

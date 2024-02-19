@@ -1,6 +1,6 @@
 //#region Import
 import type {
-	ImportFileMappingArgs,
+	ImportFileMappingBody,
 	ImportFileMappingReturnType,
 	UploadContactsMutationReturnType,
 } from "@/features/people/contacts/types"
@@ -14,7 +14,7 @@ import type { OptionType } from "@/ui"
 export type ImportType = "file" | "copyPaste"
 
 export type ImportsDataType = Partial<UploadContactsMutationReturnType> &
-	Partial<Omit<ImportFileMappingArgs, "groups">> & {
+	Partial<Omit<ImportFileMappingBody, "groups">> & {
 		/**
 		 * Type of imported entry: Could be `file` OR `copyPaste` relating to pasted text entry
 		 */

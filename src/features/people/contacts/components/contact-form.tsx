@@ -8,14 +8,14 @@ import { cleanObject, getListOfKey } from "@/utils"
 
 import type { ContactSchemaType } from "../schemas/contact-schema"
 import ContactSchema from "../schemas/contact-schema"
-import type { AddNewContactArgs } from "../types"
+import type { AddNewContactBody } from "../types"
 import { parsePhoneNumberDto } from "../utils"
 
 import SelectTagsPopover from "./select-tags-popover"
 //#endregion
 
 interface ContactFormProps {
-	onSubmit: (data: AddNewContactArgs, form: UseFormReturn<ContactSchemaType>) => void
+	onSubmit: (data: AddNewContactBody, form: UseFormReturn<ContactSchemaType>) => void
 
 	children: React.ReactNode
 
@@ -46,7 +46,7 @@ const ContactForm = ({ children, onSubmit, defaultValues }: ContactFormProps) =>
 		}
 
 		// Reshaping Data to be sent to match Backend's POST/PUT API's body, whilst also cleaning it from any undefined/nullish/empty values
-		const cleanBody: AddNewContactArgs = cleanObject({
+		const cleanBody: AddNewContactBody = cleanObject({
 			...restOfData,
 			phoneNumberDto: parsePhoneNumberDto(phoneNumber),
 			groups: getListOfKey(groups, "value"),

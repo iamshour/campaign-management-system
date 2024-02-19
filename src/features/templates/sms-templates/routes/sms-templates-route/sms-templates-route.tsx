@@ -3,7 +3,7 @@ import { lazy } from "react"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetSmsTemplatesQuery } from "@/features/templates/sms-templates/api"
 import { DataTableSkeleton } from "@/ui"
@@ -17,8 +17,8 @@ const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 
 const SmsTemplatesRoute = () => {
 	const { offset, limit, order, sort, filters, searchTerm, appliedFiltersCount } = useSelector<
-		AdvancedTableStateType<"sms-templates">
-	>(({ advancedTable }) => advancedTable["sms-templates"])
+		DataGridState<"sms-templates">
+	>(({ dataGrid }) => dataGrid["sms-templates"])
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetSmsTemplatesQuery(
 		{
