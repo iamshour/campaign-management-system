@@ -74,7 +74,7 @@ const industriesApi = api.injectEndpoints({
 
 		deleteIndustryTemplates: builder.mutation<any, DeleteIndustryTemplatesBody>({
 			query: (body) => ({ url: `/template/prebuilt/delete`, method: "POST", body }),
-			invalidatesTags: (res) => (res ? [{ type: "Industry", id: "LIST" }] : []),
+			invalidatesTags: (res, error, { industryId }) => (res ? [{ type: "Industry", id: industryId }] : []),
 		}),
 	}),
 })

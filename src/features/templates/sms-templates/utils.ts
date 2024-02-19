@@ -1,10 +1,9 @@
 //#region Import
+import { MAX_GSM_TOTAL_CHARS, MAX_UNICODE_TOTAL_CHARS } from "./constants/sms-template-body-constants"
 import {
 	STANDARD_GSM_REGEX,
 	EXTENDED_GSM_REGEX,
 	EMOJI_REGEX,
-	MAX_GSM_TOTAL_CHARS,
-	MAX_UNICODE_TOTAL_CHARS,
 	PLACEHOLDER_REGEX,
 } from "./constants/sms-template-body-regex"
 //#endregion
@@ -56,7 +55,7 @@ export const checkIfHasEmoji = (text: string) => {
 export const removeEmojisFromString = (text: string) => {
 	if (!text) return ""
 
-	return text.replace(EMOJI_REGEX, "")
+	return text.split(EMOJI_REGEX).join("")
 }
 
 /**

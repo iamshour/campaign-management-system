@@ -1,10 +1,3 @@
-export const MAX_GMS_CHARS_PER_PART = 160
-export const MAX_UNICODE_CHARS_PER_PART = 70
-export const MAX_PARTS = 5
-export const MAX_PLACEHOLDERS = 5
-export const MAX_GSM_TOTAL_CHARS = MAX_GMS_CHARS_PER_PART * MAX_PARTS
-export const MAX_UNICODE_TOTAL_CHARS = MAX_UNICODE_CHARS_PER_PART * MAX_PARTS
-
 /**
  * Regular experssions to detect Template body placeholder
  * @example placeholder format: {{3}}

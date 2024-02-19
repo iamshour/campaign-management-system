@@ -1,7 +1,8 @@
 //#region Import
 import * as z from "zod"
 
-import { MAX_PLACEHOLDERS, PLACEHOLDER_REGEX } from "../constants/sms-template-body-regex"
+import { MAX_PLACEHOLDERS } from "../constants/sms-template-body-constants"
+import { PLACEHOLDER_REGEX } from "../constants/sms-template-body-regex"
 import type { SmsTemplateLanguageOption, SmsTemplateTypeOption } from "../types"
 import { getTotalCharactersCount, getMaxTotalCharacters } from "../utils"
 //#endregion

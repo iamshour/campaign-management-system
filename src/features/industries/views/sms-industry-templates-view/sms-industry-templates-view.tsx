@@ -39,7 +39,7 @@ const SmsIndustryTemplatesView = ({ count, ...tableProps }: SharedListViewProps<
 					onRowClick={({ id }) => navigate(id)}
 					{...tableProps}
 				/>
-				<DataGrid.Pagination>
+				<DataGrid.Pagination pageLimits={[10, 20, 30]}>
 					<DataGrid.Pagination.Message />
 				</DataGrid.Pagination>
 			</DataGrid.Content>

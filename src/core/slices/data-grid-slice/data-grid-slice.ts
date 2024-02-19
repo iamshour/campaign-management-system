@@ -20,7 +20,7 @@ const initialState: DataGridSliceStateType = {
 	segments: initialDataGridBaseState,
 	"sms-templates": { ...initialDataGridBaseState, limit: 10 },
 	"sms-prebuilt-templates": { ...initialDataGridBaseState, limit: 10 },
-	"sms-industry-templates": initialDataGridBaseState,
+	"sms-industry-templates": { ...initialDataGridBaseState, limit: 10 },
 	industries: initialDataGridBaseState,
 }
 

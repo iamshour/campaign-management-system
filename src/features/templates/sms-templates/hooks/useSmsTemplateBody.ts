@@ -1,11 +1,8 @@
 //#region Import
 import { useCallback } from "react"
 
-import {
-	MAX_GMS_CHARS_PER_PART,
-	MAX_UNICODE_CHARS_PER_PART,
-	PLACEHOLDER_REGEX,
-} from "../constants/sms-template-body-regex"
+import { MAX_GMS_CHARS_PER_PART, MAX_UNICODE_CHARS_PER_PART } from "../constants/sms-template-body-constants"
+import { PLACEHOLDER_REGEX } from "../constants/sms-template-body-regex"
 import {
 	getTotalCharactersCount,
 	checkIfHasGsmCharactersOnly,
