@@ -2,7 +2,6 @@
 import { parsePhoneNumber } from "react-phone-number-input"
 
 import type { FiltersFieldMappingType } from "@/core/slices/data-grid-slice/types"
-import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { cleanObject, createObjtWithCommonValue, getListOfKey } from "@/utils"
 
 import type { ContactFilters } from "./types"
@@ -105,8 +104,8 @@ export const getContactFilterAndContactSearchFilter = (
 			tags: filters?.tags,
 			groups: getListOfKey(filters?.groups, "value"),
 			// Using below utility Function so that we won't send either date range values if any one is undefined
-			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
-			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
+			startDate: filters?.dateRange?.startDate,
+			endDate: filters?.dateRange?.endDate,
 		},
 		contactSearchFilter: getContactSearchFilter(searchTerm),
 	}

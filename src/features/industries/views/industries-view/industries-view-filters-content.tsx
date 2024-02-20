@@ -13,8 +13,8 @@ const IndustriesViewFiltersContent = () => {
 
 	return (
 		<DateRangePicker
-			dateRange={filters?.dateRange}
-			updateDateRange={(dateRange) => dispatch(updateFilters({ industries: { dateRange } }))}
+			dateRange={{ startDate: filters?.startDate, endDate: filters?.endDate }}
+			updateDateRange={(industries) => dispatch(updateFilters({ industries }))}
 		/>
 	)
 }

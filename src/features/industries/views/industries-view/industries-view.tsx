@@ -35,7 +35,6 @@ const IndustriesView = ({ count, ...tableProps }: SharedListViewProps<IndustryTy
 					<DataGrid.Body
 						GridCard={IndustryCard}
 						columns={industriesTableColumns}
-						gridClassName='[grid-template-columns:repeat(auto-fit,470px)] 3xl:[grid-template-columns:repeat(auto-fit,480px)] [grid-template-rows:repeat(auto-fit,250px)]'
 						classNames={{ wrapper: "px-4", emptyTableCell: "h-[calc(100vh-340px)]" }}
 						onRowClick={({ id }) => navigate(`${id}/sms`)}
 						{...tableProps}

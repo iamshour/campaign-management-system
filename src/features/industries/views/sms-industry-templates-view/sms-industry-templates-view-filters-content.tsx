@@ -25,7 +25,7 @@ const SmsIndustryTemplatesViewFiltersContent = () => {
 	)
 
 	const updateSelection = useCallback(
-		(newFilters: Partial<FiltersFieldMappingType["sms-industry-templates"]>) => {
+		(newFilters?: Partial<FiltersFieldMappingType["sms-industry-templates"]>) => {
 			dispatch(updateFilters({ "sms-industry-templates": newFilters }))
 		},
 		[dispatch]
@@ -35,10 +35,8 @@ const SmsIndustryTemplatesViewFiltersContent = () => {
 		<>
 			<DateRangePicker
 				label='Last updated date'
-				dateRange={{ startDate: filters?.updatedAfter, endDate: filters?.updatedBefore }}
-				updateDateRange={(dateRange) =>
-					updateSelection({ updatedAfter: dateRange?.startDate, updatedBefore: dateRange?.endDate })
-				}
+				dateRange={{ startDate: filters?.startDate, endDate: filters?.endDate }}
+				updateDateRange={updateSelection}
 			/>
 			<SelectStatusesPopover
 				isMulti

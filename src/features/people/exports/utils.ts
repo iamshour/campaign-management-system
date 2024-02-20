@@ -1,5 +1,5 @@
 //#region Import
-import { format } from "@/utils"
+import { format } from "date-fns"
 
 import type { ExportsType } from "./dialogs/export-fields-dialog/export-fields-dialog-content"
 //#endregion

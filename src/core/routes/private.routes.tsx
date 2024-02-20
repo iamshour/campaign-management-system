@@ -32,14 +32,8 @@ const privateRoutes: RouteObject[] = [
 			{ path: "industries/*", element: <IndustriesRoutes /> },
 
 			{ path: "/", element: <Navigate to={appPaths.DASHBOARD} /> },
-			{
-				path: appPaths.DASHBOARD,
-				element: <div className='text-4xl'>Dashboard Route</div>,
-			},
-			{
-				path: appPaths.INBOX,
-				element: <div className='text-4xl'>Inbox Route</div>,
-			},
+			{ path: appPaths.DASHBOARD, element: <div className='mb-8 text-4xl'>Dashboard Route</div> },
+			{ path: appPaths.INBOX, element: <div className='text-4xl'>Inbox Route</div> },
 			{ path: appPaths.INTEGRATIONS, element: <div className='text-4xl'>Integrations Route</div> },
 			{ path: appPaths.CAMPAIGNS_MANAGER, element: <div className='text-4xl'>Campaign Manager Route</div> },
 			{ path: appPaths.CHANNELS, element: <div className='text-4xl'>Channels Route</div> },

@@ -16,7 +16,6 @@ export { default as objHasFalseyValues } from "./object-utils/obj-has-falsey-val
 export { default as lazyImport } from "./lazy-import"
 
 // Re-Exported Installed Utils
-export { format, type Locale, formatISO, add as dateFnsAdd } from "date-fns"
 export { useStep } from "usehooks-ts"
 export { default as pick } from "lodash.pick"
 

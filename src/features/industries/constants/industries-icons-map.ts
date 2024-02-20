@@ -4,82 +4,79 @@ import { lazy } from "react"
 import type { IconType } from "@/ui"
 //#endregion
 
-// Keys of Icons to be used for Industries. To be provided by Marketing/Design team
-export type IndustryIcon =
-	| "FlatColorIconsFactory"
-	| "FlatColorIconsHighPriority"
-	| "FlatColorIconsKey"
-	| "FlatColorIconsBadDecision"
-	| "FlatColorIconsEngineering"
-	| "FlatColorIconsElectronics"
-	| "FlatColorIconsAbout"
-	| "BiBarChartFill"
-	| "IcBaselineCampaign"
-	| "IcBaselineInsertDriveFile"
-	| "IcRoundMoveToInbox"
-	| "IcRoundPermContactCalendar"
-	| "IonAmericanFootballSharp"
-	| "IonAnalytics"
-	| "IonAndroidBulb"
-	| "IonArchiveSharp"
-	| "IonArrowForwardCircle"
-	| "IonArrowRightA"
-	| "IonArrowSwap"
-	| "IonArrowUndoCircle"
-	| "IonAtCircle"
-	| "IonBackspaceOutline"
-	| "IonBagAddSharp"
-	| "IonBarbell"
-	| "IonBaseball"
-	| "IonBasketball"
-	| "IonBatteryHalf"
-	| "IonBicycle"
-	| "IonBonfire"
-	| "IonCalendarSharp"
-	| "IonCameraSharp"
-	| "IonCash"
-	| "MaterialSymbolsLightLabProfileSharp"
-	| "MdiVirus"
-	| "RiRobot2Fill"
-	| "TablerAppsFilled"
+export enum IndustryIconEnum {
+	"IcRoundShoppingCart" = "IcRoundShoppingCart",
+	"SolarShop2Bold" = "SolarShop2Bold",
+	"IcRoundShopify" = "IcRoundShopify",
+	"ZondiconsLocationFood" = "ZondiconsLocationFood",
+	"MaterialSymbolsFastfoodSharp" = "MaterialSymbolsFastfoodSharp",
+	"IcBaselineFoodBank" = "IcBaselineFoodBank",
+	"MaterialSymbolsSelfCare" = "MaterialSymbolsSelfCare",
+	"MaterialSymbolsLightHealthAndBeautySharp" = "MaterialSymbolsLightHealthAndBeautySharp",
+	"IconParkSolidBarberBrush" = "IconParkSolidBarberBrush",
+	"StreamlineMedicalCrossSignHealthcareSolid" = "StreamlineMedicalCrossSignHealthcareSolid",
+	"StreamlineHealthCare2Solid" = "StreamlineHealthCare2Solid",
+	"IconoirHealthcare" = "IconoirHealthcare",
+	"ZondiconsEducation" = "ZondiconsEducation",
+	"StreamlineQualityEducationSolid" = "StreamlineQualityEducationSolid",
+	"MdiAccountSchool" = "MdiAccountSchool",
+	"StreamlineTravelHotelServingDomeHandPorterServiceRoomPlateHandBellhopPlatterGiveFood" = "StreamlineTravelHotelServingDomeHandPorterServiceRoomPlateHandBellhopPlatterGiveFood",
+	"StreamlineTravelHotelBellServiceConciergePorterCallRingBellhopBellReception" = "StreamlineTravelHotelBellServiceConciergePorterCallRingBellhopBellReception",
+	"MaterialSymbolsLightTravelLuggageAndBags" = "MaterialSymbolsLightTravelLuggageAndBags",
+	"MaterialSymbolsStarsRounded" = "MaterialSymbolsStarsRounded",
+	"IconoirThreeStarsSolid" = "IconoirThreeStarsSolid",
+	"SolarHandStarsBold" = "SolarHandStarsBold",
+	"MaterialSymbolsLightRealEstateAgent" = "MaterialSymbolsLightRealEstateAgent",
+	"FluentRealEstate24Filled" = "FluentRealEstate24Filled",
+	"RiPresentationLine" = "RiPresentationLine",
+	"EmojioneMonotoneArtistPalette" = "EmojioneMonotoneArtistPalette",
+	"MaterialSymbolsBusinessCenterRounded" = "MaterialSymbolsBusinessCenterRounded",
+	"IconParkSolidUserBusiness" = "IconParkSolidUserBusiness",
+	"IconParkSolidLocal" = "IconParkSolidLocal",
+	"FluentPeopleCommunity16Filled" = "FluentPeopleCommunity16Filled",
+	"FluentHandshake16Filled" = "FluentHandshake16Filled",
+}
 
-const industriesIconsMap: Record<IndustryIcon, React.LazyExoticComponent<IconType>> = {
-	FlatColorIconsFactory: lazy(() => import("~icons/flat-color-icons/factory")),
-	FlatColorIconsHighPriority: lazy(() => import("~icons/flat-color-icons/high-priority")),
-	FlatColorIconsKey: lazy(() => import("~icons/flat-color-icons/key")),
-	FlatColorIconsBadDecision: lazy(() => import("~icons/flat-color-icons/bad-decision")),
-	FlatColorIconsEngineering: lazy(() => import("~icons/flat-color-icons/engineering")),
-	FlatColorIconsElectronics: lazy(() => import("~icons/flat-color-icons/electronics")),
-	FlatColorIconsAbout: lazy(() => import("~icons/flat-color-icons/about")),
-	BiBarChartFill: lazy(() => import("~icons/bi/bar-chart-fill")),
-	IcBaselineCampaign: lazy(() => import("~icons/ic/baseline-campaign")),
-	IcBaselineInsertDriveFile: lazy(() => import("~icons/ic/baseline-insert-drive-file")),
-	IcRoundMoveToInbox: lazy(() => import("~icons/ic/round-move-to-inbox")),
-	IcRoundPermContactCalendar: lazy(() => import("~icons/ic/round-perm-contact-calendar")),
-	IonAmericanFootballSharp: lazy(() => import("~icons/ion/american-football-sharp")),
-	IonAnalytics: lazy(() => import("~icons/ion/analytics")),
-	IonAndroidBulb: lazy(() => import("~icons/ion/android-bulb")),
-	IonArchiveSharp: lazy(() => import("~icons/ion/archive-sharp")),
-	IonArrowForwardCircle: lazy(() => import("~icons/ion/arrow-forward-circle")),
-	IonArrowRightA: lazy(() => import("~icons/ion/arrow-right-a")),
-	IonArrowSwap: lazy(() => import("~icons/ion/arrow-swap")),
-	IonArrowUndoCircle: lazy(() => import("~icons/ion/arrow-undo-circle")),
-	IonAtCircle: lazy(() => import("~icons/ion/at-circle")),
-	IonBackspaceOutline: lazy(() => import("~icons/ion/backspace-outline")),
-	IonBagAddSharp: lazy(() => import("~icons/ion/bag-add-sharp")),
-	IonBarbell: lazy(() => import("~icons/ion/barbell")),
-	IonBaseball: lazy(() => import("~icons/ion/baseball")),
-	IonBasketball: lazy(() => import("~icons/ion/basketball")),
-	IonBatteryHalf: lazy(() => import("~icons/ion/battery-half")),
-	IonBicycle: lazy(() => import("~icons/ion/bicycle")),
-	IonBonfire: lazy(() => import("~icons/ion/bonfire")),
-	IonCalendarSharp: lazy(() => import("~icons/ion/calendar-sharp")),
-	IonCameraSharp: lazy(() => import("~icons/ion/camera-sharp")),
-	IonCash: lazy(() => import("~icons/ion/cash")),
-	MaterialSymbolsLightLabProfileSharp: lazy(() => import("~icons/material-symbols-light/lab-profile-sharp")),
-	MdiVirus: lazy(() => import("~icons/mdi/virus")),
-	RiRobot2Fill: lazy(() => import("~icons/ri/robot-2-fill")),
-	TablerAppsFilled: lazy(() => import("~icons/tabler/apps-filled")),
+const industriesIconsMap: Record<IndustryIconEnum, React.LazyExoticComponent<IconType>> = {
+	EmojioneMonotoneArtistPalette: lazy(() => import("~icons/emojione-monotone/artist-palette")),
+	FluentHandshake16Filled: lazy(() => import("~icons/fluent/handshake-16-filled")),
+	FluentPeopleCommunity16Filled: lazy(() => import("~icons/fluent/people-community-16-filled")),
+	FluentRealEstate24Filled: lazy(() => import("~icons/fluent/real-estate-24-filled")),
+	IcBaselineFoodBank: lazy(() => import("~icons/ic/baseline-food-bank")),
+	IcRoundShopify: lazy(() => import("~icons/ic/round-shopify")),
+	IcRoundShoppingCart: lazy(() => import("~icons/ic/round-shopping-cart")),
+	IconParkSolidBarberBrush: lazy(() => import("~icons/icon-park-solid/barber-brush")),
+	IconParkSolidUserBusiness: lazy(() => import("~icons/icon-park-solid/user-business")),
+	IconoirHealthcare: lazy(() => import("~icons/iconoir/healthcare")),
+	MaterialSymbolsFastfoodSharp: lazy(() => import("~icons/material-symbols/fastfood-sharp")),
+	SolarShop2Bold: lazy(() => import("~icons/solar/shop-2-bold")),
+	ZondiconsLocationFood: lazy(() => import("~icons/zondicons/location-food")),
+	MaterialSymbolsSelfCare: lazy(() => import("~icons/material-symbols/self-care")),
+	MaterialSymbolsLightHealthAndBeautySharp: lazy(() => import("~icons/material-symbols-light/health-and-beauty-sharp")),
+	StreamlineMedicalCrossSignHealthcareSolid: lazy(
+		() => import("~icons/streamline/medical-cross-sign-healthcare-solid")
+	),
+	StreamlineHealthCare2Solid: lazy(() => import("~icons/streamline/health-care-2-solid")),
+	ZondiconsEducation: lazy(() => import("~icons/zondicons/education")),
+	StreamlineQualityEducationSolid: lazy(() => import("~icons/streamline/quality-education-solid")),
+	MdiAccountSchool: lazy(() => import("~icons/mdi/account-school")),
+	StreamlineTravelHotelServingDomeHandPorterServiceRoomPlateHandBellhopPlatterGiveFood: lazy(
+		() =>
+			import(
+				"~icons/streamline/travel-hotel-serving-dome-hand-porter-service-room-plate-hand-bellhop-platter-give-food"
+			)
+	),
+	StreamlineTravelHotelBellServiceConciergePorterCallRingBellhopBellReception: lazy(
+		() => import("~icons/streamline/travel-hotel-bell-service-concierge-porter-call-ring-bellhop-bell-reception")
+	),
+	MaterialSymbolsLightTravelLuggageAndBags: lazy(() => import("~icons/material-symbols-light/travel-luggage-and-bags")),
+	MaterialSymbolsStarsRounded: lazy(() => import("~icons/material-symbols/stars-rounded")),
+	IconoirThreeStarsSolid: lazy(() => import("~icons/iconoir/three-stars-solid")),
+	SolarHandStarsBold: lazy(() => import("~icons/solar/hand-stars-bold")),
+	MaterialSymbolsLightRealEstateAgent: lazy(() => import("~icons/material-symbols-light/real-estate-agent")),
+	RiPresentationLine: lazy(() => import("~icons/ri/presentation-line")),
+	MaterialSymbolsBusinessCenterRounded: lazy(() => import("~icons/material-symbols/business-center-rounded")),
+	IconParkSolidLocal: lazy(() => import("~icons/icon-park-solid/local")),
 }
 
 export default industriesIconsMap

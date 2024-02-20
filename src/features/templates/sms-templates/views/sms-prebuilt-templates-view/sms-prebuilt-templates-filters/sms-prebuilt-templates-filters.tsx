@@ -11,10 +11,10 @@ const SmsPrebuiltTemplatesFiltersContent = lazy(() => import("./sms-prebuilt-tem
 //#endregion
 
 const SmsPrebuiltTemplatesFilters = () => {
-	const [industrySearchTerm, setIndustrySearchTerm] = useState<string>()
+	const [searchTerm, setSearchTerm] = useState<string>()
 
 	const { list, isLoading, isError, error } = useGetIndustriesQuery(
-		{ name: industrySearchTerm, offset: 0, limit: 50 },
+		{ name: searchTerm, any: Boolean(searchTerm?.length) || undefined, offset: 0, limit: 50 },
 		{
 			selectFromResult: ({ data, ...rest }) => ({
 				list: data?.list ? [{ id: "ALL", name: "All Industries" } as IndustryType, ...data.list] : [],
@@ -24,7 +24,7 @@ const SmsPrebuiltTemplatesFilters = () => {
 		}
 	)
 
-	const onIndustrySearch = useCallback((searchTerm?: string) => setIndustrySearchTerm(searchTerm), [])
+	const onIndustrySearch = useCallback((searchTerm?: string) => setSearchTerm(searchTerm), [])
 
 	if (isLoading) return <Skeleton className='h-full w-[300px] bg-[#edf3f7]' />
 	if (!!isError || !list)

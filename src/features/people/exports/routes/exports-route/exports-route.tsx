@@ -4,7 +4,6 @@ import { lazy } from "react"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetExportsQuery } from "@/features/people/exports/api"
 import { DataTableSkeleton } from "@/ui"
 
@@ -26,23 +25,21 @@ const ExportsRoute = () => {
 			order: "desc",
 			fileName: searchTerm,
 			any: searchTerm ? true : undefined,
-			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
-			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
+			startDate: filters?.dateRange?.startDate,
+			endDate: filters?.dateRange?.endDate,
 			statuses: filters?.status?.length ? filters.status : undefined,
 			exportedBy: filters?.exportedBy?.length ? filters.exportedBy : undefined,
 		},
 		{
-			selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => {
-				return {
-					list: data?.list,
-					count: data?.count,
-					isInitialLoading: !data && isLoading,
-					isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-					isEmptyView: !isFetching && !!isSuccess && !data && !(appliedFiltersCount || !!searchTerm?.length),
-					isFetching,
-					...rest,
-				}
-			},
+			selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => ({
+				list: data?.list,
+				count: data?.count,
+				isInitialLoading: !data && isLoading,
+				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
+				isEmptyView: !isFetching && !!isSuccess && !data && !(appliedFiltersCount || !!searchTerm?.length),
+				isFetching,
+				...rest,
+			}),
 			...baseQueryConfigs,
 		}
 	)
