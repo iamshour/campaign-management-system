@@ -105,12 +105,9 @@ const TopBar = ({ withFilters = true, children }: TopBarProps) => {
 type TableBodyProps<TData extends RowData> = Pick<
 	TableProps<TData>,
 	"list" | "columns" | "classNames" | "highlightOnHover" | "isFetching" | "onRowClick"
-> & {
-	GridCard?: (props: TData) => JSX.Element
-	gridClassName?: string
-}
+> & { GridCard?: (props: TData) => JSX.Element }
 
-const DataGridBody = <TData extends RowData>({ list, GridCard, gridClassName, ...props }: TableBodyProps<TData>) => {
+const DataGridBody = <TData extends RowData>({ list, GridCard, ...props }: TableBodyProps<TData>) => {
 	const { t } = useTranslation("ui")
 	const dispatch = useDispatch()
 
@@ -129,7 +126,7 @@ const DataGridBody = <TData extends RowData>({ list, GridCard, gridClassName, ..
 
 	if (view === "GRID" && !!list?.length) {
 		return (
-			<div className={twMerge("grid max-w-full flex-1 justify-evenly gap-6 overflow-y-auto p-4", gridClassName)}>
+			<div className='flex max-w-full flex-wrap gap-6 overflow-y-auto p-4'>
 				{!GridCard ? (
 					<>Please pass a Grid Card to render Grid view properly</>
 				) : (

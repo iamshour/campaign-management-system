@@ -31,12 +31,12 @@ const SmsIndustryTemplatesRoute = () => {
 				sort,
 				order,
 				name: searchTerm,
-				any: searchTerm ? true : undefined,
+				any: Boolean(searchTerm?.length) || undefined,
 				statuses: filters?.statuses,
 				types: filters?.types,
 				languages: filters?.languages,
-				updatedAfter: filters?.updatedAfter,
-				updatedBefore: filters?.updatedBefore,
+				startDate: filters?.startDate,
+				endDate: filters?.endDate,
 			},
 			{
 				selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => ({

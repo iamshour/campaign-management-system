@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { getContactSearchFilter } from "@/features/people/contacts/utils"
 import { useGetGroupByIdQuery } from "@/features/people/groups/api"
 import { DataTableSkeleton } from "@/ui"
@@ -29,14 +28,10 @@ const GroupRoute = () => {
 			offset,
 			sort,
 			order,
-			// tags filter
 			tags: filters?.tags,
-			// grousp filter
 			groups: getListOfKey(filters?.groups, "value"),
-			// date range filter:
-			// TODO: function to generate startDate and endDate filters
-			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
-			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
+			startDate: filters?.dateRange?.startDate,
+			endDate: filters?.dateRange?.endDate,
 			...getContactSearchFilter(searchTerm),
 		},
 		{

@@ -33,13 +33,15 @@ const DeleteIndustryDialogContent = ({ id, name, onClose }: DeleteIndustryDialog
 
 	return (
 		<div className='flex h-full flex-col justify-between gap-6 overflow-y-auto p-2'>
-			<p className='w-full text-base'>
-				Are you sure you want to delete <strong>{`"${name}"`}</strong> from the industries list? Please note that this
-				will affect all related templates. Deleting industry is permanent and cannot be undone
+			<p className='w-full text-ellipsis text-base'>
+				Are you sure you want to delete <strong className='break-all'>{`"${name}"`}</strong> from the industries list?
+				Please note that this will affect all related templates. Deleting industry is permanent and cannot be undone
 			</p>
 
 			<div className='flex flex-col space-y-1'>
-				<Label className='font-bold'>Type {`"${name}"`} to confirm</Label>
+				<Label className='break-all'>
+					Type <span className='cursor-text font-bold'>{`"${name}"`}</span> to confirm
+				</Label>
 				<Input
 					size='lg'
 					placeholder='Enter name'

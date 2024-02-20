@@ -23,7 +23,7 @@ const SmsTemplatesFiltersContent = () => {
 	const { filters } = useSelector<DataGridState<"sms-templates">>(({ dataGrid }) => dataGrid["sms-templates"])
 
 	const updateSelection = useCallback(
-		(newFilters: Partial<Partial<FiltersFieldMappingType["sms-templates"]>>) => {
+		(newFilters?: Partial<Partial<FiltersFieldMappingType["sms-templates"]>>) => {
 			dispatch(updateFilters({ "sms-templates": newFilters }))
 		},
 		[dispatch]
@@ -34,9 +34,7 @@ const SmsTemplatesFiltersContent = () => {
 			<DateRangePicker
 				label='Last updated date'
 				dateRange={{ startDate: filters?.startDate, endDate: filters?.endDate }}
-				updateDateRange={(dateRange) =>
-					updateSelection({ startDate: dateRange?.startDate, endDate: dateRange?.endDate })
-				}
+				updateDateRange={updateSelection}
 			/>
 			<SelectStatusesPopover
 				isMulti

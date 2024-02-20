@@ -4,7 +4,6 @@ import { lazy } from "react"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetIndustriesQuery } from "@/features/industries/api"
 import { DataTableSkeleton } from "@/ui"
 
@@ -23,9 +22,10 @@ const IndustriesRoute = () => {
 			limit,
 			sort,
 			order,
+			startDate: filters?.startDate,
+			endDate: filters?.endDate,
 			name: searchTerm,
-			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
-			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
+			any: Boolean(searchTerm?.length) || undefined,
 		},
 		{
 			selectFromResult: ({ data, isLoading, isFetching, ...rest }) => ({

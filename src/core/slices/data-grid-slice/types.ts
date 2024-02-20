@@ -1,5 +1,10 @@
 //#region Import
-import type { IndustryType, SmsIndustryTemplateType, PrebuiltTemplateFilter } from "@/features/industries/types"
+import type {
+	IndustryType,
+	SmsIndustryTemplateType,
+	PrebuiltTemplateFilter,
+	IndustryFilter,
+} from "@/features/industries/types"
 import type { Contact, ContactTableFiltersType } from "@/features/people/contacts/types"
 import type { ContactExports, ContactExportsTableFiltersType } from "@/features/people/exports/types"
 import type { Group } from "@/features/people/groups/types"
@@ -45,7 +50,7 @@ export type FiltersFieldMappingType = {
 	"sms-templates": TemplateFilter
 	"sms-prebuilt-templates": PrebuiltTemplateFilter
 	"sms-industry-templates": PrebuiltTemplateFilter
-	industries: { dateRange?: DateRange }
+	industries: IndustryFilter
 }
 
 export type DataGridState<K extends DataGridKey> = TableState<TableDataMappingType[K]> & {

@@ -4,11 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import industriesIconsMap from "@/features/industries/constants/industries-icons-map"
 import type { AddNewIndustryBody, IndustryType } from "@/features/industries/types"
 import { useForm, Footer, Form, Input, Select, Button, ColorInput } from "@/ui"
-import type { IconType } from "@/ui"
 import { cleanObject } from "@/utils"
 
 import type { IndustrySchemaType } from "../schemas/industry-schema"
 import IndustrySchema from "../schemas/industry-schema"
+
+import IndustryIcon from "./industry-icon"
 //#endregion
 
 interface IndustryFormProps {
@@ -77,41 +78,34 @@ const IndustryForm = ({ children, onSubmit, defaultValues }: IndustryFormProps) 
 						<Form.Field
 							control={form.control}
 							name='icon'
-							render={({ field }) => {
-								const SelectedIcon: React.LazyExoticComponent<IconType> =
-									industriesIconsMap[field.value as keyof typeof industriesIconsMap]
+							render={({ field }) => (
+								<Form.Item>
+									<Form.Label>Icon *</Form.Label>
+									<Form.Control>
+										<Select value={field.value}>
+											<Select.Trigger size='lg' className='w-full text-base' hasValue={!!field.value?.length}>
+												<Select.Value placeholder='Select type'>
+													{!!field.value?.length && <IndustryIcon icon={field.value} className='h-[26px] w-[26px]' />}
+												</Select.Value>
+											</Select.Trigger>
 
-								return (
-									<Form.Item>
-										<Form.Label>Icon *</Form.Label>
-										<Form.Control>
-											<Select value={field.value}>
-												<Select.Trigger
-													className='h-[50px] bg-white  ring-[#d1d5db] data-[hasvalue=true]:ring-primary-500 data-[state=open]:ring-primary-300 [&>svg]:!text-[#d1d5db] [&>svg]:data-[state=open]:!text-primary-300'
-													hasValue={!!field.value?.length}>
-													<Select.Value placeholder='Select type'>
-														{!!field.value?.length && <SelectedIcon className='h-[26px] w-[26px]' />}
-													</Select.Value>
-												</Select.Trigger>
-
-												<Select.Content className='flex max-w-[340px] flex-row flex-wrap justify-between gap-1'>
-													{Object.entries(industriesIconsMap).map(([iconName, Icon]) => (
-														<Button
-															key={iconName}
-															variant='ghost'
-															type='button'
-															onClick={() => field.onChange(iconName)}
-															className='cursor-pointer rounded-lg border border-transparent p-1 hover:border-primary-300 hover:bg-primary-100/50'>
-															<Icon className='h-[26px] w-[26px]' />
-														</Button>
-													))}
-												</Select.Content>
-											</Select>
-										</Form.Control>
-										<Form.Message />
-									</Form.Item>
-								)
-							}}
+											<Select.Content className='flex max-w-[340px] flex-row flex-wrap justify-between gap-1'>
+												{Object.entries(industriesIconsMap).map(([iconName, Icon]) => (
+													<Button
+														key={iconName}
+														variant='ghost'
+														type='button'
+														onClick={() => field.onChange(iconName)}
+														className='cursor-pointer rounded-lg border border-transparent p-1 hover:border-primary-300 hover:bg-primary-100/50'>
+														<Icon className='h-[26px] w-[26px]' />
+													</Button>
+												))}
+											</Select.Content>
+										</Select>
+									</Form.Control>
+									<Form.Message />
+								</Form.Item>
+							)}
 						/>
 						<Form.Field
 							control={form.control}

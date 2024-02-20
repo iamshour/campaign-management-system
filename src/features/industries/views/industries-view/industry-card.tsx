@@ -19,7 +19,7 @@ const IndustryCard = (industry: IndustryType) => {
 	const { id, createdAt, color, icon, name, description } = industry
 
 	return (
-		<div className='flex h-[220px] w-full max-w-full flex-col rounded-xl shadow-[0px_0px_6px_#00000021]'>
+		<div className='flex h-[220px] w-[470px] max-w-full flex-col rounded-xl shadow-[0px_0px_6px_#00000021] 3xl:w-[480px]'>
 			<div className='flex w-full justify-between gap-2 overflow-hidden border-b border-b-gray-200 p-4'>
 				<div className='flex flex-1 items-center gap-4 overflow-hidden'>
 					<IndustriesViewTableIcon className='h-[44px] w-[44px]' icon={icon} color={color} />

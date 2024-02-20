@@ -1,10 +1,11 @@
 //#region Import
 import type { PopperContentProps } from "@radix-ui/react-popover"
-import { Suspense, lazy } from "react"
+import { formatISO, type Locale, endOfDay } from "date-fns"
+import { Suspense, lazy, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
-import { formatISO, dateFnsAdd, objHasFalseyValues, type Locale } from "@/utils"
+import { objHasFalseyValues } from "@/utils"
 
 import Button from "../button/button"
 import Label from "../label/label"
@@ -14,7 +15,6 @@ import Skeleton from "../skeleton/skeleton"
 import DateRangePlaceholder from "./date-range-placeholder"
 
 import RadixIconsCalendar from "~icons/radix-icons/calendar"
-
 const Calendar = lazy(() => import("../calendar/calendar"))
 //#endregion
 
@@ -59,7 +59,24 @@ const DateRangePicker = ({
 	triggerProps,
 	popoverContentProps,
 }: DateRangePicker) => {
+	const [range, setRange] = useState(dateRange)
+
 	const { t } = useTranslation("ui", { keyPrefix: "dateRange" })
+
+	useEffect(() => {
+		if (!objHasFalseyValues(range)) updateDateRange(range)
+
+		if ((!range?.startDate && !!range?.endDate) || (!range?.endDate && !!range?.startDate)) {
+			updateDateRange(undefined)
+		}
+
+		// eslint-disable-next-line
+	}, [range])
+
+	const onClearRange = () => {
+		setRange(undefined)
+		updateDateRange(undefined)
+	}
 
 	return (
 		<div className={twMerge("relative w-[340px] max-w-full")}>
@@ -70,7 +87,7 @@ const DateRangePicker = ({
 					className='h-max px-1.5 py-0 pb-0.5 text-primary-600 hover:bg-transparent hover:text-primary-900'
 					variant='ghost'
 					size='sm'
-					onClick={() => updateDateRange(undefined)}>
+					onClick={onClearRange}>
 					{t("actions.clear")}
 				</Button>
 			</div>
@@ -97,20 +114,18 @@ const DateRangePicker = ({
 							<Calendar
 								initialFocus
 								mode='range'
-								// defaultMonth={dateRange?.from}
 								selected={{
-									from: dateRange?.startDate ? new Date(dateRange?.startDate) : undefined,
-									to: dateRange?.endDate ? new Date(dateRange?.endDate) : undefined,
+									from: range?.startDate ? new Date(range?.startDate) : undefined,
+									to: range?.endDate ? new Date(range?.endDate) : undefined,
 								}}
-								onSelect={(dateRange) =>
-									updateDateRange({
-										startDate: dateRange?.from ? formatISO(dateRange?.from) : undefined,
-										// endDate time in changed from 00:00 to 23:59 using dateFnsAdd, so that this day is included in range
-										endDate: dateRange?.to
-											? formatISO(dateFnsAdd(dateRange?.to, { hours: 23, minutes: 59 }))
-											: undefined,
+								onSelect={(updatedRange) => {
+									if (updatedRange === undefined) onClearRange()
+
+									setRange({
+										startDate: updatedRange?.from ? formatISO(updatedRange?.from) : undefined,
+										endDate: updatedRange?.to ? formatISO(endOfDay(updatedRange?.to)) : undefined,
 									})
-								}
+								}}
 								numberOfMonths={2}
 								locale={locale}
 								toDate={new Date()}

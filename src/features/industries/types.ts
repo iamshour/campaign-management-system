@@ -8,6 +8,8 @@ import type {
 	SmsTemplateType,
 	SmsTemplateTypeOption,
 } from "../templates/sms-templates/types"
+
+import type { IndustryIconEnum } from "./constants/industries-icons-map"
 //#endregion
 
 /**
@@ -16,21 +18,23 @@ import type {
 export type IndustryType = {
 	id: string
 	name: string
-	icon: string
+	icon: IndustryIconEnum
 	description: string
 	color: string
 	createdAt: string
 }
 
 /**
- * Filters used in Filters bar (Internally / Only Client-Side - Not sent to the server)
+ * Filters used in Filters bar, and in some api calls such as in params of `GetIndustriesParams` query
  */
-export type IndustriesTableFiltersType = { dateRange?: DateRange }
+export type IndustryFilter = DateRange
+
+type IndustrySearchFilter = { name?: string; any?: boolean }
 
 /**
  * Params passed to the `getIndustries` query, used for fetching Industries
  */
-export type GetIndustriesParams = PaginationAndSorting<IndustryType> & DateRange & { name?: string; any?: boolean }
+export type GetIndustriesParams = PaginationAndSorting<IndustryType> & IndustryFilter & IndustrySearchFilter
 
 /**
  * Body Arguments passed to the `addNewIndustry` mutation, used to post a new Industry entry
@@ -60,9 +64,7 @@ export type SmsIndustryTemplateType = SmsTemplateType & {
 /**
  * Filters used in Filters bar, and in some api calls such as in params of `getSmsIndustryTemplates` query, and body of `deleteIndustryTemplates` mutation
  */
-export type PrebuiltTemplateFilter = {
-	updatedAfter?: string
-	updatedBefore?: string
+export type PrebuiltTemplateFilter = DateRange & {
 	types?: SmsTemplateTypeOption[]
 	languages?: SmsTemplateLanguageOption[]
 	statuses?: SmsTemplateStatusOption[]
@@ -72,14 +74,14 @@ export type PrebuiltTemplateFilter = {
 	// Only used internally (Not sent to BE)
 	filterBy?: "POPULAR" | "RECENT"
 }
-export type PrebuiltTemplateSearchFilter = { name?: string; any?: boolean }
+type PrebuiltTemplateSearchFilter = { name?: string; any?: boolean }
 
 /**
  * Params passed to the `getSmsIndustryTemplates` query, used for fetching SMS Industry Templates List
  */
 export type GetSmsIndustryTemplatesParams = PaginationAndSorting<SmsIndustryTemplateType> &
 	Omit<PrebuiltTemplateFilter, "filterBy"> &
-	PrebuiltTemplateSearchFilter & { background?: string }
+	PrebuiltTemplateSearchFilter
 
 /**
  * Body Arguments passed to the `deleteIndustryTemplates` query, used for deleting Industry Template/s

@@ -12,7 +12,7 @@ import IcRoundGroups from "~icons/ic/round-groups"
 
 const GroupCard = ({ groupId, groupName, description, createdAt, contactsCount }: Group) => {
 	return (
-		<div className='flex h-[250px] w-full max-w-full flex-col rounded-xl shadow-[0px_0px_6px_#00000021]'>
+		<div className='flex h-[250px] w-[470px] max-w-full flex-col rounded-xl shadow-[0px_0px_6px_#00000021] 3xl:w-[480px]'>
 			<div className='flex w-full justify-between gap-2 overflow-hidden border-b border-b-gray-200 p-4'>
 				<div className='flex flex-1 items-center gap-2 overflow-hidden'>
 					<span className='h-11 w-11 shrink-0 rounded-full bg-[#054060] flex-center'>

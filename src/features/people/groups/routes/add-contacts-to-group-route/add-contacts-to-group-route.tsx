@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetContactsQuery } from "@/features/people/contacts/api"
 import { getContactSearchFilter } from "@/features/people/contacts/utils"
 import { DataTableSkeleton } from "@/ui"
@@ -31,8 +30,8 @@ const AddContactsToGroupRoute = () => {
 			order,
 			tags: filters?.tags,
 			groups: getListOfKey(filters?.groups, "value"),
-			startDate: getValueFromSafeObject("startDate", filters?.dateRange), // TODO: function to generate startDate and endDate filters
-			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
+			startDate: filters?.dateRange?.startDate,
+			endDate: filters?.dateRange?.endDate,
 			...getContactSearchFilter(searchTerm),
 		},
 		{

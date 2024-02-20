@@ -38,13 +38,13 @@ const SmsPrebuiltTemplatesRoute = () => {
 			sort: sort,
 			order: order,
 			name: searchTerm,
-			any: searchTerm ? true : undefined,
+			any: Boolean(searchTerm?.length) || undefined,
 			types: filters?.types,
 			languages: filters?.languages,
 			statuses: filters?.statuses,
-			updatedAfter: filters?.updatedAfter,
-			updatedBefore: filters?.updatedBefore,
-			mostPopular: Boolean(!!filters?.filterBy && filters?.filterBy === "POPULAR") ?? undefined,
+			startDate: filters?.startDate,
+			endDate: filters?.endDate,
+			mostPopular: Boolean(filters?.filterBy === "POPULAR") || undefined,
 		},
 		{
 			selectFromResult: ({ data, isLoading, isFetching, ...rest }) => ({

@@ -4,7 +4,6 @@ import { lazy } from "react"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetGroupsQuery } from "@/features/people/groups/api"
 import { DataTableSkeleton } from "@/ui"
 
@@ -25,9 +24,8 @@ const GroupsRoute = () => {
 			sort,
 			order,
 			name: searchTerm,
-			// date range filter:
-			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
-			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
+			startDate: filters?.dateRange?.startDate,
+			endDate: filters?.dateRange?.endDate,
 		},
 		{
 			selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => ({

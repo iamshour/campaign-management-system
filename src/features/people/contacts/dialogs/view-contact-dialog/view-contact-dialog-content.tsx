@@ -1,11 +1,12 @@
 //#region Import
+import { format } from "date-fns"
 import { lazy } from "react"
 import { useTranslation } from "react-i18next"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetContactByIdQuery } from "@/features/people/contacts/api"
 import { twMerge, Badge, Input, Label, PhoneInputReadonly, Skeleton, Textarea } from "@/ui"
-import { format, getListOfKey } from "@/utils"
+import { getListOfKey } from "@/utils"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion

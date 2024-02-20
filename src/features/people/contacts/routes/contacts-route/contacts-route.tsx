@@ -6,7 +6,6 @@ import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { clearFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
 import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetContactsQuery } from "@/features/people/contacts/api"
 import { getContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
 import { DataTableSkeleton } from "@/ui"
@@ -32,8 +31,8 @@ const ContactsRoute = () => {
 			order,
 			tags: filters?.tags,
 			groups: getListOfKey(filters?.groups, "value"),
-			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
-			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
+			startDate: filters?.dateRange?.startDate,
+			endDate: filters?.dateRange?.endDate,
 			...getContactSearchFilter(searchTerm),
 			...getContactAdvancedFilter(filters?.advancedFilters),
 		},
