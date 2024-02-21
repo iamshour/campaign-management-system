@@ -1,4 +1,5 @@
 //#region Import
+import type { UserRole } from "@/features/authentication/types"
 import type { IconType } from "@/ui"
 
 import appPaths from "./app-paths"
@@ -24,6 +25,8 @@ type NavElementProps = {
 	 * Icon passed to be displayed in the navbar
 	 */
 	Icon: IconType
+
+	roles: UserRole[]
 } & (
 	| {
 			/**
@@ -55,23 +58,27 @@ const navElements: NavElementProps[] = [
 		label: "navbar.nav-elements.dashboard",
 		path: appPaths.DASHBOARD,
 		Icon: BiBarChartFill,
+		roles: ["BLUE", "BUSINESS"],
 	},
 	{
 		type: "nav-link",
 		label: "navbar.nav-elements.inbox",
 		path: appPaths.INBOX,
 		Icon: IcRoundMoveToInbox,
+		roles: ["BLUE", "BUSINESS"],
 	},
 	{
 		type: "nav-link",
 		label: "navbar.nav-elements.integrations",
 		path: appPaths.INTEGRATIONS,
 		Icon: TablerAppsFilled,
+		roles: ["BLUE", "BUSINESS"],
 	},
 	{
 		type: "accordion",
 		label: "navbar.nav-elements.people.title",
 		Icon: IcRoundPermContactCalendar,
+		roles: ["BLUE", "BUSINESS"],
 		content: [
 			{
 				label: "navbar.nav-elements.people.elements.contacts",
@@ -95,6 +102,7 @@ const navElements: NavElementProps[] = [
 		type: "accordion",
 		label: "navbar.nav-elements.templates.title",
 		Icon: IcBaselineInsertDriveFile,
+		roles: ["BUSINESS"],
 		content: [
 			{
 				label: "navbar.nav-elements.templates.elements.smsTemplates",
@@ -107,12 +115,14 @@ const navElements: NavElementProps[] = [
 		label: "navbar.nav-elements.industries",
 		path: appPaths.INDUSTRIES,
 		Icon: MaterialSymbolsLightLabProfileSharp,
+		roles: ["BLUE"],
 	},
 	{
 		type: "nav-link",
 		label: "navbar.nav-elements.campaigns",
 		path: appPaths.CAMPAIGNS_MANAGER,
 		Icon: IcBaselineCampaign,
+		roles: ["BLUE", "BUSINESS"],
 	},
 	{
 		type: "accordion",
@@ -124,6 +134,7 @@ const navElements: NavElementProps[] = [
 				path: appPaths.CHANNELS,
 			},
 		],
+		roles: ["BLUE", "BUSINESS"],
 	},
 	{
 		type: "accordion",
@@ -135,6 +146,7 @@ const navElements: NavElementProps[] = [
 				path: appPaths.CHATBOT,
 			},
 		],
+		roles: ["BLUE", "BUSINESS"],
 	},
 ]
 export default navElements

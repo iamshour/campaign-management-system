@@ -65,17 +65,12 @@ const DateRangePicker = ({
 
 	useEffect(() => {
 		if (!objHasFalseyValues(range)) updateDateRange(range)
-
-		if ((!range?.startDate && !!range?.endDate) || (!range?.endDate && !!range?.startDate)) {
-			updateDateRange(undefined)
-		}
-
-		// eslint-disable-next-line
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [range])
 
 	const onClearRange = () => {
 		setRange(undefined)
-		updateDateRange(undefined)
+		updateDateRange({ startDate: undefined, endDate: undefined })
 	}
 
 	return (
@@ -87,6 +82,7 @@ const DateRangePicker = ({
 					className='h-max px-1.5 py-0 pb-0.5 text-primary-600 hover:bg-transparent hover:text-primary-900'
 					variant='ghost'
 					size='sm'
+					disabled={objHasFalseyValues(range)}
 					onClick={onClearRange}>
 					{t("actions.clear")}
 				</Button>
@@ -119,7 +115,7 @@ const DateRangePicker = ({
 									to: range?.endDate ? new Date(range?.endDate) : undefined,
 								}}
 								onSelect={(updatedRange) => {
-									if (updatedRange === undefined) onClearRange()
+									onClearRange()
 
 									setRange({
 										startDate: updatedRange?.from ? formatISO(updatedRange?.from) : undefined,

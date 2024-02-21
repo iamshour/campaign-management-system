@@ -1,6 +1,6 @@
 {
 	"name": "@blueai/cms",
-	"version": "0.4.10",
+	"version": "0.5.10",
 	"type": "module",
 	"scripts": {
 		"dev": "vite --clearScreen false",

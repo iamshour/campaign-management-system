@@ -18,7 +18,10 @@ const SmsTemplatesRoutes = () => (
 	<Routes>
 		<Route element={<SmsTemplatesRoutesLayout />}>
 			<Route path='my-templates' element={<SmsTemplatesRoute />} />
-			<Route path='prebuilt-templates' element={<SmsPrebuiltTemplatesRoute />} />
+			<Route
+				path='prebuilt-templates'
+				element={<SmsPrebuiltTemplatesRoute prebuiltTemplatesGridKey='sms-prebuilt-templates' />}
+			/>
 		</Route>
 
 		<Route element={<SuspenseWrapper />}>

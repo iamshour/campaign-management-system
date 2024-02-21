@@ -51,7 +51,7 @@ import RadixIconsCross2 from "~icons/radix-icons/cross-2"
  * @param props.defaultOpen - Default State of Dialog, whether open by default or closed
  * @param props.onOpenChange - Optional function to use to trigger Dialog's presence in a controlled component
  */
-const Dialog = ({ children, ...dialogProps }: DialogProps) => <RootDialog {...dialogProps}>{children}</RootDialog>
+const Dialog = (dialogProps: DialogProps) => <RootDialog {...dialogProps} />
 
 const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => (
 	<Description className={twMerge("text-sm text-slate-500", className)} {...props} />

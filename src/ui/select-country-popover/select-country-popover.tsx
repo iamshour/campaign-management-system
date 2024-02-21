@@ -86,9 +86,7 @@ const SelectCountryPopover = ({
 								</>
 							) : (
 								<>
-									<Command.Empty className='min-h-[250px] w-full flex-center'>
-										{t("comboBox.message.noResults")}
-									</Command.Empty>
+									<Command.Empty className='min-h-[250px] w-full flex-center'>{t("noResultsComponent")}</Command.Empty>
 									<Command.Group>
 										{options
 											.filter(({ label }) => label.toLocaleLowerCase() !== "international")

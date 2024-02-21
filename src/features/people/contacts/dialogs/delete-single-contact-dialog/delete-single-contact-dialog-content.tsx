@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 
 import { useDeleteContactsMutation } from "@/features/people/contacts/api"
 import { Button, Footer } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 //#endregion
 
 export interface DeleteContactsDialogContent {
@@ -15,11 +16,13 @@ export interface DeleteContactsDialogContent {
 	/**
 	 * Callback function used to close the dialog
 	 */
-	onClose: () => void
+	closeDialog: () => void
 }
 
-const DeleteContactsDialogContent = ({ id, onClose }: DeleteContactsDialogContent) => {
+const DeleteContactsDialogContent = ({ id, closeDialog }: DeleteContactsDialogContent) => {
 	const { t } = useTranslation("contacts", { keyPrefix: "dialogs.deleteContacts" })
+
+	const { closeDropdown } = useDropdownStateContext()
 
 	const [deleteContacts, { isLoading }] = useDeleteContactsMutation()
 
@@ -27,7 +30,9 @@ const DeleteContactsDialogContent = ({ id, onClose }: DeleteContactsDialogConten
 		await deleteContacts({ contactsIds: [id] }).unwrap()
 
 		toast.success(t("success.single"))
-		onClose()
+
+		closeDialog()
+		closeDropdown()
 	}
 
 	return (

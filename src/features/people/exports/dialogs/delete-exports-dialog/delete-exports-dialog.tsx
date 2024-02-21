@@ -8,7 +8,7 @@ const DeleteExportsDialogContent = lazy(() => import("./delete-exports-dialog-co
 //#endregion
 
 interface DeleteExportsDialogProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof DeleteExportsDialogContent>, "id" | "closeActionsDropDown"> {
+	extends Pick<React.ComponentPropsWithoutRef<typeof DeleteExportsDialogContent>, "id"> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */
@@ -24,7 +24,7 @@ const DeleteExportsDialog = ({ children, id, ...props }: DeleteExportsDialogProp
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
 			<Dialog.Content title={t("title")} className='h-[201px] w-[319.5px] sm:h-[209px] sm:w-[350px]'>
-				<DeleteExportsDialogContent id={id} closeExportDeleteDialog={() => setOpen(false)} {...props} />
+				<DeleteExportsDialogContent id={id} closeDialog={() => setOpen(false)} {...props} />
 			</Dialog.Content>
 		</Dialog>
 	)

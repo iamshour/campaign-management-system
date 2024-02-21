@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 
 import { useDeleteExportMutation } from "@/features/people/exports/api"
 import { Button, Footer } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 //#endregion
 
 export interface DeleteExportsDialogContentProps {
@@ -13,33 +14,24 @@ export interface DeleteExportsDialogContentProps {
 	id: string
 
 	/**
-	 * Closes the actions dropdown in table row
-	 */
-	closeActionsDropDown: () => void
-
-	/**
 	 * Callback passed to close the dialog
 	 */
-	closeExportDeleteDialog: () => void
+	closeDialog: () => void
 }
 
-const DeleteExportsDialogContent = ({
-	id,
-	closeExportDeleteDialog,
-	closeActionsDropDown,
-}: DeleteExportsDialogContentProps) => {
+const DeleteExportsDialogContent = ({ id, closeDialog }: DeleteExportsDialogContentProps) => {
 	const { t } = useTranslation("exports", { keyPrefix: "dialogs.deleteExports" })
 	const [triggerDeleteExport, { isLoading }] = useDeleteExportMutation()
 
-	const handleDelete = async () => {
-		await triggerDeleteExport(id)
-			.unwrap()
-			.then(() => {
-				toast.success(t("message.success"))
+	const { closeDropdown } = useDropdownStateContext()
 
-				closeExportDeleteDialog()
-				closeActionsDropDown()
-			})
+	const handleDelete = async () => {
+		await triggerDeleteExport(id).unwrap()
+
+		toast.success(t("message.success"))
+
+		closeDialog()
+		closeDropdown()
 	}
 
 	return (

@@ -24,6 +24,7 @@ export type DataGridKey =
 	| "segments"
 	| "sms-templates"
 	| "sms-prebuilt-templates"
+	| "sms-prebuilt-templates-dialog"
 	| "sms-industry-templates"
 	| "industries"
 
@@ -36,6 +37,7 @@ type TableDataMappingType = {
 	segments: Segment
 	"sms-templates": SmsTemplateType
 	"sms-prebuilt-templates": SmsIndustryTemplateType
+	"sms-prebuilt-templates-dialog": SmsIndustryTemplateType
 	"sms-industry-templates": SmsIndustryTemplateType
 	industries: IndustryType
 }
@@ -49,6 +51,7 @@ export type FiltersFieldMappingType = {
 	segments: { dateRange?: DateRange }
 	"sms-templates": TemplateFilter
 	"sms-prebuilt-templates": PrebuiltTemplateFilter
+	"sms-prebuilt-templates-dialog": PrebuiltTemplateFilter
 	"sms-industry-templates": PrebuiltTemplateFilter
 	industries: IndustryFilter
 }

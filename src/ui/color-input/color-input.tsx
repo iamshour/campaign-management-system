@@ -1,8 +1,7 @@
 //#region Import
 import { forwardRef } from "react"
+import { twMerge } from "tailwind-merge"
 //#endregion
-
-import { twMerge } from "@/ui"
 
 const ColorInput = forwardRef<HTMLInputElement, Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">>(
 	({ className, ...props }, ref) => (

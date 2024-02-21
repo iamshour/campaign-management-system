@@ -10,7 +10,10 @@ const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 const SmsPrebuiltTemplatesFiltersContent = lazy(() => import("./sms-prebuilt-templates-filters-content"))
 //#endregion
 
-const SmsPrebuiltTemplatesFilters = () => {
+export interface SmsPrebuiltTemplatesFiltersProps
+	extends Pick<React.ComponentPropsWithoutRef<typeof SmsPrebuiltTemplatesFiltersContent>, "prebuiltTemplatesGridKey"> {}
+
+const SmsPrebuiltTemplatesFilters = ({ prebuiltTemplatesGridKey }: SmsPrebuiltTemplatesFiltersProps) => {
 	const [searchTerm, setSearchTerm] = useState<string>()
 
 	const { list, isLoading, isError, error } = useGetIndustriesQuery(
@@ -27,10 +30,15 @@ const SmsPrebuiltTemplatesFilters = () => {
 	const onIndustrySearch = useCallback((searchTerm?: string) => setSearchTerm(searchTerm), [])
 
 	if (isLoading) return <Skeleton className='h-full w-[300px] bg-[#edf3f7]' />
-	if (!!isError || !list)
-		return <DisplayError className=' w-[300px] bg-[#edf3f7]' error={error as any} showReloadButton />
+	if (isError) return <DisplayError className=' w-[300px] bg-[#edf3f7]' error={error as any} showReloadButton />
 
-	return <SmsPrebuiltTemplatesFiltersContent list={list} onIndustrySearch={onIndustrySearch} />
+	return (
+		<SmsPrebuiltTemplatesFiltersContent
+			prebuiltTemplatesGridKey={prebuiltTemplatesGridKey}
+			list={list || []}
+			onIndustrySearch={onIndustrySearch}
+		/>
+	)
 }
 
 export default SmsPrebuiltTemplatesFilters

@@ -7,7 +7,7 @@ const DeleteIndustryDialogContent = lazy(() => import("./delete-industry-dialog-
 //#endregion
 
 interface DeleteIndustryDialogProps
-	extends Omit<React.ComponentPropsWithoutRef<typeof DeleteIndustryDialogContent>, "onClose"> {
+	extends Omit<React.ComponentPropsWithoutRef<typeof DeleteIndustryDialogContent>, "closeDialog"> {
 	/**
 	 * Trigger Button/Element for triggering Dialog
 	 */
@@ -21,7 +21,7 @@ const DeleteIndustryDialog = ({ children, ...industry }: DeleteIndustryDialogPro
 		<Dialog open={open} onOpenChange={setOpen}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 			<Dialog.Content title='Delete Industry' className='w-[400px] sm:h-[390px]'>
-				<DeleteIndustryDialogContent {...industry} onClose={() => setOpen(false)} />
+				<DeleteIndustryDialogContent {...industry} closeDialog={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>
 	)

@@ -11,26 +11,23 @@ interface CreateIndustryDialogContentProps {
 	/**
 	 * Callback function used to close the dialog
 	 */
-	onClose: () => void
+	closeDialog: () => void
 }
 
-const CreateIndustryDialogContent = ({ onClose }: CreateIndustryDialogContentProps) => {
+const CreateIndustryDialogContent = ({ closeDialog }: CreateIndustryDialogContentProps) => {
 	const [addIndustry, { isLoading }] = useAddNewIndustryMutation()
 
 	/**
 	 * Used to send validated data from the `IndustryForm` component to the server, for adding the industry entry
 	 * @param body Validated data passed back from the `IndustryForm` component
 	 */
-
 	const onSubmit = async (body: AddNewIndustryBody) => {
 		if (!body) return
 
-		await addIndustry(body)
-			.unwrap()
-			.then(() => {
-				toast.success("Industry created successfully")
-				onClose()
-			})
+		await addIndustry(body).unwrap()
+
+		toast.success("Industry created successfully")
+		closeDialog()
 	}
 
 	return (

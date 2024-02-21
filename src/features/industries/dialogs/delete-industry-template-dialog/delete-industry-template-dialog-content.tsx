@@ -10,6 +10,7 @@ import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { useDeleteIndustryTemplatesMutation } from "@/features/industries/api"
 import type { DeleteIndustryTemplatesBody } from "@/features/industries/types"
 import { Button, Footer, Input, Label } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 //#endregion
 
 export interface DeleteIndustryTemplateDialogContentProps {
@@ -21,25 +22,24 @@ export interface DeleteIndustryTemplateDialogContentProps {
 	/**
 	 * Callback function used to close the dialog
 	 */
-	onClose: () => void
+	closeDialog: () => void
 }
 
-const DeleteIndustryTemplateDialogContent = ({ ids = [], onClose }: DeleteIndustryTemplateDialogContentProps) => {
-	/**
-	 * Industry Id from the URL Params
-	 */
+const DeleteIndustryTemplateDialogContent = ({ ids = [], closeDialog }: DeleteIndustryTemplateDialogContentProps) => {
 	const { industryId } = useParams()
 
 	const dispatch = useDispatch()
 
+	const { closeDropdown } = useDropdownStateContext()
+
 	const [triggerDeleteIndustryTemplates, { isLoading }] = useDeleteIndustryTemplatesMutation()
 	const [promptInputValue, setPromptInputValue] = useState<string>()
-	const { filters, searchTerm } = useSelector(({ dataGrid }) => dataGrid["sms-industry-templates"])
+	const { filters, searchTerm, selection } = useSelector(({ dataGrid }) => dataGrid["sms-industry-templates"])
 
 	const { count } = useDataGridContext()
 
-	const templatesToBeDeletedCount = ids.length ?? count
-	const deleteButtonDisabled = ids.length > 1 && promptInputValue !== `${templatesToBeDeletedCount}`
+	const templatesToBeDeletedCount = selection === "ALL" ? count : ids.length
+	const deleteButtonDisabled = templatesToBeDeletedCount > 1 && promptInputValue !== `${templatesToBeDeletedCount}`
 
 	const onSubmit = async () => {
 		if (!templatesToBeDeletedCount) return
@@ -47,22 +47,24 @@ const DeleteIndustryTemplateDialogContent = ({ ids = [], onClose }: DeleteIndust
 		const body: DeleteIndustryTemplatesBody = {
 			industryId: industryId!,
 			prebuiltTemplatesIds: ids,
-			prebuiltTemplateFilter: filters,
-			prebuiltTemplateSearchFilter: { name: searchTerm, any: searchTerm?.length ? true : undefined },
+			prebuiltTemplateFilter: !ids?.length ? filters : undefined,
+			prebuiltTemplateSearchFilter: !ids?.length
+				? { name: searchTerm, any: Boolean(searchTerm?.length) || undefined }
+				: undefined,
 		}
 
-		await triggerDeleteIndustryTemplates(body)
-			.unwrap()
-			.then(() => {
-				onClose()
-				toast.success("Template deleted successfully.")
-				dispatch(clearSelection("sms-templates"))
-			})
+		await triggerDeleteIndustryTemplates(body).unwrap()
+
+		toast.success("Template deleted successfully.")
+		dispatch(clearSelection("sms-industry-templates"))
+
+		closeDialog()
+		closeDropdown()
 	}
 
 	return (
 		<div className='flex flex-col gap-6 p-2'>
-			{ids?.length > 1 ? (
+			{templatesToBeDeletedCount > 1 ? (
 				<>
 					<p className='w-full overflow-x-auto text-base'>
 						Are you sure you want to delete <strong>({templatesToBeDeletedCount}) selected</strong> templates? Deleting

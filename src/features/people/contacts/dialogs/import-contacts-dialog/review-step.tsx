@@ -2,10 +2,11 @@
 import { lazy } from "react"
 import toast from "react-hot-toast"
 import { Trans, useTranslation } from "react-i18next"
+import { twMerge } from "tailwind-merge"
 
 import { useGetInvalidContactsFileMutation } from "@/features/people/contacts/api"
 import type { ContactScreamSnakeCaseKey } from "@/features/people/contacts/types"
-import { isoCountryOptions, twMerge, type IconType } from "@/ui"
+import { isoCountryOptions, type IconType } from "@/ui"
 import { getListOfKey } from "@/utils"
 
 import { useImportContactsDialogContext } from "./import-contacts-dialog-context"

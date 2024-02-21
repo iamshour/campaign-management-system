@@ -19,7 +19,8 @@ const initialState: DataGridSliceStateType = {
 	"contacts-exports": initialDataGridBaseState,
 	segments: initialDataGridBaseState,
 	"sms-templates": { ...initialDataGridBaseState, limit: 10 },
-	"sms-prebuilt-templates": { ...initialDataGridBaseState, limit: 10 },
+	"sms-prebuilt-templates": { ...initialDataGridBaseState, limit: 10, filters: { filterBy: "ALL" } },
+	"sms-prebuilt-templates-dialog": { ...initialDataGridBaseState, limit: 10, filters: { filterBy: "ALL" } },
 	"sms-industry-templates": { ...initialDataGridBaseState, limit: 10 },
 	industries: initialDataGridBaseState,
 }
@@ -100,14 +101,15 @@ const dataGridSlice = createSlice({
 			const prevState = state[dataGridKey]
 			const filters = { ...prevState?.filters, ...payloadValue }
 
+			let appliedFiltersCount = filters !== undefined ? getObjectSize(filters) : undefined
+
+			if (!!appliedFiltersCount && "startDate" in filters && "endDate" in filters) {
+				appliedFiltersCount = appliedFiltersCount - 1
+			}
+
 			return {
 				...state,
-				[dataGridKey]: {
-					...prevState,
-					offset: 0,
-					filters,
-					appliedFiltersCount: filters !== undefined ? getObjectSize(filters) : undefined,
-				},
+				[dataGridKey]: { ...prevState, offset: 0, filters, appliedFiltersCount },
 			}
 		},
 

@@ -13,13 +13,15 @@ const SmsPrebuiltTemplateCard = memo(
 		type,
 		language,
 		body,
-		industryId,
-		background,
+		industryName,
 		className,
-	}: Partial<Pick<SmsIndustryTemplateType, "name" | "type" | "language" | "body" | "industryId" | "background">> & {
+		backgroundImage,
+	}: Partial<
+		Pick<SmsIndustryTemplateType, "name" | "type" | "language" | "body" | "industryName" | "backgroundImage">
+	> & {
 		className?: string
 	}) => {
-		const backgroundImage = background?.length ? `url('${background}')` : "#4cb0e6"
+		const backgroundToDisplay = backgroundImage?.length ? backgroundImage : "#4cb0e6"
 
 		return (
 			<div
@@ -28,11 +30,11 @@ const SmsPrebuiltTemplateCard = memo(
 					className
 				)}>
 				<div
-					style={{ background: backgroundImage }}
+					style={{ background: `url(${backgroundToDisplay})` }}
 					className='h-[70%] w-full bg-cover p-4 before:absolute before:left-0 before:right-0 before:top-0 before:h-36 before:bg-gradient-to-t before:from-black/0 before:to-black/60 before:[content:""]   after:absolute after:bottom-0 after:left-0 after:right-0 after:h-32 after:bg-gradient-to-b after:from-black/0 after:to-black/30 after:[content:""]'>
 					<p className='relative z-10 text-white'>
 						<span className='font-light'>Industry: </span>
-						{industryId?.length ? industryId : "N/A"}
+						{industryName?.length ? industryName : "N/A"}
 					</p>
 					<p className='relative z-10 inline text-white'>
 						<span className='font-light'>Type: </span>

@@ -34,7 +34,7 @@ const DeleteIndustryTemplateDialog = ({ children, ids }: DeleteIndustryTemplateD
 						? "h-[201px] w-[319.5px] sm:h-[209px] sm:w-[350px]"
 						: "h-[343px] w-[319.5px]  sm:h-[327px] sm:w-[350px]"
 				}>
-				<DeleteIndustryTemplateDialogContent ids={ids} onClose={() => setOpen(false)} />
+				<DeleteIndustryTemplateDialogContent ids={ids} closeDialog={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>
 	)

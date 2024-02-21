@@ -1,29 +1,23 @@
 //#region Import
+import { memo } from "react"
+
 import DeleteSingleContactsDialog from "@/features/people/contacts/dialogs/delete-single-contact-dialog/delete-single-contact-dialog"
 import EditContactDialog from "@/features/people/contacts/dialogs/edit-contact-dialog/edit-contact-dialog"
-import { Dropdown } from "@/ui"
-
-import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
+import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 //#endregion
 
-const ContactsViewTableActions = ({ id }: { id: string }) => (
-	<Dropdown>
-		<Dropdown.Trigger showArrow={false} variant='ghost' className='h-max w-max p-1.5'>
-			<BiThreeDotsVertical />
-		</Dropdown.Trigger>
+const ContactsViewTableActions = memo(({ id }: { id: string }) => (
+	<ActionsDropdown>
+		<EditContactDialog id={id}>
+			<ActionsDropdown.Item>Edit</ActionsDropdown.Item>
+		</EditContactDialog>
+		<ActionsDropdown.Separator />
+		<DeleteSingleContactsDialog id={id}>
+			<ActionsDropdown.Item>Delete</ActionsDropdown.Item>
+		</DeleteSingleContactsDialog>
+	</ActionsDropdown>
+))
 
-		<Dropdown.Content sideOffset={0} align='end'>
-			<EditContactDialog id={id}>
-				<Dropdown.Item>Edit</Dropdown.Item>
-			</EditContactDialog>
-
-			<Dropdown.Separator />
-
-			<DeleteSingleContactsDialog id={id}>
-				<Dropdown.Item>Delete</Dropdown.Item>
-			</DeleteSingleContactsDialog>
-		</Dropdown.Content>
-	</Dropdown>
-)
+ContactsViewTableActions.displayName = "ContactsViewTableActions"
 
 export default ContactsViewTableActions

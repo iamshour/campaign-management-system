@@ -23,7 +23,7 @@ const DeleteSingleContactsDialog = ({ children, id }: DeleteSingleContactsDialog
 		<Dialog open={open} onOpenChange={setOpen}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 			<Dialog.Content title={t("title.single")} className='h-[201px] w-[319.5px] sm:h-[209px] sm:w-[350px]'>
-				<DeleteSingleContactDialogContent id={id} onClose={() => setOpen(false)} />
+				<DeleteSingleContactDialogContent id={id} closeDialog={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>
 	)

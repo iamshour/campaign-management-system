@@ -1,9 +1,9 @@
 //#region Import
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
+import { twMerge } from "tailwind-merge"
 
 import type { SegmentConditionType } from "@/features/people/segments/types"
-import { twMerge } from "@/ui"
 
 import SegmentRuleReadonly from "./segment-rule-readonly"
 //#endregion

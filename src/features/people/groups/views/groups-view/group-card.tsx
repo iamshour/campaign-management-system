@@ -1,13 +1,14 @@
 //#region Import
 import { format } from "date-fns"
+import { Suspense, lazy } from "react"
 
 import type { Group } from "@/features/people/groups/types"
-import { Button } from "@/ui"
-
-import GroupsTableActions from "./groups-view-table-actions"
+import { Button, Skeleton } from "@/ui"
 
 import IcRoundGroup from "~icons/ic/round-group"
 import IcRoundGroups from "~icons/ic/round-groups"
+
+const GroupsTableActions = lazy(() => import("./groups-view-table-actions"))
 //#endregion
 
 const GroupCard = ({ groupId, groupName, description, createdAt, contactsCount }: Group) => {
@@ -22,7 +23,9 @@ const GroupCard = ({ groupId, groupName, description, createdAt, contactsCount }
 					<p className='flex-1 truncate text-base font-bold'>{groupName}</p>
 				</div>
 
-				<GroupsTableActions groupId={groupId} groupName={groupName} description={description} />
+				<Suspense fallback={<Skeleton className='h-[40px] w-[40px]' />}>
+					<GroupsTableActions groupId={groupId} groupName={groupName} description={description} />
+				</Suspense>
 			</div>
 
 			<ul className='w-full flex-1 space-y-2 p-4'>

@@ -20,9 +20,6 @@
 			},
 			"message": "Page {{currentPage, number}} of {{totalPages, number}}",
 			"limit-selectbar": "Entries per page"
-		},
-		"message": {
-			"noResults": "No results found"
 		}
 	},
 	"prompt-input": {
@@ -33,7 +30,6 @@
 		"clearButton": "Clear filters",
 		"placeholder": "Type to search",
 		"message": {
-			"noResults": "No results found",
 			"maxLimitReached": "Max Limit Reached"
 		}
 	},
@@ -59,5 +55,6 @@
 	},
 	"selectCountryPopover": {
 		"placeholder": "Select a country"
-	}
+	},
+	"noResultsComponent": "No results found"
 }

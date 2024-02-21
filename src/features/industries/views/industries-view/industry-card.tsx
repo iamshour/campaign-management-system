@@ -4,8 +4,8 @@ import { lazy } from "react"
 import type { IndustryType } from "@/features/industries/types"
 import { Button } from "@/ui"
 
-import BiThreeDots from "~icons/bi/three-dots"
 import MdiCardText from "~icons/mdi/card-text"
+
 const DataGridDateCell = lazy(() => import("@/core/components/data-grid-date-cell"))
 const IndustriesViewTableIcon = lazy(
 	() => import("@/features/industries/views/industries-view/industries-view-table-icon")
@@ -27,11 +27,7 @@ const IndustryCard = (industry: IndustryType) => {
 				</div>
 
 				{/* Hide Actions if Industry is default one (named `others` from server)  */}
-				{name?.toLocaleLowerCase() !== "others" && (
-					<IndustriesViewTableActions {...industry}>
-						<BiThreeDots />
-					</IndustriesViewTableActions>
-				)}
+				{name?.toLocaleLowerCase() !== "others" && <IndustriesViewTableActions {...industry} />}
 			</div>
 
 			<ul className='w-full flex-1 space-y-2 p-4'>

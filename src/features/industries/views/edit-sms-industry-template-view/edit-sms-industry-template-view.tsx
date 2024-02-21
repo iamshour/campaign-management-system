@@ -4,7 +4,6 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useNavigate, useParams } from "react-router-dom"
 
-import appPaths from "@/core/constants/app-paths"
 import { useUpdateSmsIndustryTemplateMutation } from "@/features/industries/api"
 import SmsIndustryTemplateBuilderContent from "@/features/industries/components/sms-industry-template-builder-content/sms-industry-template-builder-content"
 import SmsIndustryTemplateSchema, {
@@ -24,34 +23,38 @@ const EditSmsIndustryTemplateView = ({ defaultValues }: EditSmsIndustryTemplateV
 	const { t } = useTranslation("sms-templates", { keyPrefix: "components.templateBuilder" })
 
 	const navigate = useNavigate()
-	const { industryId, templatedId } = useParams()
+	const { industryId, templateId } = useParams()
 
 	const [triggerUpdateSmsIndustryTemplate, { isLoading }] = useUpdateSmsIndustryTemplateMutation()
 
 	const [smsTemplateStatus, SetSmsTemplateStatus] = useState<SmsTemplateStatusOption | undefined>()
 
-	const onSubmit = async ({ background, backgroundUrl, ...requestBody }: SmsIndustryTemplateSchemaType) => {
+	const onSubmit = async ({ background, ...requestBody }: SmsIndustryTemplateSchemaType) => {
 		if (!requestBody || !smsTemplateStatus) return
-
-		// TODO: While integrating with DB, transform File above (background) to Blob, and send accordingly
-		console.log(background)
 
 		const body: UpdateSmsIndustryTemplateBody = {
 			channel: "SMS",
-			id: templatedId ?? "",
 			industryId: industryId ?? "",
 			...requestBody,
 			status: smsTemplateStatus,
-			// TODO: Send Valid Background
-			background: backgroundUrl ?? "",
 		}
 
-		await triggerUpdateSmsIndustryTemplate(body)
+		const formData = new FormData()
+
+		// add template info to request body
+		const jsonBlob = new Blob([JSON.stringify(body)], {
+			type: "application/json",
+		})
+		formData.append("prebuiltTemplateRequest", jsonBlob)
+
+		// add background image to request body
+		if (background) formData.append("background", background as Blob)
+
+		await triggerUpdateSmsIndustryTemplate({ industryId: industryId!, templateId: templateId!, body: formData })
 			.unwrap()
 			.then(() => {
-				toast.success("Template added successfully to the industry.")
-				navigate(appPaths.SMS_TEMPLATES, { replace: true })
-				console.log({ requestBody })
+				toast.success("Template updated successfully")
+				navigate(`/industries/${industryId}/sms`, { replace: true })
 			})
 	}
 

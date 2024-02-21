@@ -1,38 +1,34 @@
 //#region Import
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
-import type { Pathname } from "react-router-dom"
 //#endregion
 
 export interface AppSliceState {
 	/**
-	 * Boolean that checks if Navigation bar for private routes is open or closed
+	 * Boolean check regarding whether if Navigation bar for private routes is open or not
 	 */
-	isNavbarOpen: boolean
+	isNavOpen: boolean
 
 	/**
-	 * Persisted List of Closed Filters Bar, using URL's pathname
+	 * Boolean check regarding whether if Filters bar is open or not
 	 */
-	closedFiltersBars?: Pathname[]
+	isFilterBarOpen: boolean
 }
 
 const initialState: AppSliceState = {
-	isNavbarOpen: false,
+	isNavOpen: false,
+	isFilterBarOpen: true,
 }
 
 const appSlice = createSlice({
 	name: "app",
 	initialState,
 	reducers: {
-		toggleNavbar: (state, { payload }: PayloadAction<AppSliceState["isNavbarOpen"] | undefined>) => {
-			state.isNavbarOpen = payload !== undefined ? payload : !state.isNavbarOpen
+		toggleNavbar: (state, { payload }: PayloadAction<boolean | undefined>) => {
+			state.isNavOpen = payload !== undefined ? payload : !state.isNavOpen
 		},
 
-		toggleFiltersBar: (state, { payload: pathname }: PayloadAction<Pathname>) => {
-			const prevState = (state?.closedFiltersBars || []) as Pathname[]
-
-			state.closedFiltersBars = prevState?.includes(pathname)
-				? prevState?.filter((prevPath) => prevPath !== pathname)
-				: [...prevState, pathname]
+		toggleFiltersBar: (state) => {
+			state.isFilterBarOpen = !state.isFilterBarOpen
 		},
 	},
 })

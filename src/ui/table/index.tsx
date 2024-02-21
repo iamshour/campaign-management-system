@@ -108,7 +108,7 @@ const Table = <TData extends RowData>({
 								colSpan={columns.length}
 								className={twMerge("h-[calc(100vh-260px)]", classNames?.emptyTableCell)}>
 								<h2 className='text-center text-2xl font-light uppercase tracking-widest text-gray-500'>
-									{t("table.message.noResults")}
+									{t("noResultsComponent")}
 								</h2>
 							</TableCell>
 						</tr>

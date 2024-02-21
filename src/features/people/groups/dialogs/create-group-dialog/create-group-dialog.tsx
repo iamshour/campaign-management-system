@@ -4,18 +4,17 @@ import { useTranslation } from "react-i18next"
 
 import { Dialog } from "@/ui"
 
-const CreateGroupContent = lazy(() => import("@/features/people/groups/components/create-group-content"))
+const CreateGroupContent = lazy(() => import("./create-group-content"))
 //#endregion
 
-interface CreateGroupDialogProps
-	extends Omit<React.ComponentPropsWithoutRef<typeof CreateGroupContent>, "closePopover"> {
+interface CreateGroupDialogProps {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */
 	children: React.ReactNode
 }
 
-const CreateGroupDialog = ({ children, ...props }: CreateGroupDialogProps) => {
+const CreateGroupDialog = ({ children }: CreateGroupDialogProps) => {
 	const { t } = useTranslation("groups", { keyPrefix: "dialogs.create-group.title" })
 
 	const [open, setOpen] = useState(false)
@@ -24,15 +23,10 @@ const CreateGroupDialog = ({ children, ...props }: CreateGroupDialogProps) => {
 		<Dialog open={open} onOpenChange={setOpen}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 			<Dialog.Content
-				title={props?.groupId?.length ? t("edit-group") : t("new-group")}
+				title={t("new-group")}
 				className='h-[321px] w-[382px] sm:h-[329px] sm:w-[390px]'
 				onInteractOutside={(e) => e.preventDefault()}>
-				<CreateGroupContent
-					{...props}
-					closePopover={() => setOpen(false)}
-					size='lg'
-					ctaButtonProps={{ variant: "default" }}
-				/>
+				<CreateGroupContent closeDialog={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>
 	)

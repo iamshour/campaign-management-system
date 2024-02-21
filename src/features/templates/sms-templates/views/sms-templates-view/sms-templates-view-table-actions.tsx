@@ -3,38 +3,30 @@ import { useNavigate } from "react-router-dom"
 
 import DeleteSmsTemplateDialog from "@/features/templates/sms-templates/dialogs/delete-sms-template-dialog/delete-sms-template-dialog"
 import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
-import { Dropdown } from "@/ui"
-
-import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
+import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 //#endregion
 
 const SmsTemplatesViewTableActions = ({ id }: Pick<SmsTemplateType, "id">) => {
 	const navigate = useNavigate()
 
 	return (
-		<Dropdown>
-			<Dropdown.Trigger showArrow={false} variant='ghost' className='h-max w-max p-1.5'>
-				<BiThreeDotsVertical />
-			</Dropdown.Trigger>
+		<ActionsDropdown>
+			<ActionsDropdown.Item onClick={() => navigate(`new-template?templateId=${id}`)}>Clone</ActionsDropdown.Item>
 
-			<Dropdown.Content sideOffset={0} align='end'>
-				<Dropdown.Item onClick={() => navigate(`new-template?templateId=${id}`)}>Clone</Dropdown.Item>
+			<ActionsDropdown.Separator />
 
-				<Dropdown.Separator />
+			<ActionsDropdown.Item onClick={() => navigate(id)}>View Template</ActionsDropdown.Item>
 
-				<Dropdown.Item onClick={() => navigate(id)}>View Template</Dropdown.Item>
+			<ActionsDropdown.Separator />
 
-				<Dropdown.Separator />
+			<ActionsDropdown.Item onClick={() => navigate(`${id}/edit-template`)}>Edit</ActionsDropdown.Item>
 
-				<Dropdown.Item onClick={() => navigate(`${id}/edit-template`)}>Edit</Dropdown.Item>
+			<ActionsDropdown.Separator />
 
-				<Dropdown.Separator />
-
-				<DeleteSmsTemplateDialog ids={[id]}>
-					<Dropdown.Item>Delete</Dropdown.Item>
-				</DeleteSmsTemplateDialog>
-			</Dropdown.Content>
-		</Dropdown>
+			<DeleteSmsTemplateDialog ids={[id]}>
+				<ActionsDropdown.Item>Delete</ActionsDropdown.Item>
+			</DeleteSmsTemplateDialog>
+		</ActionsDropdown>
 	)
 }
 

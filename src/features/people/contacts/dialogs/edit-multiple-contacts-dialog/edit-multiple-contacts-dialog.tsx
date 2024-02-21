@@ -1,9 +1,10 @@
 //#region Import
 import { lazy, useState } from "react"
+import { twMerge } from "tailwind-merge"
 
 import useSelector from "@/core/hooks/useSelector"
 import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import { twMerge, Dialog } from "@/ui"
+import { Dialog } from "@/ui"
 
 const EditMultipleContactsDialogContent = lazy(() => import("./edit-multiple-contacts-dialog-content"))
 //#endregion

@@ -2,11 +2,12 @@
 import { Suspense, lazy, useMemo } from "react"
 import { useFormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import { twMerge } from "tailwind-merge"
 
 import IconTooltip from "@/core/components/icon-tooltip/icon-tooltip"
 import type { SmsIndustryTemplateSchemaType } from "@/features/industries/schemas/sms-industry-template-schema"
 import PreviewTemplateCardDialog from "@/features/templates/sms-templates/dialogs/preview-template-card-dialog/preview-template-card-dialog"
-import { Button, Checkbox, Form, Separator, Skeleton, twMerge } from "@/ui"
+import { Button, Checkbox, Form, Separator, Skeleton } from "@/ui"
 import SectionHeading from "@/ui/section-heading/section-heading"
 
 import MaterialSymbolsImagesmodeOutline from "~icons/material-symbols/imagesmode-outline"
@@ -21,12 +22,16 @@ const SmsIndustryTemplateBuilderContent = () => {
 	const { control, watch } = useFormContext<SmsIndustryTemplateSchemaType>()
 
 	const smsTemplate = watch()
-
-	const backgroundUrl = smsTemplate?.backgroundUrl ? `data:image/png;base64,${smsTemplate?.backgroundUrl}` : undefined
+	const { backgroundImage } = smsTemplate
 
 	const previewCardBackground = useMemo(
-		() => backgroundUrl ?? (smsTemplate?.background ? URL.createObjectURL(smsTemplate.background) : undefined),
-		[backgroundUrl, smsTemplate?.background]
+		() =>
+			backgroundImage
+				? `data:image;base64,${backgroundImage}`
+				: smsTemplate?.background
+					? URL.createObjectURL(smsTemplate.background)
+					: undefined,
+		[backgroundImage, smsTemplate?.background]
 	)
 
 	return (
@@ -61,7 +66,11 @@ const SmsIndustryTemplateBuilderContent = () => {
 
 			<div className='h-[175px] w-full max-w-[490px]'>
 				<Suspense fallback={<Skeleton />}>
-					{backgroundUrl ? <BuilderPreviewBackgroundSection src={backgroundUrl} /> : <BuilderDropareaSection />}
+					{backgroundImage ? (
+						<BuilderPreviewBackgroundSection src={`data:image;base64,${backgroundImage}`} />
+					) : (
+						<BuilderDropareaSection />
+					)}
 				</Suspense>
 
 				<PreviewTemplateCardDialog
@@ -69,8 +78,8 @@ const SmsIndustryTemplateBuilderContent = () => {
 					type={smsTemplate?.type}
 					language={smsTemplate?.language}
 					body={smsTemplate?.body}
-					industryId={""}
-					background={previewCardBackground}>
+					industryName={""}
+					backgroundImage={previewCardBackground}>
 					<Button variant='link' type='button' className='p-0'>
 						Preview Card
 						<IconTooltip content={t("dropArea.previewCardIconTooltipContent")} />

@@ -1,16 +1,17 @@
 //#region Import
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
+import { twMerge } from "tailwind-merge"
 
 import useSelector from "@/core/hooks/useSelector"
 import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import { twMerge, Dialog } from "@/ui"
+import { Dialog } from "@/ui"
 
 const MoveToGroupDialogContent = lazy(() => import("./move-to-group-dialog-content"))
 //#endregion
 
 interface MoveToGroupDialogProps
-	extends Omit<React.ComponentPropsWithoutRef<typeof MoveToGroupDialogContent>, "onClose"> {
+	extends Omit<React.ComponentPropsWithoutRef<typeof MoveToGroupDialogContent>, "closeDialog"> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */
@@ -35,7 +36,7 @@ const MoveToGroupDialog = ({ children, id }: MoveToGroupDialogProps) => {
 					"w-[382px] sm:w-[390px]",
 					isMovingMultipleContacts ? "h-[423px] sm:h-[431px]" : "h-[225px] sm:h-[233px]"
 				)}>
-				<MoveToGroupDialogContent id={id} onClose={() => setOpen(false)} />
+				<MoveToGroupDialogContent id={id} closeDialog={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>
 	)

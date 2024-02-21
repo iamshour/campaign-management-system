@@ -16,7 +16,7 @@
 			},
 			"actions": {
 				"saveAsDraft": "Save as Draft",
-				"publish": "Publish Template",
+				"publish": "Save Changes",
 				"updateDraft": "Update Draft",
 				"saveAndPublish": "Save & Publish Template"
 			}

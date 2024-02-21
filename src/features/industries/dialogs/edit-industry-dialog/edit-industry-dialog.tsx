@@ -7,7 +7,7 @@ const EditIndustryDialogContent = lazy(() => import("./edit-industry-dialog-cont
 //#endregion
 
 interface EditIndustryDialogProps
-	extends Omit<React.ComponentPropsWithoutRef<typeof EditIndustryDialogContent>, "onClose"> {
+	extends Omit<React.ComponentPropsWithoutRef<typeof EditIndustryDialogContent>, "closeDialog"> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */
@@ -24,7 +24,7 @@ const EditIndustryDialog = ({ children, ...industry }: EditIndustryDialogProps) 
 				title='Edit Industry'
 				className='h-[485px] w-[288px] sm:h-[430px] sm:w-[390px]'
 				onInteractOutside={(e) => e.preventDefault()}>
-				<EditIndustryDialogContent {...industry} onClose={() => setOpen(false)} />
+				<EditIndustryDialogContent {...industry} closeDialog={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>
 	)

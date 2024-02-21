@@ -2,6 +2,7 @@
 export { default as getListOfKey } from "./array-utils/get-list-of-key"
 
 // File utils
+export { default as convertBase64ToPng } from "./file-utils/convert-base64-to-png"
 export { default as downloadFile } from "./file-utils/download-file"
 export { default as formatBytes } from "./file-utils/format-bytes"
 export { default as getFileExtension } from "./file-utils/get-file-extension"

@@ -9,30 +9,36 @@ import type { IndustryType, PrebuiltTemplateFilter } from "@/features/industries
 import smsTemplateLanguagesOptions from "@/features/templates/sms-templates/constants/sms-template-languages-options"
 import smsTemplateTypesOptions from "@/features/templates/sms-templates/constants/sms-template-types-options"
 import type { SmsTemplateLanguageOption, SmsTemplateTypeOption } from "@/features/templates/sms-templates/types"
-import { SearchInput, Separator, Button, Label, Checkbox, Collapsible } from "@/ui"
+import { SearchInput, Separator, Button, Label, Checkbox, Collapsible, NoResultsFound } from "@/ui"
 //#endregion
 
-interface SmsPrebuiltTemplatesFiltersContentProps {
+export interface SmsPrebuiltTemplatesFiltersContentProps {
 	list: IndustryType[]
 
 	onIndustrySearch: (searchTerm?: string) => void
+
+	prebuiltTemplatesGridKey: "sms-prebuilt-templates" | "sms-prebuilt-templates-dialog"
 }
 
-const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebuiltTemplatesFiltersContentProps) => {
+const SmsPrebuiltTemplatesFiltersContent = ({
+	prebuiltTemplatesGridKey,
+	list,
+	onIndustrySearch,
+}: SmsPrebuiltTemplatesFiltersContentProps) => {
 	const dispatch = useDispatch()
 
 	// Getting Default User's Industry from User info in authSlice (Token))
 	const defaultUserIndustryId = useSelector(({ auth }) => auth?.user?.industryId)
 
-	const { filters } = useSelector<DataGridState<"sms-prebuilt-templates">>(
-		({ dataGrid }) => dataGrid["sms-prebuilt-templates"]
+	const { filters } = useSelector<DataGridState<typeof prebuiltTemplatesGridKey>>(
+		({ dataGrid }) => dataGrid[prebuiltTemplatesGridKey]
 	)
 
 	const onFilterClick = useCallback(
 		(updatedFilters: Partial<PrebuiltTemplateFilter>) => {
-			dispatch(updateFilters({ "sms-prebuilt-templates": updatedFilters }))
+			dispatch(updateFilters({ [prebuiltTemplatesGridKey]: updatedFilters }))
 		},
-		[dispatch]
+		[dispatch, prebuiltTemplatesGridKey]
 	)
 
 	const onTemplateTypeCheck = useCallback(
@@ -62,11 +68,11 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 	return (
 		<div className='z-10 flex h-full w-[300px] flex-col overflow-hidden bg-[#edf3f7]'>
 			<div className='w-full space-y-2 p-4'>
-				{sortButtonsLabels?.map(({ label, filterBy }, idx) => (
+				{sortButtonsLabels?.map(({ label, filterBy }) => (
 					<Button
 						key={label}
 						variant='ghost'
-						active={(!filters?.filterBy && idx === 0) || filterBy === filters?.filterBy}
+						active={filterBy === filters?.filterBy}
 						className='w-full justify-start font-normal transition-all will-change-[font-weight,background-color] data-[active=true]:bg-primary-600 data-[active=true]:font-semibold data-[active=true]:text-white'
 						onClick={() => onFilterClick({ filterBy })}>
 						{label}
@@ -80,17 +86,23 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 				<CollapsibleSection label='Industries'>
 					<SearchInput className='overflow-visible' variant='underlined' onChange={onIndustrySearch} />
 
-					<div className='flex h-[250px] w-full flex-col gap-1 overflow-y-auto'>
-						{list?.map(({ id: industryId, name }) => (
-							<Button
-								key={industryId}
-								variant='ghost'
-								active={filters?.industryId ? industryId === filters?.industryId : industryId === defaultUserIndustryId}
-								className='h-max w-full max-w-[80%] shrink-0 justify-start whitespace-break-spaces p-2 text-start font-normal text-[#054060] data-[active=true]:bg-[#C8E0EE] data-[active=true]:text-[#054060] hover:bg-[#C8E0EE]'
-								onClick={() => onFilterClick({ industryId })}>
-								{name}
-							</Button>
-						))}
+					<div className='flex max-h-[250px] w-full flex-col gap-1 overflow-y-auto'>
+						{!list?.length ? (
+							<NoResultsFound />
+						) : (
+							list?.map(({ id: industryId, name }) => (
+								<Button
+									key={industryId}
+									variant='ghost'
+									active={
+										filters?.industryId ? industryId === filters?.industryId : industryId === defaultUserIndustryId
+									}
+									className='h-max w-full max-w-[80%] shrink-0 justify-start whitespace-break-spaces p-2 text-start font-normal text-[#054060] data-[active=true]:bg-[#C8E0EE] data-[active=true]:text-[#054060] hover:bg-[#C8E0EE]'
+									onClick={() => onFilterClick({ industryId })}>
+									{name}
+								</Button>
+							))
+						)}
 					</div>
 				</CollapsibleSection>
 				<CollapsibleSection label='Type'>
@@ -129,13 +141,13 @@ const SmsPrebuiltTemplatesFiltersContent = ({ list, onIndustrySearch }: SmsPrebu
 export default SmsPrebuiltTemplatesFiltersContent
 
 const sortButtonsLabels: { filterBy?: PrebuiltTemplateFilter["filterBy"]; label: string }[] = [
-	{ label: "All Templates" },
+	{ filterBy: "ALL", label: "All Templates" },
 	{ filterBy: "RECENT", label: "Recently Added" },
 	{ filterBy: "POPULAR", label: "Most Popular" },
 ]
 
 const CollapsibleSection = ({ label, children }: { label: string; children: React.ReactNode }) => (
-	<Collapsible className='w-full overflow-hidden rounded-lg px-4 text-start transition-basic data-[state=open]:bg-primary-50/10'>
+	<Collapsible className='w-full overflow-hidden rounded-lg px-4 text-start transition-basic data-[state=open]:bg-primary-50/30'>
 		<Collapsible.Trigger showArrow className='rounded-md p-3 transition-basic hover:bg-primary-50/20'>
 			<span className='flex-1 whitespace-nowrap text-start transition-[opacity] duration-300 ease-in-out'>{label}</span>
 		</Collapsible.Trigger>

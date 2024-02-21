@@ -1,11 +1,15 @@
 //#region Import
+import { lazy } from "react"
+
 import DataGridDateCell from "@/core/components/data-grid-date-cell"
 import type { ColumnType } from "@/ui"
 
 import type { Group } from "../types"
-import GroupsViewTableActions from "../views/groups-view/groups-view-table-actions"
 
 import groupFieldsMap from "./group-fields-map"
+
+// eslint-disable-next-line react-refresh/only-export-components
+const GroupsViewTableActions = lazy(() => import("../views/groups-view/groups-view-table-actions"))
 //#endregion
 
 const grouspsTableColumns: ColumnType<Group>[] = [

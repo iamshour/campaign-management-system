@@ -20,9 +20,6 @@
 			},
 			"message": "صفحة {{currentPage, number}} من {{totalPages, number}}",
 			"limit-selectbar": "إدخالات لكل صفحة"
-		},
-		"message": {
-			"noResults": "لم يتم العثور على نتائج"
 		}
 	},
 	"prompt-input": {
@@ -33,7 +30,6 @@
 		"clearButton": "مسح المرشحات",
 		"placeholder": "اكتب للبحث",
 		"message": {
-			"noResults": "لم يتم العثور على نتائج.",
 			"maxLimitReached": "تم الوصول إلى الحد الأقصى"
 		}
 	},
@@ -52,5 +48,6 @@
 	},
 	"selectCountryPopover": {
 		"placeholder": "اختر دولة"
-	}
+	},
+	"noResultsComponent": "لم يتم العثور على نتائج"
 }

@@ -1,11 +1,10 @@
-export interface ErrorData {
-	message?: string
-	[key: string]: any
-}
 export interface ErrorObject {
 	error?: string
 	status?: number | string
-	data?: ErrorData
+	data?: {
+		message?: string
+		statusCode: number
+	}
 }
 
 /**
@@ -14,12 +13,10 @@ export interface ErrorObject {
  * @returns The error message to display.
  */
 export const getErrorMessage = (error: ErrorObject): string => {
-	console.log("Error From Get Error Message: ", error)
-
-	if (error?.status === 403) return "Forbidden request."
-	if (error?.status === 404) return "Resource not found."
-	if (error?.status === 500) return "Server exception error. Please try again, or contact IT for support."
-	if (error?.status === "FETCH_ERROR") return "Opps.. Failed to fetch. Seems like a network error"
+	if (error?.status === 403) return "Forbidden request"
+	if (error?.status === 404) return "Resource not found"
+	if (error?.status === 500) return "Server Exception error"
+	if (error?.status === "FETCH_ERROR") return "Network Error"
 
 	if (typeof error?.error === "string") return error.error
 	if (error?.data?.message && typeof error.data.message === "string" && error.status !== 500) return error.data.message

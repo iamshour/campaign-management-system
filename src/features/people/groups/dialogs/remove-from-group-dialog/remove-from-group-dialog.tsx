@@ -1,10 +1,11 @@
 //#region Import
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
+import { twMerge } from "tailwind-merge"
 
 import useSelector from "@/core/hooks/useSelector"
 import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import { twMerge, Dialog } from "@/ui"
+import { Dialog } from "@/ui"
 
 const RemoveFromGroupDialogContent = lazy(() => import("./remove-from-group-dialog-content"))
 //#endregion
@@ -34,7 +35,7 @@ const RemoveFromGroupDialog = ({ children, id }: RemoveFromGroupDialogProps) => 
 					"w-[382px] sm:w-[390px]",
 					isRemovingMultipleContacts ? "h-[343px] sm:h-[327px]" : "h-[201px] sm:h-[209px]"
 				)}>
-				<RemoveFromGroupDialogContent id={id} onClose={() => setOpen(false)} />
+				<RemoveFromGroupDialogContent id={id} closeDialog={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>
 	)

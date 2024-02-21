@@ -2,10 +2,11 @@
 import { format } from "date-fns"
 import { lazy } from "react"
 import { useTranslation } from "react-i18next"
+import { twMerge } from "tailwind-merge"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetContactByIdQuery } from "@/features/people/contacts/api"
-import { twMerge, Badge, Input, Label, PhoneInputReadonly, Skeleton, Textarea } from "@/ui"
+import { Badge, Input, Label, PhoneInputReadonly, Skeleton, Textarea } from "@/ui"
 import { getListOfKey } from "@/utils"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))

@@ -9,6 +9,7 @@ import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { useDeleteSmsTemplatesMutation } from "@/features/templates/sms-templates/api"
 import { DeleteSmsTemplatesBody } from "@/features/templates/sms-templates/types"
 import { Button, Footer, Input, Label } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 //#endregion
 
 export interface DeleteSmsTemplateDialogContentProps {
@@ -20,11 +21,13 @@ export interface DeleteSmsTemplateDialogContentProps {
 	/**
 	 * Callback function used to close the dialog
 	 */
-	onClose: () => void
+	closeDialog: () => void
 }
 
-const DeleteSmsTemplateDialogContent = ({ ids = [], onClose }: DeleteSmsTemplateDialogContentProps) => {
+const DeleteSmsTemplateDialogContent = ({ ids = [], closeDialog }: DeleteSmsTemplateDialogContentProps) => {
 	const dispatch = useDispatch()
+
+	const { closeDropdown } = useDropdownStateContext()
 
 	const [triggerDeleteSmsTemplates, { isLoading }] = useDeleteSmsTemplatesMutation()
 	const [promptInputValue, setPromptInputValue] = useState<string>()
@@ -45,14 +48,13 @@ const DeleteSmsTemplateDialogContent = ({ ids = [], onClose }: DeleteSmsTemplate
 			templateSearchFilter: { name: searchTerm, any: searchTerm?.length ? true : undefined },
 		}
 
-		await triggerDeleteSmsTemplates(body)
-			.unwrap()
-			.then(() => {
-				toast.success("Template deleted successfully.")
-				dispatch(clearSelection("sms-templates"))
+		await triggerDeleteSmsTemplates(body).unwrap()
 
-				onClose()
-			})
+		toast.success("Template deleted successfully.")
+		dispatch(clearSelection("sms-templates"))
+
+		closeDialog()
+		if (closeDropdown) closeDropdown()
 	}
 
 	return (

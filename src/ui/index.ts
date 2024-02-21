@@ -1,9 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 export { isPossiblePhoneNumber, parsePhoneNumber } from "react-phone-number-input"
 
-// Exported Utils
-export { twMerge } from "tailwind-merge"
-
 // re-exported modules
 export { DirectionProvider, type Direction } from "@radix-ui/react-direction"
 
@@ -29,6 +26,7 @@ export { default as NavTabs } from "./nav-tabs/nav-tabs"
 export { default as SearchInput } from "./input/search-Input"
 export { default as PhoneInput } from "./phone-input"
 export { default as ColorInput } from "./color-input/color-input"
+export { default as NoResultsFound } from "./errors/no-results-found"
 export { default as PhoneInputReadonly } from "./phone-input/phone-input-readonly"
 export { default as Spring } from "./react-spring/spring"
 export { default as Transition } from "./react-spring/transition"
