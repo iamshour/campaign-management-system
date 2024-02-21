@@ -7,7 +7,9 @@ import { useGetSmsTemplateByIdQuery } from "@/features/templates/sms-templates/a
 import { FullViewSkeleton } from "@/ui"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
-const SmsTemplatePreview = lazy(() => import("@/features/templates/sms-templates/components/sms-template-preview"))
+const SmsTemplateView = lazy(
+	() => import("@/features/templates/sms-templates/views/sms-template-view/sms-template-view")
+)
 //#endregion
 
 const SmsTemplateRoute = () => {
@@ -34,7 +36,7 @@ const SmsTemplateRoute = () => {
 	if (showError) return <DisplayError error={error as any} showReloadButton />
 
 	// Adding `!` becasue TS comiler comlains that data may be undefined, but its alread handle above, hence its never so
-	return <SmsTemplatePreview {...data!} />
+	return <SmsTemplateView {...data!} />
 }
 
 export default SmsTemplateRoute

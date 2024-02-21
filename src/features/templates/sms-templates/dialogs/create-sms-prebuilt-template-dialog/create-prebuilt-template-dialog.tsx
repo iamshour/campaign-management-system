@@ -21,7 +21,7 @@ const CreateSmsPrebuiltTemplateDialog = ({ children }: CreateSmsPrebuiltTemplate
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
 			<Dialog.Content title='Prebuilt Templates' className='h-[817px] w-[1600px] gap-0 !px-0 !pb-0'>
-				<SmsPrebuiltTemplatesRoute />
+				<SmsPrebuiltTemplatesRoute prebuiltTemplatesGridKey='sms-prebuilt-templates-dialog' />
 				<Button className='absolute end-4 top-16' as='link' to='new-template' size='sm'>
 					+ Create From Scratch
 				</Button>

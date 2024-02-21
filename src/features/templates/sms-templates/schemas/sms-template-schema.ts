@@ -18,13 +18,6 @@ const SmsTemplateSchema = z.object({
 	body: z
 		.string()
 		.min(1, { message: "Required" })
-		.refine(
-			(body) => {
-				const placeholdersCount = body?.match(PLACEHOLDER_REGEX)?.length ?? 0
-				return placeholdersCount <= MAX_PLACEHOLDERS
-			},
-			{ message: "Maximum 5 placeholders allowed" }
-		)
 		.superRefine((body, ctx) => {
 			if (getTotalCharactersCount(body) > getMaxTotalCharacters(body)) {
 				ctx.addIssue({
@@ -36,7 +29,14 @@ const SmsTemplateSchema = z.object({
 
 				return z.NEVER
 			}
-		}),
+		})
+		.refine(
+			(body) => {
+				const placeholdersCount = body?.match(PLACEHOLDER_REGEX)?.length ?? 0
+				return placeholdersCount <= MAX_PLACEHOLDERS
+			},
+			{ message: `Maximum ${MAX_PLACEHOLDERS} placeholders allowed` }
+		),
 })
 
 export default SmsTemplateSchema

@@ -1,11 +1,16 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
+import userAvatar from "@/assets/user-avatar.png"
+
 import type { AuthSliceState } from "./types"
 
 const initialState: AuthSliceState = {
 	user: {
+		name: "John Dow",
 		company: "Blue.Ai Technologies",
+		role: "BUSINESS",
 		industryId: undefined,
+		src: userAvatar,
 	},
 }
 
@@ -15,6 +20,11 @@ const authSlice = createSlice({
 	reducers: {
 		setUser: (state, { payload }: PayloadAction<AuthSliceState["user"]>) => {
 			state.user = payload
+		},
+
+		// MOCK FUNCTION USED TO SWITCH USER ROLE ----- ONLY USED FOR QA TESTING FOR NOW
+		switchRole: (state) => {
+			state.user.role = state.user.role === "BLUE" ? "BUSINESS" : "BLUE"
 		},
 
 		updateToken: (state, { payload }: PayloadAction<AuthSliceState["token"]>) => {
@@ -28,5 +38,5 @@ const authSlice = createSlice({
 	},
 })
 
-export const { setUser, updateToken, clearAuth } = authSlice.actions
+export const { setUser, updateToken, clearAuth, switchRole } = authSlice.actions
 export default authSlice.reducer

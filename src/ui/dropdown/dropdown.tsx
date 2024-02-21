@@ -69,7 +69,7 @@ type InsetProp = { inset?: boolean }
  * @param props.modal - Boolean whether Dropdown is triggered in a modal
  * @param props.children - Dropdown Child components to be used, such as Trigger, SubTrigger, Content, SubContent, Item, CheckboxItem, RadioItem, Label, Separator, Shortcut, Arrow, Group, RadioGroup, Sub
  */
-const Dropdown = ({ children, ...props }: DropdownMenuProps) => <Root {...props}>{children}</Root>
+const Dropdown = (props: DropdownMenuProps) => <Root {...props} />
 
 const DropdownTrigger = ({
 	children,
@@ -129,7 +129,7 @@ const DropdownItem = forwardRef<
 		ref={ref}
 		data-active={active}
 		className={twMerge(
-			"relative flex cursor-default select-none items-center gap-1.5 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[active=true]:pointer-events-none data-[disabled]:pointer-events-none data-[active=true]:bg-primary-50/80 data-[disabled]:opacity-50 focus:bg-slate-100 focus:text-slate-900",
+			"relative flex cursor-pointer select-none items-center gap-1.5 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[active=true]:pointer-events-none data-[disabled]:pointer-events-none data-[active=true]:bg-primary-50/80 data-[disabled]:opacity-50 focus:bg-slate-100 focus:text-slate-900",
 			inset && "ps-8",
 			className
 		)}

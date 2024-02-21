@@ -6,29 +6,32 @@ import toast from "react-hot-toast"
 import { useDeleteIndustryMutation } from "@/features/industries/api"
 import type { IndustryType } from "@/features/industries/types"
 import { Button, Footer, Input } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 //#endregion
 
 export interface DeleteIndustryDialogContentProps extends Pick<IndustryType, "id" | "name"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
-	onClose: () => void
+	closeDialog: () => void
 }
 
-const DeleteIndustryDialogContent = ({ id, name, onClose }: DeleteIndustryDialogContentProps) => {
+const DeleteIndustryDialogContent = ({ id, name, closeDialog }: DeleteIndustryDialogContentProps) => {
 	const [deleteIndustry, { isLoading }] = useDeleteIndustryMutation()
+
+	const { closeDropdown } = useDropdownStateContext()
 
 	const [promptInputValue, setPromptInputValue] = useState<string>()
 
 	const onSubmit = async () => {
 		if (!id) return
 
-		await deleteIndustry(id)
-			.unwrap()
-			.then(() => {
-				onClose()
-				toast.success("Industry deleted successfully.")
-			})
+		await deleteIndustry(id).unwrap()
+
+		toast.success("Industry deleted successfully.")
+
+		closeDialog()
+		closeDropdown()
 	}
 
 	return (

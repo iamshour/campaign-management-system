@@ -1,7 +1,6 @@
 const imageMimeTypes: Record<string, string[]> = {
-	"image/jpeg": [".jpg", ".jpeg"],
+	"image/jpg": [".jpg"],
 	"image/png": [".png"],
-	"image/webp": [".webp"],
 }
 
 export default imageMimeTypes

@@ -26,7 +26,7 @@ const EditContactDialog = ({ id, children }: EditContactDialogProps) => {
 				title={t("title")}
 				className='h-[765px] w-[382px] sm:h-[553px] sm:w-[746px] '
 				onInteractOutside={(e) => e.preventDefault()}>
-				<EditContactDialogContent id={id} onClose={() => setOpen(false)} />
+				<EditContactDialogContent id={id} closeDialog={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>
 	)

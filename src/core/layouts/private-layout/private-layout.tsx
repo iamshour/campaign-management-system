@@ -1,22 +1,23 @@
 //#region Import
 import { Suspense, lazy } from "react"
 import { Outlet } from "react-router-dom"
+import { twMerge } from "tailwind-merge"
 
 import useSelector from "@/core/hooks/useSelector"
-import { twMerge, Skeleton, DataTableSkeleton } from "@/ui"
+import { Skeleton, DataTableSkeleton } from "@/ui"
 
-const Navbar = lazy(() => import("./navbar"))
-const Topbar = lazy(() => import("./topbar"))
+const Navbar = lazy(() => import("./navbar/navbar"))
+const Topbar = lazy(() => import("./topbar/topbar"))
 //#endregion
 
 const PrivateLayout = () => {
-	const isNavbarOpen = useSelector(({ app }) => app.isNavbarOpen)
+	const isNavOpen = useSelector(({ app }) => app.isNavOpen)
 
 	return (
 		<main className='flex overflow-hidden'>
 			<Suspense
 				fallback={
-					<div className={twMerge("flex flex-col gap-5 bg-[#054060] p-4", isNavbarOpen ? "w-[250px]" : "w-[78px]")}>
+					<div className={twMerge("flex flex-col gap-5 bg-[#054060] p-4", isNavOpen ? "w-[250px]" : "w-[78px]")}>
 						{Array.from({ length: 10 }, (_, idx) => (
 							<Skeleton key={idx} className='h-[44px] w-full bg-opacity-30' />
 						))}

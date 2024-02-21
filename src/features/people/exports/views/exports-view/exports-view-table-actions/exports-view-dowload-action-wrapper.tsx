@@ -5,14 +5,10 @@ import { useTranslation } from "react-i18next"
 import { useDownloadExportMutation } from "@/features/people/exports/api"
 import type { ContactExports } from "@/features/people/exports/types"
 import { Slot } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 //#endregion
 
 interface ExportViewDownloadActionWrapperProps extends Pick<ContactExports, "id" | "fileName" | "contactExportStatus"> {
-	/**
-	 * Closes the actions dropdown in table row
-	 */
-	closeActionsDropDown: () => void
-
 	/**
 	 * Dropdown.Item that will trigger export download
 	 */
@@ -23,20 +19,22 @@ function ExportViewDownloadActionWrapper({
 	id,
 	fileName,
 	contactExportStatus,
-	closeActionsDropDown,
 	children,
 }: ExportViewDownloadActionWrapperProps) {
 	const { t } = useTranslation("exports", { keyPrefix: "components.exportTableActions" })
-	const [triggerDownloadExportMutation] = useDownloadExportMutation()
+
+	const { closeDropdown } = useDropdownStateContext()
+
+	const [triggerDownloadExport] = useDownloadExportMutation()
 
 	const canDownloadExport = contactExportStatus === "COMPLETED"
 
 	const handleDownload = async () => {
 		if (!canDownloadExport) return
 
-		const res = await triggerDownloadExportMutation({ id, fileName }).unwrap()
+		const res = await triggerDownloadExport({ id, fileName }).unwrap()
 
-		closeActionsDropDown()
+		closeDropdown()
 
 		if (res?.ok) return toast.success(t("downloadSuccess"))
 	}

@@ -210,9 +210,7 @@ export function ComboBoxPopper({
 						<Skeleton className='h-8 w-full rounded-lg' />
 					</Command.Loading>
 				) : !optionsList?.length ? (
-					<div className='flex-1 overflow-hidden uppercase text-gray-500 flex-center'>
-						{t("comboBox.message.noResults")}
-					</div>
+					<div className='flex-1 overflow-hidden uppercase text-gray-500 flex-center'>{t("noResultsComponent")}</div>
 				) : (
 					<Command.Group className='h-full flex-1 overflow-y-auto'>
 						{optionsList

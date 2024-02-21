@@ -9,13 +9,19 @@ import SmsIndustryTemplateBuilderContent from "@/features/industries/components/
 import SmsIndustryTemplateSchema, {
 	type SmsIndustryTemplateSchemaType,
 } from "@/features/industries/schemas/sms-industry-template-schema"
-import type { SmsIndustryTemplateType } from "@/features/industries/types"
+import type { AddNewSmsIndustryTemplateBody } from "@/features/industries/types"
 import SmsTemplateBuilder from "@/features/templates/sms-templates/components/sms-template-builder/sms-template-builder"
 import type { SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
 import { Button } from "@/ui"
+import { convertBase64ToPng } from "@/utils"
 //#endregion
 
 interface CreateSmsIndustryTemplateViewProps {
+	/**
+	 * To be passed in case of cloning a prebuilt template.
+	 * Default prebuilt template body.
+	 * This object will be passed to react hook form as default form values
+	 */
 	defaultValues?: SmsIndustryTemplateSchemaType
 }
 
@@ -27,36 +33,36 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 
 	const [triggerAddSmsIndustryTemplate, { isLoading }] = useAddNewSmsIndustryTemplateMutation()
 
-	const [smsTemplateStatus, SetSmsTemplateStatus] = useState<SmsTemplateStatusOption | undefined>()
+	const [status, setStatus] = useState<SmsTemplateStatusOption | undefined>()
 
-	const onSubmit = async ({ background, backgroundUrl, ...requestBody }: SmsIndustryTemplateSchemaType) => {
-		if (!requestBody || !smsTemplateStatus) return
+	const onSubmit = async ({ background, backgroundImage, ...requestBody }: SmsIndustryTemplateSchemaType) => {
+		if (!requestBody || !status || !industryId) return
 
-		const body: Omit<SmsIndustryTemplateType, "id" | "createdAt" | "updatedAt"> = {
+		const body: AddNewSmsIndustryTemplateBody = {
 			...requestBody,
 			channel: "SMS",
 			industryId: industryId!,
-			status: smsTemplateStatus,
-			background: backgroundUrl ?? "",
+			status,
 		}
 
 		const formData = new FormData()
 
 		// add template info to request body
-		const jsonBlob = new Blob([JSON.stringify(body)], {
-			type: "application/json",
-		})
+		const jsonBlob = new Blob([JSON.stringify(body)], { type: "application/json" })
 		formData.append("prebuiltTemplateRequest", jsonBlob)
 
-		// add background image to request body
-		if (background) formData.append("background", background as Blob)
+		if (background) {
+			formData.append("background", background)
+		} else if (backgroundImage?.length) {
+			const convertedBackground = convertBase64ToPng(backgroundImage)
 
-		await triggerAddSmsIndustryTemplate({ industryId: industryId!, body: formData })
-			.unwrap()
-			.then(() => {
-				toast.success("Template added successfully to the industry.")
-				navigate(`/industries/${industryId}/sms`, { replace: true })
-			})
+			formData.append("background", convertedBackground, "image.png")
+		}
+
+		await triggerAddSmsIndustryTemplate({ industryId, body: formData }).unwrap()
+
+		toast.success("Template added successfully to the industry.")
+		navigate(`/industries/${industryId}/sms`, { replace: true })
 	}
 
 	return (
@@ -74,18 +80,18 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 					variant='outline'
 					type='submit'
 					className='px-10'
-					loading={isLoading && smsTemplateStatus == "DRAFT"}
-					disabled={isLoading && smsTemplateStatus == "PUBLISHED"}
-					onClick={() => SetSmsTemplateStatus("DRAFT")}>
+					loading={isLoading && status == "DRAFT"}
+					disabled={isLoading && status == "PUBLISHED"}
+					onClick={() => setStatus("DRAFT")}>
 					{t("actions.saveAsDraft")}
 				</Button>
 
 				<Button
 					type='submit'
 					className='px-10'
-					loading={isLoading && smsTemplateStatus == "PUBLISHED"}
-					disabled={isLoading && smsTemplateStatus == "DRAFT"}
-					onClick={() => SetSmsTemplateStatus("PUBLISHED")}>
+					loading={isLoading && status == "PUBLISHED"}
+					disabled={isLoading && status == "DRAFT"}
+					onClick={() => setStatus("PUBLISHED")}>
 					{t("actions.saveAndPublish")}
 				</Button>
 			</SmsTemplateBuilder.Footer>

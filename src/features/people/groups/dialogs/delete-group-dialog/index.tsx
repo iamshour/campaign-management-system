@@ -8,7 +8,7 @@ const DeleteGroupDialogContent = lazy(() => import("./delete-group-dialog-conten
 //#endregion
 
 interface DeleteGroupDialogProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof DeleteGroupDialogContent>, "groupId" | "closeActionsDropDown"> {
+	extends Pick<React.ComponentPropsWithoutRef<typeof DeleteGroupDialogContent>, "groupId"> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */
@@ -24,7 +24,7 @@ const DeleteGroupDialog = ({ children, groupId, ...props }: DeleteGroupDialogPro
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
 			<Dialog.Content title={t("title")} className='h-[297px] w-[410px] sm:h-[233px]'>
-				<DeleteGroupDialogContent groupId={groupId} closeDeleteGroupDialog={() => setOpen(false)} {...props} />
+				<DeleteGroupDialogContent groupId={groupId} closeDialog={() => setOpen(false)} {...props} />
 			</Dialog.Content>
 		</Dialog>
 	)

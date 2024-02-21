@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 
 import { useDeleteSegmentMutation } from "@/features/people/segments/api"
 import { Button, Footer } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 //#endregion
 
 export interface DeleteSegmentDialogContentProps {
@@ -15,23 +16,25 @@ export interface DeleteSegmentDialogContentProps {
 	/**
 	 * Callback function used to close the dialog
 	 */
-	onClose: () => void
+	closeDialog: () => void
 }
 
-const DeleteSegmentDialogContent = ({ id, onClose }: DeleteSegmentDialogContentProps) => {
+const DeleteSegmentDialogContent = ({ id, closeDialog }: DeleteSegmentDialogContentProps) => {
 	const { t } = useTranslation("segments", { keyPrefix: "dialogs.delete-segment" })
+
+	const { closeDropdown } = useDropdownStateContext()
 
 	const [triggerDeleteSegment, { isLoading }] = useDeleteSegmentMutation()
 
 	const onSubmit = async () => {
 		if (!id) return
 
-		await triggerDeleteSegment(id)
-			.unwrap()
-			.then(() => {
-				onClose()
-				toast.success("Segment deleted successfully.")
-			})
+		await triggerDeleteSegment(id).unwrap()
+
+		toast.success("Segment deleted successfully.")
+
+		closeDialog()
+		closeDropdown()
 	}
 
 	return (

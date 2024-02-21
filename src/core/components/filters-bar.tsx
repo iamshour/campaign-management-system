@@ -1,9 +1,9 @@
 //#region Import
-import { Suspense, useMemo } from "react"
+import { Suspense } from "react"
 import { useTranslation } from "react-i18next"
-import { useLocation } from "react-router-dom"
+import { twMerge } from "tailwind-merge"
 
-import { twMerge, Button, Transition, Skeleton, Tooltip } from "@/ui"
+import { Button, Transition, Skeleton, Tooltip } from "@/ui"
 
 import useDispatch from "../hooks/useDispatch"
 import useSelector from "../hooks/useSelector"
@@ -13,15 +13,12 @@ import IconoirFilter from "~icons/iconoir/filter"
 //#endregion
 
 const FiltersBar = ({ children }: { children: React.ReactNode }) => {
-	const { pathname } = useLocation()
-	const { closedFiltersBars } = useSelector(({ app }) => app)
-
-	const isOpen = useMemo(() => (closedFiltersBars?.includes(pathname) ? false : true), [pathname, closedFiltersBars])
+	const { isFilterBarOpen } = useSelector(({ app }) => app)
 
 	return (
 		<Transition
 			as='aside'
-			open={isOpen}
+			open={isFilterBarOpen}
 			transition={{ from: { width: 0 }, enter: { width: 300 }, initial: { width: 300 } }}
 			className='z-10 flex h-full shrink-0 flex-col justify-between overflow-hidden bg-[#edf3f7] shadow-sm'>
 			<Suspense fallback={<Skeleton className='h-full w-full' />}>{children}</Suspense>
@@ -31,9 +28,8 @@ const FiltersBar = ({ children }: { children: React.ReactNode }) => {
 
 const Trigger = ({ appliedFiltersCount = 0 }: { appliedFiltersCount?: number }) => {
 	const dispatch = useDispatch()
-	const { pathname } = useLocation()
 
-	const { closedFiltersBars } = useSelector(({ app }) => app)
+	const { isFilterBarOpen } = useSelector(({ app }) => app)
 
 	const { t } = useTranslation("common", { keyPrefix: "filters-bar" })
 
@@ -42,7 +38,7 @@ const Trigger = ({ appliedFiltersCount = 0 }: { appliedFiltersCount?: number }) 
 			<Tooltip.Trigger asChild>
 				<Button
 					variant={appliedFiltersCount > 0 ? "secondary" : "outline-grey"}
-					onClick={() => dispatch(toggleFiltersBar(pathname))}
+					onClick={() => dispatch(toggleFiltersBar())}
 					className='relative z-10 w-10 !overflow-visible px-0'>
 					<IconoirFilter />
 					{appliedFiltersCount > 0 && (
@@ -53,7 +49,7 @@ const Trigger = ({ appliedFiltersCount = 0 }: { appliedFiltersCount?: number }) 
 				</Button>
 			</Tooltip.Trigger>
 			<Tooltip.Content
-				content={closedFiltersBars?.includes(pathname) ? t("trigger-button.expand") : t("trigger-button.minimize")}
+				content={isFilterBarOpen ? t("trigger-button.minimize") : t("trigger-button.expand")}
 				side='bottom'
 				align='start'
 				sideOffset={8}

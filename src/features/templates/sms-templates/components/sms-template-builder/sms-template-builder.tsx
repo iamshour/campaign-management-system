@@ -116,9 +116,12 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 													<Select.Item
 														key={value}
 														value={value}
+														showCheck={false}
 														className='static flex w-full flex-row items-center justify-between'>
 														<Select.Text className='flex-1 '>{label}</Select.Text>
-														<MdiInformationVariantCircle className='text-sm text-primary-600' />
+														<span title='Lorem ipsum dolor sit amet consectetur adipisicing elit.'>
+															<MdiInformationVariantCircle className='text-sm text-primary-600' />
+														</span>
 													</Select.Item>
 												))}
 											</Select.Content>

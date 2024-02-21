@@ -1,6 +1,7 @@
 //#region Import
 import { Suspense, createContext, lazy, useCallback, useContext, useEffect } from "react"
 import { useTranslation } from "react-i18next"
+import { twMerge } from "tailwind-merge"
 
 import DefaultFiltersBar from "@/core/components/filters-bar"
 import useDispatch from "@/core/hooks/useDispatch"
@@ -12,8 +13,9 @@ import {
 	updateDataGridState,
 	updateSelection,
 } from "@/core/slices/data-grid-slice/data-grid-slice"
-import { Button, Skeleton, Table, TableSkeleton, Tooltip, twMerge } from "@/ui"
+import { Button, Skeleton, Table, TableSkeleton, Tooltip } from "@/ui"
 import type { TablePaginationProps, RowData, TableProps, IconType } from "@/ui"
+import NoResultsFound from "@/ui/errors/no-results-found"
 
 import type { DataGridView, DataGridKey } from "../slices/data-grid-slice/types"
 
@@ -108,21 +110,12 @@ type TableBodyProps<TData extends RowData> = Pick<
 > & { GridCard?: (props: TData) => JSX.Element }
 
 const DataGridBody = <TData extends RowData>({ list, GridCard, ...props }: TableBodyProps<TData>) => {
-	const { t } = useTranslation("ui")
 	const dispatch = useDispatch()
 
 	const { dataGridKey, count } = useDataGridContext()
 	const { view, offset, limit, sort, order, selection } = useSelector(({ dataGrid }) => dataGrid[dataGridKey])
 
-	if (view === "GRID" && !list?.length) {
-		return (
-			<div className='h-full w-full p-4 flex-center'>
-				<h2 className='text-center text-2xl font-light uppercase tracking-widest text-gray-500'>
-					{t("table.message.noResults")}
-				</h2>
-			</div>
-		)
-	}
+	if (view === "GRID" && !list?.length) return <NoResultsFound />
 
 	if (view === "GRID" && !!list?.length) {
 		return (

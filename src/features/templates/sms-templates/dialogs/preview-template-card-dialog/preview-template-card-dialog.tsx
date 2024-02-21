@@ -10,7 +10,9 @@ const SmsPrebuiltTemplateCard = lazy(
 //#endregion
 
 interface PreviewTemplateCardDialogProps
-	extends Partial<Pick<SmsIndustryTemplateType, "name" | "type" | "language" | "body" | "industryId" | "background">> {
+	extends Partial<
+		Pick<SmsIndustryTemplateType, "name" | "type" | "language" | "body" | "industryName" | "backgroundImage">
+	> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */

@@ -26,7 +26,7 @@ const CreateSmsIndustryTemplateRoute = () => {
 				language: data.language,
 				status: data.status,
 				body: data?.body,
-				backgroundUrl: data.background,
+				backgroundImage: data.backgroundImage,
 				mostPopular: data.mostPopular,
 			},
 			...rest,

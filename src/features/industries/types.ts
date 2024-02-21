@@ -56,9 +56,11 @@ export type UpdateIndustryBody = Omit<IndustryType, "createdAt">
 export type SmsIndustryTemplateType = SmsTemplateType & {
 	channel: string
 	industryId: string
+	industryName: string
 	createdAt: string
 	mostPopular: boolean
 	background: string
+	backgroundImage?: string
 }
 
 /**
@@ -72,7 +74,7 @@ export type PrebuiltTemplateFilter = DateRange & {
 	industryId?: string
 
 	// Only used internally (Not sent to BE)
-	filterBy?: "POPULAR" | "RECENT"
+	filterBy?: "POPULAR" | "RECENT" | "ALL"
 }
 type PrebuiltTemplateSearchFilter = { name?: string; any?: boolean }
 
@@ -84,6 +86,22 @@ export type GetSmsIndustryTemplatesParams = PaginationAndSorting<SmsIndustryTemp
 	PrebuiltTemplateSearchFilter
 
 /**
+ * Body Arguments passed to the `addNewSmsIndustryTemplate` mutation, used to add an Industry Template
+ */
+export type AddNewSmsIndustryTemplateBody = Pick<
+	SmsIndustryTemplateType,
+	"channel" | "name" | "status" | "type" | "language" | "body" | "mostPopular" | "industryId"
+>
+
+/**
+ * Body Arguments passed to the `updateSmsIndustryTemplate` mutation, used to update an Industry Template
+ */
+export type UpdateSmsIndustryTemplateBody = Pick<
+	SmsIndustryTemplateType,
+	"channel" | "name" | "status" | "type" | "language" | "body" | "mostPopular" | "industryId"
+>
+
+/**
  * Body Arguments passed to the `deleteIndustryTemplates` query, used for deleting Industry Template/s
  */
 export type DeleteIndustryTemplatesBody = {
@@ -92,8 +110,3 @@ export type DeleteIndustryTemplatesBody = {
 	prebuiltTemplateFilter?: PrebuiltTemplateFilter
 	prebuiltTemplateSearchFilter?: PrebuiltTemplateSearchFilter
 }
-
-/**
- * Body Arguments passed to the `updateSmsIndustryTemplate` mutation, used to update an Industry Template
- */
-export type UpdateSmsIndustryTemplateBody = Omit<SmsIndustryTemplateType, "createdAt" | "updatedAt">

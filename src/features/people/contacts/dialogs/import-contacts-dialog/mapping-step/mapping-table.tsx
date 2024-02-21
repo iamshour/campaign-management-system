@@ -1,10 +1,11 @@
 //#region Import
 import { useTranslation } from "react-i18next"
+import { twMerge } from "tailwind-merge"
 import { v4 as newId } from "uuid"
 
 import fileMappingHeadersOptions from "@/features/people/contacts/constants/file-mapping-headers-options"
 import type { ContactScreamSnakeCaseKey } from "@/features/people/contacts/types"
-import { twMerge, CompactTable, Select } from "@/ui"
+import { CompactTable, Select } from "@/ui"
 
 import { useImportContactsDialogContext } from "../import-contacts-dialog-context"
 //#endregion

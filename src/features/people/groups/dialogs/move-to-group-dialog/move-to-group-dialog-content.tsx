@@ -16,6 +16,7 @@ import { useMoveContactsToGroupMutation } from "@/features/people/groups/api"
 import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option-type-schema"
 import type { MoveContactsToGroupBody } from "@/features/people/groups/types"
 import { Button, Footer, Form, Skeleton, useForm, type OptionType } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { cleanObject } from "@/utils"
 
 const Input = lazy(() => import("@/ui/input"))
@@ -26,7 +27,7 @@ export interface MoveToGroupDialogContentProps {
 	/**
 	 * Callback function used to close the dialog
 	 */
-	onClose: () => void
+	closeDialog: () => void
 
 	/**
 	 * Contact Id in the Group we want to remove from
@@ -36,11 +37,13 @@ export interface MoveToGroupDialogContentProps {
 
 type DialogFormData = { prompt: number; group?: OptionType }
 
-const MoveToGroupDialogContent = ({ id, onClose }: MoveToGroupDialogContentProps) => {
+const MoveToGroupDialogContent = ({ id, closeDialog }: MoveToGroupDialogContentProps) => {
 	const { t } = useTranslation("groups")
 	const { id: currentGroupId } = useParams()
 
 	const dispatch = useDispatch()
+
+	const { closeDropdown } = useDropdownStateContext()
 
 	const { selection, filters, searchTerm } = useSelector<DataGridState<"contacts-in-group">>(
 		({ dataGrid }) => dataGrid["contacts-in-group"]
@@ -72,15 +75,15 @@ const MoveToGroupDialogContent = ({ id, onClose }: MoveToGroupDialogContentProps
 		// Cleaning Body from all undefined values, empty objects, and nested objects with undefined values
 		const cleanBody = cleanObject(body)
 
-		await triggerMoveContactsToGroup(cleanBody)
-			.unwrap()
-			.then(() => {
-				// Clearing Selection list if contacts were selected using their Ids
-				if (cleanBody?.contactsIds?.length) dispatch(clearSelection("contacts-in-group"))
+		await triggerMoveContactsToGroup(cleanBody).unwrap()
 
-				toast.success(t("dialogs.move-to-group.successMessage", { count: nbOfContactsToMove }))
-				onClose()
-			})
+		// Clearing Selection list if contacts were selected using their Ids
+		if (cleanBody?.contactsIds?.length) dispatch(clearSelection("contacts-in-group"))
+
+		toast.success(t("dialogs.move-to-group.successMessage", { count: nbOfContactsToMove }))
+
+		closeDialog()
+		closeDropdown()
 	}
 
 	return (

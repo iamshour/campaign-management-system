@@ -23,7 +23,7 @@ const CreateIndustryDialog = ({ children }: CreateIndustryDialogProps) => {
 				title='Create Industry'
 				className='h-[485px] w-[288px] sm:h-[430px] sm:w-[390px]'
 				onInteractOutside={(e) => e.preventDefault()}>
-				<CreateIndustryDialogContent onClose={() => setOpen(false)} />
+				<CreateIndustryDialogContent closeDialog={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>
 	)

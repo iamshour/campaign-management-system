@@ -1,10 +1,11 @@
 //#region Import
 import { createContext, useContext, useMemo } from "react"
 import { useTranslation } from "react-i18next"
+import { twMerge } from "tailwind-merge"
 
 import { emptySegmentCondition } from "@/features/people/segments/constants/preset-segments"
 import type { SegmentConditionType } from "@/features/people/segments/types"
-import { twMerge, Button } from "@/ui"
+import { Button } from "@/ui"
 
 import SegmentCondition from "./segment-condition"
 //#endregion

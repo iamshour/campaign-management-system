@@ -35,7 +35,7 @@ const SmsTemplatesRoute = () => {
 				count: data?.count,
 				isInitialLoading: !data && isLoading,
 				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-				isEmptyView: !isFetching && !!isSuccess && !data && !(appliedFiltersCount || !!searchTerm?.length),
+				isEmptyView: !isFetching && !!isSuccess && !data?.list?.length && !(appliedFiltersCount || searchTerm),
 				isFetching,
 				...rest,
 			}),

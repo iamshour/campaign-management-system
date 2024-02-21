@@ -5,6 +5,7 @@ import { useUpdateIndustryMutation } from "@/features/industries/api"
 import IndustryForm from "@/features/industries/components/industry-form"
 import type { AddNewIndustryBody, IndustryType } from "@/features/industries/types"
 import { Button } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 //#endregion
 
 export interface EditIndustryDialogContentProps
@@ -12,11 +13,13 @@ export interface EditIndustryDialogContentProps
 	/**
 	 * Callback function used to close the dialog
 	 */
-	onClose: () => void
+	closeDialog: () => void
 }
 
-const EditIndustryDialogContent = ({ onClose, id, ...formDefaultValues }: EditIndustryDialogContentProps) => {
+const EditIndustryDialogContent = ({ closeDialog, id, ...formDefaultValues }: EditIndustryDialogContentProps) => {
 	const [triggerUpdateIndustry, { isLoading }] = useUpdateIndustryMutation()
+
+	const { closeDropdown } = useDropdownStateContext()
 
 	/**
 	 * Used to send validated data from the `IndustryForm` component to the server, for updating the industry entry
@@ -26,13 +29,11 @@ const EditIndustryDialogContent = ({ onClose, id, ...formDefaultValues }: EditIn
 	const onSubmit = async (body: AddNewIndustryBody) => {
 		if (!body) return
 
-		await triggerUpdateIndustry({ id, ...body })
-			.unwrap()
-			.then(() => {
-				toast.success("Industry updated successfully")
+		await triggerUpdateIndustry({ id, ...body }).unwrap()
 
-				onClose()
-			})
+		toast.success("Industry updated successfully")
+		closeDialog()
+		closeDropdown()
 	}
 
 	return (

@@ -15,6 +15,7 @@ import { getContactFilterAndContactSearchFilter } from "@/features/people/contac
 import { useRemoveContactsFromGroupMutation } from "@/features/people/groups/api"
 import type { RemoveContactsFromGroupBody } from "@/features/people/groups/types"
 import { useForm, Button, Footer, Form, Skeleton } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { cleanObject } from "@/utils"
 
 const Input = lazy(() => import("@/ui/input"))
@@ -29,14 +30,16 @@ export interface RemoveFromGroupDialogContentProps {
 	/**
 	 * Callback function used to close the dialog
 	 */
-	onClose: () => void
+	closeDialog: () => void
 }
 
-const RemoveMultiContactsFromGroup = ({ id, onClose }: RemoveFromGroupDialogContentProps) => {
+const RemoveMultiContactsFromGroup = ({ id, closeDialog }: RemoveFromGroupDialogContentProps) => {
 	const { t } = useTranslation("groups")
 	const { id: currentGroupId } = useParams()
 
 	const dispatch = useDispatch()
+
+	const { closeDropdown } = useDropdownStateContext()
 
 	const { selection, filters, searchTerm } = useSelector<DataGridState<"contacts-in-group">>(
 		({ dataGrid }) => dataGrid["contacts-in-group"]
@@ -64,15 +67,15 @@ const RemoveMultiContactsFromGroup = ({ id, onClose }: RemoveFromGroupDialogCont
 		// Cleaning Body from all undefined values, empty objects, and nested objects with undefined values
 		const cleanBody = cleanObject(body)
 
-		await triggerRemoveContactsFromGroup(cleanBody)
-			.unwrap()
-			.then(() => {
-				// Clearing Selection list if contacts were selected using their Ids
-				if (cleanBody?.contactsIds?.length) dispatch(clearSelection("contacts-in-group"))
+		await triggerRemoveContactsFromGroup(cleanBody).unwrap()
 
-				toast.success(t("successMessage", { count: nbOfContactsToRemove }))
-				onClose()
-			})
+		// Clearing Selection list if contacts were selected using their Ids
+		if (cleanBody?.contactsIds?.length) dispatch(clearSelection("contacts-in-group"))
+
+		toast.success(t("successMessage", { count: nbOfContactsToRemove }))
+
+		closeDialog()
+		closeDropdown()
 	}
 
 	return (

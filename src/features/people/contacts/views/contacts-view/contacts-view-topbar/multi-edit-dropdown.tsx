@@ -9,6 +9,8 @@ import { Dropdown } from "@/ui"
 const MultiEditDropdown = () => {
 	const { t } = useTranslation("contacts")
 
+	// TODO: USE onDropdownClose Inside (First Wrap Dropdown with DropdownStateContext)
+
 	return (
 		<Dropdown>
 			<Dropdown.Trigger variant='secondary'>{t("table.toolbar.actions.edit.title")}</Dropdown.Trigger>

@@ -23,7 +23,7 @@ const DeleteSegmentDialog = ({ children, id }: DeleteSegmentDialogProps) => {
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
 			<Dialog.Content title={t("title")} className='h-[201px] w-[319.5px] sm:h-[209px] sm:w-[350px]'>
-				<DeleteSegmentDialogContent id={id} onClose={() => setOpen(false)} />
+				<DeleteSegmentDialogContent id={id} closeDialog={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>
 	)

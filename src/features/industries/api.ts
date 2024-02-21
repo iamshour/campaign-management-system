@@ -12,7 +12,6 @@ import type {
 	UpdateIndustryBody,
 	SmsIndustryTemplateType,
 	GetSmsIndustryTemplatesParams,
-	UpdateSmsIndustryTemplateBody,
 } from "./types"
 //#endregion
 
@@ -66,10 +65,19 @@ const industriesApi = api.injectEndpoints({
 			invalidatesTags: (res, error, { industryId }) => (res ? [{ type: "Industry", id: industryId }] : []),
 		}),
 
-		updateSmsIndustryTemplate: builder.mutation<any, UpdateSmsIndustryTemplateBody>({
-			query: ({ id, ...body }) => ({ url: `/template/prebuilt/${id}`, method: "PUT", body }),
-			// TODO: invalidate Industry by id & SmsIndustryTemplate by id, refer to addContactsToGroup
-			invalidatesTags: (res) => (res ? [{ type: "SmsTemplate", id: "LIST" }] : []),
+		updateSmsIndustryTemplate: builder.mutation<any, { industryId: string; templateId: string; body: FormData }>({
+			query: ({ templateId, body }) => ({
+				url: `/template/prebuilt/${templateId}`,
+				method: "PATCH",
+				body,
+			}),
+			invalidatesTags: (res, error, { industryId, templateId }) =>
+				res
+					? [
+							{ type: "Industry", id: industryId },
+							{ type: "SmsIndustryTemplate", id: templateId },
+						]
+					: [],
 		}),
 
 		deleteIndustryTemplates: builder.mutation<any, DeleteIndustryTemplatesBody>({

@@ -1,7 +1,7 @@
 //#region Import
 import { useTranslation } from "react-i18next"
 
-import CreateGroupDialog from "@/features/people/groups/dialogs/create-group-dialog"
+import CreateGroupDialog from "@/features/people/groups/dialogs/create-group-dialog/create-group-dialog"
 import { Button } from "@/ui"
 
 import PhPlusBold from "~icons/ph/plus-bold"

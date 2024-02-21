@@ -7,6 +7,7 @@ import { useDeleteGroupMutation, useMoveContactsToGroupMutation } from "@/featur
 import SelectGroupsPopover from "@/features/people/groups/components/select-groups-popover"
 import type { MoveContactsToGroupBody } from "@/features/people/groups/types"
 import { BackButton, Button, Footer, type OptionType } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { useStep } from "@/utils"
 //#endregion
 
@@ -17,24 +18,17 @@ export interface DeleteGroupDialogContentProps {
 	groupId: string
 
 	/**
-	 * Closes the actions dropdown in table row
-	 */
-	closeActionsDropDown: () => void
-
-	/**
 	 * Callback function used to close the dialog
 	 */
-	closeDeleteGroupDialog: () => void
+	closeDialog: () => void
 }
 
-const DeleteGroupDialogContent = ({
-	groupId,
-	closeActionsDropDown,
-	closeDeleteGroupDialog,
-}: DeleteGroupDialogContentProps) => {
+const DeleteGroupDialogContent = ({ groupId, closeDialog }: DeleteGroupDialogContentProps) => {
 	const { t } = useTranslation("groups", { keyPrefix: "dialogs.delete-group" })
-	const [triggerDeleteGroupMutation, { isLoading: isDeleteLoading }] = useDeleteGroupMutation()
-	const [triggerMoveContactsToGroupMutation, { isLoading: isMoveLoading }] = useMoveContactsToGroupMutation()
+	const [triggerDeleteGroup, { isLoading: isDeleteLoading }] = useDeleteGroupMutation()
+	const [triggerMoveContactsToGroup, { isLoading: isMoveLoading }] = useMoveContactsToGroupMutation()
+
+	const { closeDropdown } = useDropdownStateContext()
 
 	const [currentStep, { goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep }] = useStep(2)
 
@@ -42,13 +36,13 @@ const DeleteGroupDialogContent = ({
 
 	const onSuccess = (message: string) => {
 		toast.success(t(message))
-		closeDeleteGroupDialog()
-		closeActionsDropDown()
+		closeDialog()
+		closeDropdown()
 	}
 
 	const handleDelete = async () => {
 		if (currentStep === 1) {
-			await triggerDeleteGroupMutation(groupId)
+			await triggerDeleteGroup(groupId)
 				.unwrap()
 				.then(() => onSuccess("successMessage"))
 		}
@@ -59,7 +53,7 @@ const DeleteGroupDialogContent = ({
 				toGroupId: selectedGroupToMoveTo?.value,
 				moveAndDelete: true,
 			}
-			await triggerMoveContactsToGroupMutation(body)
+			await triggerMoveContactsToGroup(body)
 				.unwrap()
 				.then(() => onSuccess("successMessage"))
 		}

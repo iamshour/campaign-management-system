@@ -1,41 +1,36 @@
 //#region Import
+import { memo } from "react"
 import { useNavigate } from "react-router-dom"
 
 import DeleteIndustryTemplateDialog from "@/features/industries/dialogs/delete-industry-template-dialog/delete-industry-template-dialog"
 import type { SmsIndustryTemplateType } from "@/features/industries/types"
-import { Dropdown } from "@/ui"
-
-import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
+import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 //#endregion
 
-const SmsIndustryTemplatesViewTableActions = ({ id }: Pick<SmsIndustryTemplateType, "id">) => {
+const SmsIndustryTemplatesViewTableActions = memo(({ id }: Pick<SmsIndustryTemplateType, "id">) => {
 	const navigate = useNavigate()
 
 	return (
-		<Dropdown>
-			<Dropdown.Trigger showArrow={false} variant='ghost' className='h-max w-max p-1.5'>
-				<BiThreeDotsVertical />
-			</Dropdown.Trigger>
+		<ActionsDropdown>
+			<ActionsDropdown.Item onClick={() => navigate(`new-template?templateId=${id}`)}>Clone</ActionsDropdown.Item>
 
-			<Dropdown.Content sideOffset={0} align='end'>
-				<Dropdown.Item onClick={() => navigate(`new-template?templateId=${id}`)}>Clone</Dropdown.Item>
+			<ActionsDropdown.Separator />
 
-				<Dropdown.Separator />
+			<ActionsDropdown.Item onClick={() => navigate(id)}>View Template</ActionsDropdown.Item>
 
-				<Dropdown.Item onClick={() => navigate(id)}>View Template</Dropdown.Item>
+			<ActionsDropdown.Separator />
 
-				<Dropdown.Separator />
+			<ActionsDropdown.Item onClick={() => navigate(`${id}/edit-template`)}>Edit</ActionsDropdown.Item>
 
-				<Dropdown.Item onClick={() => navigate(`${id}/edit-template`)}>Edit</Dropdown.Item>
+			<ActionsDropdown.Separator />
 
-				<Dropdown.Separator />
-
-				<DeleteIndustryTemplateDialog ids={[id]}>
-					<Dropdown.Item>Delete</Dropdown.Item>
-				</DeleteIndustryTemplateDialog>
-			</Dropdown.Content>
-		</Dropdown>
+			<DeleteIndustryTemplateDialog ids={[id]}>
+				<ActionsDropdown.Item>Delete</ActionsDropdown.Item>
+			</DeleteIndustryTemplateDialog>
+		</ActionsDropdown>
 	)
-}
+})
+
+SmsIndustryTemplatesViewTableActions.displayName = "SmsIndustryTemplatesViewTableActions"
 
 export default SmsIndustryTemplatesViewTableActions
