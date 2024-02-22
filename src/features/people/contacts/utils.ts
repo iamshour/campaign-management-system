@@ -1,10 +1,15 @@
 //#region Import
 import { parsePhoneNumber } from "react-phone-number-input"
 
-import type { FiltersFieldMappingType } from "@/core/slices/data-grid-slice/types"
 import { cleanObject, createObjtWithCommonValue, getListOfKey } from "@/utils"
 
-import type { ContactFilters } from "./types"
+import type {
+	ContactAdvancedFilter,
+	ContactFilter,
+	ContactSearchFilter,
+	ContactTableAdvancedFiltersType,
+	ContactTableFiltersType,
+} from "./types"
 //#endregion
 
 /**
@@ -60,11 +65,11 @@ export const parsePhoneNumberDto = (phoneNumber: string | undefined): ParsedPhon
  * @param searchTerm String representing search term from user's input
  * @returns
  */
-export const getContactSearchFilter = (searchTerm?: string): ContactFilters["contactSearchFilter"] | undefined => {
+export const getContactSearchFilter = (searchTerm?: string): ContactSearchFilter | undefined => {
 	if (!searchTerm) return
 
 	const searchFilter = createObjtWithCommonValue(
-		["firstName", "lastName", "email", "phoneNumber", "tag"] as (keyof ContactFilters["contactSearchFilter"])[],
+		["firstName", "lastName", "email", "phoneNumber", "tag"] as (keyof ContactSearchFilter)[],
 		searchTerm
 	)
 
@@ -96,9 +101,9 @@ export const getContactSearchFilter = (searchTerm?: string): ContactFilters["con
  * @returns
  */
 export const getContactFilterAndContactSearchFilter = (
-	filters?: FiltersFieldMappingType["contacts-in-group"],
+	filters?: ContactTableFiltersType,
 	searchTerm?: string
-): Omit<ContactFilters, "contactsIds" | "contactAdvancedFilter"> => {
+): { contactFilter: ContactFilter; contactSearchFilter?: ContactSearchFilter } => {
 	return {
 		contactFilter: {
 			tags: filters?.tags,
@@ -117,8 +122,8 @@ export const getContactFilterAndContactSearchFilter = (
  * @returns
  */
 export const getContactAdvancedFilter = (
-	advancedFilters?: FiltersFieldMappingType["contacts"]["advancedFilters"]
-): ContactFilters["contactAdvancedFilter"] | undefined => {
+	advancedFilters?: ContactTableAdvancedFiltersType["advancedFilters"]
+): ContactAdvancedFilter | undefined => {
 	if (!advancedFilters) return {}
 
 	// Case 1: No Conditions Applied
@@ -129,17 +134,20 @@ export const getContactAdvancedFilter = (
 	// Case 2: Custom Conditions Applied
 	if (!advancedFilters?.segment) {
 		const appliedConditions = advancedFilters?.conditions.map(({ rules }) => ({
-			rules: rules.map((rule) =>
+			contactSegmentRuleList: rules.map((rule) =>
 				cleanObject({
-					...rule,
+					contactSegmentRuleAttribute: rule.attribute,
+					contactSegmentRuleCondition: rule.condition,
+					specification: rule.specification,
+					country: rule.country,
 					groupId: rule.group?.value,
-					contactSegmentId: rule?.segment?.value,
+					contactSegmentId: rule.segment?.value,
 				})
 			),
 		}))
 
 		return {
-			conditions: JSON.stringify(appliedConditions),
+			contactSegmentConditionList: JSON.stringify(appliedConditions),
 		}
 	}
 

@@ -2,7 +2,7 @@
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type { DateRange } from "@/ui"
 
-import type { ContactFilters } from "../contacts/types"
+import type { ContactFilter, ContactSearchFilter, ContactAdvancedFilter } from "../contacts/types"
 //#endregion
 
 /**
@@ -67,7 +67,10 @@ export enum ContactExportField {
 /**
  * Body Arguments passed to the `submitExportsFile` mutation, used to export a new contacts file
  */
-export type SubmitExportsFileBody = Pick<ContactExports, "fileName"> &
-	ContactFilters & {
-		exportedFields: ContactExportField[]
-	}
+export type SubmitExportsFileBody = Pick<ContactExports, "fileName"> & {
+	contactsIds?: string[]
+	contactFilter?: ContactFilter
+	contactSearchFilter?: ContactSearchFilter
+	contactAdvancedFilter?: ContactAdvancedFilter
+	exportedFields: ContactExportField[]
+}
