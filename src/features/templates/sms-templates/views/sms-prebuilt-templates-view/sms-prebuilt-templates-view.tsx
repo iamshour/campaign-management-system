@@ -1,6 +1,6 @@
 //#region Import
 import { lazy, useCallback } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 import appPaths from "@/core/constants/app-paths"
 import useDispatch from "@/core/hooks/useDispatch"
@@ -29,9 +29,10 @@ const SmsPrebuiltTemplatesView = ({
 	isFetching,
 	count,
 }: SmsPrebuiltTemplatesViewProps) => {
+	const { pathname } = useLocation()
 	const dispatch = useDispatch()
 
-	const { offset, limit } = useSelector<DataGridState<typeof prebuiltTemplatesGridKey>>(
+	const { offset, limit, searchTerm } = useSelector<DataGridState<typeof prebuiltTemplatesGridKey>>(
 		({ dataGrid }) => dataGrid[prebuiltTemplatesGridKey]
 	)
 
@@ -47,15 +48,15 @@ const SmsPrebuiltTemplatesView = ({
 			<SmsPrebuiltTemplatesFilters prebuiltTemplatesGridKey={prebuiltTemplatesGridKey} />
 
 			<div className='flex h-full w-full flex-1 flex-col overflow-hidden p-4 pb-0'>
-				<SearchInput className='mb-4' onChange={(searchTerm) => updateState({ searchTerm })} />
+				<SearchInput className='mb-4' value={searchTerm} onChange={(searchTerm) => updateState({ searchTerm })} />
 
-				<div className='flex-1'>
+				<div className='flex-1 overflow-y-auto'>
 					{!list?.length ? (
 						<NoResultsFound />
 					) : (
-						<div className='flex flex-wrap gap-6 overflow-y-auto p-4 pt-0'>
+						<div className='flex flex-wrap gap-6 p-4 pt-0'>
 							{list.map(({ id, backgroundImage, ...prebuiltTemplateDetails }) => (
-								<Link key={id} to={`${appPaths.SMS_TEMPLATES_PREBUILT_TEMPLATES}/${id}`}>
+								<Link key={id} to={`${appPaths.SMS_TEMPLATES_PREBUILT_TEMPLATES}/${id}`} state={{ from: pathname }}>
 									<SmsPrebuiltTemplateCard
 										className={isFetching ? "opacity-50" : undefined}
 										backgroundImage={`data:image;base64,${backgroundImage}`}

@@ -13,18 +13,14 @@ export { Slot } from "@radix-ui/react-slot"
 export { default as isoCountryOptions } from "./utils/iso-country-options"
 
 // RE-EXPORTING COMPONENTS
-
 export { default as ComboBox } from "./combo-box/combo-box"
-export { default as DateRangePicker } from "./date-range-picker"
-export { default as DropFileArea } from "./drop-file-area"
-// #regionErrors
+export { default as DateRangePicker } from "./date-range-picker/date-range-picker"
+export { default as DropFileArea } from "./drop-file-area/drop-file-area"
 export { default as ErrorBoundary } from "./errors/error-boundary"
-// #region end
-
-export { default as Input } from "./input"
+export { default as Input } from "./input/input"
 export { default as NavTabs } from "./nav-tabs/nav-tabs"
-export { default as SearchInput } from "./input/search-Input"
-export { default as PhoneInput } from "./phone-input"
+export { default as SearchInput } from "./search-input/search-Input"
+export { default as PhoneInput } from "./phone-input/phone-input"
 export { default as ColorInput } from "./color-input/color-input"
 export { default as NoResultsFound } from "./errors/no-results-found"
 export { default as PhoneInputReadonly } from "./phone-input/phone-input-readonly"
@@ -35,7 +31,7 @@ export { default as DataTableSkeleton } from "./skeletons/data-table-skeleton"
 export { default as FullViewSkeleton } from "./skeletons/full-view-skeleton"
 export { default as PopoverSkeleton } from "./skeletons/popover-skeleton"
 export { default as TableSkeleton } from "./skeletons/table-skeleton"
-export { default as Table } from "./table"
+export { default as Table } from "./table/table"
 export { default as TablePagination } from "./table/table-pagination"
 export { default as Avatar } from "./avatar/avatar"
 export { default as BackButton } from "./back-button/back-button"
@@ -62,11 +58,10 @@ export { default as Spinner } from "./spinner/spinner"
 export { default as Tabs } from "./tabs/tabs"
 export { default as Textarea } from "./textarea/textarea"
 export { default as Tooltip } from "./tooltip/tooltip"
+export { default as SelectCountryPopover } from "./select-country-popover/select-country-popover"
+
 export * from "./combo-box/combo-box"
 
-export type { DateRange } from "./date-range-picker"
+export type { DateRange } from "./date-range-picker/date-range-picker"
 export type { TablePaginationProps } from "./table/table-pagination"
 export * from "./table/types"
-export type { CheckedState } from "@radix-ui/react-checkbox"
-
-export { default as SelectCountryPopover } from "./select-country-popover/select-country-popover"

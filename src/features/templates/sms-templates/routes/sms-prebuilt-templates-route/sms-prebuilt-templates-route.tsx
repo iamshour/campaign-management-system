@@ -27,6 +27,8 @@ const SmsPrebuiltTemplatesRoute = ({ prebuiltTemplatesGridKey }: SmsPrebuiltTemp
 	/**
 	 * Industry Id used to fetch prebuilt Templates
 	 */
+
+	//TODO: CHECK industryId === 'ALL'
 	const industryId = !filters?.industryId
 		? defaultUserIndustryId
 		: filters?.industryId !== "ALL"

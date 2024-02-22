@@ -2,7 +2,7 @@
 import { parsePhoneNumber } from "react-phone-number-input"
 import { twMerge } from "tailwind-merge"
 
-import Input from "../input"
+import Input from "../input/input"
 
 import FlagIcon from "./flag-icon"
 //#endregion

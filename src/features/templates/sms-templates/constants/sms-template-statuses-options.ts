@@ -3,7 +3,7 @@ import type { SmsTemplateStatusOption } from "../types"
 //#endregion
 
 // TODO: add translation
-const smsTemplateStatusesLocaleMap: Record<SmsTemplateStatusOption, string> = {
+export const smsTemplateStatusesLocaleMap: Record<SmsTemplateStatusOption, string> = {
 	DRAFT: "Draft",
 	PUBLISHED: "Published",
 }

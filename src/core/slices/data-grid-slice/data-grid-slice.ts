@@ -19,8 +19,16 @@ const initialState: DataGridSliceStateType = {
 	"contacts-exports": initialDataGridBaseState,
 	segments: initialDataGridBaseState,
 	"sms-templates": { ...initialDataGridBaseState, limit: 10 },
-	"sms-prebuilt-templates": { ...initialDataGridBaseState, limit: 10, filters: { filterBy: "ALL" } },
-	"sms-prebuilt-templates-dialog": { ...initialDataGridBaseState, limit: 10, filters: { filterBy: "ALL" } },
+	"sms-prebuilt-templates": {
+		...initialDataGridBaseState,
+		limit: 10,
+		filters: { filterBy: "ALL", industryId: "ALL" },
+	},
+	"sms-prebuilt-templates-dialog": {
+		...initialDataGridBaseState,
+		limit: 10,
+		filters: { filterBy: "ALL", industryId: "ALL" },
+	},
 	"sms-industry-templates": { ...initialDataGridBaseState, limit: 10 },
 	industries: initialDataGridBaseState,
 }

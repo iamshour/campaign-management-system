@@ -54,7 +54,7 @@ const DeleteSmsTemplateDialogContent = ({ ids = [], closeDialog }: DeleteSmsTemp
 		dispatch(clearSelection("sms-templates"))
 
 		closeDialog()
-		if (closeDropdown) closeDropdown()
+		if (closeDropdown !== undefined) closeDropdown()
 	}
 
 	return (

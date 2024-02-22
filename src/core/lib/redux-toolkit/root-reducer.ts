@@ -27,7 +27,7 @@ const rootPersistConfig = {
 	key: "_ROOT",
 	version: 1,
 	storage,
-	whitelist: ["app"] as Partial<keyof RootState>[],
+	whitelist: ["app", "auth"] as Partial<keyof RootState>[],
 }
 
 /**

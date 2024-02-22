@@ -69,15 +69,13 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 				value={props?.value ?? ""}
 				data-hasvalue={!!props?.value}
 				className={cn(inputVariants({ variant, size, className: inputClassName }), {
-					"!ps-10": !!LeftIcon || !!RightIcon,
+					"!ps-10": !!LeftIcon,
+					"!pe-10": !!RightIcon,
 				})}
 			/>
 
 			{!!RightIcon && (
-				<RightIcon
-					data-hasvalue={!!props?.value}
-					className={cn(iconVariants({ variant, size, className: "start-3" }))}
-				/>
+				<RightIcon data-hasvalue={!!props?.value} className={cn(iconVariants({ variant, size, className: "end-3" }))} />
 			)}
 		</div>
 	)

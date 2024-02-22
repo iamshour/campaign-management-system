@@ -5,6 +5,8 @@ import { twMerge } from "tailwind-merge"
 import WavySvg from "@/assets/prebuilt-template-card-wavy.svg?react"
 import type { SmsIndustryTemplateType } from "@/features/industries/types"
 import { smsTemplateTypesLocaleMap } from "@/features/templates/sms-templates/constants/sms-template-types-options"
+
+import { smsTemplateLanguagesLocaleMap } from "../../constants/sms-template-languages-options"
 //#endregion
 
 const SmsPrebuiltTemplateCard = memo(
@@ -42,7 +44,7 @@ const SmsPrebuiltTemplateCard = memo(
 					</p>{" "}
 					<p className='relative z-10 inline text-white'>
 						<span className='font-light'>Language: </span>
-						{language?.length ? language : "N/A"}
+						{language?.length ? smsTemplateLanguagesLocaleMap[language] : "N/A"}
 					</p>
 				</div>
 

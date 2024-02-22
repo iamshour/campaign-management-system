@@ -2,6 +2,9 @@
 import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 import SectionHeading from "@/ui/section-heading/section-heading"
 
+import { smsTemplateLanguagesLocaleMap } from "../constants/sms-template-languages-options"
+import { smsTemplateTypesLocaleMap } from "../constants/sms-template-types-options"
+
 import MobileSmsPreview from "./mobile-sms-preview"
 
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
@@ -34,8 +37,8 @@ function SmsTemplatePreview({ children, additionalTemplateInfo, ...smsTemplate }
 					/>
 
 					<SmsTemplateInfoItem itemName='name' itemValue={name} />
-					<SmsTemplateInfoItem itemName='type' itemValue={type} />
-					<SmsTemplateInfoItem itemName='language' itemValue={language} />
+					<SmsTemplateInfoItem itemName='type' itemValue={smsTemplateTypesLocaleMap[type]} />
+					<SmsTemplateInfoItem itemName='language' itemValue={smsTemplateLanguagesLocaleMap[language]} />
 					{additionalTemplateInfo?.map(({ label, value }) => (
 						<SmsTemplateInfoItem key={label} itemName={label} itemValue={value} />
 					))}

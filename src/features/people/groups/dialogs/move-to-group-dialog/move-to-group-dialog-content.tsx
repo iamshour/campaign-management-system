@@ -19,7 +19,7 @@ import { Button, Footer, Form, Skeleton, useForm, type OptionType } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { cleanObject } from "@/utils"
 
-const Input = lazy(() => import("@/ui/input"))
+const Input = lazy(() => import("@/ui/input/input"))
 const SelectGroupsPopover = lazy(() => import("@/features/people/groups/components/select-groups-popover"))
 //#endregion
 

@@ -13,16 +13,14 @@ interface CreateSmsTemplateDialogProps {
 	children: React.ReactNode
 }
 
-const CreateSmsTemplateDialog = ({ children }: CreateSmsTemplateDialogProps) => {
-	return (
-		<Dialog>
-			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
+const CreateSmsTemplateDialog = ({ children }: CreateSmsTemplateDialogProps) => (
+	<Dialog>
+		<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
-			<Dialog.Content title='Create Template' className='w-[631px] md:h-[565px]'>
-				<CreateSmsTemplateDialogContent />
-			</Dialog.Content>
-		</Dialog>
-	)
-}
+		<Dialog.Content title='Create Template' className='w-[631px] md:h-[565px]'>
+			<CreateSmsTemplateDialogContent />
+		</Dialog.Content>
+	</Dialog>
+)
 
 export default CreateSmsTemplateDialog

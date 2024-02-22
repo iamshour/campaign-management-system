@@ -4,7 +4,7 @@ import flags from "react-phone-number-input/flags"
 import PhoneInputWithCountry from "react-phone-number-input/react-hook-form"
 import { twMerge } from "tailwind-merge"
 
-import Input from "../input"
+import Input from "../input/input"
 import SelectCountryPopover from "../select-country-popover/select-country-popover"
 //#endregion
 
