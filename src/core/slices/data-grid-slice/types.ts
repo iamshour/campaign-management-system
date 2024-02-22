@@ -5,12 +5,16 @@ import type {
 	PrebuiltTemplateFilter,
 	IndustryFilter,
 } from "@/features/industries/types"
-import type { Contact, ContactTableFiltersType } from "@/features/people/contacts/types"
+import type {
+	Contact,
+	ContactTableAdvancedFiltersType,
+	ContactTableFiltersType,
+} from "@/features/people/contacts/types"
 import type { ContactExports, ContactExportsTableFiltersType } from "@/features/people/exports/types"
 import type { Group } from "@/features/people/groups/types"
-import type { Segment, SegmentConditionType } from "@/features/people/segments/types"
+import type { Segment } from "@/features/people/segments/types"
 import type { SmsTemplateType, TemplateFilter } from "@/features/templates/sms-templates/types"
-import type { DateRange, OptionType, TableState } from "@/ui"
+import type { DateRange, TableState } from "@/ui"
 //#endregion
 
 export type DataGridView = "LIST" | "GRID"
@@ -43,7 +47,7 @@ type TableDataMappingType = {
 }
 
 export type FiltersFieldMappingType = {
-	contacts: ContactTableFiltersType & { advancedFilters?: { segment?: OptionType; conditions: SegmentConditionType[] } }
+	contacts: ContactTableFiltersType & ContactTableAdvancedFiltersType
 	"contacts-in-group": ContactTableFiltersType
 	"add-contacts-to-group": ContactTableFiltersType
 	groups: { dateRange?: DateRange }

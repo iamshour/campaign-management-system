@@ -13,12 +13,12 @@ import type {
 	AddNewContactBody,
 	Tag,
 	GetTagsParams,
-	ContactFilters,
 	UpdateMultipleContactsBody,
 	ImportFileMappingBody,
 	ImportFileMappingReturnType,
 	UploadContactsMutationReturnType,
 	UpdateContactBody,
+	DeleteContactsBody,
 } from "./types"
 //#endregion
 
@@ -104,7 +104,7 @@ const contactsApi = api.injectEndpoints({
 			},
 		}),
 
-		deleteContacts: builder.mutation<any, ContactFilters>({
+		deleteContacts: builder.mutation<any, DeleteContactsBody>({
 			query: (body) => ({ url: "/contact/delete", method: "POST", body }),
 			invalidatesTags: (res) =>
 				res

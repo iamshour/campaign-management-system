@@ -2,6 +2,8 @@
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type { DateRange, OptionType } from "@/ui"
 
+import { SegmentConditionType } from "../segments/types"
+
 import type { ParsedPhoneNumberDto } from "./utils"
 //#endregion
 
@@ -37,40 +39,40 @@ export type ContactTableFiltersType = {
 }
 
 /**
- * Filters Sent to the server, using any Fetch Contacts Endpoint
+ * Filters used in Advanced filters dialog (Internally / Only Client-Side - Not sent to the server)
  */
-export type ContactFilters = {
-	/**
-	 * List of contact Ids. Could be empty if no entries are selected, meaning that filtering would be applied on other additional filters
-	 */
-	contactsIds?: string[]
-
-	/**
-	 * Current filters used to filter contacts list. Includes: Tags[], groups[], excludedGroupsList[], and DateRange
-	 */
-	contactFilter?: DateRange & Pick<Contact, "tags" | "groups"> & { excludedGroupsList?: string[] }
-
-	/**
-	 * Object of contact fields that mapped with the `searchTerm` value for each one (currently they share same `searchTerm` value)
-	 */
-	contactSearchFilter?: Partial<Pick<Contact, "firstName" | "lastName" | "email" | "phoneNumber">> & {
-		tag?: string
-		any?: boolean
-	}
-
-	contactAdvancedFilter?: { segmentId?: string } | { conditions?: string }
+export type ContactTableAdvancedFiltersType = {
+	advancedFilters?: { segment?: OptionType; conditions: SegmentConditionType[] }
 }
+
+/**
+ * Contact filters, sent to server
+ * Used when fetching contacts list and when updating/deleting multiple contacts
+ */
+export type ContactFilter = DateRange & Pick<Contact, "tags" | "groups"> & { excludedGroupsList?: string[] }
+
+/**
+ * Contact search filters, sent to server
+ * Used when fetching contacts list and when updating/deleting multiple contacts
+ */
+export type ContactSearchFilter = Partial<Pick<Contact, "firstName" | "lastName" | "email" | "phoneNumber">> & {
+	tag?: string
+	any?: boolean
+}
+
+/**
+ * Contact advanced filters, sent to server
+ * Used when fetching contacts list and when updating/deleting multiple contacts
+ */
+export type ContactAdvancedFilter = { segmentId?: string } | { contactSegmentConditionList?: string }
 
 /**
  * Params passed to the `getContactsQuery` query, used to fetch Contacts List
  */
 export type GetContactsParams = PaginationAndSorting<Contact> &
-	DateRange & {
-		excludedGroupsList?: string[]
-		tags?: string[]
-		groups?: string[]
-		segmentId?: string
-	} & ContactFilters["contactSearchFilter"]
+	ContactFilter &
+	ContactSearchFilter &
+	ContactAdvancedFilter
 
 /**
  * Body Arguments passed to the `addNewContact` mutation, used to post a new contact entry
@@ -101,9 +103,24 @@ export type GetTagsParams = PaginationAndSorting<string> & { name?: string }
 /**
  * Body Arguments passed to the `updateMultipleContacts` mutation, used to update multiple contacts
  */
-export type UpdateMultipleContactsBody = (ContactFilters & { addToContact: boolean }) & {
+export type UpdateMultipleContactsBody = {
+	addToContact: boolean
 	tags?: string[]
 	groups?: string[]
+	contactsIds?: string[]
+	contactFilter?: ContactFilter
+	contactSearchFilter?: ContactSearchFilter
+	contactAdvancedFilter?: ContactAdvancedFilter
+}
+
+/**
+ * Body Arguments passed to the `deleteContacts` mutation, used to delete contacts
+ */
+export type DeleteContactsBody = {
+	contactsIds?: string[]
+	contactFilter?: ContactFilter
+	contactSearchFilter?: ContactSearchFilter
+	contactAdvancedFilter?: ContactAdvancedFilter
 }
 
 /**

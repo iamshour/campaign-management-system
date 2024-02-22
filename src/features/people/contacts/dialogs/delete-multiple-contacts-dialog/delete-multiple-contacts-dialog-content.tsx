@@ -10,7 +10,7 @@ import useSelector from "@/core/hooks/useSelector"
 import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
 import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { useDeleteContactsMutation } from "@/features/people/contacts/api"
-import type { ContactFilters } from "@/features/people/contacts/types"
+import type { DeleteContactsBody } from "@/features/people/contacts/types"
 import { getContactFilterAndContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
 import { useForm, Button, Footer, Form, Input } from "@/ui"
 import { cleanObject } from "@/utils"
@@ -50,7 +50,7 @@ const DeleteContactsDialogContent = ({ onClose }: DeleteContactsDialogContent) =
 	const onSubmit = async () => {
 		if (Number(form.watch("prompt")) !== nbOfContactsToDelete) return
 
-		const body: ContactFilters = {
+		const body: DeleteContactsBody = {
 			contactsIds: !!selection?.length && selection !== "ALL" ? selection : undefined,
 			...getContactFilterAndContactSearchFilter(filters, searchTerm),
 			...getContactAdvancedFilter(filters?.advancedFilters),

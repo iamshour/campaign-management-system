@@ -2,7 +2,7 @@
 import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import type { TableState } from "@/ui"
 
-import type { Contact, ContactFilters, GetContactsParams } from "../contacts/types"
+import type { Contact, ContactFilter, ContactSearchFilter, GetContactsParams } from "../contacts/types"
 //#endregion
 
 /**
@@ -56,7 +56,12 @@ export type EditGroupBody = CreateGroupBody & { groupId: string }
 /**
  * Body Arguments passed to the `addContactsToGroup` mutation, used for adding contact/s to groups
  */
-export type AddContactsToGroupBody = Omit<ContactFilters, "contactAdvancedFilter"> & { contactGroupsIds: string[] }
+export type AddContactsToGroupBody = {
+	contactsIds?: string[]
+	contactFilter?: ContactFilter
+	contactSearchFilter?: ContactSearchFilter
+	contactGroupsIds: string[]
+}
 
 /**
  * Returned response shape after calling the `addContactsToGroup` mutation
@@ -69,7 +74,10 @@ export type AddContactsToGroupReturnType = {
 /**
  * Body Arguments passed to the `moveContactsToGroup` mutation, used to move contact/s from a group to one or more groups
  */
-export type MoveContactsToGroupBody = Omit<ContactFilters, "contactAdvancedFilter"> & {
+export type MoveContactsToGroupBody = {
+	contactsIds?: string[]
+	contactFilter?: ContactFilter
+	contactSearchFilter?: ContactSearchFilter
 	toGroupId: string
 	fromGroupId: string
 	moveAndDelete: boolean
