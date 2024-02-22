@@ -1,6 +1,8 @@
 //#region Import
 import * as z from "zod"
 
+import { REGEX_NAME_FIELDS } from "@/core/constants/regex"
+
 import { MAX_PLACEHOLDERS } from "../constants/sms-template-body-constants"
 import { PLACEHOLDER_REGEX } from "../constants/sms-template-body-regex"
 import type { SmsTemplateLanguageOption, SmsTemplateTypeOption } from "../types"
@@ -12,7 +14,10 @@ const SmsTemplateSchema = z.object({
 		.string()
 		.min(1, { message: "Required" })
 		.min(4, { message: "Minimum 4 characters required" })
-		.max(50, { message: "Maximum 50 characters allowed" }),
+		.max(50, { message: "Maximum 50 characters allowed" })
+		.refine((val) => REGEX_NAME_FIELDS.test(val), {
+			message: "Name can include letters, numbers and characters #@_`/&~",
+		}),
 	type: z.custom<SmsTemplateTypeOption>((val) => !!val, "Required"),
 	language: z.custom<SmsTemplateLanguageOption>((val) => !!val, "Required"),
 	body: z

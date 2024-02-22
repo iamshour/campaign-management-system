@@ -10,7 +10,7 @@ import { Button, Footer } from "@/ui"
 const SmsPrebuiltTemplateView = (
 	data: Pick<SmsIndustryTemplateType, "name" | "type" | "language" | "body" | "industryId">
 ) => {
-	const { state } = useLocation()
+	const { state, pathname } = useLocation()
 	const { templateId } = useParams()
 
 	return (
@@ -30,7 +30,8 @@ const SmsPrebuiltTemplateView = (
 				<Button
 					className='px-10'
 					as='link'
-					to={`${appPaths.SMS_TEMPLATES_MY_TEMPLATES}/new-template?templateId=${templateId}&templateType=smsPrebuiltTemplate`}>
+					to={`${appPaths.SMS_TEMPLATES_MY_TEMPLATES}/new-template?templateId=${templateId}&templateType=smsPrebuiltTemplate`}
+					state={{ from: pathname }}>
 					Use Template
 				</Button>
 			</Footer>

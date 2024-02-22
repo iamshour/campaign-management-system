@@ -42,10 +42,10 @@ const DeleteIndustryTemplateDialogContent = ({ ids = [], closeDialog }: DeleteIn
 	const deleteButtonDisabled = templatesToBeDeletedCount > 1 && promptInputValue !== `${templatesToBeDeletedCount}`
 
 	const onSubmit = async () => {
-		if (!templatesToBeDeletedCount) return
+		if (!templatesToBeDeletedCount || !industryId) return
 
 		const body: DeleteIndustryTemplatesBody = {
-			industryId: industryId!,
+			industryId,
 			prebuiltTemplatesIds: ids,
 			prebuiltTemplateFilter: !ids?.length ? filters : undefined,
 			prebuiltTemplateSearchFilter: !ids?.length
@@ -59,7 +59,8 @@ const DeleteIndustryTemplateDialogContent = ({ ids = [], closeDialog }: DeleteIn
 		dispatch(clearSelection("sms-industry-templates"))
 
 		closeDialog()
-		closeDropdown()
+
+		if (closeDropdown !== undefined) closeDropdown()
 	}
 
 	return (

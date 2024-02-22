@@ -13,14 +13,11 @@ import {
 	updateDataGridState,
 	updateSelection,
 } from "@/core/slices/data-grid-slice/data-grid-slice"
-import { Button, Skeleton, Table, TableSkeleton, Tooltip } from "@/ui"
+import { Button, SearchInput, Table, TablePagination, TableSkeleton, Tooltip } from "@/ui"
 import type { TablePaginationProps, RowData, TableProps, IconType } from "@/ui"
 import NoResultsFound from "@/ui/errors/no-results-found"
 
 import type { DataGridView, DataGridKey } from "../slices/data-grid-slice/types"
-
-const SearchInput = lazy(() => import("@/ui/input/search-Input"))
-const TablePagination = lazy(() => import("@/ui/table/table-pagination"))
 //#endregion
 
 type DataGridContextValue = Required<Pick<DataGridProps, "dataGridKey" | "count">>
@@ -81,7 +78,7 @@ const TopBar = ({ withFilters = true, children }: TopBarProps) => {
 
 	const { dataGridKey } = useDataGridContext()
 
-	const { appliedFiltersCount } = useSelector(({ dataGrid }) => dataGrid[dataGridKey])
+	const { appliedFiltersCount, searchTerm } = useSelector(({ dataGrid }) => dataGrid[dataGridKey])
 
 	const onSearchChange = useCallback(
 		(searchTerm?: string) => {
@@ -91,16 +88,14 @@ const TopBar = ({ withFilters = true, children }: TopBarProps) => {
 	)
 
 	return (
-		<Suspense fallback={<HorizontalSkeleton />}>
-			<div className='flex w-full items-center justify-between gap-2 py-4'>
-				<div className='flex gap-2'>
-					{withFilters && <DefaultFiltersBar.Trigger appliedFiltersCount={appliedFiltersCount} />}
+		<div className='flex w-full items-center justify-between gap-2 py-4'>
+			<div className='flex gap-2'>
+				{withFilters && <DefaultFiltersBar.Trigger appliedFiltersCount={appliedFiltersCount} />}
 
-					<SearchInput onChange={onSearchChange} className='max-w-[14rem] md:max-w-[18rem]' />
-				</div>
-				{children}
+				<SearchInput value={searchTerm} onChange={onSearchChange} className='max-w-[14rem] md:max-w-[18rem]' />
 			</div>
-		</Suspense>
+			{children}
+		</div>
 	)
 }
 
@@ -183,16 +178,14 @@ const DataGridPagination = (props: Pick<TablePaginationProps, "children" | "page
 	const { offset, limit } = useSelector(({ dataGrid }) => dataGrid[dataGridKey])
 
 	return (
-		<Suspense fallback={<HorizontalSkeleton />}>
-			<TablePagination
-				pagination={{ offset, limit }}
-				count={count}
-				updatePagination={(pagination: TablePaginationProps["pagination"]) =>
-					dispatch(updateDataGridState({ [dataGridKey]: pagination }))
-				}
-				{...props}
-			/>
-		</Suspense>
+		<TablePagination
+			pagination={{ offset, limit }}
+			count={count}
+			updatePagination={(pagination: TablePaginationProps["pagination"]) =>
+				dispatch(updateDataGridState({ [dataGridKey]: pagination }))
+			}
+			{...props}
+		/>
 	)
 }
 
@@ -235,12 +228,6 @@ const PaginationMessage = () => {
 		</div>
 	)
 }
-
-const HorizontalSkeleton = () => (
-	<div className='h-[72px] p-4'>
-		<Skeleton className='h-full' />
-	</div>
-)
 
 // Exposing Components on DataGrid.FiltersBar: Header and Content from DefaultFiltersBar, and a custom Footer created above (FiltersBarFooter)
 FiltersBar.Header = DefaultFiltersBar.Header

@@ -15,6 +15,8 @@ import { SearchInput, Separator, Button, Label, Checkbox, Collapsible, NoResults
 export interface SmsPrebuiltTemplatesFiltersContentProps {
 	list: IndustryType[]
 
+	industrySearchTerm: string | undefined
+
 	onIndustrySearch: (searchTerm?: string) => void
 
 	prebuiltTemplatesGridKey: "sms-prebuilt-templates" | "sms-prebuilt-templates-dialog"
@@ -23,6 +25,7 @@ export interface SmsPrebuiltTemplatesFiltersContentProps {
 const SmsPrebuiltTemplatesFiltersContent = ({
 	prebuiltTemplatesGridKey,
 	list,
+	industrySearchTerm,
 	onIndustrySearch,
 }: SmsPrebuiltTemplatesFiltersContentProps) => {
 	const dispatch = useDispatch()
@@ -84,7 +87,12 @@ const SmsPrebuiltTemplatesFiltersContent = ({
 
 			<div className='h-[calc(100%-168px)] space-y-1 overflow-y-auto'>
 				<CollapsibleSection label='Industries'>
-					<SearchInput className='overflow-visible' variant='underlined' onChange={onIndustrySearch} />
+					<SearchInput
+						className='overflow-visible'
+						variant='underlined'
+						value={industrySearchTerm}
+						onChange={onIndustrySearch}
+					/>
 
 					<div className='flex max-h-[250px] w-full flex-col gap-1 overflow-y-auto'>
 						{!list?.length ? (

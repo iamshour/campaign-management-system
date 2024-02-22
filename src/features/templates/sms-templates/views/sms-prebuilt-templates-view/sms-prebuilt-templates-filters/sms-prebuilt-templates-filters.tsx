@@ -36,6 +36,7 @@ const SmsPrebuiltTemplatesFilters = ({ prebuiltTemplatesGridKey }: SmsPrebuiltTe
 		<SmsPrebuiltTemplatesFiltersContent
 			prebuiltTemplatesGridKey={prebuiltTemplatesGridKey}
 			list={list || []}
+			industrySearchTerm={searchTerm}
 			onIndustrySearch={onIndustrySearch}
 		/>
 	)

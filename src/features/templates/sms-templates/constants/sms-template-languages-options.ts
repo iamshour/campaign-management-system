@@ -3,7 +3,7 @@ import type { SmsTemplateLanguageOption } from "../types"
 //#endregion
 
 // TODO: add translation
-const smsTemplateLanguagesLocaleMap: Record<SmsTemplateLanguageOption, string> = {
+export const smsTemplateLanguagesLocaleMap: Record<SmsTemplateLanguageOption, string> = {
 	ENGLISH: "English",
 	ARABIC: "Arabic",
 	OTHER: "Other",

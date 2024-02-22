@@ -15,6 +15,10 @@ import type {
 } from "@/features/templates/sms-templates/types"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
+
+import { smsTemplateLanguagesLocaleMap } from "../../constants/sms-template-languages-options"
+import { smsTemplateStatusesLocaleMap } from "../../constants/sms-template-statuses-options"
+import { smsTemplateTypesLocaleMap } from "../../constants/sms-template-types-options"
 //#endregion
 
 const SmsTemplatesFiltersContent = () => {
@@ -38,21 +42,21 @@ const SmsTemplatesFiltersContent = () => {
 			/>
 			<SelectStatusesPopover
 				isMulti
-				selection={filters?.statuses?.map((value) => ({ label: value, value })) || []}
+				selection={filters?.statuses?.map((value) => ({ label: smsTemplateStatusesLocaleMap[value], value })) || []}
 				updateSelection={(selection) =>
 					updateSelection({ statuses: getListOfKey(selection, "value") as SmsTemplateStatusOption[] })
 				}
 			/>
 			<SelectTypesPopover
 				isMulti
-				selection={filters?.types?.map((value) => ({ label: value, value })) || []}
+				selection={filters?.types?.map((value) => ({ label: smsTemplateTypesLocaleMap[value], value })) || []}
 				updateSelection={(selection) =>
 					updateSelection({ types: getListOfKey(selection, "value") as SmsTemplateTypeOption[] })
 				}
 			/>
 			<SelectLanguagesPopover
 				isMulti
-				selection={filters?.languages?.map((value) => ({ label: value, value })) || []}
+				selection={filters?.languages?.map((value) => ({ label: smsTemplateLanguagesLocaleMap[value], value })) || []}
 				updateSelection={(selection) =>
 					updateSelection({ languages: getListOfKey(selection, "value") as SmsTemplateLanguageOption[] })
 				}

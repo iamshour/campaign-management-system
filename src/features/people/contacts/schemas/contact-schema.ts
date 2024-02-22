@@ -2,7 +2,7 @@
 import { isPossiblePhoneNumber } from "react-phone-number-input"
 import * as z from "zod"
 
-import { REGEX_EMAIL, REGEX_NO_SPECIAL_CHARACTERS, REGEX_ONE_WORD } from "@/core/constants/regex"
+import { REGEX_EMAIL, REGEX_NAME_FIELDS } from "@/core/constants/regex"
 import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option-type-schema"
 
 import TagSchema from "./tag-schema"
@@ -12,14 +12,16 @@ const ContactSchema = z.object({
 	firstName: z
 		.string()
 		.max(50, { message: "Maximum 50 characters allowed" })
-		.refine((val) => REGEX_ONE_WORD.test(val), { message: "Only one word is allowed" })
-		.refine((val) => REGEX_NO_SPECIAL_CHARACTERS.test(val), { message: "Special Characters are not allowed" })
+		.refine((val) => REGEX_NAME_FIELDS.test(val), {
+			message: "First name can include letters, numbers and characters #@_`/&~",
+		})
 		.optional(),
 	lastName: z
 		.string()
 		.max(50, { message: "Maximum 50 characters allowed" })
-		.refine((val) => REGEX_ONE_WORD.test(val), { message: "Only one word is allowed" })
-		.refine((val) => REGEX_NO_SPECIAL_CHARACTERS.test(val), { message: "Special Characters are not allowed" })
+		.refine((val) => REGEX_NAME_FIELDS.test(val), {
+			message: "Last name can include letters, numbers and characters #@_`/&~",
+		})
 		.optional(),
 	email: z
 		.string()

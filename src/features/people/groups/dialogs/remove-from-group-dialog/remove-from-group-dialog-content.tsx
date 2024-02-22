@@ -18,7 +18,7 @@ import { useForm, Button, Footer, Form, Skeleton } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { cleanObject } from "@/utils"
 
-const Input = lazy(() => import("@/ui/input"))
+const Input = lazy(() => import("@/ui/input/input"))
 //#endregion
 
 export interface RemoveFromGroupDialogContentProps {

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next"
 
 import type { SegmentRuleType } from "@/features/people/segments/types"
 
-const Input = lazy(() => import("@/ui/input"))
+const Input = lazy(() => import("@/ui/input/input"))
 const Label = lazy(() => import("@/ui/label/label"))
 const SelectTagsPopover = lazy(() => import("@/features/people/contacts/components/select-tags-popover"))
 const SelectGroupsPopover = lazy(() => import("@/features/people/groups/components/select-groups-popover"))

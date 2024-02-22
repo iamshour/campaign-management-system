@@ -23,17 +23,15 @@ const CreateSmsTemplateView = ({ defaultValues }: CreateSmsTemplateViewProps) =>
 
 	const [triggerAddNewSmsTemplate, { isLoading }] = useAddNewSmsTemplateMutation()
 
-	const [smsTemplateStatus, SetSmsTemplateStatus] = useState<SmsTemplateStatusOption | undefined>()
+	const [status, setStatus] = useState<SmsTemplateStatusOption | undefined>()
 
 	const onSubmit = async (requestBody: SmsTemplateSchemaType) => {
-		if (!requestBody || !smsTemplateStatus) return
+		if (!requestBody || !status) return
 
-		await triggerAddNewSmsTemplate({ ...requestBody, status: smsTemplateStatus })
-			.unwrap()
-			.then(() => {
-				toast.success("Template added successfully")
-				navigate(appPaths.SMS_TEMPLATES, { replace: true })
-			})
+		await triggerAddNewSmsTemplate({ ...requestBody, status: status }).unwrap()
+
+		toast.success("Template added successfully")
+		navigate(appPaths.SMS_TEMPLATES, { replace: true })
 	}
 
 	return (
@@ -45,18 +43,18 @@ const CreateSmsTemplateView = ({ defaultValues }: CreateSmsTemplateViewProps) =>
 					variant='outline'
 					type='submit'
 					className='px-10'
-					loading={isLoading && smsTemplateStatus == "DRAFT"}
-					disabled={isLoading && smsTemplateStatus == "PUBLISHED"}
-					onClick={() => SetSmsTemplateStatus("DRAFT")}>
+					loading={isLoading && status == "DRAFT"}
+					disabled={isLoading && status == "PUBLISHED"}
+					onClick={() => setStatus("DRAFT")}>
 					{t("actions.saveAsDraft")}
 				</Button>
 
 				<Button
 					type='submit'
 					className='px-10'
-					loading={isLoading && smsTemplateStatus == "PUBLISHED"}
-					disabled={isLoading && smsTemplateStatus == "DRAFT"}
-					onClick={() => SetSmsTemplateStatus("PUBLISHED")}>
+					loading={isLoading && status == "PUBLISHED"}
+					disabled={isLoading && status == "DRAFT"}
+					onClick={() => setStatus("PUBLISHED")}>
 					{t("actions.saveAndPublish")}
 				</Button>
 			</SmsTemplateBuilder.Footer>

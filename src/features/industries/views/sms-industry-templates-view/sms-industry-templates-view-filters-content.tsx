@@ -8,6 +8,9 @@ import type { DataGridState, FiltersFieldMappingType } from "@/core/slices/data-
 import SelectLanguagesPopover from "@/features/templates/sms-templates/components/select-languages-popover"
 import SelectStatusesPopover from "@/features/templates/sms-templates/components/select-statuses-popover"
 import SelectTypesPopover from "@/features/templates/sms-templates/components/select-types-popover"
+import { smsTemplateLanguagesLocaleMap } from "@/features/templates/sms-templates/constants/sms-template-languages-options"
+import { smsTemplateStatusesLocaleMap } from "@/features/templates/sms-templates/constants/sms-template-statuses-options"
+import { smsTemplateTypesLocaleMap } from "@/features/templates/sms-templates/constants/sms-template-types-options"
 import type {
 	SmsTemplateLanguageOption,
 	SmsTemplateStatusOption,
@@ -40,21 +43,21 @@ const SmsIndustryTemplatesViewFiltersContent = () => {
 			/>
 			<SelectStatusesPopover
 				isMulti
-				selection={filters?.statuses?.map((value) => ({ label: value, value })) || []}
+				selection={filters?.statuses?.map((value) => ({ label: smsTemplateStatusesLocaleMap[value], value })) || []}
 				updateSelection={(selection) =>
 					updateSelection({ statuses: getListOfKey(selection, "value") as SmsTemplateStatusOption[] })
 				}
 			/>
 			<SelectTypesPopover
 				isMulti
-				selection={filters?.types?.map((value) => ({ label: value, value })) || []}
+				selection={filters?.types?.map((value) => ({ label: smsTemplateTypesLocaleMap[value], value })) || []}
 				updateSelection={(selection) =>
 					updateSelection({ types: getListOfKey(selection, "value") as SmsTemplateTypeOption[] })
 				}
 			/>
 			<SelectLanguagesPopover
 				isMulti
-				selection={filters?.languages?.map((value) => ({ label: value, value })) || []}
+				selection={filters?.languages?.map((value) => ({ label: smsTemplateLanguagesLocaleMap[value], value })) || []}
 				updateSelection={(selection) =>
 					updateSelection({ languages: getListOfKey(selection, "value") as SmsTemplateLanguageOption[] })
 				}

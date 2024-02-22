@@ -1,7 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
-import userAvatar from "@/assets/user-avatar.png"
-
 import type { AuthSliceState } from "./types"
 
 const initialState: AuthSliceState = {
@@ -10,7 +8,7 @@ const initialState: AuthSliceState = {
 		company: "Blue.Ai Technologies",
 		role: "BUSINESS",
 		industryId: undefined,
-		src: userAvatar,
+		src: "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(2).webp",
 	},
 }
 
