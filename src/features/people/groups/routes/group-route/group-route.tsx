@@ -8,7 +8,6 @@ import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { getContactSearchFilter } from "@/features/people/contacts/utils"
 import { useGetGroupByIdQuery } from "@/features/people/groups/api"
 import { DataTableSkeleton } from "@/ui"
-import { getListOfKey } from "@/utils"
 
 const GroupView = lazy(() => import("@/features/people/groups/views/group-view/group-view"))
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
@@ -29,7 +28,6 @@ const GroupRoute = () => {
 			sort,
 			order,
 			tags: filters?.tags,
-			groups: getListOfKey(filters?.groups, "value"),
 			startDate: filters?.dateRange?.startDate,
 			endDate: filters?.dateRange?.endDate,
 			...getContactSearchFilter(searchTerm),

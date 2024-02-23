@@ -48,7 +48,7 @@ type TableDataMappingType = {
 
 export type FiltersFieldMappingType = {
 	contacts: ContactTableFiltersType & ContactTableAdvancedFiltersType
-	"contacts-in-group": ContactTableFiltersType
+	"contacts-in-group": Omit<ContactTableFiltersType, "groups">
 	"add-contacts-to-group": ContactTableFiltersType
 	groups: { dateRange?: DateRange }
 	"contacts-exports": ContactExportsTableFiltersType

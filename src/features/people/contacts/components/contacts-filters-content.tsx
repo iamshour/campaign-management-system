@@ -11,15 +11,15 @@ import { getListOfKey } from "@/utils"
 //#endregion
 
 /**
- * Filter fields (content) used in All Pages that fetches Contacts ("./contacts", "./groups/:id", "./groups/:id/add-contacts")
+ * Filter fields (content) used in All Pages that fetches Contacts ("./contacts", "./groups/:id/add-contacts")
  */
 const ContactsFiltersContent = () => {
 	const dispatch = useDispatch()
 
 	const { dataGridKey } = useDataGridContext()
 
-	const { filters } = useSelector<DataGridState<"contacts" | "contacts-in-group" | "add-contacts-to-group">>(
-		({ dataGrid }) => dataGrid[dataGridKey as "contacts" | "contacts-in-group" | "add-contacts-to-group"]
+	const { filters } = useSelector<DataGridState<"contacts" | "add-contacts-to-group">>(
+		({ dataGrid }) => dataGrid[dataGridKey as "contacts" | "add-contacts-to-group"]
 	)
 
 	return (
