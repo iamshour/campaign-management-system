@@ -62,6 +62,8 @@ export enum ContactExportField {
 	"Creation date" = "Creation date",
 	"Tags" = "Tags",
 	"Groups" = "Groups",
+	"Country" = "Country",
+	"Note" = "Note",
 }
 
 /**
