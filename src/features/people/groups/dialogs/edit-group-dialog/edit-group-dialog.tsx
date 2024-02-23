@@ -26,7 +26,7 @@ const EditGroupDialog = ({ children, ...props }: EditGroupDialogProps) => {
 				title={t("edit-group")}
 				className='h-[321px] w-[382px] sm:h-[329px] sm:w-[390px]'
 				onInteractOutside={(e) => e.preventDefault()}>
-				<EditGroupContent {...props} closeDialog={() => setOpen(false)} />
+				<EditGroupContent {...props} closeDialog={() => setOpen(false)} size='lg' />
 			</Dialog.Content>
 		</Dialog>
 	)

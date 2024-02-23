@@ -8,7 +8,7 @@ import { Button, Skeleton } from "@/ui"
 import IcRoundGroup from "~icons/ic/round-group"
 import IcRoundGroups from "~icons/ic/round-groups"
 
-const GroupsTableActions = lazy(() => import("./groups-view-table-actions"))
+const GroupsViewTableActions = lazy(() => import("./groups-view-table-actions"))
 //#endregion
 
 const GroupCard = ({ groupId, groupName, description, createdAt, contactsCount }: Group) => {
@@ -24,7 +24,12 @@ const GroupCard = ({ groupId, groupName, description, createdAt, contactsCount }
 				</div>
 
 				<Suspense fallback={<Skeleton className='h-[40px] w-[40px]' />}>
-					<GroupsTableActions groupId={groupId} groupName={groupName} description={description} />
+					<GroupsViewTableActions
+						className='rotate-90'
+						groupId={groupId}
+						groupName={groupName}
+						description={description}
+					/>
 				</Suspense>
 			</div>
 

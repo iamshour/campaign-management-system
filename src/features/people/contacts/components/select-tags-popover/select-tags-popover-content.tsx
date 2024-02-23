@@ -10,7 +10,7 @@ const SelectTagsPopoverContent = () => {
 
 	// TODO: Handle Infinite Loading in Component to handle changing offset/limit Values
 	const { list, loading } = useGetTagsQuery(
-		{ offset: 0, limit: 100, name: searchTerm },
+		{ offset: 0, limit: 100, name: searchTerm || undefined },
 		{
 			selectFromResult: ({ data, isLoading, ...rest }) => ({
 				list: data?.list?.map(({ name }) => ({ label: name, value: name })) ?? [],

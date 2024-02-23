@@ -7,7 +7,7 @@ import GroupSchema, { type GroupSchemaType } from "@/features/people/groups/sche
 import { Footer, Form, Input, UseFormReturn, useForm } from "@/ui"
 //#endregion
 
-interface GroupFormProps {
+interface GroupFormProps extends Pick<React.ComponentPropsWithoutRef<typeof Input>, "size"> {
 	onSubmit: (data: GroupSchemaType, form: UseFormReturn<GroupSchemaType>) => void
 
 	children: React.ReactNode
@@ -15,8 +15,6 @@ interface GroupFormProps {
 	defaultValues?: GroupSchemaType
 
 	className?: string
-
-	size?: React.ComponentPropsWithoutRef<typeof Input>["size"]
 }
 
 const GroupForm = ({ children, onSubmit, defaultValues, className, size }: GroupFormProps) => {

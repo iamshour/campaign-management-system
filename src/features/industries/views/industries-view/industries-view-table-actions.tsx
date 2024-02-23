@@ -7,8 +7,15 @@ import type { IndustryType } from "@/features/industries/types"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 //#endregion
 
-const IndustriesViewTableActions = memo((industry: IndustryType) => (
-	<ActionsDropdown>
+interface IndustriesViewTableActionsProps extends IndustryType {
+	/**
+	 * className to be passed to ActionsDropdown
+	 */
+	className?: string
+}
+
+const IndustriesViewTableActions = memo(({ className, ...industry }: IndustriesViewTableActionsProps) => (
+	<ActionsDropdown className={className}>
 		<EditIndustryDialog {...industry}>
 			<ActionsDropdown.Item>Edit</ActionsDropdown.Item>
 		</EditIndustryDialog>

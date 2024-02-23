@@ -55,6 +55,7 @@ const CreateContactDialogContent = ({ onClose }: CreateContactDialogContentProps
 		<ContactForm onSubmit={onSubmit}>
 			<Button
 				type='submit'
+				data-form='contact-form'
 				variant='outline'
 				loading={isLoading && buttonClicked === "multiAddContact"}
 				disabled={isLoading}
@@ -63,6 +64,7 @@ const CreateContactDialogContent = ({ onClose }: CreateContactDialogContentProps
 			</Button>
 			<Button
 				type='submit'
+				data-form='contact-form'
 				className='ms-auto'
 				loading={isLoading && buttonClicked === "singleAddContact"}
 				disabled={isLoading}
