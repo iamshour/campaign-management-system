@@ -18,7 +18,7 @@ const AddContactsToGroupRoute = () => {
 	const { id: groupId } = useParams()
 
 	const { offset, limit, sort, order, filters, searchTerm, appliedFiltersCount } = useSelector<
-		DataGridState<"contacts-in-group">
+		DataGridState<"add-contacts-to-group">
 	>(({ dataGrid }) => dataGrid["add-contacts-to-group"])
 
 	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetContactsQuery(
