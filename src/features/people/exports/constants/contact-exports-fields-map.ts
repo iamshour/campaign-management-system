@@ -10,6 +10,8 @@ const contactExportsFieldsMap: Partial<Record<ContactExportField, string>> = {
 	Groups: "contacts:fields.groups",
 	Tags: "contacts:fields.tags",
 	"Creation date": "contacts:fields.createdAt",
+	Country: "contacts:fields.country",
+	Note: "contacts:fields.note",
 }
 
 export default contactExportsFieldsMap
