@@ -57,7 +57,18 @@ const ContactForm = ({ children, onSubmit, defaultValues }: ContactFormProps) =>
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onFormSubmit)} className='h-full w-full overflow-y-auto p-2'>
+			<form
+				onSubmit={(e) => {
+					e.preventDefault()
+
+					/**
+					 * Submit form only if submit is triggered by buttons inside the contact form (having data-form="contact-form")
+					 * This is a fix for: contact form being submitted when the submit button of "Create Group" popover is clicked
+					 */
+					const submitterButton = (e?.nativeEvent as SubmitEvent)?.submitter
+					if (submitterButton?.dataset?.form === "contact-form") form.handleSubmit(onFormSubmit)()
+				}}
+				className='h-full w-full overflow-y-auto p-2'>
 				{form?.formState?.errors?.root?.type === "required" && (
 					<Form.Message className='ps-4'>{form?.formState?.errors?.root?.message}</Form.Message>
 				)}

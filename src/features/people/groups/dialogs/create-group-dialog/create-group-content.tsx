@@ -9,7 +9,7 @@ import type { GroupSchemaType } from "@/features/people/groups/schemas/group-sch
 import { Button, type UseFormReturn, type OptionType } from "@/ui"
 //#endregion
 
-export interface CreateGroupContentProps {
+export interface CreateGroupContentProps extends Pick<React.ComponentPropsWithoutRef<typeof GroupForm>, "size"> {
 	/**
 	 *  Callback function used to close Popover/Dialog
 	 */
@@ -26,7 +26,7 @@ export interface CreateGroupContentProps {
 	ctaProps?: React.ComponentPropsWithoutRef<typeof Button>
 }
 
-const CreateGroupContent = ({ closeDialog, onCreateSuccess, ctaProps = {} }: CreateGroupContentProps) => {
+const CreateGroupContent = ({ closeDialog, onCreateSuccess, ctaProps = {}, size }: CreateGroupContentProps) => {
 	const { t } = useTranslation("groups", { keyPrefix: "components.groupsPopover.createNewPopover" })
 
 	const [triggerCreateGroupMutation, { isLoading }] = useCreateGroupMutation()
@@ -52,8 +52,8 @@ const CreateGroupContent = ({ closeDialog, onCreateSuccess, ctaProps = {} }: Cre
 	}
 
 	return (
-		<GroupForm onSubmit={onSubmit} size='default'>
-			<Button type='submit' loading={isLoading} className='px-8' {...ctaProps}>
+		<GroupForm onSubmit={onSubmit} size={size}>
+			<Button type='submit' data-form='group-form' loading={isLoading} className='px-8' {...ctaProps}>
 				Create
 			</Button>
 		</GroupForm>

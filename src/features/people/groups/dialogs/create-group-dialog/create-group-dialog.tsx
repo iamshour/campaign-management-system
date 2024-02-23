@@ -26,7 +26,7 @@ const CreateGroupDialog = ({ children }: CreateGroupDialogProps) => {
 				title={t("new-group")}
 				className='h-[321px] w-[382px] sm:h-[329px] sm:w-[390px]'
 				onInteractOutside={(e) => e.preventDefault()}>
-				<CreateGroupContent closeDialog={() => setOpen(false)} />
+				<CreateGroupContent closeDialog={() => setOpen(false)} size='lg' />
 			</Dialog.Content>
 		</Dialog>
 	)

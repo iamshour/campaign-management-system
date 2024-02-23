@@ -27,7 +27,7 @@ const IndustryCard = (industry: IndustryType) => {
 				</div>
 
 				{/* Hide Actions if Industry is default one (named `others` from server)  */}
-				{name?.toLocaleLowerCase() !== "others" && <IndustriesViewTableActions {...industry} />}
+				{name?.toLocaleLowerCase() !== "others" && <IndustriesViewTableActions className='rotate-90' {...industry} />}
 			</div>
 
 			<ul className='w-full flex-1 space-y-2 p-4'>

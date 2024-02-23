@@ -52,7 +52,14 @@ const contactsApi = api.injectEndpoints({
 
 		addNewContact: builder.mutation<any, AddNewContactBody>({
 			query: (body) => ({ url: "/contact", method: "POST", body }),
-			invalidatesTags: (res) => (res ? [{ type: "Contact", id: "LIST" }] : []),
+			invalidatesTags: (res) => {
+				return res
+					? [
+							{ type: "Contact", id: "LIST" },
+							{ type: "Tag", id: "LIST" },
+						]
+					: []
+			},
 		}),
 
 		updateContact: builder.mutation<any, UpdateContactBody>({
@@ -60,12 +67,18 @@ const contactsApi = api.injectEndpoints({
 			invalidatesTags: (res, error, { id, groups }) => {
 				if (!res) return []
 
-				const revalidatedContact: TagDescription<"Contact"> = { type: "Contact", id }
+				const revalidationList: TagDescription<"Contact" | "Tag">[] = [
+					{ type: "Contact", id },
+					{ type: "Tag", id },
+				]
 
 				if (groups?.length)
-					return [revalidatedContact, ...groups.map((id: string) => ({ type: "Group", id }) as TagDescription<"Group">)]
+					return [
+						...revalidationList,
+						...groups.map((id: string) => ({ type: "Group", id }) as TagDescription<"Group">),
+					]
 
-				return [revalidatedContact]
+				return revalidationList
 			},
 		}),
 
@@ -83,10 +96,7 @@ const contactsApi = api.injectEndpoints({
 					]
 				} else if (tags?.length) {
 					// TODO: In case of newly created tag, check if we need to pass [{ type: "Tag", id: "LIST" }] instead
-					revalidationList = [
-						...revalidationList,
-						...tags.map((id: string) => ({ type: "Tag", id }) as TagDescription<"Tag">),
-					]
+					revalidationList = [...revalidationList, { type: "Tag", id: "LIST" }]
 				}
 
 				if (contactsIds?.length) {
@@ -111,6 +121,7 @@ const contactsApi = api.injectEndpoints({
 					? [
 							{ type: "Contact", id: "LIST" },
 							{ type: "Group", id: "LIST" },
+							{ type: "Tag", id: "LIST" },
 						]
 					: [],
 		}),
@@ -143,8 +154,13 @@ const contactsApi = api.injectEndpoints({
 
 		submitImportContacts: builder.mutation<ImportFileMappingReturnType, ImportFileMappingBody>({
 			query: (body) => ({ url: "/contact/import", method: "POST", body }),
-			transformResponse,
-			invalidatesTags: (res) => (res ? [{ type: "Contact", id: "LIST" }] : []),
+			invalidatesTags: (res) =>
+				res
+					? [
+							{ type: "Contact", id: "LIST" },
+							{ type: "Tag", id: "LIST" },
+						]
+					: [],
 		}),
 	}),
 })

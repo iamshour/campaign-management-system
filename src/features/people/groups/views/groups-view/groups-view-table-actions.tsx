@@ -7,15 +7,22 @@ import type { Group } from "@/features/people/groups/types"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 //#endregion
 
-const GroupsViewTableActions = memo((props: Pick<Group, "groupId" | "groupName" | "description">) => (
-	<ActionsDropdown>
-		<EditGroupDialog {...props}>
+interface GroupsViewTableActionsProps extends Pick<Group, "groupId" | "groupName" | "description"> {
+	/**
+	 * className to be passed to ActionsDropdown
+	 */
+	className?: string
+}
+
+const GroupsViewTableActions = memo(({ className, ...group }: GroupsViewTableActionsProps) => (
+	<ActionsDropdown className={className}>
+		<EditGroupDialog {...group}>
 			<ActionsDropdown.Item>
 				<span>Edit</span>
 			</ActionsDropdown.Item>
 		</EditGroupDialog>
 
-		<DeleteGroupDialog groupId={props?.groupId}>
+		<DeleteGroupDialog groupId={group?.groupId}>
 			<ActionsDropdown.Item>
 				<span>Delete</span>
 			</ActionsDropdown.Item>

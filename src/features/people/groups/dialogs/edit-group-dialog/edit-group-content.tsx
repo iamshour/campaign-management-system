@@ -11,14 +11,16 @@ import { Button, type UseFormReturn } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 //#endregion
 
-export interface EditGroupContentProps extends Pick<Group, "groupId" | "groupName" | "description"> {
+export interface EditGroupContentProps
+	extends Pick<Group, "groupId" | "groupName" | "description">,
+		Pick<React.ComponentPropsWithoutRef<typeof GroupForm>, "size"> {
 	/**
 	 *  Callback function used to close popover/Dialog
 	 */
 	closeDialog: () => void
 }
 
-const EditGroupContent = ({ closeDialog, groupId, ...defaultValues }: EditGroupContentProps) => {
+const EditGroupContent = ({ closeDialog, groupId, size, ...defaultValues }: EditGroupContentProps) => {
 	const { t } = useTranslation("groups", { keyPrefix: "components.groupsPopover.createNewPopover" })
 
 	const { closeDropdown } = useDropdownStateContext()
@@ -43,7 +45,7 @@ const EditGroupContent = ({ closeDialog, groupId, ...defaultValues }: EditGroupC
 	}
 
 	return (
-		<GroupForm onSubmit={onSubmit} size='default' defaultValues={defaultValues}>
+		<GroupForm onSubmit={onSubmit} size={size} defaultValues={defaultValues}>
 			<Button type='submit' loading={isLoading} className='px-8'>
 				Save
 			</Button>

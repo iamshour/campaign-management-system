@@ -25,7 +25,7 @@ const SelectGroupsWithCreatePopover = ({ onCreateSuccess, className, ...props }:
 				<Popover.Trigger className='absolute -top-0.5 end-2 z-10 w-max text-sm font-bold text-primary-500 transition-colors hover:text-primary-800'>
 					{t("components.groupsPopover.createNewPopover.title")}
 				</Popover.Trigger>
-				<Popover.Content side='bottom' align='end' sideOffset={2} alignOffset={-8}>
+				<Popover.Content side='bottom' align='end' sideOffset={2} alignOffset={-8} className='p-2'>
 					<Suspense fallback={<PopoverSkeleton />}>
 						<CreateGroupContent
 							closeDialog={() => setPopoverOpen(false)}

@@ -10,6 +10,7 @@ import type { AddNewContactBody } from "@/features/people/contacts/types"
 import { addLeadingPlusToPhoneNumber } from "@/features/people/contacts/utils"
 import { Button, Skeleton, type UseFormReturn } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import { cleanObject } from "@/utils"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
@@ -69,8 +70,8 @@ const EditContactDialogContent = ({ closeDialog, id }: EditContactDialogContentP
 	if (isFetchError) return <DisplayError />
 
 	return (
-		<ContactForm onSubmit={onSubmit} defaultValues={values}>
-			<Button type='submit' loading={isUpdateLoading} disabled={isUpdateLoading}>
+		<ContactForm onSubmit={onSubmit} defaultValues={cleanObject(values)}>
+			<Button type='submit' data-form='contact-form' loading={isUpdateLoading} disabled={isUpdateLoading}>
 				{t("dialogs.editContact.buttons.save")}
 			</Button>
 		</ContactForm>
