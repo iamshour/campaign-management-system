@@ -1,180 +1,177 @@
 //#region Import
+import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import type { TagDescription } from "@reduxjs/toolkit/query"
 
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
-import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import { downloadFile } from "@/utils"
 
 import type {
+	AddNewContactBody,
 	Contact,
+	DeleteContactsBody,
 	GetContactBytIdReturnType,
 	GetContactsParams,
-	AddNewContactBody,
-	Tag,
 	GetTagsParams,
-	UpdateMultipleContactsBody,
 	ImportFileMappingBody,
 	ImportFileMappingReturnType,
-	UploadContactsMutationReturnType,
+	Tag,
 	UpdateContactBody,
-	DeleteContactsBody,
+	UpdateMultipleContactsBody,
+	UploadContactsMutationReturnType,
 } from "./types"
 //#endregion
 
 const contactsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
+		addNewContact: builder.mutation<any, AddNewContactBody>({
+			invalidatesTags: (res) => {
+				return res
+					? [
+							{ id: "LIST", type: "Contact" },
+							{ id: "LIST", type: "Tag" },
+						]
+					: []
+			},
+			query: (body) => ({ body, method: "POST", url: "/contact" }),
+		}),
+
+		deleteContacts: builder.mutation<any, DeleteContactsBody>({
+			invalidatesTags: (res) =>
+				res
+					? [
+							{ id: "LIST", type: "Contact" },
+							{ id: "LIST", type: "Group" },
+							{ id: "LIST", type: "Tag" },
+						]
+					: [],
+			query: (body) => ({ body, method: "POST", url: "/contact/delete" }),
+		}),
+
+		getContactById: builder.query<GetContactBytIdReturnType, string>({
+			providesTags: (result) => [{ id: result?.id, type: "Contact" }],
+			query: (id) => `/contact/${id}`,
+			transformResponse,
+		}),
+
 		getContacts: builder.query<GetListReturnType<Contact>, GetContactsParams>({
-			query: (params) => ({ url: "/contact", params }),
 			providesTags: (result) =>
 				providesList(
 					result?.list?.map(({ id }) => id),
 					"Contact"
 				),
+			query: (params) => ({ params, url: "/contact" }),
 			transformResponse,
 		}),
 
-		getContactById: builder.query<GetContactBytIdReturnType, string>({
-			query: (id) => `/contact/${id}`,
-			providesTags: (result) => [{ type: "Contact", id: result?.id }],
+		getInvalidContactsFile: builder.mutation<string, string>({
+			query: (fileName) => ({
+				cache: "no-cache",
+				method: "GET",
+				responseHandler: async (response: Response) => {
+					if (response?.status == 200) downloadFile(fileName, await response.blob())
+
+					return response
+				},
+				url: `/contact/import/validate/invalid-contacts/${fileName}`,
+			}),
 			transformResponse,
 		}),
 
 		getTags: builder.query<GetListReturnType<Tag>, GetTagsParams>({
-			query: (params) => ({ url: "/contact/tag", params }),
 			providesTags: (result) =>
 				providesList(
 					result?.list?.map(({ name }) => name),
 					"Tag"
 				),
+			query: (params) => ({ params, url: "/contact/tag" }),
 			transformResponse,
 		}),
 
-		addNewContact: builder.mutation<any, AddNewContactBody>({
-			query: (body) => ({ url: "/contact", method: "POST", body }),
-			invalidatesTags: (res) => {
-				return res
+		importFileMapping: builder.mutation<ImportFileMappingReturnType, ImportFileMappingBody>({
+			query: (body) => ({ body, method: "POST", url: "/contact/import/validate" }),
+			transformResponse,
+		}),
+
+		submitImportContacts: builder.mutation<ImportFileMappingReturnType, ImportFileMappingBody>({
+			invalidatesTags: (res) =>
+				res
 					? [
-							{ type: "Contact", id: "LIST" },
-							{ type: "Tag", id: "LIST" },
+							{ id: "LIST", type: "Contact" },
+							{ id: "LIST", type: "Tag" },
 						]
-					: []
-			},
+					: [],
+			query: (body) => ({ body, method: "POST", url: "/contact/import" }),
 		}),
 
 		updateContact: builder.mutation<any, UpdateContactBody>({
-			query: ({ id, ...body }) => ({ url: `/contact/${id}`, method: "PUT", body }),
-			invalidatesTags: (res, error, { id, groups }) => {
+			invalidatesTags: (res, error, { groups, id }) => {
 				if (!res) return []
 
 				const revalidationList: TagDescription<"Contact" | "Tag">[] = [
-					{ type: "Contact", id },
-					{ type: "Tag", id },
+					{ id, type: "Contact" },
+					{ id, type: "Tag" },
 				]
 
 				if (groups?.length)
 					return [
 						...revalidationList,
-						...groups.map((id: string) => ({ type: "Group", id }) as TagDescription<"Group">),
+						...groups.map((id: string) => ({ id, type: "Group" }) as TagDescription<"Group">),
 					]
 
 				return revalidationList
 			},
+			query: ({ id, ...body }) => ({ body, method: "PUT", url: `/contact/${id}` }),
 		}),
 
 		updateMultipleContacts: builder.mutation<any, UpdateMultipleContactsBody>({
-			query: (body) => ({ url: "/contact", method: "PATCH", body }),
-			invalidatesTags: (res, error, { contactsIds, tags, groups }) => {
+			invalidatesTags: (res, error, { contactsIds, groups, tags }) => {
 				if (!res) return []
 
-				let revalidationList: TagDescription<"Contact" | "Tag" | "Group" | "Segment">[] = []
+				let revalidationList: TagDescription<"Contact" | "Group" | "Segment" | "Tag">[] = []
 
 				if (groups?.length) {
 					revalidationList = [
 						...revalidationList,
-						...groups.map((id: string) => ({ type: "Group", id }) as TagDescription<"Group">),
+						...groups.map((id: string) => ({ id, type: "Group" }) as TagDescription<"Group">),
 					]
 				} else if (tags?.length) {
 					// TODO: In case of newly created tag, check if we need to pass [{ type: "Tag", id: "LIST" }] instead
-					revalidationList = [...revalidationList, { type: "Tag", id: "LIST" }]
+					revalidationList = [...revalidationList, { id: "LIST", type: "Tag" }]
 				}
 
 				if (contactsIds?.length) {
 					revalidationList = [
 						...revalidationList,
-						...contactsIds.map((id: string) => ({ type: "Contact", id }) as TagDescription<"Contact">),
+						...contactsIds.map((id: string) => ({ id, type: "Contact" }) as TagDescription<"Contact">),
 					]
 				} else {
-					console.log("Logged From: NO CONTACT IDS SELECTED")
 					// In case of having an empty contactIds, we should invalidate all contacts
 					revalidationList = [...revalidationList, "Contact"]
 				}
 
 				return revalidationList
 			},
-		}),
-
-		deleteContacts: builder.mutation<any, DeleteContactsBody>({
-			query: (body) => ({ url: "/contact/delete", method: "POST", body }),
-			invalidatesTags: (res) =>
-				res
-					? [
-							{ type: "Contact", id: "LIST" },
-							{ type: "Group", id: "LIST" },
-							{ type: "Tag", id: "LIST" },
-						]
-					: [],
+			query: (body) => ({ body, method: "PATCH", url: "/contact" }),
 		}),
 
 		uploadContactsContentData: builder.mutation<UploadContactsMutationReturnType, FormData>({
-			query: (body) => ({ url: "/contact/upload", method: "POST", body }),
+			query: (body) => ({ body, method: "POST", url: "/contact/upload" }),
 			transformResponse,
-		}),
-
-		importFileMapping: builder.mutation<ImportFileMappingReturnType, ImportFileMappingBody>({
-			query: (body) => ({ url: "/contact/import/validate", method: "POST", body }),
-			transformResponse,
-		}),
-
-		getInvalidContactsFile: builder.mutation<string, string>({
-			query: (fileName) => ({
-				url: `/contact/import/validate/invalid-contacts/${fileName}`,
-				method: "GET",
-				responseHandler: async (response: Response) => {
-					if (response?.status == 200) {
-						downloadFile(fileName, await response.blob())
-					}
-
-					return response
-				},
-				cache: "no-cache",
-			}),
-			transformResponse,
-		}),
-
-		submitImportContacts: builder.mutation<ImportFileMappingReturnType, ImportFileMappingBody>({
-			query: (body) => ({ url: "/contact/import", method: "POST", body }),
-			invalidatesTags: (res) =>
-				res
-					? [
-							{ type: "Contact", id: "LIST" },
-							{ type: "Tag", id: "LIST" },
-						]
-					: [],
 		}),
 	}),
 })
 
 export const {
-	useGetContactsQuery,
-	useGetContactByIdQuery,
-	useGetTagsQuery,
 	useAddNewContactMutation,
+	useDeleteContactsMutation,
+	useGetContactByIdQuery,
+	useGetContactsQuery,
+	useGetInvalidContactsFileMutation,
+	useGetTagsQuery,
+	useImportFileMappingMutation,
+	useSubmitImportContactsMutation,
 	useUpdateContactMutation,
 	useUpdateMultipleContactsMutation,
-	useDeleteContactsMutation,
 	useUploadContactsContentDataMutation,
-	useImportFileMappingMutation,
-	useGetInvalidContactsFileMutation,
-	useSubmitImportContactsMutation,
 } = contactsApi

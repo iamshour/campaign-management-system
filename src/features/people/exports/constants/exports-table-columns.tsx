@@ -1,15 +1,15 @@
 /* eslint-disable react-refresh/only-export-components */
+import type { ColumnType } from "@/core/components/data-grid/types"
+
 //#region Import
 import { lazy } from "react"
 
-import type { ColumnType } from "@/ui"
-
-import type { ContactExportStatusOption, ContactExports } from "../types"
+import type { ContactExports, ContactExportStatusOption } from "../types"
 
 import exportsFieldsMap from "./exports-fields-map"
 import exportStatusesColorsMap from "./statuses-colors-map"
 
-const DataGridDateCell = lazy(() => import("@/core/components/data-grid-date-cell"))
+const DataGridDateCell = lazy(() => import("@/core/components/data-grid/data-grid-date-cell"))
 
 const ExportsViewTableActions = lazy(
 	() => import("../views/exports-view/exports-view-table-actions/exports-view-table-actions")
@@ -31,21 +31,22 @@ const exportsTableColumns: ColumnType<ContactExports>[] = [
 	},
 	{
 		accessorKey: "createdAt",
-		header: exportsFieldsMap.createdAt,
 		cell: (date) => <DataGridDateCell date={date} />,
+		header: exportsFieldsMap.createdAt,
 	},
 	{
 		accessorKey: "contactExportStatus",
-		header: exportsFieldsMap.contactExportStatus,
 		cell: (status: ContactExportStatusOption) => (
 			<p style={{ color: exportStatusesColorsMap[status] ?? "" }}>{status}</p>
 		),
+		header: exportsFieldsMap.contactExportStatus,
 	},
 	{
 		accessorKey: "actions",
-		cell: (_, { id, fileName, contactExportStatus }) => (
-			<ExportsViewTableActions id={id} fileName={fileName} contactExportStatus={contactExportStatus} />
-		),
+		cell: (_, { contactExportStatus, fileName, id }) =>
+			contactExportStatus !== "IN_PROGRESS" && (
+				<ExportsViewTableActions contactExportStatus={contactExportStatus} fileName={fileName} id={id} />
+			),
 	},
 ]
 

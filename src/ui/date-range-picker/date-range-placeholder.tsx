@@ -8,7 +8,7 @@ interface DateRangePlaceholderProps extends Partial<DateRange> {
 	placeholder: string
 }
 
-const DateRangePlaceholder = ({ placeholder, startDate, endDate }: DateRangePlaceholderProps) => (
+const DateRangePlaceholder = ({ endDate, placeholder, startDate }: DateRangePlaceholderProps) => (
 	<>
 		{startDate ? (
 			endDate ? (

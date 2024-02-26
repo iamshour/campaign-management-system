@@ -4,6 +4,16 @@ import type { IconType } from "../types"
 
 interface SectionHeadingProps {
 	/**
+	 * Used to style Component
+	 */
+	className?: string
+
+	/**
+	 * Optional string to be rendered below label & icon
+	 */
+	description?: string
+
+	/**
 	 * Icon to be rendered in teh heading component.
 	 */
 	icon: IconType
@@ -12,19 +22,9 @@ interface SectionHeadingProps {
 	 * String representing Section Title
 	 */
 	label: string
-
-	/**
-	 * Optional string to be rendered below label & icon
-	 */
-	description?: string
-
-	/**
-	 * Used to style Component
-	 */
-	className?: string
 }
 
-const SectionHeading = ({ icon: Icon, label, description, className }: SectionHeadingProps) => {
+const SectionHeading = ({ className, description, icon: Icon, label }: SectionHeadingProps) => {
 	return (
 		<div className={className}>
 			<span className='inline-flex items-center gap-2.5'>

@@ -1,14 +1,14 @@
 //#region Import
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
+import type { ContactExports } from "@/features/people/exports/types"
 
 import { useDownloadExportMutation } from "@/features/people/exports/api"
-import type { ContactExports } from "@/features/people/exports/types"
 import { Slot } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 //#endregion
 
-interface ExportViewDownloadActionWrapperProps extends Pick<ContactExports, "id" | "fileName" | "contactExportStatus"> {
+interface ExportViewDownloadActionWrapperProps extends Pick<ContactExports, "contactExportStatus" | "fileName" | "id"> {
 	/**
 	 * Dropdown.Item that will trigger export download
 	 */
@@ -16,10 +16,10 @@ interface ExportViewDownloadActionWrapperProps extends Pick<ContactExports, "id"
 }
 
 function ExportViewDownloadActionWrapper({
-	id,
-	fileName,
-	contactExportStatus,
 	children,
+	contactExportStatus,
+	fileName,
+	id,
 }: ExportViewDownloadActionWrapperProps) {
 	const { t } = useTranslation("exports", { keyPrefix: "components.exportTableActions" })
 
@@ -32,7 +32,7 @@ function ExportViewDownloadActionWrapper({
 	const handleDownload = async () => {
 		if (!canDownloadExport) return
 
-		const res = await triggerDownloadExport({ id, fileName }).unwrap()
+		const res = await triggerDownloadExport({ fileName, id }).unwrap()
 
 		closeDropdown()
 
@@ -40,7 +40,7 @@ function ExportViewDownloadActionWrapper({
 	}
 
 	return (
-		<Slot onClick={handleDownload} className={!canDownloadExport ? "pointer-events-none opacity-50" : ""}>
+		<Slot className={!canDownloadExport ? "pointer-events-none opacity-50" : ""} onClick={handleDownload}>
 			{children}
 		</Slot>
 	)

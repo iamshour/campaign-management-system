@@ -3,12 +3,12 @@ import { Slot, type SlotProps } from "@radix-ui/react-slot"
 import { createContext, forwardRef, useContext, useId } from "react"
 import {
 	Controller,
-	FormProvider,
-	useFormContext,
 	type ControllerProps,
 	type FieldPath,
 	type FieldValues,
+	FormProvider,
 	type FormProviderProps,
+	useFormContext,
 } from "react-hook-form"
 import { twMerge } from "tailwind-merge"
 
@@ -44,8 +44,10 @@ const FormField = <
 // eslint-disable-next-line react-refresh/only-export-components
 export const useFormField = () => {
 	const fieldContext = useContext(FormFieldContext)
+
 	const itemContext = useContext(FormItemContext)
-	const { getFieldState, formState } = useFormContext()
+
+	const { formState, getFieldState } = useFormContext()
 
 	const fieldState = getFieldState(fieldContext.name, formState)
 
@@ -56,11 +58,11 @@ export const useFormField = () => {
 	const { id } = itemContext
 
 	return {
+		formDescriptionId: `${id}-form-item-description`,
+		formItemId: `${id}-form-item`,
+		formMessageId: `${id}-form-item-message`,
 		id,
 		name: fieldContext.name,
-		formItemId: `${id}-form-item`,
-		formDescriptionId: `${id}-form-item-description`,
-		formMessageId: `${id}-form-item-message`,
 		...fieldState,
 	}
 }
@@ -86,34 +88,36 @@ const FormLabel = ({ className, ...props }: React.ComponentPropsWithoutRef<typeo
 }
 
 const FormControl = forwardRef<React.ElementRef<typeof Slot>, SlotProps>((props, ref) => {
-	const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
+	const { error, formDescriptionId, formItemId, formMessageId } = useFormField()
 
 	return (
 		<Slot
-			ref={ref}
-			id={formItemId}
 			aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
 			aria-invalid={!!error}
+			id={formItemId}
+			ref={ref}
 			{...props}
 		/>
 	)
 })
+
 FormControl.displayName = "FormControl"
 
 const FormDescription = ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => {
 	const { formDescriptionId } = useFormField()
 
-	return <p id={formDescriptionId} className={twMerge("text-sm text-slate-500", className)} {...props} />
+	return <p className={twMerge("text-sm text-slate-500", className)} id={formDescriptionId} {...props} />
 }
 
-const FormMessage = ({ className, children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => {
+const FormMessage = ({ children, className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => {
 	const { error, formMessageId } = useFormField()
+
 	const body = error ? String(error?.message) : children
 
 	if (!body) return null
 
 	return (
-		<p id={formMessageId} className={twMerge("text-xs font-medium text-red-500", className)} {...props}>
+		<p className={twMerge("text-xs font-medium text-red-500", className)} id={formMessageId} {...props}>
 			{body}
 		</p>
 	)

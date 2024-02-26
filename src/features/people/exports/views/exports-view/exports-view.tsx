@@ -1,16 +1,16 @@
 //#region Import
-import { lazy } from "react"
-
-import DataGrid from "@/core/components/data-grid"
 import type { SharedListViewProps } from "@/core/types"
-import exportsTableColumns from "@/features/people/exports/constants/exports-table-columns"
 import type { ContactExports } from "@/features/people/exports/types"
+
+import DataGrid from "@/core/components/data-grid/data-grid"
+import exportsTableColumns from "@/features/people/exports/constants/exports-table-columns"
+import { lazy } from "react"
 
 const ExportsViewFiltersContent = lazy(() => import("./exports-view-filters-content"))
 //#endregion
 
-const ExportsView = ({ count, ...tableProps }: SharedListViewProps<ContactExports>) => (
-	<DataGrid dataGridKey='contacts-exports' count={count}>
+const ExportsView = (props: SharedListViewProps<ContactExports>) => (
+	<DataGrid columns={exportsTableColumns} dataGridKey='contacts-exports' {...props}>
 		<DataGrid.FiltersBar>
 			<DataGrid.FiltersBar.Header />
 			<DataGrid.FiltersBar.Content>
@@ -22,7 +22,7 @@ const ExportsView = ({ count, ...tableProps }: SharedListViewProps<ContactExport
 		<DataGrid.Content>
 			<DataGrid.TopBar />
 
-			<DataGrid.Body columns={exportsTableColumns} classNames={{ wrapper: "px-4" }} {...tableProps} />
+			<DataGrid.Body classNames={{ wrapper: "px-4" }} />
 			<DataGrid.Pagination />
 		</DataGrid.Content>
 	</DataGrid>

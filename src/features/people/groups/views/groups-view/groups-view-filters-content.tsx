@@ -1,22 +1,26 @@
 //#region Import
+import type { ContactGroupFilter } from "@/features/people/groups/types"
+
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { DateRangePicker } from "@/ui"
+import { memo } from "react"
 //#endregion
 
-const GroupsViewFiltersContent = () => {
+const GroupsViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const { filters } = useSelector<DataGridState<"groups">>(({ dataGrid }) => dataGrid["groups"])
+	const filters = useSelector<ContactGroupFilter | undefined>(({ dataGrid }) => dataGrid["groups"]?.filters)
 
 	return (
 		<DateRangePicker
-			dateRange={filters?.dateRange}
-			updateDateRange={(dateRange) => dispatch(updateFilters({ groups: { dateRange } }))}
+			dateRange={{ endDate: filters?.endDate, startDate: filters?.startDate }}
+			updateDateRange={(groups) => dispatch(updateFilters({ groups }))}
 		/>
 	)
-}
+})
+
+GroupsViewFiltersContent.displayName = "GroupsViewFiltersContent"
 
 export default GroupsViewFiltersContent

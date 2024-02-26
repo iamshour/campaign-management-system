@@ -1,13 +1,12 @@
 //#region Import
-import * as z from "zod"
-
 import SmsTemplateSchema from "@/features/templates/sms-templates/schemas/sms-template-schema"
+import * as z from "zod"
 //#endregion
 
 const SmsIndustryTemplateSchema = SmsTemplateSchema.extend({
-	mostPopular: z.boolean().optional().default(false),
 	background: z.instanceof(File).optional(),
 	backgroundImage: z.string().optional(),
+	mostPopular: z.boolean().optional().default(false),
 }).refine(({ background, backgroundImage }) => !!background || !!backgroundImage, {
 	message: "Required",
 	path: ["background"],

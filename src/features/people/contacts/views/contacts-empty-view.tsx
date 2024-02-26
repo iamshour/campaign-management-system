@@ -1,11 +1,10 @@
 //#region Import
-import { useTranslation } from "react-i18next"
-
 import ContactsEmptySvg from "@/assets/contacts-empty.svg?react"
 import LabelledHints from "@/core/components/labelled-hints"
 import CreateContactDialog from "@/features/people/contacts/dialogs/create-contact-dialog/create-contact-dialog"
 import ImportContactsDialog from "@/features/people/contacts/dialogs/import-contacts-dialog/import-contacts-dialog"
 import { Button } from "@/ui"
+import { useTranslation } from "react-i18next"
 //#endregion
 
 const EmptyContactsView = () => {
@@ -26,13 +25,13 @@ const EmptyContactsView = () => {
 				<p className='mb-6 text-center'>{t("emptyView.message")}</p>
 				<div className='flex-wrap gap-8 flex-center'>
 					<ImportContactsDialog title={t("dialogs.importContacts.title")}>
-						<Button size='default' variant='outline' className='min-w-[200px]'>
+						<Button className='min-w-[200px]' size='default' variant='outline'>
 							{t("table.toolbar.actions.import")}
 						</Button>
 					</ImportContactsDialog>
 
 					<CreateContactDialog>
-						<Button size='default' className='min-w-[200px]'>
+						<Button className='min-w-[200px]' size='default'>
 							{t("table.toolbar.actions.add-contact")}
 						</Button>
 					</CreateContactDialog>

@@ -1,9 +1,8 @@
 //#region Import
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
-
 import fileMimeTypes from "@/core/constants/file-mime-types"
 import { DropFileArea, ErrorBoundary } from "@/ui"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 
 import { useImportContactsDialogContext } from "../import-contacts-dialog-context"
 //#endregion
@@ -18,30 +17,30 @@ const ImportFileTab = () => {
 
 	const {
 		data: { file },
-		uploadFileLoading,
 		resetData,
 		updateData,
+		uploadFileLoading,
 	} = useImportContactsDialogContext()
 
 	return (
 		<ErrorBoundary>
 			<DropFileArea
-				name='file'
-				acceptedFiles={!uploadFileLoading && file ? [file] : []}
-				onRemove={resetData}
 				accept={fileMimeTypes}
+				acceptedFiles={!uploadFileLoading && file ? [file] : []}
+				disabled={!!file?.name.length}
+				loading={uploadFileLoading}
+				maxFiles={1}
+				maxSize={MAX_FILE_SIZE}
+				multiple={false}
+				name='file'
 				onDrop={(acceptedFiles) => updateData({ file: acceptedFiles[0] })}
 				onDropRejected={(fileRejections) => {
 					fileRejections[0].errors.forEach(({ code }) =>
 						toast.error(t(`tabs.importFile.errors.${code}`, { count: 50 }))
 					)
 				}}
+				onRemove={resetData}
 				preventDropOnDocument
-				disabled={!!file?.name.length}
-				maxSize={MAX_FILE_SIZE}
-				maxFiles={1}
-				multiple={false}
-				loading={uploadFileLoading}
 			/>
 		</ErrorBoundary>
 	)

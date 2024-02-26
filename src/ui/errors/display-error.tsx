@@ -1,29 +1,27 @@
 //#region Import
+import { type ErrorObject, getErrorMessage } from "@/core/lib/redux-toolkit/helpers"
+import RadixIconsReload from "~icons/radix-icons/reload"
 import { twMerge } from "tailwind-merge"
 
-import { getErrorMessage, type ErrorObject } from "@/core/lib/redux-toolkit/helpers"
-
 import Button from "../button/button"
-
-import RadixIconsReload from "~icons/radix-icons/reload"
 //#endregion
 
 interface DisplayErrorProps extends Pick<React.HTMLAttributes<HTMLDivElement>, "className"> {
 	error?: ErrorObject
 
 	/**
-	 * Bool check that handles whether to render a reload/reset button
-	 */
-	showReloadButton?: boolean
-
-	/**
 	 *
 	 * @returns Custom callback function passed to reload button
 	 */
 	onReload?: () => void
+
+	/**
+	 * Bool check that handles whether to render a reload/reset button
+	 */
+	showReloadButton?: boolean
 }
 
-const DisplayError = ({ error = { status: 500 }, className, showReloadButton, onReload }: DisplayErrorProps) => {
+const DisplayError = ({ className, error = { status: 500 }, onReload, showReloadButton }: DisplayErrorProps) => {
 	const message = getErrorMessage(error)
 
 	return (
@@ -35,12 +33,12 @@ const DisplayError = ({ error = { status: 500 }, className, showReloadButton, on
 			{/* Render a Reload Button, only if the bool check was passed OR a callback function: `onReload` was passed    */}
 			{(!!showReloadButton || !!onReload) && (
 				<Button
-					variant='outline-grey'
 					onClick={() => {
 						window.location.reload()
 						!!onReload && onReload()
 					}}
-					title='Reset'>
+					title='Reset'
+					variant='outline-grey'>
 					<RadixIconsReload />
 				</Button>
 			)}

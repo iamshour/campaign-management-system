@@ -1,7 +1,4 @@
 //#region Import
-import { lazy } from "react"
-import { Navigate, RouteObject } from "react-router-dom"
-
 import appPaths from "@/core/constants/app-paths"
 import PrivateLayout from "@/core/layouts/private-layout/private-layout"
 // TODO: LAZY LOAD ALL BELOW
@@ -11,6 +8,8 @@ import ExportsRoutes from "@/features/people/exports/routes/exports.routes"
 import GroupsRoutes from "@/features/people/groups/routes/groups.routes"
 import SegmentsRoutes from "@/features/people/segments/routes/segments.routes"
 import SmsTemplatesRoutes from "@/features/templates/sms-templates/routes/sms-templates.routes"
+import { lazy } from "react"
+import { Navigate, RouteObject } from "react-router-dom"
 
 // eslint-disable-next-line react-refresh/only-export-components
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
@@ -21,26 +20,26 @@ const DisplayError = lazy(() => import("@/ui/errors/display-error"))
  */
 const privateRoutes: RouteObject[] = [
 	{
-		path: "/",
-		element: <PrivateLayout />,
 		children: [
-			{ path: "people/contacts/*", element: <ContactsRoutes /> },
-			{ path: "people/groups/*", element: <GroupsRoutes /> },
-			{ path: "people/segments/*", element: <SegmentsRoutes /> },
-			{ path: "people/exports/*", element: <ExportsRoutes /> },
-			{ path: "templates/sms-templates/*", element: <SmsTemplatesRoutes /> },
-			{ path: "industries/*", element: <IndustriesRoutes /> },
+			{ element: <ContactsRoutes />, path: "people/contacts/*" },
+			{ element: <GroupsRoutes />, path: "people/groups/*" },
+			{ element: <SegmentsRoutes />, path: "people/segments/*" },
+			{ element: <ExportsRoutes />, path: "people/exports/*" },
+			{ element: <SmsTemplatesRoutes />, path: "templates/sms-templates/*" },
+			{ element: <IndustriesRoutes />, path: "industries/*" },
 
-			{ path: "/", element: <Navigate to={appPaths.DASHBOARD} /> },
-			{ path: appPaths.DASHBOARD, element: <div className='mb-8 text-4xl'>Dashboard Route</div> },
-			{ path: appPaths.INBOX, element: <div className='text-4xl'>Inbox Route</div> },
-			{ path: appPaths.INTEGRATIONS, element: <div className='text-4xl'>Integrations Route</div> },
-			{ path: appPaths.CAMPAIGNS_MANAGER, element: <div className='text-4xl'>Campaign Manager Route</div> },
-			{ path: appPaths.CHANNELS, element: <div className='text-4xl'>Channels Route</div> },
-			{ path: appPaths.CHATBOT, element: <div className='text-4xl'>Chatbot Route</div> },
+			{ element: <Navigate to={appPaths.DASHBOARD} />, path: "/" },
+			{ element: <div className='mb-8 text-4xl'>Dashboard Route</div>, path: appPaths.DASHBOARD },
+			{ element: <div className='text-4xl'>Inbox Route</div>, path: appPaths.INBOX },
+			{ element: <div className='text-4xl'>Integrations Route</div>, path: appPaths.INTEGRATIONS },
+			{ element: <div className='text-4xl'>Campaign Manager Route</div>, path: appPaths.CAMPAIGNS_MANAGER },
+			{ element: <div className='text-4xl'>Channels Route</div>, path: appPaths.CHANNELS },
+			{ element: <div className='text-4xl'>Chatbot Route</div>, path: appPaths.CHATBOT },
 
-			{ path: "*", element: <DisplayError /> },
+			{ element: <DisplayError />, path: "*" },
 		],
+		element: <PrivateLayout />,
+		path: "/",
 	},
 ]
 

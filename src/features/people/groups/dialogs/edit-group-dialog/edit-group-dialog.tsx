@@ -1,8 +1,7 @@
 //#region Import
+import { Dialog } from "@/ui"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
-
-import { Dialog } from "@/ui"
 
 const EditGroupContent = lazy(() => import("./edit-group-content"))
 //#endregion
@@ -20,12 +19,12 @@ const EditGroupDialog = ({ children, ...props }: EditGroupDialogProps) => {
 	const [open, setOpen] = useState(false)
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 			<Dialog.Content
-				title={t("edit-group")}
 				className='h-[321px] w-[382px] sm:h-[329px] sm:w-[390px]'
-				onInteractOutside={(e) => e.preventDefault()}>
+				onInteractOutside={(e) => e.preventDefault()}
+				title={t("edit-group")}>
 				<EditGroupContent {...props} closeDialog={() => setOpen(false)} size='lg' />
 			</Dialog.Content>
 		</Dialog>

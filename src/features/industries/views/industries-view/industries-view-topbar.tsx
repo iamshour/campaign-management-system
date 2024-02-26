@@ -1,13 +1,12 @@
 //#region Import
-import { useTranslation } from "react-i18next"
-
 import CreateIndustryDialog from "@/features/industries/dialogs/create-industry-dialog/create-industry-dialog"
 import { Button } from "@/ui"
-
 import PhUserPlus from "~icons/ph/user-plus"
+import { memo } from "react"
+import { useTranslation } from "react-i18next"
 //#endregion
 
-const IndustriesViewTopBar = () => {
+const IndustriesViewTopBar = memo(() => {
 	const { t } = useTranslation("industries")
 
 	return (
@@ -20,6 +19,8 @@ const IndustriesViewTopBar = () => {
 			</CreateIndustryDialog>
 		</div>
 	)
-}
+})
+
+IndustriesViewTopBar.displayName = "IndustriesViewTopBar"
 
 export default IndustriesViewTopBar

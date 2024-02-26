@@ -1,9 +1,8 @@
 //#region Import
-import { useTranslation } from "react-i18next"
-
 import GroupsEmptySvg from "@/assets/groups-empty.svg?react"
 import LabelledHints from "@/core/components/labelled-hints"
 import { Button } from "@/ui"
+import { useTranslation } from "react-i18next"
 //#endregion
 
 const GroupsEmptyView = () => {
@@ -23,7 +22,7 @@ const GroupsEmptyView = () => {
 				<h3 className='text-center text-xl font-bold sm:text-[22px]'>You don&apos;t have groups yet</h3>
 				<p className='mb-6 text-center'>Create new group to collect you contacts</p>
 				<div className='flex-wrap gap-8 flex-center'>
-					<Button size='default' className='min-w-[200px]'>
+					<Button className='min-w-[200px]' size='default'>
 						{t("table.toolbar.actions.create-group")}
 					</Button>
 				</div>

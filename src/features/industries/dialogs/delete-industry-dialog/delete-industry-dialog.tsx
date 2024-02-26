@@ -1,7 +1,6 @@
 //#region Import
-import { lazy, useState } from "react"
-
 import { Dialog } from "@/ui"
+import { lazy, useState } from "react"
 
 const DeleteIndustryDialogContent = lazy(() => import("./delete-industry-dialog-content"))
 //#endregion
@@ -18,9 +17,9 @@ const DeleteIndustryDialog = ({ children, ...industry }: DeleteIndustryDialogPro
 	const [open, setOpen] = useState(false)
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
-			<Dialog.Content title='Delete Industry' className='w-[400px] sm:h-[390px]'>
+			<Dialog.Content className='w-[400px] sm:h-[390px]' title='Delete Industry'>
 				<DeleteIndustryDialogContent {...industry} closeDialog={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>

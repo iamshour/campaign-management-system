@@ -1,10 +1,10 @@
 export interface ErrorObject {
-	error?: string
-	status?: number | string
 	data?: {
 		message?: string
 		statusCode: number
 	}
+	error?: string
+	status?: number | string
 }
 
 /**
@@ -14,11 +14,15 @@ export interface ErrorObject {
  */
 export const getErrorMessage = (error: ErrorObject): string => {
 	if (error?.status === 403) return "Forbidden request"
+
 	if (error?.status === 404) return "Resource not found"
+
 	if (error?.status === 500) return "Server Exception error"
+
 	if (error?.status === "FETCH_ERROR") return "Network Error"
 
 	if (typeof error?.error === "string") return error.error
+
 	if (error?.data?.message && typeof error.data.message === "string" && error.status !== 500) return error.data.message
 
 	return "Something went wrong..."
@@ -35,18 +39,18 @@ export const getErrorMessage = (error: ErrorObject): string => {
 export function providesList<R extends string[] | undefined, T extends string>(
 	resultsWithIds: R | undefined,
 	tagType: T
-): { type: T; id: string | undefined }[] {
+): { id: string | undefined; type: T }[] {
 	return resultsWithIds
-		? [{ type: tagType, id: "LIST" }, ...resultsWithIds.map((id) => ({ type: tagType, id }))]
-		: [{ type: tagType, id: "LIST" }]
+		? [{ id: "LIST", type: tagType }, ...resultsWithIds.map((id) => ({ id, type: tagType }))]
+		: [{ id: "LIST", type: tagType }]
 }
 
 export const transformResponse = <Result extends { data: any }>(res: Result) => res?.data
 
 interface SelectFromResultOptions<TData> {
 	data?: {
-		list: TData[]
 		count: number
+		list: TData[]
 	}
 	isLoading: boolean
 }
@@ -54,8 +58,8 @@ interface SelectFromResultOptions<TData> {
 export function selectListFromResult<TData>({ data, isLoading, ...rest }: SelectFromResultOptions<TData>) {
 	return {
 		...data,
-		list: data?.list,
 		count: data?.count,
+		list: data?.list,
 		loading: isLoading,
 		...rest,
 	}

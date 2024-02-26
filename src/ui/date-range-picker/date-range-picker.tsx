@@ -1,35 +1,33 @@
 //#region Import
 import type { PopperContentProps } from "@radix-ui/react-popover"
-import { formatISO, type Locale, endOfDay } from "date-fns"
-import { Suspense, lazy, useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { twMerge } from "tailwind-merge"
 
 import { objHasFalseyValues } from "@/utils"
+import RadixIconsCalendar from "~icons/radix-icons/calendar"
+import { endOfDay, formatISO, type Locale } from "date-fns"
+import { lazy, Suspense, useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { twMerge } from "tailwind-merge"
 
 import Button from "../button/button"
 import Label from "../label/label"
 import Popover from "../popover/popover"
 import Skeleton from "../skeleton/skeleton"
-
 import DateRangePlaceholder from "./date-range-placeholder"
-
-import RadixIconsCalendar from "~icons/radix-icons/calendar"
 const Calendar = lazy(() => import("../calendar/calendar"))
 //#endregion
 
-export type DateRange = Partial<Record<"startDate" | "endDate", string>>
+export type DateRange = Partial<Record<"endDate" | "startDate", string>>
 
 export interface DateRangePicker {
-	dateRange?: DateRange
-	updateDateRange: (dateRange?: DateRange) => void
-	locale?: Locale
+	calendarProps?: Omit<React.ComponentPropsWithoutRef<typeof Calendar>, "mode" | "onSelect" | "selected">
 	className?: string
+	dateRange?: DateRange
 	label?: string
+	locale?: Locale
 	placeholder?: string
-	triggerProps?: React.ComponentPropsWithoutRef<typeof Button>
 	popoverContentProps?: PopperContentProps
-	calendarProps?: Omit<React.ComponentPropsWithoutRef<typeof Calendar>, "onSelect" | "selected" | "mode">
+	triggerProps?: React.ComponentPropsWithoutRef<typeof Button>
+	updateDateRange: (dateRange?: DateRange) => void
 }
 
 /**
@@ -49,15 +47,15 @@ export interface DateRangePicker {
  * @param props.className - WRapper Component's classname
  */
 const DateRangePicker = ({
-	dateRange,
-	updateDateRange,
-	locale,
-	className,
-	label,
-	placeholder,
 	calendarProps,
-	triggerProps,
+	className,
+	dateRange,
+	label,
+	locale,
+	placeholder,
 	popoverContentProps,
+	triggerProps,
+	updateDateRange,
 }: DateRangePicker) => {
 	const [range, setRange] = useState(dateRange)
 
@@ -70,7 +68,7 @@ const DateRangePicker = ({
 
 	const onClearRange = () => {
 		setRange(undefined)
-		updateDateRange({ startDate: undefined, endDate: undefined })
+		updateDateRange({ endDate: undefined, startDate: undefined })
 	}
 
 	return (
@@ -80,10 +78,10 @@ const DateRangePicker = ({
 
 				<Button
 					className='h-max px-1.5 py-0 pb-0.5 text-primary-600 hover:bg-transparent hover:text-primary-900'
-					variant='ghost'
-					size='sm'
 					disabled={objHasFalseyValues(range)}
-					onClick={onClearRange}>
+					onClick={onClearRange}
+					size='sm'
+					variant='ghost'>
 					{t("actions.clear")}
 				</Button>
 			</div>
@@ -92,9 +90,9 @@ const DateRangePicker = ({
 				<Popover>
 					<Popover.Trigger asChild>
 						<Button
+							hasValue={!objHasFalseyValues(dateRange)}
 							id='date'
 							variant='outline-grey'
-							hasValue={!objHasFalseyValues(dateRange)}
 							{...triggerProps}
 							className={twMerge("w-full justify-start text-start font-normal", triggerProps?.className)}>
 							<RadixIconsCalendar className='me-2 h-4 w-4' />
@@ -109,21 +107,21 @@ const DateRangePicker = ({
 						<Suspense fallback={<CalendarSkeleton />}>
 							<Calendar
 								initialFocus
+								locale={locale}
 								mode='range'
-								selected={{
-									from: range?.startDate ? new Date(range?.startDate) : undefined,
-									to: range?.endDate ? new Date(range?.endDate) : undefined,
-								}}
+								numberOfMonths={2}
 								onSelect={(updatedRange) => {
 									onClearRange()
 
 									setRange({
-										startDate: updatedRange?.from ? formatISO(updatedRange?.from) : undefined,
 										endDate: updatedRange?.to ? formatISO(endOfDay(updatedRange?.to)) : undefined,
+										startDate: updatedRange?.from ? formatISO(updatedRange?.from) : undefined,
 									})
 								}}
-								numberOfMonths={2}
-								locale={locale}
+								selected={{
+									from: range?.startDate ? new Date(range?.startDate) : undefined,
+									to: range?.endDate ? new Date(range?.endDate) : undefined,
+								}}
 								toDate={new Date()}
 								{...calendarProps}
 							/>

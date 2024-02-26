@@ -6,17 +6,40 @@ import type { OptionType } from "@/ui"
 
 export type AdvancedFiltersTab = "newConditions" | "segmentSelection"
 
-export type SegmentSelectionRenderedView = "viewSegmentConditions" | "editSegmentConditions"
+export type SegmentSelectionRenderedView = "editSegmentConditions" | "viewSegmentConditions"
+
 export interface AdvancedFiltersDialogContextValue {
+	/**
+	 * Bool check which returns true if conditions are empty (Or has the default preset condition only)
+	 */
+	areContextConditionsEmpty: boolean
+
+	/**
+	 * Callback function used to clear conditions, resets to default value.
+	 */
+	clearConditions: () => void
+
 	/**
 	 * List of segment conditions
 	 */
 	conditions: SegmentConditionType[]
 
 	/**
-	 * Function to update the list of conditions
+	 * Callback function used when selecting an option from the fetched segments in segments popover (2nd tab of dialog)
+	 * @param segmentOption
 	 */
-	setConditions: React.Dispatch<React.SetStateAction<SegmentConditionType[]>>
+	onSegmentSelection: (segmentOption?: OptionType) => void
+
+	/**
+	 * Callback Function passed to the `RadioGroup` on tabs/Views change
+	 * @param tab Newly selected tab to switch to. Can be either `advancedFilter` or `segments`
+	 */
+	onTabChange: (tab: AdvancedFiltersTab) => void
+
+	/**
+	 * String represnting the open view inside segment selection tab (view can be view or edit)
+	 */
+	segmentSelectionTabView: SegmentSelectionRenderedView
 
 	/**
 	 * Selected option from dropdown list of fetched segments, rendered inside second tab of Dialog
@@ -29,31 +52,9 @@ export interface AdvancedFiltersDialogContextValue {
 	selectedTab: AdvancedFiltersTab
 
 	/**
-	 * Callback function used to clear conditions, resets to default value.
+	 * Function to update the list of conditions
 	 */
-	clearConditions: () => void
-
-	/**
-	 * Callback Function passed to the `RadioGroup` on tabs/Views change
-	 * @param tab Newly selected tab to switch to. Can be either `advancedFilter` or `segments`
-	 */
-	onTabChange: (tab: AdvancedFiltersTab) => void
-
-	/**
-	 * Callback function used when selecting an option from the fetched segments in segments popover (2nd tab of dialog)
-	 * @param segmentOption
-	 */
-	onSegmentSelection: (segmentOption?: OptionType) => void
-
-	/**
-	 * Bool check which returns true if conditions are empty (Or has the default preset condition only)
-	 */
-	areContextConditionsEmpty: boolean
-
-	/**
-	 * String represnting the open view inside segment selection tab (view can be view or edit)
-	 */
-	segmentSelectionTabView: SegmentSelectionRenderedView
+	setConditions: React.Dispatch<React.SetStateAction<SegmentConditionType[]>>
 
 	/**
 	 * Function to set the view inside segment selection tab

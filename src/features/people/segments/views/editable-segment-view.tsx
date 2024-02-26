@@ -1,42 +1,42 @@
 //#region Import
+import appPaths from "@/core/constants/app-paths"
+import { Button, Footer, Form, Input, useForm } from "@/ui"
 import { zodResolver } from "@hookform/resolvers/zod"
+import MdiFileDocument from "~icons/mdi/file-document"
+import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
 import { useMemo, useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useLocation, useNavigate } from "react-router-dom"
 
-import appPaths from "@/core/constants/app-paths"
-import { Button, Footer, Form, Input, useForm } from "@/ui"
+import type { CreateSegmentBody, Segment, SegmentConditionType } from "../types"
 
 import { useCreateSegmentMutation, useUpdateSegmentMutation } from "../api"
 import SegmentCollapsible from "../components/segment-collapsible"
-import SegmentsFunnelEditable from "../components/segments-funnel-editable"
+import SegmentsFunnelEditable from "../components/segments-funnel-editable/segments-funnel-editable"
 import { emptySegmentCondition } from "../constants/preset-segments"
 import SegmentSchema, { type SegmentSchemaType } from "../schemas/segment-schema"
-import type { Segment, SegmentConditionType, CreateSegmentBody } from "../types"
 import { areConditionsValid } from "../utils"
-
-import MdiFileDocument from "~icons/mdi/file-document"
-import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
 //#endregion
 
 interface EditableSegmentViewProps {
 	/**
+	 * Default Values passed if this view is used to edit a previously created segment. @default {}
+	 */
+	defaultValues?: Pick<Segment, "description" | "id" | "name"> & {
+		conditions?: SegmentConditionType[]
+	}
+
+	/**
 	 * Prop indicating to where this component is used
 	 * Either for creating a new Segment or editing a preiously created one
 	 */
-	view: "editSegment" | "createSegment"
-
-	/**
-	 * Default Values passed if this view is used to edit a previously created segment. @default {}
-	 */
-	defaultValues?: Pick<Segment, "id" | "name" | "description"> & {
-		conditions?: SegmentConditionType[]
-	}
+	view: "createSegment" | "editSegment"
 }
 
 const EditableSegmentView = ({ defaultValues, view }: EditableSegmentViewProps) => {
 	const { state } = useLocation()
+
 	const { t } = useTranslation("segments", { keyPrefix: "views.editableSegmentView" })
 
 	const navigate = useNavigate()
@@ -48,12 +48,13 @@ const EditableSegmentView = ({ defaultValues, view }: EditableSegmentViewProps) 
 	const form = useForm<SegmentSchemaType>({
 		resolver: zodResolver(SegmentSchema),
 		values: {
-			name: defaultValues?.name ?? "",
 			description: defaultValues?.description,
+			name: defaultValues?.name ?? "",
 		},
 	})
 
 	const [triggerCreateSegment, { isLoading: isCreateSegmentLoading }] = useCreateSegmentMutation()
+
 	const [triggerUpdateSegment, { isLoading: isUpdateSegmentLoading }] = useUpdateSegmentMutation()
 
 	const areFunnelConditionsValid = useMemo(
@@ -72,42 +73,40 @@ const EditableSegmentView = ({ defaultValues, view }: EditableSegmentViewProps) 
 		const transformedBody: CreateSegmentBody = {
 			...data,
 			contactSegmentConditionList: conditions?.map((condition) => ({
-				id: condition?.id,
 				contactSegmentRuleList: condition?.rules?.map((rule) => ({
-					id: rule?.id,
+					contactSegmentId: rule?.segment?.value,
 					contactSegmentRuleAttribute: rule?.attribute,
 					contactSegmentRuleCondition: rule?.condition,
-					specification: rule?.specification,
 					country: rule?.country,
 					groupId: rule?.group?.value,
-					contactSegmentId: rule?.segment?.value,
+					id: rule?.id,
+					specification: rule?.specification,
 				})),
+				id: condition?.id,
 			})),
 		}
 
 		if (view === "createSegment") {
-			await triggerCreateSegment(transformedBody)
-				.unwrap()
-				.then(() => onSucess("Segment created successfully!"))
+			await triggerCreateSegment(transformedBody).unwrap()
+			onSucess("Segment created successfully!")
 		} else {
 			// else, updating
-			await triggerUpdateSegment({ ...transformedBody, id: defaultValues?.id as string })
-				.unwrap()
-				.then(() => onSucess("Segment updated successfully!"))
+			await triggerUpdateSegment({ ...transformedBody, id: defaultValues?.id as string }).unwrap()
+			onSucess("Segment updated successfully!")
 		}
 	}
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onFormSubmit)} className='flex h-full w-full flex-col gap-4 p-6'>
+			<form className='flex h-full w-full flex-col gap-4 p-6' onSubmit={form.handleSubmit(onFormSubmit)}>
 				<h2 className='text-[21px] font-medium'>{t(`title.${view}`)}</h2>
 
 				<div className='flex flex-col gap-4 overflow-y-auto pe-2'>
 					<SegmentCollapsible
-						open
-						title={t("items.basicInfo.title")}
 						description={t(`items.basicInfo.description.${view}`)}
-						icon={MdiInformationVariantCircle}>
+						icon={MdiInformationVariantCircle}
+						open
+						title={t("items.basicInfo.title")}>
 						<div className='flex gap-8 p-2 pt-8'>
 							<Form.Field
 								control={form.control}
@@ -118,8 +117,8 @@ const EditableSegmentView = ({ defaultValues, view }: EditableSegmentViewProps) 
 										<Form.Control>
 											<Input
 												className='bg-white'
-												size='lg'
 												placeholder={t("items.basicInfo.fields.name.placeholder")}
+												size='lg'
 												{...field}
 											/>
 										</Form.Control>
@@ -136,8 +135,8 @@ const EditableSegmentView = ({ defaultValues, view }: EditableSegmentViewProps) 
 										<Form.Control>
 											<Input
 												className='bg-white'
-												size='lg'
 												placeholder={t("items.basicInfo.fields.description.placeholder")}
+												size='lg'
 												{...field}
 											/>
 										</Form.Control>
@@ -149,22 +148,22 @@ const EditableSegmentView = ({ defaultValues, view }: EditableSegmentViewProps) 
 					</SegmentCollapsible>
 
 					<SegmentCollapsible
-						title={t(`items.conditions.title`)}
 						description={t(`items.conditions.description.${view}`)}
-						icon={MdiFileDocument}>
+						icon={MdiFileDocument}
+						title={t(`items.conditions.title`)}>
 						<SegmentsFunnelEditable conditions={conditions} setConditions={setConditions} />
 					</SegmentCollapsible>
 				</div>
 
 				<Footer className='flex-1 items-end'>
-					<Button type='reset' variant='outline' as='link' to={state?.from || appPaths.SEGMENTS}>
+					<Button as='link' to={state?.from || appPaths.SEGMENTS} type='reset' variant='outline'>
 						{t("actions.cancel")}
 					</Button>
 
 					<Button
-						type='submit'
 						disabled={!areFunnelConditionsValid}
-						loading={isCreateSegmentLoading || isUpdateSegmentLoading}>
+						loading={isCreateSegmentLoading || isUpdateSegmentLoading}
+						type='submit'>
 						{t(`actions.submit.${view}`)}
 					</Button>
 				</Footer>

@@ -1,20 +1,19 @@
 //#region Import
-import { forwardRef, useEffect, useState } from "react"
-
-import Input from "../input/input"
-
 // import IconamoonCloseBold from "~icons/iconamoon/close-bold"
 import TablerSearch from "~icons/tabler/search"
+import { forwardRef, memo, useEffect, useState } from "react"
+
+import Input from "../input/input"
 //#endregion
 
 export interface SearchInputProps extends Omit<React.ComponentPropsWithoutRef<typeof Input>, "onChange" | "value"> {
-	value?: string
 	delay?: number
 	onChange: (input?: string) => void
+	value?: string
 }
 
-const SearchInput = forwardRef<React.ElementRef<typeof Input>, SearchInputProps>(
-	({ value, delay = 750, onChange, ...props }, ref) => {
+const DefaultSearchInput = forwardRef<React.ElementRef<typeof Input>, SearchInputProps>(
+	({ delay = 750, onChange, value, ...props }, ref) => {
 		const [input, setInput] = useState(value)
 
 		useEffect(() => {
@@ -28,18 +27,20 @@ const SearchInput = forwardRef<React.ElementRef<typeof Input>, SearchInputProps>
 
 		return (
 			<Input
-				ref={ref}
-				placeholder='Search'
 				leftIcon={TablerSearch}
+				onChange={(e) => setInput(e.target.value)}
+				placeholder='Search'
+				ref={ref}
 				spellCheck={false}
 				value={input || ""}
-				onChange={(e) => setInput(e.target.value)}
 				{...props}
 			/>
 		)
 	}
 )
 
-SearchInput.displayName = "SearchInput"
+DefaultSearchInput.displayName = "SearchInput"
+
+const SearchInput = memo(DefaultSearchInput)
 
 export default SearchInput

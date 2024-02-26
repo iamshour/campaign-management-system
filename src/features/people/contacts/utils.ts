@@ -1,7 +1,7 @@
 //#region Import
+import getSearchFilter from "@/core/utils/get-search-filter"
+import { cleanObject, getListOfKey } from "@/utils"
 import { parsePhoneNumber } from "react-phone-number-input"
-
-import { cleanObject, createObjtWithCommonValue, getListOfKey } from "@/utils"
 
 import type {
 	ContactAdvancedFilter,
@@ -51,103 +51,55 @@ export const parsePhoneNumberDto = (phoneNumber: string | undefined): ParsedPhon
 	}
 }
 
-/**
- * Quick Utility function used to return an object of Contact search Filter
- * To match current Backend procedure of searching for a contact.
- * ex: ```
- * 		const searchFilter = {
- * 			firstName: searchTerm
- * 			lastame: searchTerm,
- * 			email: seacrchTerm,
- * 			// rest...
- * 		}
- *
- * @param searchTerm String representing search term from user's input
- * @returns
- */
-export const getContactSearchFilter = (searchTerm?: string): ContactSearchFilter | undefined => {
-	if (!searchTerm) return
-
-	const searchFilter = createObjtWithCommonValue(
-		["firstName", "lastName", "email", "phoneNumber", "tag"] as (keyof ContactSearchFilter)[],
-		searchTerm
-	)
-
-	return searchFilter
-}
-
-/**
- * Quick Utility function used to return an object of Contact Filter and Contact search Filter
- * To match current Backend procedure of filtering and searching for a contact.
- * ex: ```
- *
- * 		const contactFilterAndSearch = {
- *			contactFilter:{
- *				tags: tags[]
- *				groups: groups[],
- *				startDate: date string,
- *				endDate: date string,
- *			},
- *			contactSearchFilter: {
- *				firstName: searchTerm
- *				lastame: searchTerm,
- *				email: seacrchTerm,
- *				// rest...
- *			}
- *		}
- *
- * @param filters String representing the filters applied by user
- * @param searchTerm String representing search term from user's input
- * @returns
- */
-export const getContactFilterAndContactSearchFilter = (
+export const getContactFilter = (
 	filters?: ContactTableFiltersType,
-	searchTerm?: string
-): { contactFilter: ContactFilter; contactSearchFilter?: ContactSearchFilter } => {
-	return {
-		contactFilter: {
-			tags: filters?.tags,
-			groups: getListOfKey(filters?.groups, "value"),
-			// Using below utility Function so that we won't send either date range values if any one is undefined
-			startDate: filters?.dateRange?.startDate,
-			endDate: filters?.dateRange?.endDate,
-		},
-		contactSearchFilter: getContactSearchFilter(searchTerm),
-	}
+	extraFilters?: Partial<ContactFilter>
+): ContactFilter | undefined => ({
+	...filters,
+	groups: getListOfKey(filters?.groups, "value"),
+	...extraFilters,
+})
+
+export const getContactSearchFilter = (searchTerm: string | undefined): ContactSearchFilter | undefined => {
+	return getSearchFilter(searchTerm, ["firstName", "lastName", "email", "phoneNumber", "tag"])
 }
 
 /**
- * TODO: ADD JSDOC...
- * @param
- * @returns
+ * This function is used to generate advance filters body used in fetching contacts list and in
+ * multi contacts actions (delete multiple, export multiple, edit multiple)
+ *
+ * @param advancedFilters object containing advanced filters applied by the user
+ * @param asString boolean specificying whether conditions list should be returned as object or stringified
+ * 		"asString" is passed as true when fetching list of contacts where we need to send conditions as url params
+ *
+ * @returns formatted object to be sent to backend, this object may contain either segmentId or conditions list
  */
 export const getContactAdvancedFilter = (
-	advancedFilters?: ContactTableAdvancedFiltersType["advancedFilters"]
+	advancedFilters?: ContactTableAdvancedFiltersType["advancedFilters"],
+	asString: boolean = false
 ): ContactAdvancedFilter | undefined => {
 	if (!advancedFilters) return {}
 
 	// Case 1: No Conditions Applied
-	if (!advancedFilters?.conditions || advancedFilters?.conditions?.length === 0) {
-		return {}
-	}
+	if (!advancedFilters?.conditions || advancedFilters?.conditions?.length === 0) return {}
 
 	// Case 2: Custom Conditions Applied
 	if (!advancedFilters?.segment) {
 		const appliedConditions = advancedFilters?.conditions.map(({ rules }) => ({
 			contactSegmentRuleList: rules.map((rule) =>
 				cleanObject({
+					contactSegmentId: rule.segment?.value,
 					contactSegmentRuleAttribute: rule.attribute,
 					contactSegmentRuleCondition: rule.condition,
-					specification: rule.specification,
 					country: rule.country,
 					groupId: rule.group?.value,
-					contactSegmentId: rule.segment?.value,
+					specification: rule.specification,
 				})
 			),
 		}))
 
 		return {
-			contactSegmentConditionList: JSON.stringify(appliedConditions),
+			contactSegmentConditionList: asString ? JSON.stringify(appliedConditions) : appliedConditions,
 		}
 	}
 

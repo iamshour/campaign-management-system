@@ -1,34 +1,34 @@
 //#region Import
-import { useCallback } from "react"
-
-import useDispatch from "@/core/hooks/useDispatch"
-import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
-import type { DataGridState, FiltersFieldMappingType } from "@/core/slices/data-grid-slice/types"
-import SelectLanguagesPopover from "@/features/templates/sms-templates/components/select-languages-popover"
-import SelectStatusesPopover from "@/features/templates/sms-templates/components/select-statuses-popover"
-import SelectTypesPopover from "@/features/templates/sms-templates/components/select-types-popover"
-import { smsTemplateLanguagesLocaleMap } from "@/features/templates/sms-templates/constants/sms-template-languages-options"
-import { smsTemplateStatusesLocaleMap } from "@/features/templates/sms-templates/constants/sms-template-statuses-options"
-import { smsTemplateTypesLocaleMap } from "@/features/templates/sms-templates/constants/sms-template-types-options"
+import type { PrebuiltTemplateFilter } from "@/features/industries/types"
 import type {
 	SmsTemplateLanguageOption,
 	SmsTemplateStatusOption,
 	SmsTemplateTypeOption,
 } from "@/features/templates/sms-templates/types"
+
+import useDispatch from "@/core/hooks/useDispatch"
+import useSelector from "@/core/hooks/useSelector"
+import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
+import SelectLanguagesPopover from "@/features/templates/sms-templates/components/select-languages-popover"
+import SelectTemplateStatusesPopover from "@/features/templates/sms-templates/components/select-template-statuses-popover"
+import SelectTemplateTypesPopover from "@/features/templates/sms-templates/components/select-template-types-popover"
+import smsTemplateLanguagesLocaleMap from "@/features/templates/sms-templates/constants/sms-template-languages-local-map"
+import smsTemplateStatusesLocaleMap from "@/features/templates/sms-templates/constants/sms-template-statuses-local-map"
+import smsTemplateTypesLocaleMap from "@/features/templates/sms-templates/constants/sms-template-types-local-map"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
+import { memo, useCallback } from "react"
 //#endregion
 
-const SmsIndustryTemplatesViewFiltersContent = () => {
+const SmsIndustryTemplatesViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const { filters } = useSelector<DataGridState<"sms-industry-templates">>(
-		({ dataGrid }) => dataGrid["sms-industry-templates"]
+	const filters = useSelector<PrebuiltTemplateFilter | undefined>(
+		({ dataGrid }) => dataGrid["sms-industry-templates"]?.filters
 	)
 
 	const updateSelection = useCallback(
-		(newFilters?: Partial<FiltersFieldMappingType["sms-industry-templates"]>) => {
+		(newFilters?: Partial<PrebuiltTemplateFilter>) => {
 			dispatch(updateFilters({ "sms-industry-templates": newFilters }))
 		},
 		[dispatch]
@@ -37,18 +37,18 @@ const SmsIndustryTemplatesViewFiltersContent = () => {
 	return (
 		<>
 			<DateRangePicker
+				dateRange={{ endDate: filters?.endDate, startDate: filters?.startDate }}
 				label='Last updated date'
-				dateRange={{ startDate: filters?.startDate, endDate: filters?.endDate }}
 				updateDateRange={updateSelection}
 			/>
-			<SelectStatusesPopover
+			<SelectTemplateStatusesPopover
 				isMulti
 				selection={filters?.statuses?.map((value) => ({ label: smsTemplateStatusesLocaleMap[value], value })) || []}
 				updateSelection={(selection) =>
 					updateSelection({ statuses: getListOfKey(selection, "value") as SmsTemplateStatusOption[] })
 				}
 			/>
-			<SelectTypesPopover
+			<SelectTemplateTypesPopover
 				isMulti
 				selection={filters?.types?.map((value) => ({ label: smsTemplateTypesLocaleMap[value], value })) || []}
 				updateSelection={(selection) =>
@@ -64,6 +64,8 @@ const SmsIndustryTemplatesViewFiltersContent = () => {
 			/>
 		</>
 	)
-}
+})
+
+SmsIndustryTemplatesViewFiltersContent.displayName = "SmsIndustryTemplatesViewFiltersContent"
 
 export default SmsIndustryTemplatesViewFiltersContent

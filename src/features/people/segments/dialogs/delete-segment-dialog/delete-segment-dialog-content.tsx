@@ -1,25 +1,24 @@
 //#region Import
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
-
 import { useDeleteSegmentMutation } from "@/features/people/segments/api"
 import { Button, Footer } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 //#endregion
 
 export interface DeleteSegmentDialogContentProps {
 	/**
-	 * Segment Id to be deleted
-	 */
-	id: string
-
-	/**
 	 * Callback function used to close the dialog
 	 */
 	closeDialog: () => void
+
+	/**
+	 * Segment Id to be deleted
+	 */
+	id: string
 }
 
-const DeleteSegmentDialogContent = ({ id, closeDialog }: DeleteSegmentDialogContentProps) => {
+const DeleteSegmentDialogContent = ({ closeDialog, id }: DeleteSegmentDialogContentProps) => {
 	const { t } = useTranslation("segments", { keyPrefix: "dialogs.delete-segment" })
 
 	const { closeDropdown } = useDropdownStateContext()
@@ -42,7 +41,7 @@ const DeleteSegmentDialogContent = ({ id, closeDialog }: DeleteSegmentDialogCont
 			<p className='w-full overflow-x-auto text-base'>{t("message")}</p>
 
 			<Footer>
-				<Button type='submit' className='px-10' onClick={onSubmit} loading={isLoading}>
+				<Button className='px-10' loading={isLoading} onClick={onSubmit} type='submit'>
 					{t("actions.submit")}
 				</Button>
 			</Footer>

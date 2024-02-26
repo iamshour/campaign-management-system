@@ -1,6 +1,5 @@
 //#region Import
 import Skeleton from "../skeleton/skeleton"
-
 import TableSkeleton from "./table-skeleton"
 //#endregion
 
@@ -13,7 +12,7 @@ const DataTableSkeleton = ({
 			<Skeleton className='h-full w-1/3' />
 			<Skeleton className='h-full w-1/3' />
 		</div>
-		<TableSkeleton colsLength={colsLength} rowsLength={rowsLength} className='flex-1' />
+		<TableSkeleton className='flex-1' colsLength={colsLength} rowsLength={rowsLength} />
 		<div className='h-[72px] w-full p-3.5'>
 			<Skeleton className='h-full w-full' />
 		</div>

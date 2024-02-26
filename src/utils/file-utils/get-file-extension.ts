@@ -13,6 +13,7 @@ const getFileExtension = (name: File["name"]): string => {
 	if (lastDotIndex === -1) return ""
 
 	const extension = name.substring(lastDotIndex + 1).toLowerCase()
+
 	return extension
 }
 

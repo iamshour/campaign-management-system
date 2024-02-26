@@ -1,8 +1,7 @@
 //#region Import
-import { useLocation } from "react-router-dom"
-
 import TmplateSvg1 from "@/assets/template-creation-1.svg?react"
 import { Button } from "@/ui"
+import { useLocation } from "react-router-dom"
 
 import CreateSmsPrebuiltTemplateDialog from "../create-sms-prebuilt-template-dialog/create-prebuilt-template-dialog"
 //#endregion
@@ -24,7 +23,7 @@ const CreateSmsTemplateDialogContent = () => {
 				</div>
 
 				<CreateSmsPrebuiltTemplateDialog>
-					<Button variant='outline' size='lg' className='min-w-[212px]'>
+					<Button className='min-w-[212px]' size='lg' variant='outline'>
 						Prebuilt Templates
 					</Button>
 				</CreateSmsPrebuiltTemplateDialog>
@@ -42,12 +41,12 @@ const CreateSmsTemplateDialogContent = () => {
 				</div>
 
 				<Button
-					variant='outline'
-					size='lg'
-					className='min-w-[212px]'
 					as='link'
+					className='min-w-[212px]'
+					size='lg'
+					state={{ from: pathname }}
 					to='new-template'
-					state={{ from: pathname }}>
+					variant='outline'>
 					Create Template
 				</Button>
 			</div>

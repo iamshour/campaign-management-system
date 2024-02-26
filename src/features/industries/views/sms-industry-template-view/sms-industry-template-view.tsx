@@ -1,16 +1,16 @@
 //#region Import
 import type { SmsIndustryTemplateType } from "@/features/industries/types"
+
 import SmsTemplatePreview from "@/features/templates/sms-templates/components/sms-template-preview"
 import PreviewTemplateCardDialog from "@/features/templates/sms-templates/dialogs/preview-template-card-dialog/preview-template-card-dialog"
 import { Button } from "@/ui"
 import SectionHeading from "@/ui/section-heading/section-heading"
-
 import MaterialSymbolsImagesmodeRounded from "~icons/material-symbols/imagesmode-rounded"
 //#endregion
 
 type SmsIndustryTemplateViewProps = Pick<
 	SmsIndustryTemplateType,
-	"name" | "type" | "language" | "body" | "backgroundImage" | "industryName"
+	"backgroundImage" | "body" | "industryName" | "language" | "name" | "type"
 >
 
 const SmsIndustryTemplateView = ({ backgroundImage, ...smsTemplate }: SmsIndustryTemplateViewProps) => {
@@ -22,21 +22,21 @@ const SmsIndustryTemplateView = ({ backgroundImage, ...smsTemplate }: SmsIndustr
 			<SmsTemplatePreview {...smsTemplate}>
 				<div>
 					<SectionHeading
+						className='relative -start-10 mb-4'
 						icon={MaterialSymbolsImagesmodeRounded}
 						label='Template Background'
-						className='relative -start-10 mb-4'
 					/>
 
 					{!!previewBackground && (
 						<img
-							src={previewBackground}
 							alt='backgroung image'
 							className='h-[200px] w-[377px] rounded-lg border border-[#054060] object-cover'
+							src={previewBackground}
 						/>
 					)}
 
 					<PreviewTemplateCardDialog {...smsTemplate} backgroundImage={previewBackground}>
-						<Button variant='link' type='button' className='p-0'>
+						<Button className='p-0' type='button' variant='link'>
 							Preview Card
 						</Button>
 					</PreviewTemplateCardDialog>

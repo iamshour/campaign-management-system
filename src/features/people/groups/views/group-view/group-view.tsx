@@ -1,22 +1,24 @@
 //#region Import
+import type { SharedListViewProps } from "@/core/types"
+import type { Contact } from "@/features/people/contacts/types"
+
+import DataGrid from "@/core/components/data-grid/data-grid"
+import { ColumnType } from "@/core/components/data-grid/types"
+import useDispatch from "@/core/hooks/useDispatch"
+import { resetAdvancedTableState } from "@/core/slices/data-grid-slice/data-grid-slice"
+import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
+import ViewContactDialog from "@/features/people/contacts/dialogs/view-contact-dialog/view-contact-dialog"
 import { lazy, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import DataGrid from "@/core/components/data-grid"
-import useDispatch from "@/core/hooks/useDispatch"
-import { resetAdvancedTableState } from "@/core/slices/data-grid-slice/data-grid-slice"
-import type { SharedListViewProps } from "@/core/types"
-import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
-import ViewContactDialog from "@/features/people/contacts/dialogs/view-contact-dialog"
-import type { Contact } from "@/features/people/contacts/types"
-import type { ColumnType } from "@/ui"
-
 const GroupViewTableActions = lazy(() => import("./group-view-table-actions"))
+
 const GroupViewTopbar = lazy(() => import("./group-view-topbar/group-view-topbar"))
+
 const GroupViewFiltersContent = lazy(() => import("./group-view-filters-content"))
 //#endregion
 
-const GroupView = ({ count, ...tableProps }: SharedListViewProps<Contact>) => {
+const GroupView = (props: SharedListViewProps<Contact>) => {
 	const dispatch = useDispatch()
 
 	const { t } = useTranslation("contacts")
@@ -32,7 +34,7 @@ const GroupView = ({ count, ...tableProps }: SharedListViewProps<Contact>) => {
 
 	return (
 		<>
-			<DataGrid dataGridKey='contacts-in-group' count={count}>
+			<DataGrid columns={tableColumns} dataGridKey='contacts-in-group' {...props}>
 				<DataGrid.FiltersBar>
 					<DataGrid.FiltersBar.Header />
 					<DataGrid.FiltersBar.Content>
@@ -46,7 +48,7 @@ const GroupView = ({ count, ...tableProps }: SharedListViewProps<Contact>) => {
 						<GroupViewTopbar />
 					</DataGrid.TopBar>
 
-					<DataGrid.Body columns={tableColumns} onRowClick={({ id }) => setViewContactId(id)} {...tableProps} />
+					<DataGrid.Body onRowClick={({ id }) => setViewContactId(id)} />
 					<DataGrid.Pagination>
 						<DataGrid.Pagination.Message />
 					</DataGrid.Pagination>
@@ -55,9 +57,9 @@ const GroupView = ({ count, ...tableProps }: SharedListViewProps<Contact>) => {
 
 			<ViewContactDialog
 				id={viewContactId}
+				onOpenChange={(open) => !open && setViewContactId(undefined)}
 				open={!!viewContactId?.length}
 				title={t("dialogs.view-contact.title")}
-				onOpenChange={(open) => !open && setViewContactId(undefined)}
 			/>
 		</>
 	)

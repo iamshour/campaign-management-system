@@ -1,29 +1,34 @@
 //#region Import
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { SharedListViewProps } from "@/core/types"
+import type { Contact } from "@/features/people/contacts/types"
+
+import DataGrid from "@/core/components/data-grid/data-grid"
+import appPaths from "@/core/constants/app-paths"
+import useDispatch from "@/core/hooks/useDispatch"
+import useSelector from "@/core/hooks/useSelector"
+import {
+	clearSelection,
+	resetAdvancedTableState,
+	updateDataGridState,
+} from "@/core/slices/data-grid-slice/data-grid-slice"
+import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
+import { Button, Footer } from "@/ui"
+import { cleanObject } from "@/utils"
 import { lazy } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useNavigate, useParams } from "react-router-dom"
 
-import DataGrid from "@/core/components/data-grid"
-import appPaths from "@/core/constants/app-paths"
-import useDispatch from "@/core/hooks/useDispatch"
-import useSelector from "@/core/hooks/useSelector"
-import { clearSelection, resetAdvancedTableState, updateSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import type { SharedListViewProps } from "@/core/types"
-import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
-import type { Contact } from "@/features/people/contacts/types"
-import { getContactFilterAndContactSearchFilter } from "@/features/people/contacts/utils"
-import { Button, Footer } from "@/ui"
-import { cleanObject } from "@/utils"
-
-import { useAddContactsToGroupMutation } from "../api"
 import type { AddContactsToGroupBody } from "../types"
+
+import { getContactFilter, getContactSearchFilter } from "../../contacts/utils"
+import { useAddContactsToGroupMutation } from "../api"
 
 const ContactsFiltersContent = lazy(() => import("@/features/people/contacts/components/contacts-filters-content"))
 //#endregion
 
-const AddContactsToGroupView = ({ count, ...tableProps }: SharedListViewProps<Contact>) => {
+const AddContactsToGroupView = (props: SharedListViewProps<Contact>) => {
 	const { t } = useTranslation("groups", { keyPrefix: "views.addToGroup" })
 
 	const { id: groupId } = useParams()
@@ -31,9 +36,10 @@ const AddContactsToGroupView = ({ count, ...tableProps }: SharedListViewProps<Co
 	const [triggerAddContactsToGroup, { isLoading }] = useAddContactsToGroupMutation()
 
 	const dispatch = useDispatch()
+
 	const navigate = useNavigate()
 
-	const { selection, filters, searchTerm } = useSelector<DataGridState<"add-contacts-to-group">>(
+	const { filters, searchTerm, selection } = useSelector<DataGridState<"add-contacts-to-group">>(
 		({ dataGrid }) => dataGrid["add-contacts-to-group"]
 	)
 
@@ -46,27 +52,26 @@ const AddContactsToGroupView = ({ count, ...tableProps }: SharedListViewProps<Co
 		const contactsIds = !!selection && selection !== "ALL" ? selection : undefined
 
 		const body: AddContactsToGroupBody = {
+			contactFilter: getContactFilter(filters),
 			contactGroupsIds: [groupId!],
+			contactSearchFilter: getContactSearchFilter(searchTerm),
 			contactsIds,
-			...getContactFilterAndContactSearchFilter(filters, searchTerm),
 		}
 
-		// Cleaning Body from all undefined values, empty objects, and nested objects with undefined values
+		// Cleaning Body from all undefined/empty/nullish objects/nested objects
 		const cleanBody = cleanObject(body)
 
-		await triggerAddContactsToGroup(cleanBody)
-			.unwrap()
-			.then(() => {
-				// Clearing Selection list if contacts were selected using their Ids
-				if (cleanBody?.contactsIds?.length) dispatch(clearSelection("add-contacts-to-group"))
+		await triggerAddContactsToGroup(cleanBody).unwrap()
 
-				toast.success(t("successMessage", { count: contactsIds?.length ?? 2 }))
-				onBack()
-			})
+		// Clearing Selection list if contacts were selected using their Ids
+		if (cleanBody?.contactsIds?.length) dispatch(clearSelection("add-contacts-to-group"))
+
+		toast.success(t("successMessage", { count: contactsIds?.length ?? 2 }))
+		onBack()
 	}
 
 	return (
-		<DataGrid dataGridKey='add-contacts-to-group' count={count}>
+		<DataGrid columns={contactsTableColumns} dataGridKey='add-contacts-to-group' {...props}>
 			<DataGrid.FiltersBar>
 				<DataGrid.FiltersBar.Header />
 				<DataGrid.FiltersBar.Content>
@@ -80,21 +85,19 @@ const AddContactsToGroupView = ({ count, ...tableProps }: SharedListViewProps<Co
 
 				<DataGrid.TopBar />
 				<DataGrid.Body
-					columns={contactsTableColumns}
-					onRowClick={({ id }) => dispatch(updateSelection({ "add-contacts-to-group": id }))}
 					classNames={{ wrapper: "px-4" }}
-					{...tableProps}
+					onRowClick={({ id }) => dispatch(updateDataGridState({ "add-contacts-to-group": { selection: id } }))}
 				/>
 				<DataGrid.Pagination>
 					<DataGrid.Pagination.Message />
 				</DataGrid.Pagination>
 
 				<Footer className='p-4'>
-					<Button variant='outline' onClick={onBack}>
+					<Button onClick={onBack} variant='outline'>
 						{t("actions.cancel")}
 					</Button>
 
-					<Button onClick={onAdd} disabled={!selection} loading={isLoading}>
+					<Button disabled={!selection} loading={isLoading} onClick={onAdd}>
 						{t("actions.submit")}
 					</Button>
 				</Footer>

@@ -18,8 +18,18 @@
 				"next-page": "Go to next page",
 				"last-page": "Go to last page"
 			},
-			"message": "Page {{currentPage, number}} of {{totalPages, number}}",
-			"limit-selectbar": "Entries per page"
+			"pageCounter": "Page {{currentPage}} of {{totalPages}}",
+			"limit-selectbar": "Entries per page",
+
+			"messages": {
+				"totalEntries": "Total Entries",
+				"selectedPerPage": "Selected per page",
+				"totalSelected": "Total selected",
+				"selectAllAction": "Select everything?",
+				"clearAllAction": "Clear all?",
+				"selectEverythingTooltip": "Do you want to select all entries from all pages? ({{count}})",
+				"clearEverythingTooltip": "Do you want to clear all selected entries from all pages?"
+			}
 		}
 	},
 	"prompt-input": {

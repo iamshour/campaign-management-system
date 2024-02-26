@@ -1,25 +1,24 @@
 //#region Import
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
-
 import { useDeleteContactsMutation } from "@/features/people/contacts/api"
 import { Button, Footer } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 //#endregion
 
 export interface DeleteContactsDialogContent {
 	/**
-	 * Contact Id for the contact we want to delete
-	 */
-	id: string
-
-	/**
 	 * Callback function used to close the dialog
 	 */
 	closeDialog: () => void
+
+	/**
+	 * Contact Id for the contact we want to delete
+	 */
+	id: string
 }
 
-const DeleteContactsDialogContent = ({ id, closeDialog }: DeleteContactsDialogContent) => {
+const DeleteContactsDialogContent = ({ closeDialog, id }: DeleteContactsDialogContent) => {
 	const { t } = useTranslation("contacts", { keyPrefix: "dialogs.deleteContacts" })
 
 	const { closeDropdown } = useDropdownStateContext()
@@ -40,7 +39,7 @@ const DeleteContactsDialogContent = ({ id, closeDialog }: DeleteContactsDialogCo
 			<p className='w-full overflow-x-auto text-base'>{t("message", { count: 1 })}</p>
 
 			<Footer>
-				<Button type='submit' loading={isLoading} className='px-10' onClick={onSubmit}>
+				<Button className='px-10' loading={isLoading} onClick={onSubmit} type='submit'>
 					{t("actions.submit")}
 				</Button>
 			</Footer>

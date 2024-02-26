@@ -1,10 +1,10 @@
 //#region Import
-import { useTranslation } from "react-i18next"
-import { v4 as newId } from "uuid"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 
 import useSelector from "@/core/hooks/useSelector"
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { Tooltip } from "@/ui"
+import { useTranslation } from "react-i18next"
+import { v4 as newId } from "uuid"
 //#endregion
 
 /**
@@ -14,7 +14,9 @@ const ContactsViewFiltersPreview = () => {
 	const { t } = useTranslation("contacts")
 
 	const { filters } = useSelector<DataGridState<"contacts">>(({ dataGrid }) => dataGrid["contacts"])
+
 	const appliedSegment = filters?.advancedFilters?.segment?.label
+
 	const appliedConditions = filters?.advancedFilters?.conditions
 
 	return (
@@ -46,11 +48,11 @@ const ContactsViewFiltersPreview = () => {
 			{/* TODO: handle rule text on filters bar close (add animation + remove flex wrap for rule sentence) */}
 			<div>
 				{appliedConditions?.map((condition) => (
-					<div key={newId()} className='my-3 w-full whitespace-nowrap rounded-lg bg-white px-3 py-2'>
+					<div className='my-3 w-full whitespace-nowrap rounded-lg bg-white px-3 py-2' key={newId()}>
 						{condition.rules.map((rule) => (
 							<div
-								key={newId()}
-								className=' my-3 flex w-full flex-row flex-wrap break-all rounded-lg bg-[#edf3f7] px-3 py-2'>
+								className=' my-3 flex w-full flex-row flex-wrap break-all rounded-lg bg-[#edf3f7] px-3 py-2'
+								key={newId()}>
 								<span className='pe-2 text-[#2DAEF5]'>{rule.attribute}</span>
 								<span className='pe-2'>{rule.condition}</span>
 								<span className='text-[#2DAEF5]'>

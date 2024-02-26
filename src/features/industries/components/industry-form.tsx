@@ -1,26 +1,26 @@
 //#region Import
-import { zodResolver } from "@hookform/resolvers/zod"
+import type { AddNewIndustryBody, IndustryType } from "@/features/industries/types"
 
 import industriesIconsMap from "@/features/industries/constants/industries-icons-map"
-import type { AddNewIndustryBody, IndustryType } from "@/features/industries/types"
-import { useForm, Footer, Form, Input, Select, Button, ColorInput } from "@/ui"
+import { Button, ColorInput, Footer, Form, Input, Select, useForm } from "@/ui"
 import { cleanObject } from "@/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import type { IndustrySchemaType } from "../schemas/industry-schema"
-import IndustrySchema from "../schemas/industry-schema"
 
+import IndustrySchema from "../schemas/industry-schema"
 import IndustryIcon from "./industry-icon"
 //#endregion
 
 interface IndustryFormProps {
-	onSubmit: (data: AddNewIndustryBody) => void
-
 	children: React.ReactNode
 
-	defaultValues?: Pick<IndustryType, "name" | "description" | "icon" | "color">
+	defaultValues?: Pick<IndustryType, "color" | "description" | "icon" | "name">
+
+	onSubmit: (data: AddNewIndustryBody) => void
 }
 
-const IndustryForm = ({ children, onSubmit, defaultValues }: IndustryFormProps) => {
+const IndustryForm = ({ children, defaultValues, onSubmit }: IndustryFormProps) => {
 	const form = useForm<IndustrySchemaType>({
 		resolver: zodResolver(IndustrySchema),
 		values: defaultValues,
@@ -39,8 +39,8 @@ const IndustryForm = ({ children, onSubmit, defaultValues }: IndustryFormProps) 
 	return (
 		<Form {...form}>
 			<form
-				onSubmit={form.handleSubmit(onFormSubmit)}
-				className='flex h-full w-full flex-col justify-between overflow-y-auto '>
+				className='flex h-full w-full flex-col justify-between overflow-y-auto '
+				onSubmit={form.handleSubmit(onFormSubmit)}>
 				<div className='flex h-full w-full flex-col gap-y-6 overflow-y-auto p-2 pb-2'>
 					{form?.formState?.errors?.root?.type === "required" && (
 						<Form.Message className='ps-4'>{form?.formState?.errors?.root?.message}</Form.Message>
@@ -53,7 +53,7 @@ const IndustryForm = ({ children, onSubmit, defaultValues }: IndustryFormProps) 
 							<Form.Item>
 								<Form.Label>Industry Name *</Form.Label>
 								<Form.Control>
-									<Input size='lg' placeholder='Enter name' {...field} />
+									<Input placeholder='Enter name' size='lg' {...field} />
 								</Form.Control>
 								<Form.Message />
 							</Form.Item>
@@ -67,7 +67,7 @@ const IndustryForm = ({ children, onSubmit, defaultValues }: IndustryFormProps) 
 							<Form.Item>
 								<Form.Label>Industry Description *</Form.Label>
 								<Form.Control>
-									<Input size='lg' placeholder='Enter description' {...field} />
+									<Input placeholder='Enter description' size='lg' {...field} />
 								</Form.Control>
 								<Form.Message />
 							</Form.Item>
@@ -83,20 +83,20 @@ const IndustryForm = ({ children, onSubmit, defaultValues }: IndustryFormProps) 
 									<Form.Label>Icon *</Form.Label>
 									<Form.Control>
 										<Select value={field.value}>
-											<Select.Trigger size='lg' className='w-full text-base' hasValue={!!field.value?.length}>
+											<Select.Trigger className='w-full text-base' hasValue={!!field.value?.length} size='lg'>
 												<Select.Value placeholder='Select type'>
-													{!!field.value?.length && <IndustryIcon icon={field.value} className='h-[26px] w-[26px]' />}
+													{!!field.value?.length && <IndustryIcon className='h-[26px] w-[26px]' icon={field.value} />}
 												</Select.Value>
 											</Select.Trigger>
 
 											<Select.Content className='flex max-w-[340px] flex-row flex-wrap justify-between gap-1'>
 												{Object.entries(industriesIconsMap).map(([iconName, Icon]) => (
 													<Button
+														className='cursor-pointer rounded-lg border border-transparent p-1 hover:border-primary-300 hover:bg-primary-100/50'
 														key={iconName}
-														variant='ghost'
-														type='button'
 														onClick={() => field.onChange(iconName)}
-														className='cursor-pointer rounded-lg border border-transparent p-1 hover:border-primary-300 hover:bg-primary-100/50'>
+														type='button'
+														variant='ghost'>
 														<Icon className='h-[26px] w-[26px]' />
 													</Button>
 												))}
@@ -114,7 +114,7 @@ const IndustryForm = ({ children, onSubmit, defaultValues }: IndustryFormProps) 
 								<Form.Item>
 									<Form.Label>Icon Color *</Form.Label>
 									<Form.Control>
-										<ColorInput {...field} value={field.value} onChange={(e) => field.onChange(e.target.value)} />
+										<ColorInput {...field} onChange={(e) => field.onChange(e.target.value)} value={field.value} />
 									</Form.Control>
 									<Form.Message />
 								</Form.Item>

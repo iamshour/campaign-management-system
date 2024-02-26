@@ -1,10 +1,9 @@
 //#region Import
+import RadixIconsGlobe from "~icons/radix-icons/globe"
 import flags from "react-phone-number-input/flags"
 import { twMerge } from "tailwind-merge"
 
 import type { CountryOption } from "../select-country-popover/select-country-popover"
-
-import RadixIconsGlobe from "~icons/radix-icons/globe"
 //#endregion
 
 type FlagIconProps = CountryOption & React.SVGProps<SVGSVGElement>
@@ -26,7 +25,7 @@ const FlagIcon = ({ className, ...props }: FlagIconProps) => {
 
 	if (!Component) return <RadixIconsGlobe className={twMerge("h-5 w-5 shrink-0", className)} />
 
-	return <Component {...props} title={props.label} className={twMerge("h-5 w-5 shrink-0", className)} />
+	return <Component {...props} className={twMerge("h-5 w-5 shrink-0", className)} title={props.label} />
 }
 
 export default FlagIcon

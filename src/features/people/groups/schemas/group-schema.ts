@@ -1,8 +1,8 @@
+import { REGEX_NAME_FIELDS } from "@/core/constants/regex"
 import * as z from "zod"
 
-import { REGEX_NAME_FIELDS } from "@/core/constants/regex"
-
 const GroupSchema = z.object({
+	groupDescription: z.string().max(100, { message: "Maximum 100 characters allowed" }).optional(),
 	groupName: z
 		.string()
 		.min(1, { message: "Required" })
@@ -10,7 +10,6 @@ const GroupSchema = z.object({
 		.refine((val) => REGEX_NAME_FIELDS.test(val), {
 			message: "Name can include letters, numbers and characters #@_`/&~",
 		}),
-	groupDescription: z.string().max(100, { message: "Maximum 100 characters allowed" }).optional(),
 })
 
 export default GroupSchema

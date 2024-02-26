@@ -1,10 +1,10 @@
 //#region Import
-import toast from "react-hot-toast"
+import type { AddNewIndustryBody } from "@/features/industries/types"
 
 import { useAddNewIndustryMutation } from "@/features/industries/api"
 import IndustryForm from "@/features/industries/components/industry-form"
-import type { AddNewIndustryBody } from "@/features/industries/types"
 import { Button } from "@/ui"
+import toast from "react-hot-toast"
 //#endregion
 
 interface CreateIndustryDialogContentProps {
@@ -32,7 +32,7 @@ const CreateIndustryDialogContent = ({ closeDialog }: CreateIndustryDialogConten
 
 	return (
 		<IndustryForm onSubmit={onSubmit}>
-			<Button type='submit' loading={isLoading} disabled={isLoading} className='px-12'>
+			<Button className='px-12' disabled={isLoading} loading={isLoading} type='submit'>
 				Add
 			</Button>
 		</IndustryForm>

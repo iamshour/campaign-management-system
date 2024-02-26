@@ -6,9 +6,11 @@
  */
 function downloadFile(fileName: string, data: Blob | MediaSource): void {
 	const downloadLink = document.createElement("a")
+
 	downloadLink.download = fileName
 
 	const url = URL.createObjectURL(data)
+
 	downloadLink.href = url
 
 	// Append the download link to the document body for cross-browser compatibility
@@ -22,4 +24,5 @@ function downloadFile(fileName: string, data: Blob | MediaSource): void {
 	// Removes the download link from the document body
 	document.body.removeChild(downloadLink)
 }
+
 export default downloadFile

@@ -1,6 +1,7 @@
-import { Outlet } from "react-router-dom"
-
+//#region Import
 import { NavTabs } from "@/ui"
+import { Outlet } from "react-router-dom"
+//#endregion
 
 const SmsIndustryRoutesLayout = () => (
 	<div className='flex h-full w-full flex-col'>

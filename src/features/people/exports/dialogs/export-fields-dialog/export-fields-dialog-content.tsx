@@ -1,40 +1,40 @@
 //#region Import
+import type { DataGridFilterType, DataGridKey } from "@/core/slices/data-grid-slice/types"
+import type { SubmitExportsFileBody } from "@/features/people/exports/types"
+
+import appPaths from "@/core/constants/app-paths"
+import useDispatch from "@/core/hooks/useDispatch"
+import useSelector from "@/core/hooks/useSelector"
+import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
+import { getContactAdvancedFilter, getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
+import { useSubmitExportsFileMutation } from "@/features/people/exports/api"
+import exportsFieldsOptions from "@/features/people/exports/constants/exports-fields-options"
+import exportSchema, { type ExportSchemaType } from "@/features/people/exports/schemas/export-schema"
+import { getDefaultExportsFileName } from "@/features/people/exports/utils"
+import { Button, Checkbox, Footer, Form, Input, useForm } from "@/ui"
+import { cleanObject, omit } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMemo } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
-
-import appPaths from "@/core/constants/app-paths"
-import useDispatch from "@/core/hooks/useDispatch"
-import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
-import type { FiltersFieldMappingType, DataGridKey } from "@/core/slices/data-grid-slice/types"
-import { getContactFilterAndContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
-import { useSubmitExportsFileMutation } from "@/features/people/exports/api"
-import exportFields from "@/features/people/exports/constants/export-fields"
-import exportSchema, { type ExportSchemaType } from "@/features/people/exports/schemas/export-schema"
-import type { SubmitExportsFileBody } from "@/features/people/exports/types"
-import { getDefaultExportsFileName } from "@/features/people/exports/utils"
-import { useForm, Button, Checkbox, Footer, Form, Input } from "@/ui"
-import { cleanObject } from "@/utils"
 //#endregion
 
-export type ExportsType = Extract<DataGridKey, "contacts" | "contacts-in-group" | "segments">
+export type ExportsType = Extract<DataGridKey, "contacts-in-group" | "contacts" | "segments">
 
 const companyName = import.meta.env.VITE_APP_PREFIX
 
 export interface ExportFieldsDialogContentProps {
 	/**
-	 * Callback function used to close the dialog
-	 */
-	onClose: () => void
-
-	/**
 	 * Type of entries to be exported. This prop is mainly used to identify whether we're exporting contacts or segments
 	 */
 	exportsType: ExportsType
+
+	/**
+	 * Callback function used to close the dialog
+	 */
+	onClose: () => void
 }
 
 const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogContentProps) => {
@@ -42,23 +42,25 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 
 	const dispatch = useDispatch()
 
-	const { selection, filters, searchTerm } = useSelector(({ dataGrid }) => dataGrid[exportsType as ExportsType])
+	const { filters, searchTerm, selection } = useSelector(({ dataGrid }) => dataGrid[exportsType as ExportsType])
 
 	const defaultFileName = getDefaultExportsFileName(companyName, exportsType === "segments" ? "segments" : "contacts")
 
 	const form = useForm<ExportSchemaType>({
-		resolver: zodResolver(exportSchema),
 		defaultValues: {
-			fileName: defaultFileName,
 			exportedFields: [],
+			fileName: defaultFileName,
 		},
 		mode: "onSubmit",
+		resolver: zodResolver(exportSchema),
 	})
 
 	const [submitExport, { isLoading }] = useSubmitExportsFileMutation()
 
 	const selectedFields = form.watch("exportedFields")
-	const allFields = useMemo(() => exportFields?.map(({ value }) => value), [])
+
+	const allFields = useMemo(() => exportsFieldsOptions?.map(({ value }) => value), [])
+
 	const isAllSelected = useMemo(
 		() => !!selectedFields?.length && selectedFields?.length === allFields?.length,
 		[selectedFields, allFields]
@@ -72,49 +74,50 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 
 		// using Set to prevent having same entries
 		const allSelection = new Set([...selectedFields, ...allFields])
+
 		return form.setValue("exportedFields", [...allSelection])
 	}
 
-	const onSubmit = async ({ fileName, exportedFields }: ExportSchemaType) => {
+	const onSubmit = async ({ exportedFields, fileName }: ExportSchemaType) => {
 		let body: SubmitExportsFileBody = {
-			fileName,
 			contactsIds: !!selection && selection !== "ALL" ? selection : undefined,
 			exportedFields,
+			fileName,
 		}
 
 		if (exportsType === "contacts") {
 			// Statically inferring type of Filters to Its Origin -- Contacts Filters used only in Contacts Table, In order to find advancedFilters without TS erros
 			const contactAdvancedFilter = getContactAdvancedFilter(
-				(filters as FiltersFieldMappingType["contacts"])?.advancedFilters
+				(filters as DataGridFilterType["contacts"])?.advancedFilters
 			)
 
-			body = { ...body, ...contactAdvancedFilter }
+			body = { ...body, contactAdvancedFilter }
 		}
 
 		if (exportsType !== "segments") {
-			const contactFilterAndContactSearchFilter = getContactFilterAndContactSearchFilter(filters, searchTerm)
-
-			body = { ...body, ...contactFilterAndContactSearchFilter }
+			body = {
+				...body,
+				contactFilter: getContactFilter(omit(filters as DataGridFilterType["contacts"], "advancedFilters")),
+				contactSearchFilter: getContactSearchFilter(searchTerm),
+			}
 		}
 
-		// Cleaning Body from all undefined values, empty objects, and nested objects with undefined values
+		// Cleaning Body from all undefined/empty/nullish objects/nested objects
 		const cleanBody = cleanObject(body)
 
-		await submitExport(cleanBody)
-			.unwrap()
-			.then(() => {
-				// Clearing Selection list if contacts were selected using their Ids
-				if (cleanBody?.contactsIds) dispatch(clearSelection(exportsType as DataGridKey))
+		await submitExport(cleanBody).unwrap()
 
-				toast.success(({ id }) => <SuccessToast id={id} />)
-				form.reset()
-				onClose()
-			})
+		// Clearing Selection list if contacts were selected using their Ids
+		if (cleanBody?.contactsIds) dispatch(clearSelection(exportsType as DataGridKey))
+
+		toast.success(({ id }) => <SuccessToast id={id} />)
+		form.reset()
+		onClose()
 	}
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-6 overflow-hidden p-2'>
+			<form className='flex flex-col gap-6 overflow-hidden p-2' onSubmit={form.handleSubmit(onSubmit)}>
 				<Form.Field
 					control={form.control}
 					name='fileName'
@@ -136,7 +139,7 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 						<Form.Item className='flex flex-col overflow-hidden'>
 							<div className='mb-2 flex w-full items-end justify-between'>
 								<Form.Label className='pb-0'>{t("dialogs.exportFields.fields.selectExportFields.label")}</Form.Label>
-								<Button type='button' variant='text' size='sm' className='-mb-1 h-max p-0 pe-2' onClick={onSelectAll}>
+								<Button className='-mb-1 h-max p-0 pe-2' onClick={onSelectAll} size='sm' type='button' variant='text'>
 									{isAllSelected
 										? t("dialogs.exportFields.buttons.clearAll")
 										: t("dialogs.exportFields.buttons.selectAll")}
@@ -144,13 +147,13 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 							</div>
 
 							<div className='space-y-3 overflow-y-auto rounded-xl bg-[#f7f7f7] p-4'>
-								{exportFields.map(({ value, label }, idx) => (
+								{exportsFieldsOptions.map(({ label, value }, idx) => (
 									<Form.Field
-										key={`${value}-${idx}`}
 										control={form.control}
+										key={`${value}-${idx}`}
 										name='exportedFields'
 										render={({ field }) => (
-											<Form.Item key={`${value}-${idx}`} className='flex flex-row items-center space-x-3 space-y-0'>
+											<Form.Item className='flex flex-row items-center space-x-3 space-y-0' key={`${value}-${idx}`}>
 												<Form.Control>
 													<Checkbox
 														checked={field.value?.includes(value)}
@@ -180,7 +183,7 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 				/>
 
 				<Footer>
-					<Button type='submit' className='px-10' loading={isLoading}>
+					<Button className='px-10' loading={isLoading} type='submit'>
 						{t("dialogs.exportFields.buttons.submit")}
 					</Button>
 				</Footer>
@@ -197,7 +200,7 @@ const SuccessToast = ({ id }: { id: string }) => {
 	return (
 		<div>
 			<span className='me-1.5 text-sm font-medium'>{t("success_1")}</span>
-			<Link className='text-sm text-primary-700 underline' to={appPaths.EXPORTS} onClick={() => toast.dismiss(id)}>
+			<Link className='text-sm text-primary-700 underline' onClick={() => toast.dismiss(id)} to={appPaths.EXPORTS}>
 				{t("success_2")}
 			</Link>
 		</div>

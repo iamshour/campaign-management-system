@@ -1,12 +1,12 @@
 //#region Import
 import type { DialogProps } from "@radix-ui/react-dialog"
-import { Command as CommandPrimitive, CommandLoading } from "cmdk"
+
+import TablerSearch from "~icons/tabler/search"
+import { CommandLoading, Command as CommandPrimitive } from "cmdk"
 import { forwardRef } from "react"
 import { twMerge } from "tailwind-merge"
 
 import Dialog from "../dialog/dialog"
-
-import TablerSearch from "~icons/tabler/search"
 //#endregion
 
 /**
@@ -31,7 +31,10 @@ const Command = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof 
 const CommandDialog = ({ children, ...props }: DialogProps) => (
 	<Dialog {...props}>
 		<Dialog.Content className='overflow-hidden p-0 shadow-lg'>
-			<Command className='[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-slate-500 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5'>
+			<Command
+				className={`[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-slate-500 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 
+			[&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 
+			[&_[cmdk-item]_svg]:w-5`}>
 				{children}
 			</Command>
 		</Dialog.Content>
@@ -41,12 +44,13 @@ const CommandDialog = ({ children, ...props }: DialogProps) => (
 const CommandInput = forwardRef<
 	React.ElementRef<typeof CommandPrimitive.Input>,
 	React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
->(({ className, children, ...props }, ref) => (
-	<div ref={ref} className='group relative flex h-max w-full items-center'>
+>(({ children, className, ...props }, ref) => (
+	<div className='group relative flex h-max w-full items-center' ref={ref}>
 		<TablerSearch className='pointer-events-none absolute inset-y-1/2 start-3 h-4 w-4 shrink-0 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-primary-600' />
 		<CommandPrimitive.Input
 			className={twMerge(
-				"flex w-full flex-1 border-0 !border-b !border-b-gray-300 bg-transparent py-3 !ps-10 text-sm !outline-0 !ring-0 placeholder:text-gray-500 autofill:shadow-[0_0_0_30px_white_inset] disabled:cursor-not-allowed disabled:opacity-50",
+				`flex w-full flex-1 border-0 !border-b !border-b-gray-300 bg-transparent py-3 !ps-10 text-sm !outline-0 !ring-0 placeholder:text-gray-500 autofill:shadow-[0_0_0_30px_white_inset]
+				 disabled:cursor-not-allowed disabled:opacity-50`,
 				className
 			)}
 			{...props}
@@ -54,6 +58,7 @@ const CommandInput = forwardRef<
 		{children}
 	</div>
 ))
+
 CommandInput.displayName = "CommandInput"
 
 const CommandList = forwardRef<
@@ -61,11 +66,12 @@ const CommandList = forwardRef<
 	React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>
 >(({ className, ...props }, ref) => (
 	<CommandPrimitive.List
-		ref={ref}
 		className={twMerge("max-h-[250px] overflow-y-auto overflow-x-hidden", className)}
+		ref={ref}
 		{...props}
 	/>
 ))
+
 CommandList.displayName = "CommandList"
 
 const CommandEmpty = (props: React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>) => (
@@ -77,14 +83,16 @@ const CommandGroup = forwardRef<
 	React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>
 >(({ className, ...props }, ref) => (
 	<CommandPrimitive.Group
-		ref={ref}
 		className={twMerge(
-			"overflow-hidden p-1 text-slate-950 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-slate-500",
+			`overflow-hidden p-1 text-slate-950 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium
+			 [&_[cmdk-group-heading]]:text-slate-500`,
 			className
 		)}
+		ref={ref}
 		{...props}
 	/>
 ))
+
 CommandGroup.displayName = "CommandGroup"
 
 const CommandSeparator = ({
@@ -100,11 +108,12 @@ const CommandItem = ({
 	...props
 }: React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>) => (
 	<CommandPrimitive.Item
-		data-disabled={disabled}
 		className={twMerge(
-			"relative flex cursor-default select-none items-center rounded-md px-2 py-1.5 text-sm outline-none transition-all aria-selected:bg-slate-100 aria-selected:text-slate-900 data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
+			`relative flex cursor-default select-none items-center rounded-md px-2 py-1.5 text-sm outline-none transition-all aria-selected:bg-slate-100 aria-selected:text-slate-900
+			 data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50`,
 			className
 		)}
+		data-disabled={disabled}
 		{...props}
 	/>
 )

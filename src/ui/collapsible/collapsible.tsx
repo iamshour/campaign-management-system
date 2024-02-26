@@ -1,15 +1,14 @@
 //#region Import
 import {
+	type CollapsibleContentProps,
+	type CollapsibleProps,
+	type CollapsibleTriggerProps,
+	CollapsibleContent as Content,
 	Root,
 	CollapsibleTrigger as Trigger,
-	CollapsibleContent as Content,
-	type CollapsibleProps,
-	type CollapsibleContentProps,
-	type CollapsibleTriggerProps,
 } from "@radix-ui/react-collapsible"
-import { twMerge } from "tailwind-merge"
-
 import LucideChevronDown from "~icons/lucide/chevron-down"
+import { twMerge } from "tailwind-merge"
 //#endregion
 
 /**
@@ -38,8 +37,8 @@ const Collapsible = ({ className, ...props }: CollapsibleProps) => (
 )
 
 const CollapsibleTrigger = ({
-	className,
 	children,
+	className,
 	showArrow,
 	...props
 }: CollapsibleTriggerProps & { showArrow?: boolean }) => (
@@ -52,17 +51,17 @@ const CollapsibleTrigger = ({
 		)}>
 		{children}
 		{showArrow && (
-			<LucideChevronDown data-element='arrow' className='h-4 w-4 shrink-0 transition-transform duration-300' />
+			<LucideChevronDown className='h-4 w-4 shrink-0 transition-transform duration-300' data-element='arrow' />
 		)}
 	</Trigger>
 )
 
 const CollapsibleContent = ({
-	className,
 	children,
+	className,
 	orientation = "vertical",
 	...props
-}: CollapsibleContentProps & { orientation?: "vertical" | "horizontal" }) => (
+}: CollapsibleContentProps & { orientation?: "horizontal" | "vertical" }) => (
 	<Content
 		{...props}
 		className={twMerge(

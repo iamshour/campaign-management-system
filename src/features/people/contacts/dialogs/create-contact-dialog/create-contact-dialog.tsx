@@ -1,8 +1,7 @@
 //#region Import
+import { Dialog } from "@/ui"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
-
-import { Dialog } from "@/ui"
 
 const CreateContactDialogContent = lazy(() => import("./create-contact-dialog-content"))
 //#endregion
@@ -20,12 +19,12 @@ const CreateContactDialog = ({ children }: CreateContactDialogProps) => {
 	const [open, setOpen] = useState(false)
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 			<Dialog.Content
-				title={t("title")}
 				className='h-[813px] w-[382px] sm:h-[553px] sm:w-[746px]'
-				onInteractOutside={(e) => e.preventDefault()}>
+				onInteractOutside={(e) => e.preventDefault()}
+				title={t("title")}>
 				<CreateContactDialogContent onClose={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>

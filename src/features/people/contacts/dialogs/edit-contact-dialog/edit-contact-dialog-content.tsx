@@ -1,16 +1,16 @@
 //#region Import
-import { lazy } from "react"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
+import type { ContactSchemaType } from "@/features/people/contacts/schemas/contact-schema"
+import type { AddNewContactBody } from "@/features/people/contacts/types"
 
 import { useGetContactByIdQuery, useUpdateContactMutation } from "@/features/people/contacts/api"
 import ContactForm from "@/features/people/contacts/components/contact-form"
-import type { ContactSchemaType } from "@/features/people/contacts/schemas/contact-schema"
-import type { AddNewContactBody } from "@/features/people/contacts/types"
 import { addLeadingPlusToPhoneNumber } from "@/features/people/contacts/utils"
 import { Button, Skeleton, type UseFormReturn } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { cleanObject } from "@/utils"
+import { lazy } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
@@ -32,15 +32,15 @@ const EditContactDialogContent = ({ closeDialog, id }: EditContactDialogContentP
 
 	const { closeDropdown } = useDropdownStateContext()
 
-	const { values, isFetching, isFetchError } = useGetContactByIdQuery(id, {
+	const { isFetchError, isFetching, values } = useGetContactByIdQuery(id, {
 		selectFromResult: ({ data, isError, ...rest }) => ({
+			isFetchError: isError,
 			values: {
 				...data,
-				groups: data?.groups?.map(({ name, id }) => ({ label: name, value: id })),
+				groups: data?.groups?.map(({ id, name }) => ({ label: name, value: id })),
 				// If Phone number exists, add + prefix for compatability with the PhoneNumberInput Component
 				phoneNumber: addLeadingPlusToPhoneNumber(data?.phoneNumber),
 			},
-			isFetchError: isError,
 			...rest,
 		}),
 	})
@@ -67,11 +67,12 @@ const EditContactDialogContent = ({ closeDialog, id }: EditContactDialogContentP
 	}
 
 	if (isFetching) return <Skeleton className='h-full' />
+
 	if (isFetchError) return <DisplayError />
 
 	return (
-		<ContactForm onSubmit={onSubmit} defaultValues={cleanObject(values)}>
-			<Button type='submit' data-form='contact-form' loading={isUpdateLoading} disabled={isUpdateLoading}>
+		<ContactForm defaultValues={cleanObject(values)} onSubmit={onSubmit}>
+			<Button data-form='contact-form' disabled={isUpdateLoading} loading={isUpdateLoading} type='submit'>
 				{t("dialogs.editContact.buttons.save")}
 			</Button>
 		</ContactForm>

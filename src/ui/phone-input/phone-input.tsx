@@ -9,24 +9,24 @@ import SelectCountryPopover from "../select-country-popover/select-country-popov
 //#endregion
 
 interface PhoneInputProps extends React.ComponentPropsWithoutRef<typeof PhoneInputWithCountry> {
-	size?: React.ComponentPropsWithoutRef<typeof Input>["size"]
 	onChange: (val?: string) => void
+	size?: React.ComponentPropsWithoutRef<typeof Input>["size"]
 }
 
 const PhoneInput = forwardRef<React.ElementRef<typeof PhoneInputWithCountry>, PhoneInputProps>(
 	({ className, onChange, ...props }, ref) => (
 		<PhoneInputWithCountry
-			defaultCountry='US'
-			ref={ref}
-			international
-			withCountryCallingCode
-			flags={flags}
-			countrySelectComponent={(props) => (
-				<SelectCountryPopover withCountryCode withPlaceholder={false} className='w-max' size='lg' {...props} />
-			)}
 			className={twMerge("flex max-w-full gap-2", className)}
+			countrySelectComponent={(props) => (
+				<SelectCountryPopover className='w-max' size='lg' withCountryCode withPlaceholder={false} {...props} />
+			)}
+			defaultCountry='US'
+			flags={flags}
 			inputComponent={Input}
+			international
 			onChange={(val?: string) => onChange(val || undefined)}
+			ref={ref}
+			withCountryCallingCode
 			{...props}
 		/>
 	)

@@ -1,16 +1,17 @@
 //#region Import
-import { useLocation, useParams } from "react-router-dom"
+import type { SmsIndustryTemplateType } from "@/features/industries/types"
 
 import appPaths from "@/core/constants/app-paths"
-import type { SmsIndustryTemplateType } from "@/features/industries/types"
 import SmsTemplatePreview from "@/features/templates/sms-templates/components/sms-template-preview"
 import { Button, Footer } from "@/ui"
+import { useLocation, useParams } from "react-router-dom"
 //#endregion
 
 const SmsPrebuiltTemplateView = (
-	data: Pick<SmsIndustryTemplateType, "name" | "type" | "language" | "body" | "industryId">
+	data: Pick<SmsIndustryTemplateType, "body" | "industryId" | "language" | "name" | "type">
 ) => {
-	const { state, pathname } = useLocation()
+	const { pathname, state } = useLocation()
+
 	const { templateId } = useParams()
 
 	return (
@@ -21,17 +22,17 @@ const SmsPrebuiltTemplateView = (
 
 			<Footer className='mt-5'>
 				<Button
-					variant='outline'
-					className='px-10'
 					as='link'
-					to={state?.from || appPaths.SMS_TEMPLATES_PREBUILT_TEMPLATES}>
+					className='px-10'
+					to={state?.from || appPaths.SMS_TEMPLATES_PREBUILT_TEMPLATES}
+					variant='outline'>
 					Back
 				</Button>
 				<Button
-					className='px-10'
 					as='link'
-					to={`${appPaths.SMS_TEMPLATES_MY_TEMPLATES}/new-template?templateId=${templateId}&templateType=smsPrebuiltTemplate`}
-					state={{ from: pathname }}>
+					className='px-10'
+					state={{ from: pathname }}
+					to={`${appPaths.SMS_TEMPLATES_MY_TEMPLATES}/new-template?templateId=${templateId}&templateType=smsPrebuiltTemplate`}>
 					Use Template
 				</Button>
 			</Footer>

@@ -1,7 +1,6 @@
 //#region Import
-import { lazy } from "react"
-
 import { Dialog } from "@/ui"
+import { lazy } from "react"
 
 const DiscardTemplateChangesDialogContent = lazy(() => import("./discard-template-changes-dialog-content"))
 //#endregion
@@ -17,7 +16,7 @@ const DiscardTemplateChangesDialog = ({ children }: DiscardTemplateChangesDialog
 	<Dialog>
 		<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
-		<Dialog.Content title='Discard Changes' className='flex h-[220px] w-[390px] flex-col justify-between p-[30px]'>
+		<Dialog.Content className='flex h-[220px] w-[390px] flex-col justify-between p-[30px]' title='Discard Changes'>
 			<DiscardTemplateChangesDialogContent />
 		</Dialog.Content>
 	</Dialog>

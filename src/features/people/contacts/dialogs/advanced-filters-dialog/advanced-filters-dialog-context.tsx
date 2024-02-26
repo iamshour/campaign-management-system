@@ -1,12 +1,12 @@
 //#region Import
-import { createContext, useCallback, useContext, useLayoutEffect, useMemo, useState } from "react"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { SegmentConditionType } from "@/features/people/segments/types"
+import type { OptionType } from "@/ui"
 
 import useSelector from "@/core/hooks/useSelector"
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { emptySegmentCondition } from "@/features/people/segments/constants/preset-segments"
-import type { SegmentConditionType } from "@/features/people/segments/types"
 import { areConditionsEmpty } from "@/features/people/segments/utils"
-import type { OptionType } from "@/ui"
+import { createContext, useCallback, useContext, useLayoutEffect, useMemo, useState } from "react"
 
 import type { AdvancedFiltersDialogContextValue, AdvancedFiltersTab, SegmentSelectionRenderedView } from "./types"
 //#endregion
@@ -21,7 +21,9 @@ export const useAdvancedFiltersDialogContext = (): AdvancedFiltersDialogContextV
 
 const AdvancedFiltersDialogContext = ({ children }: { children: React.ReactNode }) => {
 	const { filters } = useSelector<DataGridState<"contacts">>(({ dataGrid }) => dataGrid["contacts"])
+
 	const persistedSegmentOption = filters?.advancedFilters?.segment
+
 	const persistedConditions = filters?.advancedFilters?.conditions
 
 	const persistedAdvancedFiltersTab: AdvancedFiltersTab = persistedSegmentOption?.value?.length
@@ -31,8 +33,11 @@ const AdvancedFiltersDialogContext = ({ children }: { children: React.ReactNode 
 	// Not re-using value in RTK directly since user may close - reopen
 	// So creating Clonned state in Context for both conditions & selectedSegment
 	const [conditions, setConditions] = useState<SegmentConditionType[]>(persistedConditions ?? [emptySegmentCondition])
+
 	const [selectedSegmentOption, setSelectedSegmentOption] = useState<OptionType | undefined>(persistedSegmentOption)
+
 	const [selectedTab, setSelectedTab] = useState<AdvancedFiltersTab>(persistedAdvancedFiltersTab)
+
 	const [segmentSelectionTabView, setSegmentSelectionTabView] =
 		useState<SegmentSelectionRenderedView>("viewSegmentConditions")
 
@@ -69,15 +74,15 @@ const AdvancedFiltersDialogContext = ({ children }: { children: React.ReactNode 
 	return (
 		<AdvancedFiltersDialogContextProvider.Provider
 			value={{
+				areContextConditionsEmpty,
+				clearConditions,
 				conditions,
+				onSegmentSelection,
+				onTabChange,
+				segmentSelectionTabView,
 				selectedSegmentOption,
 				selectedTab,
 				setConditions,
-				clearConditions,
-				onTabChange,
-				onSegmentSelection,
-				areContextConditionsEmpty,
-				segmentSelectionTabView,
 				setSegmentSelectionTabView,
 			}}>
 			{children}

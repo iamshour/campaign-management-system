@@ -66,13 +66,6 @@
 				"add-contact": "Add Contact"
 			}
 		},
-		"pagination": {
-			"initial-message": "{{selectionLength, number}} of {{totalLength, number}} entries selected",
-			"select-everything-prompt": "Do you want to select everything?",
-			"everything-already-selected-message": "All Contacts in the server are selected.",
-			"select-all-button": "Select All {{count}} Contacts",
-			"clear-all-button": "Clear all Selection?"
-		},
 		"rows": {
 			"tagsRows": {
 				"remainingTags": "1 more tag",

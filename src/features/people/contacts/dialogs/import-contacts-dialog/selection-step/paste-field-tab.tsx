@@ -13,12 +13,12 @@ const PasteFieldTab = () => {
 	return (
 		<div className='h-full w-full rounded-xl bg-white p-4'>
 			<Textarea
-				name='pasteField'
-				value={pastedContent || ""}
-				onChange={(e) => updateData({ pastedContent: e.target.value })}
 				className='h-full w-full resize-none'
+				name='pasteField'
+				onChange={(e) => updateData({ pastedContent: e.target.value })}
 				placeholder='Paste your fields here...'
 				spellCheck={false}
+				value={pastedContent || ""}
 			/>
 		</div>
 	)

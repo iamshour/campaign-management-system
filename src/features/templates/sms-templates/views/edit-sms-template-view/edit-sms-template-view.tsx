@@ -1,15 +1,15 @@
 //#region Import
-import { useState } from "react"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
-import { useNavigate, useParams } from "react-router-dom"
+import type { SmsTemplateSchemaType } from "@/features/templates/sms-templates/schemas/sms-template-schema"
+import type { AddNewSmsTemplateBody, SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
 
 import appPaths from "@/core/constants/app-paths"
 import { useUpdateSmsTemplateMutation } from "@/features/templates/sms-templates/api"
 import SmsTemplateBuilder from "@/features/templates/sms-templates/components/sms-template-builder/sms-template-builder"
-import type { SmsTemplateSchemaType } from "@/features/templates/sms-templates/schemas/sms-template-schema"
-import type { AddNewSmsTemplateBody, SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
 import { Button } from "@/ui"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
+import { useNavigate, useParams } from "react-router-dom"
 //#endregion
 
 interface EditSmsTemplateViewProps {
@@ -20,46 +20,46 @@ const EditSmsTemplateView = ({ defaultValues }: EditSmsTemplateViewProps) => {
 	const { t } = useTranslation("sms-templates", { keyPrefix: "components.templateBuilder" })
 
 	const { templateId } = useParams()
+
 	const navigate = useNavigate()
 
-	const [updateSmsTemplate, { isLoading }] = useUpdateSmsTemplateMutation()
+	const [triggerUpdateSmsTemplate, { isLoading }] = useUpdateSmsTemplateMutation()
 
 	const [smsTemplateStatus, SetSmsTemplateStatus] = useState<SmsTemplateStatusOption | undefined>()
 
 	const onSubmit = async (requestBody: Omit<AddNewSmsTemplateBody, "status">) => {
 		if (!requestBody || !templateId || !smsTemplateStatus) return
-		await updateSmsTemplate({ id: templateId, ...requestBody, status: smsTemplateStatus })
-			.unwrap()
-			.then(() => {
-				toast.success("Template added successfully")
-				navigate(appPaths.SMS_TEMPLATES, { replace: true })
-			})
+
+		await triggerUpdateSmsTemplate({ id: templateId, ...requestBody, status: smsTemplateStatus }).unwrap()
+
+		toast.success("Template added successfully")
+		navigate(appPaths.SMS_TEMPLATES, { replace: true })
 	}
 
 	return (
-		<SmsTemplateBuilder label={t("editTemplate.title")} onSubmit={onSubmit} defaultValues={defaultValues}>
+		<SmsTemplateBuilder defaultValues={defaultValues} label={t("editTemplate.title")} onSubmit={onSubmit}>
 			<SmsTemplateBuilder.Body />
 
 			<SmsTemplateBuilder.Footer>
 				{defaultValues?.status === "DRAFT" && (
 					<Button
-						variant='outline'
-						type='submit'
 						className='px-10'
-						loading={isLoading && smsTemplateStatus == "DRAFT"}
 						disabled={isLoading && smsTemplateStatus == "PUBLISHED"}
-						onClick={() => SetSmsTemplateStatus("DRAFT")}>
+						loading={isLoading && smsTemplateStatus == "DRAFT"}
+						onClick={() => SetSmsTemplateStatus("DRAFT")}
+						type='submit'
+						variant='outline'>
 						{t("actions.updateDraft")}
 					</Button>
 				)}
 
 				<Button
-					type='submit'
 					className='px-10'
-					loading={isLoading && smsTemplateStatus == "PUBLISHED"}
 					disabled={isLoading && smsTemplateStatus == "DRAFT"}
-					onClick={() => SetSmsTemplateStatus("PUBLISHED")}>
-					{t("actions.publish")}
+					loading={isLoading && smsTemplateStatus == "PUBLISHED"}
+					onClick={() => SetSmsTemplateStatus("PUBLISHED")}
+					type='submit'>
+					{t("actions.updatedPublished")}
 				</Button>
 			</SmsTemplateBuilder.Footer>
 		</SmsTemplateBuilder>
