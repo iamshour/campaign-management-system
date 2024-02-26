@@ -1,7 +1,6 @@
 //#region Import
+import type { SegmentRuleAttribute } from "../types"
 //#endregion
-
-import { SegmentRuleAttribute } from "../types"
 
 /**
  * List of fields used in a Segment Rule's attribute field
@@ -16,4 +15,5 @@ const segmentRuleAttributeFields: { label: string; value: SegmentRuleAttribute }
 	{ label: "attribute.fields.groups", value: "GROUPS" },
 	{ label: "attribute.fields.segments", value: "SEGMENTS" },
 ]
+
 export default segmentRuleAttributeFields

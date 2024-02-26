@@ -1,32 +1,32 @@
 //#region Import
 import {
-	Root,
-	Trigger,
 	Content,
-	List,
 	type TabsProps as DefaultTabsProps,
+	List,
+	Root,
 	type TabsContentProps,
 	type TabsListProps,
 	type TabsTriggerProps,
+	Trigger,
 } from "@radix-ui/react-tabs"
-import { Suspense, forwardRef } from "react"
+import { forwardRef, Suspense } from "react"
 import { twMerge } from "tailwind-merge"
 
 import Skeleton from "../skeleton/skeleton"
 //#endregion
 
-type TabsProps<ValueType extends string> = Omit<DefaultTabsProps, "value" | "onValueChange"> & {
-	value?: ValueType
+type TabsProps<ValueType extends string> = Omit<DefaultTabsProps, "onValueChange" | "value"> & {
 	onValueChange?: (value: ValueType) => void
+	value?: ValueType
 }
 
-function Tabs<ValueType extends string>({ value, onValueChange, className, ...props }: TabsProps<ValueType>) {
+function Tabs<ValueType extends string>({ className, onValueChange, value, ...props }: TabsProps<ValueType>) {
 	return (
 		<Root
-			value={value}
+			className={twMerge("flex h-full w-full flex-col gap-4 overflow-y-auto", className)}
 			// Typecasting the onValueChange to escape ts error
 			onValueChange={onValueChange as (v: string) => void}
-			className={twMerge("flex h-full w-full flex-col gap-4 overflow-y-auto", className)}
+			value={value}
 			{...props}
 		/>
 	)
@@ -44,11 +44,13 @@ const TabsList = ({ className, ...props }: TabsListProps) => (
 
 const TabsTrigger = forwardRef<React.ElementRef<typeof Trigger>, TabsTriggerProps>(({ className, ...props }, ref) => (
 	<Trigger
-		ref={ref}
 		className={twMerge(
-			"inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-white transition-all data-[state=active]:bg-white data-[state=active]:text-slate-950 data-[state=active]:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+			`inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-white transition-all
+			 data-[state=active]:bg-white data-[state=active]:text-slate-950 data-[state=active]:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950
+			  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50`,
 			className
 		)}
+		ref={ref}
 		{...props}
 	/>
 ))
@@ -56,8 +58,8 @@ const TabsTrigger = forwardRef<React.ElementRef<typeof Trigger>, TabsTriggerProp
 TabsTrigger.displayName = "TabsTrigger"
 
 const TabsContent = ({
-	className,
 	children,
+	className,
 	skeletonClassName,
 	...props
 }: TabsContentProps & { skeletonClassName?: string }) => (

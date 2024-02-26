@@ -1,12 +1,12 @@
 //#region Import
 import {
+	Content,
 	Provider,
 	Root,
-	Trigger,
-	Content,
-	type TooltipTriggerProps,
-	type TooltipProviderProps,
 	type TooltipContentProps,
+	type TooltipProviderProps,
+	type TooltipTriggerProps,
+	Trigger,
 } from "@radix-ui/react-tooltip"
 import { forwardRef } from "react"
 import { twMerge } from "tailwind-merge"
@@ -39,7 +39,7 @@ const Tooltip = ({ children, ...props }: TooltipProviderProps) => (
 )
 
 const TooltipTrigger = forwardRef<React.ElementRef<typeof Trigger>, TooltipTriggerProps>(
-	({ className, children, ...props }, ref) => (
+	({ children, className, ...props }, ref) => (
 		<Trigger ref={ref} {...props} className={twMerge("w-full", className)}>
 			{children}
 		</Trigger>
@@ -52,7 +52,9 @@ const TooltipContent = ({ className, content, ...props }: TooltipContentProps) =
 	<Content
 		{...props}
 		className={twMerge(
-			"z-50 overflow-hidden rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-950 shadow-md prevent-selection animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+			`z-50 overflow-hidden rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-950 shadow-md prevent-selection animate-in fade-in-0 zoom-in-95
+			 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2
+			  data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2`,
 			className
 		)}>
 		{content}

@@ -1,19 +1,19 @@
 //#region Import
-import { useState } from "react"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
-import { useNavigate, useParams } from "react-router-dom"
+import type { AddNewSmsIndustryTemplateBody } from "@/features/industries/types"
+import type { SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
 
 import { useAddNewSmsIndustryTemplateMutation } from "@/features/industries/api"
 import SmsIndustryTemplateBuilderContent from "@/features/industries/components/sms-industry-template-builder-content/sms-industry-template-builder-content"
 import SmsIndustryTemplateSchema, {
 	type SmsIndustryTemplateSchemaType,
 } from "@/features/industries/schemas/sms-industry-template-schema"
-import type { AddNewSmsIndustryTemplateBody } from "@/features/industries/types"
 import SmsTemplateBuilder from "@/features/templates/sms-templates/components/sms-template-builder/sms-template-builder"
-import type { SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
 import { Button } from "@/ui"
 import { convertBase64ToPng } from "@/utils"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
+import { useNavigate, useParams } from "react-router-dom"
 //#endregion
 
 interface CreateSmsIndustryTemplateViewProps {
@@ -29,6 +29,7 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 	const { t } = useTranslation("sms-templates", { keyPrefix: "components.templateBuilder" })
 
 	const navigate = useNavigate()
+
 	const { industryId } = useParams()
 
 	const [triggerAddSmsIndustryTemplate, { isLoading }] = useAddNewSmsIndustryTemplateMutation()
@@ -49,6 +50,7 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 
 		// add template info to request body
 		const jsonBlob = new Blob([JSON.stringify(body)], { type: "application/json" })
+
 		formData.append("prebuiltTemplateRequest", jsonBlob)
 
 		if (background) {
@@ -59,7 +61,7 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 			formData.append("background", convertedBackground, "image.png")
 		}
 
-		await triggerAddSmsIndustryTemplate({ industryId, body: formData }).unwrap()
+		await triggerAddSmsIndustryTemplate({ body: formData, industryId }).unwrap()
 
 		toast.success("Template added successfully to the industry.")
 		navigate(`/industries/${industryId}/sms`, { replace: true })
@@ -67,9 +69,9 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 
 	return (
 		<SmsTemplateBuilder
+			defaultValues={defaultValues}
 			label={t("createTemplate.title")}
 			onSubmit={onSubmit}
-			defaultValues={defaultValues}
 			schema={SmsIndustryTemplateSchema}>
 			<SmsTemplateBuilder.Body>
 				<SmsIndustryTemplateBuilderContent />
@@ -77,21 +79,21 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 
 			<SmsTemplateBuilder.Footer>
 				<Button
-					variant='outline'
-					type='submit'
 					className='px-10'
-					loading={isLoading && status == "DRAFT"}
 					disabled={isLoading && status == "PUBLISHED"}
-					onClick={() => setStatus("DRAFT")}>
+					loading={isLoading && status == "DRAFT"}
+					onClick={() => setStatus("DRAFT")}
+					type='submit'
+					variant='outline'>
 					{t("actions.saveAsDraft")}
 				</Button>
 
 				<Button
-					type='submit'
 					className='px-10'
-					loading={isLoading && status == "PUBLISHED"}
 					disabled={isLoading && status == "DRAFT"}
-					onClick={() => setStatus("PUBLISHED")}>
+					loading={isLoading && status == "PUBLISHED"}
+					onClick={() => setStatus("PUBLISHED")}
+					type='submit'>
 					{t("actions.saveAndPublish")}
 				</Button>
 			</SmsTemplateBuilder.Footer>

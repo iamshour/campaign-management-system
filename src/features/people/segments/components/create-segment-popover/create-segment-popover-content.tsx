@@ -1,15 +1,14 @@
 //#region Import
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useMemo } from "react"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
-
 import { useAdvancedFiltersDialogContext } from "@/features/people/contacts/dialogs/advanced-filters-dialog/advanced-filters-dialog-context"
 import { useCreateSegmentMutation } from "@/features/people/segments/api"
 import SegmentSchema, { type SegmentSchemaType } from "@/features/people/segments/schemas/segment-schema"
 import { CreateSegmentBody } from "@/features/people/segments/types"
 import { areConditionsValid } from "@/features/people/segments/utils"
-import { useForm, Button, Footer, Form, Input } from "@/ui"
+import { Button, Footer, Form, Input, useForm } from "@/ui"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMemo } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 //#endregion
 
 export interface CreateSegmentPopoverContentProps {
@@ -27,39 +26,38 @@ const CreateSegmentPopoverContent = ({ onClose }: CreateSegmentPopoverContentPro
 	const [triggerCreateSegment, { isLoading: isCreateSegmentLoading }] = useCreateSegmentMutation()
 
 	const { conditions } = useAdvancedFiltersDialogContext()
+
 	const areEditableConditionsValid = useMemo(() => areConditionsValid(conditions), [conditions])
 
-	const onSubmit = async ({ name, description }: SegmentSchemaType) => {
+	const onSubmit = async ({ description, name }: SegmentSchemaType) => {
 		if (!areEditableConditionsValid) return
 
 		const body: CreateSegmentBody = {
-			name,
-			description,
 			contactSegmentConditionList: conditions?.map((condition) => ({
-				id: condition?.id,
 				contactSegmentRuleList: condition?.rules?.map((rule) => ({
-					id: rule?.id,
+					contactSegmentId: rule?.segment?.value,
 					contactSegmentRuleAttribute: rule?.attribute,
 					contactSegmentRuleCondition: rule?.condition,
-					specification: rule?.specification,
 					country: rule?.country,
 					groupId: rule?.group?.value,
-					contactSegmentId: rule?.segment?.value,
+					id: rule?.id,
+					specification: rule?.specification,
 				})),
+				id: condition?.id,
 			})),
+			description,
+			name,
 		}
 
-		await triggerCreateSegment(body)
-			.unwrap()
-			.then(() => {
-				toast.success(t("successMessage"))
-				onClose()
-			})
+		await triggerCreateSegment(body).unwrap()
+
+		toast.success(t("successMessage"))
+		onClose()
 	}
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+			<form className='space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
 				<Form.Field
 					control={form.control}
 					name='name'
@@ -67,7 +65,7 @@ const CreateSegmentPopoverContent = ({ onClose }: CreateSegmentPopoverContentPro
 						<Form.Item>
 							<Form.Label size={"default"}>{t("fields.name.label")}*</Form.Label>
 							<Form.Control>
-								<Input size={"default"} placeholder={t("fields.name.placeholder")} {...field} />
+								<Input placeholder={t("fields.name.placeholder")} size={"default"} {...field} />
 							</Form.Control>
 							<Form.Message />
 						</Form.Item>
@@ -80,7 +78,7 @@ const CreateSegmentPopoverContent = ({ onClose }: CreateSegmentPopoverContentPro
 						<Form.Item className='pb-4'>
 							<Form.Label size={"default"}>{t("fields.description.label")}</Form.Label>
 							<Form.Control>
-								<Input size={"default"} placeholder={t("fields.description.placeholder")} {...field} />
+								<Input placeholder={t("fields.description.placeholder")} size={"default"} {...field} />
 							</Form.Control>
 							<Form.Message />
 						</Form.Item>
@@ -88,7 +86,7 @@ const CreateSegmentPopoverContent = ({ onClose }: CreateSegmentPopoverContentPro
 				/>
 
 				<Footer>
-					<Button type='submit' loading={isCreateSegmentLoading} className='px-6' variant='secondary' size='sm'>
+					<Button className='px-6' loading={isCreateSegmentLoading} size='sm' type='submit' variant='secondary'>
 						{t("actions.create")}
 					</Button>
 				</Footer>

@@ -1,11 +1,10 @@
 //#region Import
+import LucideChevronLeft from "~icons/lucide/chevron-left"
 import { forwardRef } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
 import Button from "../button/button"
-
-import LucideChevronLeft from "~icons/lucide/chevron-left"
 //#endregion
 
 const BackButton = forwardRef<React.ElementRef<typeof Button>, React.ComponentPropsWithoutRef<typeof Button>>(
@@ -14,8 +13,8 @@ const BackButton = forwardRef<React.ElementRef<typeof Button>, React.ComponentPr
 
 		return (
 			<Button
-				ref={ref}
 				className={twMerge("bg-transparent px-1.5 font-normal hover:bg-transparent hover:text-primary-900", className)}
+				ref={ref}
 				size='sm'
 				variant='ghost'
 				{...props}>

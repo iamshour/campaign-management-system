@@ -1,10 +1,10 @@
 import type { Group } from "@/features/people/groups/types"
 
 const groupFieldsMap: Partial<Record<keyof Group, string>> = {
-	groupName: "groups:fields.groupName",
-	description: "groups:fields.description",
-	createdAt: "groups:fields.createdAt",
 	contactsCount: "groups:fields.contactsCount",
+	createdAt: "groups:fields.createdAt",
+	description: "groups:fields.description",
+	groupName: "groups:fields.groupName",
 }
 
 export default groupFieldsMap

@@ -1,39 +1,36 @@
 //#region Import
-import { lazy } from "react"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import getSearchFilter from "@/core/utils/get-search-filter"
 import { useGetIndustriesQuery } from "@/features/industries/api"
 import { DataTableSkeleton } from "@/ui"
+import { lazy } from "react"
 
 const IndustriesView = lazy(() => import("@/features/industries/views/industries-view/industries-view"))
+
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const IndustriesRoute = () => {
-	const { offset, limit, sort, order, searchTerm, filters } = useSelector<DataGridState<"industries">>(
+	const { filters, paginationAndSorting, searchTerm } = useSelector<DataGridState<"industries">>(
 		({ dataGrid }) => dataGrid["industries"]
 	)
 
-	const { list, count, isInitialLoading, isReady, isFetching, isError, error } = useGetIndustriesQuery(
+	const { count, error, isError, isFetching, isInitialLoading, isReady, list } = useGetIndustriesQuery(
 		{
-			offset,
-			limit,
-			sort,
-			order,
-			startDate: filters?.startDate,
-			endDate: filters?.endDate,
-			name: searchTerm,
-			any: Boolean(searchTerm?.length) || undefined,
+			...filters,
+			...getSearchFilter<["name"]>(searchTerm, ["name"]),
+			...paginationAndSorting,
 		},
 		{
-			selectFromResult: ({ data, isLoading, isFetching, ...rest }) => ({
-				list: data?.list,
+			selectFromResult: ({ data, isFetching, isLoading, ...rest }) => ({
 				count: data?.count,
+				isFetching,
 				isInitialLoading: !data && isLoading,
 				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-				isFetching,
+				list: data?.list,
 				...rest,
 			}),
 			...baseQueryConfigs,
@@ -44,7 +41,7 @@ const IndustriesRoute = () => {
 
 	if (isError) return <DisplayError error={error as any} showReloadButton />
 
-	if (isReady) return <IndustriesView list={list || []} count={count || 0} isFetching={isFetching} />
+	if (isReady) return <IndustriesView count={count || 0} isFetching={isFetching} list={list || []} />
 }
 
 export default IndustriesRoute

@@ -1,11 +1,10 @@
 //#region Import
-import { useState } from "react"
-import { useTranslation } from "react-i18next"
-
 import MoveToGroupDialog from "@/features/people/groups/dialogs/move-to-group-dialog/move-to-group-dialog"
 import RemoveFromGroupDialog from "@/features/people/groups/dialogs/remove-from-group-dialog/remove-from-group-dialog"
 import { Dropdown } from "@/ui"
 import { DropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import { useState } from "react"
+import { useTranslation } from "react-i18next"
 //#endregion
 
 const MultiEditDropdown = () => {
@@ -14,7 +13,7 @@ const MultiEditDropdown = () => {
 	const [open, setOpen] = useState(false)
 
 	return (
-		<Dropdown open={open} onOpenChange={setOpen}>
+		<Dropdown onOpenChange={setOpen} open={open}>
 			<Dropdown.Trigger variant='secondary'>{t("table.toolbar.actions.edit.title")}</Dropdown.Trigger>
 			<Dropdown.Content align='start' sideOffset={0}>
 				<DropdownStateContext.Provider value={{ closeDropdown: () => setOpen(false) }}>

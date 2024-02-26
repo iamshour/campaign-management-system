@@ -1,19 +1,19 @@
 //#region Import
-import { useEffect, useRef } from "react"
-import { useFormContext } from "react-hook-form"
-
 import { MAX_PARTS } from "@/features/templates/sms-templates/constants/sms-template-body-constants"
 import useSmsTemplateBody from "@/features/templates/sms-templates/hooks/useSmsTemplateBody"
-import { Form, Textarea, Button } from "@/ui"
+import { Button, Form, Textarea } from "@/ui"
+import { useEffect, useRef } from "react"
+import { useFormContext } from "react-hook-form"
 //#endregion
 
 const SmsTemplateBodyTextarea = () => {
-	const { control, watch, setValue } = useFormContext()
+	const { control, setValue, watch } = useFormContext()
 
 	const textareaRef = useRef<HTMLTextAreaElement>(null)
+
 	const currentBody: string = watch("body") ?? ""
 
-	const { maxCharactersPerPart, charactersCountInCurrentPart, partsCount, placeholdersCount, getReformattedBody } =
+	const { charactersCountInCurrentPart, getReformattedBody, maxCharactersPerPart, partsCount, placeholdersCount } =
 		useSmsTemplateBody(currentBody)
 
 	/**
@@ -41,6 +41,7 @@ const SmsTemplateBodyTextarea = () => {
 
 		const updatedText =
 			currentBody.substring(0, cursorPosition) + newPlaceHolder + currentBody.substring(cursorPosition)
+
 		const updatedCursorPostion = cursorPosition! + newPlaceHolder.length
 
 		updateTextarea(updatedText, updatedCursorPostion)
@@ -55,7 +56,9 @@ const SmsTemplateBodyTextarea = () => {
 		if (e.key !== "{") return
 
 		const cursorPosition = textareaRef.current?.selectionStart ?? 1
+
 		const previousKey = currentBody[cursorPosition - 1]
+
 		if (previousKey !== "{") return
 
 		e.preventDefault()
@@ -87,12 +90,12 @@ const SmsTemplateBodyTextarea = () => {
 						<Form.Label>Template Body *</Form.Label>
 						<Form.Control>
 							<Textarea
+								className='resize-y bg-white !transition-none'
 								placeholder='Body goes here'
 								rows={3}
-								className='resize-y bg-white !transition-none'
 								{...field}
-								ref={textareaRef}
 								onKeyDown={handleOnKeyDown}
+								ref={textareaRef}
 							/>
 						</Form.Control>
 						<Form.Message />
@@ -111,10 +114,10 @@ const SmsTemplateBodyTextarea = () => {
 					</p>
 				</div>
 				<Button
-					variant='secondary'
+					onClick={() => addPlaceholder(`{{${placeholdersCount + 1}}}`)}
 					size='sm'
 					type='button'
-					onClick={() => addPlaceholder(`{{${placeholdersCount + 1}}}`)}>
+					variant='secondary'>
 					Add Placeholder
 				</Button>
 			</div>

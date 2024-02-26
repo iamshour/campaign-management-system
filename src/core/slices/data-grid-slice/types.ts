@@ -1,78 +1,90 @@
 //#region Import
+import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type {
-	IndustryType,
-	SmsIndustryTemplateType,
-	PrebuiltTemplateFilter,
 	IndustryFilter,
+	IndustryType,
+	PrebuiltTemplateFilter,
+	SmsIndustryTemplateType,
 } from "@/features/industries/types"
 import type {
 	Contact,
 	ContactTableAdvancedFiltersType,
 	ContactTableFiltersType,
 } from "@/features/people/contacts/types"
-import type { ContactExports, ContactExportsTableFiltersType } from "@/features/people/exports/types"
-import type { Group } from "@/features/people/groups/types"
+import type { ContactExportFilter, ContactExports } from "@/features/people/exports/types"
+import type { ContactGroupFilter, Group } from "@/features/people/groups/types"
 import type { Segment } from "@/features/people/segments/types"
 import type { SmsTemplateType, TemplateFilter } from "@/features/templates/sms-templates/types"
-import type { DateRange, TableState } from "@/ui"
+import type { DateRange } from "@/ui"
 //#endregion
 
-export type DataGridView = "LIST" | "GRID"
+export type DataGridView = "GRID" | "LIST"
+
+// export enum DataGridKey {
+// 	"contacts" = "contacts",
+// 	"contacts-in-group" = "contacts-in-group",
+// 	"add-contacts-to-group" = "add-contacts-to-group",
+// 	"groups" = "groups",
+// 	"contacts-exports" = "contacts-exports",
+// 	"segments" = "segments",
+// 	"sms-templates" = "sms-templates",
+// 	"sms-prebuilt-templates" = "sms-prebuilt-templates",
+// 	"sms-prebuilt-templates-dialog" = "sms-prebuilt-templates-dialog",
+// 	"sms-industry-templates" = "sms-industry-templates",
+// 	"industries" = "industries",
+// }
 
 export type DataGridKey =
-	| "contacts"
-	| "contacts-in-group"
 	| "add-contacts-to-group"
-	| "groups"
 	| "contacts-exports"
-	| "segments"
-	| "sms-templates"
-	| "sms-prebuilt-templates"
-	| "sms-prebuilt-templates-dialog"
-	| "sms-industry-templates"
+	| "contacts-in-group"
+	| "contacts"
+	| "groups"
 	| "industries"
+	| "segments"
+	| "sms-industry-templates"
+	| "sms-prebuilt-templates-dialog"
+	| "sms-prebuilt-templates"
+	| "sms-templates"
 
-type TableDataMappingType = {
-	contacts: Contact
-	"contacts-in-group": Contact
+type DataGridEntryType = {
 	"add-contacts-to-group": Contact
-	groups: Group
+	contacts: Contact
 	"contacts-exports": ContactExports
+	"contacts-in-group": Contact
+	groups: Group
+	industries: IndustryType
 	segments: Segment
-	"sms-templates": SmsTemplateType
+	"sms-industry-templates": SmsIndustryTemplateType
 	"sms-prebuilt-templates": SmsIndustryTemplateType
 	"sms-prebuilt-templates-dialog": SmsIndustryTemplateType
-	"sms-industry-templates": SmsIndustryTemplateType
-	industries: IndustryType
+	"sms-templates": SmsTemplateType
 }
 
-export type FiltersFieldMappingType = {
-	contacts: ContactTableFiltersType & ContactTableAdvancedFiltersType
-	"contacts-in-group": Omit<ContactTableFiltersType, "groups">
+export type DataGridFilterType = {
 	"add-contacts-to-group": ContactTableFiltersType
-	groups: { dateRange?: DateRange }
-	"contacts-exports": ContactExportsTableFiltersType
-	segments: { dateRange?: DateRange }
-	"sms-templates": TemplateFilter
+	contacts: ContactTableFiltersType & ContactTableAdvancedFiltersType
+	"contacts-exports": ContactExportFilter
+	"contacts-in-group": Omit<ContactTableFiltersType, "groups">
+	groups: ContactGroupFilter
+	industries: IndustryFilter
+	segments: DateRange
+	"sms-industry-templates": PrebuiltTemplateFilter
 	"sms-prebuilt-templates": PrebuiltTemplateFilter
 	"sms-prebuilt-templates-dialog": PrebuiltTemplateFilter
-	"sms-industry-templates": PrebuiltTemplateFilter
-	industries: IndustryFilter
+	"sms-templates": TemplateFilter
 }
 
-export type DataGridState<K extends DataGridKey> = TableState<TableDataMappingType[K]> & {
-	searchTerm?: string
-
-	filters?: FiltersFieldMappingType[K]
-
+export type DataGridState<K extends DataGridKey> = {
 	appliedFiltersCount?: number
 
-	view?: DataGridView
-}
+	filters?: DataGridFilterType[K]
 
-/**
- * Advanced Table Slice Type, as a whole. Used in root reducer, and to infer `AdvancedTableSlice` state type
- */
-export type DataGridSliceStateType = {
-	[K in DataGridKey]: DataGridState<K>
+	paginationAndSorting: PaginationAndSorting<DataGridEntryType[K]>
+
+	searchTerm?: string
+
+	selection?: "ALL" | string[]
+
+	view?: DataGridView
 }

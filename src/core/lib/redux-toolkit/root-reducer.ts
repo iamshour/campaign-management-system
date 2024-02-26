@@ -1,14 +1,14 @@
 //#region Import
-import { combineReducers } from "@reduxjs/toolkit"
-import { persistReducer, type PersistConfig } from "redux-persist"
-import storage from "redux-persist/lib/storage"
-import { createBlacklistFilter } from "redux-persist-transform-filter"
+import type { DataGridKey, DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { AuthSliceState } from "@/features/authentication/types"
 
 import AppReducer, { type AppSliceState } from "@/core/slices/app-slice"
 import dataGridReducer from "@/core/slices/data-grid-slice/data-grid-slice"
-import type { DataGridSliceStateType, DataGridKey } from "@/core/slices/data-grid-slice/types"
 import authReducer from "@/features/authentication/slice"
-import type { AuthSliceState } from "@/features/authentication/types"
+import { combineReducers } from "@reduxjs/toolkit"
+import { type PersistConfig, persistReducer } from "redux-persist"
+import { createBlacklistFilter } from "redux-persist-transform-filter"
+import storage from "redux-persist/lib/storage"
 
 import api from "./api"
 //#endregion
@@ -17,16 +17,16 @@ import api from "./api"
 const APP_PREFIX = "BLUE.AI"
 
 export type RootState = {
-	auth: AuthSliceState
 	app: AppSliceState
-	dataGrid: DataGridSliceStateType
+	auth: AuthSliceState
+	dataGrid: { [K in DataGridKey]: DataGridState<K> }
 }
 
 const rootPersistConfig = {
-	keyPrefix: APP_PREFIX,
 	key: "_ROOT",
-	version: 1,
+	keyPrefix: APP_PREFIX,
 	storage,
+	version: 1,
 	whitelist: ["app", "auth"] as Partial<keyof RootState>[],
 }
 
@@ -37,23 +37,23 @@ const rootPersistConfig = {
  * @returns persistReducer function
  */
 const getDataGridPersistReducer = (gridKeys: DataGridKey[]) => {
-	const config: PersistConfig<DataGridSliceStateType> = {
-		keyPrefix: APP_PREFIX,
+	const config: PersistConfig<RootState["dataGrid"]> = {
 		key: "_DATA_GRID",
+		keyPrefix: APP_PREFIX,
 		storage,
-		whitelist: gridKeys,
 		// Progromatically Removing/blacklisting selection from all persisted `dataGrid keys` in `dataGridSlice`
 		transforms: gridKeys.map((key) => createBlacklistFilter(key, ["selection"])),
+		whitelist: gridKeys,
 	}
 
 	return persistReducer(config, dataGridReducer)
 }
 
 const reducer = combineReducers({
-	auth: authReducer,
-	app: AppReducer,
-	dataGrid: getDataGridPersistReducer(["contacts", "groups", "sms-templates", "sms-prebuilt-templates"]),
 	[api.reducerPath]: api.reducer,
+	app: AppReducer,
+	auth: authReducer,
+	dataGrid: getDataGridPersistReducer(["contacts", "groups", "sms-templates", "sms-prebuilt-templates"]),
 })
 
 export default persistReducer(rootPersistConfig, reducer)

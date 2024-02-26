@@ -1,7 +1,6 @@
 //#region Import
-import { lazy, useState } from "react"
-
 import { Dialog } from "@/ui"
+import { lazy, useState } from "react"
 
 const EditIndustryDialogContent = lazy(() => import("./edit-industry-dialog-content"))
 //#endregion
@@ -18,12 +17,12 @@ const EditIndustryDialog = ({ children, ...industry }: EditIndustryDialogProps) 
 	const [open, setOpen] = useState(false)
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 			<Dialog.Content
-				title='Edit Industry'
 				className='h-[485px] w-[288px] sm:h-[430px] sm:w-[390px]'
-				onInteractOutside={(e) => e.preventDefault()}>
+				onInteractOutside={(e) => e.preventDefault()}
+				title='Edit Industry'>
 				<EditIndustryDialogContent {...industry} closeDialog={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>

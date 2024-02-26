@@ -4,31 +4,36 @@ import { useCallback } from "react"
 import { MAX_GMS_CHARS_PER_PART, MAX_UNICODE_CHARS_PER_PART } from "../constants/sms-template-body-constants"
 import { PLACEHOLDER_REGEX } from "../constants/sms-template-body-regex"
 import {
-	getTotalCharactersCount,
-	checkIfHasGsmCharactersOnly,
 	checkIfHasEmoji,
-	removeEmojisFromString,
+	checkIfHasGsmCharactersOnly,
+	getTotalCharactersCount,
 	rearrangePlaceholders,
+	removeEmojisFromString,
 } from "../utils"
 //#endregion
 
 interface useSmsTemplateBodyReturnType {
-	maxCharactersPerPart: number
 	charactersCountInCurrentPart: number
+	getReformattedBody: (text: string) => string
+	maxCharactersPerPart: number
 	partsCount: number
 	placeholdersCount: number
-	getReformattedBody: (text: string) => string
 }
 
 const useSmsTemplateBody = (currentText: string): useSmsTemplateBodyReturnType => {
 	const charactersCount = getTotalCharactersCount(currentText)
+
 	// Check if text consists of GMS accepted characters only
 	const hasGMSCharactersOnly = checkIfHasGsmCharactersOnly(currentText)
+
 	const maxCharactersPerPart = hasGMSCharactersOnly ? MAX_GMS_CHARS_PER_PART : MAX_UNICODE_CHARS_PER_PART
+
 	const charactersCountInCurrentPart = charactersCount
 		? charactersCount % maxCharactersPerPart || maxCharactersPerPart
 		: 0
+
 	const partsCount = charactersCount ? Math.ceil(charactersCount / maxCharactersPerPart) : 0
+
 	const placeholdersCount = currentText?.match(PLACEHOLDER_REGEX)?.length ?? 0
 
 	/**
@@ -49,11 +54,11 @@ const useSmsTemplateBody = (currentText: string): useSmsTemplateBodyReturnType =
 	}, [])
 
 	return {
-		maxCharactersPerPart,
 		charactersCountInCurrentPart,
+		getReformattedBody,
+		maxCharactersPerPart,
 		partsCount,
 		placeholdersCount,
-		getReformattedBody,
 	}
 }
 

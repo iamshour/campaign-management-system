@@ -1,26 +1,26 @@
 //#region Import
+import type { SharedListViewProps } from "@/core/types"
+import type { Segment } from "@/features/people/segments/types"
+
+import DataGrid from "@/core/components/data-grid/data-grid"
+import appPaths from "@/core/constants/app-paths"
+import segmentsTableColumns from "@/features/people/segments/constants/segments-table-columns"
+import { Button } from "@/ui"
+import PhPlusBold from "~icons/ph/plus-bold"
 import { lazy } from "react"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 
-import DataGrid from "@/core/components/data-grid"
-import appPaths from "@/core/constants/app-paths"
-import type { SharedListViewProps } from "@/core/types"
-import segmentsTableColumns from "@/features/people/segments/constants/segments-table-columns"
-import type { Segment } from "@/features/people/segments/types"
-import { Button } from "@/ui"
-
-import PhPlusBold from "~icons/ph/plus-bold"
-
 const SegmentsViewFiltersContent = lazy(() => import("./segments-view-filters-content"))
 //#endregion
 
-const SegmentsView = ({ count, ...tableProps }: SharedListViewProps<Segment>) => {
+const SegmentsView = (props: SharedListViewProps<Segment>) => {
 	const navigate = useNavigate()
+
 	const { t } = useTranslation("segments")
 
 	return (
-		<DataGrid dataGridKey='segments' count={count}>
+		<DataGrid columns={segmentsTableColumns} dataGridKey='segments' {...props}>
 			<DataGrid.FiltersBar>
 				<DataGrid.FiltersBar.Header />
 				<DataGrid.FiltersBar.Content>
@@ -37,12 +37,7 @@ const SegmentsView = ({ count, ...tableProps }: SharedListViewProps<Segment>) =>
 					</Button>
 				</DataGrid.TopBar>
 
-				<DataGrid.Body
-					columns={segmentsTableColumns}
-					onRowClick={({ id }) => navigate(id)}
-					classNames={{ wrapper: "px-4" }}
-					{...tableProps}
-				/>
+				<DataGrid.Body classNames={{ wrapper: "px-4" }} onRowClick={({ id }) => navigate(id)} />
 				<DataGrid.Pagination />
 			</DataGrid.Content>
 		</DataGrid>

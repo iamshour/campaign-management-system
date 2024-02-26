@@ -1,10 +1,9 @@
 //#region Import
-import { useLocation, useNavigate } from "react-router-dom"
-
 import appPaths from "@/core/constants/app-paths"
 import ExportFieldsDialog from "@/features/people/exports/dialogs/export-fields-dialog/export-fields-dialog"
 import DeleteSegmentDialog from "@/features/people/segments/dialogs/delete-segment-dialog/delete-segment-dialog"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
+import { useLocation, useNavigate } from "react-router-dom"
 //#endregion
 
 /**
@@ -15,6 +14,7 @@ import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
  */
 const SegmentsViewTableActions = ({ id }: { id: string }) => {
 	const { pathname } = useLocation()
+
 	const navigate = useNavigate()
 
 	return (

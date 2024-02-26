@@ -1,15 +1,12 @@
 //#region Import
+import { formatBytes } from "@/utils"
+import RadixIconsCross2 from "~icons/radix-icons/cross-2"
 import { lazy, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 
-import { formatBytes } from "@/utils"
-
 import Button from "../button/button"
 import Tooltip from "../tooltip/tooltip"
-
 import { ImagePreview } from "./drop-file-card-image-preview"
-
-import RadixIconsCross2 from "~icons/radix-icons/cross-2"
 //#endregion
 // import TeenyiconsCsvSolid from '~icons/teenyicons/csv-solid'
 
@@ -35,6 +32,7 @@ export interface DropFileCardProps {
 
 const DropFileCard = ({ file, onRemove, preview = "icon" }: DropFileCardProps) => {
 	const { t } = useTranslation("ui", { keyPrefix: "drop-file-area" })
+
 	const { name, size, type } = file
 
 	const PreviewComponent = useMemo(
@@ -44,7 +42,7 @@ const DropFileCard = ({ file, onRemove, preview = "icon" }: DropFileCardProps) =
 
 	return (
 		<div className='flex h-max w-full max-w-[400px] gap-4 rounded-xl border-2 border-primary-600 bg-primary-50/30 p-4 transition-basic'>
-			<PreviewComponent file={preview === "image" ? file : undefined} className='shrink-0 text-3xl text-primary-600' />
+			<PreviewComponent className='shrink-0 text-3xl text-primary-600' file={preview === "image" ? file : undefined} />
 
 			<div className='flex-1 truncate'>
 				<p className='mb-1 truncate text-black'>{name}</p>
@@ -53,7 +51,7 @@ const DropFileCard = ({ file, onRemove, preview = "icon" }: DropFileCardProps) =
 
 			<Tooltip>
 				<Tooltip.Trigger asChild>
-					<Button variant='ghost' className='h-max w-max !bg-transparent p-0' onClick={onRemove}>
+					<Button className='h-max w-max !bg-transparent p-0' onClick={onRemove} variant='ghost'>
 						<RadixIconsCross2 />
 					</Button>
 				</Tooltip.Trigger>
@@ -67,11 +65,11 @@ const DropFileCard = ({ file, onRemove, preview = "icon" }: DropFileCardProps) =
 export default DropFileCard
 
 const fileIconsMapper = {
-	"text/plain": lazy(() => import("~icons/ant-design/file-pdf-filled")),
-	"image/png": lazy(() => import("~icons/ant-design/file-text-outlined")),
-	"image/jpeg": lazy(() => import("~icons/ion/image-sharp")),
 	"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": lazy(
 		() => import("~icons/tabler/file-spreadsheet")
 	),
+	"image/jpeg": lazy(() => import("~icons/ion/image-sharp")),
+	"image/png": lazy(() => import("~icons/ant-design/file-text-outlined")),
 	"text/csv": lazy(() => import("~icons/teenyicons/csv-solid")),
+	"text/plain": lazy(() => import("~icons/ant-design/file-pdf-filled")),
 }

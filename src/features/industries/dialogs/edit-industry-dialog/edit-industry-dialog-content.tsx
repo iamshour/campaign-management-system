@@ -1,15 +1,15 @@
 //#region Import
-import toast from "react-hot-toast"
+import type { AddNewIndustryBody, IndustryType } from "@/features/industries/types"
 
 import { useUpdateIndustryMutation } from "@/features/industries/api"
 import IndustryForm from "@/features/industries/components/industry-form"
-import type { AddNewIndustryBody, IndustryType } from "@/features/industries/types"
 import { Button } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import toast from "react-hot-toast"
 //#endregion
 
 export interface EditIndustryDialogContentProps
-	extends Pick<IndustryType, "id" | "name" | "description" | "icon" | "color"> {
+	extends Pick<IndustryType, "color" | "description" | "icon" | "id" | "name"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
@@ -37,8 +37,8 @@ const EditIndustryDialogContent = ({ closeDialog, id, ...formDefaultValues }: Ed
 	}
 
 	return (
-		<IndustryForm onSubmit={onSubmit} defaultValues={formDefaultValues}>
-			<Button type='submit' loading={isLoading} disabled={isLoading} className='px-12'>
+		<IndustryForm defaultValues={formDefaultValues} onSubmit={onSubmit}>
+			<Button className='px-12' disabled={isLoading} loading={isLoading} type='submit'>
 				Save
 			</Button>
 		</IndustryForm>

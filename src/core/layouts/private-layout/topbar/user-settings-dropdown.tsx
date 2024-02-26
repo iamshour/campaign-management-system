@@ -1,12 +1,11 @@
 //#region Import
-import { useNavigate } from "react-router-dom"
-
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import reduxStore from "@/core/lib/redux-toolkit/store"
 import getInitials from "@/core/utils/get-initials"
 import { switchRole } from "@/features/authentication/slice"
 import { Avatar, Dropdown } from "@/ui"
+import { useNavigate } from "react-router-dom"
 //#endregion
 
 const onClearStorage = async () => {
@@ -16,6 +15,7 @@ const onClearStorage = async () => {
 
 const UserSettingsDropdown = () => {
 	const navigate = useNavigate()
+
 	const dispatch = useDispatch()
 
 	const { name, role, src } = useSelector(({ auth }) => auth.user)
@@ -29,7 +29,7 @@ const UserSettingsDropdown = () => {
 		<Dropdown>
 			<Dropdown.Trigger className='h-max w-[200px] justify-between px-2 py-1' variant='ghost'>
 				<div className='flex gap-2'>
-					<Avatar src={src} fallback={getInitials(name)} />
+					<Avatar fallback={getInitials(name)} src={src} />
 					<div className='flex flex-col items-start'>
 						<h1 className='text-base font-bold text-black'>{name}</h1>
 						<span className='text-xs text-gray-400'>{role}</span>
@@ -44,7 +44,7 @@ const UserSettingsDropdown = () => {
 
 				<Dropdown.Separator />
 
-				<Dropdown.Item onClick={onClearStorage} className='px-4 text-primary-600 underline hover:!text-primary-800'>
+				<Dropdown.Item className='px-4 text-primary-600 underline hover:!text-primary-800' onClick={onClearStorage}>
 					Purge Storage (DEV ONLY)
 				</Dropdown.Item>
 			</Dropdown.Content>

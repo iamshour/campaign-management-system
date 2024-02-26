@@ -1,7 +1,11 @@
 //#region Import
-import { Suspense, createContext, useCallback, useContext, useMemo } from "react"
+import LucideCheck from "~icons/lucide/check"
+import LucideChevronDown from "~icons/lucide/chevron-down"
+import { createContext, Suspense, useCallback, useContext, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
+
+import type { OptionType } from "../types"
 
 import Badge from "../badge/badge"
 import Button from "../button/button"
@@ -9,33 +13,30 @@ import Command from "../command/command"
 import Label from "../label/label"
 import Popover from "../popover/popover"
 import Skeleton from "../skeleton/skeleton"
-import type { OptionType } from "../types"
-
-import LucideCheck from "~icons/lucide/check"
-import LucideChevronDown from "~icons/lucide/chevron-down"
 //#endregion
 
 type ComboBoxSingleProps = {
 	isMulti: false
+	maxLimit?: undefined
 	selection?: OptionType
 	updateSelection: (option?: OptionType) => void
-	maxLimit?: undefined
 }
 type ComboBoxMultiProps = {
 	isMulti: true
+	maxLimit?: number
 	selection: OptionType[]
 	updateSelection: (option: OptionType[]) => void
-	maxLimit?: number
 }
 
 export type ComboBoxContextType = Pick<React.ComponentPropsWithoutRef<typeof Button>, "size"> & {
-	isCreatable?: boolean
-} & (ComboBoxSingleProps | ComboBoxMultiProps)
+	creatable?: boolean
+} & (ComboBoxMultiProps | ComboBoxSingleProps)
 
 const ComboBoxContextProvider = createContext<ComboBoxContextType>({} as ComboBoxContextType)
+
 const useComboBoxContext = () => useContext(ComboBoxContextProvider)
 
-type ComboBoxProps = Pick<React.ComponentPropsWithoutRef<typeof Button>, "className" | "children"> & {
+type ComboBoxProps = Pick<React.ComponentPropsWithoutRef<typeof Button>, "children" | "className"> & {
 	label?: string
 } & ComboBoxContextType
 
@@ -49,15 +50,15 @@ const ComboBox = ({ children, className, label, ...contextValue }: ComboBoxProps
 	</ComboBoxContextProvider.Provider>
 )
 
-const ComboBoxTrigger = ({ className, children, ...props }: React.ComponentPropsWithoutRef<typeof Button>) => {
-	const { size, isMulti, selection } = useComboBoxContext()
+const ComboBoxTrigger = ({ children, className, ...props }: React.ComponentPropsWithoutRef<typeof Button>) => {
+	const { isMulti, selection, size } = useComboBoxContext()
 
 	return (
 		<Popover.Trigger asChild>
 			<Button
-				variant='outline-grey'
 				hasValue={(isMulti && !!selection?.length) || (!isMulti && !!selection?.value?.length)}
 				size={size}
+				variant='outline-grey'
 				{...props}
 				className={twMerge(
 					"w-full justify-between overflow-hidden py-0 !font-normal",
@@ -73,7 +74,7 @@ const ComboBoxTrigger = ({ className, children, ...props }: React.ComponentProps
 								<Badge size={size}>{selection.length} selected</Badge>
 							) : (
 								selection.map((option) => (
-									<Badge size={size} key={option.value} title={option.label}>
+									<Badge key={option.value} size={size} title={option.label}>
 										{option.label}
 									</Badge>
 								))
@@ -92,8 +93,8 @@ const ComboBoxTrigger = ({ className, children, ...props }: React.ComponentProps
 
 const ComboBoxContent = ({ children, className, ...props }: React.ComponentPropsWithoutRef<typeof Popover.Content>) => (
 	<Popover.Content
-		className={twMerge("h-[250px] w-[300px] border border-gray-300 p-0 flex-center", className)}
 		align='start'
+		className={twMerge("h-[250px] w-[300px] border border-gray-300 p-0 flex-center", className)}
 		{...props}>
 		<Suspense fallback={<Skeleton className='h-[90%] w-[90%] rounded-lg' />}>{children}</Suspense>
 	</Popover.Content>
@@ -101,20 +102,20 @@ const ComboBoxContent = ({ children, className, ...props }: React.ComponentProps
 
 // TODO: Handle Infinite Loading in Component to handle changing offset/limit Values
 export function ComboBoxPopper({
+	loading,
+	onSearch,
 	options = [],
 	searchTerm,
-	onSearch,
-	loading,
 }: {
+	children?: React.ReactNode
+	loading?: boolean
+	onSearch?: (v?: string) => void
 	options?: OptionType[]
 	searchTerm?: string
-	onSearch?: (v?: string) => void
-	loading?: boolean
-	children?: React.ReactNode
 }) {
 	const { t } = useTranslation("ui")
 
-	const { selection, updateSelection, isMulti, maxLimit, isCreatable } = useComboBoxContext()
+	const { creatable, isMulti, maxLimit, selection, updateSelection } = useComboBoxContext()
 
 	/**
 	 * Boolean to check if Limit of selected Entries has been reached (Only passed in case of Multi Selection Combobox)
@@ -128,6 +129,7 @@ export function ComboBoxPopper({
 	const isSelected = useCallback(
 		(entry: string) => {
 			if (isMulti) return selection?.some((obj) => obj?.value === entry)
+
 			return selection?.value === entry
 		},
 		[isMulti, selection]
@@ -136,16 +138,17 @@ export function ComboBoxPopper({
 	const onSelect = (option: OptionType) => {
 		if (isSelected(option?.value)) {
 			if (isMulti) return updateSelection(selection?.filter((obj) => obj?.value !== option?.value))
+
 			return updateSelection(undefined)
 		}
 
 		// Else, wasn't selected...
-
 		if (isMulti) {
 			// Can't add new entries if max limit was reached
 			if (maxLimitReached) return
 
 			const updatedSelection = new Set([...selection, option])
+
 			return updateSelection([...updatedSelection])
 		}
 
@@ -153,7 +156,7 @@ export function ComboBoxPopper({
 	}
 
 	const optionsList = useMemo(() => {
-		if (!isCreatable) return options
+		if (!creatable) return options
 
 		let listToRender = []
 
@@ -167,17 +170,19 @@ export function ComboBoxPopper({
 
 		// Stringifying entries so that duplicated would be nicely removed using Set
 		const stringifiedSet = new Set(listToRender.map((item) => JSON.stringify(item)))
+
 		// Parsing entries back to objects
 		const parsedArray: OptionType[] = Array.from(stringifiedSet).map((item) => JSON.parse(item))
+
 		// remove entries not found after search operation
 		if (!!searchTerm?.length && !options?.length)
 			return parsedArray?.filter((op) => op?.value?.toLocaleLowerCase()?.includes(searchTerm?.toLocaleLowerCase()))
 
 		return parsedArray
-	}, [options, isMulti, selection, isCreatable, searchTerm])
+	}, [options, isMulti, selection, creatable, searchTerm])
 
 	const canShowCreatable = Boolean(
-		isCreatable &&
+		creatable &&
 			searchTerm?.length &&
 			((!isMulti && selection?.value !== searchTerm) ||
 				(isMulti && selection?.every((op) => op?.value !== searchTerm))) &&
@@ -192,13 +197,13 @@ export function ComboBoxPopper({
 	}
 
 	return (
-		<Command shouldFilter={onSearch === undefined} className='!h-full'>
-			<Command.Input placeholder={t("comboBox.placeholder")} value={searchTerm} onValueChange={onSearch} />
+		<Command className='!h-full' shouldFilter={onSearch === undefined}>
+			<Command.Input onValueChange={onSearch} placeholder={t("comboBox.placeholder")} value={searchTerm} />
 
 			<Command.List className='flex-1 [&>div]:flex [&>div]:!h-full [&>div]:flex-col'>
 				{canShowCreatable && (
 					<div className='bg-primary-50/50'>
-						<Button variant='ghost' size='sm' className='w-full justify-start' onClick={onCreate}>
+						<Button className='w-full justify-start' onClick={onCreate} size='sm' variant='ghost'>
 							Create: <span className='max-w-full truncate font-light'>{searchTerm}</span>
 						</Button>
 					</div>
@@ -217,9 +222,9 @@ export function ComboBoxPopper({
 							?.sort((a, b) => (isSelected(b.value) ? 1 : -1) - (isSelected(a.value) ? 1 : -1))
 							?.map((op) => (
 								<Command.Item
+									disabled={!isSelected(op?.value) && maxLimitReached}
 									key={op?.value}
-									onSelect={() => onSelect(op)}
-									disabled={!isSelected(op?.value) && maxLimitReached}>
+									onSelect={() => onSelect(op)}>
 									<div
 										className={twMerge(
 											"me-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary transition-all duration-100",
@@ -237,15 +242,13 @@ export function ComboBoxPopper({
 			{
 				// Clear All Entries. Shown only for Multi-selection, and if entries were already selected
 				!!isMulti && !!selection?.length && !!optionsList?.length && (
-					<>
-						<Command.Group className='border-t'>
-							<Command.Item
-								onSelect={() => updateSelection([])}
-								className='cursor-pointer justify-center text-center hover:text-primary-900'>
-								{t("comboBox.clearButton")}
-							</Command.Item>
-						</Command.Group>
-					</>
+					<Command.Group className='border-t'>
+						<Command.Item
+							className='cursor-pointer justify-center text-center hover:text-primary-900'
+							onSelect={() => updateSelection([])}>
+							{t("comboBox.clearButton")}
+						</Command.Item>
+					</Command.Group>
 				)
 			}
 		</Command>

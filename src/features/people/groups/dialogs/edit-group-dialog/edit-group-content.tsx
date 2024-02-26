@@ -1,18 +1,18 @@
 //#region Import
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
-
 import type { ErrorObject } from "@/core/lib/redux-toolkit/helpers"
-import { useEditGroupMutation } from "@/features/people/groups/api"
-import GroupForm from "@/features/people/groups/components/group-form"
 import type { GroupSchemaType } from "@/features/people/groups/schemas/group-schema"
 import type { Group } from "@/features/people/groups/types"
+
+import { useEditGroupMutation } from "@/features/people/groups/api"
+import GroupForm from "@/features/people/groups/components/group-form"
 import { Button, type UseFormReturn } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 //#endregion
 
 export interface EditGroupContentProps
-	extends Pick<Group, "groupId" | "groupName" | "description">,
+	extends Pick<Group, "description" | "groupId" | "groupName">,
 		Pick<React.ComponentPropsWithoutRef<typeof GroupForm>, "size"> {
 	/**
 	 *  Callback function used to close popover/Dialog
@@ -28,7 +28,7 @@ const EditGroupContent = ({ closeDialog, groupId, size, ...defaultValues }: Edit
 	const [triggerEditGroupMutation, { isLoading }] = useEditGroupMutation()
 
 	const onSubmit = async (data: GroupSchemaType, form: UseFormReturn<GroupSchemaType>) => {
-		await triggerEditGroupMutation({ groupId, name: data?.groupName, description: data?.groupDescription })
+		await triggerEditGroupMutation({ description: data?.groupDescription, groupId, name: data?.groupName })
 			.unwrap()
 			.then(() => {
 				toast.success(t("editSuccessMessage"))
@@ -40,13 +40,14 @@ const EditGroupContent = ({ closeDialog, groupId, size, ...defaultValues }: Edit
 				// At this moment, we're only catching one specific error for group name that already exist
 				// Can be used to catch other errors later on
 				if (error?.data?.statusCode !== 4050300) return
+
 				form.setError("groupName", { message: error.data.message })
 			})
 	}
 
 	return (
-		<GroupForm onSubmit={onSubmit} size={size} defaultValues={defaultValues}>
-			<Button type='submit' loading={isLoading} className='px-8'>
+		<GroupForm defaultValues={defaultValues} onSubmit={onSubmit} size={size}>
+			<Button className='px-8' loading={isLoading} type='submit'>
 				Save
 			</Button>
 		</GroupForm>

@@ -1,8 +1,7 @@
 //#region Import
+import { Dialog } from "@/ui"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
-
-import { Dialog } from "@/ui"
 
 const DeleteExportsDialogContent = lazy(() => import("./delete-exports-dialog-content"))
 //#endregion
@@ -17,14 +16,15 @@ interface DeleteExportsDialogProps
 
 const DeleteExportsDialog = ({ children, id, ...props }: DeleteExportsDialogProps) => {
 	const { t } = useTranslation("exports", { keyPrefix: "dialogs.deleteExports" })
+
 	const [open, setOpen] = useState(false)
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
-			<Dialog.Content title={t("title")} className='h-[201px] w-[319.5px] sm:h-[209px] sm:w-[350px]'>
-				<DeleteExportsDialogContent id={id} closeDialog={() => setOpen(false)} {...props} />
+			<Dialog.Content className='h-[201px] w-[319.5px] sm:h-[209px] sm:w-[350px]' title={t("title")}>
+				<DeleteExportsDialogContent closeDialog={() => setOpen(false)} id={id} {...props} />
 			</Dialog.Content>
 		</Dialog>
 	)

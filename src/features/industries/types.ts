@@ -8,7 +8,6 @@ import type {
 	SmsTemplateType,
 	SmsTemplateTypeOption,
 } from "../templates/sms-templates/types"
-
 import type { IndustryIconEnum } from "./constants/industries-icons-map"
 //#endregion
 
@@ -16,12 +15,12 @@ import type { IndustryIconEnum } from "./constants/industries-icons-map"
  * Shape of fetched Industry
  */
 export type IndustryType = {
-	id: string
-	name: string
-	icon: IndustryIconEnum
-	description: string
 	color: string
 	createdAt: string
+	description: string
+	icon: IndustryIconEnum
+	id: string
+	name: string
 }
 
 /**
@@ -29,17 +28,17 @@ export type IndustryType = {
  */
 export type IndustryFilter = DateRange
 
-type IndustrySearchFilter = { name?: string; any?: boolean }
+type IndustrySearchFilter = { any?: true; name?: string }
 
 /**
  * Params passed to the `getIndustries` query, used for fetching Industries
  */
-export type GetIndustriesParams = PaginationAndSorting<IndustryType> & IndustryFilter & IndustrySearchFilter
+export type GetIndustriesParams = IndustryFilter & IndustrySearchFilter & PaginationAndSorting<IndustryType>
 
 /**
  * Body Arguments passed to the `addNewIndustry` mutation, used to post a new Industry entry
  */
-export type AddNewIndustryBody = Omit<IndustryType, "id" | "createdAt">
+export type AddNewIndustryBody = Omit<IndustryType, "createdAt" | "id">
 
 /**
  * Body Arguments passed to the `updateIndustry` mutation, used to update an Industry
@@ -54,43 +53,45 @@ export type UpdateIndustryBody = Omit<IndustryType, "createdAt">
  * Shape of fetched SMS Industry Template
  */
 export type SmsIndustryTemplateType = SmsTemplateType & {
-	channel: string
-	industryId: string
-	industryName: string
-	createdAt: string
-	mostPopular: boolean
 	background: string
 	backgroundImage?: string
+	channel: string
+	createdAt: string
+	industryId: string
+	industryName: string
+	mostPopular: boolean
 }
 
 /**
  * Filters used in Filters bar, and in some api calls such as in params of `getSmsIndustryTemplates` query, and body of `deleteIndustryTemplates` mutation
  */
 export type PrebuiltTemplateFilter = DateRange & {
-	types?: SmsTemplateTypeOption[]
-	languages?: SmsTemplateLanguageOption[]
-	statuses?: SmsTemplateStatusOption[]
-	mostPopular?: boolean
-	industryId?: string
-
 	// Only used internally (Not sent to BE)
-	filterBy?: "POPULAR" | "RECENT" | "ALL"
+	filterBy?: "ALL" | "POPULAR" | "RECENT"
+	industryId?: string
+	languages?: SmsTemplateLanguageOption[]
+	mostPopular?: boolean
+	statuses?: SmsTemplateStatusOption[]
+	types?: SmsTemplateTypeOption[]
 }
-type PrebuiltTemplateSearchFilter = { name?: string; any?: boolean }
+
+type PrebuiltTemplateSearchFilter = { any?: true; name?: string }
 
 /**
  * Params passed to the `getSmsIndustryTemplates` query, used for fetching SMS Industry Templates List
  */
 export type GetSmsIndustryTemplatesParams = PaginationAndSorting<SmsIndustryTemplateType> &
 	Omit<PrebuiltTemplateFilter, "filterBy"> &
-	PrebuiltTemplateSearchFilter
+	PrebuiltTemplateSearchFilter & {
+		industryId?: string
+	}
 
 /**
  * Body Arguments passed to the `addNewSmsIndustryTemplate` mutation, used to add an Industry Template
  */
 export type AddNewSmsIndustryTemplateBody = Pick<
 	SmsIndustryTemplateType,
-	"channel" | "name" | "status" | "type" | "language" | "body" | "mostPopular" | "industryId"
+	"body" | "channel" | "industryId" | "language" | "mostPopular" | "name" | "status" | "type"
 >
 
 /**
@@ -98,7 +99,7 @@ export type AddNewSmsIndustryTemplateBody = Pick<
  */
 export type UpdateSmsIndustryTemplateBody = Pick<
 	SmsIndustryTemplateType,
-	"channel" | "name" | "status" | "type" | "language" | "body" | "mostPopular" | "industryId"
+	"body" | "channel" | "industryId" | "language" | "mostPopular" | "name" | "status" | "type"
 >
 
 /**
@@ -106,7 +107,7 @@ export type UpdateSmsIndustryTemplateBody = Pick<
  */
 export type DeleteIndustryTemplatesBody = {
 	industryId: string
-	prebuiltTemplatesIds: string[]
 	prebuiltTemplateFilter?: PrebuiltTemplateFilter
 	prebuiltTemplateSearchFilter?: PrebuiltTemplateSearchFilter
+	prebuiltTemplatesIds: string[]
 }

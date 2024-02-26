@@ -2,14 +2,14 @@
 import { lazy } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 
-const ContactsRoute = lazy(() => import("@/features/people/contacts/routes/contacts-route/contacts-route"))
+const ContactsRoute = lazy(() => import("@/features/people/contacts/routes/contacts-route"))
 //#endregion
 
 const ContactsRoutes = () => (
 	<Routes>
-		<Route path='' element={<ContactsRoute />} />
+		<Route element={<ContactsRoute />} path='' />
 
-		<Route path='*' element={<Navigate to='.' />} />
+		<Route element={<Navigate to='.' />} path='*' />
 	</Routes>
 )
 

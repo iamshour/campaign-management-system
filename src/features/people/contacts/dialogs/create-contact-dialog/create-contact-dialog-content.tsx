@@ -1,13 +1,13 @@
 //#region Import
-import { useState } from "react"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
+import type { ContactSchemaType } from "@/features/people/contacts/schemas/contact-schema"
+import type { AddNewContactBody } from "@/features/people/contacts/types"
 
 import { useAddNewContactMutation } from "@/features/people/contacts/api"
 import ContactForm from "@/features/people/contacts/components/contact-form"
-import type { ContactSchemaType } from "@/features/people/contacts/schemas/contact-schema"
-import type { AddNewContactBody } from "@/features/people/contacts/types"
 import { Button, type UseFormReturn } from "@/ui"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 //#endregion
 
 interface CreateContactDialogContentProps {
@@ -17,12 +17,12 @@ interface CreateContactDialogContentProps {
 	onClose: () => void
 }
 
-type ButtonClicked = "singleAddContact" | "multiAddContact"
+type ButtonClicked = "multiAddContact" | "singleAddContact"
 
 const CreateContactDialogContent = ({ onClose }: CreateContactDialogContentProps) => {
 	const { t } = useTranslation("contacts")
 
-	const [addContact, { isLoading }] = useAddNewContactMutation()
+	const [triggerAddContact, { isLoading }] = useAddNewContactMutation()
 
 	// tracking which button was clicked to show appropriate loader
 	const [buttonClicked, setButtonClicked] = useState<ButtonClicked | undefined>()
@@ -37,38 +37,36 @@ const CreateContactDialogContent = ({ onClose }: CreateContactDialogContentProps
 	const onSubmit = async (body: AddNewContactBody, form: UseFormReturn<ContactSchemaType>) => {
 		if (!body) return
 
-		await addContact(body)
-			.unwrap()
-			.then(() => {
-				form.reset()
+		await triggerAddContact(body).unwrap()
 
-				// Sending appropriate success message based on button clicked (Add single contact, or add multiple)
-				toast.success(t(`dialogs.addContact.message.${buttonClicked}Success`))
+		form.reset()
 
-				if (buttonClicked === "singleAddContact") onClose()
+		// Sending appropriate success message based on button clicked (Add single contact, or add multiple)
+		toast.success(t(`dialogs.addContact.message.${buttonClicked}Success`))
 
-				setButtonClicked(undefined)
-			})
+		if (buttonClicked === "singleAddContact") onClose()
+
+		setButtonClicked(undefined)
 	}
 
 	return (
 		<ContactForm onSubmit={onSubmit}>
 			<Button
-				type='submit'
 				data-form='contact-form'
-				variant='outline'
-				loading={isLoading && buttonClicked === "multiAddContact"}
 				disabled={isLoading}
-				onClick={() => setButtonClicked("multiAddContact")}>
+				loading={isLoading && buttonClicked === "multiAddContact"}
+				onClick={() => setButtonClicked("multiAddContact")}
+				type='submit'
+				variant='outline'>
 				{t("dialogs.addContact.buttons.multiAdd")}
 			</Button>
 			<Button
-				type='submit'
-				data-form='contact-form'
 				className='ms-auto'
-				loading={isLoading && buttonClicked === "singleAddContact"}
+				data-form='contact-form'
 				disabled={isLoading}
-				onClick={() => setButtonClicked("singleAddContact")}>
+				loading={isLoading && buttonClicked === "singleAddContact"}
+				onClick={() => setButtonClicked("singleAddContact")}
+				type='submit'>
 				{t("dialogs.addContact.buttons.singleAdd")}
 			</Button>
 		</ContactForm>

@@ -1,9 +1,9 @@
 //#region Import
+import { Dialog } from "@/ui"
 import { lazy, useState } from "react"
 
-import { Dialog } from "@/ui"
-
 const ImportContactsDialogContext = lazy(() => import("./import-contacts-dialog-context"))
+
 const ImportContactsDialogContent = lazy(() => import("./import-contacts-dialog-content"))
 //#endregion
 
@@ -23,13 +23,13 @@ const ImportContactsDialog = ({ children, title }: ImportContactsDialogProps) =>
 	const [open, setOpen] = useState(false)
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
 			<Dialog.Content
-				title={title}
 				className='h-[552px] w-[542px] sm:h-[705px] sm:w-[870px]'
-				onInteractOutside={(e) => e.preventDefault()}>
+				onInteractOutside={(e) => e.preventDefault()}
+				title={title}>
 				<ImportContactsDialogContext onClose={() => setOpen(false)}>
 					<ImportContactsDialogContent />
 				</ImportContactsDialogContext>

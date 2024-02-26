@@ -1,28 +1,27 @@
 //#region Import
-import { createContext, useCallback, useContext, useMemo, useState } from "react"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
+import type { ContactScreamSnakeCaseKey, ImportFileMappingBody } from "@/features/people/contacts/types"
 
 import {
 	useImportFileMappingMutation,
 	useSubmitImportContactsMutation,
 	useUploadContactsContentDataMutation,
 } from "@/features/people/contacts/api"
-import type { ContactScreamSnakeCaseKey, ImportFileMappingBody } from "@/features/people/contacts/types"
-import { Button, BackButton, Footer } from "@/ui"
+import { BackButton, Button, Footer } from "@/ui"
 import { getListOfKey, useStep } from "@/utils"
+import MdiInformationSlabCircle from "~icons/mdi/information-slab-circle"
+import { createContext, useCallback, useContext, useMemo, useState } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 
 import type { ImportContactsDialogContextProps, ImportContactsDialogContextValueType, ImportsDataType } from "./types"
-
-import MdiInformationSlabCircle from "~icons/mdi/information-slab-circle"
 //#endregion
 
 const initialImportsData: ImportsDataType = {
-	importType: "file",
 	fileHasHeader: false,
-	tags: [],
 	groups: [],
+	importType: "file",
 	previewRows: [],
+	tags: [],
 }
 
 const ImportContactsDialogContextProvider = createContext<ImportContactsDialogContextValueType>(
@@ -31,11 +30,13 @@ const ImportContactsDialogContextProvider = createContext<ImportContactsDialogCo
 
 const ImportContactsDialogContext = ({ children, onClose }: ImportContactsDialogContextProps) => {
 	const { t } = useTranslation("contacts")
-	const [currentStep, { goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep }] = useStep(3)
+
+	const [currentStep, { canGoToNextStep, canGoToPrevStep, goToNextStep, goToPrevStep }] = useStep(3)
 
 	// Used for data used throughout Dialog Usage
 	const [data, setData] = useState<Omit<ImportsDataType, "loading">>(initialImportsData)
-	const { importType, file, pastedContent, fileName, fileHasHeader, columnNameToIndexMapping, tags, groups } = data
+
+	const { columnNameToIndexMapping, file, fileHasHeader, fileName, groups, importType, pastedContent, tags } = data
 
 	/**
 	 * Callback function used to clear Dialog Data
@@ -49,6 +50,7 @@ const ImportContactsDialogContext = ({ children, onClose }: ImportContactsDialog
 	 */
 	const updateData = useCallback((newData: Partial<ImportsDataType> | React.SetStateAction<ImportsDataType>): void => {
 		if (newData instanceof Function) return setData(newData)
+
 		return setData((prev) => ({ ...prev, ...newData }))
 	}, [])
 
@@ -67,7 +69,9 @@ const ImportContactsDialogContext = ({ children, onClose }: ImportContactsDialog
 				Object.keys(columnNameToIndexMapping)?.some((key) =>
 					(["PHONE_NUMBER", "EMAIL"] as ContactScreamSnakeCaseKey[])?.includes(key as ContactScreamSnakeCaseKey)
 				)
+
 			const areGroupsSizeValid = !!groups && groups?.length <= 10
+
 			const areTagsSizeValid = !!tags && tags?.length <= 10
 
 			return (
@@ -83,7 +87,9 @@ const ImportContactsDialogContext = ({ children, onClose }: ImportContactsDialog
 	}, [importType, currentStep, file, pastedContent, fileName, fileHasHeader, columnNameToIndexMapping, tags, groups])
 
 	const [triggerUploadContactsContentData, { isLoading: uploadFileLoading }] = useUploadContactsContentDataMutation()
+
 	const [triggerImportFileMapping, { isLoading: importMappingLoading }] = useImportFileMappingMutation()
+
 	const [triggerSubmitImportContacts, { isLoading: submitImportContactsLoading }] = useSubmitImportContactsMutation()
 
 	/**
@@ -106,12 +112,14 @@ const ImportContactsDialogContext = ({ children, onClose }: ImportContactsDialog
 			formData.append("contactsFile", file as Blob)
 		} else {
 			const blob = new Blob([pastedContent!], { type: "text/plain" })
+
 			formData.append("contactsFile", blob)
 		}
 
 		const jsonBlob = new Blob([JSON.stringify({ maxPreviewColumns: 10, maxPreviewRows: 7 })], {
 			type: "application/json",
 		})
+
 		formData.append("uploadAndPreviewContactsFileRequest", jsonBlob)
 
 		await triggerUploadContactsContentData(formData)
@@ -132,13 +140,14 @@ const ImportContactsDialogContext = ({ children, onClose }: ImportContactsDialog
 	const getMappingBody = (): ImportFileMappingBody | undefined => {
 		if (!fileName || fileHasHeader == undefined || !columnNameToIndexMapping) {
 			toast.error("dialogs.importContacts.message.invalidData")
+
 			return
 		}
 
 		return {
-			fileName,
-			fileHasHeader,
 			columnNameToIndexMapping,
+			fileHasHeader,
+			fileName,
 			groups: getListOfKey(groups, "value"),
 			tags,
 		}
@@ -169,12 +178,10 @@ const ImportContactsDialogContext = ({ children, onClose }: ImportContactsDialog
 
 		if (!body) return
 
-		await triggerSubmitImportContacts(body)
-			.unwrap()
-			.then(() => {
-				toast.success(t("dialogs.importContacts.message.reviewSuccess"))
-				onClose()
-			})
+		await triggerSubmitImportContacts(body).unwrap()
+
+		toast.success(t("dialogs.importContacts.message.reviewSuccess"))
+		onClose()
 	}
 
 	/**
@@ -184,7 +191,9 @@ const ImportContactsDialogContext = ({ children, onClose }: ImportContactsDialog
 		if (!isDataValid) return toast.error("Invalid Data")
 
 		if (currentStep === 1) onFileUploadSubmit()
+
 		if (currentStep === 2) onHeadersMappingSubmit()
+
 		if (currentStep === 3 && !canGoToNextStep) ontReviewSubmit()
 	}
 
@@ -195,7 +204,7 @@ const ImportContactsDialogContext = ({ children, onClose }: ImportContactsDialog
 
 	return (
 		<ImportContactsDialogContextProvider.Provider
-			value={{ currentStep, resetData, data, updateData, uploadFileLoading }}>
+			value={{ currentStep, data, resetData, updateData, uploadFileLoading }}>
 			{canGoToPrevStep && <BackButton className='absolute start-1.5 top-1.5 ' onClick={goToPrevStep} />}
 
 			<div className='flex h-full flex-col gap-6 overflow-hidden p-2'>
@@ -215,10 +224,10 @@ const ImportContactsDialogContext = ({ children, onClose }: ImportContactsDialog
 				</div>
 
 				<Footer>
-					<Button variant='outline' onClick={onClose}>
+					<Button onClick={onClose} variant='outline'>
 						{t("ui:buttons.cancel")}
 					</Button>
-					<Button loading={loading} onClick={onNextStep} disabled={!isDataValid}>
+					<Button disabled={!isDataValid} loading={loading} onClick={onNextStep}>
 						{t(`dialogs.importContacts.${localizedFieldnameMap[currentStep]}.buttons.submit`)}
 					</Button>
 				</Footer>

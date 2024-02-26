@@ -1,26 +1,25 @@
 //#region Import
+import type { ContactScreamSnakeCaseKey } from "@/features/people/contacts/types"
+
+import { useGetInvalidContactsFileMutation } from "@/features/people/contacts/api"
+import { type IconType, isoCountryOptions } from "@/ui"
+import { getListOfKey } from "@/utils"
+import MaterialSymbolsFitbitCheckSmall from "~icons/material-symbols/fitbit-check-small"
+import PhDatabaseBold from "~icons/ph/database-bold"
+import PhWarningCircle from "~icons/ph/warning-circle"
 import { lazy } from "react"
 import toast from "react-hot-toast"
 import { Trans, useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
-import { useGetInvalidContactsFileMutation } from "@/features/people/contacts/api"
-import type { ContactScreamSnakeCaseKey } from "@/features/people/contacts/types"
-import { isoCountryOptions, type IconType } from "@/ui"
-import { getListOfKey } from "@/utils"
-
 import { useImportContactsDialogContext } from "./import-contacts-dialog-context"
-
-import MaterialSymbolsFitbitCheckSmall from "~icons/material-symbols/fitbit-check-small"
-import PhDatabaseBold from "~icons/ph/database-bold"
-import PhWarningCircle from "~icons/ph/warning-circle"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const ReviewStep = () => {
 	const {
-		data: { validationResponse, tags, groups },
+		data: { groups, tags, validationResponse },
 	} = useImportContactsDialogContext()
 
 	const { t } = useTranslation("contacts")
@@ -30,45 +29,45 @@ const ReviewStep = () => {
 	if (!validationResponse) return <DisplayError />
 
 	const {
-		totalSuccessCount,
-		totalFailedCount,
-		countryCountMap,
-		invalidContactsFailedCount,
 		alreadyExistMap,
+		countryCountMap,
 		invalidContactsExportFileName,
+		invalidContactsFailedCount,
+		totalFailedCount,
+		totalSuccessCount,
 	} = validationResponse
 
 	const countryCountMapEntries = Object.entries(countryCountMap)
+
 	const alreadyExistMapEntries = Object.entries(alreadyExistMap) as unknown as [ContactScreamSnakeCaseKey, string][]
 
 	const handleDownload = async () => {
 		if (!invalidContactsExportFileName) return
 
-		await triggerGetInvalidContactsFile(invalidContactsExportFileName)
-			.unwrap()
-			.then(() => toast.success(t("dialogs.importContacts.message.downloadFileSuccess")))
+		await triggerGetInvalidContactsFile(invalidContactsExportFileName).unwrap()
+		toast.success(t("dialogs.importContacts.message.downloadFileSuccess"))
 	}
 
 	return (
 		<div className='flex h-full w-full flex-1 flex-col overflow-y-auto p-2'>
 			<div className='flex w-full flex-wrap rounded-[18px] border border-[#DADADA] bg-[#EFEFEF] p-4'>
 				<Card
-					icon={PhDatabaseBold}
-					count={totalSuccessCount + totalFailedCount}
-					label={t("dialogs.importContacts.fileReview.cards.allRows")}
 					className='text-primary-600'
+					count={totalSuccessCount + totalFailedCount}
+					icon={PhDatabaseBold}
+					label={t("dialogs.importContacts.fileReview.cards.allRows")}
 				/>
 				<Card
-					icon={MaterialSymbolsFitbitCheckSmall}
-					count={totalSuccessCount}
-					label={t("dialogs.importContacts.fileReview.cards.validRows")}
 					className='text-[#75AF08]'
+					count={totalSuccessCount}
+					icon={MaterialSymbolsFitbitCheckSmall}
+					label={t("dialogs.importContacts.fileReview.cards.validRows")}
 				/>
 				<Card
-					icon={PhWarningCircle}
-					count={totalFailedCount}
-					label={t("dialogs.importContacts.fileReview.cards.notValidRows")}
 					className='text-[#EB2344]'
+					count={totalFailedCount}
+					icon={PhWarningCircle}
+					label={t("dialogs.importContacts.fileReview.cards.notValidRows")}
 				/>
 			</div>
 
@@ -156,11 +155,11 @@ const ReviewStep = () => {
 }
 
 interface CardProps extends Pick<React.HTMLAttributes<HTMLDivElement>, "className"> {
-	icon: IconType
 	count: number
+	icon: IconType
 	label: string
 }
-const Card = ({ icon: Icon, count, label, className }: CardProps) => (
+const Card = ({ className, count, icon: Icon, label }: CardProps) => (
 	<div className={twMerge("flex-1 flex-col gap-1 border-l border-l-gray-300 flex-center first:border-none", className)}>
 		<Icon className='shrink-0 text-xl text-inherit' />
 		<p className='text-center text-xl font-bold text-primary-600'>{count ?? 0}</p>

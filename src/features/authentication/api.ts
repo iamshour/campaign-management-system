@@ -6,7 +6,7 @@ const authApi = api.injectEndpoints({
 	endpoints: (build) => ({
 		login: build.mutation({
 			queryFn: async (body, api, extraOptions, baseQuery) => {
-				const response = await baseQuery({ url: "/login", method: "POST", body })
+				const response = await baseQuery({ body, method: "POST", url: "/login" })
 
 				return response
 			},

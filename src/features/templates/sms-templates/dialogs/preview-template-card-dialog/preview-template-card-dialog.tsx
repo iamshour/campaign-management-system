@@ -1,8 +1,8 @@
 //#region Import
-import { lazy } from "react"
-
 import type { SmsIndustryTemplateType } from "@/features/industries/types"
+
 import { Dialog } from "@/ui"
+import { lazy } from "react"
 
 const SmsPrebuiltTemplateCard = lazy(
 	() => import("@/features/templates/sms-templates/views/sms-prebuilt-templates-view/sms-prebuilt-template-card")
@@ -11,7 +11,7 @@ const SmsPrebuiltTemplateCard = lazy(
 
 interface PreviewTemplateCardDialogProps
 	extends Partial<
-		Pick<SmsIndustryTemplateType, "name" | "type" | "language" | "body" | "industryName" | "backgroundImage">
+		Pick<SmsIndustryTemplateType, "backgroundImage" | "body" | "industryName" | "language" | "name" | "type">
 	> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
@@ -22,7 +22,7 @@ interface PreviewTemplateCardDialogProps
 const PreviewTemplateCardDialog = ({ children, ...smsTemplate }: PreviewTemplateCardDialogProps) => (
 	<Dialog>
 		<Dialog.Trigger asChild>{children}</Dialog.Trigger>
-		<Dialog.Content title='Preview Card' className='h-[358px] w-[403px] sm:h-[366px] sm:w-[411px]'>
+		<Dialog.Content className='h-[358px] w-[403px] sm:h-[366px] sm:w-[411px]' title='Preview Card'>
 			<SmsPrebuiltTemplateCard {...smsTemplate} className='pointer-events-none cursor-auto' />
 		</Dialog.Content>
 	</Dialog>

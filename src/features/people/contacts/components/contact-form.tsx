@@ -1,28 +1,27 @@
 //#region Import
+import SelectGroupsWithCreatePopover from "@/features/people/groups/components/select-groups-with-create-popover"
+import { Footer, Form, Input, PhoneInput, Textarea, useForm, UseFormReturn } from "@/ui"
+import { cleanObject, getListOfKey } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslation } from "react-i18next"
 
-import SelectGroupsWithCreatePopover from "@/features/people/groups/components/select-groups-with-create-popover"
-import { UseFormReturn, useForm, Footer, Form, Input, PhoneInput, Textarea } from "@/ui"
-import { cleanObject, getListOfKey } from "@/utils"
-
 import type { ContactSchemaType } from "../schemas/contact-schema"
-import ContactSchema from "../schemas/contact-schema"
 import type { AddNewContactBody } from "../types"
-import { parsePhoneNumberDto } from "../utils"
 
-import SelectTagsPopover from "./select-tags-popover"
+import ContactSchema from "../schemas/contact-schema"
+import { parsePhoneNumberDto } from "../utils"
+import SelectTagsPopover from "./select-tags-popover/select-tags-popover"
 //#endregion
 
 interface ContactFormProps {
-	onSubmit: (data: AddNewContactBody, form: UseFormReturn<ContactSchemaType>) => void
-
 	children: React.ReactNode
 
 	defaultValues?: ContactSchemaType
+
+	onSubmit: (data: AddNewContactBody, form: UseFormReturn<ContactSchemaType>) => void
 }
 
-const ContactForm = ({ children, onSubmit, defaultValues }: ContactFormProps) => {
+const ContactForm = ({ children, defaultValues, onSubmit }: ContactFormProps) => {
 	const { t } = useTranslation("contacts")
 
 	const form = useForm<ContactSchemaType>({
@@ -48,8 +47,8 @@ const ContactForm = ({ children, onSubmit, defaultValues }: ContactFormProps) =>
 		// Reshaping Data to be sent to match Backend's POST/PUT API's body, whilst also cleaning it from any undefined/nullish/empty values
 		const cleanBody: AddNewContactBody = cleanObject({
 			...restOfData,
-			phoneNumberDto: parsePhoneNumberDto(phoneNumber),
 			groups: getListOfKey(groups, "value"),
+			phoneNumberDto: parsePhoneNumberDto(phoneNumber),
 		})
 
 		onSubmit(cleanBody, form)
@@ -58,6 +57,7 @@ const ContactForm = ({ children, onSubmit, defaultValues }: ContactFormProps) =>
 	return (
 		<Form {...form}>
 			<form
+				className='h-full w-full overflow-y-auto p-2'
 				onSubmit={(e) => {
 					e.preventDefault()
 
@@ -66,9 +66,9 @@ const ContactForm = ({ children, onSubmit, defaultValues }: ContactFormProps) =>
 					 * This is a fix for: contact form being submitted when the submit button of "Create Group" popover is clicked
 					 */
 					const submitterButton = (e?.nativeEvent as SubmitEvent)?.submitter
+
 					if (submitterButton?.dataset?.form === "contact-form") form.handleSubmit(onFormSubmit)()
-				}}
-				className='h-full w-full overflow-y-auto p-2'>
+				}}>
 				{form?.formState?.errors?.root?.type === "required" && (
 					<Form.Message className='ps-4'>{form?.formState?.errors?.root?.message}</Form.Message>
 				)}
@@ -81,7 +81,7 @@ const ContactForm = ({ children, onSubmit, defaultValues }: ContactFormProps) =>
 							<Form.Item>
 								<Form.Label>{t("fields.firstName")}</Form.Label>
 								<Form.Control>
-									<Input size='lg' placeholder={t("components.contactForm.placeholders.firstName")} {...field} />
+									<Input placeholder={t("components.contactForm.placeholders.firstName")} size='lg' {...field} />
 								</Form.Control>
 								<Form.Message />
 							</Form.Item>
@@ -94,7 +94,7 @@ const ContactForm = ({ children, onSubmit, defaultValues }: ContactFormProps) =>
 							<Form.Item>
 								<Form.Label>{t("fields.lastName")}</Form.Label>
 								<Form.Control>
-									<Input size='lg' placeholder={t("components.contactForm.placeholders.lastName")} {...field} />
+									<Input placeholder={t("components.contactForm.placeholders.lastName")} size='lg' {...field} />
 								</Form.Control>
 								<Form.Message />
 							</Form.Item>
@@ -108,7 +108,7 @@ const ContactForm = ({ children, onSubmit, defaultValues }: ContactFormProps) =>
 							<Form.Item>
 								<Form.Label>{t("fields.email")}</Form.Label>
 								<Form.Control>
-									<Input size='lg' placeholder={t("components.contactForm.placeholders.email")} {...field} />
+									<Input placeholder={t("components.contactForm.placeholders.email")} size='lg' {...field} />
 								</Form.Control>
 								<Form.Message />
 							</Form.Item>
@@ -136,12 +136,12 @@ const ContactForm = ({ children, onSubmit, defaultValues }: ContactFormProps) =>
 							<Form.Item>
 								<SelectGroupsWithCreatePopover
 									isMulti
-									selection={field.value || []}
-									updateSelection={(items) => form.setValue("groups", items)}
 									onCreateSuccess={(newGroup) =>
 										form.setValue("groups", field?.value?.length ? [...field.value, newGroup] : [newGroup])
 									}
+									selection={field.value || []}
 									size='lg'
+									updateSelection={(items) => form.setValue("groups", items)}
 								/>
 								<Form.Message />
 							</Form.Item>
@@ -154,16 +154,16 @@ const ContactForm = ({ children, onSubmit, defaultValues }: ContactFormProps) =>
 						render={({ field }) => (
 							<Form.Item>
 								<SelectTagsPopover
-									isCreatable
+									creatable
 									isMulti
 									selection={field.value?.map((value) => ({ label: value, value })) || []}
+									size='lg'
 									updateSelection={(items) =>
 										form.setValue(
 											"tags",
 											items?.map(({ value }) => value)
 										)
 									}
-									size='lg'
 								/>
 								<Form.Message />
 							</Form.Item>

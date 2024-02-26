@@ -1,24 +1,22 @@
 //#region Import
+import SvgSpinnersRingResize from "~icons/svg-spinners/ring-resize"
 import React, { forwardRef } from "react"
 import { Link } from "react-router-dom"
 
 import cn from "../utils/cn"
-
 import buttonVariants, { type ButtonVariantsType } from "./button-variants"
-
-import SvgSpinnersRingResize from "~icons/svg-spinners/ring-resize"
 //#endregion
 
 type CommonTypes = ButtonVariantsType & {
 	/**
-	 * Boolean used if an asychronous action is pending
-	 */
-	loading?: boolean
-
-	/**
 	 * Boolean used if button is active
 	 */
 	active?: boolean
+
+	/**
+	 * Boolean used if button is disabled
+	 */
+	disabled?: boolean
 
 	/**
 	 * Boolean used if the button holds some value (i.e. When used as combobox trigger, etc..)
@@ -26,9 +24,9 @@ type CommonTypes = ButtonVariantsType & {
 	hasValue?: boolean
 
 	/**
-	 * Boolean used if button is disabled
+	 * Boolean used if an asychronous action is pending
 	 */
-	disabled?: boolean
+	loading?: boolean
 }
 
 type ChildAsButtonProps = { as?: "button" } & React.ButtonHTMLAttributes<HTMLButtonElement>
@@ -38,7 +36,7 @@ type ButtonProps = CommonTypes & (ChildAsButtonProps | ChildAsLinkProps)
 
 const Button = forwardRef<HTMLElement, ButtonProps>(
 	(
-		{ className, variant, size, as = "button", loading = false, children, disabled, active, hasValue, ...props },
+		{ active, as = "button", children, className, disabled, hasValue, loading = false, size, variant, ...props },
 		ref
 	) => {
 		const Comp = as === "link" ? Link : "button"
@@ -46,10 +44,10 @@ const Button = forwardRef<HTMLElement, ButtonProps>(
 		return (
 			<Comp
 				{...props}
-				disabled={disabled || loading}
+				className={cn(buttonVariants({ className, size, variant }))}
 				data-active={active}
 				data-hasvalue={hasValue}
-				className={cn(buttonVariants({ variant, size, className }))}
+				disabled={disabled || loading}
 				// eslint-disable-next-line
 				// @ts-ignore
 				ref={ref}>
@@ -64,6 +62,7 @@ const Button = forwardRef<HTMLElement, ButtonProps>(
 		)
 	}
 )
+
 Button.displayName = "Button"
 
 export default Button

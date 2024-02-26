@@ -1,37 +1,37 @@
 //#region Import
-import { lazy } from "react"
-import { useParams } from "react-router-dom"
-
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetSmsIndustryTemplateByIdQuery } from "@/features/industries/api"
 import { FullViewSkeleton } from "@/ui"
+import { lazy } from "react"
+import { useParams } from "react-router-dom"
 
 const SmsIndustryTemplateView = lazy(
 	() => import("@/features/industries/views/sms-industry-template-view/sms-industry-template-view")
 )
+
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const SmsIndustryTemplateRoute = () => {
 	const { templatedId } = useParams()
 
-	const { data, isFetching, showError, error } = useGetSmsIndustryTemplateByIdQuery(templatedId!, {
-		skip: !templatedId,
-		selectFromResult: ({ data, isFetching, isError, ...rest }) => ({
+	const { data, error, isFetching, showError } = useGetSmsIndustryTemplateByIdQuery(templatedId!, {
+		selectFromResult: ({ data, isError, isFetching, ...rest }) => ({
 			data: data && {
-				body: data.body,
-				name: data.name,
-				type: data.type,
-				language: data.language,
 				background: data.background,
 				backgroundImage: data.backgroundImage,
+				body: data.body,
 				industryId: data.industryId,
 				industryName: data.industryName,
+				language: data.language,
+				name: data.name,
+				type: data.type,
 			},
-			showError: !isFetching && !!isError && !data,
 			isFetching,
+			showError: !isFetching && !!isError && !data,
 			...rest,
 		}),
+		skip: !templatedId,
 		...baseQueryConfigs,
 	})
 

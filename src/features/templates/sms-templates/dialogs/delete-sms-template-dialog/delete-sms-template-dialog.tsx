@@ -1,7 +1,6 @@
 //#region Import
-import { lazy, useState } from "react"
-
 import { Dialog } from "@/ui"
+import { lazy, useState } from "react"
 
 const DeleteSmsTemplateDialogContent = lazy(() => import("./delete-sms-template-dialog-content"))
 //#endregion
@@ -24,15 +23,15 @@ const DeleteSmsTemplateDialog = ({ children, ids }: DeleteSmsTemplateDialogProps
 	const [open, setOpen] = useState(false)
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
 			<Dialog.Content
-				title='Delete Template'
 				className={
 					ids?.length == 1 ? "h-[201px] w-[319.5px] sm:h-[209px] sm:w-[350px]" : "w-[390px] xs:h-[295px] sm:h-[303px] "
-				}>
-				<DeleteSmsTemplateDialogContent ids={ids} closeDialog={() => setOpen(false)} />
+				}
+				title='Delete Template'>
+				<DeleteSmsTemplateDialogContent closeDialog={() => setOpen(false)} ids={ids} />
 			</Dialog.Content>
 		</Dialog>
 	)

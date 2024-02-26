@@ -1,13 +1,12 @@
 //#region Import
-import { format } from "date-fns"
-import { lazy } from "react"
-import { useTranslation } from "react-i18next"
-import { twMerge } from "tailwind-merge"
-
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetContactByIdQuery } from "@/features/people/contacts/api"
 import { Badge, Input, Label, PhoneInputReadonly, Skeleton, Textarea } from "@/ui"
 import { getListOfKey } from "@/utils"
+import { format } from "date-fns"
+import { lazy } from "react"
+import { useTranslation } from "react-i18next"
+import { twMerge } from "tailwind-merge"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
@@ -15,7 +14,7 @@ const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 const ViewContactDialogContent = ({ id }: { id: string }) => {
 	const { t } = useTranslation("contacts")
 
-	const { data, isFetching, isError } = useGetContactByIdQuery(id, baseQueryConfigs)
+	const { data, isError, isFetching } = useGetContactByIdQuery(id, baseQueryConfigs)
 
 	if (isFetching) return <Skeleton className='h-full' />
 
@@ -28,7 +27,7 @@ const ViewContactDialogContent = ({ id }: { id: string }) => {
 			<ReadonlyInputField label={t("fields.email")} value={data?.email || "N/A"} />
 
 			<ReadonlyFieldLayout label={t("fields.phoneNumber")}>
-				<PhoneInputReadonly value={data?.phoneNumber || "N/A"} className='w-[calc(340px-54px-8px)]' size='lg' />
+				<PhoneInputReadonly className='w-[calc(340px-54px-8px)]' size='lg' value={data?.phoneNumber || "N/A"} />
 			</ReadonlyFieldLayout>
 
 			<ReadonlyFieldLayout label={t("fields.groups")}>
@@ -45,8 +44,8 @@ const ViewContactDialogContent = ({ id }: { id: string }) => {
 				value={data?.createdAt?.length ? format(new Date(data?.createdAt), "MM-dd-yyyy") : "N/A"}
 			/>
 
-			<ReadonlyFieldLayout label={t("fields.note")} className='col-span-2'>
-				<Textarea value={data?.note || "N/A"} readOnly className='rounded-lg' />
+			<ReadonlyFieldLayout className='col-span-2' label={t("fields.note")}>
+				<Textarea className='rounded-lg' readOnly value={data?.note || "N/A"} />
 			</ReadonlyFieldLayout>
 		</div>
 	)
@@ -55,12 +54,12 @@ const ViewContactDialogContent = ({ id }: { id: string }) => {
 export default ViewContactDialogContent
 
 const ReadonlyFieldLayout = ({
-	label,
 	children,
 	className,
+	label,
 	...props
-}: { label: string; children: React.ReactNode } & React.HTMLAttributes<HTMLDivElement>) => (
-	<div className={twMerge("w-full", className)} aria-label={label} {...props}>
+}: { children: React.ReactNode; label: string } & React.HTMLAttributes<HTMLDivElement>) => (
+	<div aria-label={label} className={twMerge("w-full", className)} {...props}>
 		<Label htmlFor={label} size='lg'>
 			{label}
 		</Label>
@@ -68,7 +67,7 @@ const ReadonlyFieldLayout = ({
 	</div>
 )
 
-const ReadonlyInputField = ({ label, value }: Record<"value" | "label", string>) => (
+const ReadonlyInputField = ({ label, value }: Record<"label" | "value", string>) => (
 	<ReadonlyFieldLayout label={label}>
 		{/* eslint-disable-next-line  */}
 		<Input size='lg' id={label} aria-label={value} value={value} readOnly autoFocus={false} />
@@ -82,9 +81,9 @@ const OptionsReadonlyField = ({ options }: { options: string[] }) => (
 		) : (
 			options?.map((option, idx) => (
 				<Badge
+					className='min-w-max max-w-[100ch] truncate rounded-md px-1 py-0.5 font-normal'
 					key={option + idx}
-					title={option}
-					className='min-w-max max-w-[100ch] truncate rounded-md px-1 py-0.5 font-normal'>
+					title={option}>
 					{option}
 				</Badge>
 			))

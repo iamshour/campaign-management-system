@@ -11,6 +11,7 @@ const incrementNumberSuffix = (s: string) => {
 		if (!match) return " 1"
 
 		const incrementedNumber = parseInt(match.trim(), 10) + 1
+
 		return ` ${incrementedNumber}`
 	})
 }

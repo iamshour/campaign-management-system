@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
 
-const NavTabs = ({ className, children }: Pick<React.HTMLAttributes<HTMLDivElement>, "className" | "children">) => (
+const NavTabs = ({ children, className }: Pick<React.HTMLAttributes<HTMLDivElement>, "children" | "className">) => (
 	<div className={twMerge("flex w-full items-center gap-4 border-b border-b-[#E9E9E9] px-6", className)}>
 		{children}
 	</div>

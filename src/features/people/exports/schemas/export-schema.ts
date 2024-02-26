@@ -1,12 +1,14 @@
 //#region Import
-import * as z from "zod"
-
 import { REGEX_FILENAME } from "@/core/constants/regex"
+import * as z from "zod"
 
 import { ContactExportField } from "../types"
 //#endregion
 
 const exportSchema = z.object({
+	exportedFields: z.array(z.nativeEnum(ContactExportField)).refine((value) => !!value?.length, {
+		message: "Please select at least one field.",
+	}),
 	fileName: z
 		.string()
 		.min(1, { message: "A minimum 1 character is required." })
@@ -14,9 +16,6 @@ const exportSchema = z.object({
 		.refine((val) => REGEX_FILENAME.test(val), {
 			message: 'The following charcters are not allowed: / : * ? " < > |',
 		}),
-	exportedFields: z.array(z.nativeEnum(ContactExportField)).refine((value) => !!value?.length, {
-		message: "Please select at least one field.",
-	}),
 })
 
 export default exportSchema

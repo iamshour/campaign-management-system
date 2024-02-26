@@ -1,8 +1,8 @@
 //#region Import
+import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 
 import api from "@/core/lib/redux-toolkit/api"
-import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
-import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
+import { transformResponse } from "@/core/lib/redux-toolkit/helpers"
 import { downloadFile } from "@/utils"
 
 import type { ContactExports, DownloadExportParams, GetExportsParams, SubmitExportsFileBody } from "./types"
@@ -10,47 +10,38 @@ import type { ContactExports, DownloadExportParams, GetExportsParams, SubmitExpo
 
 const exportsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
+		deleteExport: builder.mutation<any, string>({
+			query: (id) => ({
+				method: "DELETE",
+				responseHandler: (response: Response) => response,
+				url: `/contact/export/${id}`,
+			}),
+		}),
+
+		downloadExport: builder.mutation<any, DownloadExportParams>({
+			query: ({ fileName, id }) => ({
+				cache: "no-cache",
+				method: "GET",
+				responseHandler: async (response: Response) => {
+					if (response?.status == 200) downloadFile(fileName, await response.blob())
+
+					return response
+				},
+				url: `/contact/export/download?id=${id}`,
+			}),
+		}),
+
 		getExports: builder.query<GetListReturnType<ContactExports>, GetExportsParams>({
-			query: (params) => ({ url: "/contact/export", params }),
-			providesTags: (result) =>
-				providesList(
-					result?.list?.map(({ id }) => id),
-					"Export"
-				),
+			query: (params) => ({ params, url: "/contact/export" }),
 			transformResponse,
 		}),
 
 		submitExportsFile: builder.mutation<{ id: string }, SubmitExportsFileBody>({
-			query: (body) => ({ url: "/contact/export", method: "POST", body }),
-			invalidatesTags: (res) => (res ? [{ type: "Export", id: "LIST" }] : []),
+			query: (body) => ({ body, method: "POST", url: "/contact/export" }),
 			transformResponse,
-		}),
-
-		downloadExport: builder.mutation<any, DownloadExportParams>({
-			query: ({ id, fileName }) => ({
-				url: `/contact/export/download?id=${id}`,
-				method: "GET",
-				responseHandler: async (response: Response) => {
-					if (response?.status == 200) {
-						downloadFile(fileName, await response.blob())
-					}
-
-					return response
-				},
-				cache: "no-cache",
-			}),
-		}),
-
-		deleteExport: builder.mutation<any, string>({
-			query: (id) => ({
-				url: `/contact/export/${id}`,
-				method: "DELETE",
-				responseHandler: (response: Response) => response,
-			}),
-			invalidatesTags: (res) => (res ? [{ type: "Export", id: "LIST" }] : []),
 		}),
 	}),
 })
 
-export const { useGetExportsQuery, useDownloadExportMutation, useDeleteExportMutation, useSubmitExportsFileMutation } =
+export const { useDeleteExportMutation, useDownloadExportMutation, useGetExportsQuery, useSubmitExportsFileMutation } =
 	exportsApi

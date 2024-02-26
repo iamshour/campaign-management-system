@@ -2,14 +2,14 @@
 import { lazy } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 
-const ExportsRoute = lazy(() => import("@/features/people/exports/routes/exports-route/exports-route"))
+const ExportsRoute = lazy(() => import("@/features/people/exports/routes/exports-route"))
 //#endregion
 
 const ExportsRoutes = () => (
 	<Routes>
-		<Route path='' element={<ExportsRoute />} />
+		<Route element={<ExportsRoute />} path='' />
 
-		<Route path='*' element={<Navigate to='.' />} />
+		<Route element={<Navigate to='.' />} path='*' />
 	</Routes>
 )
 

@@ -1,9 +1,8 @@
 //#region Import
-import { useTranslation } from "react-i18next"
-
 import GroupsEmptySvg from "@/assets/groups-empty.svg?react"
 import LabelledHints from "@/core/components/labelled-hints"
 import { Button } from "@/ui"
+import { useTranslation } from "react-i18next"
 //#endregion
 
 const SegmentsEmptyView = () => {
@@ -23,7 +22,7 @@ const SegmentsEmptyView = () => {
 				<h3 className='text-center text-xl font-bold sm:text-[22px]'>{t("views.emptyView.headline")}</h3>
 				<p className='mb-6 text-center'>{t("views.emptyView.message")}</p>
 				<div className='flex-wrap gap-8 flex-center'>
-					<Button size='default' className='min-w-[200px]'>
+					<Button className='min-w-[200px]' size='default'>
 						{t("table.toolbar.actions.create-segment")}
 					</Button>
 				</div>

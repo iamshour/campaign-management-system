@@ -9,6 +9,7 @@ const formatBytes = (bytes: number, decimals = 2): string => {
 
 	// Setting base value to 1024
 	const k = 1024
+
 	const dm = decimals < 0 ? 0 : decimals
 
 	const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"]

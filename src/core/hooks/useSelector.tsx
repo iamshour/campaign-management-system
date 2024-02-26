@@ -1,7 +1,7 @@
 //#region Import
-import { useSelector as useReduxSelector, type TypedUseSelectorHook } from "react-redux"
-
 import type { RootState } from "@/core/lib/redux-toolkit/root-reducer"
+
+import { type TypedUseSelectorHook, useSelector as useReduxSelector } from "react-redux"
 //#endregion
 
 const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector

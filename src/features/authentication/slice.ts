@@ -4,18 +4,23 @@ import type { AuthSliceState } from "./types"
 
 const initialState: AuthSliceState = {
 	user: {
-		name: "John Dow",
 		company: "Blue.Ai Technologies",
-		role: "BUSINESS",
 		industryId: undefined,
+		name: "John Dow",
+		role: "BUSINESS",
 		src: "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(2).webp",
 	},
 }
 
 const authSlice = createSlice({
-	name: "auth",
 	initialState,
+	name: "auth",
 	reducers: {
+		clearAuth: (state) => {
+			state.user = undefined!
+			state.token = ""
+		},
+
 		setUser: (state, { payload }: PayloadAction<AuthSliceState["user"]>) => {
 			state.user = payload
 		},
@@ -28,13 +33,9 @@ const authSlice = createSlice({
 		updateToken: (state, { payload }: PayloadAction<AuthSliceState["token"]>) => {
 			state.token = payload
 		},
-
-		clearAuth: (state) => {
-			state.user = undefined!
-			state.token = ""
-		},
 	},
 })
 
-export const { setUser, updateToken, clearAuth, switchRole } = authSlice.actions
+export const { clearAuth, setUser, switchRole, updateToken } = authSlice.actions
+
 export default authSlice.reducer

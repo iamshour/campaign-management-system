@@ -1,11 +1,10 @@
 //#region Import
-import { memo } from "react"
-import { useTranslation } from "react-i18next"
-
 import EditContactDialog from "@/features/people/contacts/dialogs/edit-contact-dialog/edit-contact-dialog"
 import MoveToGroupDialog from "@/features/people/groups/dialogs/move-to-group-dialog/move-to-group-dialog"
 import RemoveFromGroupDialog from "@/features/people/groups/dialogs/remove-from-group-dialog/remove-from-group-dialog"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
+import { memo } from "react"
+import { useTranslation } from "react-i18next"
 //#endregion
 
 const GroupViewTableActions = memo(({ id }: { id: string }) => {

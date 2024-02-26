@@ -1,35 +1,36 @@
 //#region Import
-import { useState } from "react"
-import toast from "react-hot-toast"
-
-import { useDataGridContext } from "@/core/components/data-grid"
+import { useDataGridContext } from "@/core/components/data-grid/data-grid"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
+import getSearchFilter from "@/core/utils/get-search-filter"
 import { useDeleteSmsTemplatesMutation } from "@/features/templates/sms-templates/api"
 import { DeleteSmsTemplatesBody } from "@/features/templates/sms-templates/types"
 import { Button, Footer, Input, Label } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import { useState } from "react"
+import toast from "react-hot-toast"
 //#endregion
 
 export interface DeleteSmsTemplateDialogContentProps {
 	/**
-	 * list of sms template Ids to be deleted
-	 */
-	ids: string[]
-
-	/**
 	 * Callback function used to close the dialog
 	 */
 	closeDialog: () => void
+
+	/**
+	 * list of sms template Ids to be deleted
+	 */
+	ids: string[]
 }
 
-const DeleteSmsTemplateDialogContent = ({ ids = [], closeDialog }: DeleteSmsTemplateDialogContentProps) => {
+const DeleteSmsTemplateDialogContent = ({ closeDialog, ids = [] }: DeleteSmsTemplateDialogContentProps) => {
 	const dispatch = useDispatch()
 
 	const { closeDropdown } = useDropdownStateContext()
 
 	const [triggerDeleteSmsTemplates, { isLoading }] = useDeleteSmsTemplatesMutation()
+
 	const [promptInputValue, setPromptInputValue] = useState<string>()
 
 	const { count } = useDataGridContext()
@@ -37,15 +38,16 @@ const DeleteSmsTemplateDialogContent = ({ ids = [], closeDialog }: DeleteSmsTemp
 	const { filters, searchTerm } = useSelector(({ dataGrid }) => dataGrid["sms-templates"])
 
 	const templatesToBeDeletedCount = ids.length || count
+
 	const deleteButtonDisabled = ids.length > 1 && promptInputValue !== `${templatesToBeDeletedCount}`
 
 	const onSubmit = async () => {
 		if (!templatesToBeDeletedCount) return
 
 		const body: DeleteSmsTemplatesBody = {
-			templatesIds: ids,
 			templateFilter: filters,
-			templateSearchFilter: { name: searchTerm, any: searchTerm?.length ? true : undefined },
+			templateSearchFilter: getSearchFilter<["name"]>(searchTerm, ["name"]),
+			templatesIds: ids,
 		}
 
 		await triggerDeleteSmsTemplates(body).unwrap()
@@ -54,6 +56,7 @@ const DeleteSmsTemplateDialogContent = ({ ids = [], closeDialog }: DeleteSmsTemp
 		dispatch(clearSelection("sms-templates"))
 
 		closeDialog()
+
 		if (closeDropdown !== undefined) closeDropdown()
 	}
 
@@ -68,10 +71,10 @@ const DeleteSmsTemplateDialogContent = ({ ids = [], closeDialog }: DeleteSmsTemp
 					<div>
 						<Label>Type {`"${templatesToBeDeletedCount}"`} to confirm</Label>
 						<Input
-							size='lg'
-							placeholder='Enter number'
-							value={promptInputValue}
 							onChange={(e) => setPromptInputValue(e.target.value)}
+							placeholder='Enter number'
+							size='lg'
+							value={promptInputValue}
 						/>
 					</div>
 				</>
@@ -80,7 +83,7 @@ const DeleteSmsTemplateDialogContent = ({ ids = [], closeDialog }: DeleteSmsTemp
 			)}
 
 			<Footer>
-				<Button type='submit' disabled={deleteButtonDisabled} className='px-10' onClick={onSubmit} loading={isLoading}>
+				<Button className='px-10' disabled={deleteButtonDisabled} loading={isLoading} onClick={onSubmit} type='submit'>
 					Delete
 				</Button>
 			</Footer>

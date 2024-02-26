@@ -1,5 +1,5 @@
 //#region Import
-import { Image, Fallback, Root, type AvatarImageProps } from "@radix-ui/react-avatar"
+import { type AvatarImageProps, Fallback, Image, Root } from "@radix-ui/react-avatar"
 import { forwardRef } from "react"
 import { twMerge } from "tailwind-merge"
 //#endregion
@@ -8,12 +8,12 @@ type CustomAvatarProps = {
 	fallback?: string
 	fallbackClassName?: string
 } & Pick<AvatarImageProps, "src"> &
-	Partial<Record<"className" | "imageClassName" | "fallbackClassName" | "alt", string>>
+	Partial<Record<"alt" | "className" | "fallbackClassName" | "imageClassName", string>>
 
 const Avatar = forwardRef<React.ElementRef<typeof Root>, CustomAvatarProps>(
-	({ src, alt, fallback, imageClassName, fallbackClassName, className }, ref) => (
-		<Root ref={ref} className={twMerge("relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full", className)}>
-			<Image src={src} alt={alt} className={twMerge("aspect-square h-full w-full object-cover", imageClassName)} />
+	({ alt, className, fallback, fallbackClassName, imageClassName, src }, ref) => (
+		<Root className={twMerge("relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full", className)} ref={ref}>
+			<Image alt={alt} className={twMerge("aspect-square h-full w-full object-cover", imageClassName)} src={src} />
 
 			<Fallback
 				className={twMerge(

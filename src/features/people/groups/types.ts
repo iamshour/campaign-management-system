@@ -1,6 +1,6 @@
 //#region Import
-import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
-import type { TableState } from "@/ui"
+import type { GetListReturnType, PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
+import type { DateRange } from "@/ui"
 
 import type { Contact, ContactFilter, ContactSearchFilter, GetContactsParams } from "../contacts/types"
 //#endregion
@@ -9,21 +9,24 @@ import type { Contact, ContactFilter, ContactSearchFilter, GetContactsParams } f
  * Fetched Group Type
  */
 export interface Group {
+	contactsCount: number
+	createdAt: string
+	description: string
 	groupId: string
 	groupName: string
-	description: string
-	createdAt: string
-	contactsCount: number
 }
+
+/**
+ * Filters used in Filters bar, as well as in params and body request of some api calls (`getGroups`)
+ */
+export type ContactGroupFilter = DateRange
+
+type ContactGroupSearchFilter = { any?: true; name?: string }
 
 /**
  * Params passed to the `getGroupsQuery` query, used for fetching Groups List
  */
-export type GetGroupsParams = Omit<TableState<Group>, "selection"> & {
-	name?: string
-	startDate?: string
-	endDate?: string
-}
+export type GetGroupsParams = PaginationAndSorting<Group> & ContactGroupFilter & ContactGroupSearchFilter
 
 /**
  * Returned response shape after calling the `getGroupById` query
@@ -36,16 +39,14 @@ export type GetGroupByIdReturnType = {
 /**
  * Params passed to the `getGroupByIdQuery` query, used for fetching single group by ID
  */
-export type GetGroupByIdParams = GetContactsParams & {
-	groupId: string
-}
+export type GetGroupByIdParams = GetContactsParams & { groupId: string }
 
 /**
  * Body Arguments passed to the `createGroup` query, used for creating a new group
  */
 export type CreateGroupBody = {
-	name: string
 	description?: string
+	name: string
 }
 
 /**
@@ -57,10 +58,10 @@ export type EditGroupBody = CreateGroupBody & { groupId: string }
  * Body Arguments passed to the `addContactsToGroup` mutation, used for adding contact/s to groups
  */
 export type AddContactsToGroupBody = {
-	contactsIds?: string[]
 	contactFilter?: ContactFilter
-	contactSearchFilter?: ContactSearchFilter
 	contactGroupsIds: string[]
+	contactSearchFilter?: ContactSearchFilter
+	contactsIds?: string[]
 }
 
 /**
@@ -75,12 +76,12 @@ export type AddContactsToGroupReturnType = {
  * Body Arguments passed to the `moveContactsToGroup` mutation, used to move contact/s from a group to one or more groups
  */
 export type MoveContactsToGroupBody = {
-	contactsIds?: string[]
 	contactFilter?: ContactFilter
 	contactSearchFilter?: ContactSearchFilter
-	toGroupId: string
+	contactsIds?: string[]
 	fromGroupId: string
 	moveAndDelete: boolean
+	toGroupId: string
 }
 
 /**

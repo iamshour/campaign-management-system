@@ -1,19 +1,14 @@
 //#region Import
 import type { SmsTemplateTypeOption } from "../types"
+
+import smsTemplateTypesLocaleMap from "./sms-template-types-local-map"
 //#endregion
 
-// TODO: add translation
-export const smsTemplateTypesLocaleMap: Record<SmsTemplateTypeOption, string> = {
-	PROMOTIONAL: "Promotional",
-	TRANSACTIONAL: "Transactional",
-	OTP: "OTP",
-}
-
-export const smsTemplateTypesOptions = (
-	Object.entries(smsTemplateTypesLocaleMap) as [SmsTemplateTypeOption, string][]
-)?.map(([value, label]) => ({
-	value,
-	label,
-}))
+const smsTemplateTypesOptions = (Object.entries(smsTemplateTypesLocaleMap) as [SmsTemplateTypeOption, string][])?.map(
+	([value, label]) => ({
+		label,
+		value,
+	})
+)
 
 export default smsTemplateTypesOptions

@@ -1,25 +1,23 @@
 //#region Import
+import type { SegmentRuleType } from "@/features/people/segments/types"
+
+import { emptySegmentRule } from "@/features/people/segments/constants/preset-segments"
+import { Button, Tooltip } from "@/ui"
+import IcBaselineDelete from "~icons/ic/baseline-delete"
 import { Fragment, memo } from "react"
 import { useTranslation } from "react-i18next"
 
-import { emptySegmentRule } from "@/features/people/segments/constants/preset-segments"
-import type { SegmentRuleType } from "@/features/people/segments/types"
-import { Button, Tooltip } from "@/ui"
-
 import SegmentRule from "./segment-rule"
-
-import { useSegmentsFunnelContext } from "."
-
-import IcBaselineDelete from "~icons/ic/baseline-delete"
+import { useSegmentsFunnelContext } from "./segments-funnel-editable"
 //#endregion
 
 interface SegmentConditionProps {
-	rules: SegmentRuleType[]
-
 	conditionIdx: number
+
+	rules: SegmentRuleType[]
 }
 
-const SegmentCondition = memo(({ rules, conditionIdx }: SegmentConditionProps) => {
+const SegmentCondition = memo(({ conditionIdx, rules }: SegmentConditionProps) => {
 	const { t } = useTranslation("segments", { keyPrefix: "views.editableSegmentView.items.conditions" })
 
 	const { conditionsLength, setConditions } = useSegmentsFunnelContext()
@@ -35,6 +33,7 @@ const SegmentCondition = memo(({ rules, conditionIdx }: SegmentConditionProps) =
 						...condition,
 						rules: [...condition.rules, emptySegmentRule],
 					}
+
 				return condition
 			})
 		)
@@ -52,6 +51,7 @@ const SegmentCondition = memo(({ rules, conditionIdx }: SegmentConditionProps) =
 						...condition,
 						rules: condition?.rules.filter((_, prevRuleIdx) => prevRuleIdx !== ruleIdx),
 					}
+
 				return condition
 			})
 		)
@@ -70,21 +70,21 @@ const SegmentCondition = memo(({ rules, conditionIdx }: SegmentConditionProps) =
 				{rules?.map((rule, ruleIdx) => (
 					<Fragment key={ruleIdx}>
 						<div className='flex items-center gap-2'>
-							<SegmentRule {...rule} ruleIdx={ruleIdx} conditionIdx={conditionIdx} />
+							<SegmentRule {...rule} conditionIdx={conditionIdx} ruleIdx={ruleIdx} />
 
 							{rules?.length > 1 && (
 								<Tooltip>
 									<Tooltip.Trigger asChild>
 										<Button
-											type='button'
-											onClick={() => removeRule(ruleIdx)}
 											className='h-6 w-6 shrink-0 rounded-full p-0 text-2xl'
+											onClick={() => removeRule(ruleIdx)}
+											type='button'
 											variant='destructive'>
 											-
 										</Button>
 									</Tooltip.Trigger>
 
-									<Tooltip.Content side='left' sideOffset={8} content={t("actions.deleteRule")} />
+									<Tooltip.Content content={t("actions.deleteRule")} side='left' sideOffset={8} />
 								</Tooltip>
 							)}
 						</div>
@@ -95,13 +95,13 @@ const SegmentCondition = memo(({ rules, conditionIdx }: SegmentConditionProps) =
 
 				<div className='mt-4 flex w-full items-center justify-between'>
 					<Button
-						type='button'
-						variant='outline'
-						size='sm'
 						className='w-max'
-						onClick={addRule}
 						// Max Number of allowed rules === 10
-						disabled={rules?.length >= 10}>
+						disabled={rules?.length >= 10}
+						onClick={addRule}
+						size='sm'
+						type='button'
+						variant='outline'>
 						{t("actions.andRule")}
 					</Button>
 
@@ -111,15 +111,15 @@ const SegmentCondition = memo(({ rules, conditionIdx }: SegmentConditionProps) =
 							<Tooltip>
 								<Tooltip.Trigger asChild>
 									<Button
-										type='button'
-										onClick={removeCondition}
 										className='h-max w-max p-0 text-xl text-gray-400 hover:bg-transparent hover:text-primary-700'
+										onClick={removeCondition}
+										type='button'
 										variant='ghost'>
 										<IcBaselineDelete />
 									</Button>
 								</Tooltip.Trigger>
 
-								<Tooltip.Content side='left' sideOffset={8} content={t("actions.deleteCondition")} />
+								<Tooltip.Content content={t("actions.deleteCondition")} side='left' sideOffset={8} />
 							</Tooltip>
 						)
 					}

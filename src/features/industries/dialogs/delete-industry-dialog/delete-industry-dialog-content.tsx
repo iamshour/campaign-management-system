@@ -1,12 +1,12 @@
 //#region Import
+import type { IndustryType } from "@/features/industries/types"
+
+import { useDeleteIndustryMutation } from "@/features/industries/api"
+import { Button, Footer, Input } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { Label } from "@radix-ui/react-label"
 import { useState } from "react"
 import toast from "react-hot-toast"
-
-import { useDeleteIndustryMutation } from "@/features/industries/api"
-import type { IndustryType } from "@/features/industries/types"
-import { Button, Footer, Input } from "@/ui"
-import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 //#endregion
 
 export interface DeleteIndustryDialogContentProps extends Pick<IndustryType, "id" | "name"> {
@@ -16,7 +16,7 @@ export interface DeleteIndustryDialogContentProps extends Pick<IndustryType, "id
 	closeDialog: () => void
 }
 
-const DeleteIndustryDialogContent = ({ id, name, closeDialog }: DeleteIndustryDialogContentProps) => {
+const DeleteIndustryDialogContent = ({ closeDialog, id, name }: DeleteIndustryDialogContentProps) => {
 	const [deleteIndustry, { isLoading }] = useDeleteIndustryMutation()
 
 	const { closeDropdown } = useDropdownStateContext()
@@ -46,20 +46,20 @@ const DeleteIndustryDialogContent = ({ id, name, closeDialog }: DeleteIndustryDi
 					Type <span className='cursor-text font-bold'>{`"${name}"`}</span> to confirm
 				</Label>
 				<Input
-					size='lg'
-					placeholder='Enter name'
-					value={promptInputValue}
 					onChange={(e) => setPromptInputValue(e.target.value)}
+					placeholder='Enter name'
+					size='lg'
+					value={promptInputValue}
 				/>
 			</div>
 
 			<Footer>
 				<Button
-					type='submit'
 					className='px-10'
-					onClick={onSubmit}
+					disabled={promptInputValue !== name}
 					loading={isLoading}
-					disabled={promptInputValue !== name}>
+					onClick={onSubmit}
+					type='submit'>
 					Delete
 				</Button>
 			</Footer>

@@ -1,54 +1,63 @@
 //#region Import
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Suspense, lazy } from "react"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
-import { array, object, string, any } from "zod"
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { UpdateMultipleContactsBody } from "@/features/people/contacts/types"
 
-import { useDataGridContext } from "@/core/components/data-grid"
+import { useDataGridContext } from "@/core/components/data-grid/data-grid"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
 import { useUpdateMultipleContactsMutation } from "@/features/people/contacts/api"
 import TagSchema from "@/features/people/contacts/schemas/tag-schema"
-import type { UpdateMultipleContactsBody } from "@/features/people/contacts/types"
-import { getContactFilterAndContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
+import { getContactAdvancedFilter, getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
 import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option-type-schema"
-import { useForm, Button, Footer, Form, Skeleton, type OptionType } from "@/ui"
-import { cleanObject, getListOfKey } from "@/utils"
+import { Button, Footer, Form, type OptionType, Skeleton, useForm } from "@/ui"
+import { cleanObject, getListOfKey, omit } from "@/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { lazy, Suspense } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
+import { any, array, object, string } from "zod"
 
 const Input = lazy(() => import("@/ui/input/input"))
-const SelectTagsPopover = lazy(() => import("@/features/people/contacts/components/select-tags-popover"))
+
+const SelectTagsPopover = lazy(
+	() => import("@/features/people/contacts/components/select-tags-popover/select-tags-popover")
+)
+
 const SelectGroupsWithCreatePopover = lazy(
 	() => import("@/features/people/groups/components/select-groups-with-create-popover")
 )
-const SelectGroupsPopover = lazy(() => import("@/features/people/groups/components/select-groups-popover"))
+
+const SelectGroupsPopover = lazy(
+	() => import("@/features/people/groups/components/select-groups-popover/select-groups-popover")
+)
 //#endregion
 
-type DialogActionType = "addTags" | "addToGroups" | "removeTags" | "removeFromGroups"
+type DialogActionType = "addTags" | "addToGroups" | "removeFromGroups" | "removeTags"
 
 export interface EditMultipleContactsDialogContentProps {
-	/**
-	 * Callback function used to close the dialog
-	 */
-	onClose: () => void
-
 	/**
 	 * Dialog's Action type (`add` OR `remove`), which could be used for adding or removing Tags
 	 */
 	actionType: DialogActionType
+
+	/**
+	 * Callback function used to close the dialog
+	 */
+	onClose: () => void
 }
 
-type DialogFormData = { prompt?: number; tags: string[]; groups: OptionType[] }
+type DialogFormData = { groups: OptionType[]; prompt?: number; tags: string[] }
 
 const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultipleContactsDialogContentProps) => {
 	const { t } = useTranslation("contacts")
+
 	const dispatch = useDispatch()
 
-	const { selection, filters, searchTerm } = useSelector<DataGridState<"contacts">>(
+	const { filters, searchTerm, selection } = useSelector<DataGridState<"contacts">>(
 		({ dataGrid }) => dataGrid["contacts"]
 	)
+
 	const { count } = useDataGridContext()
 
 	/**
@@ -58,6 +67,7 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 	const isTagsDialog = actionType === "addTags" || actionType === "removeTags"
 
 	const form = useForm<DialogFormData>({
+		defaultValues: isTagsDialog ? { prompt: 0, tags: [] } : { groups: [], prompt: 0 },
 		resolver: zodResolver(
 			object({
 				...schemaMap[actionType],
@@ -69,42 +79,40 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 						: any(),
 			})
 		),
-		defaultValues: isTagsDialog ? { prompt: 0, tags: [] } : { prompt: 0, groups: [] },
 	})
 
 	const [editMultipleContacts, { isLoading: submitLoading }] = useUpdateMultipleContactsMutation()
 
-	const onSubmit = async ({ tags, groups }: DialogFormData) => {
+	const onSubmit = async ({ groups, tags }: DialogFormData) => {
 		const body: UpdateMultipleContactsBody = {
-			contactsIds: !!selection && selection !== "ALL" ? selection : undefined,
-			tags: isTagsDialog ? tags : undefined,
-			groups: !isTagsDialog ? getListOfKey(groups, "value") : undefined,
 			// Returns true if the current component is used to add selected entries (tags or groups) to contact
 			addToContact: (["addTags", "addToGroups"] as DialogActionType[]).includes(actionType),
-			...getContactFilterAndContactSearchFilter(filters, searchTerm),
-			...getContactAdvancedFilter(filters?.advancedFilters),
+			contactAdvancedFilter: getContactAdvancedFilter(filters?.advancedFilters),
+			contactFilter: getContactFilter(omit(filters, ["advancedFilters"])),
+			contactSearchFilter: getContactSearchFilter(searchTerm),
+			contactsIds: !!selection && selection !== "ALL" ? selection : undefined,
+			groups: !isTagsDialog ? getListOfKey(groups, "value") : undefined,
+			tags: isTagsDialog ? tags : undefined,
 		}
 
-		// Cleaning Body from all undefined values, empty objects, and nested objects with undefined values
+		// Cleaning Body from all undefined/empty/nullish objects/nested objects
 		const cleanBody = cleanObject(body)
 
-		await editMultipleContacts(cleanBody)
-			.unwrap()
-			.then(() => {
-				// Clearing Selection list if contacts were selected using their Ids
-				if (cleanBody?.contactsIds?.length) dispatch(clearSelection("contacts"))
+		await editMultipleContacts(cleanBody).unwrap()
 
-				toast.success(t(successMessageMap[actionType]))
-				form.reset()
-				onClose()
-			})
+		// Clearing Selection list if contacts were selected using their Ids
+		if (cleanBody?.contactsIds?.length) dispatch(clearSelection("contacts"))
+
+		toast.success(t(successMessageMap[actionType]))
+		form.reset()
+		onClose()
 	}
 
 	return (
 		<Form {...form}>
 			<form
-				onSubmit={(e) => e.preventDefault()}
-				className='flex h-full flex-col justify-between gap-6 overflow-y-auto p-2'>
+				className='flex h-full flex-col justify-between gap-6 overflow-y-auto p-2'
+				onSubmit={(e) => e.preventDefault()}>
 				<Form.Field
 					control={form.control}
 					name={isTagsDialog ? "tags" : "groups"}
@@ -113,24 +121,22 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 							<Suspense fallback={<Skeleton className='h-[72px] w-[340px]' />}>
 								{actionType === "addTags" ? (
 									<SelectTagsPopover
-										isCreatable
+										creatable
 										isMulti
 										selection={(field.value?.map((value) => ({ label: value, value })) as OptionType[]) || []}
-										updateSelection={(items) => form.setValue("tags", getListOfKey(items, "value")!)}
 										size='lg'
+										updateSelection={(items) => form.setValue("tags", getListOfKey(items, "value")!)}
 									/>
 								) : actionType === "removeTags" ? (
 									<SelectTagsPopover
 										isMulti
 										selection={(field.value?.map((value) => ({ label: value, value })) as OptionType[]) || []}
-										updateSelection={(items) => form.setValue("tags", getListOfKey(items, "value")!)}
 										size='lg'
+										updateSelection={(items) => form.setValue("tags", getListOfKey(items, "value")!)}
 									/>
 								) : actionType === "addToGroups" ? (
 									<SelectGroupsWithCreatePopover
 										isMulti
-										selection={field.value as OptionType[]}
-										updateSelection={(items) => form.setValue("groups", items)}
 										onCreateSuccess={(newGroup) =>
 											form.setValue(
 												"groups",
@@ -139,14 +145,16 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 													: [newGroup]
 											)
 										}
+										selection={field.value as OptionType[]}
 										size='lg'
+										updateSelection={(items) => form.setValue("groups", items)}
 									/>
 								) : actionType === "removeFromGroups" ? (
 									<SelectGroupsPopover
 										isMulti
 										selection={field.value as OptionType[]}
-										updateSelection={(items) => form.setValue("groups", items)}
 										size='lg'
+										updateSelection={(items) => form.setValue("groups", items)}
 									/>
 								) : null}
 							</Suspense>
@@ -162,13 +170,13 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 
 						<Suspense fallback={<Skeleton className='h-[51px] w-[340px]' />}>
 							<Form.Field
-								name='prompt'
 								control={form.control}
+								name='prompt'
 								render={({ field }) => (
 									<Form.Item className='mb-2 w-full'>
 										<Form.Label>{t("ui:prompt-input.label", { count })}</Form.Label>
 										<Form.Control>
-											<Input size='lg' className='w-full' placeholder={t("ui:prompt-input.placeholder")} {...field} />
+											<Input className='w-full' placeholder={t("ui:prompt-input.placeholder")} size='lg' {...field} />
 										</Form.Control>
 										<Form.Message />
 									</Form.Item>
@@ -180,11 +188,11 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 
 				<Footer>
 					<Button
-						type='button'
-						onClick={form.handleSubmit(onSubmit)}
 						className='px-10'
+						disabled={selection === "ALL" && Number(form.watch("prompt")) !== count}
 						loading={submitLoading}
-						disabled={selection === "ALL" && Number(form.watch("prompt")) !== count}>
+						onClick={form.handleSubmit(onSubmit)}
+						type='button'>
 						{t(submitLabelMap[actionType])}
 					</Button>
 				</Footer>
@@ -196,6 +204,7 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 export default EditMultipleContactsDialogContent
 
 const tagsSchema = { tags: array(TagSchema).max(50, { message: "Can't select more than 10 Tags" }) }
+
 const groupsSchema = { groups: array(GroupOptionTypeSchema).max(50, { message: "Can't select more than 10 Groups" }) }
 
 /**
@@ -203,9 +212,9 @@ const groupsSchema = { groups: array(GroupOptionTypeSchema).max(50, { message: "
  */
 const schemaMap: Record<DialogActionType, any> = {
 	addTags: tagsSchema,
-	removeTags: tagsSchema,
 	addToGroups: groupsSchema,
 	removeFromGroups: groupsSchema,
+	removeTags: tagsSchema,
 }
 
 /**
@@ -214,8 +223,8 @@ const schemaMap: Record<DialogActionType, any> = {
 const messageMap: Record<DialogActionType, string> = {
 	addTags: "dialogs.editMultiple.addTags.message",
 	addToGroups: "dialogs.editMultiple.addToGroups.message",
-	removeTags: "dialogs.editMultiple.removeTags.message",
 	removeFromGroups: "dialogs.editMultiple.removeFromGroups.message",
+	removeTags: "dialogs.editMultiple.removeTags.message",
 }
 
 /**
@@ -224,8 +233,8 @@ const messageMap: Record<DialogActionType, string> = {
 const successMessageMap: Record<DialogActionType, string> = {
 	addTags: "dialogs.editMultiple.addTags.success",
 	addToGroups: "dialogs.editMultiple.addToGroups.success",
-	removeTags: "dialogs.editMultiple.removeTags.success",
 	removeFromGroups: "dialogs.editMultiple.removeFromGroups.success",
+	removeTags: "dialogs.editMultiple.removeTags.success",
 }
 
 /**
@@ -234,6 +243,6 @@ const successMessageMap: Record<DialogActionType, string> = {
 const submitLabelMap: Record<DialogActionType, string> = {
 	addTags: "dialogs.editMultiple.addTags.buttons.submit",
 	addToGroups: "dialogs.editMultiple.addToGroups.buttons.submit",
-	removeTags: "dialogs.editMultiple.removeTags.buttons.submit",
 	removeFromGroups: "dialogs.editMultiple.removeFromGroups.buttons.submit",
+	removeTags: "dialogs.editMultiple.removeTags.buttons.submit",
 }

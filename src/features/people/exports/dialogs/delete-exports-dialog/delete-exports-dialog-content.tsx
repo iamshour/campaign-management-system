@@ -1,26 +1,26 @@
 //#region Import
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
-
 import { useDeleteExportMutation } from "@/features/people/exports/api"
 import { Button, Footer } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 //#endregion
 
 export interface DeleteExportsDialogContentProps {
 	/**
-	 * Exports Id For the File we want to delete
-	 */
-	id: string
-
-	/**
 	 * Callback passed to close the dialog
 	 */
 	closeDialog: () => void
+
+	/**
+	 * Exports Id For the File we want to delete
+	 */
+	id: string
 }
 
-const DeleteExportsDialogContent = ({ id, closeDialog }: DeleteExportsDialogContentProps) => {
+const DeleteExportsDialogContent = ({ closeDialog, id }: DeleteExportsDialogContentProps) => {
 	const { t } = useTranslation("exports", { keyPrefix: "dialogs.deleteExports" })
+
 	const [triggerDeleteExport, { isLoading }] = useDeleteExportMutation()
 
 	const { closeDropdown } = useDropdownStateContext()
@@ -39,7 +39,7 @@ const DeleteExportsDialogContent = ({ id, closeDialog }: DeleteExportsDialogCont
 			<p className='w-full overflow-x-auto text-base'>{t("message.warning")}</p>
 
 			<Footer>
-				<Button type='submit' className='px-10' loading={isLoading} onClick={handleDelete}>
+				<Button className='px-10' loading={isLoading} onClick={handleDelete} type='submit'>
 					{t("actions.submit")}
 				</Button>
 			</Footer>

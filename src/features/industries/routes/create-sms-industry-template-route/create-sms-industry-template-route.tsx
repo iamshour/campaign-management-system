@@ -1,13 +1,13 @@
 //#region Import
-import { lazy } from "react"
-import { useSearchParams } from "react-router-dom"
-
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetSmsIndustryTemplateByIdQuery } from "@/features/industries/api"
 import { FullViewSkeleton } from "@/ui"
 import incrementNumberSuffix from "@/utils/increment-number-suffix"
+import { lazy } from "react"
+import { useSearchParams } from "react-router-dom"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
+
 const CreateSmsIndustryTemplateView = lazy(
 	() => import("@/features/industries/views/create-sms-industry-template-view/create-sms-industry-template-view")
 )
@@ -15,22 +15,23 @@ const CreateSmsIndustryTemplateView = lazy(
 
 const CreateSmsIndustryTemplateRoute = () => {
 	const [searchParams] = useSearchParams()
+
 	const templateId = searchParams.get("templateId") ?? ""
 
-	const { defaultValues, isFetching, isError, error } = useGetSmsIndustryTemplateByIdQuery(templateId, {
-		skip: !templateId?.length,
+	const { defaultValues, error, isError, isFetching } = useGetSmsIndustryTemplateByIdQuery(templateId, {
 		selectFromResult: ({ data, ...rest }) => ({
 			defaultValues: data && {
-				name: incrementNumberSuffix(data.name),
-				type: data.type,
-				language: data.language,
-				status: data.status,
-				body: data?.body,
 				backgroundImage: data.backgroundImage,
+				body: data?.body,
+				language: data.language,
 				mostPopular: data.mostPopular,
+				name: incrementNumberSuffix(data.name),
+				status: data.status,
+				type: data.type,
 			},
 			...rest,
 		}),
+		skip: !templateId?.length,
 		...baseQueryConfigs,
 	})
 

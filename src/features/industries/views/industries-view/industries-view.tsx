@@ -1,23 +1,24 @@
 //#region Import
+import type { SharedListViewProps } from "@/core/types"
+import type { IndustryType } from "@/features/industries/types"
+
+import DataGrid from "@/core/components/data-grid/data-grid"
+import industriesTableColumns from "@/features/industries/constants/industries-table-columns"
 import { lazy } from "react"
 import { useNavigate } from "react-router"
-
-import DataGrid from "@/core/components/data-grid"
-import type { SharedListViewProps } from "@/core/types"
-import industriesTableColumns from "@/features/industries/constants/industries-table-columns"
-import type { IndustryType } from "@/features/industries/types"
 
 import IndustryCard from "./industry-card"
 
 const IndustriesViewFiltersContent = lazy(() => import("./industries-view-filters-content"))
+
 const IndustriesViewTopBar = lazy(() => import("./industries-view-topbar"))
 //#endregion
 
-const IndustriesView = ({ count, ...tableProps }: SharedListViewProps<IndustryType>) => {
+const IndustriesView = (props: SharedListViewProps<IndustryType>) => {
 	const navigate = useNavigate()
 
 	return (
-		<DataGrid dataGridKey='industries' count={count}>
+		<DataGrid columns={industriesTableColumns} dataGridKey='industries' {...props}>
 			<DataGrid.FiltersBar>
 				<DataGrid.FiltersBar.Header />
 				<DataGrid.FiltersBar.Content>
@@ -33,11 +34,9 @@ const IndustriesView = ({ count, ...tableProps }: SharedListViewProps<IndustryTy
 
 				<DataGrid.MultiViewLayout>
 					<DataGrid.Body
+						classNames={{ emptyTableCell: "h-[calc(100vh-340px)]", wrapper: "px-4" }}
 						GridCard={IndustryCard}
-						columns={industriesTableColumns}
-						classNames={{ wrapper: "px-4", emptyTableCell: "h-[calc(100vh-340px)]" }}
 						onRowClick={({ id }) => navigate(`${id}/sms`)}
-						{...tableProps}
 					/>
 				</DataGrid.MultiViewLayout>
 

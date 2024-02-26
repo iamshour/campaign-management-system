@@ -1,42 +1,42 @@
 //#region Import
+import { Collapsible, type IconType } from "@/ui"
 import { useState } from "react"
 import { twMerge } from "tailwind-merge"
-
-import { Collapsible, type IconType } from "@/ui"
 //#endregion
 
 interface ColapsibleNavLinksProps {
+	children: React.ReactNode
+	hasActiveChild?: boolean
 	Icon: IconType
+	isNavOpen: boolean
 	label: string
 	openSidebar: () => void
-	children: React.ReactNode
-	isNavOpen: boolean
-	hasActiveChild?: boolean
 }
 
 const ColapsibleNavLinks = ({
-	Icon,
-	label,
-	isNavOpen,
-	openSidebar,
-	hasActiveChild,
 	children,
+	hasActiveChild,
+	Icon,
+	isNavOpen,
+	label,
+	openSidebar,
 }: ColapsibleNavLinksProps) => {
 	const [collapsibleOpen, setCollapsibleOpen] = useState(false)
 
 	return (
 		<Collapsible
-			open={!isNavOpen ? false : collapsibleOpen}
-			onClick={() => !isNavOpen && openSidebar()}
-			onOpenChange={(openState) => {
-				setCollapsibleOpen(openState)
-				if (!isNavOpen) openSidebar()
-			}}
 			className={twMerge(
 				"w-full overflow-hidden rounded-md bg-transparent !bg-opacity-5 text-start text-white transition-basic data-[state=open]:bg-white hover:bg-white",
 				hasActiveChild && "bg-white data-[state=closed]:!bg-opacity-20"
-			)}>
-			<Collapsible.Trigger showArrow={isNavOpen} className='p-3 prevent-selection'>
+			)}
+			onClick={() => !isNavOpen && openSidebar()}
+			onOpenChange={(openState) => {
+				setCollapsibleOpen(openState)
+
+				if (!isNavOpen) openSidebar()
+			}}
+			open={!isNavOpen ? false : collapsibleOpen}>
+			<Collapsible.Trigger className='p-3 prevent-selection' showArrow={isNavOpen}>
 				<Icon className='h-[22px] w-[22px] text-white' />
 				<span
 					className={twMerge(

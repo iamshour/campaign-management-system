@@ -1,48 +1,50 @@
 //#region Import
+import type { ContactExportFilter, ContactExportStatusOption } from "@/features/people/exports/types"
 
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import SelectExportedByPopover from "@/features/people/exports/components/select-exported-by-popover"
-import SelectStatusesPopover from "@/features/people/exports/components/select-statuses-popover"
-import type { ContactExportStatusOption } from "@/features/people/exports/types"
+import SelectExportedByPopover from "@/features/people/exports/components/select-exported-by-popover/select-exported-by-popover"
+import SelectExportsStatusesPopover from "@/features/people/exports/components/select-exports-statuses-popover/select-exports-statuses-popover"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
-
+import { memo, useCallback } from "react"
 //#endregion
 
-const ExportsViewFiltersContent = () => {
+const ExportsViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const { filters } = useSelector<DataGridState<"contacts-exports">>(({ dataGrid }) => dataGrid["contacts-exports"])
+	const filters = useSelector<ContactExportFilter | undefined>(({ dataGrid }) => dataGrid["contacts-exports"]?.filters)
+
+	const updateSelection = useCallback(
+		(newFilters?: Partial<ContactExportFilter>) => {
+			dispatch(updateFilters({ "contacts-exports": newFilters }))
+		},
+		[dispatch]
+	)
 
 	return (
 		<>
 			<DateRangePicker
-				dateRange={filters?.dateRange}
-				updateDateRange={(dateRange) => dispatch(updateFilters({ ["contacts-exports"]: { dateRange } }))}
+				dateRange={{ endDate: filters?.endDate, startDate: filters?.startDate }}
+				updateDateRange={updateSelection}
 			/>
-			<SelectStatusesPopover
+			<SelectExportsStatusesPopover
 				isMulti
-				selection={filters?.status?.map((value) => ({ label: value, value })) || []}
+				selection={filters?.statuses?.map((value) => ({ label: value, value })) || []}
 				updateSelection={(statuses) =>
-					dispatch(
-						updateFilters({
-							"contacts-exports": { status: getListOfKey(statuses, "value") as ContactExportStatusOption[] },
-						})
-					)
+					updateSelection({ statuses: getListOfKey(statuses, "value") as ContactExportStatusOption[] })
 				}
 			/>
 			<SelectExportedByPopover
 				isMulti
 				selection={filters?.exportedBy?.map((value) => ({ label: value, value })) || []}
-				updateSelection={(selection) =>
-					dispatch(updateFilters({ "contacts-exports": { exportedBy: getListOfKey(selection, "value") } }))
-				}
+				updateSelection={(selection) => updateSelection({ exportedBy: getListOfKey(selection, "value") })}
 			/>
 		</>
 	)
-}
+})
+
+ExportsViewFiltersContent.displayName = "ExportsViewFiltersContent"
 
 export default ExportsViewFiltersContent

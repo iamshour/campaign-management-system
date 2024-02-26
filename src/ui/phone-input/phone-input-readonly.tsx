@@ -3,7 +3,6 @@ import { parsePhoneNumber } from "react-phone-number-input"
 import { twMerge } from "tailwind-merge"
 
 import Input from "../input/input"
-
 import FlagIcon from "./flag-icon"
 //#endregion
 
@@ -22,7 +21,7 @@ const PhoneInputReadonly = ({ value, ...props }: PhoneInputReadonlyProps) => {
 					props?.size === "lg" ? "rounded-lg" : "rounded-md"
 				)}>
 				{countryInfo?.country ? (
-					<FlagIcon className='h-5 w-5 md:h-8 md:w-8' value={countryInfo?.country} label={countryInfo?.country} />
+					<FlagIcon className='h-5 w-5 md:h-8 md:w-8' label={countryInfo?.country} value={countryInfo?.country} />
 				) : (
 					"N/A"
 				)}
@@ -30,10 +29,10 @@ const PhoneInputReadonly = ({ value, ...props }: PhoneInputReadonlyProps) => {
 
 			<Input
 				aria-label={value}
-				value={value}
-				readOnly
 				// eslint-disable-next-line
 				autoFocus={false}
+				readOnly
+				value={value}
 				{...props}
 			/>
 		</div>

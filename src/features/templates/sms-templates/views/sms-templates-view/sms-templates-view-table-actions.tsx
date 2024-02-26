@@ -1,9 +1,9 @@
 //#region Import
-import { useNavigate } from "react-router-dom"
+import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 
 import DeleteSmsTemplateDialog from "@/features/templates/sms-templates/dialogs/delete-sms-template-dialog/delete-sms-template-dialog"
-import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
+import { useNavigate } from "react-router-dom"
 //#endregion
 
 const SmsTemplatesViewTableActions = ({ id }: Pick<SmsTemplateType, "id">) => {

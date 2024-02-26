@@ -5,15 +5,15 @@ import { cva, type VariantProps } from "class-variance-authority"
 const labelVariants = cva(
 	"block whitespace-nowrap text-sm font-medium leading-none text-[#393A3B] prevent-selection peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
 	{
+		defaultVariants: { size: "default" },
 		variants: {
 			size: {
-				xs: "pb-0.5 ps-0.5",
-				sm: "pb-1 ps-1",
 				default: "pb-1.5 ps-1.5",
 				lg: "pb-2 ps-2",
+				sm: "pb-1 ps-1",
+				xs: "pb-0.5 ps-0.5",
 			},
 		},
-		defaultVariants: { size: "default" },
 	}
 )
 

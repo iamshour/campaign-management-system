@@ -1,13 +1,13 @@
 //#region Import
-import { memo } from "react"
-
-import DeleteGroupDialog from "@/features/people/groups/dialogs/delete-group-dialog"
-import EditGroupDialog from "@/features/people/groups/dialogs/edit-group-dialog/edit-group-dialog"
 import type { Group } from "@/features/people/groups/types"
+
+import DeleteGroupDialog from "@/features/people/groups/dialogs/delete-group-dialog/delete-group-dialog"
+import EditGroupDialog from "@/features/people/groups/dialogs/edit-group-dialog/edit-group-dialog"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
+import { memo } from "react"
 //#endregion
 
-interface GroupsViewTableActionsProps extends Pick<Group, "groupId" | "groupName" | "description"> {
+interface GroupsViewTableActionsProps extends Pick<Group, "description" | "groupId" | "groupName"> {
 	/**
 	 * className to be passed to ActionsDropdown
 	 */

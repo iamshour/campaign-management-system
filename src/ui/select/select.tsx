@@ -1,37 +1,36 @@
 //#region Import
 import {
-	Root,
-	Trigger,
 	Content,
-	Label,
+	type SelectProps as DefaultSelectProps,
+	Group,
 	Item,
-	Separator,
-	Value,
-	Viewport,
-	Portal,
 	ItemIndicator,
 	ItemText,
-	Group,
-	type SelectProps as DefaultSelectProps,
-	type SelectValueProps,
-	type SelectLabelProps,
-	type SelectItemProps,
-	type SelectSeparatorProps,
+	Label,
+	Portal,
+	Root,
 	type SelectContentProps,
+	type SelectItemProps,
+	type SelectLabelProps,
+	type SelectSeparatorProps,
+	type SelectValueProps,
+	Separator,
+	Trigger,
+	Value,
+	Viewport,
 } from "@radix-ui/react-select"
+import LucideCheck from "~icons/lucide/check"
+import LucideChevronDown from "~icons/lucide/chevron-down"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
 import Button from "../button/button"
-
-import LucideCheck from "~icons/lucide/check"
-import LucideChevronDown from "~icons/lucide/chevron-down"
 //#endregion
 
 // Fixing value type below for the onValueChange callback so that the paramter takes the same type as the passed value
-type SelectProps<ValueType extends string> = Omit<DefaultSelectProps, "value" | "onValueChange"> & {
-	value?: ValueType
+type SelectProps<ValueType extends string> = Omit<DefaultSelectProps, "onValueChange" | "value"> & {
 	onValueChange?: (v: ValueType) => void
+	value?: ValueType
 }
 
 /**
@@ -74,43 +73,47 @@ function Select<ValueType extends string>(props: SelectProps<ValueType>) {
 }
 
 const SelectTrigger = ({
-	className,
 	children,
+	className,
 	showArrow = true,
 	...props
 }: React.ComponentPropsWithoutRef<typeof Button> & { showArrow?: boolean }) => (
 	<Trigger asChild>
 		<Button
-			variant='outline-grey'
 			className={twMerge(
 				`group justify-between text-opacity-90 [&>span]:inline [&>span]:flex-1 [&>span]:truncate [&>span]:text-start`,
 				className
 			)}
+			variant='outline-grey'
 			{...props}>
 			{children}
 			{showArrow && <LucideChevronDown className='h-4 w-4 shrink-0 text-gray-500 group-hover:text-primary-800' />}
 		</Button>
 	</Trigger>
 )
+
 const SelectValue = ({ placeholder, ...props }: SelectValueProps) => {
 	const { t } = useTranslation("ui")
+
 	return <Value {...props} placeholder={placeholder || t("select.placeholder")} />
 }
 
 const SelectContent = ({
 	children,
 	className,
+	position = "popper",
 	side = "bottom",
 	sideOffset = 4,
-	position = "popper",
 	...props
 }: SelectContentProps) => (
 	<Portal>
 		<Content
 			{...props}
 			className={twMerge(
-				"relative z-50 max-h-[220px] min-w-[var(--radix-select-trigger-width)] overflow-y-auto overflow-x-hidden rounded-md border border-slate-200 bg-white text-slate-950 shadow-md data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-				"duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+				`relative z-50 max-h-[220px] min-w-[var(--radix-select-trigger-width)] overflow-y-auto overflow-x-hidden rounded-md border border-slate-200 bg-white text-slate-950
+				 shadow-md data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2`,
+				`duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 
+				data-[state=open]:zoom-in-95`,
 				position === "popper" &&
 					"data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
 				className
@@ -125,10 +128,11 @@ const SelectContent = ({
 	</Portal>
 )
 
-const SelectItem = ({ className, children, showCheck = true, ...props }: SelectItemProps & { showCheck?: boolean }) => (
+const SelectItem = ({ children, className, showCheck = true, ...props }: SelectItemProps & { showCheck?: boolean }) => (
 	<Item
 		className={twMerge(
-			"relative flex w-full cursor-default select-none items-center justify-start gap-1 rounded-sm p-1.5 text-sm outline-none transition-basic data-[disabled]:pointer-events-none data-[state=checked]:!bg-primary-50/80 data-[disabled]:opacity-50 focus:bg-slate-100 focus:text-slate-900",
+			`relative flex w-full cursor-default select-none items-center justify-start gap-1 rounded-sm p-1.5 text-sm outline-none transition-basic data-[disabled]:pointer-events-none
+			 data-[state=checked]:!bg-primary-50/80 data-[disabled]:opacity-50 focus:bg-slate-100 focus:text-slate-900`,
 			className
 		)}
 		{...props}>

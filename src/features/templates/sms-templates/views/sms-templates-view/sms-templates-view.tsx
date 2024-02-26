@@ -1,24 +1,26 @@
 //#region Import
-import { lazy } from "react"
-import { useNavigate } from "react-router-dom"
-
-import DataGrid from "@/core/components/data-grid"
+import type { ColumnType } from "@/core/components/data-grid/types"
 import type { SharedListViewProps } from "@/core/types"
+import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
+
+import DataGrid from "@/core/components/data-grid/data-grid"
 import smsTemplatesTableClassNames from "@/features/templates/sms-templates/constants/sms-templates-table-classnames"
 import smsTemplatesTableColumns from "@/features/templates/sms-templates/constants/sms-templates-table-columns"
-import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
-import type { ColumnType } from "@/ui"
+import { lazy, memo } from "react"
+import { useNavigate } from "react-router-dom"
 
 const SmsTemplatesViewTopbar = lazy(() => import("./sms-templates-view-topbar"))
+
 const SmsTemplatesViewFiltersContent = lazy(() => import("./sms-templates-view-filters-content"))
+
 const SmsTemplatesViewTableActions = lazy(() => import("./sms-templates-view-table-actions"))
 //#endregion
 
-const SmsTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsTemplateType>) => {
+const SmsTemplatesView = memo((props: SharedListViewProps<SmsTemplateType>) => {
 	const navigate = useNavigate()
 
 	return (
-		<DataGrid dataGridKey='sms-templates' count={count}>
+		<DataGrid columns={columns} dataGridKey='sms-templates' {...props}>
 			<DataGrid.FiltersBar>
 				<DataGrid.FiltersBar.Header />
 				<DataGrid.FiltersBar.Content>
@@ -32,19 +34,16 @@ const SmsTemplatesView = ({ count, ...tableProps }: SharedListViewProps<SmsTempl
 					<SmsTemplatesViewTopbar />
 				</DataGrid.TopBar>
 
-				<DataGrid.Body
-					columns={columns}
-					classNames={smsTemplatesTableClassNames}
-					onRowClick={({ id }) => navigate(id)}
-					{...tableProps}
-				/>
+				<DataGrid.Body classNames={smsTemplatesTableClassNames} onRowClick={({ id }) => navigate(id)} />
 				<DataGrid.Pagination pageLimits={[10, 20, 30]}>
 					<DataGrid.Pagination.Message />
 				</DataGrid.Pagination>
 			</DataGrid.Content>
 		</DataGrid>
 	)
-}
+})
+
+SmsTemplatesView.displayName = "SmsTemplatesView"
 
 export default SmsTemplatesView
 

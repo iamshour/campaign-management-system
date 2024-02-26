@@ -1,17 +1,16 @@
 //#region Import
-import { format } from "date-fns"
-import { Suspense, lazy } from "react"
-
 import type { Group } from "@/features/people/groups/types"
-import { Button, Skeleton } from "@/ui"
 
+import { Button, Skeleton } from "@/ui"
 import IcRoundGroup from "~icons/ic/round-group"
 import IcRoundGroups from "~icons/ic/round-groups"
+import { format } from "date-fns"
+import { lazy, Suspense } from "react"
 
 const GroupsViewTableActions = lazy(() => import("./groups-view-table-actions"))
 //#endregion
 
-const GroupCard = ({ groupId, groupName, description, createdAt, contactsCount }: Group) => {
+const GroupCard = ({ contactsCount, createdAt, description, groupId, groupName }: Group) => {
 	return (
 		<div className='flex h-[250px] w-[470px] max-w-full flex-col rounded-xl shadow-[0px_0px_6px_#00000021] 3xl:w-[480px]'>
 			<div className='flex w-full justify-between gap-2 overflow-hidden border-b border-b-gray-200 p-4'>
@@ -26,9 +25,9 @@ const GroupCard = ({ groupId, groupName, description, createdAt, contactsCount }
 				<Suspense fallback={<Skeleton className='h-[40px] w-[40px]' />}>
 					<GroupsViewTableActions
 						className='rotate-90'
+						description={description}
 						groupId={groupId}
 						groupName={groupName}
-						description={description}
 					/>
 				</Suspense>
 			</div>
@@ -51,7 +50,7 @@ const GroupCard = ({ groupId, groupName, description, createdAt, contactsCount }
 			</ul>
 
 			<div className='border-t border-t-gray-200'>
-				<Button as='link' to={groupId} variant='ghost' size='lg' className='w-full rounded-xl rounded-t-none'>
+				<Button as='link' className='w-full rounded-xl rounded-t-none' size='lg' to={groupId} variant='ghost'>
 					<IcRoundGroups />
 					<span>View Contacts</span>
 				</Button>

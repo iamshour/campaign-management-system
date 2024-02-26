@@ -1,11 +1,13 @@
+//#region Import
 import type { SmsTemplateType } from "../types"
+//#endregion
 
 const smsTemplateFieldsLocaleMap: Partial<Record<keyof SmsTemplateType, string>> = {
-	name: "sms-templates:fields.name",
-	type: "sms-templates:fields.type",
 	language: "sms-templates:fields.language",
-	updatedAt: "sms-templates:fields.updatedAt",
+	name: "sms-templates:fields.name",
 	status: "sms-templates:fields.status",
+	type: "sms-templates:fields.type",
+	updatedAt: "sms-templates:fields.updatedAt",
 }
 
 export default smsTemplateFieldsLocaleMap

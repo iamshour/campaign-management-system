@@ -1,18 +1,17 @@
 //#region Import
-import { useState } from "react"
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
-import { useNavigate, useParams } from "react-router-dom"
+import type { SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
 
 import { useUpdateSmsIndustryTemplateMutation } from "@/features/industries/api"
 import SmsIndustryTemplateBuilderContent from "@/features/industries/components/sms-industry-template-builder-content/sms-industry-template-builder-content"
 import SmsIndustryTemplateSchema, {
 	type SmsIndustryTemplateSchemaType,
 } from "@/features/industries/schemas/sms-industry-template-schema"
-import type { UpdateSmsIndustryTemplateBody } from "@/features/industries/types"
 import SmsTemplateBuilder from "@/features/templates/sms-templates/components/sms-template-builder/sms-template-builder"
-import type { SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
 import { Button } from "@/ui"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
+import { useNavigate, useParams } from "react-router-dom"
 //#endregion
 
 interface EditSmsIndustryTemplateViewProps {
@@ -23,46 +22,38 @@ const EditSmsIndustryTemplateView = ({ defaultValues }: EditSmsIndustryTemplateV
 	const { t } = useTranslation("sms-templates", { keyPrefix: "components.templateBuilder" })
 
 	const navigate = useNavigate()
+
 	const { industryId, templateId } = useParams()
 
 	const [triggerUpdateSmsIndustryTemplate, { isLoading }] = useUpdateSmsIndustryTemplateMutation()
 
-	const [smsTemplateStatus, SetSmsTemplateStatus] = useState<SmsTemplateStatusOption | undefined>()
+	const [status, setStatus] = useState<SmsTemplateStatusOption | undefined>()
 
-	const onSubmit = async ({ background, ...requestBody }: SmsIndustryTemplateSchemaType) => {
-		if (!requestBody || !smsTemplateStatus) return
+	const onSubmit = async ({ background, ...formBody }: SmsIndustryTemplateSchemaType) => {
+		if (!formBody || !industryId || !templateId || !status) return
 
-		const body: UpdateSmsIndustryTemplateBody = {
-			channel: "SMS",
-			industryId: industryId ?? "",
-			...requestBody,
-			status: smsTemplateStatus,
-		}
+		const body = new FormData()
 
-		const formData = new FormData()
-
-		// add template info to request body
-		const jsonBlob = new Blob([JSON.stringify(body)], {
+		const jsonBlob = new Blob([JSON.stringify({ channel: "SMS", industryId, ...formBody, status })], {
 			type: "application/json",
 		})
-		formData.append("prebuiltTemplateRequest", jsonBlob)
+
+		body.append("prebuiltTemplateRequest", jsonBlob)
 
 		// add background image to request body
-		if (background) formData.append("background", background as Blob)
+		if (background) body.append("background", background as Blob)
 
-		await triggerUpdateSmsIndustryTemplate({ industryId: industryId!, templateId: templateId!, body: formData })
-			.unwrap()
-			.then(() => {
-				toast.success("Template updated successfully")
-				navigate(`/industries/${industryId}/sms`, { replace: true })
-			})
+		await triggerUpdateSmsIndustryTemplate({ body, industryId, templateId }).unwrap()
+
+		toast.success("Template updated successfully")
+		navigate(`/industries/${industryId}/sms`, { replace: true })
 	}
 
 	return (
 		<SmsTemplateBuilder
+			defaultValues={defaultValues}
 			label={t("editTemplate.title")}
 			onSubmit={onSubmit}
-			defaultValues={defaultValues}
 			schema={SmsIndustryTemplateSchema}>
 			<SmsTemplateBuilder.Body>
 				<SmsIndustryTemplateBuilderContent />
@@ -71,23 +62,23 @@ const EditSmsIndustryTemplateView = ({ defaultValues }: EditSmsIndustryTemplateV
 			<SmsTemplateBuilder.Footer>
 				{defaultValues?.status === "DRAFT" && (
 					<Button
-						variant='outline'
-						type='submit'
 						className='px-10'
-						loading={isLoading && smsTemplateStatus == "DRAFT"}
-						disabled={isLoading && smsTemplateStatus == "PUBLISHED"}
-						onClick={() => SetSmsTemplateStatus("DRAFT")}>
+						disabled={isLoading && status == "PUBLISHED"}
+						loading={isLoading && status == "DRAFT"}
+						onClick={() => setStatus("DRAFT")}
+						type='submit'
+						variant='outline'>
 						{t("actions.updateDraft")}
 					</Button>
 				)}
 
 				<Button
-					type='submit'
 					className='px-10'
-					loading={isLoading && smsTemplateStatus == "PUBLISHED"}
-					disabled={isLoading && smsTemplateStatus == "DRAFT"}
-					onClick={() => SetSmsTemplateStatus("PUBLISHED")}>
-					{t("actions.saveAndPublish")}
+					disabled={isLoading && status == "DRAFT"}
+					loading={isLoading && status == "PUBLISHED"}
+					onClick={() => setStatus("PUBLISHED")}
+					type='submit'>
+					{t("actions.updatedPublished")}
 				</Button>
 			</SmsTemplateBuilder.Footer>
 		</SmsTemplateBuilder>

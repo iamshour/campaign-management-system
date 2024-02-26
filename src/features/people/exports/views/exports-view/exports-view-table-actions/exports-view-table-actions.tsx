@@ -1,16 +1,15 @@
 //#region Import
+import type { ContactExports } from "@/features/people/exports/types"
+
+import DeleteExportsDialog from "@/features/people/exports/dialogs/delete-exports-dialog/delete-exports-dialog"
+import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 import { memo } from "react"
 import { useTranslation } from "react-i18next"
 
-import DeleteExportsDialog from "@/features/people/exports/dialogs/delete-exports-dialog/delete-exports-dialog"
-import type { ContactExports } from "@/features/people/exports/types"
-import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
-
 import ExportViewDownloadActionWrapper from "./exports-view-dowload-action-wrapper"
-
 //#endregion
 
-const ExportsViewTableActions = memo((props: Pick<ContactExports, "id" | "fileName" | "contactExportStatus">) => {
+const ExportsViewTableActions = memo((props: Pick<ContactExports, "contactExportStatus" | "fileName" | "id">) => {
 	const { t } = useTranslation("exports", { keyPrefix: "components.exportTableActions" })
 
 	return (

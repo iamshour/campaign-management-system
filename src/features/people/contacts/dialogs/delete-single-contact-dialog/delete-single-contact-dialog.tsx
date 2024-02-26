@@ -1,8 +1,7 @@
 //#region Import
+import { Dialog } from "@/ui"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
-
-import { Dialog } from "@/ui"
 
 const DeleteSingleContactDialogContent = lazy(() => import("./delete-single-contact-dialog-content"))
 //#endregion
@@ -17,13 +16,14 @@ interface DeleteSingleContactsDialogProps
 
 const DeleteSingleContactsDialog = ({ children, id }: DeleteSingleContactsDialogProps) => {
 	const { t } = useTranslation("contacts", { keyPrefix: "dialogs.deleteContacts" })
+
 	const [open, setOpen] = useState(false)
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
-			<Dialog.Content title={t("title.single")} className='h-[201px] w-[319.5px] sm:h-[209px] sm:w-[350px]'>
-				<DeleteSingleContactDialogContent id={id} closeDialog={() => setOpen(false)} />
+			<Dialog.Content className='h-[201px] w-[319.5px] sm:h-[209px] sm:w-[350px]' title={t("title.single")}>
+				<DeleteSingleContactDialogContent closeDialog={() => setOpen(false)} id={id} />
 			</Dialog.Content>
 		</Dialog>
 	)

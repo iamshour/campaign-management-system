@@ -1,31 +1,31 @@
 //#region Import
-import { useState } from "react"
-import toast from "react-hot-toast"
-import { useParams } from "react-router-dom"
+import type { DeleteIndustryTemplatesBody } from "@/features/industries/types"
 
-import { useDataGridContext } from "@/core/components/data-grid"
+import { useDataGridContext } from "@/core/components/data-grid/data-grid"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { useDeleteIndustryTemplatesMutation } from "@/features/industries/api"
-import type { DeleteIndustryTemplatesBody } from "@/features/industries/types"
 import { Button, Footer, Input, Label } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import { useParams } from "react-router-dom"
 //#endregion
 
 export interface DeleteIndustryTemplateDialogContentProps {
 	/**
-	 * list of Industry template Ids to be deleted
-	 */
-	ids: string[]
-
-	/**
 	 * Callback function used to close the dialog
 	 */
 	closeDialog: () => void
+
+	/**
+	 * list of Industry template Ids to be deleted
+	 */
+	ids: string[]
 }
 
-const DeleteIndustryTemplateDialogContent = ({ ids = [], closeDialog }: DeleteIndustryTemplateDialogContentProps) => {
+const DeleteIndustryTemplateDialogContent = ({ closeDialog, ids = [] }: DeleteIndustryTemplateDialogContentProps) => {
 	const { industryId } = useParams()
 
 	const dispatch = useDispatch()
@@ -33,12 +33,15 @@ const DeleteIndustryTemplateDialogContent = ({ ids = [], closeDialog }: DeleteIn
 	const { closeDropdown } = useDropdownStateContext()
 
 	const [triggerDeleteIndustryTemplates, { isLoading }] = useDeleteIndustryTemplatesMutation()
+
 	const [promptInputValue, setPromptInputValue] = useState<string>()
+
 	const { filters, searchTerm, selection } = useSelector(({ dataGrid }) => dataGrid["sms-industry-templates"])
 
 	const { count } = useDataGridContext()
 
 	const templatesToBeDeletedCount = selection === "ALL" ? count : ids.length
+
 	const deleteButtonDisabled = templatesToBeDeletedCount > 1 && promptInputValue !== `${templatesToBeDeletedCount}`
 
 	const onSubmit = async () => {
@@ -46,11 +49,11 @@ const DeleteIndustryTemplateDialogContent = ({ ids = [], closeDialog }: DeleteIn
 
 		const body: DeleteIndustryTemplatesBody = {
 			industryId,
-			prebuiltTemplatesIds: ids,
 			prebuiltTemplateFilter: !ids?.length ? filters : undefined,
 			prebuiltTemplateSearchFilter: !ids?.length
-				? { name: searchTerm, any: Boolean(searchTerm?.length) || undefined }
+				? { any: Boolean(searchTerm?.length) || undefined, name: searchTerm }
 				: undefined,
+			prebuiltTemplatesIds: ids,
 		}
 
 		await triggerDeleteIndustryTemplates(body).unwrap()
@@ -75,10 +78,10 @@ const DeleteIndustryTemplateDialogContent = ({ ids = [], closeDialog }: DeleteIn
 					<div>
 						<Label>Type {`"${templatesToBeDeletedCount}"`} to confirm</Label>
 						<Input
-							size='lg'
-							placeholder='Enter number'
-							value={promptInputValue}
 							onChange={(e) => setPromptInputValue(e.target.value)}
+							placeholder='Enter number'
+							size='lg'
+							value={promptInputValue}
 						/>
 					</div>
 				</>
@@ -87,7 +90,7 @@ const DeleteIndustryTemplateDialogContent = ({ ids = [], closeDialog }: DeleteIn
 			)}
 
 			<Footer>
-				<Button type='submit' disabled={deleteButtonDisabled} className='px-10' onClick={onSubmit} loading={isLoading}>
+				<Button className='px-10' disabled={deleteButtonDisabled} loading={isLoading} onClick={onSubmit} type='submit'>
 					Delete
 				</Button>
 			</Footer>

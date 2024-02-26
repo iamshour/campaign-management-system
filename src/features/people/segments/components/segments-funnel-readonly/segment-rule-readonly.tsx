@@ -6,7 +6,7 @@ interface SegmentRuleReadonlyProps extends OptionType {
 	showBadge?: boolean
 }
 
-const SegmentRuleReadonly = ({ label, value, showBadge }: SegmentRuleReadonlyProps) => (
+const SegmentRuleReadonly = ({ label, showBadge, value }: SegmentRuleReadonlyProps) => (
 	<div className='w-max max-w-full'>
 		<h4 className='mb-1 truncate ps-1.5 text-sm font-bold'>{label}</h4>
 

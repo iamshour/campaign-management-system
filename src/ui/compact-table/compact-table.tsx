@@ -2,7 +2,7 @@
 import { twMerge } from "tailwind-merge"
 //#endregion
 
-const CompactTable = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+const CompactTable = ({ children, className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
 	<div className={twMerge("relative h-full w-full flex-1 overflow-auto rounded-md bg-white", className)} {...props}>
 		<table className='h-full w-full min-w-max caption-bottom text-sm'>{children}</table>
 	</div>

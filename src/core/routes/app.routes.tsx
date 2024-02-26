@@ -5,8 +5,8 @@ import privateRoutes from "./private.routes"
 import publicRoutes from "./public.routes"
 
 const auth = {
-	user: "hghg",
 	token: "",
+	user: "hghg",
 }
 
 const AppRoutes = () => {

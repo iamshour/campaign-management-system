@@ -1,10 +1,10 @@
 //#region Import
 import { MAX_GSM_TOTAL_CHARS, MAX_UNICODE_TOTAL_CHARS } from "./constants/sms-template-body-constants"
 import {
-	STANDARD_GSM_REGEX,
-	EXTENDED_GSM_REGEX,
 	EMOJI_REGEX,
+	EXTENDED_GSM_REGEX,
 	PLACEHOLDER_REGEX,
+	STANDARD_GSM_REGEX,
 } from "./constants/sms-template-body-regex"
 //#endregion
 
@@ -30,6 +30,7 @@ export const checkIfHasGsmCharactersOnly = (text: string) => {
  */
 export const rearrangePlaceholders = (text: string) => {
 	const list = text.split(PLACEHOLDER_REGEX)
+
 	return list.reduce((prev, current, idx) => (idx > 0 ? prev + `{{${idx}}}` + current : current), "")
 }
 

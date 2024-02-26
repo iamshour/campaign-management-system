@@ -1,49 +1,51 @@
 //#region Import
+import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { RemoveContactsFromGroupBody } from "@/features/people/groups/types"
+
+import { useDataGridContext } from "@/core/components/data-grid/data-grid"
+import useDispatch from "@/core/hooks/useDispatch"
+import useSelector from "@/core/hooks/useSelector"
+import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
+import { getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
+import { useRemoveContactsFromGroupMutation } from "@/features/people/groups/api"
+import { Button, Footer, Form, Skeleton, useForm } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import { cleanObject } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Suspense, lazy } from "react"
+import { lazy, Suspense } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
 import { any, object, string } from "zod"
-
-import { useDataGridContext } from "@/core/components/data-grid"
-import useDispatch from "@/core/hooks/useDispatch"
-import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-import { getContactFilterAndContactSearchFilter } from "@/features/people/contacts/utils"
-import { useRemoveContactsFromGroupMutation } from "@/features/people/groups/api"
-import type { RemoveContactsFromGroupBody } from "@/features/people/groups/types"
-import { useForm, Button, Footer, Form, Skeleton } from "@/ui"
-import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
-import { cleanObject } from "@/utils"
 
 const Input = lazy(() => import("@/ui/input/input"))
 //#endregion
 
 export interface RemoveFromGroupDialogContentProps {
 	/**
-	 * Contact Id in the Group we want to remove from
-	 */
-	id?: string
-
-	/**
 	 * Callback function used to close the dialog
 	 */
 	closeDialog: () => void
+
+	/**
+	 * Contact Id in the Group we want to remove from
+	 */
+	id?: string
 }
 
-const RemoveMultiContactsFromGroup = ({ id, closeDialog }: RemoveFromGroupDialogContentProps) => {
+const RemoveMultiContactsFromGroup = ({ closeDialog, id }: RemoveFromGroupDialogContentProps) => {
 	const { t } = useTranslation("groups")
+
 	const { id: currentGroupId } = useParams()
 
 	const dispatch = useDispatch()
 
 	const { closeDropdown } = useDropdownStateContext()
 
-	const { selection, filters, searchTerm } = useSelector<DataGridState<"contacts-in-group">>(
+	const { filters, searchTerm, selection } = useSelector<DataGridState<"contacts-in-group">>(
 		({ dataGrid }) => dataGrid["contacts-in-group"]
 	)
+
 	const { count } = useDataGridContext()
 
 	const [triggerRemoveContactsFromGroup, { isLoading }] = useRemoveContactsFromGroupMutation()
@@ -51,20 +53,21 @@ const RemoveMultiContactsFromGroup = ({ id, closeDialog }: RemoveFromGroupDialog
 	const nbOfContactsToRemove = (selection === "ALL" ? count : selection?.length) ?? 0
 
 	const form = useForm<{ prompt?: number }>({
-		resolver: getResolvedFormSchema(nbOfContactsToRemove),
 		defaultValues: { prompt: 0 },
+		resolver: getResolvedFormSchema(nbOfContactsToRemove),
 	})
 
 	const onSubmit = async () => {
 		const contactsIdsToBeRemoved = id ? [id] : !!selection && selection !== "ALL" ? selection : undefined
 
 		const body: RemoveContactsFromGroupBody = {
-			contactsIds: contactsIdsToBeRemoved,
+			contactFilter: getContactFilter(filters),
 			contactGroupsIds: [currentGroupId!],
-			...getContactFilterAndContactSearchFilter(filters, searchTerm),
+			contactSearchFilter: getContactSearchFilter(searchTerm),
+			contactsIds: contactsIdsToBeRemoved,
 		}
 
-		// Cleaning Body from all undefined values, empty objects, and nested objects with undefined values
+		// Cleaning Body from all undefined/empty/nullish objects/nested objects
 		const cleanBody = cleanObject(body)
 
 		await triggerRemoveContactsFromGroup(cleanBody).unwrap()
@@ -80,19 +83,19 @@ const RemoveMultiContactsFromGroup = ({ id, closeDialog }: RemoveFromGroupDialog
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-6 overflow-y-auto p-2'>
+			<form className='flex flex-col gap-6 overflow-y-auto p-2' onSubmit={form.handleSubmit(onSubmit)}>
 				<p>{t("dialogs.remove-from-group.message", { count: nbOfContactsToRemove })}</p>
 
 				{nbOfContactsToRemove > 1 && (
 					<Suspense fallback={<Skeleton className='h-[50px]' />}>
 						<Form.Field
-							name='prompt'
 							control={form.control}
+							name='prompt'
 							render={({ field }) => (
 								<Form.Item>
 									<Form.Label>{t("ui:prompt-input.label", { count: nbOfContactsToRemove })}</Form.Label>
 									<Form.Control>
-										<Input size='lg' placeholder={t("ui:prompt-input.placeholder")} {...field} />
+										<Input placeholder={t("ui:prompt-input.placeholder")} size='lg' {...field} />
 									</Form.Control>
 									<Form.Message />
 								</Form.Item>
@@ -103,10 +106,10 @@ const RemoveMultiContactsFromGroup = ({ id, closeDialog }: RemoveFromGroupDialog
 
 				<Footer>
 					<Button
-						type='submit'
 						className='px-10'
+						disabled={nbOfContactsToRemove > 1 && Number(form.watch("prompt")) !== nbOfContactsToRemove}
 						loading={isLoading}
-						disabled={nbOfContactsToRemove > 1 && Number(form.watch("prompt")) !== nbOfContactsToRemove}>
+						type='submit'>
 						{t("dialogs.remove-from-group.actions.submit")}
 					</Button>
 				</Footer>
