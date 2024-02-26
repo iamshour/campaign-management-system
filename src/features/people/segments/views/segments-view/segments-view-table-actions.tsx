@@ -32,7 +32,7 @@ const SegmentsViewTableActions = ({ id }: { id: string }) => {
 
 			<ActionsDropdown.Separator />
 
-			<ExportFieldsDialog exportsType='segments'>
+			<ExportFieldsDialog exportsType='segments' segmentId={id}>
 				<ActionsDropdown.Item>Export</ActionsDropdown.Item>
 			</ExportFieldsDialog>
 		</ActionsDropdown>

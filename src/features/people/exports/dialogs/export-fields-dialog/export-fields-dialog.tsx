@@ -7,14 +7,14 @@ const ExportFieldsDialogContent = lazy(() => import("./export-fields-dialog-cont
 //#endregion
 
 interface ExportFieldsDialogProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof ExportFieldsDialogContent>, "exportsType"> {
+	extends Pick<React.ComponentPropsWithoutRef<typeof ExportFieldsDialogContent>, "exportsType" | "segmentId"> {
 	/**
 	 * Trigger Button/Element for triggering Contact Dilaog
 	 */
 	children: React.ReactNode
 }
 
-const ExportFieldsDialog = ({ children, exportsType }: ExportFieldsDialogProps) => {
+const ExportFieldsDialog = ({ children, exportsType, segmentId }: ExportFieldsDialogProps) => {
 	const { t } = useTranslation("exports", { keyPrefix: "dialogs.exportFields" })
 
 	const [open, setOpen] = useState(false)
@@ -24,7 +24,11 @@ const ExportFieldsDialog = ({ children, exportsType }: ExportFieldsDialogProps) 
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
 			<Dialog.Content className='h-[507px] w-[382px] sm:h-[515px] sm:w-[390px]' title={t("title")}>
-				<ExportFieldsDialogContent exportsType={exportsType} onClose={() => setOpen(false)} />
+				<ExportFieldsDialogContent
+					exportsType={exportsType}
+					onDialogClose={() => setOpen(false)}
+					segmentId={segmentId}
+				/>
 			</Dialog.Content>
 		</Dialog>
 	)

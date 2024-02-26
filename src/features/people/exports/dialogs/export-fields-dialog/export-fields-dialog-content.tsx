@@ -34,10 +34,15 @@ export interface ExportFieldsDialogContentProps {
 	/**
 	 * Callback function used to close the dialog
 	 */
-	onClose: () => void
+	onDialogClose: () => void
+
+	/**
+	 * Only Passed if component is used for exporting segments
+	 */
+	segmentId?: string
 }
 
-const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogContentProps) => {
+const ExportFieldsDialogContent = ({ exportsType, onDialogClose, segmentId }: ExportFieldsDialogContentProps) => {
 	const { t } = useTranslation("exports")
 
 	const dispatch = useDispatch()
@@ -85,6 +90,7 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 			fileName,
 		}
 
+		// Calling From Contacts-View
 		if (exportsType === "contacts") {
 			// Statically inferring type of Filters to Its Origin -- Contacts Filters used only in Contacts Table, In order to find advancedFilters without TS erros
 			const contactAdvancedFilter = getContactAdvancedFilter(
@@ -94,11 +100,19 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 			body = { ...body, contactAdvancedFilter }
 		}
 
+		// Calling From Contacts-View OR Contacts in Group View
 		if (exportsType !== "segments") {
 			body = {
 				...body,
 				contactFilter: getContactFilter(omit(filters as DataGridFilterType["contacts"], "advancedFilters")),
 				contactSearchFilter: getContactSearchFilter(searchTerm),
+			}
+		}
+
+		if (exportsType === "segments") {
+			body = {
+				...body,
+				contactAdvancedFilter: { segmentId },
 			}
 		}
 
@@ -111,8 +125,9 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 		if (cleanBody?.contactsIds) dispatch(clearSelection(exportsType as DataGridKey))
 
 		toast.success(({ id }) => <SuccessToast id={id} />)
+
 		form.reset()
-		onClose()
+		onDialogClose()
 	}
 
 	return (
