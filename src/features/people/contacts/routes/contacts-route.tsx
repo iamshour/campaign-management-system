@@ -1,10 +1,10 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { DataViewState } from "@/core/components/data-view/types"
 
+import { clearFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { clearFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { useGetContactsQuery } from "@/features/people/contacts/api"
 import { getContactAdvancedFilter, getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
 import { DataTableSkeleton } from "@/ui"
@@ -20,8 +20,8 @@ const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 const ContactsRoute = () => {
 	const dispatch = useDispatch()
 
-	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector<DataGridState<"contacts">>(
-		({ dataGrid }) => dataGrid.contacts
+	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector<DataViewState<"contacts">>(
+		({ dataView }) => dataView.contacts
 	)
 
 	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } = useGetContactsQuery(

@@ -1,11 +1,11 @@
 //#region Import
+import type { ColumnType } from "@/core/components/data-view/data-table/types"
 import type { SharedListViewProps } from "@/core/types"
 import type { Contact } from "@/features/people/contacts/types"
 
-import DataGrid from "@/core/components/data-grid/data-grid"
-import { ColumnType } from "@/core/components/data-grid/types"
+import DataView from "@/core/components/data-view/data-view"
+import { resetDataViewState } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
-import { resetAdvancedTableState } from "@/core/slices/data-grid-slice/data-grid-slice"
 import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
 import ViewContactDialog from "@/features/people/contacts/dialogs/view-contact-dialog/view-contact-dialog"
 import { lazy, useEffect, useState } from "react"
@@ -28,32 +28,32 @@ const GroupView = (props: SharedListViewProps<Contact>) => {
 	useEffect(() => {
 		return () => {
 			// Clearing All RTK-Slice data on unmount, to prevent persisting in-app persistance (for selection, filters, etc.)
-			dispatch(resetAdvancedTableState("contacts-in-group"))
+			dispatch(resetDataViewState("contacts-in-group"))
 		}
 	}, [dispatch])
 
 	return (
 		<>
-			<DataGrid columns={tableColumns} dataGridKey='contacts-in-group' {...props}>
-				<DataGrid.FiltersBar>
-					<DataGrid.FiltersBar.Header />
-					<DataGrid.FiltersBar.Content>
+			<DataView columns={tableColumns} dataViewKey='contacts-in-group' {...props}>
+				<DataView.FiltersBar>
+					<DataView.FiltersBar.Header />
+					<DataView.FiltersBar.Content>
 						<GroupViewFiltersContent />
-					</DataGrid.FiltersBar.Content>
-					<DataGrid.FiltersBar.Footer />
-				</DataGrid.FiltersBar>
+					</DataView.FiltersBar.Content>
+					<DataView.FiltersBar.Footer />
+				</DataView.FiltersBar>
 
-				<DataGrid.Content>
-					<DataGrid.TopBar>
+				<DataView.Content>
+					<DataView.TopBar>
 						<GroupViewTopbar />
-					</DataGrid.TopBar>
+					</DataView.TopBar>
 
-					<DataGrid.Body onRowClick={({ id }) => setViewContactId(id)} />
-					<DataGrid.Pagination>
-						<DataGrid.Pagination.Message />
-					</DataGrid.Pagination>
-				</DataGrid.Content>
-			</DataGrid>
+					<DataView.Body onRowClick={({ id }) => setViewContactId(id)} />
+					<DataView.Pagination>
+						<DataView.Pagination.Message />
+					</DataView.Pagination>
+				</DataView.Content>
+			</DataView>
 
 			<ViewContactDialog
 				id={viewContactId}

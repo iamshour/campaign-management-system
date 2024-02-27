@@ -1,5 +1,5 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { DataViewState } from "@/core/components/data-view/types"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
@@ -18,8 +18,8 @@ const GroupRoute = () => {
 	const { id: groupId } = useParams()
 
 	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector<
-		DataGridState<"contacts-in-group">
-	>(({ dataGrid }) => dataGrid["contacts-in-group"])
+		DataViewState<"contacts-in-group">
+	>(({ dataView }) => dataView["contacts-in-group"])
 
 	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } = useGetGroupByIdQuery(
 		{

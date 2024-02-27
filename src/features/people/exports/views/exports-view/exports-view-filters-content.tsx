@@ -1,9 +1,9 @@
 //#region Import
 import type { ContactExportFilter, ContactExportStatusOption } from "@/features/people/exports/types"
 
+import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
 import SelectExportedByPopover from "@/features/people/exports/components/select-exported-by-popover/select-exported-by-popover"
 import SelectExportsStatusesPopover from "@/features/people/exports/components/select-exports-statuses-popover/select-exports-statuses-popover"
 import { DateRangePicker } from "@/ui"
@@ -14,7 +14,9 @@ import { memo, useCallback } from "react"
 const ExportsViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const filters = useSelector<ContactExportFilter | undefined>(({ dataGrid }) => dataGrid["contacts-exports"]?.filters)
+	const filters = useSelector<ContactExportFilter | undefined>(
+		(state) => selectFilters(state, "contacts-exports") as ContactExportFilter | undefined
+	)
 
 	const updateSelection = useCallback(
 		(newFilters?: Partial<ContactExportFilter>) => {

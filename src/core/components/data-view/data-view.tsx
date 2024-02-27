@@ -1,57 +1,53 @@
 //#region Import
-import type { DataGridView } from "@/core/slices/data-grid-slice/types"
+import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type { IconType, PaginationProps } from "@/ui"
 
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import {
-	clearFilters,
-	clearSelection,
-	toggleDataGridView,
-	updatePaginationAndSorting,
-	updateSearch,
-	updateSelection,
-} from "@/core/slices/data-grid-slice/data-grid-slice"
 import { Button, Pagination, SearchInput, TableSkeleton, Tooltip } from "@/ui"
 import NoResultsFound from "@/ui/errors/no-results-found"
-import { createContext, lazy, memo, Suspense, useCallback, useContext, useEffect, useMemo } from "react"
+import { lazy, memo, Suspense, useCallback, useEffect, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
-import type { DataGridProps, DataGridTableProps, RowData } from "./types"
+import type { DataTableProps, RowData } from "./data-table/types"
+import type { DataViewProps, DataViewRenderType, Selection } from "./types"
 
 import DefaultFiltersBar from "../filters-bar"
 import IconTooltip from "../icon-tooltip/icon-tooltip"
-import DataGridTable from "./data-grid-table/data-grid-table"
+import DataTable from "./data-table/data-table"
+import DataViewContext, { useDataViewContext } from "./data-view-context"
+import {
+	clearFilters,
+	clearSelection,
+	selectPaginationAndSorting,
+	selectSelection,
+	selectView,
+	toggleView,
+	updatePaginationAndSorting,
+	updateSearch,
+	updateSelection,
+} from "./data-view-slice"
 //#endregion
 
-type DataGridContextValue<TData extends RowData> = Omit<DataGridProps<TData>, "children" | "className"> & {
-	selectionPerPage: number
-}
-const DataGridContext = createContext({} as DataGridContextValue<any>)
-
-// eslint-disable-next-line
-export const useDataGridContext = <TData extends RowData>(): DataGridContextValue<TData> =>
-	useContext(DataGridContext as React.Context<DataGridContextValue<TData>>)
-
-const DataGrid = <TData extends RowData>({
+const DataView = <TData extends RowData>({
 	children,
 	className,
 	columns,
 	count,
-	dataGridKey,
+	dataViewKey,
 	list,
 	...restValue
-}: DataGridProps<TData>) => {
+}: DataViewProps<TData>) => {
 	const dispatch = useDispatch()
 
-	const selection = useSelector(({ dataGrid }) => dataGrid[dataGridKey]?.selection)
+	const selection = useSelector<Selection>((state) => selectSelection(state, dataViewKey))
 
 	useEffect(() => {
 		return () => {
-			dispatch(clearSelection(dataGridKey))
+			dispatch(clearSelection(dataViewKey))
 		}
-	}, [dispatch, dataGridKey])
+	}, [dispatch, dataViewKey])
 
 	const selectionPerPage = useMemo(() => {
 		if (!count || !selection) return 0
@@ -66,9 +62,9 @@ const DataGrid = <TData extends RowData>({
 	}, [count, selection, list, columns])
 
 	return (
-		<DataGridContext.Provider value={{ columns, count, dataGridKey, list, selectionPerPage, ...restValue }}>
+		<DataViewContext.Provider value={{ columns, count, dataViewKey, list, selectionPerPage, ...restValue }}>
 			<div className={twMerge("flex h-full w-full flex-1 overflow-hidden", className)}>{children}</div>
-		</DataGridContext.Provider>
+		</DataViewContext.Provider>
 	)
 }
 
@@ -79,13 +75,13 @@ const FiltersBarFooter = memo(() => {
 
 	const { t } = useTranslation("common", { keyPrefix: "filters-bar" })
 
-	const { dataGridKey } = useDataGridContext()
+	const { dataViewKey } = useDataViewContext()
 
 	return (
 		<footer className='p-3 shadow-inner'>
 			<Button
 				className='h-max w-full py-2 text-lg text-primary-600'
-				onClick={() => dispatch(clearFilters(dataGridKey))}
+				onClick={() => dispatch(clearFilters(dataViewKey))}
 				size='lg'
 				variant='ghost'>
 				{t("actions.clear-all")}
@@ -100,17 +96,20 @@ const Content = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) 
 	<div className={twMerge("flex h-full w-[calc(100%-300px)] max-w-full flex-1 flex-col px-4", className)} {...props} />
 )
 
-type TopBarProps = { children?: React.ReactNode; withFilters?: boolean }
+interface TopBarProps {
+	children?: React.ReactNode
+	withFilters?: boolean
+}
 const TopBar = memo(({ children, withFilters = true }: TopBarProps) => {
 	const dispatch = useDispatch()
 
-	const { dataGridKey } = useDataGridContext()
+	const { dataViewKey } = useDataViewContext()
 
-	const { appliedFiltersCount, searchTerm } = useSelector(({ dataGrid }) => dataGrid[dataGridKey])
+	const { appliedFiltersCount, searchTerm } = useSelector(({ dataView }) => dataView[dataViewKey])
 
 	const onSearchChange = useCallback(
-		(searchTerm?: string) => dispatch(updateSearch({ [dataGridKey]: searchTerm })),
-		[dispatch, dataGridKey]
+		(searchTerm?: string) => dispatch(updateSearch({ [dataViewKey]: searchTerm })),
+		[dispatch, dataViewKey]
 	)
 
 	return (
@@ -127,14 +126,13 @@ const TopBar = memo(({ children, withFilters = true }: TopBarProps) => {
 
 TopBar.displayName = "TopBar"
 
-type DataGridBodyProps<TData extends RowData> = DataGridTableProps<TData> & {
+interface DataViewBodyProps<TData extends RowData> extends DataTableProps<TData> {
 	GridCard?: (props: TData) => JSX.Element
 }
+const DataViewBody = <TData extends RowData>({ GridCard, ...props }: DataViewBodyProps<TData>) => {
+	const { columns, count, dataViewKey, list } = useDataViewContext<TData>()
 
-const DataGridBody = <TData extends RowData>({ GridCard, ...props }: DataGridBodyProps<TData>) => {
-	const { columns, count, dataGridKey, list } = useDataGridContext<TData>()
-
-	const { view } = useSelector(({ dataGrid }) => dataGrid[dataGridKey])
+	const view = useSelector<DataViewRenderType | undefined>((state) => selectView(state, dataViewKey))
 
 	if (view === "GRID") {
 		if (!count) return <NoResultsFound />
@@ -152,7 +150,7 @@ const DataGridBody = <TData extends RowData>({ GridCard, ...props }: DataGridBod
 
 	return (
 		<Suspense fallback={<TableSkeleton className='mb-4 flex-1 px-0' colsLength={columns?.length} />}>
-			<DataGridTable {...props} />
+			<DataTable {...props} />
 		</Suspense>
 	)
 }
@@ -160,9 +158,9 @@ const DataGridBody = <TData extends RowData>({ GridCard, ...props }: DataGridBod
 const MultiViewLayout = memo(({ children }: { children: React.ReactNode }) => {
 	const dispatch = useDispatch()
 
-	const { dataGridKey } = useDataGridContext()
+	const { dataViewKey } = useDataViewContext()
 
-	const view = useSelector(({ dataGrid }) => dataGrid[dataGridKey].view)
+	const view = useSelector<DataViewRenderType | undefined>((state) => selectView(state, dataViewKey))
 
 	return (
 		<div className='flex h-full w-full flex-col overflow-hidden'>
@@ -173,7 +171,7 @@ const MultiViewLayout = memo(({ children }: { children: React.ReactNode }) => {
 							<Button
 								active={key === view}
 								className='flex h-[40px] w-[40px] rounded-md'
-								onClick={() => dispatch(toggleDataGridView({ [dataGridKey]: key }))}
+								onClick={() => dispatch(toggleView({ [dataViewKey]: key }))}
 								variant='outline-grey'>
 								<Icon className='text-lg' />
 								<p className='sr-only'>{title}</p>
@@ -192,18 +190,20 @@ const MultiViewLayout = memo(({ children }: { children: React.ReactNode }) => {
 
 MultiViewLayout.displayName = "MultiViewLayout"
 
-const DataGridPagination = (props: Pick<PaginationProps, "children" | "pageLimits">) => {
+const DataViewPagination = (props: Pick<PaginationProps, "children" | "pageLimits">) => {
 	const dispatch = useDispatch()
 
-	const { count, dataGridKey } = useDataGridContext()
+	const { count, dataViewKey } = useDataViewContext()
 
-	const paginationAndSorting = useSelector(({ dataGrid }) => dataGrid[dataGridKey]?.paginationAndSorting)
+	const paginationAndSorting = useSelector<PaginationAndSorting<any>>((state) =>
+		selectPaginationAndSorting(state, dataViewKey)
+	)
 
 	return (
 		<Pagination
 			count={count}
 			pagination={paginationAndSorting}
-			updatePagination={(pagination) => dispatch(updatePaginationAndSorting({ [dataGridKey]: pagination }))}
+			updatePagination={(pagination) => dispatch(updatePaginationAndSorting({ [dataViewKey]: pagination }))}
 			{...props}
 		/>
 	)
@@ -214,9 +214,9 @@ const PaginationMessage = memo(() => {
 
 	const { t } = useTranslation("ui", { keyPrefix: "table.pagination.messages" })
 
-	const { count, dataGridKey, selectionPerPage } = useDataGridContext()
+	const { count, dataViewKey, selectionPerPage } = useDataViewContext()
 
-	const { selection } = useSelector(({ dataGrid }) => dataGrid[dataGridKey])
+	const selection = useSelector<Selection>((state) => selectSelection(state, dataViewKey))
 
 	const isEverythingSelected = useMemo(() => selection === "ALL" || selection?.length === count, [count, selection])
 
@@ -239,7 +239,7 @@ const PaginationMessage = memo(() => {
 				{!!selection?.length && (
 					<Button
 						className='h-max py-1.5 pe-0 text-primary-800'
-						onClick={() => dispatch(updateSelection({ [dataGridKey]: isEverythingSelected ? [] : "ALL" }))}
+						onClick={() => dispatch(updateSelection({ [dataViewKey]: isEverythingSelected ? [] : "ALL" }))}
 						size='sm'
 						variant='link'>
 						{isEverythingSelected ? t("clearAllAction") : t("selectAllAction")}
@@ -256,27 +256,27 @@ const PaginationMessage = memo(() => {
 
 PaginationMessage.displayName = "PaginationMessage"
 
-// Exposing Components on DataGrid.FiltersBar: Header and Content from DefaultFiltersBar, and a custom Footer created above (FiltersBarFooter)
+// Exposing Components on DataView.FiltersBar: Header and Content from DefaultFiltersBar, and a custom Footer created above (FiltersBarFooter)
 FiltersBar.Header = DefaultFiltersBar.Header
 FiltersBar.Content = DefaultFiltersBar.Content
 FiltersBar.Footer = FiltersBarFooter
-DataGrid.FiltersBar = FiltersBar
+DataView.FiltersBar = FiltersBar
 
-DataGrid.Content = Content
-DataGrid.MultiViewLayout = MultiViewLayout
-DataGrid.Body = DataGridBody
+DataView.Content = Content
+DataView.MultiViewLayout = MultiViewLayout
+DataView.Body = DataViewBody
 
-DataGrid.TopBar = TopBar
+DataView.TopBar = TopBar
 
-// Exposing PaginationMessage on DataGrid.Pasgination.Message
-DataGridPagination.Message = PaginationMessage
-DataGrid.Pagination = DataGridPagination
+// Exposing PaginationMessage on DataView.Pasgination.Message
+DataViewPagination.Message = PaginationMessage
+DataView.Pagination = DataViewPagination
 
-export default DataGrid
+export default DataView
 
 const viewsTriggerButtons: {
 	icon: React.LazyExoticComponent<IconType>
-	key: DataGridView
+	key: DataViewRenderType
 	title: string
 }[] = [
 	{ icon: lazy(() => import("~icons/material-symbols/format-list-bulleted-rounded")), key: "LIST", title: "List View" },

@@ -1,9 +1,9 @@
 //#region Import
 import type { IndustryFilter } from "@/features/industries/types"
 
+import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { DateRangePicker } from "@/ui"
 import { memo } from "react"
 //#endregion
@@ -11,7 +11,7 @@ import { memo } from "react"
 const IndustriesViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const filters = useSelector<IndustryFilter | undefined>(({ dataGrid }) => dataGrid["industries"]?.filters)
+	const filters = useSelector<IndustryFilter | undefined>((state) => selectFilters(state, "industries"))
 
 	return (
 		<DateRangePicker

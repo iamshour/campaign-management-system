@@ -2,7 +2,7 @@
 import type { SharedListViewProps } from "@/core/types"
 import type { Group } from "@/features/people/groups/types"
 
-import DataGrid from "@/core/components/data-grid/data-grid"
+import DataView from "@/core/components/data-view/data-view"
 import grouspsTableColumns from "@/features/people/groups/constants/groups-table-columns"
 import { lazy } from "react"
 import { useNavigate } from "react-router-dom"
@@ -12,38 +12,37 @@ import GroupCard from "./group-card"
 const GroupsViewFiltersContent = lazy(() => import("./groups-view-filters-content"))
 
 const GroupsViewTopBar = lazy(() => import("./groups-view-topbar"))
-// const GroupsGridView = lazy(() => import("./grid-view"))
 //#endregion
 
 const GroupsView = (props: SharedListViewProps<Group>) => {
 	const navigate = useNavigate()
 
 	return (
-		<DataGrid columns={grouspsTableColumns} dataGridKey='groups' {...props}>
-			<DataGrid.FiltersBar>
-				<DataGrid.FiltersBar.Header />
-				<DataGrid.FiltersBar.Content>
+		<DataView columns={grouspsTableColumns} dataViewKey='groups' {...props}>
+			<DataView.FiltersBar>
+				<DataView.FiltersBar.Header />
+				<DataView.FiltersBar.Content>
 					<GroupsViewFiltersContent />
-				</DataGrid.FiltersBar.Content>
-				<DataGrid.FiltersBar.Footer />
-			</DataGrid.FiltersBar>
+				</DataView.FiltersBar.Content>
+				<DataView.FiltersBar.Footer />
+			</DataView.FiltersBar>
 
-			<DataGrid.Content>
-				<DataGrid.TopBar>
+			<DataView.Content>
+				<DataView.TopBar>
 					<GroupsViewTopBar />
-				</DataGrid.TopBar>
+				</DataView.TopBar>
 
-				<DataGrid.MultiViewLayout>
-					<DataGrid.Body
+				<DataView.MultiViewLayout>
+					<DataView.Body
 						classNames={{ wrapper: "px-4" }}
 						GridCard={GroupCard}
 						onRowClick={({ groupId }) => navigate(groupId)}
 					/>
-				</DataGrid.MultiViewLayout>
+				</DataView.MultiViewLayout>
 
-				<DataGrid.Pagination pageLimits={[10, 20, 30]} />
-			</DataGrid.Content>
-		</DataGrid>
+				<DataView.Pagination pageLimits={[10, 20, 30]} />
+			</DataView.Content>
+		</DataView>
 	)
 }
 

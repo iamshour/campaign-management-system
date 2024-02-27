@@ -1,5 +1,5 @@
 //#region Import
-import type { ColumnType } from "@/core/components/data-grid/types"
+import type { ColumnType } from "@/core/components/data-view/data-table/types"
 
 import { Badge } from "@/ui"
 import { lazy } from "react"
@@ -18,7 +18,7 @@ import smsTemplateStatusesLocaleMap from "./sms-template-statuses-local-map"
 import smsTemplateTypesLocaleMap from "./sms-template-types-local-map"
 
 // eslint-disable-next-line react-refresh/only-export-components
-const DataGridDateCell = lazy(() => import("@/core/components/data-grid/data-grid-date-cell"))
+const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-view-date-cell"))
 //#endregion
 
 const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
@@ -43,7 +43,7 @@ const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
 	},
 	{
 		accessorKey: "updatedAt",
-		cell: (date) => <DataGridDateCell date={date} dateFormat='MM-dd-yyyy | hh:mm aaa' />,
+		cell: (date) => <DataViewDateCell date={date} dateFormat='MM-dd-yyyy | hh:mm aaa' />,
 		header: smsTemplateFieldsLocaleMap.updatedAt,
 		sortable: true,
 	},

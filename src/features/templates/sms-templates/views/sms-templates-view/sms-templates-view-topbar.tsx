@@ -1,19 +1,20 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { Selection } from "@/core/components/data-view/types"
 
+import { selectSelection } from "@/core/components/data-view/data-view-slice"
 import useSelector from "@/core/hooks/useSelector"
 import CreateSmsTemplateDialog from "@/features/templates/sms-templates/dialogs/create-sms-template-dialog/create-sms-template-dialog"
 import { Button, Skeleton } from "@/ui"
 import PhUserPlus from "~icons/ph/user-plus"
-import { lazy, Suspense } from "react"
+import { lazy, memo, Suspense } from "react"
 
 const DeleteSmsTemplateDialog = lazy(
 	() => import("@/features/templates/sms-templates/dialogs/delete-sms-template-dialog/delete-sms-template-dialog")
 )
 //#endregion
 
-const SmsTemplatesViewTopbar = () => {
-	const { selection } = useSelector<DataGridState<"sms-templates">>(({ dataGrid }) => dataGrid["sms-templates"])
+const SmsTemplatesViewTopbar = memo(() => {
+	const selection = useSelector<Selection>((state) => selectSelection(state, "sms-templates"))
 
 	return (
 		<div className='flex flex-1 justify-between'>
@@ -35,6 +36,8 @@ const SmsTemplatesViewTopbar = () => {
 			</CreateSmsTemplateDialog>
 		</div>
 	)
-}
+})
+
+SmsTemplatesViewTopbar.displayName = "SmsTemplatesViewTopbar"
 
 export default SmsTemplatesViewTopbar

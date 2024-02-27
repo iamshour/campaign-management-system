@@ -1,9 +1,3 @@
-//#region Import
-import type { DataGridKey } from "@/core/slices/data-grid-slice/types"
-//#endregion
-
-export type SortDirection = "asc" | "desc" | null
-
 export type RowData = Record<string, any>
 
 export type ColumnType<TData, TValue = any> = {
@@ -54,7 +48,7 @@ export type ColumnType<TData, TValue = any> = {
 	  }
 )
 
-export type DataGridTableProps<TData extends RowData> = {
+export interface DataTableProps<TData extends RowData> {
 	/**
 	 * classNames object, used to pass classNames for each element in Table
 	 */
@@ -73,31 +67,6 @@ export type DataGridTableProps<TData extends RowData> = {
 	/**
 	 * Optional onClick event passed on each table row
 	 * @param rowData Row Data passed
-	 * @returns void
 	 */
 	onRowClick?: (rowData: TData) => void
-}
-
-export interface DataGridProps<TData> extends Pick<React.HTMLAttributes<HTMLDivElement>, "children" | "className"> {
-	/**
-	 * Array of Columns to be rendered
-	 */
-	columns: ColumnType<TData, any>[]
-
-	/**
-	 * Total Number of entries fetched from the server
-	 */
-	count: number
-
-	dataGridKey: DataGridKey
-
-	/**
-	 * Boolean used to show skeleton in each cell when an asynchronous acrion is pending
-	 */
-	isFetching?: boolean
-
-	/**
-	 * Passed data to be used for each column/row
-	 */
-	list: TData[]
 }

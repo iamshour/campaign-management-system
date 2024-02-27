@@ -1,11 +1,11 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { DataViewState } from "@/core/components/data-view/types"
 import type { UpdateMultipleContactsBody } from "@/features/people/contacts/types"
 
-import { useDataGridContext } from "@/core/components/data-grid/data-grid"
+import { useDataViewContext } from "@/core/components/data-view/data-view-context"
+import { clearSelection } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { useUpdateMultipleContactsMutation } from "@/features/people/contacts/api"
 import TagSchema from "@/features/people/contacts/schemas/tag-schema"
 import { getContactAdvancedFilter, getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
@@ -54,11 +54,11 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 
 	const dispatch = useDispatch()
 
-	const { filters, searchTerm, selection } = useSelector<DataGridState<"contacts">>(
-		({ dataGrid }) => dataGrid["contacts"]
+	const { filters, searchTerm, selection } = useSelector<DataViewState<"contacts">>(
+		({ dataView }) => dataView["contacts"]
 	)
 
-	const { count } = useDataGridContext()
+	const { count } = useDataViewContext()
 
 	/**
 	 * Boolean used to quickly & conviniently check if Dialog is strictly used for `Tags`

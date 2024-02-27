@@ -1,17 +1,13 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { DataViewState } from "@/core/components/data-view/types"
 import type { SharedListViewProps } from "@/core/types"
 import type { Contact } from "@/features/people/contacts/types"
 
-import DataGrid from "@/core/components/data-grid/data-grid"
+import DataView from "@/core/components/data-view/data-view"
+import { clearSelection, resetDataViewState, updateSelection } from "@/core/components/data-view/data-view-slice"
 import appPaths from "@/core/constants/app-paths"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import {
-	clearSelection,
-	resetAdvancedTableState,
-	updateDataGridState,
-} from "@/core/slices/data-grid-slice/data-grid-slice"
 import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
 import { Button, Footer } from "@/ui"
 import { cleanObject } from "@/utils"
@@ -39,12 +35,12 @@ const AddContactsToGroupView = (props: SharedListViewProps<Contact>) => {
 
 	const navigate = useNavigate()
 
-	const { filters, searchTerm, selection } = useSelector<DataGridState<"add-contacts-to-group">>(
-		({ dataGrid }) => dataGrid["add-contacts-to-group"]
+	const { filters, searchTerm, selection } = useSelector<DataViewState<"add-contacts-to-group">>(
+		({ dataView }) => dataView["add-contacts-to-group"]
 	)
 
 	const onBack = () => {
-		dispatch(resetAdvancedTableState("add-contacts-to-group"))
+		dispatch(resetDataViewState("add-contacts-to-group"))
 		navigate(`${appPaths.GROUPS}/${groupId}`, { replace: true })
 	}
 
@@ -71,26 +67,26 @@ const AddContactsToGroupView = (props: SharedListViewProps<Contact>) => {
 	}
 
 	return (
-		<DataGrid columns={contactsTableColumns} dataGridKey='add-contacts-to-group' {...props}>
-			<DataGrid.FiltersBar>
-				<DataGrid.FiltersBar.Header />
-				<DataGrid.FiltersBar.Content>
+		<DataView columns={contactsTableColumns} dataViewKey='add-contacts-to-group' {...props}>
+			<DataView.FiltersBar>
+				<DataView.FiltersBar.Header />
+				<DataView.FiltersBar.Content>
 					<ContactsFiltersContent />
-				</DataGrid.FiltersBar.Content>
-				<DataGrid.FiltersBar.Footer />
-			</DataGrid.FiltersBar>
+				</DataView.FiltersBar.Content>
+				<DataView.FiltersBar.Footer />
+			</DataView.FiltersBar>
 
-			<DataGrid.Content>
+			<DataView.Content>
 				<h3 className='pt-4 text-[21px] font-medium'>{t("title")}</h3>
 
-				<DataGrid.TopBar />
-				<DataGrid.Body
+				<DataView.TopBar />
+				<DataView.Body
 					classNames={{ wrapper: "px-4" }}
-					onRowClick={({ id }) => dispatch(updateDataGridState({ "add-contacts-to-group": { selection: id } }))}
+					onRowClick={({ id }) => dispatch(updateSelection({ "add-contacts-to-group": [id] }))}
 				/>
-				<DataGrid.Pagination>
-					<DataGrid.Pagination.Message />
-				</DataGrid.Pagination>
+				<DataView.Pagination>
+					<DataView.Pagination.Message />
+				</DataView.Pagination>
 
 				<Footer className='p-4'>
 					<Button onClick={onBack} variant='outline'>
@@ -101,8 +97,8 @@ const AddContactsToGroupView = (props: SharedListViewProps<Contact>) => {
 						{t("actions.submit")}
 					</Button>
 				</Footer>
-			</DataGrid.Content>
-		</DataGrid>
+			</DataView.Content>
+		</DataView>
 	)
 }
 

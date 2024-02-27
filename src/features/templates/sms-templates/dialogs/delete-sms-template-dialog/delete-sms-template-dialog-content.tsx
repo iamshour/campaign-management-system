@@ -1,8 +1,8 @@
 //#region Import
-import { useDataGridContext } from "@/core/components/data-grid/data-grid"
+import { useDataViewContext } from "@/core/components/data-view/data-view-context"
+import { clearSelection } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
 import getSearchFilter from "@/core/utils/get-search-filter"
 import { useDeleteSmsTemplatesMutation } from "@/features/templates/sms-templates/api"
 import { DeleteSmsTemplatesBody } from "@/features/templates/sms-templates/types"
@@ -33,13 +33,13 @@ const DeleteSmsTemplateDialogContent = ({ closeDialog, ids = [] }: DeleteSmsTemp
 
 	const [promptInputValue, setPromptInputValue] = useState<string>()
 
-	const { count } = useDataGridContext()
+	const { count } = useDataViewContext()
 
-	const { filters, searchTerm } = useSelector(({ dataGrid }) => dataGrid["sms-templates"])
+	const { filters, searchTerm } = useSelector(({ dataView }) => dataView["sms-templates"])
 
 	const templatesToBeDeletedCount = ids.length || count
 
-	const deleteButtonDisabled = ids.length > 1 && promptInputValue !== `${templatesToBeDeletedCount}`
+	const deleteButtonDisabled = templatesToBeDeletedCount > 1 && promptInputValue !== `${templatesToBeDeletedCount}`
 
 	const onSubmit = async () => {
 		if (!templatesToBeDeletedCount) return
@@ -65,7 +65,7 @@ const DeleteSmsTemplateDialogContent = ({ closeDialog, ids = [] }: DeleteSmsTemp
 			{templatesToBeDeletedCount > 1 ? (
 				<>
 					<p className='w-full overflow-x-auto text-base'>
-						Are you sure you want to delete <strong>({templatesToBeDeletedCount}) selected</strong> templates?
+						Are you sure you want to delete <strong>({templatesToBeDeletedCount})</strong> selected templates?
 					</p>
 
 					<div>

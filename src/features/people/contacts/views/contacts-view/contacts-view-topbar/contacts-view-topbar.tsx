@@ -1,6 +1,7 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { Selection } from "@/core/components/data-view/types"
 
+import { selectSelection } from "@/core/components/data-view/data-view-slice"
 import useSelector from "@/core/hooks/useSelector"
 import CreateContactDialog from "@/features/people/contacts/dialogs/create-contact-dialog/create-contact-dialog"
 import ImportContactsDialog from "@/features/people/contacts/dialogs/import-contacts-dialog/import-contacts-dialog"
@@ -8,16 +9,16 @@ import ExportFieldsDialog from "@/features/people/exports/dialogs/export-fields-
 import { Button, Skeleton } from "@/ui"
 import PajamasImport from "~icons/pajamas/import"
 import PhUserPlus from "~icons/ph/user-plus"
-import { Suspense } from "react"
+import { memo, Suspense } from "react"
 import { useTranslation } from "react-i18next"
 
 import MultiEditDropdown from "./multi-edit-dropdown"
 //#endregion
 
-const ContactsViewTopbar = () => {
+const ContactsViewTopbar = memo(() => {
 	const { t } = useTranslation("contacts")
 
-	const { selection } = useSelector<DataGridState<"contacts">>(({ dataGrid }) => dataGrid["contacts"])
+	const selection = useSelector<Selection>((state) => selectSelection(state, "contacts"))
 
 	return (
 		<div className='flex flex-1 justify-between'>
@@ -52,6 +53,8 @@ const ContactsViewTopbar = () => {
 			</div>
 		</div>
 	)
-}
+})
+
+ContactsViewTopbar.displayName = "ContactsViewTopbar"
 
 export default ContactsViewTopbar

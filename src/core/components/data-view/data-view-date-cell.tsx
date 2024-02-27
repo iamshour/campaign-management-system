@@ -13,7 +13,7 @@ interface AdvancedTableDateCellProps {
  * @param props.date Stringified date passed from the server
  * @param props.dateFormat Format of the date to be rendered
  */
-const DataGridDateCell = ({ date, dateFormat = "MM-dd-yyyy" }: AdvancedTableDateCellProps) => {
+const DataViewDateCell = ({ date, dateFormat = "MM-dd-yyyy" }: AdvancedTableDateCellProps) => {
 	if (!date) return
 
 	const jsDateObject = new Date(date)
@@ -23,4 +23,4 @@ const DataGridDateCell = ({ date, dateFormat = "MM-dd-yyyy" }: AdvancedTableDate
 	return <>{format(jsDateObject, dateFormat)}</>
 }
 
-export default DataGridDateCell
+export default DataViewDateCell

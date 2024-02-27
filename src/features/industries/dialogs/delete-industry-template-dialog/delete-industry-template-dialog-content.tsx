@@ -1,10 +1,10 @@
 //#region Import
 import type { DeleteIndustryTemplatesBody } from "@/features/industries/types"
 
-import { useDataGridContext } from "@/core/components/data-grid/data-grid"
+import { useDataViewContext } from "@/core/components/data-view/data-view-context"
+import { clearSelection } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { useDeleteIndustryTemplatesMutation } from "@/features/industries/api"
 import { Button, Footer, Input, Label } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
@@ -36,9 +36,9 @@ const DeleteIndustryTemplateDialogContent = ({ closeDialog, ids = [] }: DeleteIn
 
 	const [promptInputValue, setPromptInputValue] = useState<string>()
 
-	const { filters, searchTerm, selection } = useSelector(({ dataGrid }) => dataGrid["sms-industry-templates"])
+	const { filters, searchTerm, selection } = useSelector(({ dataView }) => dataView["sms-industry-templates"])
 
-	const { count } = useDataGridContext()
+	const { count } = useDataViewContext()
 
 	const templatesToBeDeletedCount = selection === "ALL" ? count : ids.length
 

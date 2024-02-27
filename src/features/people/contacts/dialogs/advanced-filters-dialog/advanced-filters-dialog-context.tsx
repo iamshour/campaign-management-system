@@ -1,8 +1,9 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { DataViewFilterType } from "@/core/components/data-view/types"
 import type { SegmentConditionType } from "@/features/people/segments/types"
 import type { OptionType } from "@/ui"
 
+import { selectFilters } from "@/core/components/data-view/data-view-slice"
 import useSelector from "@/core/hooks/useSelector"
 import { emptySegmentCondition } from "@/features/people/segments/constants/preset-segments"
 import { areConditionsEmpty } from "@/features/people/segments/utils"
@@ -20,7 +21,7 @@ export const useAdvancedFiltersDialogContext = (): AdvancedFiltersDialogContextV
 	useContext(AdvancedFiltersDialogContextProvider)
 
 const AdvancedFiltersDialogContext = ({ children }: { children: React.ReactNode }) => {
-	const { filters } = useSelector<DataGridState<"contacts">>(({ dataGrid }) => dataGrid["contacts"])
+	const filters = useSelector<DataViewFilterType["contacts"] | undefined>((state) => selectFilters(state, "contacts"))
 
 	const persistedSegmentOption = filters?.advancedFilters?.segment
 

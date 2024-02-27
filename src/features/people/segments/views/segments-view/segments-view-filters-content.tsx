@@ -1,17 +1,15 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
-
+import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
-import { DateRangePicker } from "@/ui"
+import { DateRange, DateRangePicker } from "@/ui"
 import { memo } from "react"
 //#endregion
 
 const SegmentsViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const filters = useSelector<DataGridState<"segments">["filters"]>(({ dataGrid }) => dataGrid["segments"]?.filters)
+	const filters = useSelector<DateRange | undefined>((state) => selectFilters(state, "segments"))
 
 	return (
 		<DateRangePicker

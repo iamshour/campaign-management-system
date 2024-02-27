@@ -1,5 +1,5 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { DataViewState } from "@/core/components/data-view/types"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
@@ -17,8 +17,8 @@ const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 
 const ExportsRoute = () => {
 	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector<
-		DataGridState<"contacts-exports">
-	>(({ dataGrid }) => dataGrid["contacts-exports"])
+		DataViewState<"contacts-exports">
+	>(({ dataView }) => dataView["contacts-exports"])
 
 	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } = useGetExportsQuery(
 		{

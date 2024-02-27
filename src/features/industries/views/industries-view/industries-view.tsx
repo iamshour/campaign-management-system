@@ -2,7 +2,7 @@
 import type { SharedListViewProps } from "@/core/types"
 import type { IndustryType } from "@/features/industries/types"
 
-import DataGrid from "@/core/components/data-grid/data-grid"
+import DataView from "@/core/components/data-view/data-view"
 import industriesTableColumns from "@/features/industries/constants/industries-table-columns"
 import { lazy } from "react"
 import { useNavigate } from "react-router"
@@ -18,31 +18,31 @@ const IndustriesView = (props: SharedListViewProps<IndustryType>) => {
 	const navigate = useNavigate()
 
 	return (
-		<DataGrid columns={industriesTableColumns} dataGridKey='industries' {...props}>
-			<DataGrid.FiltersBar>
-				<DataGrid.FiltersBar.Header />
-				<DataGrid.FiltersBar.Content>
+		<DataView columns={industriesTableColumns} dataViewKey='industries' {...props}>
+			<DataView.FiltersBar>
+				<DataView.FiltersBar.Header />
+				<DataView.FiltersBar.Content>
 					<IndustriesViewFiltersContent />
-				</DataGrid.FiltersBar.Content>
-				<DataGrid.FiltersBar.Footer />
-			</DataGrid.FiltersBar>
+				</DataView.FiltersBar.Content>
+				<DataView.FiltersBar.Footer />
+			</DataView.FiltersBar>
 
-			<DataGrid.Content>
-				<DataGrid.TopBar>
+			<DataView.Content>
+				<DataView.TopBar>
 					<IndustriesViewTopBar />
-				</DataGrid.TopBar>
+				</DataView.TopBar>
 
-				<DataGrid.MultiViewLayout>
-					<DataGrid.Body
+				<DataView.MultiViewLayout>
+					<DataView.Body
 						classNames={{ emptyTableCell: "h-[calc(100vh-340px)]", wrapper: "px-4" }}
 						GridCard={IndustryCard}
 						onRowClick={({ id }) => navigate(`${id}/sms`)}
 					/>
-				</DataGrid.MultiViewLayout>
+				</DataView.MultiViewLayout>
 
-				<DataGrid.Pagination />
-			</DataGrid.Content>
-		</DataGrid>
+				<DataView.Pagination />
+			</DataView.Content>
+		</DataView>
 	)
 }
 

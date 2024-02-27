@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 //#endregion
 
 /**
- * Table Actions Component used inside td of DataGrid used in `SegmentsView` Component
+ * Table Actions Component used inside td of DataView used in `SegmentsView` Component
  *
  * @param param0.id Row Id that would have edit/delete/eport actions supported
  * @returns

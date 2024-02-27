@@ -2,7 +2,7 @@
 import type { SharedListViewProps } from "@/core/types"
 import type { Segment } from "@/features/people/segments/types"
 
-import DataGrid from "@/core/components/data-grid/data-grid"
+import DataView from "@/core/components/data-view/data-view"
 import appPaths from "@/core/constants/app-paths"
 import segmentsTableColumns from "@/features/people/segments/constants/segments-table-columns"
 import { Button } from "@/ui"
@@ -20,27 +20,27 @@ const SegmentsView = (props: SharedListViewProps<Segment>) => {
 	const { t } = useTranslation("segments")
 
 	return (
-		<DataGrid columns={segmentsTableColumns} dataGridKey='segments' {...props}>
-			<DataGrid.FiltersBar>
-				<DataGrid.FiltersBar.Header />
-				<DataGrid.FiltersBar.Content>
+		<DataView columns={segmentsTableColumns} dataViewKey='segments' {...props}>
+			<DataView.FiltersBar>
+				<DataView.FiltersBar.Header />
+				<DataView.FiltersBar.Content>
 					<SegmentsViewFiltersContent />
-				</DataGrid.FiltersBar.Content>
-				<DataGrid.FiltersBar.Footer />
-			</DataGrid.FiltersBar>
+				</DataView.FiltersBar.Content>
+				<DataView.FiltersBar.Footer />
+			</DataView.FiltersBar>
 
-			<DataGrid.Content>
-				<DataGrid.TopBar>
+			<DataView.Content>
+				<DataView.TopBar>
 					<Button as='link' to={appPaths.SEGMENTS_NEW}>
 						<PhPlusBold />
 						{t("table.toolbar.actions.create-segment")}
 					</Button>
-				</DataGrid.TopBar>
+				</DataView.TopBar>
 
-				<DataGrid.Body classNames={{ wrapper: "px-4" }} onRowClick={({ id }) => navigate(id)} />
-				<DataGrid.Pagination />
-			</DataGrid.Content>
-		</DataGrid>
+				<DataView.Body classNames={{ wrapper: "px-4" }} onRowClick={({ id }) => navigate(id)} />
+				<DataView.Pagination />
+			</DataView.Content>
+		</DataView>
 	)
 }
 

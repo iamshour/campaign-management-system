@@ -1,5 +1,5 @@
 //#region Import
-import type { ColumnType } from "@/core/components/data-grid/types"
+import type { ColumnType } from "@/core/components/data-view/data-table/types"
 
 import { lazy } from "react"
 
@@ -8,7 +8,7 @@ import type { Contact } from "../types"
 import contactFieldsMap from "./contact-fields-map"
 
 // eslint-disable-next-line react-refresh/only-export-components
-const DataGridDateCell = lazy(() => import("@/core/components/data-grid/data-grid-date-cell"))
+const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-view-date-cell"))
 
 // eslint-disable-next-line react-refresh/only-export-components
 const ContactsTableTagsRow = lazy(() => import("../components/contacts-table-tags-row"))
@@ -40,7 +40,7 @@ const contactsTableColumns: ColumnType<Contact>[] = [
 	},
 	{
 		accessorKey: "createdAt",
-		cell: (date) => <DataGridDateCell date={date} />,
+		cell: (date) => <DataViewDateCell date={date} />,
 		header: contactFieldsMap.createdAt,
 		sortable: true,
 	},

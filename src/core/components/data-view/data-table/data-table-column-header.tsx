@@ -1,8 +1,8 @@
 //#region Import
+import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
+
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
-import { updatePaginationAndSorting } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { Dropdown } from "@/ui"
 import RadixIconsArrowDown from "~icons/radix-icons/arrow-down"
 import RadixIconsArrowUp from "~icons/radix-icons/arrow-up"
@@ -10,27 +10,30 @@ import RadixIconsCaretSort from "~icons/radix-icons/caret-sort"
 import RadixIconsReset from "~icons/radix-icons/reset"
 import { useTranslation } from "react-i18next"
 
-import { useDataGridContext } from "../data-grid"
-import { RowData } from "../types"
+import type { RowData } from "./types"
+
+import { useDataViewContext } from "../data-view-context"
+import { selectPaginationAndSorting, updatePaginationAndSorting } from "../data-view-slice"
 //#endregion
 
-export interface TableColumnHeaderProps<TData extends RowData> {
+export interface DataTableColumnHeaderProps<TData extends RowData> {
 	children: React.ReactNode
 	newSort?: keyof TData
 }
 
-function DataTableColumnHeader<TData extends RowData>({ children, newSort }: TableColumnHeaderProps<TData>) {
+const DataTableColumnHeader = <TData extends RowData>({ children, newSort }: DataTableColumnHeaderProps<TData>) => {
 	const dispatch = useDispatch()
 
 	const { t } = useTranslation("ui")
 
-	const { dataGridKey } = useDataGridContext<TData>()
+	const { dataViewKey } = useDataViewContext<TData>()
 
-	const { order, sort: prevSort } = useSelector(({ dataGrid }) => dataGrid[dataGridKey].paginationAndSorting)
+	const paginationAndSorting = useSelector<PaginationAndSorting<any | TData>>((state) =>
+		selectPaginationAndSorting(state, dataViewKey)
+	)
 
-	const updateSortAndOrder = (
-		sortAndOrder?: Partial<Pick<PaginationAndSorting<typeof dataGridKey>, "order" | "sort">>
-	) => dispatch(updatePaginationAndSorting({ [dataGridKey]: sortAndOrder }))
+	const updateSortAndOrder = (sortAndOrder?: Partial<Pick<PaginationAndSorting<TData>, "order" | "sort">>) =>
+		dispatch(updatePaginationAndSorting({ [dataViewKey]: sortAndOrder }))
 
 	return (
 		<Dropdown>
@@ -40,24 +43,24 @@ function DataTableColumnHeader<TData extends RowData>({ children, newSort }: Tab
 				size='sm'
 				variant='ghost'>
 				<span className='whitespace-nowrap uppercase'>{children}</span>
-				{prevSort !== newSort || !order ? (
+				{paginationAndSorting?.sort !== newSort || !paginationAndSorting?.order ? (
 					<RadixIconsCaretSort />
-				) : order === "desc" ? (
+				) : paginationAndSorting?.order === "desc" ? (
 					<RadixIconsArrowDown />
-				) : order === "asc" ? (
+				) : paginationAndSorting?.order === "asc" ? (
 					<RadixIconsArrowUp />
 				) : null}
 			</Dropdown.Trigger>
 
 			<Dropdown.Content align='start' alignOffset={2}>
 				<Dropdown.Item
-					active={prevSort === newSort && order === "asc"}
+					active={paginationAndSorting?.sort === newSort && paginationAndSorting?.order === "asc"}
 					onClick={() => updateSortAndOrder({ order: "asc", sort: newSort as any })}>
 					<RadixIconsArrowUp className='text-muted-foreground/70 me-2 h-3.5 w-3.5' />
 					{t("table.actions.sort.ascending")}
 				</Dropdown.Item>
 				<Dropdown.Item
-					active={prevSort === newSort && order === "desc"}
+					active={paginationAndSorting?.sort === newSort && paginationAndSorting?.order === "desc"}
 					onClick={() => updateSortAndOrder({ order: "desc", sort: newSort as any })}>
 					<RadixIconsArrowDown className='text-muted-foreground/70 me-2 h-3.5 w-3.5' />
 					{t("table.actions.sort.descending")}

@@ -1,6 +1,4 @@
-//#region Import
-import type { SortDirection } from "@/core/components/data-grid/types"
-//#endregion
+export type SortDirection = "asc" | "desc" | null
 
 export interface GetListReturnType<T> {
 	/**

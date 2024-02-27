@@ -1,5 +1,5 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { DataViewState } from "@/core/components/data-view/types"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
@@ -22,8 +22,8 @@ const SmsIndustryTemplatesRoute = () => {
 	const { industryId } = useParams()
 
 	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector<
-		DataGridState<"sms-industry-templates">
-	>(({ dataGrid }) => dataGrid["sms-industry-templates"])
+		DataViewState<"sms-industry-templates">
+	>(({ dataView }) => dataView["sms-industry-templates"])
 
 	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } =
 		useGetSmsIndustryTemplatesQuery(

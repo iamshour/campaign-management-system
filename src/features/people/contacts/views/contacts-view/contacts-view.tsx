@@ -1,10 +1,11 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { ColumnType } from "@/core/components/data-view/data-table/types"
+import type { DataViewFilterType } from "@/core/components/data-view/types"
 import type { SharedListViewProps } from "@/core/types"
 import type { Contact } from "@/features/people/contacts/types"
 
-import DataGrid from "@/core/components/data-grid/data-grid"
-import { ColumnType } from "@/core/components/data-grid/types"
+import DataView from "@/core/components/data-view/data-view"
+import { selectFilters } from "@/core/components/data-view/data-view-slice"
 import useSelector from "@/core/hooks/useSelector"
 import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
 import AdvancedFiltersDialog from "@/features/people/contacts/dialogs/advanced-filters-dialog/advanced-filters-dialog"
@@ -27,15 +28,15 @@ const ContactsView = (props: SharedListViewProps<Contact>) => {
 
 	const [viewContactId, setViewContactId] = useState<string | undefined>(undefined)
 
-	const { filters } = useSelector<DataGridState<"contacts">>(({ dataGrid }) => dataGrid["contacts"])
+	const filters = useSelector<DataViewFilterType["contacts"] | undefined>((state) => selectFilters(state, "contacts"))
 
 	const isAdvancedFiltersApplied = filters?.advancedFilters
 
 	return (
 		<>
-			<DataGrid columns={tableColumns} dataGridKey='contacts' {...props}>
-				<DataGrid.FiltersBar>
-					<DataGrid.FiltersBar.Header>
+			<DataView columns={tableColumns} dataViewKey='contacts' {...props}>
+				<DataView.FiltersBar>
+					<DataView.FiltersBar.Header>
 						<AdvancedFiltersDialog>
 							<Button
 								className='h-max px-1.5 py-0 pb-0.5 text-primary-600 hover:bg-transparent hover:text-primary-900'
@@ -44,27 +45,27 @@ const ContactsView = (props: SharedListViewProps<Contact>) => {
 								{t("common:filters-bar.advanced-filters.button")}
 							</Button>
 						</AdvancedFiltersDialog>
-					</DataGrid.FiltersBar.Header>
-					<DataGrid.FiltersBar.Content>
+					</DataView.FiltersBar.Header>
+					<DataView.FiltersBar.Content>
 						<ContactsFiltersContent />
 
 						{isAdvancedFiltersApplied && <ContactsViewFiltersPreview />}
-					</DataGrid.FiltersBar.Content>
-					<DataGrid.FiltersBar.Footer />
-				</DataGrid.FiltersBar>
+					</DataView.FiltersBar.Content>
+					<DataView.FiltersBar.Footer />
+				</DataView.FiltersBar>
 
-				<DataGrid.Content>
-					<DataGrid.TopBar>
+				<DataView.Content>
+					<DataView.TopBar>
 						<ContactsViewTopbar />
-					</DataGrid.TopBar>
+					</DataView.TopBar>
 
-					<DataGrid.Body onRowClick={({ id }) => setViewContactId(id)} />
+					<DataView.Body onRowClick={({ id }) => setViewContactId(id)} />
 
-					<DataGrid.Pagination>
-						<DataGrid.Pagination.Message />
-					</DataGrid.Pagination>
-				</DataGrid.Content>
-			</DataGrid>
+					<DataView.Pagination>
+						<DataView.Pagination.Message />
+					</DataView.Pagination>
+				</DataView.Content>
+			</DataView>
 
 			<ViewContactDialog
 				id={viewContactId}

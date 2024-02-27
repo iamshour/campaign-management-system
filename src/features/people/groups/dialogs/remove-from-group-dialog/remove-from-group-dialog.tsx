@@ -1,6 +1,7 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { Selection } from "@/core/components/data-view/types"
 
+import { selectSelection } from "@/core/components/data-view/data-view-slice"
 import useSelector from "@/core/hooks/useSelector"
 import { Dialog } from "@/ui"
 import { lazy, useState } from "react"
@@ -23,7 +24,7 @@ const RemoveFromGroupDialog = ({ children, id }: RemoveFromGroupDialogProps) => 
 
 	const [open, setOpen] = useState(false)
 
-	const { selection } = useSelector<DataGridState<"contacts-in-group">>(({ dataGrid }) => dataGrid["contacts-in-group"])
+	const selection = useSelector<Selection>((state) => selectSelection(state, "contacts-in-group"))
 
 	const isRemovingMultipleContacts = !id && (selection === "ALL" || (selection?.length && selection?.length > 1))
 

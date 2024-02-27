@@ -1,20 +1,21 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { Selection } from "@/core/components/data-view/types"
 
+import { selectSelection } from "@/core/components/data-view/data-view-slice"
 import useSelector from "@/core/hooks/useSelector"
 import ExportFieldsDialog from "@/features/people/exports/dialogs/export-fields-dialog/export-fields-dialog"
 import { Button, Skeleton } from "@/ui"
 import PhUserPlus from "~icons/ph/user-plus"
-import { Suspense } from "react"
+import { memo, Suspense } from "react"
 import { useTranslation } from "react-i18next"
 
 import MultiEditDropdown from "./multi-edit-dropdown"
 //#endregion
 
-const GroupViewTopbar = () => {
+const GroupViewTopbar = memo(() => {
 	const { t } = useTranslation("contacts")
 
-	const { selection } = useSelector<DataGridState<"contacts-in-group">>(({ dataGrid }) => dataGrid["contacts-in-group"])
+	const selection = useSelector<Selection>((state) => selectSelection(state, "contacts-in-group"))
 
 	return (
 		<div className='flex flex-1 justify-between'>
@@ -38,6 +39,8 @@ const GroupViewTopbar = () => {
 			</Button>
 		</div>
 	)
-}
+})
+
+GroupViewTopbar.displayName = "GroupViewTopbar"
 
 export default GroupViewTopbar

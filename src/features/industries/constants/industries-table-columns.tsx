@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import type { ColumnType } from "@/core/components/data-grid/types"
+import type { ColumnType } from "@/core/components/data-view/data-table/types"
 import type { IndustryType } from "@/features/industries/types"
 
 //#region Import
@@ -7,7 +7,7 @@ import { lazy } from "react"
 
 import industryFieldsMap from "./industry-fields-map"
 
-const DataGridDateCell = lazy(() => import("@/core/components/data-grid/data-grid-date-cell"))
+const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-view-date-cell"))
 
 const IndustriesViewTableIcon = lazy(
 	() => import("@/features/industries/views/industries-view/industries-view-table-icon")
@@ -36,7 +36,7 @@ const industriesTableColumns: ColumnType<IndustryType>[] = [
 	},
 	{
 		accessorKey: "createdAt",
-		cell: (date) => <DataGridDateCell date={date} />,
+		cell: (date) => <DataViewDateCell date={date} />,
 		header: industryFieldsMap.createdAt,
 		sortable: true,
 	},

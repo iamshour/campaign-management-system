@@ -1,11 +1,11 @@
 //#region Import
-import type { DataGridFilterType, DataGridKey } from "@/core/slices/data-grid-slice/types"
+import type { DataViewFilterType, DataViewKey } from "@/core/components/data-view/types"
 import type { SubmitExportsFileBody } from "@/features/people/exports/types"
 
+import { clearSelection } from "@/core/components/data-view/data-view-slice"
 import appPaths from "@/core/constants/app-paths"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { getContactAdvancedFilter, getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
 import { useSubmitExportsFileMutation } from "@/features/people/exports/api"
 import exportsFieldsOptions from "@/features/people/exports/constants/exports-fields-options"
@@ -21,7 +21,7 @@ import { Link } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
 //#endregion
 
-export type ExportsType = Extract<DataGridKey, "contacts-in-group" | "contacts" | "segments">
+export type ExportsType = Extract<DataViewKey, "contacts-in-group" | "contacts" | "segments">
 
 const companyName = import.meta.env.VITE_APP_PREFIX
 
@@ -47,7 +47,7 @@ const ExportFieldsDialogContent = ({ exportsType, onDialogClose, segmentId }: Ex
 
 	const dispatch = useDispatch()
 
-	const { filters, searchTerm, selection } = useSelector(({ dataGrid }) => dataGrid[exportsType as ExportsType])
+	const { filters, searchTerm, selection } = useSelector(({ dataView }) => dataView[exportsType as ExportsType])
 
 	const defaultFileName = getDefaultExportsFileName(companyName, exportsType === "segments" ? "segments" : "contacts")
 
@@ -94,7 +94,7 @@ const ExportFieldsDialogContent = ({ exportsType, onDialogClose, segmentId }: Ex
 		if (exportsType === "contacts") {
 			// Statically inferring type of Filters to Its Origin -- Contacts Filters used only in Contacts Table, In order to find advancedFilters without TS erros
 			const contactAdvancedFilter = getContactAdvancedFilter(
-				(filters as DataGridFilterType["contacts"])?.advancedFilters
+				(filters as DataViewFilterType["contacts"])?.advancedFilters
 			)
 
 			body = { ...body, contactAdvancedFilter }
@@ -104,7 +104,7 @@ const ExportFieldsDialogContent = ({ exportsType, onDialogClose, segmentId }: Ex
 		if (exportsType !== "segments") {
 			body = {
 				...body,
-				contactFilter: getContactFilter(omit(filters as DataGridFilterType["contacts"], "advancedFilters")),
+				contactFilter: getContactFilter(omit(filters as DataViewFilterType["contacts"], "advancedFilters")),
 				contactSearchFilter: getContactSearchFilter(searchTerm),
 			}
 		}
@@ -122,7 +122,7 @@ const ExportFieldsDialogContent = ({ exportsType, onDialogClose, segmentId }: Ex
 		await submitExport(cleanBody).unwrap()
 
 		// Clearing Selection list if contacts were selected using their Ids
-		if (cleanBody?.contactsIds) dispatch(clearSelection(exportsType as DataGridKey))
+		if (cleanBody?.contactsIds) dispatch(clearSelection(exportsType as DataViewKey))
 
 		toast.success(({ id }) => <SuccessToast id={id} />)
 

@@ -1,9 +1,9 @@
 //#region Import
-import type { ColumnType } from "@/core/components/data-grid/types"
+import type { ColumnType } from "@/core/components/data-view/data-table/types"
 import type { SharedListViewProps } from "@/core/types"
 import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 
-import DataGrid from "@/core/components/data-grid/data-grid"
+import DataView from "@/core/components/data-view/data-view"
 import smsTemplatesTableClassNames from "@/features/templates/sms-templates/constants/sms-templates-table-classnames"
 import smsTemplatesTableColumns from "@/features/templates/sms-templates/constants/sms-templates-table-columns"
 import { lazy, memo } from "react"
@@ -20,26 +20,26 @@ const SmsTemplatesView = memo((props: SharedListViewProps<SmsTemplateType>) => {
 	const navigate = useNavigate()
 
 	return (
-		<DataGrid columns={columns} dataGridKey='sms-templates' {...props}>
-			<DataGrid.FiltersBar>
-				<DataGrid.FiltersBar.Header />
-				<DataGrid.FiltersBar.Content>
+		<DataView columns={columns} dataViewKey='sms-templates' {...props}>
+			<DataView.FiltersBar>
+				<DataView.FiltersBar.Header />
+				<DataView.FiltersBar.Content>
 					<SmsTemplatesViewFiltersContent />
-				</DataGrid.FiltersBar.Content>
-				<DataGrid.FiltersBar.Footer />
-			</DataGrid.FiltersBar>
+				</DataView.FiltersBar.Content>
+				<DataView.FiltersBar.Footer />
+			</DataView.FiltersBar>
 
-			<DataGrid.Content>
-				<DataGrid.TopBar>
+			<DataView.Content>
+				<DataView.TopBar>
 					<SmsTemplatesViewTopbar />
-				</DataGrid.TopBar>
+				</DataView.TopBar>
 
-				<DataGrid.Body classNames={smsTemplatesTableClassNames} onRowClick={({ id }) => navigate(id)} />
-				<DataGrid.Pagination pageLimits={[10, 20, 30]}>
-					<DataGrid.Pagination.Message />
-				</DataGrid.Pagination>
-			</DataGrid.Content>
-		</DataGrid>
+				<DataView.Body classNames={smsTemplatesTableClassNames} onRowClick={({ id }) => navigate(id)} />
+				<DataView.Pagination pageLimits={[10, 20, 30]}>
+					<DataView.Pagination.Message />
+				</DataView.Pagination>
+			</DataView.Content>
+		</DataView>
 	)
 })
 

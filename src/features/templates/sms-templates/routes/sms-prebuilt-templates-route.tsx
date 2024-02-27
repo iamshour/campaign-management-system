@@ -22,7 +22,7 @@ const SmsPrebuiltTemplatesRoute = ({ prebuiltTemplatesGridKey }: SmsPrebuiltTemp
 	const defaultUserIndustryId = useSelector(({ auth }) => auth?.user?.industryId)
 
 	const { filters, paginationAndSorting, searchTerm } = useSelector(
-		({ dataGrid }) => dataGrid[prebuiltTemplatesGridKey]
+		({ dataView }) => dataView[prebuiltTemplatesGridKey]
 	)
 
 	/**

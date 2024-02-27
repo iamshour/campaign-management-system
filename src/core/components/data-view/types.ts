@@ -16,25 +16,39 @@ import type { ContactGroupFilter, Group } from "@/features/people/groups/types"
 import type { Segment } from "@/features/people/segments/types"
 import type { SmsTemplateType, TemplateFilter } from "@/features/templates/sms-templates/types"
 import type { DateRange } from "@/ui"
+
+import type { ColumnType } from "./data-table/types"
 //#endregion
 
-export type DataGridView = "GRID" | "LIST"
+export interface DataViewProps<TData> extends Pick<React.HTMLAttributes<HTMLDivElement>, "children" | "className"> {
+	/**
+	 * Array of Columns to be rendered
+	 */
+	columns: ColumnType<TData, any>[]
 
-// export enum DataGridKey {
-// 	"contacts" = "contacts",
-// 	"contacts-in-group" = "contacts-in-group",
-// 	"add-contacts-to-group" = "add-contacts-to-group",
-// 	"groups" = "groups",
-// 	"contacts-exports" = "contacts-exports",
-// 	"segments" = "segments",
-// 	"sms-templates" = "sms-templates",
-// 	"sms-prebuilt-templates" = "sms-prebuilt-templates",
-// 	"sms-prebuilt-templates-dialog" = "sms-prebuilt-templates-dialog",
-// 	"sms-industry-templates" = "sms-industry-templates",
-// 	"industries" = "industries",
-// }
+	/**
+	 * Total Number of entries fetched from the server
+	 */
+	count: number
 
-export type DataGridKey =
+	dataViewKey: DataViewKey
+
+	/**
+	 * Boolean used to show skeleton in each cell when an asynchronous acrion is pending
+	 */
+	isFetching?: boolean
+
+	/**
+	 * Passed data to be used for each column/row
+	 */
+	list: TData[]
+}
+
+export type DataViewRenderType = "GRID" | "LIST"
+
+export type Selection = "ALL" | string[] | undefined
+
+export type DataViewKey =
 	| "add-contacts-to-group"
 	| "contacts-exports"
 	| "contacts-in-group"
@@ -47,7 +61,7 @@ export type DataGridKey =
 	| "sms-prebuilt-templates"
 	| "sms-templates"
 
-type DataGridEntryType = {
+type DataViewEntryType = {
 	"add-contacts-to-group": Contact
 	contacts: Contact
 	"contacts-exports": ContactExports
@@ -61,7 +75,7 @@ type DataGridEntryType = {
 	"sms-templates": SmsTemplateType
 }
 
-export type DataGridFilterType = {
+export type DataViewFilterType = {
 	"add-contacts-to-group": ContactTableFiltersType
 	contacts: ContactTableFiltersType & ContactTableAdvancedFiltersType
 	"contacts-exports": ContactExportFilter
@@ -75,16 +89,16 @@ export type DataGridFilterType = {
 	"sms-templates": TemplateFilter
 }
 
-export type DataGridState<K extends DataGridKey> = {
+export type DataViewState<K extends DataViewKey> = {
 	appliedFiltersCount?: number
 
-	filters?: DataGridFilterType[K]
+	filters?: DataViewFilterType[K]
 
-	paginationAndSorting: PaginationAndSorting<DataGridEntryType[K]>
+	paginationAndSorting: PaginationAndSorting<DataViewEntryType[K]>
 
 	searchTerm?: string
 
-	selection?: "ALL" | string[]
+	selection?: Selection
 
-	view?: DataGridView
+	view?: DataViewRenderType
 }

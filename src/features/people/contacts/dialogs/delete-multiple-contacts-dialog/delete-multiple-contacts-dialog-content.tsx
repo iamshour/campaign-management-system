@@ -1,10 +1,10 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { DataViewState } from "@/core/components/data-view/types"
 import type { DeleteContactsBody } from "@/features/people/contacts/types"
 
-import { useDataGridContext } from "@/core/components/data-grid/data-grid"
+import { useDataViewContext } from "@/core/components/data-view/data-view-context"
+import { clearSelection } from "@/core/components/data-view/data-view-slice"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { useDeleteContactsMutation } from "@/features/people/contacts/api"
 import { getContactAdvancedFilter, getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
 import { Button, Footer, Form, Input, useForm } from "@/ui"
@@ -28,11 +28,11 @@ const DeleteContactsDialogContent = ({ onClose }: DeleteContactsDialogContent) =
 
 	const dispatch = useDispatch()
 
-	const { filters, searchTerm, selection } = useSelector<DataGridState<"contacts">>(
-		({ dataGrid }) => dataGrid["contacts"]
+	const { filters, searchTerm, selection } = useSelector<DataViewState<"contacts">>(
+		({ dataView }) => dataView["contacts"]
 	)
 
-	const { count } = useDataGridContext()
+	const { count } = useDataViewContext()
 
 	const nbOfContactsToDelete = selection === "ALL" ? count : selection !== undefined ? selection?.length : 0
 

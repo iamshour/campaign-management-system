@@ -1,6 +1,7 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { DataViewFilterType } from "@/core/components/data-view/types"
 
+import { selectFilters } from "@/core/components/data-view/data-view-slice"
 import useSelector from "@/core/hooks/useSelector"
 import { Tooltip } from "@/ui"
 import { useTranslation } from "react-i18next"
@@ -13,7 +14,7 @@ import { v4 as newId } from "uuid"
 const ContactsViewFiltersPreview = () => {
 	const { t } = useTranslation("contacts")
 
-	const { filters } = useSelector<DataGridState<"contacts">>(({ dataGrid }) => dataGrid["contacts"])
+	const filters = useSelector<DataViewFilterType["contacts"] | undefined>((state) => selectFilters(state, "contacts"))
 
 	const appliedSegment = filters?.advancedFilters?.segment?.label
 

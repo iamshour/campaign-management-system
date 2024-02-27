@@ -2,10 +2,10 @@
 import type { SharedListViewProps } from "@/core/types"
 import type { SmsIndustryTemplateType } from "@/features/industries/types"
 
+import { updatePaginationAndSorting, updateSearch } from "@/core/components/data-view/data-view-slice"
 import appPaths from "@/core/constants/app-paths"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updatePaginationAndSorting, updateSearch } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { NoResultsFound, SearchInput } from "@/ui"
 import { lazy } from "react"
 import { Link, useLocation } from "react-router-dom"
@@ -33,7 +33,7 @@ const SmsPrebuiltTemplatesView = ({
 
 	const dispatch = useDispatch()
 
-	const { paginationAndSorting, searchTerm } = useSelector(({ dataGrid }) => dataGrid[prebuiltTemplatesGridKey])
+	const { paginationAndSorting, searchTerm } = useSelector(({ dataView }) => dataView[prebuiltTemplatesGridKey])
 
 	return (
 		<div className='flex h-full w-full flex-1 overflow-hidden'>

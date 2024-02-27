@@ -1,8 +1,8 @@
 //#region Import
-import { useDataGridContext } from "@/core/components/data-grid/data-grid"
+import { useDataViewContext } from "@/core/components/data-view/data-view-context"
+import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
 import SelectTagsPopover from "@/features/people/contacts/components/select-tags-popover/select-tags-popover"
 import SelectGroupsPopover from "@/features/people/groups/components/select-groups-popover/select-groups-popover"
 import { DateRangePicker } from "@/ui"
@@ -18,15 +18,13 @@ import type { ContactTableFiltersType } from "../types"
 const ContactsFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const { dataGridKey } = useDataGridContext()
+	const { dataViewKey } = useDataViewContext()
 
-	const filters = useSelector<ContactTableFiltersType | undefined>(
-		({ dataGrid }) => dataGrid[dataGridKey as "add-contacts-to-group" | "contacts"]?.filters
-	)
+	const filters = useSelector<ContactTableFiltersType | undefined>((state) => selectFilters(state, dataViewKey))
 
 	const updateState = useCallback(
-		(newFilters?: Partial<ContactTableFiltersType>) => dispatch(updateFilters({ [dataGridKey]: newFilters })),
-		[dataGridKey, dispatch]
+		(newFilters?: Partial<ContactTableFiltersType>) => dispatch(updateFilters({ [dataViewKey]: newFilters })),
+		[dataViewKey, dispatch]
 	)
 
 	return (

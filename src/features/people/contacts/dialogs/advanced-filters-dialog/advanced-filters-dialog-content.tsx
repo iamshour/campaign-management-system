@@ -1,8 +1,8 @@
 //#region Import
 import type { ContactTableAdvancedFiltersType } from "@/features/people/contacts/types"
 
+import { updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
-import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
 import CreateSegmentPopover from "@/features/people/segments/components/create-segment-popover/create-segment-popover"
 import { areConditionsValid } from "@/features/people/segments/utils"
 import { Button, Footer, RadioGroup, Skeleton } from "@/ui"

@@ -1,9 +1,9 @@
 //#region Import
-import type { DataGridFilterType, DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { DataViewFilterType } from "@/core/components/data-view/types"
 
+import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
 import SelectTagsPopover from "@/features/people/contacts/components/select-tags-popover/select-tags-popover"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
@@ -16,12 +16,12 @@ import { memo, useCallback } from "react"
 const GroupViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const filters = useSelector<DataGridState<"contacts-in-group">["filters"]>(
-		({ dataGrid }) => dataGrid["contacts-in-group"]?.filters
+	const filters = useSelector<DataViewFilterType["contacts-in-group"] | undefined>((state) =>
+		selectFilters(state, "contacts-in-group")
 	)
 
 	const updateSelection = useCallback(
-		(newFilters?: Partial<Partial<DataGridFilterType["contacts-in-group"]>>) => {
+		(newFilters?: Partial<Partial<DataViewFilterType["contacts-in-group"]>>) => {
 			dispatch(updateFilters({ "contacts-in-group": newFilters }))
 		},
 		[dispatch]

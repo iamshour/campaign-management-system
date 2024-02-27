@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import type { ColumnType } from "@/core/components/data-grid/types"
+import type { ColumnType } from "@/core/components/data-view/data-table/types"
 
 //#region Import
 import { lazy } from "react"
@@ -9,7 +9,7 @@ import type { ContactExports, ContactExportStatusOption } from "../types"
 import exportsFieldsMap from "./exports-fields-map"
 import exportStatusesColorsMap from "./statuses-colors-map"
 
-const DataGridDateCell = lazy(() => import("@/core/components/data-grid/data-grid-date-cell"))
+const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-view-date-cell"))
 
 const ExportsViewTableActions = lazy(
 	() => import("../views/exports-view/exports-view-table-actions/exports-view-table-actions")
@@ -31,7 +31,7 @@ const exportsTableColumns: ColumnType<ContactExports>[] = [
 	},
 	{
 		accessorKey: "createdAt",
-		cell: (date) => <DataGridDateCell date={date} />,
+		cell: (date) => <DataViewDateCell date={date} />,
 		header: exportsFieldsMap.createdAt,
 	},
 	{

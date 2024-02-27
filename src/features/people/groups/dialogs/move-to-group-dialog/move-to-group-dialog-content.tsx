@@ -1,11 +1,11 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { DataViewState } from "@/core/components/data-view/types"
 import type { MoveContactsToGroupBody } from "@/features/people/groups/types"
 
-import { useDataGridContext } from "@/core/components/data-grid/data-grid"
+import { useDataViewContext } from "@/core/components/data-view/data-view-context"
+import { clearSelection } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
 import { useMoveContactsToGroupMutation } from "@/features/people/groups/api"
 import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option-type-schema"
@@ -49,11 +49,11 @@ const MoveToGroupDialogContent = ({ closeDialog, id }: MoveToGroupDialogContentP
 
 	const { closeDropdown } = useDropdownStateContext()
 
-	const { filters, searchTerm, selection } = useSelector<DataGridState<"contacts-in-group">>(
-		({ dataGrid }) => dataGrid["contacts-in-group"]
+	const { filters, searchTerm, selection } = useSelector<DataViewState<"contacts-in-group">>(
+		({ dataView }) => dataView["contacts-in-group"]
 	)
 
-	const { count } = useDataGridContext()
+	const { count } = useDataViewContext()
 
 	const [triggerMoveContactsToGroup, { isLoading }] = useMoveContactsToGroupMutation()
 

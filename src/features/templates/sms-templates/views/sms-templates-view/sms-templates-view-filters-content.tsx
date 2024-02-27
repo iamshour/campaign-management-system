@@ -6,9 +6,9 @@ import type {
 	TemplateFilter,
 } from "@/features/templates/sms-templates/types"
 
+import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
 import SelectLanguagesPopover from "@/features/templates/sms-templates/components/select-languages-popover"
 import SelectTemplateStatusesPopover from "@/features/templates/sms-templates/components/select-template-statuses-popover"
 import SelectTemplateTypesPopover from "@/features/templates/sms-templates/components/select-template-types-popover"
@@ -23,7 +23,9 @@ import { memo, useCallback } from "react"
 const SmsTemplatesFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const filters = useSelector<TemplateFilter | undefined>(({ dataGrid }) => dataGrid["sms-templates"]?.filters)
+	const filters = useSelector<TemplateFilter | undefined>(
+		(state) => selectFilters(state, "sms-templates") as TemplateFilter | undefined
+	)
 
 	const updateSelection = useCallback(
 		(newFilters?: Partial<TemplateFilter>) => {

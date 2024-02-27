@@ -5,7 +5,7 @@ import { Button } from "@/ui"
 import MdiCardText from "~icons/mdi/card-text"
 import { lazy } from "react"
 
-const DataGridDateCell = lazy(() => import("@/core/components/data-grid/data-grid-date-cell"))
+const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-view-date-cell"))
 
 const IndustriesViewTableIcon = lazy(
 	() => import("@/features/industries/views/industries-view/industries-view-table-icon")
@@ -40,7 +40,7 @@ const IndustryCard = (industry: IndustryType) => {
 				</li>
 				<li className='flex gap-2 text-base'>
 					<span className='inline whitespace-nowrap text-[#8F8F8F]'>Creation date and time:</span>
-					<DataGridDateCell date={createdAt} />
+					<DataViewDateCell date={createdAt} />
 				</li>
 			</ul>
 

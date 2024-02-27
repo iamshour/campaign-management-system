@@ -6,9 +6,9 @@ import type {
 	SmsTemplateTypeOption,
 } from "@/features/templates/sms-templates/types"
 
+import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/data-grid-slice/data-grid-slice"
 import SelectLanguagesPopover from "@/features/templates/sms-templates/components/select-languages-popover"
 import SelectTemplateStatusesPopover from "@/features/templates/sms-templates/components/select-template-statuses-popover"
 import SelectTemplateTypesPopover from "@/features/templates/sms-templates/components/select-template-types-popover"
@@ -24,7 +24,7 @@ const SmsIndustryTemplatesViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
 	const filters = useSelector<PrebuiltTemplateFilter | undefined>(
-		({ dataGrid }) => dataGrid["sms-industry-templates"]?.filters
+		(state) => selectFilters(state, "sms-industry-templates") as PrebuiltTemplateFilter | undefined
 	)
 
 	const updateSelection = useCallback(

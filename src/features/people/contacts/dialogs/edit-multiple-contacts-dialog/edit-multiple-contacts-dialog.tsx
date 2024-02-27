@@ -1,6 +1,7 @@
 //#region Import
-import type { DataGridState } from "@/core/slices/data-grid-slice/types"
+import type { Selection } from "@/core/components/data-view/types"
 
+import { selectSelection } from "@/core/components/data-view/data-view-slice"
 import useSelector from "@/core/hooks/useSelector"
 import { Dialog } from "@/ui"
 import { lazy, useState } from "react"
@@ -25,7 +26,7 @@ interface EditMultipleContactsDialogProps
 const EditMultipleContactsDialog = ({ actionType, children, title }: EditMultipleContactsDialogProps) => {
 	const [open, setOpen] = useState(false)
 
-	const { selection } = useSelector<DataGridState<"contacts">>(({ dataGrid }) => dataGrid["contacts"])
+	const selection = useSelector<Selection>((state) => selectSelection(state, "contacts"))
 
 	return (
 		<Dialog onOpenChange={setOpen} open={open}>

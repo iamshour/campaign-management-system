@@ -1,17 +1,18 @@
 //#region Import
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateSelection } from "@/core/slices/data-grid-slice/data-grid-slice"
 import { Checkbox, Skeleton } from "@/ui"
 import { isValidElement, lazy, Suspense, useCallback, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
-import type { DataGridTableProps, RowData } from "../types"
+import type { Selection } from "../types"
+import type { DataTableProps, RowData } from "./types"
 
-import { useDataGridContext } from "../data-grid"
+import { useDataViewContext } from "../data-view-context"
+import { selectSelection, updateSelection } from "../data-view-slice"
 
-const TableColumnHeader = lazy(() => import("./table-column-header"))
+const DataTableColumnHeader = lazy(() => import("./data-table-column-header"))
 //#endregion
 
 const TableCell = ({ children, className, ...props }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
@@ -20,23 +21,23 @@ const TableCell = ({ children, className, ...props }: React.TdHTMLAttributes<HTM
 	</td>
 )
 
-const DataGridTable = <TData extends RowData>({
+const DataTable = <TData extends RowData>({
 	classNames,
 	highlightOnHover = true,
 	onRowClick,
-}: DataGridTableProps<TData>) => {
+}: DataTableProps<TData>) => {
 	const dispatch = useDispatch()
 
 	const { t } = useTranslation("ui")
 
-	const { columns, count = 0, dataGridKey, isFetching, list } = useDataGridContext<TData>()
+	const { columns, count = 0, dataViewKey, isFetching, list } = useDataViewContext<TData>()
 
-	const selection = useSelector(({ dataGrid }) => dataGrid[dataGridKey]?.selection)
+	const selection = useSelector<Selection>((state) => selectSelection(state, dataViewKey))
 
 	const isSelectable = useMemo(() => columns?.some((col) => col.accessorKey === "selection"), [columns])
 
 	const checkIfRowSelected = useCallback(
-		(row: TData): boolean => {
+		(row: TData) => {
 			if (selection === undefined) return false
 
 			if (selection === "ALL") return true
@@ -46,13 +47,13 @@ const DataGridTable = <TData extends RowData>({
 
 			if (!rowIdSelector) return false
 
-			return selection?.includes(row[rowIdSelector as keyof typeof row])
+			return selection?.includes(row[rowIdSelector])
 		},
 		[columns, selection]
 	)
 
 	const isCheckAllActive = useCallback(
-		(rowIdSelector: keyof TData) => list?.every((entry) => selection?.includes(entry[rowIdSelector])),
+		(rowIdSelector: keyof TData) => !!list?.length && list?.every((entry) => selection?.includes(entry[rowIdSelector])),
 		[list, selection]
 	)
 
@@ -78,9 +79,9 @@ const DataGridTable = <TData extends RowData>({
 				newSelection = Array.from(new Set([...selection, ...currentListIds]))
 			}
 
-			dispatch(updateSelection({ [dataGridKey]: newSelection }))
+			dispatch(updateSelection({ [dataViewKey]: newSelection }))
 		},
-		[count, isCheckAllActive, dataGridKey, dispatch, list, selection]
+		[count, isCheckAllActive, dataViewKey, dispatch, list, selection]
 	)
 
 	const onCheckItem = useCallback(
@@ -97,9 +98,9 @@ const DataGridTable = <TData extends RowData>({
 				updatedSelection = [...selection, rowId]
 			}
 
-			dispatch(updateSelection({ [dataGridKey]: updatedSelection }))
+			dispatch(updateSelection({ [dataViewKey]: updatedSelection }))
 		},
-		[selection, dataGridKey, dispatch]
+		[selection, dataViewKey, dispatch]
 	)
 
 	return (
@@ -133,9 +134,9 @@ const DataGridTable = <TData extends RowData>({
 									key={idx + String(accessorKey)}>
 									<Suspense fallback={<Skeleton className='h-8 w-full' />}>
 										{!!sortable && typeof header === "string" ? (
-											<TableColumnHeader newSort={accessorKey as keyof (TData | undefined)}>
+											<DataTableColumnHeader newSort={accessorKey as keyof (TData | undefined)}>
 												{t(header)}
-											</TableColumnHeader>
+											</DataTableColumnHeader>
 										) : typeof header === "string" ? (
 											<h2 className='w-full whitespace-nowrap ps-2 text-start text-sm font-medium text-black'>
 												{(t(header) as string)?.toLocaleUpperCase()}
@@ -220,4 +221,4 @@ const DataGridTable = <TData extends RowData>({
 	)
 }
 
-export default DataGridTable
+export default DataTable
