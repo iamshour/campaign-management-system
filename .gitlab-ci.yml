@@ -42,6 +42,7 @@ workflow:
     - if: '$CI_COMMIT_BRANCH =~ /DEVO*/'
     - if: '$CI_COMMIT_BRANCH =~ /hotfix*/'
     - if: '$CI_COMMIT_BRANCH == "updates-on-latest-features"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
 .before_script:
   get_tool:
@@ -458,6 +459,8 @@ deploy-to-dev:
   rules:
     # This job will only run if branch name is master
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: never
     - when: manual
   before_script:
