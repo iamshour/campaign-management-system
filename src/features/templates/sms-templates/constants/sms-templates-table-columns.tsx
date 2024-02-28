@@ -1,6 +1,7 @@
 //#region Import
 import type { ColumnType } from "@/core/components/data-view/data-table/types"
 
+import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
 import { Badge } from "@/ui"
 import { lazy } from "react"
 
@@ -15,7 +16,6 @@ import smsTemplateFieldsLocaleMap from "./sms-template-fields-locale-map"
 import smsTemplateLanguagesLocaleMap from "./sms-template-languages-local-map"
 import smsTemplateStatusesColorsMap from "./sms-template-statuses-colors-map"
 import smsTemplateStatusesLocaleMap from "./sms-template-statuses-local-map"
-import smsTemplateTypesLocaleMap from "./sms-template-types-local-map"
 
 // eslint-disable-next-line react-refresh/only-export-components
 const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-view-date-cell"))
@@ -33,7 +33,7 @@ const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
 	},
 	{
 		accessorKey: "type",
-		cell: (type: SmsTemplateTypeOption) => smsTemplateTypesLocaleMap[type],
+		cell: (type: SmsTemplateTypeOption) => templateTypesLocaleMap[type],
 		header: smsTemplateFieldsLocaleMap.type,
 	},
 	{

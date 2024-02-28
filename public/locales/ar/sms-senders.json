@@ -1,0 +1,27 @@
+{
+	"fields": {
+		"name": "اسم",
+		"type": "يكتب",
+		"createdAt": "تاريخ الإنشاء"
+	},
+	"components": {
+		"navTabs": {
+			"local": "محلي",
+			"international": "دولي"
+		}
+	},
+	"table": {
+		"actions": {
+			"addRequest": "أضف طلب ",
+			"viewAllTypes": "عرض جميع الأنواع ",
+			"requestSender": "طلب المرسل"
+		}
+	},
+	"grid": {
+		"card": {
+			"sender": "مرسل"
+		}
+	},
+	"dialogs": {},
+	"views": {}
+}

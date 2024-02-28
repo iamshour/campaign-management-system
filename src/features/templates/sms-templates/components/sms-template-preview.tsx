@@ -1,12 +1,12 @@
 //#region Import
 import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 
+import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
 import SectionHeading from "@/ui/section-heading/section-heading"
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
 import MdiMessageProcessing from "~icons/mdi/message-processing"
 
 import smsTemplateLanguagesLocaleMap from "../constants/sms-template-languages-local-map"
-import smsTemplateTypesLocaleMap from "../constants/sms-template-types-local-map"
 import MobileSmsPreview from "./mobile-sms-preview"
 //#endregion
 
@@ -36,7 +36,7 @@ function SmsTemplatePreview({ additionalTemplateInfo, children, ...smsTemplate }
 					/>
 
 					<SmsTemplateInfoItem itemName='name' itemValue={name} />
-					<SmsTemplateInfoItem itemName='type' itemValue={smsTemplateTypesLocaleMap[type]} />
+					<SmsTemplateInfoItem itemName='type' itemValue={templateTypesLocaleMap[type]} />
 					<SmsTemplateInfoItem itemName='language' itemValue={smsTemplateLanguagesLocaleMap[language]} />
 					{additionalTemplateInfo?.map(({ label, value }) => (
 						<SmsTemplateInfoItem itemName={label} itemValue={value} key={label} />

@@ -82,9 +82,7 @@ type PrebuiltTemplateSearchFilter = { any?: true; name?: string }
  */
 export type GetSmsIndustryTemplatesParams = PaginationAndSorting<SmsIndustryTemplateType> &
 	Omit<PrebuiltTemplateFilter, "filterBy"> &
-	PrebuiltTemplateSearchFilter & {
-		industryId?: string
-	}
+	PrebuiltTemplateSearchFilter
 
 /**
  * Body Arguments passed to the `addNewSmsIndustryTemplate` mutation, used to add an Industry Template

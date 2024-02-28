@@ -9,12 +9,12 @@ import type {
 import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
+import SelectTemplateTypesPopover from "@/features/templates/common/components/select-template-types-popover"
+import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
 import SelectLanguagesPopover from "@/features/templates/sms-templates/components/select-languages-popover"
 import SelectTemplateStatusesPopover from "@/features/templates/sms-templates/components/select-template-statuses-popover"
-import SelectTemplateTypesPopover from "@/features/templates/sms-templates/components/select-template-types-popover"
 import smsTemplateLanguagesLocaleMap from "@/features/templates/sms-templates/constants/sms-template-languages-local-map"
 import smsTemplateStatusesLocaleMap from "@/features/templates/sms-templates/constants/sms-template-statuses-local-map"
-import smsTemplateTypesLocaleMap from "@/features/templates/sms-templates/constants/sms-template-types-local-map"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
 import { memo, useCallback } from "react"
@@ -50,7 +50,7 @@ const SmsIndustryTemplatesViewFiltersContent = memo(() => {
 			/>
 			<SelectTemplateTypesPopover
 				isMulti
-				selection={filters?.types?.map((value) => ({ label: smsTemplateTypesLocaleMap[value], value })) || []}
+				selection={filters?.types?.map((value) => ({ label: templateTypesLocaleMap[value], value })) || []}
 				updateSelection={(selection) =>
 					updateSelection({ types: getListOfKey(selection, "value") as SmsTemplateTypeOption[] })
 				}

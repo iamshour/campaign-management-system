@@ -1,34 +1,39 @@
+/* eslint-disable perfectionist/sort-objects*/
+
 const appPaths = {
-	CAMPAIGNS_MANAGER: "/campaigns-manager",
-	CHANNELS: "/channels",
-	CHATBOT: "/chatbot",
+	HOME: "/",
+
 	// #start People
 	CONTACTS: "/people/contacts",
-
-	DASHBOARD: "/dashboard",
-
-	EXPORTS: "/people/exports",
+	GROUPS: "/people/groups",
 	GROUP: "/people/groups/:id",
 	GROUP_ADD_CONTACTS: "/people/groups/:id/add-contacts",
-
-	GROUPS: "/people/groups",
-	HOME: "/",
-	INBOX: "/inbox",
-	INDUSTRIES: "./industries",
-	INTEGRATIONS: "/integrations",
-	// #end People
-
+	EXPORTS: "/people/exports",
+	SEGMENTS: "/people/segments",
 	SEGMENT_EDIT: "/people/segments/:id/edit-segment",
 	SEGMENT_VIEW: "/people/segments/:id",
-	SEGMENTS: "/people/segments",
-	// #end Templates
-
 	SEGMENTS_NEW: "/people/segments/new-segment",
+	// #end People
 
 	// #start Templates
 	SMS_TEMPLATES: "/templates/sms-templates",
 	SMS_TEMPLATES_MY_TEMPLATES: "/templates/sms-templates/my-templates",
 	SMS_TEMPLATES_PREBUILT_TEMPLATES: "/templates/sms-templates/prebuilt-templates",
+	// #end Templates
+
+	INDUSTRIES: "/industries",
+
+	// #start channels
+	SMS_SENDERS: "/channels/sms/senders",
+	SMS_SENDERS_MANAGEMENT: "channels/sms/senders-management",
+	// #end channels
+
+	// MOCK
+	INBOX: "/inbox",
+	CHATBOT: "/chatbot",
+	DASHBOARD: "/dashboard",
+	INTEGRATIONS: "/integrations",
+	CAMPAIGNS_MANAGER: "/campaigns-manager",
 }
 
 export default appPaths

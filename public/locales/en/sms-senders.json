@@ -1,0 +1,27 @@
+{
+	"fields": {
+		"name": "Name",
+		"type": "Type",
+		"createdAt": "Creation Date"
+	},
+	"components": {
+		"navTabs": {
+			"local": "Local",
+			"international": "International"
+		}
+	},
+	"table": {
+		"actions": {
+			"addRequest": "Add Request",
+			"viewAllTypes": "View All Types",
+			"requestSender": "Request Sender"
+		}
+	},
+	"grid": {
+		"card": {
+			"sender": "Sender"
+		}
+	},
+	"dialogs": {},
+	"views": {}
+}

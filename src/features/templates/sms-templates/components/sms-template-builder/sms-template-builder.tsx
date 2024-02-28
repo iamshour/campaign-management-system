@@ -1,7 +1,7 @@
 //#region Import
 import SmsIndustryTemplateSchema from "@/features/industries/schemas/sms-industry-template-schema"
+import templateTypesOptions from "@/features/templates/common/constants/template-types-options"
 import smsTemplateLanguagesOptions from "@/features/templates/sms-templates/constants/sms-template-languages-options"
-import smsTemplateTypesOptions from "@/features/templates/sms-templates/constants/sms-template-types-options"
 import DiscardTemplateChangesDialog from "@/features/templates/sms-templates/dialogs/discard-template-changes-dialog/discard-template-changes-dialog"
 import SmsTemplateSchema from "@/features/templates/sms-templates/schemas/sms-template-schema"
 import { Button, Footer, Form, Input, Select, Separator, useForm } from "@/ui"
@@ -109,7 +109,7 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 												<Select.Value placeholder='Select type' />
 											</Select.Trigger>
 											<Select.Content sideOffset={8}>
-												{smsTemplateTypesOptions.map(({ label, value }) => (
+												{templateTypesOptions.map(({ label, value }) => (
 													<Select.Item
 														className='static flex w-full flex-row items-center justify-between'
 														key={value}

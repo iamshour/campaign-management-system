@@ -1,7 +1,7 @@
 //#region Import
 import { ComboBox, ComboBoxPopper } from "@/ui"
 
-import smsTemplateTypesOptions from "../constants/sms-template-types-options"
+import templateTypesOptions from "../constants/template-types-options"
 //#endregion
 
 const SelectTemplateTypesPopover = ({
@@ -9,13 +9,11 @@ const SelectTemplateTypesPopover = ({
 	...props
 }: React.ComponentPropsWithoutRef<typeof ComboBox>) => {
 	return (
-		<ComboBox
-			label='Type' // label={label ?? t("label")} // TODO: add translation
-			{...props}>
+		<ComboBox label='Type' {...props}>
 			<ComboBox.Trigger>Select types</ComboBox.Trigger>
 
 			<ComboBox.Content className='h-[193px]'>
-				<ComboBoxPopper options={smsTemplateTypesOptions} />
+				<ComboBoxPopper options={templateTypesOptions} />
 			</ComboBox.Content>
 		</ComboBox>
 	)
