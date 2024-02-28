@@ -1,5 +1,5 @@
 //#region Import
-import { Dropdown } from "@/ui"
+import { Dropdown, IconType } from "@/ui"
 import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 import { useState } from "react"
 import { twMerge } from "tailwind-merge"
@@ -7,13 +7,21 @@ import { twMerge } from "tailwind-merge"
 import { DropdownStateContext } from "./dropdown-state-context"
 //#endregion
 
-const ActionsDropdown = ({ children, className }: React.ComponentPropsWithoutRef<typeof Dropdown.Trigger>) => {
+type ActionsDropdownProps = React.ComponentPropsWithoutRef<typeof Dropdown.Trigger> & {
+	Icon?: IconType
+	iconClassName?: string
+}
+
+const ActionsDropdown = ({ children, className, Icon = BiThreeDotsVertical, iconClassName }: ActionsDropdownProps) => {
 	const [open, setOpen] = useState(false)
 
 	return (
 		<Dropdown onOpenChange={setOpen} open={open}>
-			<Dropdown.Trigger className={twMerge("h-max w-max p-1.5", className)} showArrow={false} variant='ghost'>
-				<BiThreeDotsVertical />
+			<Dropdown.Trigger
+				className={twMerge("h-max w-max p-1.5 text-[#939393] hover:text-[#2DAEF5]", className)}
+				showArrow={false}
+				variant='ghost'>
+				<Icon className={iconClassName} />
 			</Dropdown.Trigger>
 
 			<Dropdown.Content align='end' sideOffset={0}>

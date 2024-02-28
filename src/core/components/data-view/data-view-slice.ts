@@ -22,6 +22,8 @@ const initialState: { [K in DataViewKey]: DataViewState<K> } = {
 	"contacts-in-group": initialDataViewBaseState,
 	groups: initialCompactDataViewBaseState,
 	industries: initialDataViewBaseState,
+	"international-sms-senders": initialCompactDataViewBaseState,
+	"local-sms-senders": initialCompactDataViewBaseState,
 	segments: initialDataViewBaseState,
 	"sms-industry-templates": initialCompactDataViewBaseState,
 	"sms-prebuilt-templates": {

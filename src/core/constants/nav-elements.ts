@@ -118,23 +118,23 @@ const navElements: NavElementProps[] = [
 		type: "nav-link",
 	},
 	{
-		Icon: IcBaselineCampaign,
-		label: "navbar.nav-elements.campaigns",
-		path: appPaths.CAMPAIGNS_MANAGER,
-		roles: ["BLUE", "BUSINESS"],
-		type: "nav-link",
-	},
-	{
 		content: [
 			{
-				label: "navbar.nav-elements.channels.elements.whatsapp",
-				path: appPaths.CHANNELS,
+				label: "navbar.nav-elements.channels.elements.smsChannels",
+				path: appPaths.SMS_SENDERS,
 			},
 		],
 		Icon: MdiVirus,
 		label: "navbar.nav-elements.channels.title",
 		roles: ["BLUE", "BUSINESS"],
 		type: "accordion",
+	},
+	{
+		Icon: IcBaselineCampaign,
+		label: "navbar.nav-elements.campaigns",
+		path: appPaths.CAMPAIGNS_MANAGER,
+		roles: ["BLUE", "BUSINESS"],
+		type: "nav-link",
 	},
 	{
 		content: [

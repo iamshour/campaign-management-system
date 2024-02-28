@@ -36,7 +36,18 @@ i18n
 		// Example: so that an ar-EG (Egyptian Arabic) user will see the ar (Arabic) version of our app
 		nonExplicitSupportedLngs: true,
 
-		ns: ["common", "contacts", "groups", "exports", "segments", "campaigns", "ui", "sms-templates", "industries"],
+		ns: [
+			"common",
+			"contacts",
+			"groups",
+			"exports",
+			"segments",
+			"campaigns",
+			"ui",
+			"sms-templates",
+			"industries",
+			"sms-senders",
+		],
 
 		preload: ["en", "ar"],
 

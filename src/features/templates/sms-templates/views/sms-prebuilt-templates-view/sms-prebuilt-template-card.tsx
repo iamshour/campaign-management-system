@@ -2,8 +2,8 @@
 import type { SmsIndustryTemplateType } from "@/features/industries/types"
 
 import WavySvg from "@/assets/prebuilt-template-card-wavy.svg?react"
+import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
 import smsTemplateLanguagesLocaleMap from "@/features/templates/sms-templates/constants/sms-template-languages-local-map"
-import smsTemplateTypesLocaleMap from "@/features/templates/sms-templates/constants/sms-template-types-local-map"
 import { memo } from "react"
 import { twMerge } from "tailwind-merge"
 //#endregion
@@ -41,7 +41,7 @@ const SmsPrebuiltTemplateCard = memo(
 					</p>
 					<p className='relative z-10 inline text-white'>
 						<span className='font-light'>Type: </span>
-						{type ? smsTemplateTypesLocaleMap[type] : "N/A"} |
+						{type ? templateTypesLocaleMap[type] : "N/A"} |
 					</p>{" "}
 					<p className='relative z-10 inline text-white'>
 						<span className='font-light'>Language: </span>

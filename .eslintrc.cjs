@@ -31,7 +31,7 @@ module.exports = {
 		"import/no-unresolved": [2, { amd: true, commonjs: true, ignore: ["~icons/*", "unplugin-icons"] }],
 		"import/prefer-default-export": "off",
 		"max-len": ["error", { code: 200 }],
-		"no-console": "error",
+		"no-console": "warn",
 		"no-else-return": "error",
 		"no-unused-vars": "off",
 		"padding-line-between-statements": [

@@ -11,6 +11,7 @@ declare module "i18next" {
 			groups: typeof unknown
 			industries: typeof unknown
 			segments: typeof unknown
+			"sms-senders": typeof unknown
 			"sms-templates": typeof unknown
 			ui: typeof unknown
 		}

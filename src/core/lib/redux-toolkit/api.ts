@@ -59,7 +59,7 @@ const api = createApi({
 	endpoints: () => ({}),
 	reducerPath: "api",
 	refetchOnReconnect: true,
-	tagTypes: ["Contact", "Tag", "Group", "Segment", "SmsTemplate", "Industry", "SmsIndustryTemplate"],
+	tagTypes: ["Contact", "Tag", "Group", "Segment", "SmsTemplate", "Industry", "SmsIndustryTemplate", "Sender"],
 })
 
 export default api

@@ -5,8 +5,8 @@ import type { SmsTemplateLanguageOption, SmsTemplateTypeOption } from "@/feature
 import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
+import templateTypesOptions from "@/features/templates/common/constants/template-types-options"
 import smsTemplateLanguagesOptions from "@/features/templates/sms-templates/constants/sms-template-languages-options"
-import smsTemplateTypesOptions from "@/features/templates/sms-templates/constants/sms-template-types-options"
 import { Button, Checkbox, Collapsible, Label, NoResultsFound, SearchInput, Separator } from "@/ui"
 import { memo, useCallback } from "react"
 //#endregion
@@ -118,7 +118,7 @@ const SmsPrebuiltTemplatesFiltersContent = memo(
 						</div>
 					</CollapsibleSection>
 					<CollapsibleSection label='Type'>
-						{smsTemplateTypesOptions?.map(({ label, value }) => (
+						{templateTypesOptions?.map(({ label, value }) => (
 							<div className='flex flex-row items-center space-x-3 space-y-0 ps-3' key={value}>
 								<Checkbox
 									checked={filters?.types?.includes(value)}
