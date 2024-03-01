@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge"
 //#endregion
 
 const Textarea = forwardRef<HTMLTextAreaElement, React.TextareaHTMLAttributes<HTMLTextAreaElement>>(
-	({ className, value, ...props }, ref) => (
+	({ className, ...props }, ref) => (
 		<textarea
 			className={twMerge(
 				`flex w-full resize-none rounded-xl border-0 bg-transparent p-4 text-base text-gray-800 !outline-0 ring-1 !ring-inset
@@ -13,10 +13,9 @@ const Textarea = forwardRef<HTMLTextAreaElement, React.TextareaHTMLAttributes<HT
 				   data-[hasvalue=true]:invalid:ring-red-500 focus:ring-2 focus:!ring-primary-500 active:ring-2 active:!ring-primary-500 disabled:cursor-not-allowed disabled:opacity-50`,
 				className
 			)}
-			data-hasvalue={!!value}
+			data-hasvalue={!!props?.value}
 			ref={ref}
 			spellCheck={false}
-			value={value || ""}
 			{...props}
 		/>
 	)

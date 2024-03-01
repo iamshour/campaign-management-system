@@ -1,6 +1,7 @@
 //#region Import
+import type { TemplateStatus } from "@/features/templates/common/types"
 import type { SmsTemplateSchemaType } from "@/features/templates/sms-templates/schemas/sms-template-schema"
-import type { AddNewSmsTemplateBody, SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
+import type { AddNewSmsTemplateBody } from "@/features/templates/sms-templates/types"
 
 import appPaths from "@/core/constants/app-paths"
 import { useUpdateSmsTemplateMutation } from "@/features/templates/sms-templates/api"
@@ -13,7 +14,7 @@ import { useNavigate, useParams } from "react-router-dom"
 //#endregion
 
 interface EditSmsTemplateViewProps {
-	defaultValues?: SmsTemplateSchemaType & { status?: SmsTemplateStatusOption }
+	defaultValues?: SmsTemplateSchemaType & { status?: TemplateStatus }
 }
 
 const EditSmsTemplateView = ({ defaultValues }: EditSmsTemplateViewProps) => {
@@ -25,12 +26,12 @@ const EditSmsTemplateView = ({ defaultValues }: EditSmsTemplateViewProps) => {
 
 	const [triggerUpdateSmsTemplate, { isLoading }] = useUpdateSmsTemplateMutation()
 
-	const [smsTemplateStatus, SetSmsTemplateStatus] = useState<SmsTemplateStatusOption | undefined>()
+	const [status, setStatus] = useState<TemplateStatus | undefined>()
 
 	const onSubmit = async (requestBody: Omit<AddNewSmsTemplateBody, "status">) => {
-		if (!requestBody || !templateId || !smsTemplateStatus) return
+		if (!requestBody || !templateId || !status) return
 
-		await triggerUpdateSmsTemplate({ id: templateId, ...requestBody, status: smsTemplateStatus }).unwrap()
+		await triggerUpdateSmsTemplate({ id: templateId, ...requestBody, status }).unwrap()
 
 		toast.success("Template added successfully")
 		navigate(appPaths.SMS_TEMPLATES, { replace: true })
@@ -44,9 +45,9 @@ const EditSmsTemplateView = ({ defaultValues }: EditSmsTemplateViewProps) => {
 				{defaultValues?.status === "DRAFT" && (
 					<Button
 						className='px-10'
-						disabled={isLoading && smsTemplateStatus == "PUBLISHED"}
-						loading={isLoading && smsTemplateStatus == "DRAFT"}
-						onClick={() => SetSmsTemplateStatus("DRAFT")}
+						disabled={isLoading && status == "PUBLISHED"}
+						loading={isLoading && status == "DRAFT"}
+						onClick={() => setStatus("DRAFT")}
 						type='submit'
 						variant='outline'>
 						{t("actions.updateDraft")}
@@ -55,9 +56,9 @@ const EditSmsTemplateView = ({ defaultValues }: EditSmsTemplateViewProps) => {
 
 				<Button
 					className='px-10'
-					disabled={isLoading && smsTemplateStatus == "DRAFT"}
-					loading={isLoading && smsTemplateStatus == "PUBLISHED"}
-					onClick={() => SetSmsTemplateStatus("PUBLISHED")}
+					disabled={isLoading && status == "DRAFT"}
+					loading={isLoading && status == "PUBLISHED"}
+					onClick={() => setStatus("PUBLISHED")}
 					type='submit'>
 					{t("actions.updatedPublished")}
 				</Button>

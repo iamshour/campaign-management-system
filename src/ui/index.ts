@@ -51,6 +51,8 @@ export { default as Input } from "./input/input"
 
 export { default as Label } from "./label/label"
 
+export { default as MultiSelectPopover } from "./multi-select-popover/multi-select-popover"
+
 export { default as NavTabs } from "./nav-tabs/nav-tabs"
 
 export { default as Pagination } from "./pagination/pagination"
@@ -86,8 +88,6 @@ export { default as DataGridSkeleton } from "./skeletons/data-grid-skeleton"
 export { default as DataTableSkeleton } from "./skeletons/data-table-skeleton"
 
 export { default as FullViewSkeleton } from "./skeletons/full-view-skeleton"
-
-export { default as PopoverSkeleton } from "./skeletons/popover-skeleton"
 
 export { default as TableSkeleton } from "./skeletons/table-skeleton"
 

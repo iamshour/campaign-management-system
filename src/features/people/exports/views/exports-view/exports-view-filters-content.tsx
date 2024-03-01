@@ -5,7 +5,7 @@ import { selectFilters, updateFilters } from "@/core/components/data-view/data-v
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import SelectExportedByPopover from "@/features/people/exports/components/select-exported-by-popover/select-exported-by-popover"
-import SelectExportsStatusesPopover from "@/features/people/exports/components/select-exports-statuses-popover/select-exports-statuses-popover"
+import SelectMultiExportsStatusesPopover from "@/features/people/exports/components/select-multi-exports-statuses-popover"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
 import { memo, useCallback } from "react"
@@ -18,7 +18,7 @@ const ExportsViewFiltersContent = memo(() => {
 		(state) => selectFilters(state, "contacts-exports") as ContactExportFilter | undefined
 	)
 
-	const updateSelection = useCallback(
+	const onValueChange = useCallback(
 		(newFilters?: Partial<ContactExportFilter>) => {
 			dispatch(updateFilters({ "contacts-exports": newFilters }))
 		},
@@ -29,19 +29,18 @@ const ExportsViewFiltersContent = memo(() => {
 		<>
 			<DateRangePicker
 				dateRange={{ endDate: filters?.endDate, startDate: filters?.startDate }}
-				updateDateRange={updateSelection}
+				updateDateRange={onValueChange}
 			/>
-			<SelectExportsStatusesPopover
-				isMulti
-				selection={filters?.statuses?.map((value) => ({ label: value, value })) || []}
-				updateSelection={(statuses) =>
-					updateSelection({ statuses: getListOfKey(statuses, "value") as ContactExportStatusOption[] })
+			<SelectMultiExportsStatusesPopover
+				onValueChange={(statuses) =>
+					onValueChange({ statuses: getListOfKey(statuses, "value") as ContactExportStatusOption[] })
 				}
+				value={filters?.statuses?.map((value) => ({ label: value, value })) || []}
 			/>
 			<SelectExportedByPopover
 				isMulti
 				selection={filters?.exportedBy?.map((value) => ({ label: value, value })) || []}
-				updateSelection={(selection) => updateSelection({ exportedBy: getListOfKey(selection, "value") })}
+				updateSelection={(selection) => onValueChange({ exportedBy: getListOfKey(selection, "value") })}
 			/>
 		</>
 	)

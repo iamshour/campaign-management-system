@@ -1,9 +1,11 @@
 {
 	"name": "@blueai/cms",
-	"version": "0.5.13",
+	"version": "0.5.14",
 	"type": "module",
 	"scripts": {
 		"dev": "vite --clearScreen false",
+		"server": "json-server public/db.json --port 5000",
+		"concurrent": "concurrently \"npm run dev\" \"npm run server\"",
 		"build": "npm run clean && tsc && vite build",
 		"start": "vite preview --port 3000 --host",
 		"clean": "rm -rf dist",
@@ -11,8 +13,7 @@
 		"typecheck": "tsc --noEmit",
 		"lint": "npm run typecheck && eslint \"src/**/*.ts*\"",
 		"test": "vitest run",
-		"test:watch": "vitest",
-		"json": "npx json-server public/db.json --port 5000"
+		"test:watch": "vitest"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "3.3.4",
@@ -33,7 +34,6 @@
 		"@radix-ui/react-tooltip": "1.0.7",
 		"@react-spring/web": "9.7.3",
 		"@reduxjs/toolkit": "1.9.7",
-		"axios": "1.6.7",
 		"class-variance-authority": "0.7.0",
 		"clsx": "2.1.0",
 		"cmdk": "0.2.1",
@@ -41,7 +41,6 @@
 		"i18next": "23.8.2",
 		"i18next-browser-languagedetector": "7.2.0",
 		"i18next-http-backend": "2.4.3",
-		"json-server": "1.0.0-alpha.23",
 		"lodash.isempty": "4.4.0",
 		"lodash.omit": "4.5.0",
 		"react": "18.2.0",
@@ -86,6 +85,7 @@
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-react-refresh": "^0.4.5",
 		"fontaine": "^0.4.1",
+		"json-server": "1.0.0-alpha.23",
 		"postcss": "8.4.33",
 		"postcss-nesting": "12.0.2",
 		"prettier": "3.2.4",

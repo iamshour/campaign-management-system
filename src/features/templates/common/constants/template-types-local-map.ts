@@ -1,8 +1,8 @@
 //#region Import
-import type { TemplateTypeOption } from "../types"
+import type { TemplateType } from "../types"
 //#endregion
 
-const templateTypesLocaleMap: Record<TemplateTypeOption, string> = {
+const templateTypesLocaleMap: Record<TemplateType, string> = {
 	OTP: "OTP",
 	PROMOTIONAL: "Promotional",
 	TRANSACTIONAL: "Transactional",

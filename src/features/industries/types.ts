@@ -1,13 +1,9 @@
 //#region Import
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
+import type { TemplateLanguage, TemplateStatus, TemplateType } from "@/features/templates/common/types"
 import type { DateRange } from "@/ui"
 
-import type {
-	SmsTemplateLanguageOption,
-	SmsTemplateStatusOption,
-	SmsTemplateType,
-	SmsTemplateTypeOption,
-} from "../templates/sms-templates/types"
+import type { SmsTemplateType } from "../templates/sms-templates/types"
 import type { IndustryIconEnum } from "./constants/industries-icons-map"
 //#endregion
 
@@ -69,10 +65,10 @@ export type PrebuiltTemplateFilter = DateRange & {
 	// Only used internally (Not sent to BE)
 	filterBy?: "ALL" | "POPULAR" | "RECENT"
 	industryId?: string
-	languages?: SmsTemplateLanguageOption[]
+	languages?: TemplateLanguage[]
 	mostPopular?: boolean
-	statuses?: SmsTemplateStatusOption[]
-	types?: SmsTemplateTypeOption[]
+	statuses?: TemplateStatus[]
+	types?: TemplateType[]
 }
 
 type PrebuiltTemplateSearchFilter = { any?: true; name?: string }

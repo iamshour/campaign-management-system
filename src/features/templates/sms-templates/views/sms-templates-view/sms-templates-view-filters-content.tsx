@@ -1,20 +1,16 @@
 //#region Import
-import type {
-	SmsTemplateLanguageOption,
-	SmsTemplateStatusOption,
-	SmsTemplateTypeOption,
-	TemplateFilter,
-} from "@/features/templates/sms-templates/types"
+import type { TemplateLanguage, TemplateStatus, TemplateType } from "@/features/templates/common/types"
+import type { TemplateFilter } from "@/features/templates/sms-templates/types"
 
 import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import SelectTemplateTypesPopover from "@/features/templates/common/components/select-template-types-popover"
+import SelectMultiLanguagesPopover from "@/features/templates/common/components/select-multi-languages-popover"
+import SelectMultiTemplateStatusesPopover from "@/features/templates/common/components/select-multi-template-statuses-popover"
+import SelectMultiTemplateTypesPopover from "@/features/templates/common/components/select-multi-template-types-popover"
+import templateLanguagesLocaleMap from "@/features/templates/common/constants/template-languages-local-map"
+import templateStatusesLocaleMap from "@/features/templates/common/constants/template-statuses-local-map"
 import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
-import SelectLanguagesPopover from "@/features/templates/sms-templates/components/select-languages-popover"
-import SelectTemplateStatusesPopover from "@/features/templates/sms-templates/components/select-template-statuses-popover"
-import smsTemplateLanguagesLocaleMap from "@/features/templates/sms-templates/constants/sms-template-languages-local-map"
-import smsTemplateStatusesLocaleMap from "@/features/templates/sms-templates/constants/sms-template-statuses-local-map"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
 import { memo, useCallback } from "react"
@@ -27,7 +23,7 @@ const SmsTemplatesFiltersContent = memo(() => {
 		(state) => selectFilters(state, "sms-templates") as TemplateFilter | undefined
 	)
 
-	const updateSelection = useCallback(
+	const onValueChange = useCallback(
 		(newFilters?: Partial<TemplateFilter>) => {
 			dispatch(updateFilters({ "sms-templates": newFilters }))
 		},
@@ -39,28 +35,22 @@ const SmsTemplatesFiltersContent = memo(() => {
 			<DateRangePicker
 				dateRange={{ endDate: filters?.endDate, startDate: filters?.startDate }}
 				label='Last updated date'
-				updateDateRange={updateSelection}
+				updateDateRange={onValueChange}
 			/>
-			<SelectTemplateStatusesPopover
-				isMulti
-				selection={filters?.statuses?.map((value) => ({ label: smsTemplateStatusesLocaleMap[value], value })) || []}
-				updateSelection={(selection) =>
-					updateSelection({ statuses: getListOfKey(selection, "value") as SmsTemplateStatusOption[] })
-				}
+			<SelectMultiTemplateStatusesPopover
+				onValueChange={(selection) => onValueChange({ statuses: getListOfKey(selection, "value") as TemplateStatus[] })}
+				value={filters?.statuses?.map((value) => ({ label: templateStatusesLocaleMap[value], value })) || []}
 			/>
-			<SelectTemplateTypesPopover
-				isMulti
-				selection={filters?.types?.map((value) => ({ label: templateTypesLocaleMap[value], value })) || []}
-				updateSelection={(selection) =>
-					updateSelection({ types: getListOfKey(selection, "value") as SmsTemplateTypeOption[] })
-				}
+			<SelectMultiTemplateTypesPopover
+				onValueChange={(selection) => onValueChange({ types: getListOfKey(selection, "value") as TemplateType[] })}
+				value={filters?.types?.map((value) => ({ label: templateTypesLocaleMap[value], value })) || []}
 			/>
-			<SelectLanguagesPopover
-				isMulti
-				selection={filters?.languages?.map((value) => ({ label: smsTemplateLanguagesLocaleMap[value], value })) || []}
-				updateSelection={(selection) =>
-					updateSelection({ languages: getListOfKey(selection, "value") as SmsTemplateLanguageOption[] })
+
+			<SelectMultiLanguagesPopover
+				onValueChange={(selection) =>
+					onValueChange({ languages: getListOfKey(selection, "value") as TemplateLanguage[] })
 				}
+				value={filters?.languages?.map((value) => ({ label: templateLanguagesLocaleMap[value], value })) || []}
 			/>
 		</>
 	)

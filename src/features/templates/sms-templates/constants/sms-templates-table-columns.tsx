@@ -1,21 +1,17 @@
 //#region Import
 import type { ColumnType } from "@/core/components/data-view/data-table/types"
+import type { TemplateLanguage, TemplateStatus, TemplateType } from "@/features/templates/common/types"
 
+import templateLanguagesLocaleMap from "@/features/templates/common/constants/template-languages-local-map"
+import templateStatusesLocaleMap from "@/features/templates/common/constants/template-statuses-local-map"
 import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
 import { Badge } from "@/ui"
 import { lazy } from "react"
 
-import type {
-	SmsTemplateLanguageOption,
-	SmsTemplateStatusOption,
-	SmsTemplateType,
-	SmsTemplateTypeOption,
-} from "../types"
+import type { SmsTemplateType } from "../types"
 
 import smsTemplateFieldsLocaleMap from "./sms-template-fields-locale-map"
-import smsTemplateLanguagesLocaleMap from "./sms-template-languages-local-map"
 import smsTemplateStatusesColorsMap from "./sms-template-statuses-colors-map"
-import smsTemplateStatusesLocaleMap from "./sms-template-statuses-local-map"
 
 // eslint-disable-next-line react-refresh/only-export-components
 const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-view-date-cell"))
@@ -33,12 +29,12 @@ const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
 	},
 	{
 		accessorKey: "type",
-		cell: (type: SmsTemplateTypeOption) => templateTypesLocaleMap[type],
+		cell: (type: TemplateType) => templateTypesLocaleMap[type],
 		header: smsTemplateFieldsLocaleMap.type,
 	},
 	{
 		accessorKey: "language",
-		cell: (language: SmsTemplateLanguageOption) => smsTemplateLanguagesLocaleMap[language],
+		cell: (language: TemplateLanguage) => templateLanguagesLocaleMap[language],
 		header: smsTemplateFieldsLocaleMap.language,
 	},
 	{
@@ -49,10 +45,10 @@ const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
 	},
 	{
 		accessorKey: "status",
-		cell: (status: SmsTemplateStatusOption) =>
+		cell: (status: TemplateStatus) =>
 			!!status?.length && (
 				<Badge className='rounded-md' key={status} style={{ backgroundColor: smsTemplateStatusesColorsMap[status] }}>
-					{smsTemplateStatusesLocaleMap[status]}
+					{templateStatusesLocaleMap[status]}
 				</Badge>
 			),
 		header: smsTemplateFieldsLocaleMap.status,

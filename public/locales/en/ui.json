@@ -66,5 +66,10 @@
 	"selectCountryPopover": {
 		"placeholder": "Select a country"
 	},
-	"noResultsComponent": "No results found"
+	"noResultsComponent": "No results found",
+
+	"textareaTooltip": {
+		"placeholder": "Enter content",
+		"submit": "Add"
+	}
 }

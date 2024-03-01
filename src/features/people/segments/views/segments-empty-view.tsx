@@ -3,10 +3,13 @@ import GroupsEmptySvg from "@/assets/groups-empty.svg?react"
 import LabelledHints from "@/core/components/labelled-hints"
 import { Button } from "@/ui"
 import { useTranslation } from "react-i18next"
+import { useNavigate } from "react-router-dom"
 //#endregion
 
 const SegmentsEmptyView = () => {
 	const { t } = useTranslation("segments")
+
+	const navigate = useNavigate()
 
 	return (
 		<div className='flex h-full w-full flex-col p-4'>
@@ -22,7 +25,7 @@ const SegmentsEmptyView = () => {
 				<h3 className='text-center text-xl font-bold sm:text-[22px]'>{t("views.emptyView.headline")}</h3>
 				<p className='mb-6 text-center'>{t("views.emptyView.message")}</p>
 				<div className='flex-wrap gap-8 flex-center'>
-					<Button className='min-w-[200px]' size='default'>
+					<Button className='min-w-[200px]' onClick={() => navigate("new-segment")} size='default'>
 						{t("table.toolbar.actions.create-segment")}
 					</Button>
 				</div>

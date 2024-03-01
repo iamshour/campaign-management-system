@@ -1,13 +1,25 @@
 {
 	"fields": {
-		"name": "Name",
+		"name": "Sender",
 		"type": "Type",
+		"targetCountry": "Target Country",
+		"note": "Note",
+		"sampleContent": "Sample Content",
 		"createdAt": "Creation Date"
 	},
 	"components": {
 		"navTabs": {
 			"local": "Local",
 			"international": "International"
+		},
+		"smsSenderRequestForm": {
+			"placeholders": {
+				"name": "Enter name",
+				"type": "Select type",
+				"note": "Enter note",
+				"sampleContent": "Enter content"
+			},
+			"labels": { "name": { "iconTooltip": "Description Goes Here" } }
 		}
 	},
 	"table": {
@@ -22,6 +34,35 @@
 			"sender": "Sender"
 		}
 	},
-	"dialogs": {},
-	"views": {}
+	"dialogs": {
+		"smsSenderRequest": {
+			"title": "Request Sender",
+			"buttons": {
+				"multiRequest": "Send & Add Another",
+				"singleRequest": "Send Request"
+			},
+			"message": {
+				"multiRequestSuccess": "Your request has been successfully sent, you can send another request.",
+				"singleRequestSuccess": "Your request has been successfully sent."
+			}
+		},
+		"activateSmsDialog": {
+			"title": {
+				"local": "Activate Local SMS",
+				"international": "Activate International SMS"
+			},
+			"text": "You will need a Sender ID in order to send SMS campaigns, please request a sender ID registration to start sending campaigns.",
+			"buttons": { "confirm": "Confirm" }
+		}
+	},
+	"views": {
+		"emptyView": {
+			"title": "You don't have sender ID yet",
+			"text": "Request a Sender ID in order to start sending you're campaigns",
+			"buttons": {
+				"local": "Activate Local SMS",
+				"international": "Activate International SMS"
+			}
+		}
+	}
 }

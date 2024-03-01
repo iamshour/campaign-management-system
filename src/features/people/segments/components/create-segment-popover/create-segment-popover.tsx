@@ -1,7 +1,7 @@
 //#region Import
-import { Button, Popover, PopoverSkeleton, Tooltip } from "@/ui"
-import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
-import { lazy, Suspense, useState } from "react"
+import IconTooltip from "@/core/components/icon-tooltip/icon-tooltip"
+import { Button, Popover } from "@/ui"
+import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
@@ -19,7 +19,6 @@ const CreateSegmentPopover = ({ disabled }: CreateSegmentPopoverProps) => {
 
 	return (
 		<Popover onOpenChange={setIsOpen} open={isOpen}>
-			{/* Note: Move Trigger to Component where it's used and pass it as child if this popover will be re-used again. */}
 			<Popover.Trigger asChild>
 				<Button
 					className={twMerge(
@@ -31,26 +30,11 @@ const CreateSegmentPopover = ({ disabled }: CreateSegmentPopoverProps) => {
 					variant='outline'>
 					<span className={disabled ? "!opacity-50" : ""}>{t("segment.addSegment.buttonLabel")}</span>
 
-					<Tooltip>
-						<Tooltip.Trigger asChild className='w-max'>
-							<div>
-								<MdiInformationVariantCircle className='shrink-0 text-xl text-primary-600' />
-							</div>
-						</Tooltip.Trigger>
-						<Tooltip.Content
-							align='start'
-							alignOffset={-110}
-							content={t("segment.addSegment.tooltip")}
-							side='top'
-							sideOffset={14}
-						/>
-					</Tooltip>
+					<IconTooltip alignOffset={-110} content={t("segment.addSegment.tooltip")} sideOffset={14} />
 				</Button>
 			</Popover.Trigger>
 			<Popover.Content align='start' alignOffset={0} side='top' sideOffset={10}>
-				<Suspense fallback={<PopoverSkeleton />}>
-					<CreateSegmentPopoverContent onClose={() => setIsOpen(false)} />
-				</Suspense>
+				<CreateSegmentPopoverContent onClose={() => setIsOpen(false)} />
 			</Popover.Content>
 		</Popover>
 	)

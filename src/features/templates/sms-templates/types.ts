@@ -1,22 +1,8 @@
 //#region Import
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
+import type { TemplateLanguage, TemplateStatus, TemplateType } from "@/features/templates/common/types"
 import type { DateRange } from "@/ui"
 //#endregion
-
-/**
- * Type options for the SMS Template
- */
-export type SmsTemplateTypeOption = "OTP" | "PROMOTIONAL" | "TRANSACTIONAL"
-
-/**
- * Language options for the SMS Template
- */
-export type SmsTemplateLanguageOption = "ARABIC" | "ENGLISH" | "OTHER"
-
-/**
- * Status options for the SMS Template
- */
-export type SmsTemplateStatusOption = "DRAFT" | "PUBLISHED"
 
 /**
  * Shape of fetched SMS Template
@@ -24,10 +10,10 @@ export type SmsTemplateStatusOption = "DRAFT" | "PUBLISHED"
 export type SmsTemplateType = {
 	body: string
 	id: string
-	language: SmsTemplateLanguageOption
+	language: TemplateLanguage
 	name: string
-	status: SmsTemplateStatusOption
-	type: SmsTemplateTypeOption
+	status: TemplateStatus
+	type: TemplateType
 	updatedAt: string
 }
 
@@ -35,9 +21,9 @@ export type SmsTemplateType = {
  * Filters used in Filters bar, as well as in params and body request of some api calls (`getSmsTemplates`, `deleteSmsTemplates`)
  */
 export type TemplateFilter = DateRange & {
-	languages?: SmsTemplateLanguageOption[]
-	statuses?: SmsTemplateStatusOption[]
-	types?: SmsTemplateTypeOption[]
+	languages?: TemplateLanguage[]
+	statuses?: TemplateStatus[]
+	types?: TemplateType[]
 }
 
 type TemplateSearchFilter = { any?: true; name?: string }

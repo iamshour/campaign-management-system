@@ -36,6 +36,8 @@
 			"channels": {
 				"title": "Channels",
 				"elements": {
+					"smsSendersManagementLocal": "Sender Mgmt - LOCAL",
+					"smsSendersManagementInternational": "Sender Mgmt - INT",
 					"smsChannels": "SMS Channels"
 				}
 			},

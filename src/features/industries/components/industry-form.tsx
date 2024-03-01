@@ -2,7 +2,7 @@
 import type { AddNewIndustryBody, IndustryType } from "@/features/industries/types"
 
 import industriesIconsMap from "@/features/industries/constants/industries-icons-map"
-import { Button, ColorInput, Footer, Form, Input, Select, useForm } from "@/ui"
+import { ColorInput, Footer, Form, Input, Select, useForm } from "@/ui"
 import { cleanObject } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -82,24 +82,27 @@ const IndustryForm = ({ children, defaultValues, onSubmit }: IndustryFormProps) 
 								<Form.Item>
 									<Form.Label>Icon *</Form.Label>
 									<Form.Control>
-										<Select value={field.value}>
+										<Select onValueChange={(iconName) => !!iconName && field.onChange(iconName)} value={field.value}>
 											<Select.Trigger className='w-full text-base' hasValue={!!field.value?.length} size='lg'>
 												<Select.Value placeholder='Select type'>
 													{!!field.value?.length && <IndustryIcon className='h-[26px] w-[26px]' icon={field.value} />}
 												</Select.Value>
 											</Select.Trigger>
 
-											<Select.Content className='flex max-w-[340px] flex-row flex-wrap justify-between gap-1'>
-												{Object.entries(industriesIconsMap).map(([iconName, Icon]) => (
-													<Button
-														className='cursor-pointer rounded-lg border border-transparent p-1 hover:border-primary-300 hover:bg-primary-100/50'
-														key={iconName}
-														onClick={() => field.onChange(iconName)}
-														type='button'
-														variant='ghost'>
-														<Icon className='h-[26px] w-[26px]' />
-													</Button>
-												))}
+											<Select.Content className='flex max-w-[340px] flex-row flex-wrap gap-1'>
+												{Object.entries(industriesIconsMap)
+													// removing `Others` industry icon
+													?.filter((icon) => icon[0] !== "FluentWrenchSettings24Regular")
+													.map(([iconName, Icon]) => (
+														<Select.Item
+															className={`inline-block w-max cursor-pointer rounded-lg border border-transparent p-1 text-black hover:border-primary-300
+														 hover:bg-primary-100/50 hover:!text-primary-900`}
+															key={iconName}
+															showCheck={false}
+															value={iconName}>
+															<Icon className='h-[26px] w-[26px] text-inherit' />
+														</Select.Item>
+													))}
 											</Select.Content>
 										</Select>
 									</Form.Control>

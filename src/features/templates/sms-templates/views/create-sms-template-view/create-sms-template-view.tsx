@@ -1,6 +1,6 @@
 //#region Import
+import type { TemplateStatus } from "@/features/templates/common/types"
 import type { SmsTemplateSchemaType } from "@/features/templates/sms-templates/schemas/sms-template-schema"
-import type { SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
 
 import appPaths from "@/core/constants/app-paths"
 import { useAddNewSmsTemplateMutation } from "@/features/templates/sms-templates/api"
@@ -23,7 +23,7 @@ const CreateSmsTemplateView = ({ defaultValues }: CreateSmsTemplateViewProps) =>
 
 	const [triggerAddNewSmsTemplate, { isLoading }] = useAddNewSmsTemplateMutation()
 
-	const [status, setStatus] = useState<SmsTemplateStatusOption | undefined>()
+	const [status, setStatus] = useState<TemplateStatus | undefined>()
 
 	const onSubmit = async (requestBody: SmsTemplateSchemaType) => {
 		if (!requestBody || !status) return

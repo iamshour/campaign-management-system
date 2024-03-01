@@ -221,7 +221,7 @@ const PaginationMessage = memo(() => {
 	const isEverythingSelected = useMemo(() => selection === "ALL" || selection?.length === count, [count, selection])
 
 	return (
-		<div className='text-muted-foreground m-2 flex w-max flex-wrap items-center text-sm'>
+		<div className='text-muted-foreground m-4 flex w-max flex-wrap items-center text-xs'>
 			<div className='h-full gap-2 rounded-s-md border-e-4 border-e-white bg-gray-200/60 px-4 text-black inline-flex-center'>
 				<span className='font-medium'>{t("totalEntries")}:</span> {count}
 			</div>
@@ -240,7 +240,7 @@ const PaginationMessage = memo(() => {
 					<Button
 						className='h-max py-1.5 pe-0 text-primary-800'
 						onClick={() => dispatch(updateSelection({ [dataViewKey]: isEverythingSelected ? [] : "ALL" }))}
-						size='sm'
+						size='xs'
 						variant='link'>
 						{isEverythingSelected ? t("clearAllAction") : t("selectAllAction")}
 

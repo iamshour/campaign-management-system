@@ -70,7 +70,7 @@ const ContactForm = ({ children, defaultValues, onSubmit }: ContactFormProps) =>
 					if (submitterButton?.dataset?.form === "contact-form") form.handleSubmit(onFormSubmit)()
 				}}>
 				{form?.formState?.errors?.root?.type === "required" && (
-					<Form.Message className='ps-4'>{form?.formState?.errors?.root?.message}</Form.Message>
+					<Form.Message className='pb-2.5 ps-2'>{form?.formState?.errors?.root?.message}</Form.Message>
 				)}
 
 				<div className='w-full space-y-3 pb-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 sm:pb-8'>

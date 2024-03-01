@@ -1,8 +1,8 @@
 //#region Import
-import type { SmsTemplateStatusOption } from "../types"
+import type { TemplateStatus } from "@/features/templates/common/types"
 //#endregion
 
-const smsTemplateStatusesColorsMap: Record<SmsTemplateStatusOption, string> = {
+const smsTemplateStatusesColorsMap: Record<TemplateStatus, string> = {
 	DRAFT: "#DBDBDB",
 	PUBLISHED: "#9EC654",
 }
