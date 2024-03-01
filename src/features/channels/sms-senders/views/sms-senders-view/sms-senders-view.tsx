@@ -1,13 +1,12 @@
 //#region Import
 import type { ColumnType } from "@/core/components/data-view/data-table/types"
 import type { SharedListViewProps } from "@/core/types"
-import type { SmsSenderType } from "@/features/channels/sms-senders/types"
+import type { SmsSenderDataViewKeyOptions, SmsSenderType } from "@/features/channels/sms-senders/types"
 
 import DataView from "@/core/components/data-view/data-view"
 import smsSendersTableColumns from "@/features/channels/sms-senders/constants/sms-sender-table-columns"
 import { lazy, memo } from "react"
 
-import { SmsSenderDataViewKeyOptions } from "../../routes/sms-senders-route"
 import SmsSenderCard from "./sms-sender-card"
 
 const SmsSendersViewTopbar = lazy(() => import("./sms-senders-view-topbar"))

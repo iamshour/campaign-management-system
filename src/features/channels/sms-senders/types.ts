@@ -20,13 +20,18 @@ export type SmsSenderStatusOption = "Approved" | "Blocked" | "Pending" | "Reject
 export type SmsChannelTypeOption = "international" | "local"
 
 /**
+ * Type options for the SMS Sender dataView key
+ */
+export type SmsSenderDataViewKeyOptions = "international-sms-senders" | "local-sms-senders"
+
+/**
  * Shape of fetched SMS Sender
  */
 export type SmsSenderType = {
 	createdAt: string
 	id: string
 	name: string
-	note: string
+	note?: string
 	sampleContent: string
 	status: SmsSenderStatusOption
 	statusChangeDate: string
@@ -52,3 +57,8 @@ type SenderSearchFilter = { any?: true; name?: string }
  * Params passed to the `getSmsSenders` query, used for fetching SMS Senders List
  */
 export type GetSmsSendersParams = PaginationAndSorting<SmsSenderType> & SenderFilter & SenderSearchFilter
+
+/**
+ * Body Arguments passed to the `addSmsSenderRequest` mutation, used to send a new listing request
+ */
+export type AddSmsSenderRequestBody = Pick<SmsSenderType, "name" | "note" | "sampleContent" | "targetCountry" | "type">

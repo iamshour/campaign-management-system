@@ -1,5 +1,9 @@
 //#region Import
-import type { SenderFilter, SmsSenderTypeOption } from "@/features/channels/sms-senders/types"
+import type {
+	SenderFilter,
+	SmsSenderDataViewKeyOptions,
+	SmsSenderTypeOption,
+} from "@/features/channels/sms-senders/types"
 
 import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
@@ -10,7 +14,6 @@ import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
 import { memo, useCallback } from "react"
 
-import { SmsSenderDataViewKeyOptions } from "../../routes/sms-senders-route"
 //#endregion
 interface SmsSendersFiltersContentProps {
 	dataViewKey: SmsSenderDataViewKeyOptions

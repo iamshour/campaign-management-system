@@ -1,10 +1,12 @@
+/* eslint-disable perfectionist/sort-objects*/
+
 //#region Import
 import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
 
-import type { GetSmsSendersParams, SmsSenderType } from "./types"
+import type { AddSmsSenderRequestBody, GetSmsSendersParams, SmsSenderType } from "./types"
 //#endregion
 
 const smsSendersApi = api.injectEndpoints({
@@ -17,12 +19,19 @@ const smsSendersApi = api.injectEndpoints({
 				),
 			query: ({ channelType, ...params }) => ({
 				params,
-				// TODO: in integration, use same endpoint with filter
+				// TODO: in integration; use same endpoint with filter
 				url: channelType === "local" ? "/localSenders" : "/internationalSenders",
 			}),
 			transformResponse,
 		}),
+
+		addSmsSenderRequest: builder.mutation<any, AddSmsSenderRequestBody>({
+			invalidatesTags: (res) => {
+				return res ? [{ id: "LIST", type: "Sender" }] : []
+			},
+			query: (body) => ({ body, method: "POST", url: "/requests" }),
+		}),
 	}),
 })
 
-export const { useGetSmsSendersQuery } = smsSendersApi
+export const { useGetSmsSendersQuery, useAddSmsSenderRequestMutation } = smsSendersApi

@@ -53,6 +53,11 @@
 			},
 			"text": "You will need a Sender ID in order to send SMS campaigns, please request a sender ID registration to start sending campaigns.",
 			"buttons": { "confirm": "Confirm" }
+		},
+		"confirmRequestDialog": {
+			"title": "Confirm Request",
+			"text": "Are you sure you want to send this Sender ID request?",
+			"buttons": { "confirm": "Confirm" }
 		}
 	},
 	"views": {

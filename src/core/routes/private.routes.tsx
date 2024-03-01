@@ -33,7 +33,7 @@ const privateRoutes: RouteObject[] = [
 			{ element: <SegmentsRoutes />, path: "people/segments/*" },
 			{ element: <ExportsRoutes />, path: "people/exports/*" },
 			{ element: <SmsTemplatesRoutes />, path: "templates/sms-templates/*" },
-			{ element: <SmsSendersRoutes />, path: `${appPaths.SMS_SENDERS}/*` },
+			{ element: <SmsSendersRoutes />, path: `channels/*` },
 
 			// ADMINS ONLY ROUTES
 			{ element: <IndustriesRoutes />, path: `${appPaths.INDUSTRIES}/*` },
