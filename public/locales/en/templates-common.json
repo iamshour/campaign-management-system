@@ -1,0 +1,20 @@
+{
+	"components": {
+		"selectMultiTemplateStatusesPopover": {
+			"label": "Status",
+			"placeholder": "Select status"
+		},
+		"selectMultiLanguagesPopover": {
+			"label": "Language",
+			"placeholder": "Select languages"
+		},
+		"selectSingleTemplateTypePopover": {
+			"label": "Template Type",
+			"placeholder": "Select type"
+		},
+		"selectMultiTemplateTypesPopover": {
+			"label": "Types",
+			"placeholder": "Select types"
+		}
+	}
+}

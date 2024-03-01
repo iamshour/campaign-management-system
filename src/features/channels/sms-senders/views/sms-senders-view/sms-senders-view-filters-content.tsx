@@ -4,7 +4,7 @@ import type { SenderFilter, SmsSenderTypeOption } from "@/features/channels/sms-
 import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import SelectTemplateTypesPopover from "@/features/templates/common/components/select-template-types-popover"
+import SelectMultiTemplateTypesPopover from "@/features/templates/common/components/select-multi-template-types-popover"
 import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
@@ -36,12 +36,11 @@ const SmsSendersFiltersContent = memo(({ dataViewKey }: SmsSendersFiltersContent
 				label='Last updated date'
 				updateDateRange={updateSelection}
 			/>
-			<SelectTemplateTypesPopover
-				isMulti
-				selection={filters?.types?.map((value) => ({ label: templateTypesLocaleMap[value], value })) || []}
-				updateSelection={(selection) =>
+			<SelectMultiTemplateTypesPopover
+				onValueChange={(selection) =>
 					updateSelection({ types: getListOfKey(selection, "value") as SmsSenderTypeOption[] })
 				}
+				value={filters?.types?.map((value) => ({ label: templateTypesLocaleMap[value], value })) || []}
 			/>
 		</>
 	)

@@ -1,7 +1,7 @@
 //#region Import
 import SmsIndustryTemplateSchema from "@/features/industries/schemas/sms-industry-template-schema"
-import templateTypesOptions from "@/features/templates/common/constants/template-types-options"
-import smsTemplateLanguagesOptions from "@/features/templates/sms-templates/constants/sms-template-languages-options"
+import SelectSingleTemplateType from "@/features/templates/common/components/select-single-template-type"
+import templateLanguagesOptions from "@/features/templates/common/constants/template-languages-options"
 import DiscardTemplateChangesDialog from "@/features/templates/sms-templates/dialogs/discard-template-changes-dialog/discard-template-changes-dialog"
 import SmsTemplateSchema from "@/features/templates/sms-templates/schemas/sms-template-schema"
 import { Button, Footer, Form, Input, Select, Separator, useForm } from "@/ui"
@@ -103,27 +103,11 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 							render={({ field }) => (
 								<Form.Item className='w-full max-w-[340px]'>
 									<Form.Label>Template Type *</Form.Label>
-									<Form.Control>
-										<Select onValueChange={(selectedType) => field.onChange(selectedType)} value={field.value}>
-											<Select.Trigger className='h-[50px] w-full !p-4 font-normal' hasValue={!!field.value?.length}>
-												<Select.Value placeholder='Select type' />
-											</Select.Trigger>
-											<Select.Content sideOffset={8}>
-												{templateTypesOptions.map(({ label, value }) => (
-													<Select.Item
-														className='static flex w-full flex-row items-center justify-between'
-														key={value}
-														showCheck={false}
-														value={value}>
-														<Select.Text className='flex-1 '>{label}</Select.Text>
-														<span title='Lorem ipsum dolor sit amet consectetur adipisicing elit.'>
-															<MdiInformationVariantCircle className='text-sm text-primary-600' />
-														</span>
-													</Select.Item>
-												))}
-											</Select.Content>
-										</Select>
-									</Form.Control>
+									<SelectSingleTemplateType
+										onValueChange={(selectedType) => field.onChange(selectedType)}
+										placeholder='Select type'
+										value={field.value}
+									/>
 									<Form.Message />
 								</Form.Item>
 							)}
@@ -135,20 +119,18 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 							render={({ field }) => (
 								<Form.Item className='w-full max-w-[340px]'>
 									<Form.Label>Template Language *</Form.Label>
-									<Form.Control>
-										<Select onValueChange={(selectedLanguage) => field.onChange(selectedLanguage)} value={field.value}>
-											<Select.Trigger className='h-[50px] w-full !p-4 font-normal' hasValue={!!field.value?.length}>
-												<Select.Value placeholder='Select language' />
-											</Select.Trigger>
-											<Select.Content sideOffset={8}>
-												{smsTemplateLanguagesOptions.map(({ label, value }) => (
-													<Select.Item key={value} value={value}>
-														<Select.Text>{label}</Select.Text>
-													</Select.Item>
-												))}
-											</Select.Content>
-										</Select>
-									</Form.Control>
+									<Select onValueChange={(selectedLanguage) => field.onChange(selectedLanguage)} value={field.value}>
+										<Select.Trigger className='h-[50px] w-full !p-4 font-normal' hasValue={!!field.value?.length}>
+											<Select.Value placeholder='Select language' />
+										</Select.Trigger>
+										<Select.Content sideOffset={4}>
+											{templateLanguagesOptions.map(({ label, value }) => (
+												<Select.Item key={value} value={value}>
+													<Select.Text>{label}</Select.Text>
+												</Select.Item>
+											))}
+										</Select.Content>
+									</Select>
 									<Form.Message />
 								</Form.Item>
 							)}

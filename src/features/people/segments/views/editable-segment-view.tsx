@@ -103,9 +103,9 @@ const EditableSegmentView = ({ defaultValues, view }: EditableSegmentViewProps) 
 
 				<div className='flex flex-col gap-4 overflow-y-auto pe-2'>
 					<SegmentCollapsible
+						defaultOpen
 						description={t(`items.basicInfo.description.${view}`)}
 						icon={MdiInformationVariantCircle}
-						open
 						title={t("items.basicInfo.title")}>
 						<div className='flex gap-8 p-2 pt-8'>
 							<Form.Field

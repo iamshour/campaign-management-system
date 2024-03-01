@@ -1,6 +1,6 @@
 //#region Import
-import { Popover, PopoverSkeleton } from "@/ui"
-import { lazy, Suspense, useState } from "react"
+import { Popover } from "@/ui"
+import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
@@ -26,13 +26,11 @@ const SelectGroupsWithCreatePopover = ({ className, onCreateSuccess, ...props }:
 					{t("components.groupsPopover.createNewPopover.title")}
 				</Popover.Trigger>
 				<Popover.Content align='end' alignOffset={-8} className='p-2' side='bottom' sideOffset={2}>
-					<Suspense fallback={<PopoverSkeleton />}>
-						<CreateGroupContent
-							closeDialog={() => setPopoverOpen(false)}
-							ctaProps={{ size: "sm", variant: "secondary" }}
-							onCreateSuccess={onCreateSuccess}
-						/>
-					</Suspense>
+					<CreateGroupContent
+						closeDialog={() => setPopoverOpen(false)}
+						ctaProps={{ size: "sm", variant: "secondary" }}
+						onCreateSuccess={onCreateSuccess}
+					/>
 				</Popover.Content>
 			</Popover>
 

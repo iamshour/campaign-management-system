@@ -1,12 +1,12 @@
 //#region Import
 import type { IndustryType, PrebuiltTemplateFilter } from "@/features/industries/types"
-import type { SmsTemplateLanguageOption, SmsTemplateTypeOption } from "@/features/templates/sms-templates/types"
+import type { TemplateLanguage, TemplateType } from "@/features/templates/common/types"
 
 import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
+import templateLanguagesOptions from "@/features/templates/common/constants/template-languages-options"
 import templateTypesOptions from "@/features/templates/common/constants/template-types-options"
-import smsTemplateLanguagesOptions from "@/features/templates/sms-templates/constants/sms-template-languages-options"
 import { Button, Checkbox, Collapsible, Label, NoResultsFound, SearchInput, Separator } from "@/ui"
 import { memo, useCallback } from "react"
 //#endregion
@@ -45,7 +45,7 @@ const SmsPrebuiltTemplatesFiltersContent = memo(
 		)
 
 		const onTemplateTypeCheck = useCallback(
-			(value: SmsTemplateTypeOption) => {
+			(value: TemplateType) => {
 				const prevTemplateTypes = filters?.types || []
 
 				const updatedTemplateTypes = prevTemplateTypes?.includes(value)
@@ -58,7 +58,7 @@ const SmsPrebuiltTemplatesFiltersContent = memo(
 		)
 
 		const onTemplateLanguageCheck = useCallback(
-			(value: SmsTemplateLanguageOption) => {
+			(value: TemplateLanguage) => {
 				const prevTemplateLanguage = filters?.languages || []
 
 				const updatedTemplateLanguages = prevTemplateLanguage?.includes(value)
@@ -132,7 +132,7 @@ const SmsPrebuiltTemplatesFiltersContent = memo(
 						))}
 					</CollapsibleSection>
 					<CollapsibleSection label='Language'>
-						{smsTemplateLanguagesOptions?.map(({ label, value }) => (
+						{templateLanguagesOptions?.map(({ label, value }) => (
 							<div className='flex flex-row items-center space-x-3 space-y-0 ps-3' key={value}>
 								<Checkbox
 									checked={filters?.languages?.includes(value)}

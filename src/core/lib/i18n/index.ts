@@ -5,6 +5,21 @@ import { initReactI18next } from "react-i18next"
 
 export const defaultNS = "common"
 
+export const nameSpaces = [
+	defaultNS,
+	"contacts",
+	"groups",
+	"exports",
+	"segments",
+	"campaigns",
+	"ui",
+	"sms-templates",
+	"industries",
+	"senders-management",
+	"sms-senders",
+	"templates-common",
+] as const
+
 i18n
 	// load translation using http -> see /public/locales
 	// learn more: https://github.com/i18next/i18next-http-backend
@@ -36,18 +51,7 @@ i18n
 		// Example: so that an ar-EG (Egyptian Arabic) user will see the ar (Arabic) version of our app
 		nonExplicitSupportedLngs: true,
 
-		ns: [
-			"common",
-			"contacts",
-			"groups",
-			"exports",
-			"segments",
-			"campaigns",
-			"ui",
-			"sms-templates",
-			"industries",
-			"sms-senders",
-		],
+		ns: nameSpaces,
 
 		preload: ["en", "ar"],
 

@@ -3,15 +3,15 @@ import { Tooltip } from "@/ui"
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
 //#endregion
 
-const IconTooltip = ({ content }: { content: string }) => (
+const IconTooltip = (props: React.ComponentPropsWithoutRef<typeof Tooltip.Content>) => (
 	<Tooltip>
 		<Tooltip.Trigger asChild>
 			<div>
-				<MdiInformationVariantCircle className='shrink-0 text-sm text-inherit' />
+				<MdiInformationVariantCircle className='shrink-0 text-sm text-primary-600' />
 			</div>
 		</Tooltip.Trigger>
 
-		<Tooltip.Content align='start' alignOffset={8} content={content} side='top' sideOffset={0} />
+		<Tooltip.Content align='start' alignOffset={8} side='top' sideOffset={0} {...props} />
 	</Tooltip>
 )
 

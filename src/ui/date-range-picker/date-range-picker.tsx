@@ -4,15 +4,15 @@ import type { PopperContentProps } from "@radix-ui/react-popover"
 import { objHasFalseyValues } from "@/utils"
 import RadixIconsCalendar from "~icons/radix-icons/calendar"
 import { endOfDay, formatISO, type Locale } from "date-fns"
-import { lazy, Suspense, useEffect, useState } from "react"
+import { lazy, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
 import Button from "../button/button"
 import Label from "../label/label"
 import Popover from "../popover/popover"
-import Skeleton from "../skeleton/skeleton"
 import DateRangePlaceholder from "./date-range-placeholder"
+
 const Calendar = lazy(() => import("../calendar/calendar"))
 //#endregion
 
@@ -53,7 +53,6 @@ const DateRangePicker = ({
 	label,
 	locale,
 	placeholder,
-	popoverContentProps,
 	triggerProps,
 	updateDateRange,
 }: DateRangePicker) => {
@@ -99,33 +98,27 @@ const DateRangePicker = ({
 							<DateRangePlaceholder {...dateRange} placeholder={placeholder || t("placeholder")} />
 						</Button>
 					</Popover.Trigger>
-					<Popover.Content
-						align='start'
-						side='bottom'
-						{...popoverContentProps}
-						className={twMerge("w-auto p-0", popoverContentProps?.className)}>
-						<Suspense fallback={<CalendarSkeleton />}>
-							<Calendar
-								initialFocus
-								locale={locale}
-								mode='range'
-								numberOfMonths={2}
-								onSelect={(updatedRange) => {
-									onClearRange()
+					<Popover.Content align='start' className='w-auto p-0' side='bottom' skeletonClassName='h-[350px] w-[544px]'>
+						<Calendar
+							initialFocus
+							locale={locale}
+							mode='range'
+							numberOfMonths={2}
+							onSelect={(updatedRange) => {
+								onClearRange()
 
-									setRange({
-										endDate: updatedRange?.to ? formatISO(endOfDay(updatedRange?.to)) : undefined,
-										startDate: updatedRange?.from ? formatISO(updatedRange?.from) : undefined,
-									})
-								}}
-								selected={{
-									from: range?.startDate ? new Date(range?.startDate) : undefined,
-									to: range?.endDate ? new Date(range?.endDate) : undefined,
-								}}
-								toDate={new Date()}
-								{...calendarProps}
-							/>
-						</Suspense>
+								setRange({
+									endDate: updatedRange?.to ? formatISO(endOfDay(updatedRange?.to)) : undefined,
+									startDate: updatedRange?.from ? formatISO(updatedRange?.from) : undefined,
+								})
+							}}
+							selected={{
+								from: range?.startDate ? new Date(range?.startDate) : undefined,
+								to: range?.endDate ? new Date(range?.endDate) : undefined,
+							}}
+							toDate={new Date()}
+							{...calendarProps}
+						/>
 					</Popover.Content>
 				</Popover>
 			</div>
@@ -134,16 +127,3 @@ const DateRangePicker = ({
 }
 
 export default DateRangePicker
-
-const CalendarSkeleton = () => (
-	<div className='grid h-[350px] w-[544px] grid-cols-2 gap-4 p-4'>
-		<div className='w-/1/2 flex h-full flex-col gap-4'>
-			<Skeleton className='h-[56px] w-full' />
-			<Skeleton className='h-full w-full flex-1' />
-		</div>
-		<div className='w-/1/2 flex h-full flex-col gap-4'>
-			<Skeleton className='h-[56px] w-full' />
-			<Skeleton className='h-full w-full flex-1' />
-		</div>
-	</div>
-)

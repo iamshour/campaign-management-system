@@ -120,6 +120,14 @@ const navElements: NavElementProps[] = [
 	{
 		content: [
 			{
+				label: "navbar.nav-elements.channels.elements.smsSendersManagementLocal",
+				path: "admin/channels/local-sms",
+			},
+			{
+				label: "navbar.nav-elements.channels.elements.smsSendersManagementInternational",
+				path: "admin/channels/international-sms",
+			},
+			{
 				label: "navbar.nav-elements.channels.elements.smsChannels",
 				path: appPaths.SMS_SENDERS,
 			},

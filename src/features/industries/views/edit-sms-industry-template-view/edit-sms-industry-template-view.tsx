@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
+import type { TemplateStatus } from "@/features/templates/common/types"
 
 import { useUpdateSmsIndustryTemplateMutation } from "@/features/industries/api"
 import SmsIndustryTemplateBuilderContent from "@/features/industries/components/sms-industry-template-builder-content/sms-industry-template-builder-content"
@@ -15,7 +15,7 @@ import { useNavigate, useParams } from "react-router-dom"
 //#endregion
 
 interface EditSmsIndustryTemplateViewProps {
-	defaultValues?: SmsIndustryTemplateSchemaType & { status?: SmsTemplateStatusOption }
+	defaultValues?: SmsIndustryTemplateSchemaType & { status?: TemplateStatus }
 }
 
 const EditSmsIndustryTemplateView = ({ defaultValues }: EditSmsIndustryTemplateViewProps) => {
@@ -27,7 +27,7 @@ const EditSmsIndustryTemplateView = ({ defaultValues }: EditSmsIndustryTemplateV
 
 	const [triggerUpdateSmsIndustryTemplate, { isLoading }] = useUpdateSmsIndustryTemplateMutation()
 
-	const [status, setStatus] = useState<SmsTemplateStatusOption | undefined>()
+	const [status, setStatus] = useState<TemplateStatus | undefined>()
 
 	const onSubmit = async ({ background, ...formBody }: SmsIndustryTemplateSchemaType) => {
 		if (!formBody || !industryId || !templateId || !status) return

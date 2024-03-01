@@ -1,6 +1,6 @@
 //#region Import
 import type { AddNewSmsIndustryTemplateBody } from "@/features/industries/types"
-import type { SmsTemplateStatusOption } from "@/features/templates/sms-templates/types"
+import type { TemplateStatus } from "@/features/templates/common/types"
 
 import { useAddNewSmsIndustryTemplateMutation } from "@/features/industries/api"
 import SmsIndustryTemplateBuilderContent from "@/features/industries/components/sms-industry-template-builder-content/sms-industry-template-builder-content"
@@ -34,7 +34,7 @@ const CreateSmsIndustryTemplateView = ({ defaultValues }: CreateSmsIndustryTempl
 
 	const [triggerAddSmsIndustryTemplate, { isLoading }] = useAddNewSmsIndustryTemplateMutation()
 
-	const [status, setStatus] = useState<SmsTemplateStatusOption | undefined>()
+	const [status, setStatus] = useState<TemplateStatus | undefined>()
 
 	const onSubmit = async ({ background, backgroundImage, ...requestBody }: SmsIndustryTemplateSchemaType) => {
 		if (!requestBody || !status || !industryId) return

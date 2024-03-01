@@ -1,8 +1,8 @@
 //#region Import
+import type { TemplateLanguage, TemplateType } from "@/features/templates/common/types"
+
 import { REGEX_NAME_FIELDS } from "@/core/constants/regex"
 import * as z from "zod"
-
-import type { SmsTemplateLanguageOption, SmsTemplateTypeOption } from "../types"
 
 import { MAX_PLACEHOLDERS } from "../constants/sms-template-body-constants"
 import { PLACEHOLDER_REGEX } from "../constants/sms-template-body-regex"
@@ -33,7 +33,7 @@ const SmsTemplateSchema = z.object({
 			},
 			{ message: `Maximum ${MAX_PLACEHOLDERS} placeholders allowed` }
 		),
-	language: z.custom<SmsTemplateLanguageOption>((val) => !!val, "Required"),
+	language: z.custom<TemplateLanguage>((val) => !!val, "Required"),
 	name: z
 		.string()
 		.min(1, { message: "Required" })
@@ -42,7 +42,7 @@ const SmsTemplateSchema = z.object({
 		.refine((val) => REGEX_NAME_FIELDS.test(val), {
 			message: "Name can include letters, numbers and characters #@_`/&~",
 		}),
-	type: z.custom<SmsTemplateTypeOption>((val) => !!val, "Required"),
+	type: z.custom<TemplateType>((val) => !!val, "Required"),
 })
 
 export default SmsTemplateSchema

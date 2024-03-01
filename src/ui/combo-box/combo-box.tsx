@@ -1,7 +1,7 @@
 //#region Import
 import LucideCheck from "~icons/lucide/check"
 import LucideChevronDown from "~icons/lucide/chevron-down"
-import { createContext, Suspense, useCallback, useContext, useMemo } from "react"
+import { createContext, useCallback, useContext, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
@@ -13,6 +13,7 @@ import Command from "../command/command"
 import Label from "../label/label"
 import Popover from "../popover/popover"
 import Skeleton from "../skeleton/skeleton"
+import MultiBadegesPreview from "./multi-badges-preview"
 //#endregion
 
 type ComboBoxSingleProps = {
@@ -70,15 +71,7 @@ const ComboBoxTrigger = ({ children, className, ...props }: React.ComponentProps
 						{(isMulti && !selection?.length) || (!isMulti && !selection?.value?.length) ? (
 							children
 						) : isMulti ? (
-							selection.length > 2 ? (
-								<Badge size={size}>{selection.length} selected</Badge>
-							) : (
-								selection.map((option) => (
-									<Badge key={option.value} size={size} title={option.label}>
-										{option.label}
-									</Badge>
-								))
-							)
+							<MultiBadegesPreview selection={selection} size={size} />
 						) : (
 							<Badge size={size}>{selection?.label}</Badge>
 						)}
@@ -91,13 +84,12 @@ const ComboBoxTrigger = ({ children, className, ...props }: React.ComponentProps
 	)
 }
 
-const ComboBoxContent = ({ children, className, ...props }: React.ComponentPropsWithoutRef<typeof Popover.Content>) => (
+const ComboBoxContent = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof Popover.Content>) => (
 	<Popover.Content
 		align='start'
 		className={twMerge("h-[250px] w-[300px] border border-gray-300 p-0 flex-center", className)}
-		{...props}>
-		<Suspense fallback={<Skeleton className='h-[90%] w-[90%] rounded-lg' />}>{children}</Suspense>
-	</Popover.Content>
+		{...props}
+	/>
 )
 
 // TODO: Handle Infinite Loading in Component to handle changing offset/limit Values

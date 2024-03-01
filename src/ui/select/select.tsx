@@ -1,7 +1,6 @@
 //#region Import
 import {
 	Content,
-	type SelectProps as DefaultSelectProps,
 	Group,
 	Item,
 	ItemIndicator,
@@ -28,7 +27,10 @@ import Button from "../button/button"
 //#endregion
 
 // Fixing value type below for the onValueChange callback so that the paramter takes the same type as the passed value
-type SelectProps<ValueType extends string> = Omit<DefaultSelectProps, "onValueChange" | "value"> & {
+type SelectProps<ValueType extends string> = Omit<
+	React.ComponentPropsWithoutRef<typeof Root>,
+	"onValueChange" | "value"
+> & {
 	onValueChange?: (v: ValueType) => void
 	value?: ValueType
 }

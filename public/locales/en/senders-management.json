@@ -1,0 +1,28 @@
+{
+	"views": {
+		"smsListingRequestsPending": {
+			"headline": "You didn't receive any sender ID yet",
+			"message": "You haven't received any requests from your client yet",
+			"submit": "Add Sender ID Request"
+		},
+		"smsListingRequestsCompleted": {
+			"headline": "You don't have sender ID yet with complete status",
+			"message": "Check the request you have received on pending list to complete them"
+		}
+	},
+
+	"components": {
+		"companyPopover": {
+			"label": "Company name",
+			"placeholder": "Select company"
+		},
+		"senderRequestFunnel": {
+			"actions": {
+				"addType": "Add Type",
+				"addCountry": "Add Country",
+				"deleteType": "Delete type",
+				"deleteCountry": "Delete country"
+			}
+		}
+	}
+}
