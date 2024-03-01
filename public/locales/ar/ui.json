@@ -49,5 +49,10 @@
 	"selectCountryPopover": {
 		"placeholder": "اختر دولة"
 	},
-	"noResultsComponent": "لم يتم العثور على نتائج"
+	"noResultsComponent": "لم يتم العثور على نتائج",
+
+	"textareaTooltip": {
+		"placeholder": "أدخل المحتوى",
+		"submit": "يضيف"
+	}
 }

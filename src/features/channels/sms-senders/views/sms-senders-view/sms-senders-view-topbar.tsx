@@ -1,4 +1,5 @@
 //#region Import
+import SmsSenderRequestDialog from "@/features/channels/sms-senders/dialogs/sms-sender-request-dialog/sms-sender-request-dialog"
 import { Button } from "@/ui"
 import HeroiconsPlus16Solid from "~icons/heroicons/plus-16-solid"
 import { memo } from "react"
@@ -10,10 +11,12 @@ const SmsSendersViewTopbar = memo(() => {
 
 	return (
 		<div className='flex w-full items-end justify-end'>
-			<Button>
-				<HeroiconsPlus16Solid />
-				{t("requestSender")}
-			</Button>
+			<SmsSenderRequestDialog>
+				<Button>
+					<HeroiconsPlus16Solid />
+					{t("requestSender")}
+				</Button>
+			</SmsSenderRequestDialog>
 		</div>
 	)
 })

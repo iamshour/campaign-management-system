@@ -1,15 +1,15 @@
 //#region Import
 import type { DataViewState } from "@/core/components/data-view/types"
+import type { SmsSenderDataViewKeyOptions } from "@/features/channels/sms-senders/types"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
+import getChannelType from "@/core/utils/get-channel-type"
 import getSearchFilter from "@/core/utils/get-search-filter"
 import { useGetSmsSendersQuery } from "@/features/channels/sms-senders/api"
 import { DataTableSkeleton } from "@/ui"
 import { lazy } from "react"
-import { useParams } from "react-router-dom"
-
-import { SmsChannelTypeOption } from "../types"
+import { useLocation } from "react-router-dom"
 
 const SmsSendersView = lazy(() => import("@/features/channels/sms-senders/views/sms-senders-view/sms-senders-view"))
 
@@ -18,13 +18,11 @@ const SmsSendersEmptyView = lazy(() => import("@/features/channels/sms-senders/v
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
-export type SmsSenderDataViewKeyOptions = "international-sms-senders" | "local-sms-senders"
-
 const SmsSendersRoute = () => {
-	const params = useParams()
+	const { pathname } = useLocation()
 
 	// channel type: "local" | "international"
-	const channelType: SmsChannelTypeOption = Object.values(params)[0] as SmsChannelTypeOption
+	const channelType = getChannelType(pathname)!.type!
 
 	// dataview Key: "local-sms-senders" | "international-sms-senders"
 	const dataViewKey: SmsSenderDataViewKeyOptions = `${channelType}-sms-senders`
@@ -56,7 +54,7 @@ const SmsSendersRoute = () => {
 
 	if (isInitialLoading) return <DataTableSkeleton />
 
-	if (isEmptyView) return <SmsSendersEmptyView />
+	if (isEmptyView) return <SmsSendersEmptyView channelType={channelType} />
 
 	if (isError) return <DisplayError error={error as any} showReloadButton />
 
