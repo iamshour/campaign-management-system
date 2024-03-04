@@ -1,13 +1,25 @@
 {
 	"fields": {
-		"name": "اسم",
-		"type": "يكتب",
+		"name": "مرسل",
+		"types": "يكتب",
+		"targetCountry": "البلد المستهدف",
+		"note": "ملحوظة",
+		"sampleContent": "عينة من المحتوى ",
 		"createdAt": "تاريخ الإنشاء"
 	},
 	"components": {
 		"navTabs": {
 			"local": "محلي",
 			"international": "دولي"
+		},
+		"smsSenderRequestForm": {
+			"placeholders": {
+				"name": "أدخل الاسم",
+				"type": "اختر صنف",
+				"note": "أدخل الملاحظة ",
+				"sampleContent": "أدخل المحتوى"
+			},
+			"labels": { "name": { "iconTooltip": "الوصف يذهب هنا " } }
 		}
 	},
 	"table": {
@@ -22,6 +34,59 @@
 			"sender": "مرسل"
 		}
 	},
-	"dialogs": {},
-	"views": {}
+	"dialogs": {
+		"smsSenderRequest": {
+			"title": "طلب المرسل ",
+			"buttons": {
+				"multiRequest": "أرسل وإضافة آخر ",
+				"singleRequest": "ارسل طلب"
+			},
+			"message": {
+				"multiRequestSuccess": "تم إرسال طلبك بنجاح ، يمكنك إرسال طلب آخر. ",
+				"singleRequestSuccess": "تم ارسال طلبك بنجاح."
+			}
+		},
+		"activateSmsDialog": {
+			"title": {
+				"local": "تنشيط الرسائل القصيرة المحلية ",
+				"international": "تنشيط الرسائل القصيرة الدولية"
+			},
+			"text": "ستحتاج إلى معرف المرسل لإرسال حملات الرسائل القصيرة ، يرجى طلب تسجيل معرف المرسل للبدء في إرسال الحملات. ",
+			"buttons": { "confirm": "يتأكد" }
+		},
+		"confirmRequestDialog": {
+			"title": "تأكيد الطلب ",
+			"text": "هل أنت متأكد من أنك تريد إرسال طلب معرف المرسل هذا؟ ",
+			"buttons": { "confirm": "يتأكد" }
+		},
+		"viewListingSampleContentDialog": {
+			"title": "عرض نموذج محتوى"
+		},
+		"viewListingStatusReasonDialog": {
+			"Suspended": { "title": "عرض سبب تعليق " },
+			"Blocked": { "title": "عرض سبب كتلة " },
+			"Rejected": { "title": "عرض رفض العقل " }
+		}
+	},
+	"views": {
+		"emptyView": {
+			"title": "ليس لديك معرف المرسل بعد ",
+			"text": "اطلب معرف المرسل من أجل البدء في إرسال حملاتك ",
+			"buttons": {
+				"local": "تنشيط الرسائل القصيرة المحلية ",
+				"international": "تنشيط الرسائل القصيرة الدولية"
+			}
+		},
+		"smsListingsView": {
+			"actions": {
+				"viewSampleContent": "عرض نموذج المحتوى ",
+
+				"viewStatusReason": {
+					"Suspended": "عرض سبب تعليق ",
+					"Blocked": "عرض العقل ",
+					"Rejected": "عرض رفض العقل"
+				}
+			}
+		}
+	}
 }

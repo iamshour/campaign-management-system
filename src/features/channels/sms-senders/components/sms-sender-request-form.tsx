@@ -33,7 +33,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 				<div className='w-full space-y-3 pb-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 sm:pb-8'>
 					<Form.Field
 						control={form.control}
-						name='name'
+						name='sender'
 						render={({ field }) => (
 							<Form.Item>
 								<Form.Label className='flex flex-row items-center gap-2'>

@@ -1,8 +1,8 @@
 //#region Import
 
-import type { AddSmsSenderRequestBody } from "@/features/channels/sms-senders/types"
+import type { AddSmsListingBody } from "@/features/channels/sms-senders/types"
 
-import { useAddSmsSenderRequestMutation } from "@/features/channels/sms-senders/api"
+import { useAddSmsListingMutation } from "@/features/channels/sms-senders/api"
 import SmsSenderRequestForm from "@/features/channels/sms-senders/components/sms-sender-request-form"
 import ConfirmRequestDialog from "@/features/channels/sms-senders/dialogs/confirm-request-dialog/confirm-request-dialog"
 import { SmsSenderRequestSchemaType } from "@/features/channels/sms-senders/schemas/sms-sender-request-schema"
@@ -24,7 +24,7 @@ type ButtonClicked = "multiRequest" | "singleRequest"
 const SmsSenderRequestDialogContent = ({ closeDialog }: SmsSenderRequestDialogContentProps) => {
 	const { t } = useTranslation("sms-senders")
 
-	const [triggerAddSmsSenderRequest, { isLoading }] = useAddSmsSenderRequestMutation()
+	const [triggerAddSmsSenderRequest, { isLoading }] = useAddSmsListingMutation()
 
 	// tracking which button was clicked to show appropriate loader
 	const [buttonClicked, setButtonClicked] = useState<ButtonClicked | undefined>()
@@ -37,7 +37,7 @@ const SmsSenderRequestDialogContent = ({ closeDialog }: SmsSenderRequestDialogCo
 	 *             actions such as sending back an error on a specific field
 	 */
 
-	const onSubmit = async (body: AddSmsSenderRequestBody, form: UseFormReturn<SmsSenderRequestSchemaType>) => {
+	const onSubmit = async (body: AddSmsListingBody, form: UseFormReturn<SmsSenderRequestSchemaType>) => {
 		if (!body) return
 
 		await triggerAddSmsSenderRequest(body).unwrap()

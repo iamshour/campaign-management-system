@@ -1,7 +1,7 @@
 {
 	"fields": {
 		"name": "Sender",
-		"type": "Type",
+		"types": "Type",
 		"targetCountry": "Target Country",
 		"note": "Note",
 		"sampleContent": "Sample Content",
@@ -61,6 +61,11 @@
 		},
 		"viewListingSampleContentDialog": {
 			"title": "View Sample Content"
+		},
+		"viewListingStatusReasonDialog": {
+			"Suspended": { "title": "View Suspend Reason" },
+			"Blocked": { "title": "View Block Reason" },
+			"Rejected": { "title": "View Reject Reason" }
 		}
 	},
 	"views": {
@@ -73,7 +78,15 @@
 			}
 		},
 		"smsListingsView": {
-			"actions": { "viewSampleContent": "View Sample Conntent" }
+			"actions": {
+				"viewSampleContent": "View Sample Content",
+
+				"viewStatusReason": {
+					"Suspended": "View Suspend Reason",
+					"Blocked": "View Block Reason",
+					"Rejected": "View Reject Reason"
+				}
+			}
 		}
 	}
 }

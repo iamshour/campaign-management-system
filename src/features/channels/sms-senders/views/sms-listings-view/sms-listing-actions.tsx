@@ -13,11 +13,18 @@ const ViewListingSampleContentDialog = lazy(
 		)
 )
 
+const ViewListingStatusReasonDialog = lazy(
+	() =>
+		import(
+			"@/features/channels/sms-senders/dialogs/view-listing-status-reason-dialog/view-listing-status-reason-dialog"
+		)
+)
+
 //#endregion
 
-interface SmsListingActionsProps extends Pick<SmsListingType, "id"> {}
+interface SmsListingActionsProps extends Pick<SmsListingType, "id" | "status"> {}
 
-const SmsListingActions = ({ id }: SmsListingActionsProps) => {
+const SmsListingActions = ({ id, status }: SmsListingActionsProps) => {
 	const { t } = useTranslation("sms-senders", { keyPrefix: "views.smsListingsView.actions" })
 
 	return (
@@ -25,6 +32,16 @@ const SmsListingActions = ({ id }: SmsListingActionsProps) => {
 			<ViewListingSampleContentDialog id={id}>
 				<ActionsDropdown.Item>{t("viewSampleContent")}</ActionsDropdown.Item>
 			</ViewListingSampleContentDialog>
+
+			{["Blocked", "Rejected", "Suspended"].includes(status) && (
+				<>
+					<ActionsDropdown.Separator />
+
+					<ViewListingStatusReasonDialog id={id} status={status}>
+						<ActionsDropdown.Item>{t(`viewStatusReason.${status}`)}</ActionsDropdown.Item>
+					</ViewListingStatusReasonDialog>
+				</>
+			)}
 		</ActionsDropdown>
 	)
 }
