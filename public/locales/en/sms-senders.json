@@ -67,6 +67,12 @@
 			"Blocked": { "title": "View Block Reason" },
 			"Rejected": { "title": "View Reject Reason" }
 		},
+		"activateListingDialog": {
+			"title": "Activate",
+			"text": "Are you sure you want to activate this sender ID on this country?",
+			"buttons": { "confirm": "Confirm" },
+			"message": { "success": "Listing successfully activated" }
+		},
 		"deactivateListingDialog": {
 			"title": "Deactivate",
 			"text": "Are you sure you want to deactivate the sender ID. You will no longer be able to use it in your campaigs. This action will lead to failing launched campiagns messages and suspending scheduled campaigns using the desired deactivated sender ID",
@@ -86,13 +92,12 @@
 		"smsListingsView": {
 			"actions": {
 				"viewSampleContent": "View Sample Content",
-
 				"viewStatusReason": {
 					"Suspended": "View Suspend Reason",
 					"Blocked": "View Block Reason",
 					"Rejected": "View Reject Reason"
 				},
-
+				"activate": "Activate",
 				"deactivate": "Deactivate"
 			}
 		}
