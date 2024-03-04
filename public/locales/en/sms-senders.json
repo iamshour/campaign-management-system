@@ -66,6 +66,12 @@
 			"Suspended": { "title": "View Suspend Reason" },
 			"Blocked": { "title": "View Block Reason" },
 			"Rejected": { "title": "View Reject Reason" }
+		},
+		"deactivateListingDialog": {
+			"title": "Deactivate",
+			"text": "Are you sure you want to deactivate the sender ID. You will no longer be able to use it in your campaigs. This action will lead to failing launched campiagns messages and suspending scheduled campaigns using the desired deactivated sender ID",
+			"buttons": { "confirm": "Confirm" },
+			"message": { "success": "Listing successfully deactivated" }
 		}
 	},
 	"views": {
@@ -85,7 +91,9 @@
 					"Suspended": "View Suspend Reason",
 					"Blocked": "View Block Reason",
 					"Rejected": "View Reject Reason"
-				}
+				},
+
+				"deactivate": "Deactivate"
 			}
 		}
 	}
