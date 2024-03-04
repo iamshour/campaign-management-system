@@ -24,9 +24,9 @@ const smsSendersTableColumns: ColumnType<SmsSenderType>[] = [
 		sortable: true,
 	},
 	{
-		accessorKey: "type",
-		cell: (type: TemplateType) => templateTypesLocaleMap[type],
-		header: smsSenderFieldsLocaleMap.type,
+		accessorKey: "types",
+		cell: (types: TemplateType[]) => types?.map((type) => templateTypesLocaleMap[type])?.join(" / "),
+		header: smsSenderFieldsLocaleMap.types,
 	},
 	{
 		accessorKey: "createdAt",

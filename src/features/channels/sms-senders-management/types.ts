@@ -1,1 +1,1 @@
-export type SmsListingRequestStatus = "COMPLETED" | "PENDING"
+export type SmsRequestStatus = "COMPLETED" | "PENDING"

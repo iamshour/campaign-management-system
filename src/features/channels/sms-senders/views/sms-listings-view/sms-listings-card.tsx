@@ -14,12 +14,12 @@ import smsListingsStatusesColorsMap from "../../constants/sms-listings-statuses-
 const SmsListingActions = lazy(() => import("./sms-listing-actions"))
 //#endregion
 
-const SmsListingCard = ({ id, isNew, status, statusChangeDate, targetCountry }: SmsListingType) => {
+const SmsListingCard = ({ id, requestStatus, status, statusChangeDate, targetCountry }: SmsListingType) => {
 	const color = smsListingsStatusesColorsMap[status] || "#EDF3F7"
 
 	const countryName = getCountryName(targetCountry)
 
-	const listingStatus: SmsListingStatus = isNew ? "Pending" : status
+	const listingStatus: SmsListingStatus = requestStatus === "PENDING" ? "Pending" : status
 
 	return (
 		<div className='flex h-[80px] w-[445px] max-w-full flex-row items-center rounded-md bg-[#F7F7F7]'>
@@ -41,7 +41,7 @@ const SmsListingCard = ({ id, isNew, status, statusChangeDate, targetCountry }: 
 			</ul>
 
 			<Suspense fallback={<Skeleton className='h-[30px] w-[30px]' />}>
-				<SmsListingActions id={id} />
+				<SmsListingActions id={id} status={status} />
 			</Suspense>
 		</div>
 	)

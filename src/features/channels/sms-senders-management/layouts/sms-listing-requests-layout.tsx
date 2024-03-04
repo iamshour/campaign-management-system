@@ -3,11 +3,11 @@ import { Button } from "@/ui"
 import { useState } from "react"
 import { Outlet } from "react-router-dom"
 
-import type { SmsListingRequestStatus } from "../types"
+import type { SmsRequestStatus } from "../types"
 //#endregion
 
 const SmsListingRequestsLayout = () => {
-	const [currentStatus, setCurrentStatus] = useState<SmsListingRequestStatus>("PENDING")
+	const [currentStatus, setCurrentStatus] = useState<SmsRequestStatus>("PENDING")
 
 	return (
 		<div className='flex h-full w-full flex-col p-6'>
