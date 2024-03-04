@@ -4,6 +4,7 @@ import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 import { lazy } from "react"
 import { useTranslation } from "react-i18next"
 
+import ActivateSmsListingDialog from "../../dialogs/activate-sms-listing-dialog copy/activate-sms-listing-dialog"
 import { SmsListingType } from "../../types"
 
 const ViewListingSampleContentDialog = lazy(
@@ -32,7 +33,9 @@ const SmsListingActions = ({ id, status }: SmsListingActionsProps) => {
 
 	const viewStatusReasonActionStatuses: SmsListingStatus[] = ["Blocked", "Rejected", "Suspended"]
 
-	const activateListingActionStatuses: SmsListingStatus[] = ["Approved", "Blocked", "Rejected", "Suspended"]
+	const activateListingActionStatuses: SmsListingStatus[] = ["Deactivated"]
+
+	const deactivateListingActionStatuses: SmsListingStatus[] = ["Approved"]
 
 	return (
 		<ActionsDropdown className='m-4'>
@@ -51,6 +54,16 @@ const SmsListingActions = ({ id, status }: SmsListingActionsProps) => {
 			)}
 
 			{activateListingActionStatuses.includes(status) && (
+				<>
+					<ActionsDropdown.Separator />
+
+					<ActivateSmsListingDialog id={id}>
+						<ActionsDropdown.Item>{t(`activate`)}</ActionsDropdown.Item>
+					</ActivateSmsListingDialog>
+				</>
+			)}
+
+			{deactivateListingActionStatuses.includes(status) && (
 				<>
 					<ActionsDropdown.Separator />
 
