@@ -58,6 +58,9 @@
 			"title": "Confirm Request",
 			"text": "Are you sure you want to send this Sender ID request?",
 			"buttons": { "confirm": "Confirm" }
+		},
+		"viewListingSampleContentDialog": {
+			"title": "View Sample Content"
 		}
 	},
 	"views": {
@@ -68,6 +71,9 @@
 				"local": "Activate Local SMS",
 				"international": "Activate International SMS"
 			}
+		},
+		"smsListingsView": {
+			"actions": { "viewSampleContent": "View Sample Conntent" }
 		}
 	}
 }

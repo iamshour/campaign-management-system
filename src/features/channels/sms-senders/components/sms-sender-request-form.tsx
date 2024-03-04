@@ -88,10 +88,10 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 							<Form.Item>
 								<Form.Label>{t("fields.note")}</Form.Label>
 								<TextareaPopover
-									classNames={{ trigger: "text-base" }}
 									onValueChange={(v) => field.onChange(v)}
 									placeholder={t("components.smsSenderRequestForm.placeholders.note")}
 									size='lg'
+									triggerProps={{ className: "text-base" }}
 									value={field.value}
 								/>
 								<Form.Message />

@@ -6,6 +6,7 @@ import type { SmsSenderDataViewKeyOptions, SmsSenderType } from "@/features/chan
 import DataView from "@/core/components/data-view/data-view"
 import smsSendersTableColumns from "@/features/channels/sms-senders/constants/sms-sender-table-columns"
 import { lazy, memo } from "react"
+import { useNavigate } from "react-router-dom"
 
 import SmsSenderCard from "./sms-sender-card"
 
@@ -20,6 +21,8 @@ interface SmsSendersViewProps extends SharedListViewProps<SmsSenderType> {
 	dataViewKey: SmsSenderDataViewKeyOptions
 }
 const SmsSendersView = memo(({ dataViewKey, ...props }: SmsSendersViewProps) => {
+	const navigate = useNavigate()
+
 	return (
 		<DataView columns={columns} dataViewKey={dataViewKey} {...props}>
 			<DataView.FiltersBar>
@@ -39,10 +42,7 @@ const SmsSendersView = memo(({ dataViewKey, ...props }: SmsSendersViewProps) => 
 					<DataView.Body
 						classNames={{ wrapper: "px-4" }}
 						GridCard={SmsSenderCard}
-						onRowClick={({ id }) =>
-							// eslint-disable-next-line no-console
-							console.log(id)
-						}
+						onRowClick={({ id }) => navigate(id)}
 					/>
 				</DataView.MultiViewLayout>
 
