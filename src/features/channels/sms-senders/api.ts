@@ -58,6 +58,13 @@ const smsSendersApi = api.injectEndpoints({
 			// TODO: in integration; change below 65ddd3877ce29dce66cdf0d9" ?? id to id
 			query: (id) => `/listings/${"65ddd3877ce29dce66cdf0d9" ?? id}`,
 		}),
+
+		deactivateSmsListing: builder.mutation<any, string>({
+			invalidatesTags: (res) => {
+				return res ? [{ id: "LIST", type: "SmsListing" }] : []
+			},
+			query: (listingId) => ({ method: "PUT", url: `/listings/${listingId}/active` }),
+		}),
 	}),
 })
 
@@ -67,4 +74,5 @@ export const {
 	useGetSmsSenderByIdQuery,
 	useGetSmsListingsQuery,
 	useGetSmsListingByIdQuery,
+	useDeactivateSmsListingMutation,
 } = smsSendersApi

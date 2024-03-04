@@ -1,7 +1,7 @@
 //#region Import
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type { SmsListingStatus } from "@/features/channels/common/types"
-import type { SmsRequestStatus } from "@/features/channels/sms-senders-management/types"
+import type { SmsListingRequestStatus } from "@/features/channels/sms-senders-management/types"
 import type { TemplateType } from "@/features/templates/common/types"
 import type { DateRange } from "@/ui"
 import type { Country } from "react-phone-number-input"
@@ -64,7 +64,7 @@ export type SmsListingType = {
 	createdAt: string
 	id: string
 	note?: string
-	requestStatus: SmsRequestStatus
+	requestStatus: SmsListingRequestStatus
 	sampleContent: string
 	sender: string
 	status: SmsListingStatus

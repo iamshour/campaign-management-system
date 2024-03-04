@@ -3,13 +3,13 @@ import { SharedListViewProps } from "@/core/types"
 import { DataTableSkeleton } from "@/ui"
 import { lazy } from "react"
 
-import type { SmsRequestStatus } from "../types"
+import type { SmsListingRequestStatus } from "../types"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 // TO BE SELECTED FROM RTK-SLICE
-const currentStatus: SmsRequestStatus = "PENDING"
+const currentStatus: SmsListingRequestStatus = "PENDING"
 
 const SmsListingRequestsRoute = () => {
 	// Get Fetched list here... (RTK)
@@ -44,13 +44,13 @@ const SmsListingRequestsRoute = () => {
 
 export default SmsListingRequestsRoute
 
-const EmptyComponents: Record<SmsRequestStatus, React.LazyExoticComponent<() => JSX.Element>> = {
+const EmptyComponents: Record<SmsListingRequestStatus, React.LazyExoticComponent<() => JSX.Element>> = {
 	COMPLETED: lazy(() => import("../views/sms-listing-requests-completed-view/sms-listing-requests-completed-empty")),
 	PENDING: lazy(() => import("../views/sms-listing-requests-pending-view/sms-listing-requests-pending-empty")),
 }
 
 const ListComponents: Record<
-	SmsRequestStatus,
+	SmsListingRequestStatus,
 	React.LazyExoticComponent<(props: SharedListViewProps<any>) => JSX.Element>
 > = {
 	COMPLETED: lazy(() => import("../views/sms-listing-requests-completed-view/sms-listing-requests-completed-view")),
