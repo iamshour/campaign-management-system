@@ -2,9 +2,10 @@
 import type { ColumnType } from "@/core/components/data-view/data-table/types"
 
 import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
+import { TemplateType } from "@/features/templates/common/types"
 import { lazy } from "react"
 
-import type { SmsSenderType, SmsSenderTypeOption } from "../types"
+import type { SmsSenderType } from "../types"
 
 import smsSenderFieldsLocaleMap from "./sms-sender-fields-locale-map"
 
@@ -24,7 +25,7 @@ const smsSendersTableColumns: ColumnType<SmsSenderType>[] = [
 	},
 	{
 		accessorKey: "type",
-		cell: (type: SmsSenderTypeOption) => templateTypesLocaleMap[type],
+		cell: (type: TemplateType) => templateTypesLocaleMap[type],
 		header: smsSenderFieldsLocaleMap.type,
 	},
 	{

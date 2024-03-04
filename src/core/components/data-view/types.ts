@@ -1,6 +1,6 @@
 //#region Import
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
-import type { SenderFilter, SmsSenderType } from "@/features/channels/sms-senders/types"
+import type { SmsSenderFilter, SmsSenderType } from "@/features/channels/sms-senders/types"
 import type {
 	IndustryFilter,
 	IndustryType,
@@ -87,8 +87,8 @@ export type DataViewFilterType = {
 	"contacts-in-group": Omit<ContactTableFiltersType, "groups">
 	groups: ContactGroupFilter
 	industries: IndustryFilter
-	"international-sms-senders": SenderFilter
-	"local-sms-senders": SenderFilter
+	"international-sms-senders": SmsSenderFilter
+	"local-sms-senders": SmsSenderFilter
 	segments: DateRange
 	"sms-industry-templates": PrebuiltTemplateFilter
 	"sms-prebuilt-templates": PrebuiltTemplateFilter

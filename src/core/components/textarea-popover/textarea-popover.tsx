@@ -11,13 +11,17 @@ const TextareaPopoverContent = lazy(() => import("./textarea-popover-content"))
 
 interface TextareaPopoverProps
 	extends Omit<React.ComponentPropsWithoutRef<typeof TextareaPopoverContent>, "closePopover"> {
-	classNames?: Partial<Record<"content" | "trigger" | "wrapper", string>>
+	className?: string
+
+	contentProps?: React.ComponentPropsWithoutRef<typeof Popover.Content>
 
 	label?: string
 
 	size?: React.ComponentPropsWithoutRef<typeof Button>["size"]
 
 	tooltip?: string
+
+	triggerProps?: React.ComponentPropsWithoutRef<typeof Button>
 }
 
 /**
@@ -35,12 +39,14 @@ interface TextareaPopoverProps
  *
  */
 const TextareaPopover = ({
-	classNames,
+	className,
+	contentProps,
 	label,
 	onValueChange,
 	placeholder,
 	size,
 	tooltip,
+	triggerProps,
 	value,
 }: TextareaPopoverProps) => {
 	const { t } = useTranslation("ui", { keyPrefix: "textareaTooltip" })
@@ -50,7 +56,7 @@ const TextareaPopover = ({
 	const placeholderValue = placeholder ?? t("placeholder")
 
 	return (
-		<div className={twMerge("relative w-[340px] max-w-full", classNames?.wrapper)}>
+		<div className={twMerge("relative w-[340px] max-w-full", className)}>
 			{!!label?.length && (
 				<Label className='flex items-center gap-2' size={size}>
 					{label}
@@ -62,17 +68,21 @@ const TextareaPopover = ({
 			<Popover onOpenChange={setOpen} open={open}>
 				<Popover.Trigger asChild>
 					<Button
-						className={twMerge("w-full justify-between font-normal", classNames?.trigger)}
 						hasValue={!!value?.length}
 						size={size}
-						variant='outline-grey'>
+						variant='outline-grey'
+						{...triggerProps}
+						className={twMerge("w-full justify-between font-normal", triggerProps?.className)}>
 						<span className='truncate'>{value?.length ? value : placeholderValue}</span>
 
 						<MaterialSymbolsAddCircleOutlineRounded className='transition-basic group-hover:!text-primary-700 group-data-[hasvalue=true]:text-gray-400' />
 					</Button>
 				</Popover.Trigger>
 
-				<Popover.Content align='end' className={twMerge("border border-gray-300 p-3", classNames?.content)}>
+				<Popover.Content
+					align='end'
+					{...contentProps}
+					className={twMerge("border border-gray-300 p-3", contentProps?.className)}>
 					<TextareaPopoverContent
 						closePopover={() => setOpen(false)}
 						onValueChange={onValueChange}

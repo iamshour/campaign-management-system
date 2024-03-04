@@ -11,9 +11,9 @@ import { useGetSmsSendersQuery } from "../api"
 //#endregion
 
 interface SenderNameInputProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof InputWithSearch>, "onChange" | "value"> {}
+	extends Omit<React.ComponentPropsWithoutRef<typeof InputWithSearch>, "contentProps" | "fetchState"> {}
 
-const SenderNameInput = ({ onChange, value }: SenderNameInputProps) => {
+const SenderNameInput = ({ onChange, value, ...props }: SenderNameInputProps) => {
 	const { t } = useTranslation("sms-senders", { keyPrefix: "components.smsSenderRequestForm.placeholders" })
 
 	const { pathname } = useLocation()
@@ -54,6 +54,7 @@ const SenderNameInput = ({ onChange, value }: SenderNameInputProps) => {
 			onChange={onChange}
 			placeholder={t("name")}
 			value={value}
+			{...props}
 		/>
 	)
 }
