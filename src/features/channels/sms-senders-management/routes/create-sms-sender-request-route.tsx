@@ -1,13 +1,20 @@
-import SmsSenderRequestFunnel from "../components/sms-sender-request-funnel/sms-sender-request-funnel"
+//#region Import
+import CreateSmsSenderRequestView, {
+	SmsSenderRequestsForm,
+} from "../views/create-sms-sender-request-view/create-sms-sender-request-view"
+//#endregion
 
 const CreateSmsSenderRequestRoute = () => {
-	return (
-		<div className='h-full w-full p-4'>
-			<div className='h-full w-full bg-[#F7F7F7] p-4 flex-center'>
-				<SmsSenderRequestFunnel />
-			</div>
-		</div>
-	)
+	// Call API TO SUBMIT NEW BULK LISTING DATA
+	const onSubmit = (data: SmsSenderRequestsForm) => {
+		// eslint-disable-next-line no-console
+		console.log(data)
+
+		// ON SUBMIT
+		// NAVIGATE TO: state?.from || `/admin/channels/${channel?.type}-${channel?.name}/listing-requests`
+	}
+
+	return <CreateSmsSenderRequestView onSubmit={onSubmit} />
 }
 
 export default CreateSmsSenderRequestRoute

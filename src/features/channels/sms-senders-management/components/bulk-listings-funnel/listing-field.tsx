@@ -1,0 +1,139 @@
+//#region Import
+import TextareaPopover from "@/core/components/textarea-popover/textarea-popover"
+import { Button, Form, SelectCountryPopover, Tooltip } from "@/ui"
+import IcBaselineDelete from "~icons/ic/baseline-delete"
+import { Control, useFieldArray } from "react-hook-form"
+import { useTranslation } from "react-i18next"
+
+import type { BulkListingsFunnelBase } from "./types"
+
+import { emptyListingField } from "./bulk-listings-funnel-configs"
+
+//#endregion
+
+interface ListingFieldProps {
+	control: Control<BulkListingsFunnelBase>
+
+	/**
+	 * Bool check used to disable adding new requests if number of requests hits the specified limit
+	 */
+	// disableNewRequest: boolean
+
+	/**
+	 * Callback function used to remove a Group (grouped by type), Only if there's an initial one existing (length of groups > 1)
+	 */
+	removeType: (() => void) | undefined
+
+	SenderRequestsGroupsIdx: number
+}
+
+const ListingField = ({
+	control,
+	// disableNewRequest,
+	removeType,
+	SenderRequestsGroupsIdx,
+}: ListingFieldProps) => {
+	const { t } = useTranslation("senders-management")
+
+	const { append, fields, remove } = useFieldArray({
+		control,
+		name: `bulkListingsGroups.${SenderRequestsGroupsIdx}.listingsFields`,
+	})
+
+	return (
+		<>
+			{fields.map((_, singleRequestIdx) => (
+				<div className='flex flex-wrap items-center gap-4 rounded-lg bg-[#F7F7F7] p-4' key={singleRequestIdx}>
+					<Form.Field
+						control={control}
+						name={`bulkListingsGroups.${SenderRequestsGroupsIdx}.listingsFields.${singleRequestIdx}.country`}
+						render={({ field }) => (
+							<Form.Item>
+								<SelectCountryPopover
+									className='[&>button]:text-base [&>button]:font-normal'
+									label={`${t("sms-senders:fields.targetCountry")} *`}
+									onChange={field.onChange}
+									size='lg'
+									value={field.value}
+								/>
+								<Form.Message />
+							</Form.Item>
+						)}
+					/>
+
+					<Form.Field
+						control={control}
+						name={`bulkListingsGroups.${SenderRequestsGroupsIdx}.listingsFields.${singleRequestIdx}.content`}
+						render={({ field }) => (
+							<Form.Item>
+								<TextareaPopover
+									className='[&>button]:text-base [&>button]:font-normal'
+									label={`${t("sms-senders:fields.sampleContent")} *`}
+									onValueChange={field.onChange}
+									size='lg'
+									value={field.value}
+								/>
+								<Form.Message />
+							</Form.Item>
+						)}
+					/>
+
+					{fields?.length > 1 && (
+						<Tooltip>
+							<Tooltip.Trigger asChild>
+								<Button
+									className='mt-5 h-5 w-5 shrink-0 rounded-full p-0 text-xl'
+									onClick={() => remove(singleRequestIdx)}
+									type='button'
+									variant='destructive'>
+									-
+								</Button>
+							</Tooltip.Trigger>
+
+							<Tooltip.Content
+								content={t("components.senderRequestFunnel.actions.deleteCountry")}
+								side='left'
+								sideOffset={8}
+							/>
+						</Tooltip>
+					)}
+				</div>
+			))}
+
+			<div className='mt-4 flex w-full items-center justify-between'>
+				<Button
+					// disabled={disableNewRequest}
+					className='w-max gap-2'
+					onClick={() => append([emptyListingField])}
+					size='sm'
+					type='button'
+					variant='outline'>
+					<span className='text-lg'>+</span>
+					{t("components.senderRequestFunnel.actions.addCountry")}
+				</Button>
+
+				{removeType !== undefined && (
+					<Tooltip>
+						<Tooltip.Trigger asChild>
+							<Button
+								className='h-max w-max p-0 text-xl text-gray-400 hover:bg-transparent hover:text-primary-700'
+								onClick={removeType}
+								type='button'
+								variant='ghost'>
+								<IcBaselineDelete />
+							</Button>
+						</Tooltip.Trigger>
+
+						<Tooltip.Content
+							content={t("components.senderRequestFunnel.actions.deleteType")}
+							side='left'
+							sideOffset={8}
+						/>
+					</Tooltip>
+				)}
+			</div>
+		</>
+	)
+}
+
+export default ListingField
