@@ -46,20 +46,16 @@ const Navbar = () => {
 				transition={{ from: { width: isInitiallyOpen?.current ? 250 : 78 }, to: { width: isNavOpen ? 250 : 78 } }}>
 				{/* Top Section  */}
 				<div className={`flex h-[calc(100%-172px)] flex-1 flex-col gap-2 p-2`}>
-					<Tooltip>
-						<Tooltip.Trigger asChild>
-							<Button
-								className='me-2 w-max self-end px-3 py-6 text-xl !text-white flex-center hover:bg-white hover:bg-opacity-10'
-								onClick={() => dispatch(toggleNavbar())}
-								variant='ghost'>
-								{isNavOpen ? <LucideChevronsLeft className='rtl:rotate-180' /> : <IcRoundMenu />}
-							</Button>
-						</Tooltip.Trigger>
-						<Tooltip.Content
-							content={isNavOpen ? t("navbar.toggle-btn.minimize") : t("navbar.toggle-btn.expand")}
-							side={TOOLTIP_CONFIGS.side}
-							sideOffset={TOOLTIP_CONFIGS.sideOffset}
-						/>
+					<Tooltip
+						content={isNavOpen ? t("navbar.toggle-btn.minimize") : t("navbar.toggle-btn.expand")}
+						side={TOOLTIP_CONFIGS.side}
+						sideOffset={TOOLTIP_CONFIGS.sideOffset}>
+						<Button
+							className='me-2 w-max self-end px-3 py-6 text-xl !text-white flex-center hover:bg-white hover:bg-opacity-10'
+							onClick={() => dispatch(toggleNavbar())}
+							variant='ghost'>
+							{isNavOpen ? <LucideChevronsLeft className='rtl:rotate-180' /> : <IcRoundMenu />}
+						</Button>
 					</Tooltip>
 
 					<div className='flex items-center justify-center py-2'>
@@ -81,42 +77,39 @@ const Navbar = () => {
 								const { Icon, label, type } = props
 
 								return (
-									<Tooltip key={`${label}-${idx}`}>
-										<Tooltip.Trigger asChild={type === "accordion"}>
-											<div>
-												{type === "nav-link" ? (
-													<NavLink className='p-3' key={`${label}:${props?.path}`} to={props.path}>
-														<Icon className='h-[22px] w-[22px] shrink-0' />
-														<span
-															className={twMerge(
-																"w-full flex-1 whitespace-nowrap text-start transition-[opacity] duration-300 ease-in-out",
-																!isNavOpen && "w-0 opacity-0"
-															)}>
+									<Tooltip
+										content={t(label)}
+										hidden={isNavOpen}
+										key={`${label}-${idx}`}
+										side={TOOLTIP_CONFIGS.side}
+										sideOffset={TOOLTIP_CONFIGS.sideOffset}>
+										<div>
+											{type === "nav-link" ? (
+												<NavLink className='p-3' key={`${label}:${props?.path}`} to={props.path}>
+													<Icon className='h-[22px] w-[22px] shrink-0' />
+													<span
+														className={twMerge(
+															"w-full flex-1 whitespace-nowrap text-start transition-[opacity] duration-300 ease-in-out",
+															!isNavOpen && "w-0 opacity-0"
+														)}>
+														{t(label)}
+													</span>
+												</NavLink>
+											) : (
+												<ColapsibleNavLinks
+													hasActiveChild={props.content?.some((item) => pathname?.includes(item.path))}
+													Icon={Icon}
+													isNavOpen={isNavOpen}
+													label={t(label)}
+													openSidebar={() => dispatch(toggleNavbar(true))}>
+													{props.content.map(({ label, path }) => (
+														<NavLink className='p-2 ps-3 text-sm' key={`${label}:${path}`} to={path}>
 															{t(label)}
-														</span>
-													</NavLink>
-												) : (
-													<ColapsibleNavLinks
-														hasActiveChild={props.content?.some((item) => pathname?.includes(item.path))}
-														Icon={Icon}
-														isNavOpen={isNavOpen}
-														label={t(label)}
-														openSidebar={() => dispatch(toggleNavbar(true))}>
-														{props.content.map(({ label, path }) => (
-															<NavLink className='p-2 ps-3 text-sm' key={`${label}:${path}`} to={path}>
-																{t(label)}
-															</NavLink>
-														))}
-													</ColapsibleNavLinks>
-												)}
-											</div>
-										</Tooltip.Trigger>
-										<Tooltip.Content
-											content={t(label)}
-											hidden={isNavOpen}
-											side={TOOLTIP_CONFIGS.side}
-											sideOffset={TOOLTIP_CONFIGS.sideOffset}
-										/>
+														</NavLink>
+													))}
+												</ColapsibleNavLinks>
+											)}
+										</div>
 									</Tooltip>
 								)
 							})}
@@ -128,41 +121,37 @@ const Navbar = () => {
 				{/* Bottom Secton */}
 				<div className='flex h-max min-h-max w-full flex-col p-2'>
 					<div className='flex w-full flex-col gap-2 px-[7px]'>
-						<Tooltip>
-							<Tooltip.Trigger asChild>
-								<div>
-									<ColapsibleNavLinks
-										Icon={RadixIconsGlobe}
-										isNavOpen={isNavOpen}
-										label={t("navbar.language-selector.title")}
-										openSidebar={() => dispatch(toggleNavbar(true))}>
-										<Button
-											active={i18n.language === "en"}
-											className={`w-full justify-start text-sm text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white
+						<Tooltip
+							content={t("navbar.language-selector.title")}
+							hidden={isNavOpen}
+							side={TOOLTIP_CONFIGS.side}
+							sideOffset={TOOLTIP_CONFIGS.sideOffset}>
+							<div>
+								<ColapsibleNavLinks
+									Icon={RadixIconsGlobe}
+									isNavOpen={isNavOpen}
+									label={t("navbar.language-selector.title")}
+									openSidebar={() => dispatch(toggleNavbar(true))}>
+									<Button
+										active={i18n.language === "en"}
+										className={`w-full justify-start text-sm text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white
 											 focus-visible:ring-2 focus-visible:ring-primary-500`}
-											onClick={() => changeLanguage("en")}
-											size='sm'
-											variant='ghost'>
-											{t("navbar.language-selector.options.english")}
-										</Button>
-										<Button
-											active={i18n.language === "ar"}
-											className={`w-full justify-start text-sm text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white 
+										onClick={() => changeLanguage("en")}
+										size='sm'
+										variant='ghost'>
+										{t("navbar.language-selector.options.english")}
+									</Button>
+									<Button
+										active={i18n.language === "ar"}
+										className={`w-full justify-start text-sm text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white 
 											focus-visible:ring-2 focus-visible:ring-primary-500`}
-											onClick={() => changeLanguage("ar")}
-											size='sm'
-											variant='ghost'>
-											{t("navbar.language-selector.options.arabic")}
-										</Button>
-									</ColapsibleNavLinks>
-								</div>
-							</Tooltip.Trigger>
-							<Tooltip.Content
-								content={t("navbar.language-selector.title")}
-								hidden={isNavOpen}
-								side={TOOLTIP_CONFIGS.side}
-								sideOffset={TOOLTIP_CONFIGS.sideOffset}
-							/>
+										onClick={() => changeLanguage("ar")}
+										size='sm'
+										variant='ghost'>
+										{t("navbar.language-selector.options.arabic")}
+									</Button>
+								</ColapsibleNavLinks>
+							</div>
 						</Tooltip>
 					</div>
 				</div>

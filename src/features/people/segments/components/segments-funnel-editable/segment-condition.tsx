@@ -73,18 +73,14 @@ const SegmentCondition = memo(({ conditionIdx, rules }: SegmentConditionProps) =
 							<SegmentRule {...rule} conditionIdx={conditionIdx} ruleIdx={ruleIdx} />
 
 							{rules?.length > 1 && (
-								<Tooltip>
-									<Tooltip.Trigger asChild>
-										<Button
-											className='h-6 w-6 shrink-0 rounded-full p-0 text-2xl'
-											onClick={() => removeRule(ruleIdx)}
-											type='button'
-											variant='destructive'>
-											-
-										</Button>
-									</Tooltip.Trigger>
-
-									<Tooltip.Content content={t("actions.deleteRule")} side='left' sideOffset={8} />
+								<Tooltip content={t("actions.deleteRule")} side='left' sideOffset={8}>
+									<Button
+										className='h-6 w-6 shrink-0 rounded-full p-0 text-2xl'
+										onClick={() => removeRule(ruleIdx)}
+										type='button'
+										variant='destructive'>
+										-
+									</Button>
 								</Tooltip>
 							)}
 						</div>
@@ -108,18 +104,14 @@ const SegmentCondition = memo(({ conditionIdx, rules }: SegmentConditionProps) =
 					{
 						// Renders Delete condition button only if conditions length are more than two
 						conditionsLength > 1 && (
-							<Tooltip>
-								<Tooltip.Trigger asChild>
-									<Button
-										className='h-max w-max p-0 text-xl text-gray-400 hover:bg-transparent hover:text-primary-700'
-										onClick={removeCondition}
-										type='button'
-										variant='ghost'>
-										<IcBaselineDelete />
-									</Button>
-								</Tooltip.Trigger>
-
-								<Tooltip.Content content={t("actions.deleteCondition")} side='left' sideOffset={8} />
+							<Tooltip content={t("actions.deleteCondition")} side='left' sideOffset={8}>
+								<Button
+									className='h-max w-max p-0 text-xl text-gray-400 hover:bg-transparent hover:text-primary-700'
+									onClick={removeCondition}
+									type='button'
+									variant='ghost'>
+									<IcBaselineDelete />
+								</Button>
 							</Tooltip>
 						)
 					}

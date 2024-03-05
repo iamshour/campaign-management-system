@@ -1,5 +1,6 @@
 //#region Import
-import { Country } from "react-phone-number-input"
+import type { Country } from "react-phone-number-input"
+
 import en from "react-phone-number-input/locale/en.json"
 //#endregion
 

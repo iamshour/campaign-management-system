@@ -49,14 +49,10 @@ const DropFileCard = ({ file, onRemove, preview = "icon" }: DropFileCardProps) =
 				<p className='truncate text-sm text-black/30'>{formatBytes(size, 2)}</p>
 			</div>
 
-			<Tooltip>
-				<Tooltip.Trigger asChild>
-					<Button className='h-max w-max !bg-transparent p-0' onClick={onRemove} variant='ghost'>
-						<RadixIconsCross2 />
-					</Button>
-				</Tooltip.Trigger>
-
-				<Tooltip.Content content={t("buttons.remove")} side='right' sideOffset={4} />
+			<Tooltip content={t("buttons.remove")} side='right' sideOffset={4}>
+				<Button className='h-max w-max !bg-transparent p-0' onClick={onRemove} variant='ghost'>
+					<RadixIconsCross2 />
+				</Button>
 			</Tooltip>
 		</div>
 	)

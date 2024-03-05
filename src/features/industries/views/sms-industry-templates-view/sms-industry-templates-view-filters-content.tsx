@@ -10,7 +10,6 @@ import SelectMultiTemplateStatusesPopover from "@/features/templates/common/comp
 import SelectMultiTemplateTypesPopover from "@/features/templates/common/components/select-multi-template-types-popover"
 import templateLanguagesLocaleMap from "@/features/templates/common/constants/template-languages-local-map"
 import templateStatusesLocaleMap from "@/features/templates/common/constants/template-statuses-local-map"
-import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
 import { memo, useCallback } from "react"
@@ -45,7 +44,7 @@ const SmsIndustryTemplatesViewFiltersContent = memo(() => {
 			/>
 			<SelectMultiTemplateTypesPopover
 				onValueChange={(selection) => updateSelection({ types: getListOfKey(selection, "value") as TemplateType[] })}
-				value={filters?.types?.map((value) => ({ label: templateTypesLocaleMap[value], value })) || []}
+				value={filters?.types}
 			/>
 			<SelectMultiLanguagesPopover
 				onValueChange={(selection) =>

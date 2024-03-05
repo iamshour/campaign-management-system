@@ -5,7 +5,6 @@ import { selectFilters, updateFilters } from "@/core/components/data-view/data-v
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import SelectMultiTemplateTypesPopover from "@/features/templates/common/components/select-multi-template-types-popover"
-import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
 import { TemplateType } from "@/features/templates/common/types"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
@@ -38,7 +37,7 @@ const SmsSendersFiltersContent = memo(({ dataViewKey }: SmsSendersFiltersContent
 			/>
 			<SelectMultiTemplateTypesPopover
 				onValueChange={(selection) => updateSelection({ types: getListOfKey(selection, "value") as TemplateType[] })}
-				value={filters?.types?.map((value) => ({ label: templateTypesLocaleMap[value], value })) || []}
+				value={filters?.types}
 			/>
 		</>
 	)

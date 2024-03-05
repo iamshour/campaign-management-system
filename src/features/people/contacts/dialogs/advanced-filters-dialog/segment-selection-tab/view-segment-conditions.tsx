@@ -40,13 +40,10 @@ const SegmentConditionsViewContent = ({ segment, setView }: SegmentSelectionRend
 							{t(`editSegment.editButton`)}
 						</Button>
 
-						<Tooltip key={"tooltip"}>
-							<Tooltip.Trigger asChild>
-								<span className='w-max'>
-									<MdiInformationVariantCircle className='text-lg text-[#054060]' />
-								</span>
-							</Tooltip.Trigger>
-							<Tooltip.Content align='end' content={t("editSegment.tooltip")} side='top' sideOffset={10} />
+						<Tooltip align='end' content={t("editSegment.tooltip")} key={"tooltip"} side='top' sideOffset={10}>
+							<span className='w-max'>
+								<MdiInformationVariantCircle className='text-lg text-[#054060]' />
+							</span>
 						</Tooltip>
 					</div>
 				</div>

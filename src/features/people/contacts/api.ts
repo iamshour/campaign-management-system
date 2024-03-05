@@ -1,3 +1,5 @@
+/* eslint-disable perfectionist/sort-objects*/
+
 //#region Import
 import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import type { TagDescription } from "@reduxjs/toolkit/query"
@@ -24,36 +26,6 @@ import type {
 
 const contactsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		addNewContact: builder.mutation<any, AddNewContactBody>({
-			invalidatesTags: (res) => {
-				return res
-					? [
-							{ id: "LIST", type: "Contact" },
-							{ id: "LIST", type: "Tag" },
-						]
-					: []
-			},
-			query: (body) => ({ body, method: "POST", url: "/contact" }),
-		}),
-
-		deleteContacts: builder.mutation<any, DeleteContactsBody>({
-			invalidatesTags: (res) =>
-				res
-					? [
-							{ id: "LIST", type: "Contact" },
-							{ id: "LIST", type: "Group" },
-							{ id: "LIST", type: "Tag" },
-						]
-					: [],
-			query: (body) => ({ body, method: "POST", url: "/contact/delete" }),
-		}),
-
-		getContactById: builder.query<GetContactBytIdReturnType, string>({
-			providesTags: (result) => [{ id: result?.id, type: "Contact" }],
-			query: (id) => `/contact/${id}`,
-			transformResponse,
-		}),
-
 		getContacts: builder.query<GetListReturnType<Contact>, GetContactsParams>({
 			providesTags: (result) =>
 				providesList(
@@ -64,17 +36,9 @@ const contactsApi = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		getInvalidContactsFile: builder.mutation<string, string>({
-			query: (fileName) => ({
-				cache: "no-cache",
-				method: "GET",
-				responseHandler: async (response: Response) => {
-					if (response?.status == 200) downloadFile(fileName, await response.blob())
-
-					return response
-				},
-				url: `/contact/import/validate/invalid-contacts/${fileName}`,
-			}),
+		getContactById: builder.query<GetContactBytIdReturnType, string>({
+			providesTags: (result) => [{ id: result?.id, type: "Contact" }],
+			query: (id) => `/contact/${id}`,
 			transformResponse,
 		}),
 
@@ -88,20 +52,16 @@ const contactsApi = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		importFileMapping: builder.mutation<ImportFileMappingReturnType, ImportFileMappingBody>({
-			query: (body) => ({ body, method: "POST", url: "/contact/import/validate" }),
-			transformResponse,
-		}),
-
-		submitImportContacts: builder.mutation<ImportFileMappingReturnType, ImportFileMappingBody>({
-			invalidatesTags: (res) =>
-				res
+		addNewContact: builder.mutation<any, AddNewContactBody>({
+			invalidatesTags: (res) => {
+				return res
 					? [
 							{ id: "LIST", type: "Contact" },
 							{ id: "LIST", type: "Tag" },
 						]
-					: [],
-			query: (body) => ({ body, method: "POST", url: "/contact/import" }),
+					: []
+			},
+			query: (body) => ({ body, method: "POST", url: "/contact" }),
 		}),
 
 		updateContact: builder.mutation<any, UpdateContactBody>({
@@ -136,7 +96,6 @@ const contactsApi = api.injectEndpoints({
 						...groups.map((id: string) => ({ id, type: "Group" }) as TagDescription<"Group">),
 					]
 				} else if (tags?.length) {
-					// TODO: In case of newly created tag, check if we need to pass [{ type: "Tag", id: "LIST" }] instead
 					revalidationList = [...revalidationList, { id: "LIST", type: "Tag" }]
 				}
 
@@ -155,9 +114,53 @@ const contactsApi = api.injectEndpoints({
 			query: (body) => ({ body, method: "PATCH", url: "/contact" }),
 		}),
 
+		deleteContacts: builder.mutation<any, DeleteContactsBody>({
+			invalidatesTags: (res) =>
+				res
+					? [
+							{ id: "LIST", type: "Contact" },
+							{ id: "LIST", type: "Group" },
+							{ id: "LIST", type: "Tag" },
+						]
+					: [],
+			query: (body) => ({ body, method: "POST", url: "/contact/delete" }),
+		}),
+
+		// Importing Contacts By File
+		// Step - 1
 		uploadContactsContentData: builder.mutation<UploadContactsMutationReturnType, FormData>({
 			query: (body) => ({ body, method: "POST", url: "/contact/upload" }),
 			transformResponse,
+		}),
+		// Step - 2
+		importFileMapping: builder.mutation<ImportFileMappingReturnType, ImportFileMappingBody>({
+			query: (body) => ({ body, method: "POST", url: "/contact/import/validate" }),
+			transformResponse,
+		}),
+		// Step - 3
+		getInvalidContactsFile: builder.mutation<string, string>({
+			query: (fileName) => ({
+				cache: "no-cache",
+				method: "GET",
+				responseHandler: async (response: Response) => {
+					if (response?.status == 200) downloadFile(fileName, await response.blob())
+
+					return response
+				},
+				url: `/contact/import/validate/invalid-contacts/${fileName}`,
+			}),
+			transformResponse,
+		}),
+		// Step - 4
+		submitImportContacts: builder.mutation<ImportFileMappingReturnType, ImportFileMappingBody>({
+			invalidatesTags: (res) =>
+				res
+					? [
+							{ id: "LIST", type: "Contact" },
+							{ id: "LIST", type: "Tag" },
+						]
+					: [],
+			query: (body) => ({ body, method: "POST", url: "/contact/import" }),
 		}),
 	}),
 })

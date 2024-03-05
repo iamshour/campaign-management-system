@@ -166,19 +166,15 @@ const MultiViewLayout = memo(({ children }: { children: React.ReactNode }) => {
 		<div className='flex h-full w-full flex-col overflow-hidden'>
 			<div className='mb-4 inline-flex w-max gap-2.5 place-self-end'>
 				{viewsTriggerButtons.map(({ icon: Icon, key, title }) => (
-					<Tooltip key={key}>
-						<Tooltip.Trigger asChild>
-							<Button
-								active={key === view}
-								className='flex h-[40px] w-[40px] rounded-md'
-								onClick={() => dispatch(toggleView({ [dataViewKey]: key }))}
-								variant='outline-grey'>
-								<Icon className='text-lg' />
-								<p className='sr-only'>{title}</p>
-							</Button>
-						</Tooltip.Trigger>
-
-						<Tooltip.Content align='end' content={title} side='bottom' sideOffset={8} />
+					<Tooltip align='end' content={title} key={key} side='bottom' sideOffset={8}>
+						<Button
+							active={key === view}
+							className='flex h-[40px] w-[40px] rounded-md'
+							onClick={() => dispatch(toggleView({ [dataViewKey]: key }))}
+							variant='outline-grey'>
+							<Icon className='text-lg' />
+							<p className='sr-only'>{title}</p>
+						</Button>
 					</Tooltip>
 				))}
 			</div>

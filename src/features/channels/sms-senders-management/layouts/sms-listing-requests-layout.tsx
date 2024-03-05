@@ -1,30 +1,38 @@
 //#region Import
+import useGetChannelType from "@/core/hooks/useGetChannelType"
 import { Button } from "@/ui"
-import { useState } from "react"
 import { Outlet } from "react-router-dom"
 
 import type { SmsListingRequestStatus } from "../types"
 //#endregion
 
 const SmsListingRequestsLayout = () => {
-	const [currentStatus, setCurrentStatus] = useState<SmsListingRequestStatus>("PENDING")
+	const { name, pathname, type } = useGetChannelType()
+
+	const currentStatus: SmsListingRequestStatus | undefined = pathname?.match("pending")
+		? "PENDING"
+		: pathname?.match("completed")
+			? "COMPLETED"
+			: undefined
 
 	return (
-		<div className='flex h-full w-full flex-col p-6'>
-			<div className='inline-flex gap-4'>
+		<div className='flex h-full w-full flex-col gap-6 overflow-hidden pt-6'>
+			<div className='inline-flex gap-4 ps-10'>
 				<FilterButton
 					active={currentStatus === "PENDING"}
+					as='link'
 					label='Pending'
-					onClick={() => setCurrentStatus("PENDING")}
+					to={`./${type}-${name}/listing-requests/pending`}
 				/>
 				<FilterButton
 					active={currentStatus === "COMPLETED"}
+					as='link'
 					label='Completed'
-					onClick={() => setCurrentStatus("COMPLETED")}
+					to={`./${type}-${name}/listing-requests/completed`}
 				/>
 			</div>
 
-			<div className='flex-1 p-4'>
+			<div className='h-full overflow-hidden'>
 				<Outlet />
 			</div>
 		</div>

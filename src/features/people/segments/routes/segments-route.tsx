@@ -29,7 +29,7 @@ const SegmentsRoute = () => {
 		{
 			selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({
 				count: data?.count,
-				isEmptyView: !isFetching && !!isSuccess && !data && !(appliedFiltersCount || !!searchTerm?.length),
+				isEmptyView: !isFetching && !!isSuccess && !data?.count && !(appliedFiltersCount || !!searchTerm?.length),
 				isFetching,
 				isInitialLoading: !data && isLoading,
 				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,

@@ -10,7 +10,9 @@ const SmsListingRequestsLayout = lazy(() => import("../layouts/sms-listing-reque
 
 const SmsSendersManagementLayout = lazy(() => import("../layouts/sms-senders-management-layout"))
 
-const SmsListingRequestsRoute = lazy(() => import("./sms-listing-requests-route"))
+const SmsListingPendingRequestsRoute = lazy(() => import("./sms-listing-pending-requests-route"))
+
+const SmsListingCompletedRequestsRoute = lazy(() => import("./sms-listing-completed-requests-route"))
 
 const SmsBusinessSendersRoute = lazy(() => import("./sms-business-senders-route"))
 //#endregion
@@ -22,16 +24,22 @@ const SmsSendersManagementRoutes = () => (
 			<Route element={<SmsBusinessSendersRoute />} path='international-sms/business-senders' />
 
 			<Route element={<SmsListingRequestsLayout />}>
-				<Route element={<SmsListingRequestsRoute />} path='local-sms/listing-requests' />
-				<Route element={<SmsListingRequestsRoute />} path='international-sms/listing-requests' />
+				<Route element={<SmsListingPendingRequestsRoute />} path='local-sms/listing-requests/pending' />
+				<Route element={<SmsListingCompletedRequestsRoute />} path='local-sms/listing-requests/completed' />
+
+				<Route element={<SmsListingPendingRequestsRoute />} path='international-sms/listing-requests/pending' />
+				<Route element={<SmsListingCompletedRequestsRoute />} path='international-sms/listing-requests/completed' />
 			</Route>
 
 			<Route element={<Navigate to='./business-senders' />} path='local-sms' />
 			<Route element={<Navigate to='./business-senders' />} path='international-sms' />
+
+			<Route element={<Navigate to='./pending' />} path='local-sms/listing-requests' />
+			<Route element={<Navigate to='./pending' />} path='international-sms/listing-requests' />
 		</Route>
 
-		<Route element={<CreateSmsSenderRequestRoute />} path='local-sms/listing-requests/new-sender-request' />
-		<Route element={<CreateSmsSenderRequestRoute />} path='international-sms/listing-requests/new-sender-request' />
+		<Route element={<CreateSmsSenderRequestRoute />} path='local-sms/listing-requests/new-request' />
+		<Route element={<CreateSmsSenderRequestRoute />} path='international-sms/listing-requests/new-request' />
 
 		<Route element={<DisplayError error={{ status: 404 }} />} path='*' />
 	</Routes>
