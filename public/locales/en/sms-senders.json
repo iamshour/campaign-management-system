@@ -35,15 +35,37 @@
 		}
 	},
 	"dialogs": {
-		"smsSenderRequest": {
-			"title": "Request Sender",
-			"buttons": {
-				"multiRequest": "Send & Add Another",
-				"singleRequest": "Send Request"
+		"smsSenderRequestDialog": {
+			"newRequest": {
+				"title": "Request Sender",
+				"buttons": {
+					"multiRequest": "Send & Add Another",
+					"singleRequest": "Send Request"
+				},
+				"message": {
+					"multiRequestSuccess": "Your request has been successfully sent, you can send another request",
+					"singleRequestSuccess": "Your request has been sent successfully"
+				}
 			},
-			"message": {
-				"multiRequestSuccess": "Your request has been successfully sent, you can send another request.",
-				"singleRequestSuccess": "Your request has been successfully sent."
+			"addRequest": {
+				"title": "Add Request",
+				"buttons": {
+					"multiRequest": "Send & Add Another",
+					"singleRequest": "Send Request"
+				},
+				"message": {
+					"multiRequestSuccess": "Your request has been successfully sent, you can send another request",
+					"singleRequestSuccess": "Your request has been sent successfully"
+				}
+			},
+			"resendRequest": {
+				"title": "Resend Request",
+				"buttons": {
+					"singleRequest": "Resend Request"
+				},
+				"message": {
+					"singleRequestSuccess": "Your request has been resent successfully"
+				}
 			}
 		},
 		"activateSmsDialog": {
@@ -51,13 +73,25 @@
 				"local": "Activate Local SMS",
 				"international": "Activate International SMS"
 			},
-			"text": "You will need a Sender ID in order to send SMS campaigns, please request a sender ID registration to start sending campaigns.",
+			"text": "You will need a Sender ID in order to send SMS campaigns, please request a sender ID registration to start sending campaigns",
 			"buttons": { "confirm": "Confirm" }
 		},
 		"confirmRequestDialog": {
-			"title": "Confirm Request",
-			"text": "Are you sure you want to send this Sender ID request?",
-			"buttons": { "confirm": "Confirm" }
+			"newRequest": {
+				"title": "Confirm Request",
+				"text": "Are you sure you want to send this Sender request?",
+				"buttons": { "confirm": "Confirm" }
+			},
+			"addRequest": {
+				"title": "Confirm Request",
+				"text": "Are you sure you want to send this Sender request?",
+				"buttons": { "confirm": "Confirm" }
+			},
+			"resendRequest": {
+				"title": "Confirm Request",
+				"text": "Are you sure you want to resend this request?",
+				"buttons": { "confirm": "Confirm" }
+			}
 		},
 		"viewListingSampleContentDialog": {
 			"title": "View Sample Content"
@@ -75,7 +109,7 @@
 		},
 		"deactivateListingDialog": {
 			"title": "Deactivate",
-			"text": "Are you sure you want to deactivate the sender ID. You will no longer be able to use it in your campaigs. This action will lead to failing launched campiagns messages and suspending scheduled campaigns using the desired deactivated sender ID",
+			"text": "Are you sure you want to deactivate the sender ID. You will no longer be able to use it in your campaigns. This action will lead to failing launched campaigns messages and suspending scheduled campaigns using the desired deactivated sender ID",
 			"buttons": { "confirm": "Confirm" },
 			"message": { "success": "Listing successfully deactivated" }
 		}
@@ -99,7 +133,8 @@
 				},
 				"activate": "Activate",
 				"deactivate": "Deactivate",
-				"addRequest": "Add Request"
+				"addRequest": "Add Request",
+				"resendRequest": "Resend Request"
 			}
 		}
 	}

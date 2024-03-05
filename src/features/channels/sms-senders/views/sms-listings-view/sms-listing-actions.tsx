@@ -24,23 +24,27 @@ const ViewListingStatusReasonDialog = lazy(
 const DeactivateSmsListingDialog = lazy(
 	() => import("@/features/channels/sms-senders/dialogs/deactivate-sms-listing-dialog/deactivate-sms-listing-dialog")
 )
+
+const SmsSenderRequestDialog = lazy(
+	() => import("@/features/channels/sms-senders/dialogs/sms-sender-request-dialog/sms-sender-request-dialog")
+)
 //#endregion
 
-interface SmsListingActionsProps extends Pick<SmsListingType, "id" | "status"> {}
-
-const SmsListingActions = ({ id, status }: SmsListingActionsProps) => {
-	const { t } = useTranslation("sms-senders", { keyPrefix: "views.smsListingsView.actions" })
+const SmsListingActions = ({ id, note, sampleContent, sender, status, targetCountry, type }: SmsListingType) => {
+	const { t } = useTranslation("sms-senders")
 
 	const viewStatusReasonActionStatuses: SmsListingStatus[] = ["Blocked", "Rejected", "Suspended"]
 
 	const activateListingActionStatuses: SmsListingStatus[] = ["Deactivated"]
 
-	const deactivateListingActionStatuses: SmsListingStatus[] = ["Approved"]
+	const deactivateListingActionStatuses: SmsListingStatus[] = ["Approved", "Blocked", "Rejected", "Suspended"]
+
+	const resendRequestActionStatuses: SmsListingStatus[] = ["Rejected", "Suspended"]
 
 	return (
 		<ActionsDropdown className='m-4'>
 			<ViewListingSampleContentDialog id={id}>
-				<ActionsDropdown.Item>{t("viewSampleContent")}</ActionsDropdown.Item>
+				<ActionsDropdown.Item>{t("views.smsListingsView.actions.viewSampleContent")}</ActionsDropdown.Item>
 			</ViewListingSampleContentDialog>
 
 			{viewStatusReasonActionStatuses.includes(status) && (
@@ -48,7 +52,7 @@ const SmsListingActions = ({ id, status }: SmsListingActionsProps) => {
 					<ActionsDropdown.Separator />
 
 					<ViewListingStatusReasonDialog id={id} status={status}>
-						<ActionsDropdown.Item>{t(`viewStatusReason.${status}`)}</ActionsDropdown.Item>
+						<ActionsDropdown.Item>{t(`views.smsListingsView.actions.viewStatusReason.${status}`)}</ActionsDropdown.Item>
 					</ViewListingStatusReasonDialog>
 				</>
 			)}
@@ -58,7 +62,7 @@ const SmsListingActions = ({ id, status }: SmsListingActionsProps) => {
 					<ActionsDropdown.Separator />
 
 					<ActivateSmsListingDialog id={id}>
-						<ActionsDropdown.Item>{t(`activate`)}</ActionsDropdown.Item>
+						<ActionsDropdown.Item>{t(`views.smsListingsView.actions.activate`)}</ActionsDropdown.Item>
 					</ActivateSmsListingDialog>
 				</>
 			)}
@@ -68,8 +72,20 @@ const SmsListingActions = ({ id, status }: SmsListingActionsProps) => {
 					<ActionsDropdown.Separator />
 
 					<DeactivateSmsListingDialog id={id}>
-						<ActionsDropdown.Item>{t(`deactivate`)}</ActionsDropdown.Item>
+						<ActionsDropdown.Item>{t(`views.smsListingsView.actions.deactivate`)}</ActionsDropdown.Item>
 					</DeactivateSmsListingDialog>
+				</>
+			)}
+
+			{resendRequestActionStatuses.includes(status) && (
+				<>
+					<ActionsDropdown.Separator />
+
+					<SmsSenderRequestDialog
+						defaultValues={{ note, sampleContent, sender, targetCountry, type }}
+						formType='resendRequest'>
+						<ActionsDropdown.Item>{t(`views.smsListingsView.actions.resendRequest`)}</ActionsDropdown.Item>
+					</SmsSenderRequestDialog>
 				</>
 			)}
 		</ActionsDropdown>

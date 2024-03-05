@@ -1,8 +1,8 @@
 //#region Import
 
-import type { AddSmsListingBody } from "@/features/channels/sms-senders/types"
+import type { AddSmsRequestBody } from "@/features/channels/sms-senders/types"
 
-import { useAddSmsListingMutation } from "@/features/channels/sms-senders/api"
+import { useAddSmsRequestMutation } from "@/features/channels/sms-senders/api"
 import SmsSenderRequestForm from "@/features/channels/sms-senders/components/sms-sender-request-form"
 import ConfirmRequestDialog from "@/features/channels/sms-senders/dialogs/confirm-request-dialog/confirm-request-dialog"
 import { SmsSenderRequestSchemaType } from "@/features/channels/sms-senders/schemas/sms-sender-request-schema"
@@ -13,7 +13,8 @@ import { useTranslation } from "react-i18next"
 //#endregion
 
 export interface SmsSenderRequestDialogContentProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof SmsSenderRequestForm>, "defaultValues"> {
+	extends Pick<React.ComponentPropsWithoutRef<typeof SmsSenderRequestForm>, "defaultValues">,
+		Pick<React.ComponentPropsWithoutRef<typeof ConfirmRequestDialog>, "formType"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
@@ -22,10 +23,14 @@ export interface SmsSenderRequestDialogContentProps
 
 type ButtonClicked = "multiRequest" | "singleRequest"
 
-const SmsSenderRequestDialogContent = ({ closeDialog, ...props }: SmsSenderRequestDialogContentProps) => {
-	const { t } = useTranslation("sms-senders")
+const SmsSenderRequestDialogContent = ({
+	closeDialog,
+	formType = "newRequest",
+	...props
+}: SmsSenderRequestDialogContentProps) => {
+	const { t } = useTranslation("sms-senders", { keyPrefix: `dialogs.smsSenderRequestDialog.${formType}` })
 
-	const [triggerAddSmsSenderRequest, { isLoading }] = useAddSmsListingMutation()
+	const [triggerAddSmsRequest, { isLoading }] = useAddSmsRequestMutation()
 
 	// tracking which button was clicked to show appropriate loader
 	const [buttonClicked, setButtonClicked] = useState<ButtonClicked | undefined>()
@@ -38,15 +43,15 @@ const SmsSenderRequestDialogContent = ({ closeDialog, ...props }: SmsSenderReque
 	 *             actions such as sending back an error on a specific field
 	 */
 
-	const onSubmit = async (body: AddSmsListingBody, form: UseFormReturn<SmsSenderRequestSchemaType>) => {
+	const onSubmit = async (body: AddSmsRequestBody, form: UseFormReturn<SmsSenderRequestSchemaType>) => {
 		if (!body) return
 
-		await triggerAddSmsSenderRequest(body).unwrap()
+		await triggerAddSmsRequest(body).unwrap()
 
 		form.reset()
 
 		// Sending appropriate success message based on button clicked (Add single request, or add multiple)
-		toast.success(t(`dialogs.smsSenderRequest.message.${buttonClicked}Success`))
+		toast.success(t(`message.${buttonClicked}Success`))
 
 		if (buttonClicked === "singleRequest") closeDialog()
 
@@ -55,25 +60,27 @@ const SmsSenderRequestDialogContent = ({ closeDialog, ...props }: SmsSenderReque
 
 	return (
 		<SmsSenderRequestForm {...props}>
-			<ConfirmRequestDialog onSubmit={onSubmit}>
-				<Button
-					disabled={isLoading}
-					loading={isLoading && buttonClicked === "multiRequest"}
-					onClick={() => setButtonClicked("multiRequest")}
-					type='button'
-					variant='outline'>
-					{t("dialogs.smsSenderRequest.buttons.multiRequest")}
-				</Button>
-			</ConfirmRequestDialog>
+			{formType !== "resendRequest" && (
+				<ConfirmRequestDialog formType={formType} onSubmit={onSubmit}>
+					<Button
+						disabled={isLoading}
+						loading={isLoading && buttonClicked === "multiRequest"}
+						onClick={() => setButtonClicked("multiRequest")}
+						type='button'
+						variant='outline'>
+						{t("buttons.multiRequest")}
+					</Button>
+				</ConfirmRequestDialog>
+			)}
 
-			<ConfirmRequestDialog onSubmit={onSubmit}>
+			<ConfirmRequestDialog formType={formType} onSubmit={onSubmit}>
 				<Button
 					className='ms-auto'
 					disabled={isLoading}
 					loading={isLoading && buttonClicked === "singleRequest"}
 					onClick={() => setButtonClicked("singleRequest")}
 					type='button'>
-					{t("dialogs.smsSenderRequest.buttons.singleRequest")}
+					{t("buttons.singleRequest")}
 				</Button>
 			</ConfirmRequestDialog>
 		</SmsSenderRequestForm>

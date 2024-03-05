@@ -20,7 +20,7 @@ const inputVariants = cva(
 				xs: "h-6 p-1.5 text-xs rounded-sm",
 			},
 			variant: {
-				default: `bg-transparent text-gray-800 ring-gray-300 read-only:!ring-gray-300 placeholder:text-gray-400 autofill:shadow-[0_0_0_30px_white_inset] border-0 !outline-0 ring-1
+				default: `bg-transparent text-gray-800 ring-gray-300 placeholder:text-gray-400 autofill:shadow-[0_0_0_30px_white_inset] border-0 !outline-0 ring-1
 					 !ring-inset focus:ring-2 active:ring-2 focus-within:ring-2 data-[hasvalue=true]:invalid:ring-1 invalid:ring-1 aria-[invalid=true]:!ring-1 focus:ring-primary-500 
 					 active:ring-primary-500 focus-within:ring-primary-500 data-[hasvalue=true]:ring-primary-500 data-[hasvalue=true]:invalid:ring-red-500 invalid:ring-red-500 
 					 aria-[invalid=true]:!ring-red-500`,
@@ -82,7 +82,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 			/>
 
 			{readOnly && (
-				<MaterialSymbolsLock className={cn(iconVariants({ className: "end-3 text-[#9899A7]", size, variant }))} />
+				<MaterialSymbolsLock
+					className={cn(iconVariants({ className: "end-3 h-4 w-4 text-[#9899A7]", size, variant }))}
+				/>
 			)}
 
 			{!readOnly && !!RightIcon && (

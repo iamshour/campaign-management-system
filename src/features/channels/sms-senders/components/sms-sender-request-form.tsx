@@ -24,6 +24,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 
 	const form = useForm<SmsSenderRequestSchemaType>({
 		defaultValues,
+		mode: "onChange",
 		resolver: zodResolver(SmsSenderRequestSchema),
 	})
 
@@ -57,6 +58,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 								<SelectSingleTemplateType
 									onValueChange={field.onChange}
 									placeholder={t("components.smsSenderRequestForm.placeholders.type")}
+									readOnly={!!defaultValues?.type}
 									value={field.value}
 								/>
 								<Form.Message />
@@ -73,6 +75,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 								<SelectCountryPopover
 									className='[&>*]:text-base [&>*]:font-normal'
 									onChange={(country) => field.onChange(country)}
+									readOnly={!!defaultValues?.targetCountry}
 									size='lg'
 									value={field.value}
 								/>

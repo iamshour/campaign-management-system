@@ -20,7 +20,7 @@ interface ActivateSmsDialogProps {
 }
 
 const ActivateSmsDialog = ({ channelType, children }: ActivateSmsDialogProps) => {
-	const { t } = useTranslation("sms-senders", { keyPrefix: "dialogs.activateSmsDialog" })
+	const { t } = useTranslation("sms-senders")
 
 	const [open, setOpen] = useState(false)
 
@@ -30,13 +30,13 @@ const ActivateSmsDialog = ({ channelType, children }: ActivateSmsDialogProps) =>
 			<Dialog.Content
 				className='h-[] w-[438px] sm:h-[] sm:w-[438px]'
 				onInteractOutside={(e) => e.preventDefault()}
-				title={t(`title.${channelType}`)}>
+				title={t(`dialogs.activateSmsDialog.title.${channelType}`)}>
 				<div className='p-2'>
-					<p>{t("text")}</p>
+					<p>{t("dialogs.activateSmsDialog.text")}</p>
 
-					<SmsSenderRequestDialog closeActivateSmsDialog={() => setOpen(false)}>
+					<SmsSenderRequestDialog closeActivateSmsDialog={() => setOpen(false)} formType='newRequest'>
 						<Button className='ms-auto mt-8 block' type='button'>
-							{t("buttons.confirm")}
+							{t("dialogs.activateSmsDialog.buttons.confirm")}
 						</Button>
 					</SmsSenderRequestDialog>
 				</div>
