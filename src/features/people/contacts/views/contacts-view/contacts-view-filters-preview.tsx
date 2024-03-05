@@ -25,15 +25,12 @@ const ContactsViewFiltersPreview = () => {
 			<div className='-mx-4 flex whitespace-nowrap bg-[#2DAEF51C] px-4 py-1 font-bold text-[#054060]'>
 				{t("components.advancedFiltersPreview.title")}
 				{appliedSegment && (
-					<Tooltip>
-						<Tooltip.Trigger asChild>
-							<span className='cursor-default overflow-hidden text-ellipsis ps-2'>
-								{' "'}
-								{appliedSegment}
-								{'"'}
-							</span>
-						</Tooltip.Trigger>
-						<Tooltip.Content content={appliedSegment} side={"top"} sideOffset={0} />
+					<Tooltip content={appliedSegment} side={"top"} sideOffset={0}>
+						<span className='cursor-default overflow-hidden text-ellipsis ps-2'>
+							{' "'}
+							{appliedSegment}
+							{'"'}
+						</span>
 					</Tooltip>
 				)}
 			</div>

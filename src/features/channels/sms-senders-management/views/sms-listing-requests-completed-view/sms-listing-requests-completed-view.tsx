@@ -1,16 +1,54 @@
 //#region Import
+import type { DataViewKey } from "@/core/components/data-view/types"
 import type { SharedListViewProps } from "@/core/types"
+
+import DataView from "@/core/components/data-view/data-view"
+import useGetChannelType from "@/core/hooks/useGetChannelType"
+import smsListingRequestsCompletedTableColumns from "@/features/channels/sms-senders-management/constants/sms-listing-requests-completed-table-columns"
+import SmsListingRequestDetailsDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-request-details-dialog/sms-listing-request-details-dialog"
+import { lazy, useState } from "react"
+
+const SmsListingRequestsCompletedViewFiltersContent = lazy(
+	() => import("./sms-listing-requests-completed-view-filters-content")
+)
 //#endregion
 
-const CmsListingRequestsCompletedView = (props: SharedListViewProps<any>) => {
-	// eslint-disable-next-line no-console
-	console.log(props)
+const SmsListingRequestsCompletedView = (props: SharedListViewProps<any>) => {
+	const { type } = useGetChannelType()
+
+	const [requestDetailsId, setRequestDetailsId] = useState<string | undefined>(undefined)
 
 	return (
-		<div>
-			<div>CmsListingRequestsCompletedView</div>
-		</div>
+		<>
+			<DataView
+				className='border-t border-t-[#E9E9E9]'
+				columns={smsListingRequestsCompletedTableColumns}
+				dataViewKey={`${type}-sms-listing-pending-requests` as DataViewKey}
+				{...props}>
+				<DataView.FiltersBar>
+					<DataView.FiltersBar.Header />
+					<DataView.FiltersBar.Content>
+						<SmsListingRequestsCompletedViewFiltersContent />
+					</DataView.FiltersBar.Content>
+					<DataView.FiltersBar.Footer />
+				</DataView.FiltersBar>
+
+				<DataView.Content className='px-8'>
+					<DataView.TopBar />
+
+					<DataView.Body onRowClick={({ id }) => setRequestDetailsId(id)} />
+
+					<DataView.Pagination pageLimits={[20, 40, 60, 80]} />
+				</DataView.Content>
+			</DataView>
+
+			<SmsListingRequestDetailsDialog
+				id={requestDetailsId}
+				onOpenChange={(open) => !open && setRequestDetailsId(undefined)}
+				open={!!requestDetailsId?.length}
+			/>
+		</>
 	)
 }
 
-export default CmsListingRequestsCompletedView
+export default SmsListingRequestsCompletedView

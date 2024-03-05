@@ -39,22 +39,16 @@ const Topbar = () => {
 					placeholder={t("top-bar.search")}
 				/>
 
-				<Tooltip>
-					<Tooltip.Trigger asChild>
-						<Button className='h-max w-max p-3' variant='ghost'>
-							<RadixIconsGear className='h-[22px] w-[22px] shrink-0' />
-						</Button>
-					</Tooltip.Trigger>
-					<Tooltip.Content content='Settings' side='bottom' sideOffset={8} />
+				<Tooltip content='Settings' side='bottom' sideOffset={8}>
+					<Button className='h-max w-max p-3' variant='ghost'>
+						<RadixIconsGear className='h-[22px] w-[22px] shrink-0' />
+					</Button>
 				</Tooltip>
 
-				<Tooltip>
-					<Tooltip.Trigger asChild>
-						<Button className='h-max w-max p-3' variant='ghost'>
-							<RadixIconsBell className='h-[22px] w-[22px] shrink-0' />
-						</Button>
-					</Tooltip.Trigger>
-					<Tooltip.Content content='Notifications' side='bottom' sideOffset={8} />
+				<Tooltip content='Notifications' side='bottom' sideOffset={8}>
+					<Button className='h-max w-max p-3' variant='ghost'>
+						<RadixIconsBell className='h-[22px] w-[22px] shrink-0' />
+					</Button>
 				</Tooltip>
 
 				<Separator className='h-10 bg-slate-400/60' orientation='vertical' />

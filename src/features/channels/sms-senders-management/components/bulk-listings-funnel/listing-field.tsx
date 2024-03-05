@@ -79,22 +79,14 @@ const ListingField = ({
 					/>
 
 					{fields?.length > 1 && (
-						<Tooltip>
-							<Tooltip.Trigger asChild>
-								<Button
-									className='mt-5 h-5 w-5 shrink-0 rounded-full p-0 text-xl'
-									onClick={() => remove(singleRequestIdx)}
-									type='button'
-									variant='destructive'>
-									-
-								</Button>
-							</Tooltip.Trigger>
-
-							<Tooltip.Content
-								content={t("components.senderRequestFunnel.actions.deleteCountry")}
-								side='left'
-								sideOffset={8}
-							/>
+						<Tooltip content={t("components.senderRequestFunnel.actions.deleteCountry")} side='left' sideOffset={8}>
+							<Button
+								className='mt-5 h-5 w-5 shrink-0 rounded-full p-0 text-xl'
+								onClick={() => remove(singleRequestIdx)}
+								type='button'
+								variant='destructive'>
+								-
+							</Button>
 						</Tooltip>
 					)}
 				</div>
@@ -113,22 +105,14 @@ const ListingField = ({
 				</Button>
 
 				{removeType !== undefined && (
-					<Tooltip>
-						<Tooltip.Trigger asChild>
-							<Button
-								className='h-max w-max p-0 text-xl text-gray-400 hover:bg-transparent hover:text-primary-700'
-								onClick={removeType}
-								type='button'
-								variant='ghost'>
-								<IcBaselineDelete />
-							</Button>
-						</Tooltip.Trigger>
-
-						<Tooltip.Content
-							content={t("components.senderRequestFunnel.actions.deleteType")}
-							side='left'
-							sideOffset={8}
-						/>
+					<Tooltip content={t("components.senderRequestFunnel.actions.deleteType")} side='left' sideOffset={8}>
+						<Button
+							className='h-max w-max p-0 text-xl text-gray-400 hover:bg-transparent hover:text-primary-700'
+							onClick={removeType}
+							type='button'
+							variant='ghost'>
+							<IcBaselineDelete />
+						</Button>
 					</Tooltip>
 				)}
 			</div>

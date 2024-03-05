@@ -32,26 +32,22 @@ const Trigger = memo(({ appliedFiltersCount = 0 }: { appliedFiltersCount?: numbe
 	const { t } = useTranslation("common", { keyPrefix: "filters-bar" })
 
 	return (
-		<Tooltip>
-			<Tooltip.Trigger asChild>
-				<Button
-					className='relative z-10 w-10 !overflow-visible px-0'
-					onClick={() => dispatch(toggleFiltersBar())}
-					variant={appliedFiltersCount > 0 ? "secondary" : "outline-grey"}>
-					<IconoirFilter />
-					{appliedFiltersCount > 0 && (
-						<span className='absolute -end-2 -top-2 z-50 h-5 w-5 truncate rounded-full border-2 border-white bg-primary-600 text-xs flex-center'>
-							{appliedFiltersCount}
-						</span>
-					)}
-				</Button>
-			</Tooltip.Trigger>
-			<Tooltip.Content
-				align='start'
-				content={isFilterBarOpen ? t("trigger-button.minimize") : t("trigger-button.expand")}
-				side='bottom'
-				sideOffset={8}
-			/>
+		<Tooltip
+			align='start'
+			content={isFilterBarOpen ? t("trigger-button.minimize") : t("trigger-button.expand")}
+			side='bottom'
+			sideOffset={8}>
+			<Button
+				className='relative z-10 w-10 !overflow-visible px-0'
+				onClick={() => dispatch(toggleFiltersBar())}
+				variant={appliedFiltersCount > 0 ? "secondary" : "outline-grey"}>
+				<IconoirFilter />
+				{appliedFiltersCount > 0 && (
+					<span className='absolute -end-2 -top-2 z-50 h-5 w-5 truncate rounded-full border-2 border-white bg-primary-600 text-xs flex-center'>
+						{appliedFiltersCount}
+					</span>
+				)}
+			</Button>
 		</Tooltip>
 	)
 })

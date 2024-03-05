@@ -19,18 +19,14 @@ const BuilderPreviewBackgroundSection = ({ src }: BuilderPreviewBackgroundSectio
 	return (
 		<div className='relative h-full w-full overflow-hidden rounded-lg border border-[#054060] flex-center'>
 			<img alt='backgroung image' className='bg-cover' src={src} />
-			<Tooltip>
-				<Tooltip.Trigger asChild>
-					<Button
-						className='absolute end-2 top-2 h-max w-max rounded-full bg-white bg-opacity-20 p-2 hover:bg-white hover:bg-opacity-50'
-						onClick={() => setValue("backgroundImage", undefined)}
-						type='reset'
-						variant='ghost'>
-						<RadixIconsCross2 />
-					</Button>
-				</Tooltip.Trigger>
-
-				<Tooltip.Content content={t("actions.remove")} side='right' sideOffset={4} />
+			<Tooltip content={t("actions.remove")} side='right' sideOffset={4}>
+				<Button
+					className='absolute end-2 top-2 h-max w-max rounded-full bg-white bg-opacity-20 p-2 hover:bg-white hover:bg-opacity-50'
+					onClick={() => setValue("backgroundImage", undefined)}
+					type='reset'
+					variant='ghost'>
+					<RadixIconsCross2 />
+				</Button>
 			</Tooltip>
 		</div>
 	)

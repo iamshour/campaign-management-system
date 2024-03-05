@@ -69,6 +69,7 @@ const api = createApi({
 		"SmsIndustryTemplate",
 		"SmsSender",
 		"SmsListing",
+		"SmsListingRequest",
 	],
 })
 

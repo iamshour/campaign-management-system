@@ -39,9 +39,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 							<Form.Item>
 								<Form.Label className='flex flex-row items-center gap-2'>
 									{t("fields.name")} *
-									<span className='text-[#2daef5]'>
-										<IconTooltip content={t("components.smsSenderRequestForm.labels.name.iconTooltip")} />
-									</span>
+									<IconTooltip content={t("components.smsSenderRequestForm.labels.name.iconTooltip")} />
 								</Form.Label>
 								<SenderNameInput onChange={field.onChange} readOnly={!!defaultValues?.sender} value={field.value} />
 								<Form.Message />

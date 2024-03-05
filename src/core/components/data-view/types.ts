@@ -1,5 +1,12 @@
+/* eslint-disable perfectionist/sort-object-types*/
+
 //#region Import
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
+import type {
+	SmsListingCompletedRequestFilter,
+	SmsListingPendingRequestFilter,
+	SmsListingRequest,
+} from "@/features/channels/sms-senders-management/types"
 import type { SmsSenderFilter, SmsSenderType } from "@/features/channels/sms-senders/types"
 import type {
 	IndustryFilter,
@@ -56,7 +63,11 @@ export type DataViewKey =
 	| "contacts"
 	| "groups"
 	| "industries"
+	| "international-sms-listing-completed-requests"
+	| "international-sms-listing-pending-requests"
 	| "international-sms-senders"
+	| "local-sms-listing-completed-requests"
+	| "local-sms-listing-pending-requests"
 	| "local-sms-senders"
 	| "segments"
 	| "sms-industry-templates"
@@ -78,6 +89,11 @@ type DataViewEntryType = {
 	"sms-prebuilt-templates": SmsIndustryTemplateType
 	"sms-prebuilt-templates-dialog": SmsIndustryTemplateType
 	"sms-templates": SmsTemplateType
+	// LISTING REQUESTS TYPE
+	"local-sms-listing-pending-requests": SmsListingRequest
+	"local-sms-listing-completed-requests": SmsListingRequest
+	"international-sms-listing-pending-requests": SmsListingRequest
+	"international-sms-listing-completed-requests": SmsListingRequest
 }
 
 export type DataViewFilterType = {
@@ -94,6 +110,11 @@ export type DataViewFilterType = {
 	"sms-prebuilt-templates": PrebuiltTemplateFilter
 	"sms-prebuilt-templates-dialog": PrebuiltTemplateFilter
 	"sms-templates": TemplateFilter
+	// LISTING REQUESTS FILTER TYPES
+	"local-sms-listing-pending-requests": SmsListingPendingRequestFilter
+	"local-sms-listing-completed-requests": SmsListingCompletedRequestFilter
+	"international-sms-listing-pending-requests": SmsListingPendingRequestFilter
+	"international-sms-listing-completed-requests": SmsListingCompletedRequestFilter
 }
 
 export type DataViewState<K extends DataViewKey> = {

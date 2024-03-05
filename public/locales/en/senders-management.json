@@ -1,4 +1,20 @@
 {
+	"fields": {
+		"company": "Company name",
+		"sender": "Sender",
+		"type": "Type",
+		"targetCountry": "Target Country",
+		"dateTime": "Date / Time",
+		"action": "Action",
+
+		"requester": "Requester",
+		"sampleContent": "Sample Content",
+		"note": "Note",
+		"actionReason": "Action Reason",
+		"currentSenderStatus": "Current Sender status",
+		"statusReason": "Status Reason"
+	},
+
 	"views": {
 		"smsListingRequestsPending": {
 			"headline": "You didn't receive any sender ID yet",
@@ -23,6 +39,49 @@
 				"deleteType": "Delete type",
 				"deleteCountry": "Delete country"
 			}
+		},
+		"selectMultiListingRequestActionPopover": {
+			"label": "Action",
+			"placeholder": "Select actions",
+			"options": {
+				"approved": "Approved",
+				"rejected": "Rejected",
+				"rejectedAndBlocked": "Rejected & Blocked"
+			}
+		}
+	},
+
+	"dialogs": {
+		"smsListingRequestDetails": {
+			"title": "View Sender Request Details",
+			"senderRequestInfo": "Sender request info",
+			"senderStatusInfo": "Sender status info"
+		},
+		"listingRequestApprove": {
+			"title": "Approve Request",
+			"tooltip": "Approve",
+			"message": "Are you sure you want to approve the sender {{name}} request for the target country {{country}}?",
+			"submit": "Confirm"
+		},
+		"listingRequestReject": {
+			"title": "Reject Request",
+			"tooltip": "Reject",
+			"message": "Are you sure you want to reject the sender {{name}} request for the target country {{country}}?",
+			"textarea": {
+				"label": "Reason",
+				"placeholder": "Enter reason"
+			},
+			"submit": "Confirm"
+		},
+		"listingRequestRejectAndBlock": {
+			"title": "Reject & Block Request",
+			"tooltip": "Reject & Block",
+			"message": "Are you sure you want to reject & Block the sender {{name}} request for the target country {{country}}?",
+			"textarea": {
+				"label": "Reason",
+				"placeholder": "Enter reason"
+			},
+			"submit": "Confirm"
 		}
 	}
 }

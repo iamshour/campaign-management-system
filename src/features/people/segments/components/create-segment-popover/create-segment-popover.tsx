@@ -30,7 +30,7 @@ const CreateSegmentPopover = ({ disabled }: CreateSegmentPopoverProps) => {
 					variant='outline'>
 					<span className={disabled ? "!opacity-50" : ""}>{t("segment.addSegment.buttonLabel")}</span>
 
-					<IconTooltip alignOffset={-110} content={t("segment.addSegment.tooltip")} sideOffset={14} />
+					<IconTooltip alignOffset={-110} content={t("segment.addSegment.tooltip")} sideOffset={20} />
 				</Button>
 			</Popover.Trigger>
 			<Popover.Content align='start' alignOffset={0} side='top' sideOffset={10}>
