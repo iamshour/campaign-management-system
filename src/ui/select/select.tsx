@@ -20,8 +20,10 @@ import {
 } from "@radix-ui/react-select"
 import LucideCheck from "~icons/lucide/check"
 import LucideChevronDown from "~icons/lucide/chevron-down"
+import { lazy } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
+const MaterialSymbolsLock = lazy(() => import("~icons/material-symbols/lock"))
 
 import Button from "../button/button"
 //#endregion
@@ -77,19 +79,26 @@ function Select<ValueType extends string>(props: SelectProps<ValueType>) {
 const SelectTrigger = ({
 	children,
 	className,
+	readOnly,
 	showArrow = true,
 	...props
-}: React.ComponentPropsWithoutRef<typeof Button> & { showArrow?: boolean }) => (
+}: React.ComponentPropsWithoutRef<typeof Button> & { readOnly?: boolean; showArrow?: boolean }) => (
 	<Trigger asChild>
 		<Button
 			className={twMerge(
 				`group justify-between text-opacity-90 [&>span]:inline [&>span]:flex-1 [&>span]:truncate [&>span]:text-start`,
+				readOnly && "pointer-events-none",
 				className
 			)}
 			variant='outline-grey'
 			{...props}>
 			{children}
-			{showArrow && <LucideChevronDown className='h-4 w-4 shrink-0 text-gray-500 group-hover:text-primary-800' />}
+
+			{readOnly && <MaterialSymbolsLock className='h-4 w-4 shrink-0 text-[#9899A7]' />}
+
+			{showArrow && !readOnly && (
+				<LucideChevronDown className='h-4 w-4 shrink-0 text-gray-500 group-hover:text-primary-800' />
+			)}
 		</Button>
 	</Trigger>
 )

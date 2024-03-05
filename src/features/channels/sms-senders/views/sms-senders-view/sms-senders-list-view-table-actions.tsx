@@ -8,19 +8,19 @@ import { useNavigate } from "react-router-dom"
 //#endregion
 
 const SmsSendersListViewTableActions = ({ id, name }: Pick<SmsSenderType, "id" | "name">) => {
-	const { t } = useTranslation("sms-senders", { keyPrefix: "table.actions" })
+	const { t } = useTranslation("sms-senders")
 
 	const navigate = useNavigate()
 
 	return (
 		<ActionsDropdown>
-			<SmsSenderRequestDialog defaultValues={{ sender: name }}>
-				<ActionsDropdown.Item>{t("addRequest")}</ActionsDropdown.Item>
+			<SmsSenderRequestDialog defaultValues={{ sender: name }} formType='addRequest'>
+				<ActionsDropdown.Item>{t("table.actions.addRequest")}</ActionsDropdown.Item>
 			</SmsSenderRequestDialog>
 
 			<ActionsDropdown.Separator />
 
-			<ActionsDropdown.Item onClick={() => navigate(id)}>{t("viewAllTypes")}</ActionsDropdown.Item>
+			<ActionsDropdown.Item onClick={() => navigate(id)}>{t("table.actions.viewAllTypes")}</ActionsDropdown.Item>
 		</ActionsDropdown>
 	)
 }

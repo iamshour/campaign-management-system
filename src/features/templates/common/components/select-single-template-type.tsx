@@ -10,17 +10,23 @@ import templateTypesOptions from "../constants/template-types-options"
 interface SelectSingleTemplateTypeProps<T extends TemplateType | undefined> {
 	onValueChange: (selectedType: T) => void
 	placeholder: string
+	readOnly?: boolean
 	value: T
 }
 
 const SelectSingleTemplateType = ({
 	onValueChange,
 	placeholder,
+	readOnly,
 	value,
 }: SelectSingleTemplateTypeProps<TemplateType | undefined>) => {
 	return (
 		<Select onValueChange={onValueChange} value={value}>
-			<Select.Trigger className='w-full text-base font-normal text-[#9899A7]' hasValue={!!value?.length} size='lg'>
+			<Select.Trigger
+				className='w-full text-base font-normal text-[#9899A7]'
+				hasValue={!!value?.length}
+				readOnly={readOnly}
+				size='lg'>
 				<Select.Value placeholder={placeholder} />
 			</Select.Trigger>
 			<Select.Content sideOffset={4}>

@@ -8,7 +8,7 @@ const SmsSenderRequestDialogContent = lazy(() => import("./sms-sender-request-di
 //#endregion
 
 interface SmsSenderRequestDialogProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof SmsSenderRequestDialogContent>, "defaultValues"> {
+	extends Pick<React.ComponentPropsWithoutRef<typeof SmsSenderRequestDialogContent>, "defaultValues" | "formType"> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */
@@ -20,8 +20,13 @@ interface SmsSenderRequestDialogProps
 	closeActivateSmsDialog?: () => void
 }
 
-const SmsSenderRequestDialog = ({ children, closeActivateSmsDialog, ...props }: SmsSenderRequestDialogProps) => {
-	const { t } = useTranslation("sms-senders", { keyPrefix: "dialogs.smsSenderRequest" })
+const SmsSenderRequestDialog = ({
+	children,
+	closeActivateSmsDialog,
+	formType,
+	...props
+}: SmsSenderRequestDialogProps) => {
+	const { t } = useTranslation("sms-senders", { keyPrefix: `dialogs.smsSenderRequestDialog.${formType}` })
 
 	const [open, setOpen] = useState(false)
 
@@ -45,6 +50,7 @@ const SmsSenderRequestDialog = ({ children, closeActivateSmsDialog, ...props }: 
 						// close SmsSenderRequestDialog
 						setOpen(false)
 					}}
+					formType={formType}
 					{...props}
 				/>
 			</Dialog.Content>

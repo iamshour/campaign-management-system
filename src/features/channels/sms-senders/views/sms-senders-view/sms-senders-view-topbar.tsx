@@ -7,14 +7,14 @@ import { useTranslation } from "react-i18next"
 //#endregion
 
 const SmsSendersViewTopbar = memo(() => {
-	const { t } = useTranslation("sms-senders", { keyPrefix: "table.actions" })
+	const { t } = useTranslation("sms-senders")
 
 	return (
 		<div className='flex w-full items-end justify-end'>
-			<SmsSenderRequestDialog>
+			<SmsSenderRequestDialog formType='newRequest'>
 				<Button>
 					<HeroiconsPlus16Solid />
-					{t("requestSender")}
+					{t("table.actions.requestSender")}
 				</Button>
 			</SmsSenderRequestDialog>
 		</div>

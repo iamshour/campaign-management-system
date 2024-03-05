@@ -53,14 +53,14 @@ export type GetSmsSendersParams = PaginationAndSorting<SmsSenderType> & SmsSende
 
 /* ******** */
 /* ******** */
-/* LISTINGS */
+/* REQUESTS */
 /* ******** */
 /* ******** */
 
 /**
- * Shape of fetched SMS Sender Listing
+ * Shape of fetched SMS Sender Request
  */
-export type SmsListingType = {
+export type SmsRequestType = {
 	createdAt: string
 	id: string
 	note?: string
@@ -75,6 +75,22 @@ export type SmsListingType = {
 }
 
 /**
+ * Body Arguments passed to the `addSmsRequest` mutation, used to send a new listing request
+ */
+export type AddSmsRequestBody = Pick<SmsListingType, "note" | "sampleContent" | "sender" | "targetCountry" | "type">
+
+/* ******** */
+/* ******** */
+/* LISTINGS */
+/* ******** */
+/* ******** */
+
+/**
+ * Shape of fetched SMS Sender Listing
+ */
+export type SmsListingType = SmsRequestType
+
+/**
  * Filters used in Filters bar, to be sent in params of request for api call `getSmsListings`
  */
 export type SmsListingsFilter = {
@@ -87,8 +103,3 @@ export type SmsListingsFilter = {
  * Params passed to the `getSmsListings` query, used for fetching SMS Listings List
  */
 export type GetSmsListingdParams = PaginationAndSorting<SmsListingType> & SmsListingsFilter
-
-/**
- * Body Arguments passed to the `addSmsListing` mutation, used to send a new listing request
- */
-export type AddSmsListingBody = Pick<SmsListingType, "note" | "sampleContent" | "sender" | "targetCountry" | "type">

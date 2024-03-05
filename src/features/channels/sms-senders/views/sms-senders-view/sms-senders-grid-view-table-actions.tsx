@@ -8,12 +8,12 @@ import { useTranslation } from "react-i18next"
 //#endregion
 
 const SmsSendersGridViewTableActions = ({ name }: Pick<SmsSenderType, "name">) => {
-	const { t } = useTranslation("sms-senders", { keyPrefix: "table.actions" })
+	const { t } = useTranslation("sms-senders")
 
 	return (
 		<ActionsDropdown Icon={HeroiconsPlus16Solid} iconClassName='w-5 h-5'>
-			<SmsSenderRequestDialog defaultValues={{ sender: name }}>
-				<ActionsDropdown.Item>{t("addRequest")}</ActionsDropdown.Item>
+			<SmsSenderRequestDialog defaultValues={{ sender: name }} formType='addRequest'>
+				<ActionsDropdown.Item>{t("table.actions.addRequest")}</ActionsDropdown.Item>
 			</SmsSenderRequestDialog>
 		</ActionsDropdown>
 	)

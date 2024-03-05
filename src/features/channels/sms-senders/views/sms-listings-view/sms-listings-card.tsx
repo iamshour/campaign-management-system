@@ -14,7 +14,9 @@ import smsListingsStatusesColorsMap from "../../constants/sms-listings-statuses-
 const SmsListingActions = lazy(() => import("./sms-listing-actions"))
 //#endregion
 
-const SmsListingCard = ({ id, requestStatus, status, statusChangeDate, targetCountry }: SmsListingType) => {
+const SmsListingCard = (smsListing: SmsListingType) => {
+	const { requestStatus, status, statusChangeDate, targetCountry } = smsListing
+
 	const color = smsListingsStatusesColorsMap[status] || "#EDF3F7"
 
 	const countryName = getCountryName(targetCountry)
@@ -41,7 +43,7 @@ const SmsListingCard = ({ id, requestStatus, status, statusChangeDate, targetCou
 			</ul>
 
 			<Suspense fallback={<Skeleton className='h-[30px] w-[30px]' />}>
-				<SmsListingActions id={id} status={status} />
+				<SmsListingActions {...smsListing} />
 			</Suspense>
 		</div>
 	)

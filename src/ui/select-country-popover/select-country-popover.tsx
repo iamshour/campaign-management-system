@@ -12,6 +12,8 @@ import isoCountryOptions from "../utils/iso-country-options"
 
 const SelectCountryPopoverContent = lazy(() => import("./select-country-popover-content"))
 
+const MaterialSymbolsLock = lazy(() => import("~icons/material-symbols/lock"))
+
 const FlagIcon = lazy(() => import("../phone-input/flag-icon"))
 //#endregion
 
@@ -19,6 +21,7 @@ interface SelectCountryPopoverProps
 	extends Partial<Pick<React.ComponentPropsWithoutRef<typeof Button>, "className" | "size">>,
 		Omit<React.ComponentPropsWithoutRef<typeof SelectCountryPopoverContent>, "closePopover"> {
 	label?: string
+	readOnly?: boolean
 	withPlaceholder?: boolean
 }
 
@@ -26,6 +29,7 @@ const SelectCountryPopover = ({
 	className,
 	label,
 	options = isoCountryOptions,
+	readOnly,
 	size = "default",
 	value,
 	withPlaceholder = true,
@@ -41,7 +45,11 @@ const SelectCountryPopover = ({
 
 			<Popover onOpenChange={setOpen} open={open}>
 				<Popover.Trigger asChild>
-					<Button className='w-full px-2' hasValue={!!value?.length} size={size} variant='outline-grey'>
+					<Button
+						className={twMerge("w-full px-2", readOnly && "pointer-events-none")}
+						hasValue={!!value?.length}
+						size={size}
+						variant='outline-grey'>
 						<Suspense fallback={<Skeleton className='h-5 w-5' />}>
 							<FlagIcon label={options.find((c) => c?.value === value)?.label ?? value} value={value} />
 						</Suspense>
@@ -55,7 +63,10 @@ const SelectCountryPopover = ({
 									{t("selectCountryPopover.placeholder")}
 								</span>
 							))}
-						<LucideChevronDown className='h-4 w-4' />
+
+						{readOnly && <MaterialSymbolsLock className='h-4 w-4 shrink-0 text-[#9899A7]' />}
+
+						{!readOnly && <LucideChevronDown className='h-4 w-4' />}
 					</Button>
 				</Popover.Trigger>
 

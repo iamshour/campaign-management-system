@@ -6,7 +6,7 @@ import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
 
-import type { AddSmsListingBody, GetSmsSendersParams, SmsListingsFilter, SmsListingType, SmsSenderType } from "./types"
+import type { AddSmsRequestBody, GetSmsSendersParams, SmsListingsFilter, SmsListingType, SmsSenderType } from "./types"
 //#endregion
 
 const smsSendersApi = api.injectEndpoints({
@@ -31,7 +31,7 @@ const smsSendersApi = api.injectEndpoints({
 			query: (id) => `/senders/${"65dda90d5cddf38ab869f080" ?? id}`,
 		}),
 
-		addSmsListing: builder.mutation<any, AddSmsListingBody>({
+		addSmsRequest: builder.mutation<any, AddSmsRequestBody>({
 			invalidatesTags: (res) => {
 				return res ? [{ id: "LIST", type: "SmsSender" }] : []
 			},
@@ -77,7 +77,7 @@ const smsSendersApi = api.injectEndpoints({
 
 export const {
 	useGetSmsSendersQuery,
-	useAddSmsListingMutation,
+	useAddSmsRequestMutation,
 	useGetSmsSenderByIdQuery,
 	useGetSmsListingsQuery,
 	useGetSmsListingByIdQuery,

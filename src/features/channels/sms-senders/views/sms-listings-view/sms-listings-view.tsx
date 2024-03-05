@@ -20,7 +20,7 @@ import SmsListingCard from "./sms-listings-card"
 interface SmsListingsViewrops extends Pick<SmsSenderType, "name" | "types"> {}
 
 const SmsListingsView = memo(({ name, types }: SmsListingsViewrops) => {
-	const { t } = useTranslation("sms-senders", { keyPrefix: "views.smsListingsView" })
+	const { t } = useTranslation("sms-senders")
 
 	const [paginationState, setPaginationState] = useState<{ limit?: number; offset?: number }>({ limit: 25, offset: 0 })
 
@@ -65,7 +65,7 @@ const SmsListingsView = memo(({ name, types }: SmsListingsViewrops) => {
 	if (isReady)
 		return (
 			<div className={twMerge("flex h-full w-full flex-col p-8 pb-0", isFetching && "pointer-events-none opacity-50")}>
-				<div className='flex flex-row flex-wrap justify-between'>
+				<div className='mb-8 flex flex-row flex-wrap justify-between'>
 					<div className='flex flex-row gap-5'>
 						{templateTypesOptions
 							?.filter((type) => types.includes(type.value))
@@ -80,16 +80,16 @@ const SmsListingsView = memo(({ name, types }: SmsListingsViewrops) => {
 							))}
 					</div>
 
-					<SmsSenderRequestDialog defaultValues={{ sender: name }}>
+					<SmsSenderRequestDialog defaultValues={{ sender: name }} formType='addRequest'>
 						<Button>
 							<HeroiconsPlus16Solid />
-							{t("actions.addRequest")}
+							{t("views.smsListingsView.actions.addRequest")}
 						</Button>
 					</SmsSenderRequestDialog>
 				</div>
 
 				<div className='flex-1 overflow-y-auto'>
-					<div className='mt-8 flex flex-row flex-wrap gap-9 '>
+					<div className='flex flex-row flex-wrap gap-9 '>
 						{list?.map((listing, idx) => <SmsListingCard key={idx} {...listing} />)}
 					</div>
 				</div>
