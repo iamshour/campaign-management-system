@@ -86,12 +86,14 @@
 		"smsListingsView": {
 			"actions": {
 				"viewSampleContent": "عرض نموذج المحتوى ",
-
 				"viewStatusReason": {
 					"Suspended": "عرض سبب تعليق ",
 					"Blocked": "عرض العقل ",
 					"Rejected": "عرض رفض العقل"
-				}
+				},
+				"activate": "تفعيل",
+				"deactivate": "إلغاء تنشيط ",
+				"addRequest": "أضف الطلب"
 			}
 		}
 	}

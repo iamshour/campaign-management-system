@@ -98,7 +98,8 @@
 					"Rejected": "View Reject Reason"
 				},
 				"activate": "Activate",
-				"deactivate": "Deactivate"
+				"deactivate": "Deactivate",
+				"addRequest": "Add Request"
 			}
 		}
 	}

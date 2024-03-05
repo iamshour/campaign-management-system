@@ -30,13 +30,13 @@ const SmsSenderCard = ({ createdAt = "", id, name, types }: SmsSenderType) => {
 				</div>
 
 				<Suspense fallback={<Skeleton className='h-[40px] w-[40px]' />}>
-					<SmsSendersGridViewTableActions id={id} name={name} />
+					<SmsSendersGridViewTableActions name={name} />
 				</Suspense>
 			</div>
 
 			<ul className='w-full flex-1 space-y-2 p-4'>
 				<li className='flex gap-2 text-base'>
-					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("fields.type")}:</span>
+					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("fields.types")}:</span>
 					<span className='block truncate' title={typesFormatted}>
 						{typesFormatted}
 					</span>

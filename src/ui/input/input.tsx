@@ -1,6 +1,8 @@
 import { cva, type VariantProps } from "class-variance-authority"
-import { forwardRef } from "react"
+import { forwardRef, lazy } from "react"
 import { twMerge } from "tailwind-merge"
+
+const MaterialSymbolsLock = lazy(() => import("~icons/material-symbols/lock"))
 
 import type { IconType } from "../types"
 
@@ -58,7 +60,7 @@ export interface InputProps
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-	({ className, inputClassName, leftIcon: LeftIcon, rightIcon: RightIcon, size, variant, ...props }, ref) => (
+	({ className, inputClassName, leftIcon: LeftIcon, readOnly, rightIcon: RightIcon, size, variant, ...props }, ref) => (
 		<div className={twMerge("group !relative h-max w-[340px] max-w-full overflow-hidden", className)}>
 			{!!LeftIcon && (
 				<LeftIcon
@@ -75,10 +77,15 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 					"!ps-10": !!LeftIcon,
 				})}
 				data-hasvalue={!!props?.value}
+				readOnly={readOnly}
 				value={props?.value ?? ""}
 			/>
 
-			{!!RightIcon && (
+			{readOnly && (
+				<MaterialSymbolsLock className={cn(iconVariants({ className: "end-3 text-[#9899A7]", size, variant }))} />
+			)}
+
+			{!readOnly && !!RightIcon && (
 				<RightIcon className={cn(iconVariants({ className: "end-3", size, variant }))} data-hasvalue={!!props?.value} />
 			)}
 		</div>

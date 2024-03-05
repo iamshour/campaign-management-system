@@ -1,12 +1,14 @@
 //#region Import
 import { Dialog } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 const SmsSenderRequestDialogContent = lazy(() => import("./sms-sender-request-dialog-content"))
 //#endregion
 
-interface SmsSenderRequestDialogProps {
+interface SmsSenderRequestDialogProps
+	extends Pick<React.ComponentPropsWithoutRef<typeof SmsSenderRequestDialogContent>, "defaultValues"> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */
@@ -18,10 +20,12 @@ interface SmsSenderRequestDialogProps {
 	closeActivateSmsDialog?: () => void
 }
 
-const SmsSenderRequestDialog = ({ children, closeActivateSmsDialog }: SmsSenderRequestDialogProps) => {
+const SmsSenderRequestDialog = ({ children, closeActivateSmsDialog, ...props }: SmsSenderRequestDialogProps) => {
 	const { t } = useTranslation("sms-senders", { keyPrefix: "dialogs.smsSenderRequest" })
 
 	const [open, setOpen] = useState(false)
+
+	const { closeDropdown } = useDropdownStateContext()
 
 	return (
 		<Dialog onOpenChange={setOpen} open={open}>
@@ -32,9 +36,16 @@ const SmsSenderRequestDialog = ({ children, closeActivateSmsDialog }: SmsSenderR
 				title={t("title")}>
 				<SmsSenderRequestDialogContent
 					closeDialog={() => {
+						// close outer dialog ("Activate")
 						closeActivateSmsDialog && closeActivateSmsDialog()
+
+						// close action drop-down
+						closeDropdown && closeDropdown()
+
+						// close SmsSenderRequestDialog
 						setOpen(false)
 					}}
+					{...props}
 				/>
 			</Dialog.Content>
 		</Dialog>

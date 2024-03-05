@@ -1,6 +1,7 @@
 //#region Import
 import { Button, Input, Popover } from "@/ui"
 import { useEffect, useRef, useState } from "react"
+import { twMerge } from "tailwind-merge"
 //#endregion
 
 interface InputWithSearchProps extends Omit<React.ComponentPropsWithoutRef<typeof Input>, "onChange"> {
@@ -20,6 +21,7 @@ const InputWithSearch = ({
 	contentProps,
 	fetchState: { setShouldFetch, suggestions },
 	onChange,
+	readOnly,
 	value,
 	...props
 }: InputWithSearchProps) => {
@@ -67,11 +69,12 @@ const InputWithSearch = ({
 
 	return (
 		<Popover onOpenChange={(focus) => !focus && setOpen(false)} open={shouldShowPopover}>
-			<Popover.Trigger className='max-w-full'>
+			<Popover.Trigger className={twMerge("max-w-full", readOnly && "pointer-events-none")}>
 				<Input
 					autoComplete='off'
 					onChange={onInputChange}
 					onKeyDown={(e) => e.key === "ArrowDown" && focusOnPopover()}
+					readOnly={readOnly}
 					ref={inputRef}
 					size='lg'
 					spellCheck='false'
