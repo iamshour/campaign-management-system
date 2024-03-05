@@ -1,6 +1,7 @@
 //#region Import
 import type { SmsSenderType } from "@/features/channels/sms-senders/types"
 
+import SmsSenderRequestDialog from "@/features/channels/sms-senders/dialogs/sms-sender-request-dialog/sms-sender-request-dialog"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
@@ -13,13 +14,9 @@ const SmsSendersListViewTableActions = ({ id, name }: Pick<SmsSenderType, "id" |
 
 	return (
 		<ActionsDropdown>
-			<ActionsDropdown.Item
-				onClick={() => {
-					// eslint-disable-next-line no-console
-					console.log("sender ", id, name)
-				}}>
-				{t("addRequest")}
-			</ActionsDropdown.Item>
+			<SmsSenderRequestDialog defaultValues={{ sender: name }}>
+				<ActionsDropdown.Item>{t("addRequest")}</ActionsDropdown.Item>
+			</SmsSenderRequestDialog>
 
 			<ActionsDropdown.Separator />
 

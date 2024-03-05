@@ -16,15 +16,15 @@ import SenderNameInput from "./sender-name-input"
 interface SmsSenderRequestFormProps {
 	children: React.ReactNode
 
-	defaultValues?: SmsSenderRequestSchemaType
+	defaultValues?: Partial<SmsSenderRequestSchemaType>
 }
 
 const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormProps) => {
 	const { t } = useTranslation("sms-senders")
 
 	const form = useForm<SmsSenderRequestSchemaType>({
+		defaultValues,
 		resolver: zodResolver(SmsSenderRequestSchema),
-		values: defaultValues,
 	})
 
 	return (
@@ -42,7 +42,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 										<IconTooltip content={t("components.smsSenderRequestForm.labels.name.iconTooltip")} />
 									</span>
 								</Form.Label>
-								<SenderNameInput onChange={field.onChange} value={field.value} />
+								<SenderNameInput onChange={field.onChange} readOnly={!!defaultValues?.sender} value={field.value} />
 								<Form.Message />
 							</Form.Item>
 						)}
@@ -53,7 +53,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 						name='type'
 						render={({ field }) => (
 							<Form.Item className='w-full max-w-[340px]'>
-								<Form.Label>{t("fields.type")} *</Form.Label>
+								<Form.Label>{t("fields.types")} *</Form.Label>
 								<SelectSingleTemplateType
 									onValueChange={field.onChange}
 									placeholder={t("components.smsSenderRequestForm.placeholders.type")}

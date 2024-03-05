@@ -13,7 +13,7 @@ const SmsSenderRoute = () => {
 
 	const senderId = params.senderId
 
-	const { isError, isInitialLoading, isReady, types } = useGetSmsSenderByIdQuery(senderId!, {
+	const { isError, isInitialLoading, isReady, name, types } = useGetSmsSenderByIdQuery(senderId!, {
 		selectFromResult: ({ data, isLoading, ...rest }) => ({
 			isInitialLoading: data === undefined && isLoading,
 			isReady: !isLoading && Boolean(data?.types),
@@ -29,9 +29,9 @@ const SmsSenderRoute = () => {
 
 	if (isError || !types) return <DisplayError className='h-full w-full' />
 
-	if (!types?.length) return <NoResultsFound />
+	if (!types?.length || !name?.length) return <NoResultsFound />
 
-	if (isReady) return <SmsListingsView types={types} />
+	if (isReady) return <SmsListingsView name={name} types={types} />
 }
 
 export default SmsSenderRoute

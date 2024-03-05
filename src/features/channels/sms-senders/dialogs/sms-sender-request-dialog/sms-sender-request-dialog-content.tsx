@@ -12,7 +12,8 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-interface SmsSenderRequestDialogContentProps {
+export interface SmsSenderRequestDialogContentProps
+	extends Pick<React.ComponentPropsWithoutRef<typeof SmsSenderRequestForm>, "defaultValues"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
@@ -21,7 +22,7 @@ interface SmsSenderRequestDialogContentProps {
 
 type ButtonClicked = "multiRequest" | "singleRequest"
 
-const SmsSenderRequestDialogContent = ({ closeDialog }: SmsSenderRequestDialogContentProps) => {
+const SmsSenderRequestDialogContent = ({ closeDialog, ...props }: SmsSenderRequestDialogContentProps) => {
 	const { t } = useTranslation("sms-senders")
 
 	const [triggerAddSmsSenderRequest, { isLoading }] = useAddSmsListingMutation()
@@ -53,7 +54,7 @@ const SmsSenderRequestDialogContent = ({ closeDialog }: SmsSenderRequestDialogCo
 	}
 
 	return (
-		<SmsSenderRequestForm>
+		<SmsSenderRequestForm {...props}>
 			<ConfirmRequestDialog onSubmit={onSubmit}>
 				<Button
 					disabled={isLoading}
