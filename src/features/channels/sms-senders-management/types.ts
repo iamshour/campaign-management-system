@@ -57,8 +57,16 @@ export type SmsSenderRequestDetailsType = {
 
 /**
  * Body Arguments passed to the `updateSmsListingStatus` mutation, used to update status for an sms listing
+ * P.S. `statusReason` is only required if status is 'BLOCKED' or 'REJECTED'
  */
-export type UpdateSmsListingStatusBody = Pick<
-	SmsSenderRequestDetailsType,
-	"actionReason" | "requestAction" | "requestId"
->
+export type UpdateSmsListingStatusBody = {
+	listingId: SmsListingType["listingId"]
+} & (
+	| {
+			status: Extract<SmsListingType["status"], "APPROVED">
+	  }
+	| {
+			status: Extract<SmsListingType["status"], "BLOCKED" | "REJECTED">
+			statusReason: SmsListingType["statusReason"]
+	  }
+)

@@ -18,7 +18,7 @@ const ListingRequestApproveDialog = ({ children, id }: ListingRequestApproveDial
 
 	return (
 		<Dialog onOpenChange={setOpen} open={open}>
-			<Tooltip align='end' content={t("tooltip")} side='top' sideOffset={8}>
+			<Tooltip align='center' content={t("tooltip")} side='top' sideOffset={8}>
 				<Dialog.Trigger className='h-max w-max rounded-md p-1.5 text-base text-[#939393] transition-basic hover:bg-primary-50/75 hover:text-[#2DAEF5]'>
 					{children}
 				</Dialog.Trigger>

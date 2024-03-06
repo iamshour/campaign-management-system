@@ -48,7 +48,9 @@ const smsListingRequestsPendingTableColumns: ColumnType<SmsListingRequest>[] = [
 	},
 	{
 		accessorKey: "actions",
-		cell: (_, { id }) => <SmsListingRequestsPendingActions id={id} />,
+		cell: (_, { country, id, sender }) => (
+			<SmsListingRequestsPendingActions country={country} id={id} sender={sender} />
+		),
 		preventCellClick: true,
 	},
 ]
