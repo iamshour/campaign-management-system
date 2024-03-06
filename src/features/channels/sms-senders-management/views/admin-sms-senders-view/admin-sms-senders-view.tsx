@@ -8,19 +8,19 @@ import smsSendersTableColumns from "@/features/channels/sms-senders/constants/sm
 import { lazy } from "react"
 import { useNavigate } from "react-router-dom"
 
-import SmsSenderCard from "./sms-sender-card"
+const AdminSmsSendersViewTopbar = lazy(() => import("./admin-sms-senders-view-topbar"))
 
-const SmsSendersViewTopbar = lazy(() => import("./sms-senders-view-topbar"))
+const SmsSendersViewFiltersContent = lazy(
+	() => import("@/features/channels/sms-senders/views/sms-senders-view/sms-senders-view-filters-content")
+)
 
-const SmsSendersViewFiltersContent = lazy(() => import("./sms-senders-view-filters-content"))
-
-const SmsSendersListViewTableActions = lazy(() => import("./sms-senders-list-view-table-actions"))
+const AdminSmsSendersTableActions = lazy(() => import("./admin-sms-senders-table-actions"))
 //#endregion
 
 interface SmsSendersViewProps extends SharedListViewProps<SmsSenderType> {
 	dataViewKey: SmsSenderDataViewKeyOptions
 }
-const SmsSendersView = ({ dataViewKey, ...props }: SmsSendersViewProps) => {
+const AdminSmsSendersView = ({ dataViewKey, ...props }: SmsSendersViewProps) => {
 	const navigate = useNavigate()
 
 	return (
@@ -35,29 +35,23 @@ const SmsSendersView = ({ dataViewKey, ...props }: SmsSendersViewProps) => {
 
 			<DataView.Content>
 				<DataView.TopBar>
-					<SmsSendersViewTopbar />
+					<AdminSmsSendersViewTopbar />
 				</DataView.TopBar>
 
-				<DataView.MultiViewLayout>
-					<DataView.Body
-						classNames={{ wrapper: "px-4" }}
-						GridCard={SmsSenderCard}
-						onRowClick={({ id }) => navigate(id)}
-					/>
-				</DataView.MultiViewLayout>
+				<DataView.Body onRowClick={({ id }) => navigate(id)} />
 
-				<DataView.Pagination pageLimits={[10, 20, 30]} />
+				<DataView.Pagination pageLimits={[20, 40, 60, 80]} />
 			</DataView.Content>
 		</DataView>
 	)
 }
 
-export default SmsSendersView
+export default AdminSmsSendersView
 
 const columns: ColumnType<SmsSenderType>[] = [
 	...smsSendersTableColumns,
 	{
 		accessorKey: "actions",
-		cell: (_, { id, name }) => <SmsSendersListViewTableActions id={id} name={name} />,
+		cell: (_, { id, name }) => <AdminSmsSendersTableActions id={id} name={name} />,
 	},
 ]

@@ -8,6 +8,8 @@ import smsListingRequestsPendingTableColumns from "@/features/channels/sms-sende
 import SmsListingRequestDetailsDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-request-details-dialog/sms-listing-request-details-dialog"
 import { lazy, useState } from "react"
 
+const SmsListingRequestsPendingViewTopbar = lazy(() => import("./sms-listing-requests-pending-view-topbar"))
+
 const SmsListingRequestsPendingViewFiltersContent = lazy(
 	() => import("./sms-listing-requests-pending-view-filters-content")
 )
@@ -34,7 +36,9 @@ const SmsListingRequestsPendingView = (props: SharedListViewProps<any>) => {
 				</DataView.FiltersBar>
 
 				<DataView.Content className='px-8'>
-					<DataView.TopBar />
+					<DataView.TopBar>
+						<SmsListingRequestsPendingViewTopbar />
+					</DataView.TopBar>
 
 					<DataView.Body onRowClick={({ id }) => setRequestDetailsId(id)} />
 

@@ -37,7 +37,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 						render={({ field }) => (
 							<Form.Item>
 								<Form.Label className='flex flex-row items-center gap-2'>
-									{t("fields.name")} *
+									{t("channels-common:fields.sender")} *
 									<IconTooltip content={t("components.smsSenderRequestForm.labels.name.iconTooltip")} />
 								</Form.Label>
 								<SenderNameInput onChange={field.onChange} readOnly={!!defaultValues?.sender} value={field.value} />
@@ -51,7 +51,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 						name='type'
 						render={({ field }) => (
 							<Form.Item className='w-full max-w-[340px]'>
-								<Form.Label>{t("fields.types")} *</Form.Label>
+								<Form.Label>{t("channels-common:fields.type")} *</Form.Label>
 								<SelectSingleTemplateType
 									onValueChange={field.onChange}
 									placeholder={t("components.smsSenderRequestForm.placeholders.type")}
@@ -68,7 +68,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 						name='targetCountry'
 						render={({ field }) => (
 							<Form.Item>
-								<Form.Label>{t("fields.targetCountry")} *</Form.Label>
+								<Form.Label>{t("channels-common:fields.targetCountry")} *</Form.Label>
 								<SelectCountryPopover
 									className='[&>*]:text-base [&>*]:font-normal'
 									onChange={(country) => field.onChange(country)}
@@ -86,7 +86,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 						name='note'
 						render={({ field }) => (
 							<Form.Item>
-								<Form.Label>{t("fields.note")}</Form.Label>
+								<Form.Label>{t("channels-common:fields.note")}</Form.Label>
 								<TextareaPopover
 									onValueChange={(v) => field.onChange(v)}
 									placeholder={t("components.smsSenderRequestForm.placeholders.note")}
@@ -104,7 +104,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 						name='sampleContent'
 						render={({ field }) => (
 							<Form.Item className='col-span-2'>
-								<Form.Label>{t("fields.sampleContent")} *</Form.Label>
+								<Form.Label>{t("channels-common:fields.sampleContent")} *</Form.Label>
 								<Textarea
 									maxLength={500}
 									onChange={field.onChange}

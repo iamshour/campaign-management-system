@@ -1,7 +1,7 @@
 //#region Import
 import type { BulkListingsFunnelBase } from "@/features/channels/sms-senders-management/components/bulk-listings-funnel/types"
 
-import getChannelType from "@/core/utils/get-channel-type"
+import useGetChannelType from "@/core/hooks/useGetChannelType"
 import BulkListingsFunnel from "@/features/channels/sms-senders-management/components/bulk-listings-funnel/bulk-listings-funnel"
 import { emptyBulkListingsGroup } from "@/features/channels/sms-senders-management/components/bulk-listings-funnel/bulk-listings-funnel-configs"
 import { Button, Footer, Form } from "@/ui"
@@ -22,7 +22,7 @@ interface CreateSmsSenderRequestViewProps {
 }
 
 const CreateSmsSenderRequestView = ({ onSubmit }: CreateSmsSenderRequestViewProps) => {
-	const { pathname, state } = useLocation()
+	const { state } = useLocation()
 
 	const form = useForm<SmsSenderRequestsForm>({
 		defaultValues: {
@@ -32,7 +32,7 @@ const CreateSmsSenderRequestView = ({ onSubmit }: CreateSmsSenderRequestViewProp
 		},
 	})
 
-	const channel = getChannelType(pathname)
+	const { name, type } = useGetChannelType()
 
 	return (
 		<div className='flex h-full w-full flex-col gap-6 overflow-hidden p-6'>
@@ -56,10 +56,7 @@ const CreateSmsSenderRequestView = ({ onSubmit }: CreateSmsSenderRequestViewProp
 					</div>
 
 					<Footer>
-						<Button
-							as='link'
-							to={state?.from || `/admin/channels/${channel?.type}-${channel?.name}/listing-requests`}
-							variant='outline'>
+						<Button as='link' to={state?.from || `/admin/channels/${type}-${name}/listing-requests`} variant='outline'>
 							Cancel
 						</Button>
 						<Button type='submit'>Add</Button>

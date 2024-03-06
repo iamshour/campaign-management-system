@@ -14,7 +14,7 @@ import { memo, useCallback } from "react"
 interface SmsSendersFiltersContentProps {
 	dataViewKey: SmsSenderDataViewKeyOptions
 }
-const SmsSendersFiltersContent = memo(({ dataViewKey }: SmsSendersFiltersContentProps) => {
+const SmsSendersViewFiltersContent = memo(({ dataViewKey }: SmsSendersFiltersContentProps) => {
 	const dispatch = useDispatch()
 
 	const filters = useSelector<SmsSenderFilter | undefined>(
@@ -43,6 +43,6 @@ const SmsSendersFiltersContent = memo(({ dataViewKey }: SmsSendersFiltersContent
 	)
 })
 
-SmsSendersFiltersContent.displayName = "SmsSendersFiltersContent"
+SmsSendersViewFiltersContent.displayName = "SmsSendersViewFiltersContent"
 
-export default SmsSendersFiltersContent
+export default SmsSendersViewFiltersContent

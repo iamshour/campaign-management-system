@@ -1,13 +1,28 @@
 {
 	"views": {
-		"smsListingRequestsPending": {
+		"smsListingRequestsPendingEmpty": {
 			"headline": "You didn't receive any sender ID yet",
-			"message": "You haven't received any requests from your client yet",
-			"submit": "Add Sender ID Request"
+			"message": "You haven't received any requests from your client yet"
 		},
-		"smsListingRequestsCompleted": {
+		"smsListingRequestsPending": {
+			"callToAction": "Add Sender ID Request"
+		},
+		"smsListingRequestsCompletedEmpty": {
 			"headline": "You don't have sender ID yet with complete status",
 			"message": "Check the request you have received on pending list to complete them"
+		},
+		"adminSmsSendersView": {
+			"table": {
+				"callToAction": "Create Sender",
+				"actionsCell": {
+					"addList": "Add List",
+					"delete": "Delete"
+				}
+			}
+		},
+		"adminSmsSendersViewEmpty": {
+			"headline": "You don't have sender ID yet",
+			"message": "Create a new sender IDs"
 		}
 	},
 

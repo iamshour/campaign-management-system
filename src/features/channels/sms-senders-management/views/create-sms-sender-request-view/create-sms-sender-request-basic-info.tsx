@@ -13,7 +13,7 @@ interface CreateSmsSenderRequestBasicInfoProps {
 }
 
 const CreateSmsSenderRequestBasicInfo = ({ control }: CreateSmsSenderRequestBasicInfoProps) => {
-	const { t } = useTranslation("sms-senders")
+	const { t } = useTranslation("channels-common")
 
 	return (
 		<div className='flex w-full flex-wrap gap-4'>
@@ -62,7 +62,7 @@ const CreateSmsSenderRequestBasicInfo = ({ control }: CreateSmsSenderRequestBasi
 				render={({ field }) => (
 					<Form.Item>
 						<Form.Label className='flex h-[20px] flex-row items-center gap-2'>
-							{t("fields.name")} *
+							{t("fields.sender")} *
 							<IconTooltip content='tooltip content here...' />
 						</Form.Label>
 						<SenderNameInput className='rounded-lg bg-white' onChange={field.onChange} value={field.value} />

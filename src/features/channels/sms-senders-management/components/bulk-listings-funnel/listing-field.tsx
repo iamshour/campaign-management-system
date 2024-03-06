@@ -51,7 +51,7 @@ const ListingField = ({
 							<Form.Item>
 								<SelectCountryPopover
 									className='[&>button]:text-base [&>button]:font-normal'
-									label={`${t("sms-senders:fields.targetCountry")} *`}
+									label={`${t("channels-common:fields.targetCountry")} *`}
 									onChange={field.onChange}
 									size='lg'
 									value={field.value}
@@ -68,7 +68,7 @@ const ListingField = ({
 							<Form.Item>
 								<TextareaPopover
 									className='[&>button]:text-base [&>button]:font-normal'
-									label={`${t("sms-senders:fields.sampleContent")} *`}
+									label={`${t("channels-common:fields.sampleContent")} *`}
 									onValueChange={field.onChange}
 									size='lg'
 									value={field.value}

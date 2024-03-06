@@ -1,18 +1,18 @@
 //#region Import
+import type { SmsChannelTypeOption } from "@/features/channels/sms-senders/types"
+
 import SmsSendersEmptySvg from "@/assets/sms-senders-empty.svg?react"
 import LabelledHints from "@/core/components/labelled-hints"
 import ActivateSmsDialog from "@/features/channels/sms-senders/dialogs/activate-sms-dialog/activate-sms-dialog"
 import { Button } from "@/ui"
 import { useTranslation } from "react-i18next"
-
-import { SmsChannelTypeOption } from "../types"
 //#endregion
 
 interface SmsSendersEmptyViewProps {
 	channelType: SmsChannelTypeOption
 }
 
-const SmsSendersEmptyView = ({ channelType }: SmsSendersEmptyViewProps) => {
+const SmsSendersViewEmpty = ({ channelType }: SmsSendersEmptyViewProps) => {
 	const { t } = useTranslation("sms-senders", { keyPrefix: "views.emptyView" })
 
 	return (
@@ -37,4 +37,4 @@ const SmsSendersEmptyView = ({ channelType }: SmsSendersEmptyViewProps) => {
 	)
 }
 
-export default SmsSendersEmptyView
+export default SmsSendersViewEmpty

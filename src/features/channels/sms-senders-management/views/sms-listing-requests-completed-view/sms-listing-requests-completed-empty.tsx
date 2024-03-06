@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next"
 //#endregion
 
 const SmsListingRequestsCompletedEmpty = () => {
-	const { t } = useTranslation("senders-management", { keyPrefix: "views.smsListingRequestsCompleted" })
+	const { t } = useTranslation("senders-management", { keyPrefix: "views.smsListingRequestsCompletedEmpty" })
 
 	return (
 		<div className='flex h-full w-full flex-1 flex-col gap-[14px] p-4 flex-center prevent-selection'>
