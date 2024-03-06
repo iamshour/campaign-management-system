@@ -1,51 +1,47 @@
 //#region Import
+import type { SmsListingType } from "@/features/channels/common/types"
 import type { SmsLisintgActionReasonSchemaType } from "@/features/channels/sms-senders-management/schemas/sms-listing-action-reason-schema"
-import type { SmsListingRequest } from "@/features/channels/sms-senders-management/types"
 
 import getCountryName from "@/core/utils/get-country-name"
 import { useUpdateSmsListingStatusMutation } from "@/features/channels/sms-senders-management/api"
 import ActionReasonForm from "@/features/channels/sms-senders-management/components/action-reason-form"
 import { Button } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-export interface ListingRequestRejectDialogContentProps extends Pick<SmsListingRequest, "country" | "id" | "sender"> {
+export interface BlockSmsListingDialogContentProps extends Pick<SmsListingType, "company" | "country" | "listingId"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
 	closeDialog: () => void
-
-	/**
-	 * Boolean used to check if request would only be rejected, or would also be blocked as well
-	 */
-	withBlock?: boolean
 }
 
-const ListingRequestRejectDialogContent = ({
+const BlockSmsListingDialogContent = ({
 	closeDialog,
+	company,
 	country,
-	id,
-	sender,
-	withBlock,
-}: ListingRequestRejectDialogContentProps) => {
-	const { t } = useTranslation("senders-management", {
-		keyPrefix: withBlock ? "dialogs.listingRequestRejectAndBlock" : "dialogs.listingRequestReject",
-	})
+	listingId,
+}: BlockSmsListingDialogContentProps) => {
+	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.blockSmsListing" })
+
+	const { closeDropdown } = useDropdownStateContext()
 
 	const [triggerUpdateSmsListing, { isLoading }] = useUpdateSmsListingStatusMutation()
 
 	const onSubmit = async ({ actionReason }: SmsLisintgActionReasonSchemaType) => {
 		await triggerUpdateSmsListing({
-			listingId: id,
-			status: withBlock ? "BLOCKED" : "REJECTED",
+			listingId,
+			status: "BLOCKED",
 			statusReason: actionReason,
 		}).unwrap()
 
+		closeDropdown()
 		closeDialog()
 	}
 
 	return (
-		<ActionReasonForm message={t("message", { country: getCountryName(country), sender })} onSubmit={onSubmit}>
+		<ActionReasonForm message={t("message", { company, country: getCountryName(country) })} onSubmit={onSubmit}>
 			<Button className='ms-auto w-max px-10' loading={isLoading} type='submit'>
 				{t("submit")}
 			</Button>
@@ -53,4 +49,4 @@ const ListingRequestRejectDialogContent = ({
 	)
 }
 
-export default ListingRequestRejectDialogContent
+export default BlockSmsListingDialogContent

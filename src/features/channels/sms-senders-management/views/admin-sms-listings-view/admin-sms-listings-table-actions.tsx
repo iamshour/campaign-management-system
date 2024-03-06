@@ -1,19 +1,25 @@
 //#region Import
+import type { SmsListingType } from "@/features/channels/common/types"
+
+import BlockSmsListingDialog from "@/features/channels/sms-senders-management/dialogs/block-sms-listing-dialog/block-sms-listing-dialog"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-const AdminSmsListingsTableActions = ({ id }: { id: string }) => {
+const AdminSmsListingsTableActions = (props: Pick<SmsListingType, "company" | "country" | "listingId">) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "views.adminSmsListingsView.table.actionsCell" })
 
 	return (
 		<ActionsDropdown>
-			{/* eslint-disable-next-line no-console */}
-			<ActionsDropdown.Item onClick={() => console.log(id)}>{t("edit")}</ActionsDropdown.Item>
+			<ActionsDropdown.Item>{t("edit")}</ActionsDropdown.Item>
 			<ActionsDropdown.Separator />
 			<ActionsDropdown.Item>{t("delete")}</ActionsDropdown.Item>
+
 			<ActionsDropdown.Separator />
-			<ActionsDropdown.Item>{t("block")}</ActionsDropdown.Item>
+			<BlockSmsListingDialog {...props}>
+				<ActionsDropdown.Item>{t("block")}</ActionsDropdown.Item>
+			</BlockSmsListingDialog>
+
 			<ActionsDropdown.Separator />
 			<ActionsDropdown.Item>{t("suspend")}</ActionsDropdown.Item>
 		</ActionsDropdown>

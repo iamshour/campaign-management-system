@@ -33,12 +33,12 @@ const smsSendersManagementApis = api.injectEndpoints({
 		}),
 
 		updateSmsListingStatus: builder.mutation<any, UpdateSmsListingStatusBody>({
-			invalidatesTags: (res, error, { requestId }) => {
+			invalidatesTags: (res, error, { listingId }) => {
 				if (!res) return []
 
-				return [{ id: requestId, type: "SmsListingRequest" }]
+				return [{ id: listingId, type: "SmsListingRequest" }]
 			},
-			query: ({ requestId, ...body }) => ({ body, method: "PUT", url: `/source-request/status/${requestId}` }),
+			query: ({ listingId, ...body }) => ({ body, method: "PUT", url: `/source-request/status/${listingId}` }),
 		}),
 	}),
 })

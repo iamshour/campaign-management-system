@@ -37,13 +37,11 @@ const smsListingsTableColumns: ColumnType<SmsListingType>[] = [
 		accessorKey: "country",
 		cell: (_, { country }) => getCountryName(country),
 		header: smsListingsFieldsLocalMap.country,
-		sortable: true,
 	},
 	{
 		accessorKey: "status",
 		cell: (_, { status }) => <AdminSmsListingsViewStatusTableCell status={status} />,
 		header: smsListingsFieldsLocalMap.status,
-		sortable: true,
 	},
 	{
 		accessorKey: "updatedAt",
@@ -53,7 +51,9 @@ const smsListingsTableColumns: ColumnType<SmsListingType>[] = [
 	},
 	{
 		accessorKey: "actions",
-		cell: (_, { listingId }) => <AdminSmsListingsTableActions id={listingId} />,
+		cell: (_, { company, country, listingId }) => (
+			<AdminSmsListingsTableActions company={company} country={country} listingId={listingId} />
+		),
 		preventCellClick: true,
 	},
 ]

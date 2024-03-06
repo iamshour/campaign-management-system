@@ -22,7 +22,7 @@ const ListingRequestApproveDialogContent = ({ closeDialog, id }: ListingRequestA
 	const [triggerUpdateSmsListing, { isLoading }] = useUpdateSmsListingStatusMutation()
 
 	const handleSubmit = async () => {
-		await triggerUpdateSmsListing({ requestAction: "APPROVED", requestId: id }).unwrap()
+		await triggerUpdateSmsListing({ listingId: id, status: "APPROVED" }).unwrap()
 
 		closeDialog()
 	}

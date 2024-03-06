@@ -6,11 +6,11 @@ const ListingRequestRejectDialogContent = lazy(() => import("./listing-request-r
 //#endregion
 
 interface ListingRequestRejectDialogProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof ListingRequestRejectDialogContent>, "id" | "withBlock"> {
+	extends Omit<React.ComponentPropsWithoutRef<typeof ListingRequestRejectDialogContent>, "closeDialog"> {
 	children: React.ReactNode
 }
 
-const ListingRequestRejectDialog = ({ children, id, withBlock }: ListingRequestRejectDialogProps) => {
+const ListingRequestRejectDialog = ({ children, withBlock, ...props }: ListingRequestRejectDialogProps) => {
 	const { t } = useTranslation("senders-management", {
 		keyPrefix: withBlock ? "dialogs.listingRequestRejectAndBlock" : "dialogs.listingRequestReject",
 	})
@@ -19,14 +19,14 @@ const ListingRequestRejectDialog = ({ children, id, withBlock }: ListingRequestR
 
 	return (
 		<Dialog onOpenChange={setOpen} open={open}>
-			<Tooltip align='end' content={t("tooltip")} side='top' sideOffset={8}>
+			<Tooltip align='center' content={t("tooltip")} side='top' sideOffset={8}>
 				<Dialog.Trigger className='h-max w-max rounded-md p-1.5 text-base text-[#939393] transition-basic hover:bg-primary-50/75 hover:text-[#2DAEF5]'>
 					{children}
 				</Dialog.Trigger>
 			</Tooltip>
 
 			<Dialog.Content className='h-[401px] w-[416px] xs:h-[377px] sm:h-[385px]' title={t("title")}>
-				<ListingRequestRejectDialogContent closeDialog={() => setOpen(false)} id={id} />
+				<ListingRequestRejectDialogContent closeDialog={() => setOpen(false)} withBlock={withBlock} {...props} />
 			</Dialog.Content>
 		</Dialog>
 	)
