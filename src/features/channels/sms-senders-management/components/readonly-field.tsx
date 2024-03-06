@@ -46,7 +46,7 @@ const ReadonlyField = ({ children, className, label, showTooltip }: ReadonlyFiel
 			<Label className='text-base font-bold text-black'>{label}</Label>
 
 			{showTooltip ? (
-				<Tooltip align='center' className='max-w-[380px]' content={children} side='bottom' sideOffset={12}>
+				<Tooltip align='center' className='max-w-[380px]' content={children} side='top' sideOffset={12}>
 					<p className='line-clamp-3 text-base text-black'>{children}</p>
 				</Tooltip>
 			) : (

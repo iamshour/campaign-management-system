@@ -23,6 +23,18 @@
 		"adminSmsSendersViewEmpty": {
 			"headline": "You don't have sender ID yet",
 			"message": "Create a new sender IDs"
+		},
+		"adminSmsListingsView": {
+			"table": {
+				"callToAction": "Add List",
+				"secondaryCallToAction": "Opted-out List",
+				"actionsCell": {
+					"edit": "Edit",
+					"delete": "Delete",
+					"block": "Block",
+					"suspend": "Suspend"
+				}
+			}
 		}
 	},
 
@@ -42,6 +54,10 @@
 		"selectMultiListingRequestActionPopover": {
 			"label": "Action",
 			"placeholder": "Select actions"
+		},
+		"selectMultiListingStatusesPopover": {
+			"label": "Status",
+			"placeholder": "Select statuses"
 		}
 	},
 
@@ -50,6 +66,10 @@
 			"title": "View Sender Request Details",
 			"senderRequestInfo": "Sender request info",
 			"senderStatusInfo": "Sender status info"
+		},
+		"smsListingDetails": {
+			"title": "View Sender Details",
+			"otherInfo": "Other info"
 		},
 		"listingRequestApprove": {
 			"title": "Approve Request",

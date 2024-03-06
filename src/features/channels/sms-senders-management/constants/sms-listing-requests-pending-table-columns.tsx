@@ -35,9 +35,9 @@ const smsListingRequestsPendingTableColumns: ColumnType<SmsListingRequest>[] = [
 		header: smsListingRequestsFieldsLocalMap.type,
 	},
 	{
-		accessorKey: "targetCountry",
-		cell: (targetCountry) => getCountryName(targetCountry),
-		header: smsListingRequestsFieldsLocalMap.targetCountry,
+		accessorKey: "country",
+		cell: (country) => getCountryName(country),
+		header: smsListingRequestsFieldsLocalMap.country,
 		sortable: true,
 	},
 	{

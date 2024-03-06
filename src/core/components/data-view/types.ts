@@ -2,6 +2,7 @@
 
 //#region Import
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
+import type { SmsListingsFilter, SmsListingType } from "@/features/channels/common/types"
 import type {
 	SmsListingCompletedRequestFilter,
 	SmsListingPendingRequestFilter,
@@ -65,9 +66,11 @@ export type DataViewKey =
 	| "industries"
 	| "international-sms-listing-completed-requests"
 	| "international-sms-listing-pending-requests"
+	| "international-sms-listings"
 	| "international-sms-senders"
 	| "local-sms-listing-completed-requests"
 	| "local-sms-listing-pending-requests"
+	| "local-sms-listings"
 	| "local-sms-senders"
 	| "segments"
 	| "sms-industry-templates"
@@ -82,18 +85,20 @@ type DataViewEntryType = {
 	"contacts-in-group": Contact
 	groups: Group
 	industries: IndustryType
+	"international-sms-listing-completed-requests": SmsListingRequest
+	"international-sms-listing-pending-requests": SmsListingRequest
+	"international-sms-listings": SmsListingType
 	"international-sms-senders": SmsSenderType
+	"local-sms-listing-completed-requests": SmsListingRequest
+	// LISTING REQUESTS TYPE
+	"local-sms-listing-pending-requests": SmsListingRequest
+	"local-sms-listings": SmsListingType
 	"local-sms-senders": SmsSenderType
 	segments: Segment
 	"sms-industry-templates": SmsIndustryTemplateType
 	"sms-prebuilt-templates": SmsIndustryTemplateType
 	"sms-prebuilt-templates-dialog": SmsIndustryTemplateType
 	"sms-templates": SmsTemplateType
-	// LISTING REQUESTS TYPE
-	"local-sms-listing-pending-requests": SmsListingRequest
-	"local-sms-listing-completed-requests": SmsListingRequest
-	"international-sms-listing-pending-requests": SmsListingRequest
-	"international-sms-listing-completed-requests": SmsListingRequest
 }
 
 export type DataViewFilterType = {
@@ -103,18 +108,22 @@ export type DataViewFilterType = {
 	"contacts-in-group": Omit<ContactTableFiltersType, "groups">
 	groups: ContactGroupFilter
 	industries: IndustryFilter
+	"international-sms-listing-completed-requests": SmsListingCompletedRequestFilter
+	"international-sms-listing-pending-requests": SmsListingPendingRequestFilter
 	"international-sms-senders": SmsSenderFilter
+	"local-sms-listing-completed-requests": SmsListingCompletedRequestFilter
+	// LISTING REQUESTS FILTER TYPES
+	"local-sms-listing-pending-requests": SmsListingPendingRequestFilter
 	"local-sms-senders": SmsSenderFilter
 	segments: DateRange
 	"sms-industry-templates": PrebuiltTemplateFilter
+	//#region CHANNELS
+	"local-sms-listings": SmsListingsFilter
+	"international-sms-listings": SmsListingsFilter
 	"sms-prebuilt-templates": PrebuiltTemplateFilter
 	"sms-prebuilt-templates-dialog": PrebuiltTemplateFilter
 	"sms-templates": TemplateFilter
-	// LISTING REQUESTS FILTER TYPES
-	"local-sms-listing-pending-requests": SmsListingPendingRequestFilter
-	"local-sms-listing-completed-requests": SmsListingCompletedRequestFilter
-	"international-sms-listing-pending-requests": SmsListingPendingRequestFilter
-	"international-sms-listing-completed-requests": SmsListingCompletedRequestFilter
+	//#endregion
 }
 
 export type DataViewState<K extends DataViewKey> = {

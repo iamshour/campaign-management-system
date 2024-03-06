@@ -1,9 +1,9 @@
 //#region Import
 import type { DataViewKey } from "@/core/components/data-view/types"
 import type { SharedListViewProps } from "@/core/types"
+import type { SmsListingRequest } from "@/features/channels/sms-senders-management/types"
 
 import DataView from "@/core/components/data-view/data-view"
-import useGetChannelType from "@/core/hooks/useGetChannelType"
 import smsListingRequestsPendingTableColumns from "@/features/channels/sms-senders-management/constants/sms-listing-requests-pending-table-columns"
 import SmsListingRequestDetailsDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-request-details-dialog/sms-listing-request-details-dialog"
 import { lazy, useState } from "react"
@@ -15,18 +15,16 @@ const SmsListingRequestsPendingViewFiltersContent = lazy(
 )
 //#endregion
 
-const SmsListingRequestsPendingView = (props: SharedListViewProps<any>) => {
-	const [requestDetailsId, setRequestDetailsId] = useState<string | undefined>(undefined)
+interface SmsListingRequestsPendingViewProps extends SharedListViewProps<SmsListingRequest> {
+	dataViewKey: Extract<DataViewKey, "international-sms-listing-pending-requests" | "local-sms-listing-pending-requests">
+}
 
-	const { type } = useGetChannelType()
+const SmsListingRequestsPendingView = (props: SmsListingRequestsPendingViewProps) => {
+	const [requestId, setRequestId] = useState<string | undefined>(undefined)
 
 	return (
 		<>
-			<DataView
-				className='border-t border-t-[#E9E9E9]'
-				columns={smsListingRequestsPendingTableColumns}
-				dataViewKey={`${type}-sms-listing-pending-requests` as DataViewKey}
-				{...props}>
+			<DataView className='border-t border-t-[#E9E9E9]' columns={smsListingRequestsPendingTableColumns} {...props}>
 				<DataView.FiltersBar>
 					<DataView.FiltersBar.Header />
 					<DataView.FiltersBar.Content>
@@ -35,21 +33,21 @@ const SmsListingRequestsPendingView = (props: SharedListViewProps<any>) => {
 					<DataView.FiltersBar.Footer />
 				</DataView.FiltersBar>
 
-				<DataView.Content className='px-8'>
+				<DataView.Content>
 					<DataView.TopBar>
 						<SmsListingRequestsPendingViewTopbar />
 					</DataView.TopBar>
 
-					<DataView.Body onRowClick={({ id }) => setRequestDetailsId(id)} />
+					<DataView.Body onRowClick={({ id }) => setRequestId(id)} />
 
 					<DataView.Pagination pageLimits={[20, 40, 60, 80]} />
 				</DataView.Content>
 			</DataView>
 
 			<SmsListingRequestDetailsDialog
-				id={requestDetailsId}
-				onOpenChange={(open) => !open && setRequestDetailsId(undefined)}
-				open={!!requestDetailsId?.length}
+				id={requestId}
+				onOpenChange={(open) => !open && setRequestId(undefined)}
+				open={!!requestId?.length}
 			/>
 		</>
 	)

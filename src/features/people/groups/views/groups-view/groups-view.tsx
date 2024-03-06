@@ -33,11 +33,7 @@ const GroupsView = (props: SharedListViewProps<Group>) => {
 				</DataView.TopBar>
 
 				<DataView.MultiViewLayout>
-					<DataView.Body
-						classNames={{ wrapper: "px-4" }}
-						GridCard={GroupCard}
-						onRowClick={({ groupId }) => navigate(groupId)}
-					/>
+					<DataView.Body GridCard={GroupCard} onRowClick={({ groupId }) => navigate(groupId)} />
 				</DataView.MultiViewLayout>
 
 				<DataView.Pagination pageLimits={[10, 20, 30]} />

@@ -1,4 +1,5 @@
 //#region Import
+import useGetChannelType from "@/core/hooks/useGetChannelType"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { DataTableSkeleton } from "@/ui"
@@ -18,8 +19,12 @@ const SmsListingRequestsPendingView = lazy(
 //#endregion
 
 const SmsListingPendingRequestsRoute = () => {
+	const { type } = useGetChannelType()
+
+	const dataViewKey = `${type!}-sms-listing-pending-requests` as const
+
 	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector(
-		({ dataView }) => dataView["local-sms-listing-pending-requests"]
+		({ dataView }) => dataView[dataViewKey]
 	)
 
 	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } =
@@ -49,7 +54,15 @@ const SmsListingPendingRequestsRoute = () => {
 
 	if (isError) return <DisplayError error={error as any} showReloadButton />
 
-	if (isReady) return <SmsListingRequestsPendingView count={count || 0} isFetching={isFetching} list={list || []} />
+	if (isReady)
+		return (
+			<SmsListingRequestsPendingView
+				count={count || 0}
+				dataViewKey={dataViewKey}
+				isFetching={isFetching}
+				list={list || []}
+			/>
+		)
 }
 
 export default SmsListingPendingRequestsRoute

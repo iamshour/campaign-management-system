@@ -2,7 +2,7 @@
 	"fields": {
 		"name": "مرسل",
 		"types": "يكتب",
-		"targetCountry": "البلد المستهدف",
+		"country": "البلد المستهدف",
 		"note": "ملحوظة",
 		"sampleContent": "عينة من المحتوى ",
 		"createdAt": "تاريخ الإنشاء"

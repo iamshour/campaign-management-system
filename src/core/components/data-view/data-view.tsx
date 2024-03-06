@@ -93,14 +93,13 @@ const FiltersBarFooter = memo(() => {
 FiltersBarFooter.displayName = "FiltersBarFooter"
 
 const Content = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-	<div className={twMerge("flex h-full w-[calc(100%-300px)] max-w-full flex-1 flex-col px-4", className)} {...props} />
+	<div className={twMerge("flex h-full w-[calc(100%-300px)] max-w-full flex-1 flex-col px-6", className)} {...props} />
 )
 
-interface TopBarProps {
-	children?: React.ReactNode
+interface TopBarProps extends Pick<React.HTMLAttributes<HTMLDivElement>, "children" | "className"> {
 	withFilters?: boolean
 }
-const TopBar = memo(({ children, withFilters = true }: TopBarProps) => {
+const TopBar = memo(({ children, className, withFilters = true }: TopBarProps) => {
 	const dispatch = useDispatch()
 
 	const { dataViewKey } = useDataViewContext()
@@ -113,7 +112,7 @@ const TopBar = memo(({ children, withFilters = true }: TopBarProps) => {
 	)
 
 	return (
-		<div className='flex w-full items-center justify-between gap-2 py-4'>
+		<div className={twMerge("flex w-full items-center justify-between gap-2 py-6", className)}>
 			<div className='flex gap-2'>
 				{withFilters && <DefaultFiltersBar.Trigger appliedFiltersCount={appliedFiltersCount} />}
 

@@ -1,23 +1,21 @@
 //#region Import
-import type { SmsSenderType } from "@/features/channels/sms-senders/types"
-
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-const AdminSmsSendersTableActions = ({ id, name }: Pick<SmsSenderType, "id" | "name">) => {
-	const { t } = useTranslation("sms-senders")
+const AdminSmsSendersTableActions = ({ id }: { id: string }) => {
+	const { t } = useTranslation("senders-management", { keyPrefix: "views.adminSmsSendersView.table.actionsCell" })
 
 	// eslint-disable-next-line no-console
-	console.assert(!!id || !!name, "YO")
+	console.assert(!!id, "YO")
 
 	return (
 		<ActionsDropdown>
-			<ActionsDropdown.Item>{t("table.actions.addRequest")}</ActionsDropdown.Item>
+			<ActionsDropdown.Item>{t("addList")}</ActionsDropdown.Item>
 
 			<ActionsDropdown.Separator />
 
-			<ActionsDropdown.Item>{t("table.actions.viewAllTypes")}</ActionsDropdown.Item>
+			<ActionsDropdown.Item>{t("delete")}</ActionsDropdown.Item>
 		</ActionsDropdown>
 	)
 }

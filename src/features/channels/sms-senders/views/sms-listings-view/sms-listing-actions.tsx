@@ -1,6 +1,5 @@
 //#region Import
-import type { SmsListingStatus } from "@/features/channels/common/types"
-import type { SmsListingType } from "@/features/channels/sms-senders/types"
+import type { SmsListingStatus, SmsListingType } from "@/features/channels/common/types"
 
 import ActivateSmsListingDialog from "@/features/channels/sms-senders/dialogs/activate-sms-listing-dialog/activate-sms-listing-dialog"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
@@ -30,12 +29,20 @@ const SmsSenderRequestDialog = lazy(
 )
 //#endregion
 
-const SmsListingActions = ({ id, note, sampleContent, sender, status, targetCountry, type }: SmsListingType) => {
+const SmsListingActions = ({
+	category,
+	country,
+	listingId,
+	note,
+	sampleContent,
+	sender,
+	status,
+}: SmsListingType & Record<"note" | "sender", string>) => {
 	const { t } = useTranslation("sms-senders")
 
 	return (
 		<ActionsDropdown className='m-4'>
-			<ViewListingSampleContentDialog id={id}>
+			<ViewListingSampleContentDialog listingId={listingId}>
 				<ActionsDropdown.Item>{t("views.smsListingsView.actions.viewSampleContent")}</ActionsDropdown.Item>
 			</ViewListingSampleContentDialog>
 
@@ -43,7 +50,7 @@ const SmsListingActions = ({ id, note, sampleContent, sender, status, targetCoun
 				<>
 					<ActionsDropdown.Separator />
 
-					<ViewListingStatusReasonDialog id={id} status={status}>
+					<ViewListingStatusReasonDialog listingId={listingId} status={status}>
 						<ActionsDropdown.Item>{t(`views.smsListingsView.actions.viewStatusReason.${status}`)}</ActionsDropdown.Item>
 					</ViewListingStatusReasonDialog>
 				</>
@@ -53,7 +60,7 @@ const SmsListingActions = ({ id, note, sampleContent, sender, status, targetCoun
 				<>
 					<ActionsDropdown.Separator />
 
-					<ActivateSmsListingDialog id={id}>
+					<ActivateSmsListingDialog listingId={listingId}>
 						<ActionsDropdown.Item>{t(`views.smsListingsView.actions.activate`)}</ActionsDropdown.Item>
 					</ActivateSmsListingDialog>
 				</>
@@ -63,7 +70,7 @@ const SmsListingActions = ({ id, note, sampleContent, sender, status, targetCoun
 				<>
 					<ActionsDropdown.Separator />
 
-					<DeactivateSmsListingDialog id={id}>
+					<DeactivateSmsListingDialog listingId={listingId}>
 						<ActionsDropdown.Item>{t(`views.smsListingsView.actions.deactivate`)}</ActionsDropdown.Item>
 					</DeactivateSmsListingDialog>
 				</>
@@ -74,7 +81,7 @@ const SmsListingActions = ({ id, note, sampleContent, sender, status, targetCoun
 					<ActionsDropdown.Separator />
 
 					<SmsSenderRequestDialog
-						defaultValues={{ note, sampleContent, sender, targetCountry, type }}
+						defaultValues={{ category, country, note, sampleContent, sender }}
 						formType='resendRequest'>
 						<ActionsDropdown.Item>{t(`views.smsListingsView.actions.resendRequest`)}</ActionsDropdown.Item>
 					</SmsSenderRequestDialog>

@@ -79,16 +79,13 @@ const AddContactsToGroupView = (props: SharedListViewProps<Contact>) => {
 			<DataView.Content>
 				<h3 className='pt-4 text-[21px] font-medium'>{t("title")}</h3>
 
-				<DataView.TopBar />
-				<DataView.Body
-					classNames={{ wrapper: "px-4" }}
-					onRowClick={({ id }) => dispatch(updateSelection({ "add-contacts-to-group": [id] }))}
-				/>
+				<DataView.TopBar className='pt-4' />
+				<DataView.Body onRowClick={({ id }) => dispatch(updateSelection({ "add-contacts-to-group": [id] }))} />
 				<DataView.Pagination>
 					<DataView.Pagination.Message />
 				</DataView.Pagination>
 
-				<Footer className='p-4'>
+				<Footer className='py-4'>
 					<Button onClick={onBack} variant='outline'>
 						{t("actions.cancel")}
 					</Button>

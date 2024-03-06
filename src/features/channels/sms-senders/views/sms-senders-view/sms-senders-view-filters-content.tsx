@@ -1,30 +1,28 @@
 //#region Import
-import type { SmsSenderDataViewKeyOptions, SmsSenderFilter } from "@/features/channels/sms-senders/types"
+import type { SmsSenderFilter } from "@/features/channels/sms-senders/types"
+import type { TemplateType } from "@/features/templates/common/types"
 
+import { useDataViewContext } from "@/core/components/data-view/data-view-context"
 import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import SelectMultiTemplateTypesPopover from "@/features/templates/common/components/select-multi-template-types-popover"
-import { TemplateType } from "@/features/templates/common/types"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
 import { memo, useCallback } from "react"
-
 //#endregion
-interface SmsSendersFiltersContentProps {
-	dataViewKey: SmsSenderDataViewKeyOptions
-}
-const SmsSendersViewFiltersContent = memo(({ dataViewKey }: SmsSendersFiltersContentProps) => {
+
+const SmsSendersViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
+
+	const { dataViewKey } = useDataViewContext()
 
 	const filters = useSelector<SmsSenderFilter | undefined>(
 		(state) => selectFilters(state, dataViewKey) as SmsSenderFilter | undefined
 	)
 
 	const updateSelection = useCallback(
-		(newFilters?: Partial<SmsSenderFilter>) => {
-			dispatch(updateFilters({ [dataViewKey]: newFilters }))
-		},
+		(newFilters?: Partial<SmsSenderFilter>) => dispatch(updateFilters({ [dataViewKey]: newFilters })),
 		[dispatch, dataViewKey]
 	)
 

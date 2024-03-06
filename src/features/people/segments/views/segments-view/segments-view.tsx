@@ -37,7 +37,7 @@ const SegmentsView = (props: SharedListViewProps<Segment>) => {
 					</Button>
 				</DataView.TopBar>
 
-				<DataView.Body classNames={{ wrapper: "px-4" }} onRowClick={({ id }) => navigate(id)} />
+				<DataView.Body onRowClick={({ id }) => navigate(id)} />
 				<DataView.Pagination />
 			</DataView.Content>
 		</DataView>

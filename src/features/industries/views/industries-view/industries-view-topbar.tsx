@@ -10,7 +10,7 @@ const IndustriesViewTopBar = memo(() => {
 	const { t } = useTranslation("industries")
 
 	return (
-		<div className='flex w-full items-end justify-end py-4'>
+		<div className='flex w-full items-end justify-end'>
 			<CreateIndustryDialog>
 				<Button>
 					<PhUserPlus />

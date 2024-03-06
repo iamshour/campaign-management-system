@@ -89,9 +89,9 @@
 			"title": "View Sample Content"
 		},
 		"viewListingStatusReasonDialog": {
-			"Suspended": { "title": "View Suspend Reason" },
-			"Blocked": { "title": "View Block Reason" },
-			"Rejected": { "title": "View Reject Reason" }
+			"SUSPENDED": { "title": "View Suspend Reason" },
+			"BLOCKED": { "title": "View Block Reason" },
+			"REJECTED": { "title": "View Reject Reason" }
 		},
 		"activateListingDialog": {
 			"title": "Activate",
@@ -119,9 +119,9 @@
 			"actions": {
 				"viewSampleContent": "View Sample Content",
 				"viewStatusReason": {
-					"Suspended": "View Suspend Reason",
-					"Blocked": "View Block Reason",
-					"Rejected": "View Reject Reason"
+					"SUSPENDED": "View Suspend Reason",
+					"BLOCKED": "View Block Reason",
+					"REJECTED": "View Reject Reason"
 				},
 				"activate": "Activate",
 				"deactivate": "Deactivate",

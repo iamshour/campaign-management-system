@@ -34,7 +34,7 @@ const IndustriesView = (props: SharedListViewProps<IndustryType>) => {
 
 				<DataView.MultiViewLayout>
 					<DataView.Body
-						classNames={{ emptyTableCell: "h-[calc(100vh-340px)]", wrapper: "px-4" }}
+						classNames={{ emptyTableCell: "h-[calc(100vh-340px)]" }}
 						GridCard={IndustryCard}
 						onRowClick={({ id }) => navigate(`${id}/sms`)}
 					/>

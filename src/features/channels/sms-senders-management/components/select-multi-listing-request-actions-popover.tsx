@@ -24,11 +24,7 @@ const SelectMultiListingRequestActionsPopover = ({
 			label={label ?? t("components.selectMultiListingRequestActionPopover.label")}
 			options={Object.entries(smsListingRequestsActionsLocalMap)?.map(([value, label]) => ({ label: t(label), value }))}
 			placeholder={placeholder ?? t("components.selectMultiListingRequestActionPopover.placeholder")}
-			value={
-				value?.length
-					? value?.map((op) => ({ label: t(smsListingRequestsActionsLocalMap[op as RequestActionType]), value: op }))
-					: []
-			}
+			value={value?.length ? value?.map((op) => ({ label: t(smsListingRequestsActionsLocalMap[op]), value: op })) : []}
 			{...props}
 		/>
 	)
