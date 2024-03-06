@@ -10,19 +10,20 @@ import { useGetSmsSendersQuery } from "@/features/channels/sms-senders/api"
 import { DataTableSkeleton } from "@/ui"
 import { lazy } from "react"
 
-const SmsSendersView = lazy(() => import("@/features/channels/sms-senders/views/sms-senders-view/sms-senders-view"))
+const AdminSmsSendersView = lazy(
+	() => import("@/features/channels/sms-senders-management/views/admin-sms-senders-view/admin-sms-senders-view")
+)
 
-const SmsSendersViewEmpty = lazy(
-	() => import("@/features/channels/sms-senders/views/sms-senders-view/sms-senders-view-empty")
+const AdminSmsSendersViewEmpty = lazy(
+	() => import("@/features/channels/sms-senders-management/views/admin-sms-senders-view/admin-sms-senders-view-empty")
 )
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
-const SmsSendersRoute = () => {
+const AdminSmsSendersRoute = () => {
 	const { type } = useGetChannelType()
 
-	// dataview Key: "local-sms-senders" | "international-sms-senders"
 	const dataViewKey: SmsSenderDataViewKeyOptions = `${type!}-sms-senders`
 
 	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector<
@@ -52,12 +53,14 @@ const SmsSendersRoute = () => {
 
 	if (isInitialLoading) return <DataTableSkeleton />
 
-	if (isEmptyView) return <SmsSendersViewEmpty channelType={type!} />
+	if (isEmptyView) return <AdminSmsSendersViewEmpty />
 
 	if (isError) return <DisplayError error={error as any} showReloadButton />
 
 	if (isReady)
-		return <SmsSendersView count={count || 0} dataViewKey={dataViewKey} isFetching={isFetching} list={list || []} />
+		return (
+			<AdminSmsSendersView count={count || 0} dataViewKey={dataViewKey} isFetching={isFetching} list={list || []} />
+		)
 }
 
-export default SmsSendersRoute
+export default AdminSmsSendersRoute

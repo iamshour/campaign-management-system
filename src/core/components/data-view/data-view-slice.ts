@@ -10,7 +10,7 @@ import type { DataViewFilterType, DataViewKey, DataViewRenderType, DataViewState
 
 const initialDataViewBaseState = { paginationAndSorting: { limit: 25, offset: 0 }, view: "LIST" as DataViewRenderType }
 
-const initialSmsListingRequestsState = {
+const initialSmsChannelsTablesState = {
 	paginationAndSorting: { limit: 20, offset: 0 },
 	view: "LIST" as DataViewRenderType,
 }
@@ -27,12 +27,12 @@ const initialState: { [K in DataViewKey]: DataViewState<K> } = {
 	"contacts-in-group": initialDataViewBaseState,
 	groups: initialCompactDataViewBaseState,
 	industries: initialDataViewBaseState,
-	"international-sms-listing-completed-requests": initialSmsListingRequestsState,
-	"international-sms-listing-pending-requests": initialSmsListingRequestsState,
-	"international-sms-senders": initialCompactDataViewBaseState,
-	"local-sms-listing-completed-requests": initialSmsListingRequestsState,
-	"local-sms-listing-pending-requests": initialSmsListingRequestsState,
-	"local-sms-senders": initialCompactDataViewBaseState,
+	"international-sms-listing-completed-requests": initialSmsChannelsTablesState,
+	"international-sms-listing-pending-requests": initialSmsChannelsTablesState,
+	"international-sms-senders": initialSmsChannelsTablesState,
+	"local-sms-listing-completed-requests": initialSmsChannelsTablesState,
+	"local-sms-listing-pending-requests": initialSmsChannelsTablesState,
+	"local-sms-senders": initialSmsChannelsTablesState,
 	segments: initialDataViewBaseState,
 	"sms-industry-templates": initialCompactDataViewBaseState,
 	"sms-prebuilt-templates": {

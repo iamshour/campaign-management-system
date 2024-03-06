@@ -34,11 +34,11 @@ const SmsSenderCard = ({ createdAt = "", id, name, types }: SmsSenderType) => {
 
 			<ul className='w-full flex-1 space-y-2 p-4'>
 				<li className='flex gap-2 text-base'>
-					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("fields.types")}:</span>
+					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("channels-common:fields.type")}:</span>
 					<TemplateTypesTableColumn types={types} />
 				</li>
 				<li className='flex gap-2 text-base'>
-					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("fields.createdAt")}:</span>
+					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("channels-common:fields.createdAt")}:</span>
 					<DataViewDateCell date={createdAt} dateFormat='MM-dd-yyyy' />
 				</li>
 			</ul>

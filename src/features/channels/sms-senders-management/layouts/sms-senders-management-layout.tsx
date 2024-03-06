@@ -10,7 +10,7 @@ const SmsSendersManagementLayout = () => {
 	return (
 		<div className='flex h-full w-full flex-col'>
 			<NavTabs>
-				<NavTabs.Item to={`./${type}-${name}/business-senders`}>Business Senders</NavTabs.Item>
+				<NavTabs.Item to={`./${type}-${name}/senders`}>Business Senders</NavTabs.Item>
 				<NavTabs.Item to={`./${type}-${name}/listing-requests`}>Requests</NavTabs.Item>
 			</NavTabs>
 
