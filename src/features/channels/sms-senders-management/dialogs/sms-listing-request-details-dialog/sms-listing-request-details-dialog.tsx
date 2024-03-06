@@ -18,17 +18,14 @@ interface SmsListingRequestDetailsDialogProps extends React.ComponentPropsWithou
 }
 
 const SmsListingRequestDetailsDialog = ({ children, id, ...props }: SmsListingRequestDetailsDialogProps) => {
-	const { t } = useTranslation("senders-management")
+	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.smsListingRequestDetails" })
 
 	if (!id) return
 
 	return (
 		<Dialog {...props}>
 			{!!children && <Dialog.Trigger asChild>{children}</Dialog.Trigger>}
-			<Dialog.Content
-				className='w-[382px] sm:h-[770.19px] sm:w-[762px]'
-				// className='w-[382px] sm:w-[762px]'
-				title={t("dialogs.smsListingRequestDetails.title")}>
+			<Dialog.Content className='h-[770.19px] w-[382px] sm:w-[762px]' title={t("title")}>
 				<SmsListingRequestDetailsDialogContent id={id} />
 			</Dialog.Content>
 		</Dialog>

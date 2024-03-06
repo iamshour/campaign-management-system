@@ -104,7 +104,12 @@ const DataTable = <TData extends RowData>({
 	)
 
 	return (
-		<div className={twMerge("relative h-full w-full flex-1 overflow-y-auto", classNames?.wrapper)}>
+		<div
+			className={twMerge(
+				"relative h-full w-full flex-1 overflow-y-auto",
+				!isSelectable && "px-4",
+				classNames?.wrapper
+			)}>
 			<table className={twMerge("w-max min-w-full table-fixed caption-bottom text-sm", classNames?.table)}>
 				<thead className={twMerge("sticky top-0 z-10 bg-white shadow-sm", classNames?.thead)}>
 					<tr className={twMerge("h-12", classNames?.theadTr)}>

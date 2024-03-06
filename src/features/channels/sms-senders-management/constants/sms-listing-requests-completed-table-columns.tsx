@@ -35,9 +35,9 @@ const smsListingRequestsCompletedTableColumns: ColumnType<SmsListingRequest>[] =
 		header: smsListingRequestsFieldsLocalMap.type,
 	},
 	{
-		accessorKey: "targetCountry",
-		cell: (_, { targetCountry }) => getCountryName(targetCountry),
-		header: smsListingRequestsFieldsLocalMap.targetCountry,
+		accessorKey: "country",
+		cell: (_, { country }) => getCountryName(country),
+		header: smsListingRequestsFieldsLocalMap.country,
 		sortable: true,
 	},
 	{

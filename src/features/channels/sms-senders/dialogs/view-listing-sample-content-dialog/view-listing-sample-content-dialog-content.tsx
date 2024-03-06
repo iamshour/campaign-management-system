@@ -1,23 +1,23 @@
 //#region Import
-import type { SmsListingType } from "@/features/channels/sms-senders/types"
+import type { SmsListingType } from "@/features/channels/common/types"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { useGetSmsListingByIdQuery } from "@/features/channels/sms-senders/api"
+import { useGetSmsListingByIdQuery } from "@/features/channels/common/api"
 import { Skeleton } from "@/ui"
 import DisplayError from "@/ui/errors/display-error"
 //#endregion
 
-interface ViewListingSampleContentDialogContentProps extends Pick<SmsListingType, "id"> {}
+interface ViewListingSampleContentDialogContentProps extends Pick<SmsListingType, "listingId"> {}
 
-const ViewListingSampleContentDialogContent = ({ id }: ViewListingSampleContentDialogContentProps) => {
-	const { isError, isInitialLoading, isReady, sampleContent } = useGetSmsListingByIdQuery(id, {
+const ViewListingSampleContentDialogContent = ({ listingId }: ViewListingSampleContentDialogContentProps) => {
+	const { isError, isInitialLoading, isReady, sampleContent } = useGetSmsListingByIdQuery(listingId, {
 		selectFromResult: ({ data, isLoading, ...rest }) => ({
 			isInitialLoading: data === undefined && isLoading,
 			isReady: !isLoading && Boolean(data?.sampleContent?.length),
 			sampleContent: data?.sampleContent,
 			...rest,
 		}),
-		skip: !id,
+		skip: !listingId,
 		...baseQueryConfigs,
 	})
 

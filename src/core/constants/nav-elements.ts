@@ -8,8 +8,8 @@ import IcBaselineInsertDriveFile from "~icons/ic/baseline-insert-drive-file"
 import IcRoundMoveToInbox from "~icons/ic/round-move-to-inbox"
 import IcRoundPermContactCalendar from "~icons/ic/round-perm-contact-calendar"
 import MaterialSymbolsLightLabProfileSharp from "~icons/material-symbols-light/lab-profile-sharp"
-import MdiVirus from "~icons/mdi/virus"
 import RiRobot2Fill from "~icons/ri/robot-2-fill"
+import NetworkHierarchy from "~icons/streamline/interface-hierarchy-2-node-organization-links-structure-link-nodes-network-hierarchy"
 import TablerAppsFilled from "~icons/tabler/apps-filled"
 
 import appPaths from "./app-paths"
@@ -129,10 +129,10 @@ const navElements: NavElementProps[] = [
 			},
 			{
 				label: "navbar.nav-elements.channels.elements.smsChannels",
-				path: appPaths.SMS_SENDERS,
+				path: appPaths.CHANNELS,
 			},
 		],
-		Icon: MdiVirus,
+		Icon: NetworkHierarchy,
 		label: "navbar.nav-elements.channels.title",
 		roles: ["BLUE", "BUSINESS"],
 		type: "accordion",

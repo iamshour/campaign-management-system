@@ -3,7 +3,7 @@
 		"company": "Company name",
 		"sender": "Sender",
 		"type": "Type",
-		"targetCountry": "Target Country",
+		"country": "Target Country",
 		"updatedAt": "Date / Time",
 		"createdAt": "Creation Date",
 		"action": "Action",
@@ -12,7 +12,8 @@
 		"requesterUserEmail": "Requester",
 		"actionReason": "Action Reason",
 		"currentSenderStatus": "Current Sender status",
-		"statusReason": "Status Reason"
+		"statusReason": "Status Reason",
+		"listingStatus": "Status"
 	},
 
 	"listingRequestActions": {
@@ -24,7 +25,7 @@
 	"listingStatuses": {
 		"approved": "Approved",
 		"blocked": "Blocked",
-		"deactivate": "Deactivate",
+		"deactivated": "Deactivated",
 		"pending": "Pending",
 		"rejected": "Rejected",
 		"suspended": "Suspended"

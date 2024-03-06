@@ -1,28 +1,27 @@
 //#region Import
-import type { SmsListingPendingRequestFilter } from "@/features/channels/sms-senders-management/types"
+import type { SmsListingsFilter, SmsListingStatus } from "@/features/channels/common/types"
 import type { TemplateType } from "@/features/templates/common/types"
 
 import { useDataViewContext } from "@/core/components/data-view/data-view-context"
 import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
+import SelectMultiListingStatusesPopover from "@/features/channels/sms-senders-management/components/select-multi-listing-statuses-popover"
 import SelectMultiTemplateTypesPopover from "@/features/templates/common/components/select-multi-template-types-popover"
 import { DateRangePicker, SelectCountryPopover } from "@/ui"
 import { getListOfKey } from "@/utils"
 import { memo, useCallback } from "react"
 //#endregion
 
-const SmsListingRequestsPendingViewFiltersContent = memo(() => {
+const AdminSmsListingsViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
 	const { dataViewKey } = useDataViewContext()
 
-	const filters = useSelector<SmsListingPendingRequestFilter>(
-		(state) => selectFilters(state, dataViewKey) as SmsListingPendingRequestFilter
-	)
+	const filters = useSelector<SmsListingsFilter>((state) => selectFilters(state, dataViewKey) as SmsListingsFilter)
 
 	const updateState = useCallback(
-		(newFilters?: Partial<SmsListingPendingRequestFilter>) => dispatch(updateFilters({ [dataViewKey]: newFilters })),
+		(newFilters?: Partial<SmsListingsFilter>) => dispatch(updateFilters({ [dataViewKey]: newFilters })),
 		[dataViewKey, dispatch]
 	)
 
@@ -31,6 +30,11 @@ const SmsListingRequestsPendingViewFiltersContent = memo(() => {
 			<DateRangePicker
 				dateRange={{ endDate: filters?.endDate, startDate: filters?.startDate }}
 				updateDateRange={updateState}
+			/>
+
+			<SelectMultiListingStatusesPopover
+				onValueChange={(selection) => updateState({ status: getListOfKey(selection, "value") as SmsListingStatus[] })}
+				value={filters?.status}
 			/>
 
 			<SelectMultiTemplateTypesPopover
@@ -48,6 +52,6 @@ const SmsListingRequestsPendingViewFiltersContent = memo(() => {
 	)
 })
 
-SmsListingRequestsPendingViewFiltersContent.displayName = "SmsListingRequestsPendingViewFiltersContent"
+AdminSmsListingsViewFiltersContent.displayName = "AdminSmsListingsViewFiltersContent"
 
-export default SmsListingRequestsPendingViewFiltersContent
+export default AdminSmsListingsViewFiltersContent

@@ -2,6 +2,8 @@
 import { lazy } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 
+const AdminSmsListingsRoute = lazy(() => import("./admin-sms-listings-route"))
+
 const CreateSmsSenderRoute = lazy(() => import("./create-sms-sender-route"))
 
 const CreateSmsSenderRequestRoute = lazy(() => import("./create-sms-sender-request-route"))
@@ -45,6 +47,9 @@ const SmsSendersManagementRoutes = () => (
 
 		<Route element={<CreateSmsSenderRoute />} path='local-sms/senders/new-sender' />
 		<Route element={<CreateSmsSenderRoute />} path='international-sms/senders/new-sender' />
+
+		<Route element={<AdminSmsListingsRoute />} path='local-sms/senders/:senderId' />
+		<Route element={<AdminSmsListingsRoute />} path='international-sms/senders/:senderId' />
 
 		<Route element={<DisplayError error={{ status: 404 }} />} path='*' />
 	</Routes>

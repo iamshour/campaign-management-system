@@ -28,7 +28,7 @@ const AdminSmsSendersView = ({ dataViewKey, ...props }: SmsSendersViewProps) => 
 			<DataView.FiltersBar>
 				<DataView.FiltersBar.Header />
 				<DataView.FiltersBar.Content>
-					<SmsSendersViewFiltersContent dataViewKey={dataViewKey} />
+					<SmsSendersViewFiltersContent />
 				</DataView.FiltersBar.Content>
 				<DataView.FiltersBar.Footer />
 			</DataView.FiltersBar>
@@ -52,6 +52,6 @@ const columns: ColumnType<SmsSenderType>[] = [
 	...smsSendersTableColumns,
 	{
 		accessorKey: "actions",
-		cell: (_, { id, name }) => <AdminSmsSendersTableActions id={id} name={name} />,
+		cell: (_, { id }) => <AdminSmsSendersTableActions id={id} />,
 	},
 ]

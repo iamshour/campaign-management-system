@@ -22,7 +22,7 @@ const ExportsView = (props: SharedListViewProps<ContactExports>) => (
 		<DataView.Content>
 			<DataView.TopBar />
 
-			<DataView.Body classNames={{ wrapper: "px-4" }} />
+			<DataView.Body />
 			<DataView.Pagination />
 		</DataView.Content>
 	</DataView>

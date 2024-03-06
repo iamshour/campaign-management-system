@@ -1,6 +1,6 @@
 //#region Import
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
-import type { SmsListingRequestStatus, SmsListingStatus } from "@/features/channels/common/types"
+import type { SmsListingRequestStatus, SmsListingStatus, SmsListingType } from "@/features/channels/common/types"
 import type { TemplateType } from "@/features/templates/common/types"
 import type { DateRange } from "@/ui"
 import type { Country } from "react-phone-number-input"
@@ -60,6 +60,7 @@ export type GetSmsSendersParams = PaginationAndSorting<SmsSenderType> & SmsSende
  * Shape of fetched SMS Sender Request
  */
 export type SmsRequestType = {
+	country: Country
 	createdAt: string
 	id: string
 	note?: string
@@ -69,36 +70,13 @@ export type SmsRequestType = {
 	status: SmsListingStatus
 	statusChangeDate: string
 	statusChangeReason: string
-	targetCountry: Country
 	type: TemplateType
 }
 
 /**
  * Body Arguments passed to the `addSmsRequest` mutation, used to send a new listing request
  */
-export type AddSmsRequestBody = Pick<SmsListingType, "note" | "sampleContent" | "sender" | "targetCountry" | "type">
-
-/* ******** */
-/* ******** */
-/* LISTINGS */
-/* ******** */
-/* ******** */
-
-/**
- * Shape of fetched SMS Sender Listing
- */
-export type SmsListingType = SmsRequestType
-
-/**
- * Filters used in Filters bar, to be sent in params of request for api call `getSmsListings`
- */
-export type SmsListingsFilter = {
-	channelType: SmsChannelTypeOption
-	senderId: string
-	type: TemplateType
+export type AddSmsRequestBody = Pick<SmsListingType, "category" | "country" | "sampleContent"> & {
+	note?: string
+	sender: string
 }
-
-/**
- * Params passed to the `getSmsListings` query, used for fetching SMS Listings List
- */
-export type GetSmsListingdParams = PaginationAndSorting<SmsListingType> & SmsListingsFilter

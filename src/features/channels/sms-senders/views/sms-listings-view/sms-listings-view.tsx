@@ -1,7 +1,9 @@
 //#region Import
-import type { SmsChannelTypeOption, SmsSenderType } from "@/features/channels/sms-senders/types"
+import type { SmsSenderType } from "@/features/channels/sms-senders/types"
 
+import useGetChannelType from "@/core/hooks/useGetChannelType"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
+import { useGetSmsListingsQuery } from "@/features/channels/common/api"
 import SmsSenderRequestDialog from "@/features/channels/sms-senders/dialogs/sms-sender-request-dialog/sms-sender-request-dialog"
 import templateTypesOptions from "@/features/templates/common/constants/template-types-options"
 import { TemplateType } from "@/features/templates/common/types"
@@ -13,7 +15,6 @@ import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
 
-import { useGetSmsListingsQuery } from "../../api"
 import SmsListingCard from "./sms-listings-card"
 //#endregion
 
@@ -22,14 +23,11 @@ interface SmsListingsViewrops extends Pick<SmsSenderType, "name" | "types"> {}
 const SmsListingsView = memo(({ name, types }: SmsListingsViewrops) => {
 	const { t } = useTranslation("sms-senders")
 
-	const [paginationState, setPaginationState] = useState<{ limit?: number; offset?: number }>({ limit: 25, offset: 0 })
+	const [paginationState, setPaginationState] = useState<{ limit: number; offset: number }>({ limit: 25, offset: 0 })
 
-	const params = useParams()
+	const { senderId } = useParams()
 
-	// channel type: "local" | "international"
-	const channelType: SmsChannelTypeOption = Object.values(params)[0] as SmsChannelTypeOption
-
-	const senderId = params.senderId
+	const { channelType } = useGetChannelType()
 
 	const [typeFilter, setTypeFilter] = useState<TemplateType>(
 		templateTypesOptions?.filter((type) => types.includes(type.value))[0]?.value
@@ -37,9 +35,10 @@ const SmsListingsView = memo(({ name, types }: SmsListingsViewrops) => {
 
 	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } = useGetSmsListingsQuery(
 		{
-			channelType,
-			senderId: senderId!,
-			type: typeFilter,
+			channel: channelType,
+			sourceId: senderId!,
+			type: [typeFilter],
+			...paginationState,
 		},
 		{
 			selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({
@@ -97,7 +96,7 @@ const SmsListingsView = memo(({ name, types }: SmsListingsViewrops) => {
 				<Pagination
 					count={count || 0}
 					pagination={{ limit: paginationState?.limit, offset: paginationState?.offset }}
-					updatePagination={(pagination) => setPaginationState(pagination)}
+					updatePagination={({ limit, offset }) => setPaginationState({ limit: limit ?? 0, offset: offset ?? 0 })}
 				/>
 			</div>
 		)

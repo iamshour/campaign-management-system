@@ -48,14 +48,14 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 
 					<Form.Field
 						control={form.control}
-						name='type'
+						name='category'
 						render={({ field }) => (
 							<Form.Item className='w-full max-w-[340px]'>
 								<Form.Label>{t("channels-common:fields.type")} *</Form.Label>
 								<SelectSingleTemplateType
 									onValueChange={field.onChange}
 									placeholder={t("components.smsSenderRequestForm.placeholders.type")}
-									readOnly={!!defaultValues?.type}
+									readOnly={!!defaultValues?.category}
 									value={field.value}
 								/>
 								<Form.Message />
@@ -65,14 +65,14 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 
 					<Form.Field
 						control={form.control}
-						name='targetCountry'
+						name='country'
 						render={({ field }) => (
 							<Form.Item>
-								<Form.Label>{t("channels-common:fields.targetCountry")} *</Form.Label>
+								<Form.Label>{t("channels-common:fields.country")} *</Form.Label>
 								<SelectCountryPopover
 									className='[&>*]:text-base [&>*]:font-normal'
 									onChange={(country) => field.onChange(country)}
-									readOnly={!!defaultValues?.targetCountry}
+									readOnly={!!defaultValues?.country}
 									size='lg'
 									value={field.value}
 								/>

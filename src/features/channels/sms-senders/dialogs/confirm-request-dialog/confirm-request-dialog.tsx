@@ -33,16 +33,16 @@ const ConfirmRequestDialog = ({ children, formType, onSubmit }: ConfirmRequestDi
 
 	const form = useFormContext<SmsSenderRequestSchemaType>()
 
+	const onOpenChange = () => {
+		if (!open) {
+			form.trigger().then((res) => {
+				if (res) setOpen(true)
+			})
+		} else setOpen(false)
+	}
+
 	return (
-		<Dialog
-			onOpenChange={() => {
-				if (!open) {
-					form.trigger().then((res) => {
-						if (res) setOpen(true)
-					})
-				} else setOpen(false)
-			}}
-			open={open}>
+		<Dialog onOpenChange={onOpenChange} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 			<Dialog.Content
 				className='h-[] w-[438px] sm:h-[] sm:w-[438px]'

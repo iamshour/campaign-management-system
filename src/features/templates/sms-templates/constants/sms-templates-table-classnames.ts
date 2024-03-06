@@ -12,7 +12,6 @@ const smsTemplatesTableClassNames: DataTableProps<SmsTemplateType>["classNames"]
 	table: "border-separate border-spacing-y-[20px] -mt-[20px]",
 	tbodyTd: "first:rounded-s-[12px] last:rounded-e-[12px] py-[20px]",
 	tbodyTr: "bg-[#F7F7F7] cursor-pointer ",
-	wrapper: "px-4",
 }
 
 export default smsTemplatesTableClassNames

@@ -1,6 +1,5 @@
 //#region Import
-import type { SmsListingStatus } from "@/features/channels/common/types"
-import type { SmsListingType } from "@/features/channels/sms-senders/types"
+import type { SmsListingStatus, SmsListingType } from "@/features/channels/common/types"
 
 import DataViewDateCell from "@/core/components/data-view/data-view-date-cell"
 import getCountryName from "@/core/utils/get-country-name"
@@ -16,11 +15,11 @@ const SmsListingActions = lazy(() => import("./sms-listing-actions"))
 const SmsListingCard = (smsListing: SmsListingType) => {
 	const { t } = useTranslation("channels-common")
 
-	const { requestStatus, status, statusChangeDate, targetCountry } = smsListing
+	const { country, requestStatus, status, updatedAt } = smsListing
 
 	const color = smsListingStatusesColorsMap[status] || "#EDF3F7"
 
-	const countryName = getCountryName(targetCountry)
+	const countryName = getCountryName(country)
 
 	const listingStatus: SmsListingStatus = requestStatus === "PENDING" ? "PENDING" : status
 
@@ -29,21 +28,22 @@ const SmsListingCard = (smsListing: SmsListingType) => {
 			<div className={`h-full w-2 rounded-s-md`} style={{ backgroundColor: color }} />
 			<ul className='flex-1 space-y-2 p-4'>
 				<li className='flex gap-2 text-base'>
-					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("fields.targetCountry")}:</span>
+					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("fields.country")}:</span>
 					<span className='block max-w-28 truncate' title={countryName}>
 						{countryName}
 					</span>
-					<span style={{ color }}>{t(smsListingStatusesLocaleMap[listingStatus]) + ":"}</span>
+					<span style={{ color }}>({t(smsListingStatusesLocaleMap[listingStatus])})</span>
 				</li>
 				<li className='flex gap-2 text-base'>
 					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("fields.createdAt")}</span>
 
-					<DataViewDateCell date={statusChangeDate} dateFormat='MM-dd-yyyy | hh:mm aaa' />
+					<DataViewDateCell date={updatedAt} dateFormat='MM-dd-yyyy | hh:mm aaa' />
 				</li>
 			</ul>
 
 			<Suspense fallback={<Skeleton className='h-[30px] w-[30px]' />}>
-				<SmsListingActions {...smsListing} />
+				{/* TODO: NOTE AND SENDER MAY NOT BE FETCHED BY API  */}
+				<SmsListingActions {...smsListing} listingId='123' note='my note...' sender='Sender name 1' />
 			</Suspense>
 		</div>
 	)

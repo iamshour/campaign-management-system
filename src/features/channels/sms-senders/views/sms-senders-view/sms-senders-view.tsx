@@ -28,7 +28,7 @@ const SmsSendersView = ({ dataViewKey, ...props }: SmsSendersViewProps) => {
 			<DataView.FiltersBar>
 				<DataView.FiltersBar.Header />
 				<DataView.FiltersBar.Content>
-					<SmsSendersViewFiltersContent dataViewKey={dataViewKey} />
+					<SmsSendersViewFiltersContent />
 				</DataView.FiltersBar.Content>
 				<DataView.FiltersBar.Footer />
 			</DataView.FiltersBar>
@@ -39,11 +39,7 @@ const SmsSendersView = ({ dataViewKey, ...props }: SmsSendersViewProps) => {
 				</DataView.TopBar>
 
 				<DataView.MultiViewLayout>
-					<DataView.Body
-						classNames={{ wrapper: "px-4" }}
-						GridCard={SmsSenderCard}
-						onRowClick={({ id }) => navigate(id)}
-					/>
+					<DataView.Body GridCard={SmsSenderCard} onRowClick={({ id }) => navigate(id)} />
 				</DataView.MultiViewLayout>
 
 				<DataView.Pagination pageLimits={[10, 20, 30]} />

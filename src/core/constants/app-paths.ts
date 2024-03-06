@@ -24,7 +24,7 @@ const appPaths = {
 	INDUSTRIES: "/industries",
 
 	// #start channels
-	SMS_SENDERS: "/channels/local-sms/senders",
+	CHANNELS: "/channels",
 	// #end channels
 
 	// MOCK

@@ -10,7 +10,7 @@ const GroupsViewTopBar = memo(() => {
 	const { t } = useTranslation("groups")
 
 	return (
-		<div className='flex w-full items-end justify-end py-4'>
+		<div className='flex w-full items-end justify-end'>
 			<CreateGroupDialog>
 				<Button>
 					<PhPlusBold />

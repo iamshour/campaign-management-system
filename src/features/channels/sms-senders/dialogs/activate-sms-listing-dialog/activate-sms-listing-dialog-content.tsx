@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsListingType } from "@/features/channels/sms-senders/types"
+import type { SmsListingType } from "@/features/channels/common/types"
 
 import { useActivateSmsListingMutation } from "@/features/channels/sms-senders/api"
 import { Button } from "@/ui"
@@ -7,20 +7,20 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-export interface ActivateSmsListingDialogContentProps extends Pick<SmsListingType, "id"> {
+export interface ActivateSmsListingDialogContentProps extends Pick<SmsListingType, "listingId"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
 	closeDialog: () => void
 }
 
-const ActivateSmsListingDialogContent = ({ closeDialog, id }: ActivateSmsListingDialogContentProps) => {
+const ActivateSmsListingDialogContent = ({ closeDialog, listingId }: ActivateSmsListingDialogContentProps) => {
 	const { t } = useTranslation("sms-senders", { keyPrefix: "dialogs.activateListingDialog" })
 
 	const [triggerActivateSmsListing, { isLoading }] = useActivateSmsListingMutation()
 
 	const activateListing = async () => {
-		await triggerActivateSmsListing(id).unwrap()
+		await triggerActivateSmsListing(listingId).unwrap()
 
 		toast.success(t(`message.success`))
 

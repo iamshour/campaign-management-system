@@ -5,8 +5,7 @@ import { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import { TemplateType } from "@/features/templates/common/types"
 import { DateRange } from "@/ui"
 
-import type { RequestActionType, SmsListingRequestStatus } from "../common/types"
-import type { SmsListingType } from "../sms-senders/types"
+import type { RequestActionType, SmsListingRequestStatus, SmsListingType } from "../common/types"
 //#endregion
 
 /**
@@ -15,15 +14,15 @@ import type { SmsListingType } from "../sms-senders/types"
 export type SmsListingRequest = {
 	action?: RequestActionType
 	company: string
+	country: Country
 	id: string
 	sender: string
-	targetCountry: Country
 	type: TemplateType
 	updatedAt: string
 }
 
 export type SmsListingPendingRequestFilter = DateRange & {
-	targetCountry?: Country[]
+	country?: Country[]
 	type?: TemplateType[]
 }
 
@@ -42,16 +41,16 @@ export type GetSmsListingRequestsParams = PaginationAndSorting<SmsListingRequest
  */
 export type SmsSenderRequestDetailsType = {
 	actionReason?: string
+	category: TemplateType
+	company: string
 	country: Country
-	listingDetails: Pick<SmsListingType, "status" | "statusChangeReason">
+	listingDetails: Pick<SmsListingType, "status" | "statusReason">
 	requestAction?: RequestActionType
-	requesterCategory: TemplateType
-	requesterCompanyName: string
 	requesterUserEmail: string
 	requestId: string
 	requestNote?: string
-	requestSampleContent: string
 	requestStatus: SmsListingRequestStatus
+	sampleContent: string
 	sourceName: string
 	updatedAt: string
 }

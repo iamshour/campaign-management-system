@@ -7,6 +7,8 @@ import * as z from "zod"
 //#endregion
 
 const SmsSenderRequestSchema = z.object({
+	category: z.custom<TemplateType>((val) => !!val, "Required"),
+	country: z.custom<Country>((val) => !!val, "Required"),
 	note: z.string().max(500, { message: "Maximum 500 Characters allowed" }).optional(),
 	sampleContent: z.string().min(1, { message: "Required" }).max(500, { message: "Maximum 500 Characters allowed" }),
 	sender: z
@@ -17,8 +19,6 @@ const SmsSenderRequestSchema = z.object({
 		.refine((val) => REGEX_ALPHANUMERICAL.test(val), {
 			message: "Name can include letters, numbers and spaces",
 		}),
-	targetCountry: z.custom<Country>((val) => !!val, "Required"),
-	type: z.custom<TemplateType>((val) => !!val, "Required"),
 })
 
 export default SmsSenderRequestSchema

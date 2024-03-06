@@ -36,7 +36,7 @@ const ContactsViewTopbar = memo(() => {
 				</ExportFieldsDialog>
 			</div>
 
-			<div className='flex gap-2'>
+			<div className='flex gap-4'>
 				<ImportContactsDialog title={t("dialogs.importContacts.title")}>
 					<Button variant='outline'>
 						<PajamasImport />

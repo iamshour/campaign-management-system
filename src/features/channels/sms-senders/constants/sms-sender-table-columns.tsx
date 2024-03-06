@@ -14,10 +14,6 @@ const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-vie
 
 const smsSendersTableColumns: ColumnType<SmsSenderType>[] = [
 	{
-		accessorKey: "selection",
-		rowIdSelector: "id",
-	},
-	{
 		accessorKey: "name",
 		header: smsSenderFieldsLocaleMap.name,
 		sortable: true,

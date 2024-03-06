@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsListingType } from "@/features/channels/sms-senders/types"
+import type { SmsListingType } from "@/features/channels/common/types"
 
 import { Dialog } from "@/ui"
 import { useTranslation } from "react-i18next"
@@ -8,7 +8,7 @@ import ViewListingStatusReasonDialogContent from "./view-listing-status-reason-d
 
 //#endregion
 
-interface ViewListingStatusReasonDialogProps extends Pick<SmsListingType, "id" | "status"> {
+interface ViewListingStatusReasonDialogProps extends Pick<SmsListingType, "listingId" | "status"> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */

@@ -51,7 +51,7 @@ const ListingField = ({
 							<Form.Item>
 								<SelectCountryPopover
 									className='[&>button]:text-base [&>button]:font-normal'
-									label={`${t("channels-common:fields.targetCountry")} *`}
+									label={`${t("channels-common:fields.country")} *`}
 									onChange={field.onChange}
 									size='lg'
 									value={field.value}

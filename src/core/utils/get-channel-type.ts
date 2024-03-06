@@ -3,6 +3,7 @@ import type { Pathname } from "react-router-dom"
 //#endregion
 
 type ChannelType = {
+	channelType: "international-sms" | "local-sms"
 	name: "sms"
 	type?: "international" | "local"
 }
@@ -22,7 +23,11 @@ function getChannelType(pathname: Pathname): ChannelType | null {
 		// If channel type in URL is: "local-sms", then returned value is { name: "sms", type: "local" }
 		// If channel type doesn't have "local" or "internaltion", like for ex. "whatsapp", then return value is { name: "whatsapp" }
 		// Since we're safely assigning first index of array after split as channel name if type doesn't exist
-		return { name: channel[1] || channel[0], type: channel[0] || undefined } as ChannelType
+		return {
+			channelType: matchedPaths[1],
+			name: channel[1] || channel[0],
+			type: channel[0] || undefined,
+		} as ChannelType
 	}
 
 	return null

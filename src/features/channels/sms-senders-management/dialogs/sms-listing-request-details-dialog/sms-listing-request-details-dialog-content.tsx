@@ -39,20 +39,20 @@ const SmsListingRequestDetailsDialogContent = ({ id }: { id: string }) => {
 				<div className='grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-4'>
 					<ReadonlyField label={t("fields.requesterUserEmail")}>{data?.requesterUserEmail}</ReadonlyField>
 
-					<ReadonlyField label={t("fields.company")}>{data?.requesterCompanyName}</ReadonlyField>
+					<ReadonlyField label={t("fields.company")}>{data?.company}</ReadonlyField>
 
 					<ReadonlyField label={t("fields.sender")}>{data?.sourceName}</ReadonlyField>
 
-					<ReadonlyField label={t("fields.type")}>{t(templateTypesLocaleMap[data!.requesterCategory!])}</ReadonlyField>
+					<ReadonlyField label={t("fields.type")}>{t(templateTypesLocaleMap[data!.category!])}</ReadonlyField>
 
-					<ReadonlyField label={t("fields.targetCountry")}>{getCountryName(data!.country)}</ReadonlyField>
+					<ReadonlyField label={t("fields.country")}>{getCountryName(data!.country)}</ReadonlyField>
 
 					<ReadonlyField label={t("fields.updatedAt")}>
 						<DataViewDateCell date={data?.updatedAt} dateFormat='MM-dd-yyyy | hh:mm aaa' />
 					</ReadonlyField>
 
 					<ReadonlyField label={t("fields.sampleContent")} showTooltip>
-						{data!.requestSampleContent}
+						{data!.sampleContent}
 					</ReadonlyField>
 
 					{!!data?.requestNote && (
@@ -89,9 +89,9 @@ const SmsListingRequestDetailsDialogContent = ({ id }: { id: string }) => {
 						{t(smsListingStatusesLocaleMap[data!.listingDetails.status])}
 					</ReadonlyField>
 
-					{!!data?.listingDetails?.statusChangeReason && (
+					{!!data?.listingDetails?.statusReason && (
 						<ReadonlyField label={t("fields.statusReason")} showTooltip>
-							{data.listingDetails.statusChangeReason}
+							{data.listingDetails.statusReason}
 						</ReadonlyField>
 					)}
 				</div>

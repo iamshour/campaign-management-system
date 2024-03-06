@@ -49,8 +49,8 @@ const SmsListingRequestsCompletedViewFiltersContent = memo(() => {
 			{/* TODO: MAKE IT MULTI SELECT  */}
 			<SelectCountryPopover
 				label='Target Country'
-				onChange={(v) => updateState({ targetCountry: [v] })}
-				value={filters?.targetCountry ? filters?.targetCountry[0] : undefined}
+				onChange={(v) => updateState({ country: [v] })}
+				value={filters?.country ? filters?.country[0] : undefined}
 			/>
 		</>
 	)
