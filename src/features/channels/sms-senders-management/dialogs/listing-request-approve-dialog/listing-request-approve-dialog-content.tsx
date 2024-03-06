@@ -1,4 +1,5 @@
 //#region Import
+import { useUpdateSmsListingStatusMutation } from "@/features/channels/sms-senders-management/api"
 import { Button } from "@/ui"
 import { useTranslation } from "react-i18next"
 //#endregion
@@ -18,9 +19,10 @@ export interface ListingRequestApproveDialogContentProps {
 const ListingRequestApproveDialogContent = ({ closeDialog, id }: ListingRequestApproveDialogContentProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.listingRequestApprove" })
 
-	const handleSubmit = () => {
-		// eslint-disable-next-line no-console
-		console.log("Handling approve...", id)
+	const [triggerUpdateSmsListing, { isLoading }] = useUpdateSmsListingStatusMutation()
+
+	const handleSubmit = async () => {
+		await triggerUpdateSmsListing({ requestAction: "APPROVED", requestId: id }).unwrap()
 
 		closeDialog()
 	}
@@ -29,7 +31,7 @@ const ListingRequestApproveDialogContent = ({ closeDialog, id }: ListingRequestA
 		<div className='flex flex-col gap-8 p-2'>
 			<p>{t("message")}</p>
 
-			<Button className='ms-auto w-max px-10' onClick={handleSubmit}>
+			<Button className='ms-auto w-max px-10' loading={isLoading} onClick={handleSubmit}>
 				{t("submit")}
 			</Button>
 		</div>
