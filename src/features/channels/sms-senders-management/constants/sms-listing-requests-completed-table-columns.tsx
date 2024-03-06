@@ -2,8 +2,7 @@
 import type { ColumnType } from "@/core/components/data-view/data-table/types"
 
 import getCountryName from "@/core/utils/get-country-name"
-import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
-import { TemplateType } from "@/features/templates/common/types"
+import TemplateTypesTableColumn from "@/features/templates/common/components/template-types-table-cell"
 import { lazy } from "react"
 
 import type { SmsListingRequest } from "../types"
@@ -32,12 +31,12 @@ const smsListingRequestsCompletedTableColumns: ColumnType<SmsListingRequest>[] =
 	},
 	{
 		accessorKey: "type",
-		cell: (type: TemplateType) => templateTypesLocaleMap[type],
+		cell: (_, { type }) => <TemplateTypesTableColumn types={[type]} />,
 		header: smsListingRequestsFieldsLocalMap.type,
 	},
 	{
 		accessorKey: "targetCountry",
-		cell: (countryCode) => getCountryName(countryCode),
+		cell: (_, { targetCountry }) => getCountryName(targetCountry),
 		header: smsListingRequestsFieldsLocalMap.targetCountry,
 		sortable: true,
 	},
@@ -47,9 +46,9 @@ const smsListingRequestsCompletedTableColumns: ColumnType<SmsListingRequest>[] =
 		header: smsListingRequestsFieldsLocalMap.action,
 	},
 	{
-		accessorKey: "dateTime",
-		cell: (date) => <DataViewDateCell date={date} dateFormat='MM-dd-yyyy' />,
-		header: smsListingRequestsFieldsLocalMap.dateTime,
+		accessorKey: "updatedAt",
+		cell: (date) => <DataViewDateCell date={date} />,
+		header: smsListingRequestsFieldsLocalMap.updatedAt,
 		sortable: true,
 	},
 ]

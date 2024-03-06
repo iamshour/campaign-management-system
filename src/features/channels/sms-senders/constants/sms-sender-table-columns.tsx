@@ -1,8 +1,7 @@
 //#region Import
 import type { ColumnType } from "@/core/components/data-view/data-table/types"
 
-import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
-import { TemplateType } from "@/features/templates/common/types"
+import TemplateTypesTableColumn from "@/features/templates/common/components/template-types-table-cell"
 import { lazy } from "react"
 
 import type { SmsSenderType } from "../types"
@@ -25,12 +24,12 @@ const smsSendersTableColumns: ColumnType<SmsSenderType>[] = [
 	},
 	{
 		accessorKey: "types",
-		cell: (types: TemplateType[]) => types?.map((type) => templateTypesLocaleMap[type])?.join(" / "),
+		cell: (_, { types }) => <TemplateTypesTableColumn types={types} />,
 		header: smsSenderFieldsLocaleMap.types,
 	},
 	{
 		accessorKey: "createdAt",
-		cell: (date) => <DataViewDateCell date={date} dateFormat='MM-dd-yyyy' />,
+		cell: (date) => <DataViewDateCell date={date} />,
 		header: smsSenderFieldsLocaleMap.createdAt,
 		sortable: true,
 	},

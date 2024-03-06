@@ -5,7 +5,6 @@ import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetSmsListingByIdQuery } from "@/features/channels/sms-senders/api"
 import { Skeleton } from "@/ui"
 import DisplayError from "@/ui/errors/display-error"
-
 //#endregion
 
 interface ViewListingSampleContentDialogContentProps extends Pick<SmsListingType, "id"> {}

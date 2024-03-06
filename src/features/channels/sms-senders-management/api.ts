@@ -5,7 +5,7 @@ import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
 import { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 
-import type { GetSmsListingRequestsParams, GetSmsSenderRequestDetailsByIdType, SmsListingRequest } from "./types"
+import type { GetSmsListingRequestsParams, SmsListingRequest, SmsSenderRequestDetailsType } from "./types"
 //#endregion
 
 // eslint-disable-next-line
@@ -21,7 +21,7 @@ const smsSendersManagementApis = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		getSmsListingRequestById: builder.query<GetSmsSenderRequestDetailsByIdType, string>({
+		getSmsListingRequestById: builder.query<SmsSenderRequestDetailsType, string>({
 			providesTags: (result) => [{ id: result?.requestId, type: "SmsListingRequest" }],
 			query: (id) => ({ url: `/sms-sender-request-details/${id}` }),
 			transformResponse,

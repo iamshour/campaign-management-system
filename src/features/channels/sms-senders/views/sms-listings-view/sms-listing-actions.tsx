@@ -1,11 +1,11 @@
 //#region Import
-import { SmsListingStatus } from "@/features/channels/common/types"
+import type { SmsListingStatus } from "@/features/channels/common/types"
+import type { SmsListingType } from "@/features/channels/sms-senders/types"
+
+import ActivateSmsListingDialog from "@/features/channels/sms-senders/dialogs/activate-sms-listing-dialog/activate-sms-listing-dialog"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 import { lazy } from "react"
 import { useTranslation } from "react-i18next"
-
-import ActivateSmsListingDialog from "../../dialogs/activate-sms-listing-dialog copy/activate-sms-listing-dialog"
-import { SmsListingType } from "../../types"
 
 const ViewListingSampleContentDialog = lazy(
 	() =>
@@ -33,21 +33,13 @@ const SmsSenderRequestDialog = lazy(
 const SmsListingActions = ({ id, note, sampleContent, sender, status, targetCountry, type }: SmsListingType) => {
 	const { t } = useTranslation("sms-senders")
 
-	const viewStatusReasonActionStatuses: SmsListingStatus[] = ["Blocked", "Rejected", "Suspended"]
-
-	const activateListingActionStatuses: SmsListingStatus[] = ["Deactivated"]
-
-	const deactivateListingActionStatuses: SmsListingStatus[] = ["Approved", "Blocked", "Rejected", "Suspended"]
-
-	const resendRequestActionStatuses: SmsListingStatus[] = ["Rejected", "Suspended"]
-
 	return (
 		<ActionsDropdown className='m-4'>
 			<ViewListingSampleContentDialog id={id}>
 				<ActionsDropdown.Item>{t("views.smsListingsView.actions.viewSampleContent")}</ActionsDropdown.Item>
 			</ViewListingSampleContentDialog>
 
-			{viewStatusReasonActionStatuses.includes(status) && (
+			{allowedActionsPerStatusMap["VIEW_STATUS_REASON"].includes(status) && (
 				<>
 					<ActionsDropdown.Separator />
 
@@ -57,7 +49,7 @@ const SmsListingActions = ({ id, note, sampleContent, sender, status, targetCoun
 				</>
 			)}
 
-			{activateListingActionStatuses.includes(status) && (
+			{allowedActionsPerStatusMap["ACTIVATE_LISTING"].includes(status) && (
 				<>
 					<ActionsDropdown.Separator />
 
@@ -67,7 +59,7 @@ const SmsListingActions = ({ id, note, sampleContent, sender, status, targetCoun
 				</>
 			)}
 
-			{deactivateListingActionStatuses.includes(status) && (
+			{allowedActionsPerStatusMap["DEACTIVATE_LISTING"].includes(status) && (
 				<>
 					<ActionsDropdown.Separator />
 
@@ -77,7 +69,7 @@ const SmsListingActions = ({ id, note, sampleContent, sender, status, targetCoun
 				</>
 			)}
 
-			{resendRequestActionStatuses.includes(status) && (
+			{allowedActionsPerStatusMap["RESEND_REQUEST"].includes(status) && (
 				<>
 					<ActionsDropdown.Separator />
 
@@ -93,3 +85,15 @@ const SmsListingActions = ({ id, note, sampleContent, sender, status, targetCoun
 }
 
 export default SmsListingActions
+
+type DialogAction = "ACTIVATE_LISTING" | "DEACTIVATE_LISTING" | "RESEND_REQUEST" | "VIEW_STATUS_REASON"
+
+/**
+ * A mapping object used to allow specific user actions based on passed listing status
+ */
+const allowedActionsPerStatusMap: Record<DialogAction, SmsListingStatus[]> = {
+	ACTIVATE_LISTING: ["DEACTIVATED"],
+	DEACTIVATE_LISTING: ["APPROVED", "BLOCKED", "REJECTED", "SUSPENDED"],
+	RESEND_REQUEST: ["REJECTED", "SUSPENDED"],
+	VIEW_STATUS_REASON: ["BLOCKED", "REJECTED", "SUSPENDED"],
+}

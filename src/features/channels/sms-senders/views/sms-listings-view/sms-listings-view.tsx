@@ -75,7 +75,7 @@ const SmsListingsView = memo(({ name, types }: SmsListingsViewrops) => {
 									key={type.value}
 									onClick={() => setTypeFilter(type.value)}
 									variant='secondary'>
-									{type.label}
+									{t(type.label)}
 								</Button>
 							))}
 					</div>

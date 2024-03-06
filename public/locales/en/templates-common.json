@@ -14,12 +14,12 @@
 		},
 		"selectMultiTemplateTypesPopover": {
 			"label": "Types",
-			"placeholder": "Select types",
-			"options": {
-				"otp": "OTP",
-				"promotional": "Promotional",
-				"transactional": "Transactional"
-			}
+			"placeholder": "Select types"
 		}
+	},
+	"templateTypes": {
+		"otp": "OTP",
+		"promotional": "Promotional",
+		"transactional": "Transactional"
 	}
 }

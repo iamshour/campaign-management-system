@@ -2,7 +2,7 @@
 import type { SmsSenderType } from "@/features/channels/sms-senders/types"
 
 import DataViewDateCell from "@/core/components/data-view/data-view-date-cell"
-import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
+import TemplateTypesTableColumn from "@/features/templates/common/components/template-types-table-cell"
 import { Button, Skeleton } from "@/ui"
 import BitcoinIconsVisibleFilled from "~icons/bitcoin-icons/visible-filled"
 import IcRoundSender from "~icons/ic/round-group"
@@ -13,8 +13,6 @@ const SmsSendersGridViewTableActions = lazy(() => import("./sms-senders-grid-vie
 
 const SmsSenderCard = ({ createdAt = "", id, name, types }: SmsSenderType) => {
 	const { t } = useTranslation("sms-senders")
-
-	const typesFormatted = types?.map((type) => templateTypesLocaleMap[type])?.join(" / ")
 
 	return (
 		<div className='flex h-[220px] w-[470px] max-w-full flex-col rounded-xl shadow-[0px_0px_6px_#00000021] 3xl:w-[480px]'>
@@ -37,15 +35,11 @@ const SmsSenderCard = ({ createdAt = "", id, name, types }: SmsSenderType) => {
 			<ul className='w-full flex-1 space-y-2 p-4'>
 				<li className='flex gap-2 text-base'>
 					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("fields.types")}:</span>
-					<span className='block truncate' title={typesFormatted}>
-						{typesFormatted}
-					</span>
+					<TemplateTypesTableColumn types={types} />
 				</li>
 				<li className='flex gap-2 text-base'>
 					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("fields.createdAt")}:</span>
-					<span className='block truncate'>
-						<DataViewDateCell date={createdAt} dateFormat='MM-dd-yyyy' />
-					</span>
+					<DataViewDateCell date={createdAt} dateFormat='MM-dd-yyyy' />
 				</li>
 			</ul>
 

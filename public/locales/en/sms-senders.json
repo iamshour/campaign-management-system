@@ -1,12 +1,4 @@
 {
-	"fields": {
-		"name": "Sender",
-		"types": "Type",
-		"targetCountry": "Target Country",
-		"note": "Note",
-		"sampleContent": "Sample Content",
-		"createdAt": "Creation Date"
-	},
 	"components": {
 		"navTabs": {
 			"local": "Local",

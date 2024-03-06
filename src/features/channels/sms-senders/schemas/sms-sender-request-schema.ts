@@ -1,7 +1,8 @@
 //#region Import
+import type { TemplateType } from "@/features/templates/common/types"
+import type { Country } from "react-phone-number-input"
+
 import { REGEX_ALPHANUMERICAL } from "@/core/constants/regex"
-import { TemplateType } from "@/features/templates/common/types"
-import { Country } from "react-phone-number-input"
 import * as z from "zod"
 //#endregion
 

@@ -32,6 +32,17 @@ const SmsSenderRequestDialog = ({
 
 	const { closeDropdown } = useDropdownStateContext()
 
+	const onCloseDialog = () => {
+		// close outer dialog ("Activate")
+		closeActivateSmsDialog && closeActivateSmsDialog()
+
+		// close action drop-down
+		closeDropdown && closeDropdown()
+
+		// close SmsSenderRequestDialog
+		setOpen(false)
+	}
+
 	return (
 		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
@@ -39,20 +50,7 @@ const SmsSenderRequestDialog = ({
 				className='h-[712px] w-[382px] sm:h-[516px] sm:w-[746px]'
 				onInteractOutside={(e) => e.preventDefault()}
 				title={t("title")}>
-				<SmsSenderRequestDialogContent
-					closeDialog={() => {
-						// close outer dialog ("Activate")
-						closeActivateSmsDialog && closeActivateSmsDialog()
-
-						// close action drop-down
-						closeDropdown && closeDropdown()
-
-						// close SmsSenderRequestDialog
-						setOpen(false)
-					}}
-					formType={formType}
-					{...props}
-				/>
+				<SmsSenderRequestDialogContent closeDialog={onCloseDialog} formType={formType} {...props} />
 			</Dialog.Content>
 		</Dialog>
 	)

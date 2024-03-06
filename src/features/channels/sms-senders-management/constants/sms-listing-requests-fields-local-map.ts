@@ -3,12 +3,12 @@ import type { SmsListingRequest } from "../types"
 //#endregion
 
 const smsListingRequestsFieldsLocalMap: Partial<Record<keyof SmsListingRequest, string>> = {
-	action: "senders-management:fields.action",
-	company: "senders-management:fields.company",
-	dateTime: "senders-management:fields.dateTime",
-	sender: "senders-management:fields.sender",
-	targetCountry: "senders-management:fields.targetCountry",
-	type: "senders-management:fields.type",
+	action: "channels-common:fields.action",
+	company: "channels-common:fields.company",
+	sender: "channels-common:fields.sender",
+	targetCountry: "channels-common:fields.targetCountry",
+	type: "channels-common:fields.type",
+	updatedAt: "channels-common:fields.updatedAt",
 }
 
 export default smsListingRequestsFieldsLocalMap

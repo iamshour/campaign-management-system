@@ -1,6 +1,7 @@
 //#region Import
 import { Select } from "@/ui"
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
+import { useTranslation } from "react-i18next"
 
 import type { TemplateType } from "../types"
 
@@ -20,6 +21,8 @@ const SelectSingleTemplateType = ({
 	readOnly,
 	value,
 }: SelectSingleTemplateTypeProps<TemplateType | undefined>) => {
+	const { t } = useTranslation()
+
 	return (
 		<Select onValueChange={onValueChange} value={value}>
 			<Select.Trigger
@@ -36,7 +39,7 @@ const SelectSingleTemplateType = ({
 						key={value}
 						showCheck={false}
 						value={value}>
-						<Select.Text className='flex-1'>{label}</Select.Text>
+						<Select.Text className='flex-1'>{t(label)}</Select.Text>
 						<span title='Lorem ipsum dolor sit amet consectetur adipisicing elit.'>
 							<MdiInformationVariantCircle className='text-sm text-primary-600' />
 						</span>
