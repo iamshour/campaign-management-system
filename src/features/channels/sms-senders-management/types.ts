@@ -55,3 +55,11 @@ export type SmsSenderRequestDetailsType = {
 	sourceName: string
 	updatedAt: string
 }
+
+/**
+ * Body Arguments passed to the `updateSmsListingStatus` mutation, used to update status for an sms listing
+ */
+export type UpdateSmsListingStatusBody = Pick<
+	SmsSenderRequestDetailsType,
+	"actionReason" | "requestAction" | "requestId"
+>

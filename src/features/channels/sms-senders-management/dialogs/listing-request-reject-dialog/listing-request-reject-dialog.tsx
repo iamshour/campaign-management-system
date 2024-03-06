@@ -25,7 +25,7 @@ const ListingRequestRejectDialog = ({ children, id, withBlock }: ListingRequestR
 				</Dialog.Trigger>
 			</Tooltip>
 
-			<Dialog.Content className='w-[416px] xs:h-[361px] sm:h-[369px]' title={t("title")}>
+			<Dialog.Content className='h-[401px] w-[416px] xs:h-[377px] sm:h-[385px]' title={t("title")}>
 				<ListingRequestRejectDialogContent closeDialog={() => setOpen(false)} id={id} />
 			</Dialog.Content>
 		</Dialog>
