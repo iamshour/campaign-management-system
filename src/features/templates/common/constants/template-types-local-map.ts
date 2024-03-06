@@ -3,9 +3,9 @@ import type { TemplateType } from "../types"
 //#endregion
 
 const templateTypesLocaleMap: Record<TemplateType, string> = {
-	OTP: "templates-common:components.selectMultiTemplateTypesPopover.options.otp",
-	PROMOTIONAL: "templates-common:components.selectMultiTemplateTypesPopover.options.promotional",
-	TRANSACTIONAL: "templates-common:components.selectMultiTemplateTypesPopover.options.transactional",
+	OTP: "templates-common:templateTypes.otp",
+	PROMOTIONAL: "templates-common:templateTypes.promotional",
+	TRANSACTIONAL: "templates-common:templateTypes.transactional",
 }
 
 export default templateTypesLocaleMap

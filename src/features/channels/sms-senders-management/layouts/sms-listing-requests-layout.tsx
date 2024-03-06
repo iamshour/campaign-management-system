@@ -1,9 +1,10 @@
 //#region Import
+import type { SmsListingRequestStatus } from "@/features/channels/common/types"
+
 import useGetChannelType from "@/core/hooks/useGetChannelType"
 import { Button } from "@/ui"
 import { Outlet } from "react-router-dom"
 
-import type { SmsListingRequestStatus } from "../types"
 //#endregion
 
 const SmsListingRequestsLayout = () => {

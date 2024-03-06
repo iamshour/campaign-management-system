@@ -1,0 +1,32 @@
+{
+	"fields": {
+		"company": "Company name",
+		"sender": "Sender",
+		"type": "Type",
+		"targetCountry": "Target Country",
+		"updatedAt": "Date / Time",
+		"createdAt": "Creation Date",
+		"action": "Action",
+		"sampleContent": "Sample Content",
+		"note": "Note",
+		"requesterUserEmail": "Requester",
+		"actionReason": "Action Reason",
+		"currentSenderStatus": "Current Sender status",
+		"statusReason": "Status Reason"
+	},
+
+	"listingRequestActions": {
+		"approved": "Approved",
+		"rejected": "Rejected",
+		"rejectedAndBlocked": "Rejected & Blocked"
+	},
+
+	"listingStatuses": {
+		"approved": "Approved",
+		"blocked": "Blocked",
+		"deactivate": "Deactivate",
+		"pending": "Pending",
+		"rejected": "Rejected",
+		"suspended": "Suspended"
+	}
+}

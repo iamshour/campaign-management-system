@@ -2,10 +2,10 @@
 import type { SmsSenderType } from "../types"
 //#endregion
 
-const smsTemplateFieldsLocaleMap: Partial<Record<keyof SmsSenderType, string>> = {
-	createdAt: "sms-senders:fields.createdAt",
-	name: "sms-senders:fields.name",
-	types: "sms-senders:fields.types",
+const smsSenderFieldsLocaleMap: Partial<Record<keyof SmsSenderType, string>> = {
+	createdAt: "channels-common:fields.createdAt",
+	name: "channels-common:fields.sender",
+	types: "channels-common:fields.type",
 }
 
-export default smsTemplateFieldsLocaleMap
+export default smsSenderFieldsLocaleMap

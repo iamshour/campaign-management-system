@@ -1,14 +1,12 @@
 //#region Import
-import type {
-	RequestActionType,
-	SmsListingCompletedRequestFilter,
-} from "@/features/channels/sms-senders-management/types"
+import type { SmsListingCompletedRequestFilter } from "@/features/channels/sms-senders-management/types"
 import type { TemplateType } from "@/features/templates/common/types"
 
 import { useDataViewContext } from "@/core/components/data-view/data-view-context"
 import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
+import { RequestActionType } from "@/features/channels/common/types"
 import SelectMultiTemplateTypesPopover from "@/features/templates/common/components/select-multi-template-types-popover"
 import { DateRangePicker, SelectCountryPopover } from "@/ui"
 import { getListOfKey } from "@/utils"

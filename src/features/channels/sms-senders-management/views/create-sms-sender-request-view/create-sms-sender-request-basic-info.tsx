@@ -44,7 +44,7 @@ const CreateSmsSenderRequestBasicInfo = ({ control }: CreateSmsSenderRequestBasi
 						</Form.Label>
 						<Form.Control>
 							<Input
-								className='bg-white'
+								className='rounded-lg bg-white'
 								// placeholder={t("components.contactForm.placeholders.firstName")}
 								placeholder='Enter email'
 								size='lg'
@@ -61,11 +61,11 @@ const CreateSmsSenderRequestBasicInfo = ({ control }: CreateSmsSenderRequestBasi
 				name='basicInfo.sender'
 				render={({ field }) => (
 					<Form.Item>
-						<Form.Label className='flex flex-row items-center gap-2'>
+						<Form.Label className='flex h-[20px] flex-row items-center gap-2'>
 							{t("fields.name")} *
 							<IconTooltip content='tooltip content here...' />
 						</Form.Label>
-						<SenderNameInput onChange={field.onChange} value={field.value} />
+						<SenderNameInput className='rounded-lg bg-white' onChange={field.onChange} value={field.value} />
 						<Form.Message />
 					</Form.Item>
 				)}

@@ -1,20 +1,4 @@
 {
-	"fields": {
-		"company": "Company name",
-		"sender": "Sender",
-		"type": "Type",
-		"targetCountry": "Target Country",
-		"dateTime": "Date / Time",
-		"action": "Action",
-
-		"requester": "Requester",
-		"sampleContent": "Sample Content",
-		"note": "Note",
-		"actionReason": "Action Reason",
-		"currentSenderStatus": "Current Sender status",
-		"statusReason": "Status Reason"
-	},
-
 	"views": {
 		"smsListingRequestsPending": {
 			"headline": "You didn't receive any sender ID yet",
@@ -42,12 +26,7 @@
 		},
 		"selectMultiListingRequestActionPopover": {
 			"label": "Action",
-			"placeholder": "Select actions",
-			"options": {
-				"approved": "Approved",
-				"rejected": "Rejected",
-				"rejectedAndBlocked": "Rejected & Blocked"
-			}
+			"placeholder": "Select actions"
 		}
 	},
 

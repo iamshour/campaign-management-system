@@ -5,12 +5,9 @@ import { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import { TemplateType } from "@/features/templates/common/types"
 import { DateRange } from "@/ui"
 
-import { SmsListingType } from "../sms-senders/types"
-
-export type SmsListingRequestStatus = "COMPLETED" | "PENDING"
+import type { RequestActionType, SmsListingRequestStatus } from "../common/types"
+import type { SmsListingType } from "../sms-senders/types"
 //#endregion
-
-export type RequestActionType = "APPROVED" | "REJECTED_BLOCKED" | "REJECTED"
 
 /**
  * Shape of fetched SMS Sender
@@ -18,11 +15,11 @@ export type RequestActionType = "APPROVED" | "REJECTED_BLOCKED" | "REJECTED"
 export type SmsListingRequest = {
 	action?: RequestActionType
 	company: string
-	dateTime: string
 	id: string
 	sender: string
 	targetCountry: Country
 	type: TemplateType
+	updatedAt: string
 }
 
 export type SmsListingPendingRequestFilter = DateRange & {
@@ -43,10 +40,10 @@ export type GetSmsListingRequestsParams = PaginationAndSorting<SmsListingRequest
 /**
  * Params passed to the `getSenderListingRequestsQuery` query, used to fetch Sender Listing Requests List
  */
-export type GetSmsSenderRequestDetailsByIdType = {
+export type SmsSenderRequestDetailsType = {
 	actionReason?: string
 	country: Country
-	listingDetails?: Pick<SmsListingType, "status" | "statusChangeReason">
+	listingDetails: Pick<SmsListingType, "status" | "statusChangeReason">
 	requestAction?: RequestActionType
 	requesterCategory: TemplateType
 	requesterCompanyName: string

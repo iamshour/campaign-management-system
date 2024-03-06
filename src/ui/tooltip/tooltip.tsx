@@ -13,7 +13,8 @@ import { twMerge } from "tailwind-merge"
 
 interface TooltipProps
 	extends Pick<TooltipProviderProps, "delayDuration" | "disableHoverableContent" | "skipDelayDuration">,
-		TooltipContentProps {}
+		Omit<TooltipContentProps, "content">,
+		Required<Pick<TooltipContentProps, "content">> {}
 
 /**
  * Tooltip Component

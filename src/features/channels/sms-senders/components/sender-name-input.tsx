@@ -1,31 +1,25 @@
 //#region Import
-
 import InputWithSearch from "@/core/components/input-with-search/input-with-search"
+import useGetChannelType from "@/core/hooks/useGetChannelType"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import getChannelType from "@/core/utils/get-channel-type"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
-import { useLocation } from "react-router-dom"
 
 import { useGetSmsSendersQuery } from "../api"
 //#endregion
 
-interface SenderNameInputProps
-	extends Omit<React.ComponentPropsWithoutRef<typeof InputWithSearch>, "contentProps" | "fetchState"> {}
+interface SenderNameInputProps extends Omit<React.ComponentPropsWithoutRef<typeof InputWithSearch>, "fetchState"> {}
 
 const SenderNameInput = ({ onChange, value, ...props }: SenderNameInputProps) => {
 	const { t } = useTranslation("sms-senders", { keyPrefix: "components.smsSenderRequestForm.placeholders" })
 
-	const { pathname } = useLocation()
-
-	// channel type: "local" | "international"
-	const channelType = getChannelType(pathname)!.type!
+	const { type } = useGetChannelType()
 
 	const [shouldFetch, setShouldFetch] = useState<boolean>(false)
 
 	const { suggestions } = useGetSmsSendersQuery(
 		{
-			channelType,
+			channelType: type,
 			limit: 4,
 			name: value,
 			offset: 0,
@@ -47,10 +41,7 @@ const SenderNameInput = ({ onChange, value, ...props }: SenderNameInputProps) =>
 
 	return (
 		<InputWithSearch
-			fetchState={{
-				setShouldFetch,
-				suggestions,
-			}}
+			fetchState={{ setShouldFetch, suggestions }}
 			onChange={onChange}
 			placeholder={t("name")}
 			value={value}

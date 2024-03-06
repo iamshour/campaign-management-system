@@ -18,6 +18,7 @@ export const nameSpaces = [
 	"senders-management",
 	"sms-senders",
 	"templates-common",
+	"channels-common",
 ] as const
 
 i18n

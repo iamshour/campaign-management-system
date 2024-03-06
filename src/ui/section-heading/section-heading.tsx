@@ -1,4 +1,6 @@
 //#region Import
+import { twMerge } from "tailwind-merge"
+
 import type { IconType } from "../types"
 //#endregion
 
@@ -24,16 +26,14 @@ interface SectionHeadingProps {
 	label: string
 }
 
-const SectionHeading = ({ className, description, icon: Icon, label }: SectionHeadingProps) => {
-	return (
-		<div className={className}>
-			<span className='inline-flex items-center gap-2.5'>
-				<Icon className='shrink-0 text-xl text-[#2daef5]' />
-				<h2 className='text-xl font-bold'>{label}</h2>
-			</span>
-			{!!description?.length && <p className='ps-8 text-[#545454]'>{description}</p>}
-		</div>
-	)
-}
+const SectionHeading = ({ className, description, icon: Icon, label }: SectionHeadingProps) => (
+	<div className={twMerge("text-xl", className)}>
+		<span className='inline-flex items-center gap-2.5 [font-size:inherit]'>
+			<Icon className='shrink-0 text-[#2daef5] [font-size:inherit]' />
+			<h2 className='font-bold [font-size:inherit]'>{label}</h2>
+		</span>
+		{!!description?.length && <p className='ps-8 text-[#545454]'>{description}</p>}
+	</div>
+)
 
 export default SectionHeading
