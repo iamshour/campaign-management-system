@@ -10,20 +10,20 @@ import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-export interface BlockSmsListingDialogContentProps extends Pick<SmsListingType, "company" | "country" | "listingId"> {
+export interface SmsListingBlockDialogContentProps extends Pick<SmsListingType, "company" | "country" | "listingId"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
 	closeDialog: () => void
 }
 
-const BlockSmsListingDialogContent = ({
+const SmsListingBlockDialogContent = ({
 	closeDialog,
 	company,
 	country,
 	listingId,
-}: BlockSmsListingDialogContentProps) => {
-	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.blockSmsListing" })
+}: SmsListingBlockDialogContentProps) => {
+	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.smsListingBlock" })
 
 	const { closeDropdown } = useDropdownStateContext()
 
@@ -49,4 +49,4 @@ const BlockSmsListingDialogContent = ({
 	)
 }
 
-export default BlockSmsListingDialogContent
+export default SmsListingBlockDialogContent

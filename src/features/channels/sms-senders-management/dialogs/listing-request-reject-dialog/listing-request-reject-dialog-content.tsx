@@ -1,15 +1,16 @@
 //#region Import
 import type { SmsLisintgActionReasonSchemaType } from "@/features/channels/sms-senders-management/schemas/sms-listing-action-reason-schema"
-import type { SmsListingRequest } from "@/features/channels/sms-senders-management/types"
+import type { SmsSenderRequestDetailsType } from "@/features/channels/sms-senders-management/types"
 
 import getCountryName from "@/core/utils/get-country-name"
-import { useUpdateSmsListingStatusMutation } from "@/features/channels/sms-senders-management/api"
+import { useUpdateSmsSourceRequestMutation } from "@/features/channels/sms-senders-management/api"
 import ActionReasonForm from "@/features/channels/sms-senders-management/components/action-reason-form"
 import { Button } from "@/ui"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-export interface ListingRequestRejectDialogContentProps extends Pick<SmsListingRequest, "country" | "id" | "sender"> {
+export interface ListingRequestRejectDialogContentProps
+	extends Pick<SmsSenderRequestDetailsType, "country" | "requestId" | "sourceName"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
@@ -24,28 +25,30 @@ export interface ListingRequestRejectDialogContentProps extends Pick<SmsListingR
 const ListingRequestRejectDialogContent = ({
 	closeDialog,
 	country,
-	id,
-	sender,
+	requestId,
+	sourceName,
 	withBlock,
 }: ListingRequestRejectDialogContentProps) => {
 	const { t } = useTranslation("senders-management", {
 		keyPrefix: withBlock ? "dialogs.listingRequestRejectAndBlock" : "dialogs.listingRequestReject",
 	})
 
-	const [triggerUpdateSmsListing, { isLoading }] = useUpdateSmsListingStatusMutation()
+	const [triggerUpdateSmsListing, { isLoading }] = useUpdateSmsSourceRequestMutation()
 
 	const onSubmit = async ({ actionReason }: SmsLisintgActionReasonSchemaType) => {
 		await triggerUpdateSmsListing({
-			listingId: id,
-			status: withBlock ? "BLOCKED" : "REJECTED",
-			statusReason: actionReason,
+			actionReason,
+			requestAction: withBlock ? "REJECTED_BLOCKED" : "REJECTED",
+			requestId,
 		}).unwrap()
 
 		closeDialog()
 	}
 
 	return (
-		<ActionReasonForm message={t("message", { country: getCountryName(country), sender })} onSubmit={onSubmit}>
+		<ActionReasonForm
+			message={t("message", { country: getCountryName(country), sender: sourceName })}
+			onSubmit={onSubmit}>
 			<Button className='ms-auto w-max px-10' loading={isLoading} type='submit'>
 				{t("submit")}
 			</Button>
