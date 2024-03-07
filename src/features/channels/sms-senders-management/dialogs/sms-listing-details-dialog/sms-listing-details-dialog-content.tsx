@@ -26,7 +26,7 @@ const SmsListingDetailsDialogContent = ({ id }: { id: string }) => {
 	if (!isFetching && (!!isError || !data)) return <DisplayError />
 
 	return (
-		<div className='flex flex-col gap-4 overflow-y-auto p-2'>
+		<div className='flex flex-1 flex-col gap-4 overflow-y-auto'>
 			<div className='space-y-4 rounded-xl bg-[#F7F7F7] p-4'>
 				<SectionHeading
 					className='text-base'
