@@ -34,8 +34,10 @@ const SmsSendersViewFiltersContent = memo(() => {
 				updateDateRange={updateSelection}
 			/>
 			<SelectMultiTemplateTypesPopover
-				onValueChange={(selection) => updateSelection({ types: getListOfKey(selection, "value") as TemplateType[] })}
-				value={filters?.types}
+				onValueChange={(selection) =>
+					updateSelection({ templateTypes: getListOfKey(selection, "value") as TemplateType[] })
+				}
+				value={filters?.templateTypes}
 			/>
 		</>
 	)

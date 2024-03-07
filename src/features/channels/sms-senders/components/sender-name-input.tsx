@@ -1,6 +1,5 @@
 //#region Import
 import InputWithSearch from "@/core/components/input-with-search/input-with-search"
-import useGetChannelType from "@/core/hooks/useGetChannelType"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -13,13 +12,10 @@ interface SenderNameInputProps extends Omit<React.ComponentPropsWithoutRef<typeo
 const SenderNameInput = ({ onChange, value, ...props }: SenderNameInputProps) => {
 	const { t } = useTranslation("sms-senders", { keyPrefix: "components.smsSenderRequestForm.placeholders" })
 
-	const { type } = useGetChannelType()
-
 	const [shouldFetch, setShouldFetch] = useState<boolean>(false)
 
 	const { suggestions } = useGetSmsSendersQuery(
 		{
-			channelType: type,
 			limit: 4,
 			name: value,
 			offset: 0,
@@ -28,7 +24,7 @@ const SenderNameInput = ({ onChange, value, ...props }: SenderNameInputProps) =>
 			selectFromResult: ({ data, ...rest }) => ({
 				// TODO: in integration remove below 'filter' and 'slice' since filter and pagination will be done on backend
 				suggestions: data?.list
-					?.map((sender) => sender.name)
+					?.map((sender) => sender.channelSourceName)
 					?.filter((senderName) => senderName.includes(value))
 					?.slice(0, 4),
 				...rest,

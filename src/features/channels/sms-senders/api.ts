@@ -6,21 +6,20 @@ import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
 
-import type { AddSmsRequestBody, GetSmsSendersParams, SmsSenderType } from "./types"
+import type { AddSmsRequestBody, GetSmsSendersParams, GetSmsSendersResponseType, SmsSenderType } from "./types"
 //#endregion
 
 const smsSendersApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getSmsSenders: builder.query<GetListReturnType<SmsSenderType>, GetSmsSendersParams>({
+		getSmsSenders: builder.query<GetListReturnType<GetSmsSendersResponseType>, GetSmsSendersParams>({
 			providesTags: (result) =>
 				providesList(
 					result?.list?.map(({ id }) => id),
 					"SmsSender"
 				),
-			query: ({ channelType, ...params }) => ({
+			query: (params) => ({
 				params,
-				// TODO: in integration; use same endpoint with filter
-				url: channelType === "local" ? "/localSenders" : "/internationalSenders",
+				url: "/channel-source",
 			}),
 			transformResponse,
 		}),

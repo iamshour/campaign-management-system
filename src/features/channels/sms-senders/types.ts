@@ -1,11 +1,6 @@
 //#region Import
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
-import type {
-	SmsChannelTypeOption,
-	SmsListingRequestStatus,
-	SmsListingStatus,
-	SmsListingType,
-} from "@/features/channels/common/types"
+import type { SmsListingRequestStatus, SmsListingStatus, SmsListingType } from "@/features/channels/common/types"
 import type { TemplateType } from "@/features/templates/common/types"
 import type { DateRange } from "@/ui"
 import type { Country } from "react-phone-number-input"
@@ -36,14 +31,21 @@ export type SmsSenderType = {
  * Filters used in Filters bar, to be sent in params of request for api call `getSmsSenders`
  */
 export type SmsSenderFilter = DateRange & {
-	channelType?: SmsChannelTypeOption
-	types?: TemplateType[]
+	templateTypes?: TemplateType[]
 }
 
 /**
  * Fields to allow search on, to be sent in params of request for api call `getSmsSenders`
  */
 type SmsSenderSearchFilter = { any?: true; name?: string }
+
+/**
+ * Type for the response body from backend when fetching senders list
+ */
+export type GetSmsSendersResponseType = Omit<SmsSenderType, "name" | "types"> & {
+	channelSourceName: string
+	templateTypes: TemplateType[]
+}
 
 /**
  * Params passed to the `getSmsSenders` query, used for fetching SMS Senders List

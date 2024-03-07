@@ -36,7 +36,7 @@ const initialState: { [K in DataViewKey]: DataViewState<K> } = {
 	"local-sms-listing-pending-requests": initialSmsChannelsTablesState,
 	"local-sms-listings": initialSmsChannelsTablesState,
 	"local-sms-opted-out-senders": initialSmsChannelsTablesState,
-	"local-sms-senders": initialSmsChannelsTablesState,
+	"local-sms-senders": initialCompactDataViewBaseState,
 	segments: initialDataViewBaseState,
 	"sms-industry-templates": initialCompactDataViewBaseState,
 	"sms-prebuilt-templates": {
