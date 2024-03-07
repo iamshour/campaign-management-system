@@ -9,7 +9,7 @@ import { Button } from "@/ui"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-export interface ListingRequestRejectDialogContentProps
+export interface SmsListingRequestRejectDialogContentProps
 	extends Pick<SmsSenderRequestDetailsType, "country" | "requestId" | "sourceName"> {
 	/**
 	 * Callback function used to close the dialog
@@ -22,13 +22,13 @@ export interface ListingRequestRejectDialogContentProps
 	withBlock?: boolean
 }
 
-const ListingRequestRejectDialogContent = ({
+const SmsListingRequestRejectDialogContent = ({
 	closeDialog,
 	country,
 	requestId,
 	sourceName,
 	withBlock,
-}: ListingRequestRejectDialogContentProps) => {
+}: SmsListingRequestRejectDialogContentProps) => {
 	const { t } = useTranslation("senders-management", {
 		keyPrefix: withBlock ? "dialogs.listingRequestRejectAndBlock" : "dialogs.listingRequestReject",
 	})
@@ -56,4 +56,4 @@ const ListingRequestRejectDialogContent = ({
 	)
 }
 
-export default ListingRequestRejectDialogContent
+export default SmsListingRequestRejectDialogContent

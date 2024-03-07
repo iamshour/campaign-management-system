@@ -1,12 +1,12 @@
 //#region Import
 import type { SmsListingStatus, SmsListingType } from "@/features/channels/common/types"
 
+import SmsListingActivateDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-activate-dialog/sms-listing-activate-dialog"
 import SmsListingBlockDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-block-dialog/sms-listing-block-dialog"
+import SmsListingSuspendDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-suspend-dialog/sms-listing-suspend-dialog"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
-
-import SmsListingActivateDialog from "../../dialogs/sms-listing-activate-dialog/sms-listing-activate-dialog"
 //#endregion
 
 const AdminSmsListingsTableActions = ({
@@ -47,7 +47,9 @@ const AdminSmsListingsTableActions = ({
 					if (actionType === "SUSPEND_LISTING")
 						return (
 							<ActionWrapper key={actionType}>
-								<ActionsDropdown.Item>{t("suspend")}</ActionsDropdown.Item>
+								<SmsListingSuspendDialog {...props}>
+									<ActionsDropdown.Item>{t("suspend")}</ActionsDropdown.Item>
+								</SmsListingSuspendDialog>
 							</ActionWrapper>
 						)
 				}

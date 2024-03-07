@@ -2,15 +2,15 @@
 import { Dialog, Tooltip } from "@/ui"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
-const ListingRequestRejectDialogContent = lazy(() => import("./listing-request-reject-dialog-content"))
+const SmsListingRequestRejectDialogContent = lazy(() => import("./sms-listing-request-reject-dialog-content"))
 //#endregion
 
-interface ListingRequestRejectDialogProps
-	extends Omit<React.ComponentPropsWithoutRef<typeof ListingRequestRejectDialogContent>, "closeDialog"> {
+interface SmsListingRequestRejectDialogProps
+	extends Omit<React.ComponentPropsWithoutRef<typeof SmsListingRequestRejectDialogContent>, "closeDialog"> {
 	children: React.ReactNode
 }
 
-const ListingRequestRejectDialog = ({ children, withBlock, ...props }: ListingRequestRejectDialogProps) => {
+const SmsListingRequestRejectDialog = ({ children, withBlock, ...props }: SmsListingRequestRejectDialogProps) => {
 	const { t } = useTranslation("senders-management", {
 		keyPrefix: withBlock ? "dialogs.listingRequestRejectAndBlock" : "dialogs.listingRequestReject",
 	})
@@ -26,10 +26,10 @@ const ListingRequestRejectDialog = ({ children, withBlock, ...props }: ListingRe
 			</Tooltip>
 
 			<Dialog.Content className='h-[401px] w-[416px] xs:h-[377px] sm:h-[385px]' title={t("title")}>
-				<ListingRequestRejectDialogContent closeDialog={() => setOpen(false)} withBlock={withBlock} {...props} />
+				<SmsListingRequestRejectDialogContent closeDialog={() => setOpen(false)} withBlock={withBlock} {...props} />
 			</Dialog.Content>
 		</Dialog>
 	)
 }
 
-export default ListingRequestRejectDialog
+export default SmsListingRequestRejectDialog

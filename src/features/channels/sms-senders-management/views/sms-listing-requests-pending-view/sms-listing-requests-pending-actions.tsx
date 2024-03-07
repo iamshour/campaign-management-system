@@ -1,8 +1,8 @@
 //#region Import
 import type { SmsSenderRequestDetailsType } from "@/features/channels/sms-senders-management/types"
 
-import ListingRequestApproveDialog from "@/features/channels/sms-senders-management/dialogs/listing-request-approve-dialog/listing-request-approve-dialog"
-import ListingRequestRejectDialog from "@/features/channels/sms-senders-management/dialogs/listing-request-reject-dialog/listing-request-reject-dialog"
+import SmsListingRequestApproveDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-request-approve-dialog/sms-listing-request-approve-dialog"
+import SmsListingRequestRejectDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-request-reject-dialog/sms-listing-request-reject-dialog"
 import LetsIconsCancel from "~icons/lets-icons/cancel"
 import MaterialSymbolsCheckSmall from "~icons/material-symbols/check-small"
 import MaterialSymbolsCloseRounded from "~icons/material-symbols/close-rounded"
@@ -13,17 +13,17 @@ const SmsListingRequestsPendingActions = (
 ) => {
 	return (
 		<div className='flex items-center gap-2'>
-			<ListingRequestApproveDialog requestId={props?.requestId}>
+			<SmsListingRequestApproveDialog requestId={props?.requestId}>
 				<MaterialSymbolsCheckSmall />
-			</ListingRequestApproveDialog>
+			</SmsListingRequestApproveDialog>
 
-			<ListingRequestRejectDialog {...props}>
+			<SmsListingRequestRejectDialog {...props}>
 				<MaterialSymbolsCloseRounded />
-			</ListingRequestRejectDialog>
+			</SmsListingRequestRejectDialog>
 
-			<ListingRequestRejectDialog {...props} withBlock>
+			<SmsListingRequestRejectDialog {...props} withBlock>
 				<LetsIconsCancel />
-			</ListingRequestRejectDialog>
+			</SmsListingRequestRejectDialog>
 		</div>
 	)
 }

@@ -36,9 +36,9 @@ const ActionReasonForm = ({ children, message, onSubmit }: ActionReasonFormProps
 	return (
 		<Form {...form}>
 			<form
-				className='flex h-full flex-col justify-between gap-8 overflow-hidden p-2'
+				className='flex h-full flex-col justify-between gap-8 overflow-y-auto p-2'
 				onSubmit={form.handleSubmit(onSubmit)}>
-				<p className='overflow-y-auto'>{message}</p>
+				<p className='flex-1'>{message}</p>
 
 				<Form.Field
 					control={form.control}
