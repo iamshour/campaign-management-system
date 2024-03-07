@@ -1,6 +1,6 @@
 //#region Import
 import LucideChevronDown from "~icons/lucide/chevron-down"
-import { lazy, Suspense, useState } from "react"
+import { forwardRef, lazy, Suspense, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
@@ -25,57 +25,70 @@ interface SelectCountryPopoverProps
 	withPlaceholder?: boolean
 }
 
-const SelectCountryPopover = ({
-	className,
-	label,
-	options = isoCountryOptions,
-	readOnly,
-	size = "default",
-	value,
-	withPlaceholder = true,
-	...props
-}: SelectCountryPopoverProps) => {
-	const { t } = useTranslation("ui")
+const SelectCountryPopover = forwardRef<React.ElementRef<typeof Button>, SelectCountryPopoverProps>(
+	(
+		{
+			className,
+			label,
+			options = isoCountryOptions,
+			readOnly,
+			size = "default",
+			value,
+			withPlaceholder = true,
+			...props
+		},
+		ref
+	) => {
+		const { t } = useTranslation("ui")
 
-	const [open, setOpen] = useState(false)
+		const [open, setOpen] = useState(false)
 
-	return (
-		<div className={twMerge("relative w-[340px] max-w-full", className)}>
-			{!!label?.length && <Label size={size}>{label}</Label>}
+		return (
+			<div className={twMerge("relative w-[340px] max-w-full", className)}>
+				{!!label?.length && <Label size={size}>{label}</Label>}
 
-			<Popover onOpenChange={setOpen} open={open}>
-				<Popover.Trigger asChild>
-					<Button
-						className={twMerge("w-full px-2", readOnly && "pointer-events-none")}
-						hasValue={!!value?.length}
-						size={size}
-						variant='outline-grey'>
-						<Suspense fallback={<Skeleton className='h-5 w-5' />}>
-							<FlagIcon label={options.find((c) => c?.value === value)?.label ?? value} value={value} />
-						</Suspense>
-						{withPlaceholder &&
-							(value?.length ? (
-								<span className='flex-1 truncate px-2 text-start'>
-									{options.find((c) => c?.value === value)?.label}
-								</span>
-							) : (
-								<span className='flex-1 truncate px-2 text-start font-normal text-[#9899A7]'>
-									{t("selectCountryPopover.placeholder")}
-								</span>
-							))}
+				<Popover onOpenChange={setOpen} open={open}>
+					<Popover.Trigger asChild>
+						<Button
+							className={twMerge("w-full px-2", readOnly && "pointer-events-none")}
+							hasValue={!!value?.length}
+							ref={ref}
+							size={size}
+							variant='outline-grey'>
+							<Suspense fallback={<Skeleton className='h-5 w-5' />}>
+								<FlagIcon label={options.find((c) => c?.value === value)?.label ?? value} value={value} />
+							</Suspense>
+							{withPlaceholder &&
+								(value?.length ? (
+									<span className='flex-1 truncate px-2 text-start'>
+										{options.find((c) => c?.value === value)?.label}
+									</span>
+								) : (
+									<span className='flex-1 truncate px-2 text-start font-normal text-[#9899A7]'>
+										{t("selectCountryPopover.placeholder")}
+									</span>
+								))}
 
-						{readOnly && <MaterialSymbolsLock className='h-4 w-4 shrink-0 text-[#9899A7]' />}
+							{readOnly && <MaterialSymbolsLock className='h-4 w-4 shrink-0 text-[#9899A7]' />}
 
-						{!readOnly && <LucideChevronDown className='h-4 w-4' />}
-					</Button>
-				</Popover.Trigger>
+							{!readOnly && <LucideChevronDown className='h-4 w-4' />}
+						</Button>
+					</Popover.Trigger>
 
-				<Popover.Content align='start' className='h-[297px] border border-gray-300 p-0'>
-					<SelectCountryPopoverContent closePopover={() => setOpen(false)} options={options} value={value} {...props} />
-				</Popover.Content>
-			</Popover>
-		</div>
-	)
-}
+					<Popover.Content align='start' className='h-[297px] border border-gray-300 p-0'>
+						<SelectCountryPopoverContent
+							closePopover={() => setOpen(false)}
+							options={options}
+							value={value}
+							{...props}
+						/>
+					</Popover.Content>
+				</Popover>
+			</div>
+		)
+	}
+)
+
+SelectCountryPopover.displayName = "SelectCountryPopover"
 
 export default SelectCountryPopover

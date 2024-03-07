@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsChannelTypeOption } from "@/features/channels/sms-senders/types"
+import type { SmsChannelTypeOption } from "@/features/channels/common/types"
 
 import SmsSenderRequestDialog from "@/features/channels/sms-senders/dialogs/sms-sender-request-dialog/sms-sender-request-dialog"
 import { Button, Dialog } from "@/ui"

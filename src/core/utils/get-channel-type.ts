@@ -1,11 +1,13 @@
 //#region Import
 import type { Pathname } from "react-router-dom"
+
+import { SmsChannelTypeOption } from "@/features/channels/common/types"
 //#endregion
 
 type ChannelType = {
 	channelType: "international-sms" | "local-sms"
 	name: "sms"
-	type?: "international" | "local"
+	type?: SmsChannelTypeOption
 }
 
 /**

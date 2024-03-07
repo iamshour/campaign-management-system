@@ -1,0 +1,166 @@
+{
+	"views": {
+		"smsListingRequestsPendingEmpty": {
+			"headline": "لم تتلق أي معرف مرسل بعد ",
+			"message": "لم تتلق أي طلبات من عميلك حتى الآن"
+		},
+		"smsListingRequestsPending": {
+			"callToAction": "إضافة طلب معرف المرسل"
+		},
+		"smsListingRequestsCompletedEmpty": {
+			"headline": "ليس لديك معرف المرسل بعد مع الحالة الكاملة ",
+			"message": "تحقق من الطلب الذي تلقيته في القائمة المعلقة لإكماله"
+		},
+		"adminSmsSendersView": {
+			"table": {
+				"callToAction": "إنشاء مرسل ",
+				"actionsCell": {
+					"addList": "اضف قائمة",
+					"delete": "يمسح"
+				}
+			}
+		},
+		"adminSmsSendersViewEmpty": {
+			"headline": "ليس لديك معرف المرسل بعد ",
+			"message": "إنشاء معرفات مرسل جديدة"
+		},
+		"adminSmsListingsView": {
+			"table": {
+				"callToAction": "اضف قائمة",
+				"secondaryCallToAction": "قائمة الاختيار ",
+				"actionsCell": {
+					"edit": "يحرر",
+					"delete": "يمسح",
+					"block": "حاجز",
+					"suspend": "تعليق",
+					"activate": "تفعيل"
+				}
+			}
+		},
+		"smsOptedOutSenders": {
+			"fields": {
+				"phoneNumbers": "أرقام الهواتف"
+			},
+			"table": {
+				"topbar": {
+					"actions": {
+						"export": "تم اختيار التصدير ",
+						"export_other": "تصدير الكل",
+						"optIn": "الاختيار المحدد ",
+						"optIn_other": "الاشتراك في كل ",
+						"import": "يستورد"
+					}
+				}
+			}
+		}
+	},
+
+	"components": {
+		"companyPopover": {
+			"label": "اسم الشركة",
+			"placeholder": "حدد شركة"
+		},
+		"senderRequestFunnel": {
+			"actions": {
+				"addType": "أضف النوع ",
+				"addCountry": "أضف البلد ",
+				"deleteType": "حذف النوع ",
+				"deleteCountry": "حذف البلد"
+			}
+		},
+		"selectMultiListingRequestActionPopover": {
+			"label": "فعل",
+			"placeholder": "حدد الإجراءات"
+		},
+		"selectMultiListingStatusesPopover": {
+			"label": "حالة",
+			"placeholder": "حدد الحالات"
+		},
+		"actionReasonForm": {
+			"label": "سبب",
+			"placeholder": "أدخل العقل"
+		},
+		"smsListingRequestCreatePreview": {
+			"message": "هل أنت متأكد من أنك تريد إضافة طلب المرسل هذا؟ ",
+			"editDetails": "عدل التفاصيل",
+			"basicInfo": {
+				"company": "اسم الشركة",
+				"email": "البريد الإلكتروني العميل ",
+				"sender": "مرسل"
+			},
+			"requestsTable": {
+				"type": "يكتب",
+				"country": "البلد المستهدف",
+				"content": "عينة من المحتوى ",
+				"status": "حالة"
+			}
+		}
+	},
+
+	"dialogs": {
+		"smsListingRequestDetails": {
+			"title": "عرض تفاصيل طلب المرسل ",
+			"senderRequestInfo": "معلومات طلب المرسل ",
+			"senderStatusInfo": "معلومات حالة المرسل"
+		},
+		"smsListingDetails": {
+			"title": "عرض تفاصيل المرسل ",
+			"otherInfo": "معلومات اخرى"
+		},
+		"listingRequestApprove": {
+			"title": "الموافقة على الطلب ",
+			"tooltip": "يعتمد",
+			"message": "هل أنت متأكد من أنك تريد الموافقة على طلب المرسل {{name}} للبلد المستهدف {{country}}؟ ",
+			"submit": "يتأكد"
+		},
+		"listingRequestReject": {
+			"title": "رفض الطلب ",
+			"tooltip": "يرفض",
+			"message": "هل أنت متأكد من أنك تريد رفض طلب المرسل {{sender}} للبلد المستهدف {{country}}؟ ",
+			"submit": "يتأكد"
+		},
+		"listingRequestRejectAndBlock": {
+			"title": "رفض وطلب الحظر ",
+			"tooltip": "رفض وكتلة ",
+			"message": "هل أنت متأكد من أنك ترغب في رفض وحظر المرسل {{sender}} لطلب البلد المستهدف {{country}}؟ ",
+			"submit": "يتأكد"
+		},
+		"smsListingBlock": {
+			"title": "قائمة مرسل الحظر ",
+			"message": "هل أنت متأكد من أنك ترغب في حظر هذا المرسل لـ {{Company}} نحو {{country}}؟لن يتمكن العميل من إرسال رسائل من خلال هذا المرسل إلى البلد المختار وسيظهر على أنه محظور في نهاية قائمة العملاء. ",
+			"submit": "يتأكد"
+		},
+		"smsListingSuspend": {
+			"title": "مرسل تعليق ",
+			"message": "هل أنت متأكد من أنك ترغب في تعليق هذا المرسل لـ {{Lebanon}}؟لن يتمكن العميل الذي يستخدمه من إرسال رسائل من خلال هذا المرسل إلى البلد المختار. ",
+			"submit": "يتأكد"
+		},
+		"smsListingActivate": {
+			"title": "تنشيط المرسل ",
+			"message": "هل أنت متأكد من أنك ترغب في الموافقة على هذا المرسل لـ {{country}}؟ستتمكن الشركة التي لديها وصول من إرسال الرسائل من خلال هذا المرسل إلى البلد المختار. ",
+			"submit": "يتأكد"
+		},
+		"smsOptInSender": {
+			"title": "رقم هاتف الاشتراك ",
+			"message": "هل أنت متأكد من أنك تريد اختيار رقم الهاتف هذا؟ ",
+			"tooltip": "الاشتراك ",
+			"submit": "يتأكد"
+		},
+		"createSmsListingRequestConfirm": {
+			"title": "تأكيد الطلب ",
+			"submit": "يتأكد",
+			"cancel": "يلغي"
+		},
+		"createSmsListingConfirm": {
+			"title": "تأكيد القائمة ",
+			"submit": "يتأكد",
+			"cancel": "يلغي"
+		},
+		"exportOptOutSmsSenders": {
+			"title": "يصدّر",
+			"label": "اسم ملف التصدير ",
+			"placeholder": "أدخل الاسم",
+			"submit": "يصدّر"
+		}
+	}
+}

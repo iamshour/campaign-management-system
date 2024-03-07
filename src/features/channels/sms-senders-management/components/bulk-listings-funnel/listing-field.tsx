@@ -4,6 +4,7 @@ import { Button, Form, SelectCountryPopover, Tooltip } from "@/ui"
 import IcBaselineDelete from "~icons/ic/baseline-delete"
 import { Control, useFieldArray } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import { twMerge } from "tailwind-merge"
 
 import type { BulkListingsFunnelBase } from "./types"
 
@@ -19,6 +20,8 @@ interface ListingFieldProps {
 	 */
 	// disableNewRequest: boolean
 
+	highlightedErrorRow?: string
+
 	/**
 	 * Callback function used to remove a Group (grouped by type), Only if there's an initial one existing (length of groups > 1)
 	 */
@@ -29,6 +32,7 @@ interface ListingFieldProps {
 
 const ListingField = ({
 	control,
+	highlightedErrorRow,
 	// disableNewRequest,
 	removeType,
 	SenderRequestsGroupsIdx,
@@ -43,7 +47,15 @@ const ListingField = ({
 	return (
 		<>
 			{fields.map((_, singleRequestIdx) => (
-				<div className='flex flex-wrap items-center gap-4 rounded-lg bg-[#F7F7F7] p-4' key={singleRequestIdx}>
+				<div
+					className={twMerge(
+						"flex flex-wrap items-center gap-4 rounded-lg bg-[#F7F7F7] p-4",
+						highlightedErrorRow ===
+							`bulkListingsGroups.${SenderRequestsGroupsIdx}.listingsFields.${singleRequestIdx}` &&
+							"duration-5000 animate-pulse bg-red-100"
+					)}
+					id={`bulkListingsGroups.${SenderRequestsGroupsIdx}.listingsFields.${singleRequestIdx}`}
+					key={singleRequestIdx}>
 					<Form.Field
 						control={control}
 						name={`bulkListingsGroups.${SenderRequestsGroupsIdx}.listingsFields.${singleRequestIdx}.country`}
@@ -53,6 +65,7 @@ const ListingField = ({
 									className='[&>button]:text-base [&>button]:font-normal'
 									label={`${t("channels-common:fields.country")} *`}
 									onChange={field.onChange}
+									ref={field.ref}
 									size='lg'
 									value={field.value}
 								/>
@@ -67,7 +80,7 @@ const ListingField = ({
 						render={({ field }) => (
 							<Form.Item>
 								<TextareaPopover
-									className='[&>button]:text-base [&>button]:font-normal'
+									className='self-start [&>button]:text-base [&>button]:font-normal'
 									label={`${t("channels-common:fields.sampleContent")} *`}
 									onValueChange={field.onChange}
 									size='lg'

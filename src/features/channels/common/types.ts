@@ -10,6 +10,11 @@ import type { SmsSenderRequestDetailsType } from "../sms-senders-management/type
 //#endregion
 
 /**
+ * Type options for the SMS Channel
+ */
+export type SmsChannelTypeOption = "international" | "local"
+
+/**
  * Status options for the SMS Listing
  */
 export type SmsListingStatus = "APPROVED" | "BLOCKED" | "DEACTIVATED" | "PENDING" | "REJECTED" | "SUSPENDED"
