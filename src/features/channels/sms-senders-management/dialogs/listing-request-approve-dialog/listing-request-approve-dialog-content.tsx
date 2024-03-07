@@ -1,5 +1,5 @@
 //#region Import
-import { useUpdateSmsListingStatusMutation } from "@/features/channels/sms-senders-management/api"
+import { useUpdateSmsSourceRequestMutation } from "@/features/channels/sms-senders-management/api"
 import { Button } from "@/ui"
 import { useTranslation } from "react-i18next"
 //#endregion
@@ -13,16 +13,16 @@ export interface ListingRequestApproveDialogContentProps {
 	/**
 	 * Listing request Id
 	 */
-	id: string
+	requestId: string
 }
 
-const ListingRequestApproveDialogContent = ({ closeDialog, id }: ListingRequestApproveDialogContentProps) => {
+const ListingRequestApproveDialogContent = ({ closeDialog, requestId }: ListingRequestApproveDialogContentProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.listingRequestApprove" })
 
-	const [triggerUpdateSmsListing, { isLoading }] = useUpdateSmsListingStatusMutation()
+	const [triggerUpdateSmsListing, { isLoading }] = useUpdateSmsSourceRequestMutation()
 
 	const handleSubmit = async () => {
-		await triggerUpdateSmsListing({ listingId: id, status: "APPROVED" }).unwrap()
+		await triggerUpdateSmsListing({ requestAction: "APPROVED", requestId }).unwrap()
 
 		closeDialog()
 	}

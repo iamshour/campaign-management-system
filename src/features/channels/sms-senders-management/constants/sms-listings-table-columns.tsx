@@ -51,8 +51,8 @@ const smsListingsTableColumns: ColumnType<SmsListingType>[] = [
 	},
 	{
 		accessorKey: "actions",
-		cell: (_, { company, country, listingId }) => (
-			<AdminSmsListingsTableActions company={company} country={country} listingId={listingId} />
+		cell: (_, { company, country, listingId, status }) => (
+			<AdminSmsListingsTableActions company={company} country={country} listingId={listingId} status={status} />
 		),
 		preventCellClick: true,
 	},

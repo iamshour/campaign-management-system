@@ -10,6 +10,7 @@ import type {
 	SmsListingRequest,
 	SmsSenderRequestDetailsType,
 	UpdateSmsListingStatusBody,
+	UpdateSmsSourceRequestBody,
 } from "./types"
 //#endregion
 
@@ -40,8 +41,21 @@ const smsSendersManagementApis = api.injectEndpoints({
 			},
 			query: ({ listingId, ...body }) => ({ body, method: "PUT", url: `/source-request/status/${listingId}` }),
 		}),
+
+		updateSmsSourceRequest: builder.mutation<any, UpdateSmsSourceRequestBody>({
+			invalidatesTags: (res, error, { requestId }) => {
+				if (!res) return []
+
+				return [{ id: requestId, type: "SmsListingRequest" }]
+			},
+			query: ({ requestId, ...body }) => ({ body, method: "PUT", url: `/source-request/status/${requestId}` }),
+		}),
 	}),
 })
 
-export const { useGetSmsListingRequestsQuery, useGetSmsListingRequestByIdQuery, useUpdateSmsListingStatusMutation } =
-	smsSendersManagementApis
+export const {
+	useGetSmsListingRequestsQuery,
+	useGetSmsListingRequestByIdQuery,
+	useUpdateSmsListingStatusMutation,
+	useUpdateSmsSourceRequestMutation,
+} = smsSendersManagementApis

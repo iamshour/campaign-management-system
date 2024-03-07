@@ -49,7 +49,7 @@ const smsListingRequestsPendingTableColumns: ColumnType<SmsListingRequest>[] = [
 	{
 		accessorKey: "actions",
 		cell: (_, { country, id, sender }) => (
-			<SmsListingRequestsPendingActions country={country} id={id} sender={sender} />
+			<SmsListingRequestsPendingActions country={country} requestId={id} sourceName={sender} />
 		),
 		preventCellClick: true,
 	},

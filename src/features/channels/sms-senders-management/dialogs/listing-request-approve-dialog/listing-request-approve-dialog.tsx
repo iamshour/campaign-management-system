@@ -7,11 +7,11 @@ const ListingRequestApproveDialogContent = lazy(() => import("./listing-request-
 //#endregion
 
 interface ListingRequestApproveDialogProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof ListingRequestApproveDialogContent>, "id"> {
+	extends Pick<React.ComponentPropsWithoutRef<typeof ListingRequestApproveDialogContent>, "requestId"> {
 	children: React.ReactNode
 }
 
-const ListingRequestApproveDialog = ({ children, id }: ListingRequestApproveDialogProps) => {
+const ListingRequestApproveDialog = ({ children, requestId }: ListingRequestApproveDialogProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.listingRequestApprove" })
 
 	const [open, setOpen] = useState(false)
@@ -25,7 +25,7 @@ const ListingRequestApproveDialog = ({ children, id }: ListingRequestApproveDial
 			</Tooltip>
 
 			<Dialog.Content className='w-[395px] xs:h-[209px] sm:h-[217px]' title={t("title")}>
-				<ListingRequestApproveDialogContent closeDialog={() => setOpen(false)} id={id} />
+				<ListingRequestApproveDialogContent closeDialog={() => setOpen(false)} requestId={requestId} />
 			</Dialog.Content>
 		</Dialog>
 	)

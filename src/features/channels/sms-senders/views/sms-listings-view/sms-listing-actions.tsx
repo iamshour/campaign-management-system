@@ -93,12 +93,12 @@ const SmsListingActions = ({
 
 export default SmsListingActions
 
-type DialogAction = "ACTIVATE_LISTING" | "DEACTIVATE_LISTING" | "RESEND_REQUEST" | "VIEW_STATUS_REASON"
+type ActionType = "ACTIVATE_LISTING" | "DEACTIVATE_LISTING" | "RESEND_REQUEST" | "VIEW_STATUS_REASON"
 
 /**
  * A mapping object used to allow specific user actions based on passed listing status
  */
-const allowedActionsPerStatusMap: Record<DialogAction, SmsListingStatus[]> = {
+const allowedActionsPerStatusMap: Record<ActionType, SmsListingStatus[]> = {
 	ACTIVATE_LISTING: ["DEACTIVATED"],
 	DEACTIVATE_LISTING: ["APPROVED", "BLOCKED", "REJECTED", "SUSPENDED"],
 	RESEND_REQUEST: ["REJECTED", "SUSPENDED"],
