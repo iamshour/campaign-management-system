@@ -5,7 +5,7 @@ import getCountryName from "@/core/utils/get-country-name"
 
 import type { SmsOptedOutSenderType } from "../types"
 
-import SmsOptInSenderDialog from "../dialogs/sms-opt-in-sender-dialog/sms-opt-in-sender-dialog"
+import OptInSmsSenderDialog from "../dialogs/opt-in-sms-sender-dialog/opt-in-sms-sender-dialog"
 import smsOptedOutFieldsLocaleMap from "./sms-opted-out-fields-locale-map"
 //#endregion
 
@@ -25,7 +25,7 @@ const smsOptedOutSendersTableColumns: ColumnType<SmsOptedOutSenderType>[] = [
 	},
 	{
 		accessorKey: "actions",
-		cell: (_, { id }) => <SmsOptInSenderDialog id={id} />,
+		cell: (_, { id }) => <OptInSmsSenderDialog id={id} />,
 		preventCellClick: true,
 	},
 ]

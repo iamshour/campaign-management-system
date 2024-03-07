@@ -103,3 +103,11 @@ export type SmsOptedOutFilter = {
  * Params passed to the `getSenderListingRequestsQuery` query, used to fetch Sender Listing Requests List
  */
 export type GetSmsOptedOutSendersParams = PaginationAndSorting<SmsOptedOutSenderType> & SmsListingPendingRequestFilter
+
+/**
+ * Body Arguments passed to the `optInSmsSenders` mutation, used to Opt in Sms Senders
+ */
+export type OptInSmsSendersBody = {
+	id?: string
+	// optInSearchFilter?: OptInSearchFilter
+}
