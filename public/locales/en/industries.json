@@ -6,7 +6,7 @@
 		"createdAt": "Creation date"
 	},
 	"table": {
-		"toolbar": {
+		"topbar": {
 			"actions": {
 				"create-industry": "Create Industry"
 			}

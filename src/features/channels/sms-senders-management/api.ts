@@ -4,8 +4,10 @@
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
 import { GetListReturnType } from "@/core/lib/redux-toolkit/types"
+import { downloadFile } from "@/utils"
 
 import type {
+	ExportOptOutSmsSendersParams,
 	GetSmsListingRequestsParams,
 	GetSmsOptedOutSendersParams,
 	OptInSmsSendersBody,
@@ -68,6 +70,20 @@ const smsSendersManagementApis = api.injectEndpoints({
 			invalidatesTags: (res) => (res ? [{ id: "LIST", type: "OptInSender" }] : []),
 			query: (body) => ({ body, method: "POST", url: "/opt-in-senders" }),
 		}),
+
+		exportOptOutSmsSenders: builder.mutation<any, ExportOptOutSmsSendersParams>({
+			query: ({ fileName, ...params }) => ({
+				cache: "no-cache",
+				method: "GET",
+				responseHandler: async (response: Response) => {
+					if (response?.status == 200) downloadFile(fileName, await response.blob())
+
+					return response
+				},
+				url: "/opt-out-export",
+				params: { fileName, ...params },
+			}),
+		}),
 	}),
 })
 
@@ -78,4 +94,5 @@ export const {
 	useUpdateSmsSourceRequestMutation,
 	useGetSmsOptedOutSendersQuery,
 	useOptInSmsSendersMutation,
+	useExportOptOutSmsSendersMutation,
 } = smsSendersManagementApis

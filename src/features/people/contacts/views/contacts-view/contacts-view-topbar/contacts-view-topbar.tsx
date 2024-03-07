@@ -40,14 +40,14 @@ const ContactsViewTopbar = memo(() => {
 				<ImportContactsDialog title={t("dialogs.importContacts.title")}>
 					<Button variant='outline'>
 						<PajamasImport />
-						{t("table.toolbar.actions.import")}
+						{t("table.topbar.actions.import")}
 					</Button>
 				</ImportContactsDialog>
 
 				<CreateContactDialog>
 					<Button>
 						<PhUserPlus />
-						{t("table.toolbar.actions.add-contact")}
+						{t("table.topbar.actions.add-contact")}
 					</Button>
 				</CreateContactDialog>
 			</div>

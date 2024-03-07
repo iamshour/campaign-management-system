@@ -33,7 +33,7 @@ const SegmentsView = (props: SharedListViewProps<Segment>) => {
 				<DataView.TopBar>
 					<Button as='link' to={appPaths.SEGMENTS_NEW}>
 						<PhPlusBold />
-						{t("table.toolbar.actions.create-segment")}
+						{t("table.topbar.actions.create-segment")}
 					</Button>
 				</DataView.TopBar>
 

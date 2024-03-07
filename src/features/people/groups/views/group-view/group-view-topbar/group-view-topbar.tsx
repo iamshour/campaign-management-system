@@ -35,7 +35,7 @@ const GroupViewTopbar = memo(() => {
 
 			<Button as='link' to='./add-contacts'>
 				<PhUserPlus />
-				{t("table.toolbar.actions.add-contact")}
+				{t("table.topbar.actions.add-contact")}
 			</Button>
 		</div>
 	)

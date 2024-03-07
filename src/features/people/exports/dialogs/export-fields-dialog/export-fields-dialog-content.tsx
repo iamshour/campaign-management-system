@@ -10,9 +10,8 @@ import { getContactAdvancedFilter, getContactFilter, getContactSearchFilter } fr
 import { useSubmitExportsFileMutation } from "@/features/people/exports/api"
 import exportsFieldsOptions from "@/features/people/exports/constants/exports-fields-options"
 import exportSchema, { type ExportSchemaType } from "@/features/people/exports/schemas/export-schema"
-import { getDefaultExportsFileName } from "@/features/people/exports/utils"
 import { Button, Checkbox, Footer, Form, Input, useForm } from "@/ui"
-import { cleanObject, omit } from "@/utils"
+import { cleanObject, generateFileName, omit } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMemo } from "react"
 import toast from "react-hot-toast"
@@ -49,7 +48,7 @@ const ExportFieldsDialogContent = ({ exportsType, onDialogClose, segmentId }: Ex
 
 	const { filters, searchTerm, selection } = useSelector(({ dataView }) => dataView[exportsType as ExportsType])
 
-	const defaultFileName = getDefaultExportsFileName(companyName, exportsType === "segments" ? "segments" : "contacts")
+	const defaultFileName = generateFileName(companyName, exportsType === "segments" ? "segments" : "contacts")
 
 	const form = useForm<ExportSchemaType>({
 		defaultValues: {

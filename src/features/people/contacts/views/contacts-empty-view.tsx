@@ -26,13 +26,13 @@ const EmptyContactsView = () => {
 				<div className='flex-wrap gap-8 flex-center'>
 					<ImportContactsDialog title={t("dialogs.importContacts.title")}>
 						<Button className='min-w-[200px]' size='default' variant='outline'>
-							{t("table.toolbar.actions.import")}
+							{t("table.topbar.actions.import")}
 						</Button>
 					</ImportContactsDialog>
 
 					<CreateContactDialog>
 						<Button className='min-w-[200px]' size='default'>
-							{t("table.toolbar.actions.add-contact")}
+							{t("table.topbar.actions.add-contact")}
 						</Button>
 					</CreateContactDialog>
 				</div>

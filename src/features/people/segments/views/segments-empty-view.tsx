@@ -26,7 +26,7 @@ const SegmentsEmptyView = () => {
 				<p className='mb-6 text-center'>{t("views.emptyView.message")}</p>
 				<div className='flex-wrap gap-8 flex-center'>
 					<Button className='min-w-[200px]' onClick={() => navigate("new-segment")} size='default'>
-						{t("table.toolbar.actions.create-segment")}
+						{t("table.topbar.actions.create-segment")}
 					</Button>
 				</div>
 			</div>

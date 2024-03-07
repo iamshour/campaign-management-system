@@ -31,7 +31,7 @@
 		"createdAt": "تاريخ الإنشاء"
 	},
 	"table": {
-		"toolbar": {
+		"topbar": {
 			"search": "البحث عن القطاعات",
 
 			"actions": {

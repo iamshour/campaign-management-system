@@ -37,7 +37,7 @@
 		"contactsCount": "Number of contacts"
 	},
 	"table": {
-		"toolbar": {
+		"topbar": {
 			"search": "Search by any field",
 
 			"actions": {

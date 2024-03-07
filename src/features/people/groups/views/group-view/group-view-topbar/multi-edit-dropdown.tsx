@@ -14,7 +14,7 @@ const MultiEditDropdown = () => {
 
 	return (
 		<Dropdown onOpenChange={setOpen} open={open}>
-			<Dropdown.Trigger variant='secondary'>{t("table.toolbar.actions.edit.title")}</Dropdown.Trigger>
+			<Dropdown.Trigger variant='secondary'>{t("table.topbar.actions.edit.title")}</Dropdown.Trigger>
 			<Dropdown.Content align='start' sideOffset={0}>
 				<DropdownStateContext.Provider value={{ closeDropdown: () => setOpen(false) }}>
 					<MoveToGroupDialog>

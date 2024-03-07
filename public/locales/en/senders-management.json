@@ -40,6 +40,17 @@
 		"smsOptedOutSenders": {
 			"fields": {
 				"phoneNumbers": "Phone Numbers"
+			},
+			"table": {
+				"topbar": {
+					"actions": {
+						"export": "Export Selected",
+						"export_other": "Export All",
+						"optIn": "Opt-in Selected",
+						"optIn_other": "Opt-in All",
+						"import": "Import"
+					}
+				}
 			}
 		}
 	},
@@ -119,6 +130,12 @@
 			"message": "Are you sure you want to opt-in this phone number?",
 			"tooltip": "Opt-in",
 			"submit": "Confirm"
+		},
+		"exportOptOutSmsSenders": {
+			"title": "Export",
+			"label": "Export file name",
+			"placeholder": "Enter name",
+			"submit": "Export"
 		}
 	}
 }

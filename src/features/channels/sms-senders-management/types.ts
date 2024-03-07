@@ -111,3 +111,11 @@ export type OptInSmsSendersBody = {
 	id?: string
 	// optInSearchFilter?: OptInSearchFilter
 }
+
+/**
+ * Params passed to the `exportOptOutSmsSendersQuery` query, used to export download an exported file of opted-out sms senders
+ */
+export type ExportOptOutSmsSendersParams = {
+	fileName: string
+	ids?: string[]
+}
