@@ -12,13 +12,16 @@ import { emptyBulkListingsGroup } from "./bulk-listings-funnel-configs"
 import ListingField from "./listing-field"
 //#endregion
 
-interface BulkListingsFunnelProps {
+interface BulkListingsFunnelProps
+	extends Pick<React.ComponentPropsWithoutRef<typeof ListingField>, "highlightedErrorRow"> {
 	bulkListingsGroups: BulkListingsGroup[]
 
 	control: Control<BulkListingsFunnelBase>
 }
 
-const BulkListingsFunnel = ({ bulkListingsGroups, control }: BulkListingsFunnelProps) => {
+interface BulkListingsFunnelProps {}
+
+const BulkListingsFunnel = ({ bulkListingsGroups, control, highlightedErrorRow }: BulkListingsFunnelProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "components.senderRequestFunnel.actions" })
 
 	const { append, fields, remove, update } = useFieldArray({ control, name: "bulkListingsGroups" })
@@ -58,6 +61,7 @@ const BulkListingsFunnel = ({ bulkListingsGroups, control }: BulkListingsFunnelP
 
 					<ListingField
 						control={control}
+						highlightedErrorRow={highlightedErrorRow}
 						// disableNewRequest={disableNewRequest}
 						removeType={fields?.length > 1 ? () => remove(SenderRequestsGroupsIdx) : undefined}
 						SenderRequestsGroupsIdx={SenderRequestsGroupsIdx}

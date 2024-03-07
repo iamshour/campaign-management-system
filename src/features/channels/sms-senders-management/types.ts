@@ -5,7 +5,7 @@ import { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import { TemplateType } from "@/features/templates/common/types"
 import { DateRange } from "@/ui"
 
-import type { RequestActionType, SmsListingRequestStatus, SmsListingType } from "../common/types"
+import type { RequestActionType, SmsChannelTypeOption, SmsListingRequestStatus, SmsListingType } from "../common/types"
 //#endregion
 
 /**
@@ -118,4 +118,21 @@ export type OptInSmsSendersBody = {
 export type ExportOptOutSmsSendersParams = {
 	fileName: string
 	ids?: string[]
+}
+
+/**
+ * Body Arguments passed to the `addBulkSmsListingRequests` mutation, used to send multiple new listing requests
+ */
+export type AddBulkSmsListingRequestsBody = {
+	channelSource: string
+	channelSourceRequestRouteList: {
+		channelSourceListingStatus?: SmsListingRequestStatus
+		country: Country
+		sample: string
+		templateType: TemplateType
+	}[]
+	channelType: SmsChannelTypeOption
+	companyId: string
+	email: string
+	note?: string
 }

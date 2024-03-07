@@ -7,6 +7,7 @@ import { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import { downloadFile } from "@/utils"
 
 import type {
+	AddBulkSmsListingRequestsBody,
 	ExportOptOutSmsSendersParams,
 	GetSmsListingRequestsParams,
 	GetSmsOptedOutSendersParams,
@@ -37,7 +38,6 @@ const smsSendersManagementApis = api.injectEndpoints({
 			query: (id) => ({ url: `/sms-sender-request-details/${id}` }),
 			transformResponse,
 		}),
-
 		updateSmsListingStatus: builder.mutation<any, UpdateSmsListingStatusBody>({
 			invalidatesTags: (res, error, { listingId }) => {
 				if (!res) return []
@@ -84,6 +84,20 @@ const smsSendersManagementApis = api.injectEndpoints({
 				params: { fileName, ...params },
 			}),
 		}),
+
+		addBulkSmsListingRequests: builder.mutation<any, AddBulkSmsListingRequestsBody>({
+			invalidatesTags: (res) => {
+				return res ? [{ id: "LIST", type: "SmsListingRequest" }] : []
+			},
+			query: (body) => ({ body, method: "POST", url: "/requests-bulk" }),
+		}),
+
+		addBulkSmsListings: builder.mutation<any, AddBulkSmsListingRequestsBody>({
+			invalidatesTags: (res) => {
+				return res ? [{ id: "LIST", type: "SmsListing" }] : []
+			},
+			query: (body) => ({ body, method: "POST", url: "/listings-bulk" }),
+		}),
 	}),
 })
 
@@ -95,4 +109,6 @@ export const {
 	useGetSmsOptedOutSendersQuery,
 	useOptInSmsSendersMutation,
 	useExportOptOutSmsSendersMutation,
+	useAddBulkSmsListingRequestsMutation,
+	useAddBulkSmsListingsMutation,
 } = smsSendersManagementApis

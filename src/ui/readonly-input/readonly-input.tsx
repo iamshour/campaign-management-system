@@ -1,25 +1,38 @@
 import { type VariantProps } from "class-variance-authority"
-import { forwardRef, lazy } from "react"
+import { lazy } from "react"
 import { twMerge } from "tailwind-merge"
 
 const MaterialSymbolsLock = lazy(() => import("~icons/material-symbols/lock"))
 
 import type { IconType } from "../types"
 
+import iconVariants from "../input/icon-variants"
+import inputVariants from "../input/input-variants"
+import Label from "../label/label"
 import cn from "../utils/cn"
-import iconVariants from "./icon-variants"
-import inputVariants from "./input-variants"
 
-export interface InputProps
+export interface ReadonlyInputProps
 	extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
 		VariantProps<typeof inputVariants> {
 	inputClassName?: string
+	label?: string
 	leftIcon?: IconType
 	rightIcon?: IconType
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
-	({ className, inputClassName, leftIcon: LeftIcon, readOnly, rightIcon: RightIcon, size, variant, ...props }, ref) => (
+const ReadonlyInput = ({
+	className,
+	inputClassName,
+	label,
+	leftIcon: LeftIcon,
+	readOnly,
+	rightIcon: RightIcon,
+	size,
+	variant,
+	...props
+}: ReadonlyInputProps) => (
+	<div className='flex flex-col'>
+		{label && <Label size={size}>{label}</Label>}
 		<div className={twMerge("group !relative h-max w-[340px] max-w-full overflow-hidden", className)}>
 			{!!LeftIcon && (
 				<LeftIcon
@@ -28,17 +41,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 				/>
 			)}
 
-			<input
-				ref={ref}
-				{...props}
+			<p
 				className={cn(inputVariants({ className: inputClassName, size, variant }), {
 					"!pe-10": !!RightIcon,
 					"!ps-10": !!LeftIcon,
-				})}
-				data-hasvalue={!!props?.value}
-				readOnly={readOnly}
-				value={props?.value ?? ""}
-			/>
+					block: true,
+				})}>
+				{props?.value}
+			</p>
 
 			{readOnly && (
 				<MaterialSymbolsLock
@@ -50,9 +60,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 				<RightIcon className={cn(iconVariants({ className: "end-3", size, variant }))} data-hasvalue={!!props?.value} />
 			)}
 		</div>
-	)
+	</div>
 )
 
-Input.displayName = "Input"
+ReadonlyInput.displayName = "ReadonlyInput"
 
-export default Input
+export default ReadonlyInput

@@ -69,7 +69,11 @@ export { default as Spring } from "./react-spring/spring"
 
 export { default as Transition } from "./react-spring/transition"
 
+export { default as ReadonlyInput } from "./readonly-input/readonly-input"
+
 export { default as SearchInput } from "./search-input/search-Input"
+
+export { default as SectionHeading } from "./section-heading/section-heading"
 
 export { default as SelectCountry } from "./select-country-popover/select-country-popover"
 

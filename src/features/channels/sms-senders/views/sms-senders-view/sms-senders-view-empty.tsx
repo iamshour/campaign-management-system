@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsChannelTypeOption } from "@/features/channels/sms-senders/types"
+import type { SmsChannelTypeOption } from "@/features/channels/common/types"
 
 import SmsSendersEmptySvg from "@/assets/sms-senders-empty.svg?react"
 import LabelledHints from "@/core/components/labelled-hints"

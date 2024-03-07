@@ -79,6 +79,21 @@
 		"actionReasonForm": {
 			"label": "Reason",
 			"placeholder": "Enter reason"
+		},
+		"smsListingRequestCreatePreview": {
+			"message": "Are you sure you want to add this Sender request?",
+			"editDetails": "Edit Details",
+			"basicInfo": {
+				"company": "Company Name",
+				"email": "Client Email",
+				"sender": "Sender"
+			},
+			"requestsTable": {
+				"type": "Type",
+				"country": "Target Country",
+				"content": "Sample Content",
+				"status": "Status"
+			}
 		}
 	},
 
@@ -130,6 +145,16 @@
 			"message": "Are you sure you want to opt-in this phone number?",
 			"tooltip": "Opt-in",
 			"submit": "Confirm"
+		},
+		"createSmsListingRequestConfirm": {
+			"title": "Confirm Request",
+			"submit": "Confirm",
+			"cancel": "Cancel"
+		},
+		"createSmsListingConfirm": {
+			"title": "Confirm Listing",
+			"submit": "Confirm",
+			"cancel": "Cancel"
 		},
 		"exportOptOutSmsSenders": {
 			"title": "Export",
