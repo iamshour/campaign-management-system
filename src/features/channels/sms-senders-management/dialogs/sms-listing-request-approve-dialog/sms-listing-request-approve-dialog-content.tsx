@@ -4,7 +4,7 @@ import { Button } from "@/ui"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-export interface ListingRequestApproveDialogContentProps {
+export interface SmsListingRequestApproveDialogContentProps {
 	/**
 	 * Callback function used to close the dialog
 	 */
@@ -16,7 +16,10 @@ export interface ListingRequestApproveDialogContentProps {
 	requestId: string
 }
 
-const ListingRequestApproveDialogContent = ({ closeDialog, requestId }: ListingRequestApproveDialogContentProps) => {
+const SmsListingRequestApproveDialogContent = ({
+	closeDialog,
+	requestId,
+}: SmsListingRequestApproveDialogContentProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.listingRequestApprove" })
 
 	const [triggerUpdateSmsListing, { isLoading }] = useUpdateSmsSourceRequestMutation()
@@ -38,4 +41,4 @@ const ListingRequestApproveDialogContent = ({ closeDialog, requestId }: ListingR
 	)
 }
 
-export default ListingRequestApproveDialogContent
+export default SmsListingRequestApproveDialogContent

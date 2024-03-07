@@ -3,15 +3,15 @@ import { Dialog, Tooltip } from "@/ui"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-const ListingRequestApproveDialogContent = lazy(() => import("./listing-request-approve-dialog-content"))
+const SmsListingRequestApproveDialogContent = lazy(() => import("./sms-listing-request-approve-dialog-content"))
 //#endregion
 
-interface ListingRequestApproveDialogProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof ListingRequestApproveDialogContent>, "requestId"> {
+interface SmsListingRequestApproveDialogProps
+	extends Pick<React.ComponentPropsWithoutRef<typeof SmsListingRequestApproveDialogContent>, "requestId"> {
 	children: React.ReactNode
 }
 
-const ListingRequestApproveDialog = ({ children, requestId }: ListingRequestApproveDialogProps) => {
+const SmsListingRequestApproveDialog = ({ children, requestId }: SmsListingRequestApproveDialogProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.listingRequestApprove" })
 
 	const [open, setOpen] = useState(false)
@@ -25,10 +25,10 @@ const ListingRequestApproveDialog = ({ children, requestId }: ListingRequestAppr
 			</Tooltip>
 
 			<Dialog.Content className='w-[395px] xs:h-[209px] sm:h-[217px]' title={t("title")}>
-				<ListingRequestApproveDialogContent closeDialog={() => setOpen(false)} requestId={requestId} />
+				<SmsListingRequestApproveDialogContent closeDialog={() => setOpen(false)} requestId={requestId} />
 			</Dialog.Content>
 		</Dialog>
 	)
 }
 
-export default ListingRequestApproveDialog
+export default SmsListingRequestApproveDialog

@@ -81,7 +81,7 @@ export type UpdateSmsListingStatusBody = {
 			status: Extract<SmsListingType["status"], "APPROVED">
 	  }
 	| {
-			status: Extract<SmsListingType["status"], "BLOCKED" | "REJECTED">
+			status: Extract<SmsListingType["status"], "BLOCKED" | "REJECTED" | "SUSPENDED">
 			statusReason: SmsListingType["statusReason"]
 	  }
 )

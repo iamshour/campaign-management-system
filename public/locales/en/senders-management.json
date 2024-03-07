@@ -99,6 +99,11 @@
 			"message": "Are you sure you wish to block this sender for {{company}} towards {{country}}? The client will be unable to send messages through this sender to the chosen country and it will appear as Blocked at the clients list end.",
 			"submit": "Confirm"
 		},
+		"smsListingSuspend": {
+			"title": "Suspend Sender",
+			"message": "Are you sure you wish to Suspend this sender for {{Lebanon}}? The client using it will be unable to send messages through this sender to the chosen country.",
+			"submit": "Confirm"
+		},
 		"smsListingActivate": {
 			"title": "Activate Sender",
 			"message": "Are you sure you wish to approve this sender for {{country}}? The company with access will be able to send messages through this sender to the chosen country.",
