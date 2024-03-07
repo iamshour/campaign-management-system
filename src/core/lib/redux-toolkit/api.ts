@@ -70,6 +70,7 @@ const api = createApi({
 		"SmsSender",
 		"SmsListing",
 		"SmsListingRequest",
+		"OptInSender",
 	],
 })
 

@@ -4,13 +4,13 @@ import MaterialSymbolsSyncRounded from "~icons/material-symbols/sync-rounded"
 import { lazy, memo, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-const SmsOptInSenderDialogContent = lazy(() => import("./sms-opt-in-sender-dialog-content"))
+const OptInSmsSenderDialogContent = lazy(() => import("./opt-in-sms-sender-dialog-content"))
 //#endregion
 
-interface SmsOptInSenderDialogProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof SmsOptInSenderDialogContent>, "id"> {}
+interface OptInSmsSenderDialogProps
+	extends Pick<React.ComponentPropsWithoutRef<typeof OptInSmsSenderDialogContent>, "id"> {}
 
-const SmsOptInSenderDialog = memo(({ id }: SmsOptInSenderDialogProps) => {
+const OptInSmsSenderDialog = memo(({ id }: OptInSmsSenderDialogProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.smsOptInSender" })
 
 	const [open, setOpen] = useState(false)
@@ -24,12 +24,12 @@ const SmsOptInSenderDialog = memo(({ id }: SmsOptInSenderDialogProps) => {
 			</Tooltip>
 
 			<Dialog.Content className='h-[209px] w-[416px] sm:h-[193px]' title={t("title")}>
-				<SmsOptInSenderDialogContent closeDialog={() => setOpen(false)} id={id} />
+				<OptInSmsSenderDialogContent closeDialog={() => setOpen(false)} id={id} />
 			</Dialog.Content>
 		</Dialog>
 	)
 })
 
-SmsOptInSenderDialog.displayName = "SmsOptInSenderDialog"
+OptInSmsSenderDialog.displayName = "OptInSmsSenderDialog"
 
-export default SmsOptInSenderDialog
+export default OptInSmsSenderDialog
