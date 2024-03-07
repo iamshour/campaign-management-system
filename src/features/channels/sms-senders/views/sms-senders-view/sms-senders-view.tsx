@@ -1,5 +1,4 @@
 //#region Import
-import type { ColumnType } from "@/core/components/data-view/data-table/types"
 import type { SharedListViewProps } from "@/core/types"
 import type { SmsSenderDataViewKeyOptions, SmsSenderType } from "@/features/channels/sms-senders/types"
 
@@ -13,8 +12,6 @@ import SmsSenderCard from "./sms-sender-card"
 const SmsSendersViewTopbar = lazy(() => import("./sms-senders-view-topbar"))
 
 const SmsSendersViewFiltersContent = lazy(() => import("./sms-senders-view-filters-content"))
-
-const SmsSendersListViewTableActions = lazy(() => import("./sms-senders-list-view-table-actions"))
 //#endregion
 
 interface SmsSendersViewProps extends SharedListViewProps<SmsSenderType> {
@@ -24,7 +21,7 @@ const SmsSendersView = ({ dataViewKey, ...props }: SmsSendersViewProps) => {
 	const navigate = useNavigate()
 
 	return (
-		<DataView columns={columns} dataViewKey={dataViewKey} {...props}>
+		<DataView columns={smsSendersTableColumns} dataViewKey={dataViewKey} {...props}>
 			<DataView.FiltersBar>
 				<DataView.FiltersBar.Header />
 				<DataView.FiltersBar.Content>
@@ -49,11 +46,3 @@ const SmsSendersView = ({ dataViewKey, ...props }: SmsSendersViewProps) => {
 }
 
 export default SmsSendersView
-
-const columns: ColumnType<SmsSenderType>[] = [
-	...smsSendersTableColumns,
-	{
-		accessorKey: "actions",
-		cell: (_, { id, name }) => <SmsSendersListViewTableActions id={id} name={name} />,
-	},
-]

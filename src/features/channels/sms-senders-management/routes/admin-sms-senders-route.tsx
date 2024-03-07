@@ -35,7 +35,6 @@ const AdminSmsSendersRoute = () => {
 			...paginationAndSorting,
 			...filters,
 			...getSearchFilter<["name"]>(searchTerm, ["name"]),
-			channelType: type,
 		},
 		{
 			selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({
@@ -44,7 +43,7 @@ const AdminSmsSendersRoute = () => {
 				isFetching,
 				isInitialLoading: !data && isLoading,
 				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-				list: data?.list,
+				list: data?.list?.map((sender) => ({ ...sender, name: sender.channelSourceName, types: sender.templateTypes })),
 				...rest,
 			}),
 			...baseQueryConfigs,
