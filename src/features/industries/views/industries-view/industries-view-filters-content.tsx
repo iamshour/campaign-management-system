@@ -11,7 +11,7 @@ import { memo } from "react"
 const IndustriesViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const filters = useSelector<IndustryFilter | undefined>((state) => selectFilters(state, "industries"))
+	const filters = useSelector<IndustryFilter>((state) => selectFilters(state, "industries") as IndustryFilter)
 
 	return (
 		<DateRangePicker

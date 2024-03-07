@@ -28,7 +28,9 @@ const ContactsView = (props: SharedListViewProps<Contact>) => {
 
 	const [viewContactId, setViewContactId] = useState<string | undefined>(undefined)
 
-	const filters = useSelector<DataViewFilterType["contacts"] | undefined>((state) => selectFilters(state, "contacts"))
+	const filters = useSelector<DataViewFilterType["contacts"]>(
+		(state) => selectFilters(state, "contacts") as DataViewFilterType["contacts"]
+	)
 
 	const isAdvancedFiltersApplied = filters?.advancedFilters
 

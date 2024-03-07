@@ -21,7 +21,9 @@ export const useAdvancedFiltersDialogContext = (): AdvancedFiltersDialogContextV
 	useContext(AdvancedFiltersDialogContextProvider)
 
 const AdvancedFiltersDialogContext = ({ children }: { children: React.ReactNode }) => {
-	const filters = useSelector<DataViewFilterType["contacts"] | undefined>((state) => selectFilters(state, "contacts"))
+	const filters = useSelector<DataViewFilterType["contacts"]>(
+		(state) => selectFilters(state, "contacts") as DataViewFilterType["contacts"]
+	)
 
 	const persistedSegmentOption = filters?.advancedFilters?.segment
 

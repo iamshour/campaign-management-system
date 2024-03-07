@@ -7,6 +7,8 @@ import type {
 	SmsListingCompletedRequestFilter,
 	SmsListingPendingRequestFilter,
 	SmsListingRequest,
+	SmsOptedOutFilter,
+	SmsOptedOutSenderType,
 } from "@/features/channels/sms-senders-management/types"
 import type { SmsSenderFilter, SmsSenderType } from "@/features/channels/sms-senders/types"
 import type {
@@ -67,10 +69,12 @@ export type DataViewKey =
 	| "international-sms-listing-completed-requests"
 	| "international-sms-listing-pending-requests"
 	| "international-sms-listings"
+	| "international-sms-opted-out-senders"
 	| "international-sms-senders"
 	| "local-sms-listing-completed-requests"
 	| "local-sms-listing-pending-requests"
 	| "local-sms-listings"
+	| "local-sms-opted-out-senders"
 	| "local-sms-senders"
 	| "segments"
 	| "sms-industry-templates"
@@ -99,6 +103,8 @@ type DataViewEntryType = {
 	"sms-prebuilt-templates": SmsIndustryTemplateType
 	"sms-prebuilt-templates-dialog": SmsIndustryTemplateType
 	"sms-templates": SmsTemplateType
+	"local-sms-opted-out-senders": SmsOptedOutSenderType
+	"international-sms-opted-out-senders": SmsOptedOutSenderType
 }
 
 export type DataViewFilterType = {
@@ -123,6 +129,8 @@ export type DataViewFilterType = {
 	"sms-prebuilt-templates": PrebuiltTemplateFilter
 	"sms-prebuilt-templates-dialog": PrebuiltTemplateFilter
 	"sms-templates": TemplateFilter
+	"local-sms-opted-out-senders": SmsOptedOutFilter
+	"international-sms-opted-out-senders": SmsOptedOutFilter
 	//#endregion
 }
 

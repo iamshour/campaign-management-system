@@ -36,6 +36,11 @@
 					"activate": "Activate"
 				}
 			}
+		},
+		"smsOptedOutSenders": {
+			"fields": {
+				"phoneNumbers": "Phone Numbers"
+			}
 		}
 	},
 
@@ -107,6 +112,12 @@
 		"smsListingActivate": {
 			"title": "Activate Sender",
 			"message": "Are you sure you wish to approve this sender for {{country}}? The company with access will be able to send messages through this sender to the chosen country.",
+			"submit": "Confirm"
+		},
+		"smsOptInSender": {
+			"title": "Opt-in Phone Number",
+			"message": "Are you sure you want to opt-in this phone number?",
+			"tooltip": "Opt-in",
 			"submit": "Confirm"
 		}
 	}

@@ -11,7 +11,7 @@ import { memo } from "react"
 const GroupsViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const filters = useSelector<ContactGroupFilter | undefined>((state) => selectFilters(state, "groups"))
+	const filters = useSelector<ContactGroupFilter>((state) => selectFilters(state, "groups") as ContactGroupFilter)
 
 	return (
 		<DateRangePicker

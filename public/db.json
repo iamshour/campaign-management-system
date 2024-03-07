@@ -1574,5 +1574,312 @@
 				}
 			}
 		}
-	]
+	],
+	"sms-opted-out": {
+		"data": {
+			"count": 60,
+			"list": [
+				{
+					"id": "65e9624cea54a07e807630c6",
+					"country": "HT",
+					"phoneNumber": "+1 (883) 424-3504"
+				},
+				{
+					"id": "65e9624cd304acbc9a341229",
+					"country": "FM",
+					"phoneNumber": "+1 (959) 464-3155"
+				},
+				{
+					"id": "65e9624c17d0337f0a585fa5",
+					"country": "CA",
+					"phoneNumber": "+1 (982) 508-2356"
+				},
+				{
+					"id": "65e9624c6b6e66296f333ad5",
+					"country": "CH",
+					"phoneNumber": "+1 (885) 578-2542"
+				},
+				{
+					"id": "65e9624c5551ec1318bcec67",
+					"country": "CK",
+					"phoneNumber": "+1 (911) 574-2889"
+				},
+				{
+					"id": "65e9624cd00db41302f7df6c",
+					"country": "GW",
+					"phoneNumber": "+1 (854) 428-2442"
+				},
+				{
+					"id": "65e9624c63a374764c11bde0",
+					"country": "AC",
+					"phoneNumber": "+1 (971) 439-3381"
+				},
+				{
+					"id": "65e9624c59b66f72759239c1",
+					"country": "FO",
+					"phoneNumber": "+1 (842) 508-2542"
+				},
+				{
+					"id": "65e9624cd7982bdb51e99235",
+					"country": "GW",
+					"phoneNumber": "+1 (877) 541-3809"
+				},
+				{
+					"id": "65e9624cb6dc387140b3f289",
+					"country": "CA",
+					"phoneNumber": "+1 (860) 596-2800"
+				},
+				{
+					"id": "65e9624c2bff372941522592",
+					"country": "ID",
+					"phoneNumber": "+1 (803) 531-2900"
+				},
+				{
+					"id": "65e9624c9692a7473f261c4b",
+					"country": "AR",
+					"phoneNumber": "+1 (974) 447-3384"
+				},
+				{
+					"id": "65e9624c1877223bcb4b3721",
+					"country": "BR",
+					"phoneNumber": "+1 (863) 531-3450"
+				},
+				{
+					"id": "65e9624cbf74a8f7837d1ad4",
+					"country": "KI",
+					"phoneNumber": "+1 (807) 461-3223"
+				},
+				{
+					"id": "65e9624c65ad87d7e8a846b5",
+					"country": "BI",
+					"phoneNumber": "+1 (877) 427-2205"
+				},
+				{
+					"id": "65e9624cf0a5d16631393b4f",
+					"country": "IN",
+					"phoneNumber": "+1 (878) 552-2207"
+				},
+				{
+					"id": "65e9624c5632f02cbf2f60f6",
+					"country": "US",
+					"phoneNumber": "+1 (857) 515-3476"
+				},
+				{
+					"id": "65e9624c08a82d811087d8c7",
+					"country": "HN",
+					"phoneNumber": "+1 (944) 442-2419"
+				},
+				{
+					"id": "65e9624c7ddbc20bdb10758a",
+					"country": "CD",
+					"phoneNumber": "+1 (896) 419-2543"
+				},
+				{
+					"id": "65e9624c0870a96b95a773e0",
+					"country": "CA",
+					"phoneNumber": "+1 (891) 563-2986"
+				},
+				{
+					"id": "65e9624c82d5cc912c0e9e1c",
+					"country": "ER",
+					"phoneNumber": "+1 (816) 432-2467"
+				},
+				{
+					"id": "65e9624c6bf0d13ed0f30fae",
+					"country": "GM",
+					"phoneNumber": "+1 (843) 488-3432"
+				},
+				{
+					"id": "65e9624ca941c7c11b2895b2",
+					"country": "GM",
+					"phoneNumber": "+1 (920) 569-3454"
+				},
+				{
+					"id": "65e9624cf089c9f8bf489139",
+					"country": "CD",
+					"phoneNumber": "+1 (875) 529-3588"
+				},
+				{
+					"id": "65e9624cb13e67f40edd7387",
+					"country": "BE",
+					"phoneNumber": "+1 (978) 447-2441"
+				},
+				{
+					"id": "65e9624c04d8a7655e4669f7",
+					"country": "BB",
+					"phoneNumber": "+1 (945) 520-2699"
+				},
+				{
+					"id": "65e9624cd616f3fb777565ed",
+					"country": "BM",
+					"phoneNumber": "+1 (884) 424-3120"
+				},
+				{
+					"id": "65e9624c7c6f0cfb95c59295",
+					"country": "BA",
+					"phoneNumber": "+1 (809) 589-3579"
+				},
+				{
+					"id": "65e9624c7bc844cbfa17b576",
+					"country": "GP",
+					"phoneNumber": "+1 (854) 513-3949"
+				},
+				{
+					"id": "65e9624c23b8dd851d3c2330",
+					"country": "DZ",
+					"phoneNumber": "+1 (881) 517-2300"
+				},
+				{
+					"id": "65e9624c88853d7608cdd1e1",
+					"country": "BM",
+					"phoneNumber": "+1 (937) 404-3220"
+				},
+				{
+					"id": "65e9624ce3b08833e43202fe",
+					"country": "DJ",
+					"phoneNumber": "+1 (995) 475-2844"
+				},
+				{
+					"id": "65e9624c81824a02702a7ef4",
+					"country": "CC",
+					"phoneNumber": "+1 (900) 552-2655"
+				},
+				{
+					"id": "65e9624c2a6496722ca8d4d5",
+					"country": "IR",
+					"phoneNumber": "+1 (823) 496-2950"
+				},
+				{
+					"id": "65e9624c3ed8b6185e505f0f",
+					"country": "BG",
+					"phoneNumber": "+1 (864) 523-2190"
+				},
+				{
+					"id": "65e9624cf204b9c9829c231f",
+					"country": "EE",
+					"phoneNumber": "+1 (967) 458-2402"
+				},
+				{
+					"id": "65e9624c60ea9e2f300fcfcd",
+					"country": "CR",
+					"phoneNumber": "+1 (931) 570-2217"
+				},
+				{
+					"id": "65e9624cf8a26d82aa9ab9db",
+					"country": "EE",
+					"phoneNumber": "+1 (839) 430-2622"
+				},
+				{
+					"id": "65e9624cb221c8e6e5ba47c4",
+					"country": "DO",
+					"phoneNumber": "+1 (876) 598-3846"
+				},
+				{
+					"id": "65e9624c9b04d8e0c589b3f4",
+					"country": "ER",
+					"phoneNumber": "+1 (842) 557-2511"
+				},
+				{
+					"id": "65e9624c8fd9220b373c1c2a",
+					"country": "CZ",
+					"phoneNumber": "+1 (801) 567-3411"
+				},
+				{
+					"id": "65e9624cd52f78691b38624b",
+					"country": "KG",
+					"phoneNumber": "+1 (833) 584-3773"
+				},
+				{
+					"id": "65e9624c35ec779691ce8871",
+					"country": "KM",
+					"phoneNumber": "+1 (952) 556-2533"
+				},
+				{
+					"id": "65e9624c9c5c446120eeb734",
+					"country": "HK",
+					"phoneNumber": "+1 (810) 427-2029"
+				},
+				{
+					"id": "65e9624c95c83a502ddab27d",
+					"country": "GM",
+					"phoneNumber": "+1 (981) 451-3644"
+				},
+				{
+					"id": "65e9624c1982e03c47229df4",
+					"country": "CA",
+					"phoneNumber": "+1 (948) 521-3920"
+				},
+				{
+					"id": "65e9624c346412f805a887ad",
+					"country": "IE",
+					"phoneNumber": "+1 (835) 484-3341"
+				},
+				{
+					"id": "65e9624c7eaf2a89ad63f9f1",
+					"country": "CG",
+					"phoneNumber": "+1 (851) 434-2500"
+				},
+				{
+					"id": "65e9624c576c2e771fafc716",
+					"country": "BE",
+					"phoneNumber": "+1 (909) 586-3320"
+				},
+				{
+					"id": "65e9624cfff0068beaaa0f5f",
+					"country": "CN",
+					"phoneNumber": "+1 (972) 531-3660"
+				},
+				{
+					"id": "65e9624cda57002955dde9e5",
+					"country": "BZ",
+					"phoneNumber": "+1 (824) 419-2732"
+				},
+				{
+					"id": "65e9624c4cbacbc640f83086",
+					"country": "BS",
+					"phoneNumber": "+1 (918) 499-2300"
+				},
+				{
+					"id": "65e9624ce1855b88eb85138d",
+					"country": "AW",
+					"phoneNumber": "+1 (809) 537-2270"
+				},
+				{
+					"id": "65e9624c5f278f12b6f8ffd9",
+					"country": "KH",
+					"phoneNumber": "+1 (922) 488-3528"
+				},
+				{
+					"id": "65e9624c3bddc07c6b6fc123",
+					"country": "CI",
+					"phoneNumber": "+1 (987) 507-2649"
+				},
+				{
+					"id": "65e9624c07b1fd849fb70a0d",
+					"country": "GN",
+					"phoneNumber": "+1 (966) 530-3274"
+				},
+				{
+					"id": "65e9624c227c00686071d32a",
+					"country": "FI",
+					"phoneNumber": "+1 (982) 511-2570"
+				},
+				{
+					"id": "65e9624cff96873a0b79e5d6",
+					"country": "CH",
+					"phoneNumber": "+1 (952) 522-2852"
+				},
+				{
+					"id": "65e9624c7bb4cb7844d571b5",
+					"country": "GD",
+					"phoneNumber": "+1 (813) 431-2820"
+				},
+				{
+					"id": "65e9624c12adeda359a32f20",
+					"country": "CR",
+					"phoneNumber": "+1 (832) 577-3022"
+				}
+			]
+		}
+	}
 }

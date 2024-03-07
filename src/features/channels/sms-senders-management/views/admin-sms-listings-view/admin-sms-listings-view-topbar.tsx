@@ -14,7 +14,7 @@ const AdminSmsListingsViewTopbar = memo(() => {
 
 	return (
 		<div className='flex w-full items-end justify-end gap-4'>
-			<Button as='link' state={{ from: pathname }} to='./new-sender' variant='outline'>
+			<Button as='link' state={{ from: pathname }} to='./opted-out' variant='outline'>
 				<HeroiconsUsers16Solid />
 				{t("secondaryCallToAction")}
 			</Button>

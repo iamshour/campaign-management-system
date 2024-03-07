@@ -14,7 +14,9 @@ import { v4 as newId } from "uuid"
 const ContactsViewFiltersPreview = () => {
 	const { t } = useTranslation("contacts")
 
-	const filters = useSelector<DataViewFilterType["contacts"] | undefined>((state) => selectFilters(state, "contacts"))
+	const filters = useSelector<DataViewFilterType["contacts"]>(
+		(state) => selectFilters(state, "contacts") as DataViewFilterType["contacts"]
+	)
 
 	const appliedSegment = filters?.advancedFilters?.segment?.label
 

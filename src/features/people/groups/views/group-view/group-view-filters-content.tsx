@@ -16,8 +16,8 @@ import { memo, useCallback } from "react"
 const GroupViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const filters = useSelector<DataViewFilterType["contacts-in-group"] | undefined>((state) =>
-		selectFilters(state, "contacts-in-group")
+	const filters = useSelector<DataViewFilterType["contacts-in-group"]>(
+		(state) => selectFilters(state, "contacts-in-group") as DataViewFilterType["contacts-in-group"]
 	)
 
 	const updateSelection = useCallback(
