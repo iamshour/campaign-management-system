@@ -25,7 +25,7 @@ const GroupsEmptyView = () => {
 				<div className='flex-wrap gap-8 flex-center'>
 					<CreateGroupDialog>
 						<Button className='min-w-[200px]' size='default'>
-							{t("table.toolbar.actions.create-group")}
+							{t("table.topbar.actions.create-group")}
 						</Button>
 					</CreateGroupDialog>
 				</div>

@@ -14,7 +14,7 @@ const GroupsViewTopBar = memo(() => {
 			<CreateGroupDialog>
 				<Button>
 					<PhPlusBold />
-					{t("table.toolbar.actions.create-group")}
+					{t("table.topbar.actions.create-group")}
 				</Button>
 			</CreateGroupDialog>
 		</div>

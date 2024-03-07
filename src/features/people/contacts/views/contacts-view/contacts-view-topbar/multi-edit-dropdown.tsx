@@ -12,28 +12,28 @@ const MultiEditDropdown = () => {
 
 	return (
 		<Dropdown>
-			<Dropdown.Trigger variant='secondary'>{t("table.toolbar.actions.edit.title")}</Dropdown.Trigger>
+			<Dropdown.Trigger variant='secondary'>{t("table.topbar.actions.edit.title")}</Dropdown.Trigger>
 			<Dropdown.Content align='start' sideOffset={0}>
 				<DeleteMultipleContactsDialog>
-					<Dropdown.Item>{t("table.toolbar.actions.edit.delete")}</Dropdown.Item>
+					<Dropdown.Item>{t("table.topbar.actions.edit.delete")}</Dropdown.Item>
 				</DeleteMultipleContactsDialog>
 
 				<Dropdown.Separator />
 
 				<EditMultipleContactsDialog actionType='addTags' title={t("dialogs.editMultiple.addTags.title")}>
-					<Dropdown.Item>{t("table.toolbar.actions.edit.addTags")}</Dropdown.Item>
+					<Dropdown.Item>{t("table.topbar.actions.edit.addTags")}</Dropdown.Item>
 				</EditMultipleContactsDialog>
 
 				<Dropdown.Separator />
 
 				<EditMultipleContactsDialog actionType='removeTags' title={t("dialogs.editMultiple.removeTags.title")}>
-					<Dropdown.Item>{t("table.toolbar.actions.edit.removeTags")}</Dropdown.Item>
+					<Dropdown.Item>{t("table.topbar.actions.edit.removeTags")}</Dropdown.Item>
 				</EditMultipleContactsDialog>
 
 				<Dropdown.Separator />
 
 				<EditMultipleContactsDialog actionType='addToGroups' title={t("dialogs.editMultiple.addToGroups.title")}>
-					<Dropdown.Item>{t("table.toolbar.actions.edit.addToGroups")}</Dropdown.Item>
+					<Dropdown.Item>{t("table.topbar.actions.edit.addToGroups")}</Dropdown.Item>
 				</EditMultipleContactsDialog>
 
 				<Dropdown.Separator />
@@ -41,7 +41,7 @@ const MultiEditDropdown = () => {
 				<EditMultipleContactsDialog
 					actionType='removeFromGroups'
 					title={t("dialogs.editMultiple.removeFromGroups.title")}>
-					<Dropdown.Item>{t("table.toolbar.actions.edit.removeGroups")}</Dropdown.Item>
+					<Dropdown.Item>{t("table.topbar.actions.edit.removeGroups")}</Dropdown.Item>
 				</EditMultipleContactsDialog>
 			</Dropdown.Content>
 		</Dropdown>

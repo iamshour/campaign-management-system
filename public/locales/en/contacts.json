@@ -50,7 +50,7 @@
 		"groupName": "Group name"
 	},
 	"table": {
-		"toolbar": {
+		"topbar": {
 			"search": "Search by any field",
 
 			"actions": {
@@ -63,7 +63,11 @@
 					"removeGroups": "Remove Groups"
 				},
 				"import": "Import",
-				"add-contact": "Add Contact"
+				"add-contact": "Add Contact",
+				"export": {
+					"label": "Export Selected",
+					"label_other": "Export All"
+				}
 			}
 		},
 		"rows": {

@@ -8,6 +8,8 @@ export { default as downloadFile } from "./file-utils/download-file"
 
 export { default as formatBytes } from "./file-utils/format-bytes"
 
+export { default as generateFileName } from "./file-utils/generate-filename"
+
 export { default as getFileExtension } from "./file-utils/get-file-extension"
 
 // Custom Hooks

@@ -14,7 +14,7 @@ const IndustriesViewTopBar = memo(() => {
 			<CreateIndustryDialog>
 				<Button>
 					<PhUserPlus />
-					{t("table.toolbar.actions.create-industry")}
+					{t("table.topbar.actions.create-industry")}
 				</Button>
 			</CreateIndustryDialog>
 		</div>
