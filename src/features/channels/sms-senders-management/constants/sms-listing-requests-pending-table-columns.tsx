@@ -7,7 +7,7 @@ import { lazy } from "react"
 
 import type { SmsListingRequest } from "../types"
 
-import smsListingRequestsFieldsLocalMap from "./sms-listing-requests-fields-local-map"
+import smsListingRequestsFieldsLocaleMap from "./sms-listing-requests-fields-locale-map"
 
 // eslint-disable-next-line react-refresh/only-export-components
 const SmsListingRequestsPendingActions = lazy(
@@ -21,29 +21,29 @@ const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-vie
 const smsListingRequestsPendingTableColumns: ColumnType<SmsListingRequest>[] = [
 	{
 		accessorKey: "company",
-		header: smsListingRequestsFieldsLocalMap.company,
+		header: smsListingRequestsFieldsLocaleMap.company,
 		sortable: true,
 	},
 	{
 		accessorKey: "sender",
-		header: smsListingRequestsFieldsLocalMap.sender,
+		header: smsListingRequestsFieldsLocaleMap.sender,
 		sortable: true,
 	},
 	{
 		accessorKey: "type",
 		cell: (type) => <TemplateTypesTableColumn types={[type]} />,
-		header: smsListingRequestsFieldsLocalMap.type,
+		header: smsListingRequestsFieldsLocaleMap.type,
 	},
 	{
 		accessorKey: "country",
 		cell: (country) => getCountryName(country),
-		header: smsListingRequestsFieldsLocalMap.country,
+		header: smsListingRequestsFieldsLocaleMap.country,
 		sortable: true,
 	},
 	{
 		accessorKey: "updatedAt",
 		cell: (date) => <DataViewDateCell date={date} />,
-		header: smsListingRequestsFieldsLocalMap.updatedAt,
+		header: smsListingRequestsFieldsLocaleMap.updatedAt,
 		sortable: true,
 	},
 	{

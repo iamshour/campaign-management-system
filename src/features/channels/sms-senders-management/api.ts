@@ -7,7 +7,9 @@ import { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 
 import type {
 	GetSmsListingRequestsParams,
+	GetSmsOptedOutSendersParams,
 	SmsListingRequest,
+	SmsOptedOutSenderType,
 	SmsSenderRequestDetailsType,
 	UpdateSmsListingStatusBody,
 	UpdateSmsSourceRequestBody,
@@ -50,6 +52,16 @@ const smsSendersManagementApis = api.injectEndpoints({
 			},
 			query: ({ requestId, ...body }) => ({ body, method: "PUT", url: `/source-request/status/${requestId}` }),
 		}),
+
+		getSmsOptedOutSenders: builder.query<GetListReturnType<SmsOptedOutSenderType>, GetSmsOptedOutSendersParams>({
+			providesTags: (result) =>
+				providesList(
+					result?.list?.map(({ id }) => id),
+					"SmsListingRequest"
+				),
+			query: (params) => ({ params, url: "/sms-opted-out" }),
+			transformResponse,
+		}),
 	}),
 })
 
@@ -58,4 +70,5 @@ export const {
 	useGetSmsListingRequestByIdQuery,
 	useUpdateSmsListingStatusMutation,
 	useUpdateSmsSourceRequestMutation,
+	useGetSmsOptedOutSendersQuery,
 } = smsSendersManagementApis

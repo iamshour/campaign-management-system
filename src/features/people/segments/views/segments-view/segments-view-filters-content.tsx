@@ -9,7 +9,7 @@ import { memo } from "react"
 const SegmentsViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const filters = useSelector<DateRange | undefined>((state) => selectFilters(state, "segments"))
+	const filters = useSelector<DateRange>((state) => selectFilters(state, "segments") as DateRange)
 
 	return (
 		<DateRangePicker

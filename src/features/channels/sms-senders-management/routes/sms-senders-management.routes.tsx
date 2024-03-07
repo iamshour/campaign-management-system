@@ -19,6 +19,8 @@ const SmsListingPendingRequestsRoute = lazy(() => import("./sms-listing-pending-
 const SmsListingCompletedRequestsRoute = lazy(() => import("./sms-listing-completed-requests-route"))
 
 const AdminSmsSendersRoute = lazy(() => import("./admin-sms-senders-route"))
+
+const SmsOptedOutSendersRoute = lazy(() => import("./sms-opted-out-senders-route"))
 //#endregion
 
 const SmsSendersManagementRoutes = () => (
@@ -50,6 +52,9 @@ const SmsSendersManagementRoutes = () => (
 
 		<Route element={<AdminSmsListingsRoute />} path='local-sms/senders/:senderId' />
 		<Route element={<AdminSmsListingsRoute />} path='international-sms/senders/:senderId' />
+
+		<Route element={<SmsOptedOutSendersRoute />} path='local-sms/senders/:senderId/opted-out' />
+		<Route element={<SmsOptedOutSendersRoute />} path='international-sms/senders/:senderId/opted-out' />
 
 		<Route element={<DisplayError error={{ status: 404 }} />} path='*' />
 	</Routes>

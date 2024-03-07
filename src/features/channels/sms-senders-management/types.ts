@@ -85,3 +85,21 @@ export type UpdateSmsListingStatusBody = {
 			statusReason: SmsListingType["statusReason"]
 	  }
 )
+
+export type SmsOptedOutSenderType = {
+	country: Country
+	id: string
+	phoneNumber: string
+}
+
+/**
+ * Filters used in Filters bar
+ */
+export type SmsOptedOutFilter = {
+	country: Country[]
+}
+
+/**
+ * Params passed to the `getSenderListingRequestsQuery` query, used to fetch Sender Listing Requests List
+ */
+export type GetSmsOptedOutSendersParams = PaginationAndSorting<SmsOptedOutSenderType> & SmsListingPendingRequestFilter

@@ -2,7 +2,7 @@
 import type { SmsListingRequest } from "../types"
 //#endregion
 
-const smsListingRequestsFieldsLocalMap: Partial<Record<keyof SmsListingRequest, string>> = {
+const smsListingRequestsFieldsLocaleMap: Partial<Record<keyof SmsListingRequest, string>> = {
 	action: "channels-common:fields.action",
 	company: "channels-common:fields.company",
 	country: "channels-common:fields.country",
@@ -11,4 +11,4 @@ const smsListingRequestsFieldsLocalMap: Partial<Record<keyof SmsListingRequest, 
 	updatedAt: "channels-common:fields.updatedAt",
 }
 
-export default smsListingRequestsFieldsLocalMap
+export default smsListingRequestsFieldsLocaleMap

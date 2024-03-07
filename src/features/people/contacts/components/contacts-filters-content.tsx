@@ -20,7 +20,9 @@ const ContactsFiltersContent = memo(() => {
 
 	const { dataViewKey } = useDataViewContext()
 
-	const filters = useSelector<ContactTableFiltersType | undefined>((state) => selectFilters(state, dataViewKey))
+	const filters = useSelector<ContactTableFiltersType>(
+		(state) => selectFilters(state, dataViewKey) as ContactTableFiltersType
+	)
 
 	const updateState = useCallback(
 		(newFilters?: Partial<ContactTableFiltersType>) => dispatch(updateFilters({ [dataViewKey]: newFilters })),
