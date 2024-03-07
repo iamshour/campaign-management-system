@@ -2,6 +2,8 @@
 import type { ColumnType } from "@/core/components/data-view/data-table/types"
 
 import getCountryName from "@/core/utils/get-country-name"
+import { Button } from "@/ui"
+import MaterialSymbolsSyncRounded from "~icons/material-symbols/sync-rounded"
 
 import type { SmsOptedOutSenderType } from "../types"
 
@@ -25,7 +27,13 @@ const smsOptedOutSendersTableColumns: ColumnType<SmsOptedOutSenderType>[] = [
 	},
 	{
 		accessorKey: "actions",
-		cell: (_, { id }) => <OptInSmsSenderDialog id={id} />,
+		cell: (_, { id }) => (
+			<OptInSmsSenderDialog id={id} showTooltip>
+				<Button className='h-max w-max p-1.5 text-lg text-[#939393]' variant='ghost'>
+					<MaterialSymbolsSyncRounded />
+				</Button>
+			</OptInSmsSenderDialog>
+		),
 		preventCellClick: true,
 	},
 ]

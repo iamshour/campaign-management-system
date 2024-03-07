@@ -32,9 +32,9 @@ type ExportOptOutSchemaType = z.infer<typeof exportOptOutSchema>
 const ExportOptOutSmsSendersDialogContent = ({ onClose }: ExportOptOutSmsSendersDialogContentProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.exportOptOutSmsSenders" })
 
-	const { dataViewKey } = useDataViewContext()
-
 	const dispatch = useDispatch()
+
+	const { dataViewKey } = useDataViewContext()
 
 	// Send Filters as part of Payload
 	const {

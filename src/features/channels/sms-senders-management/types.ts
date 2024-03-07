@@ -108,7 +108,7 @@ export type GetSmsOptedOutSendersParams = PaginationAndSorting<SmsOptedOutSender
  * Body Arguments passed to the `optInSmsSenders` mutation, used to Opt in Sms Senders
  */
 export type OptInSmsSendersBody = {
-	id?: string
+	ids?: string[]
 	// optInSearchFilter?: OptInSearchFilter
 }
 

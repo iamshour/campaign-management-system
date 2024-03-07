@@ -25,7 +25,7 @@ const SmsListingRequestDetailsDialog = ({ children, id, ...props }: SmsListingRe
 	return (
 		<Dialog {...props}>
 			{!!children && <Dialog.Trigger asChild>{children}</Dialog.Trigger>}
-			<Dialog.Content className='h-[770.19px] w-[382px] sm:w-[762px]' title={t("title")}>
+			<Dialog.Content className=' h-[750px] w-[382px] sm:h-[754.19px] sm:w-[762px]' title={t("title")}>
 				<SmsListingRequestDetailsDialogContent id={id} />
 			</Dialog.Content>
 		</Dialog>
