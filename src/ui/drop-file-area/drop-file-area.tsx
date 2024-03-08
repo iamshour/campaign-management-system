@@ -19,7 +19,7 @@ interface DropFileAreaProps extends React.ComponentPropsWithoutRef<typeof Dropzo
 	/**
 	 * classNames object, used to pass classNames for each element in DropFileArea
 	 */
-	classNames?: Partial<Record<"droparea" | "dropareaButton" | "wrapper", string>>
+	classNames?: Partial<Record<"droparea" | "dropareaButton" | "fileCard" | "fileCardWrapper" | "wrapper", string>>
 
 	/**
 	 * Boolean used if an asychronous action is pending
@@ -66,15 +66,25 @@ const DropFileArea = ({
 							<Spinner className='text-gray-300' size='xl' />
 						</div>
 					) : acceptedFiles?.length ? (
-						<div className='mt-1 flex h-[calc(100%-8px)] w-[calc(100%-4px)] flex-wrap gap-4 overflow-y-auto p-4'>
+						<div
+							className={twMerge(
+								"mt-1 flex h-full w-[calc(100%-4px)] flex-wrap gap-4 overflow-y-auto p-4",
+								classNames?.fileCardWrapper
+							)}>
 							{acceptedFiles.map((file, i) => (
-								<DropFileCard file={file} key={`${file.name}-${i}`} onRemove={() => onRemove(i)} preview={preview} />
+								<DropFileCard
+									className={classNames?.fileCard}
+									file={file}
+									key={`${file.name}-${i}`}
+									onRemove={() => onRemove(i)}
+									preview={preview}
+								/>
 							))}
 						</div>
 					) : (
 						<div
 							className={twMerge(
-								"flex h-full w-full cursor-pointer flex-col items-center justify-center gap-4 px-4 py-6 text-inherit",
+								"flex h-full w-full cursor-pointer flex-col items-center justify-center gap-1.5 px-4 py-6 text-center text-inherit sm:gap-4 sm:text-start",
 								isDragActive && "bg-primary-600",
 								(!!props?.disabled || loading) && "pointer-events-none",
 								classNames?.droparea
@@ -86,7 +96,7 @@ const DropFileArea = ({
 									"flex items-center gap-2 text-inherit prevent-selection",
 									props?.disabled && "opacity-40"
 								)}>
-								<PajamasImport className='inline text-base' />
+								<PajamasImport className='hidden text-base sm:inline' />
 								<p className='inline'>{t("message")}</p>
 							</div>
 							<div

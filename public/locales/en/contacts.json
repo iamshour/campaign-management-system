@@ -64,10 +64,8 @@
 				},
 				"import": "Import",
 				"add-contact": "Add Contact",
-				"export": {
-					"label": "Export Selected",
-					"label_other": "Export All"
-				}
+				"export": "Export Selected",
+				"export_other": "Export All"
 			}
 		},
 		"rows": {

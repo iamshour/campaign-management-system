@@ -4,7 +4,7 @@ import type { SharedListViewProps } from "@/core/types"
 import type { Contact } from "@/features/people/contacts/types"
 
 import DataView from "@/core/components/data-view/data-view"
-import { clearSelection, resetDataViewState, updateSelection } from "@/core/components/data-view/data-view-slice"
+import { checkItem, clearSelection, resetDataViewState } from "@/core/components/data-view/data-view-slice"
 import appPaths from "@/core/constants/app-paths"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
@@ -80,7 +80,7 @@ const AddContactsToGroupView = (props: SharedListViewProps<Contact>) => {
 				<h3 className='pt-4 text-[21px] font-medium'>{t("title")}</h3>
 
 				<DataView.TopBar className='pt-4' />
-				<DataView.Body onRowClick={({ id }) => dispatch(updateSelection({ "add-contacts-to-group": [id] }))} />
+				<DataView.Body onRowClick={({ id }) => dispatch(checkItem({ "add-contacts-to-group": id }))} />
 				<DataView.Pagination>
 					<DataView.Pagination.Message />
 				</DataView.Pagination>

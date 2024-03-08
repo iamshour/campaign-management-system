@@ -4,7 +4,7 @@ import type { SharedListViewProps } from "@/core/types"
 import type { SmsOptedOutSenderType } from "@/features/channels/sms-senders-management/types"
 
 import DataView from "@/core/components/data-view/data-view"
-import { updateSelection } from "@/core/components/data-view/data-view-slice"
+import { checkItem } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import smsOptedOutSendersTableColumns from "@/features/channels/sms-senders-management/constants/sms-opted-out-senders-table-columns"
 import { lazy } from "react"
@@ -36,7 +36,7 @@ const SmsOptedOutSendersView = (props: SmsOptedOutSendersViewProps) => {
 					<SmsOptedOutViewTopbar />
 				</DataView.TopBar>
 
-				<DataView.Body onRowClick={({ id }) => dispatch(updateSelection({ [props.dataViewKey]: [id] }))} />
+				<DataView.Body onRowClick={({ id }) => dispatch(checkItem({ [props.dataViewKey]: id }))} />
 
 				<DataView.Pagination pageLimits={[20, 40, 60, 80]}>
 					<DataView.Pagination.Message />
