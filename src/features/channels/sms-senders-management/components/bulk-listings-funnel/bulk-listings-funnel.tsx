@@ -45,15 +45,18 @@ const BulkListingsFunnel = ({ bulkListingsGroups, control, highlightedErrorRow }
 						name={`bulkListingsGroups.${SenderRequestsGroupsIdx}.type`}
 						render={({ field }) => (
 							<Form.Item className='w-full max-w-[340px]'>
-								<Form.Label>Template Type *</Form.Label>
-								<SelectSingleTemplateType
-									onValueChange={(selectedType) => {
-										onTypeSelect(selectedType)
-										field.onChange(selectedType)
-									}}
-									placeholder='Select type'
-									value={field.value}
-								/>
+								<Form.Control>
+									<SelectSingleTemplateType
+										label='Template Type *'
+										onValueChange={(selectedType) => {
+											onTypeSelect(selectedType)
+											field.onChange(selectedType)
+										}}
+										placeholder='Select type'
+										size='lg'
+										value={field.value}
+									/>
+								</Form.Control>
 								<Form.Message />
 							</Form.Item>
 						)}

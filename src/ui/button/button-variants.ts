@@ -1,5 +1,6 @@
 //#region Import
 import { cva, type VariantProps } from "class-variance-authority"
+import { twMerge } from "tailwind-merge"
 //#endregion
 
 const buttonVariants = cva(
@@ -21,8 +22,12 @@ const buttonVariants = cva(
 					"hover:bg-primary-50/75 hover:text-primary-950 data-[active=true]:bg-white data-[active=true]:text-black",
 				link: "text-primary-600 underline-offset-4 underline hover:text-opacity-75",
 				outline: "border-current bg-white text-primary-600 hover:bg-primary-50 hover:text-primary-800",
-				"outline-grey": `border-current bg-white text-gray-400 border-gray-300 hover:bg-primary-50/40 hover:text-primary-800 hover:border-primary-700 data-[hasvalue=true]:border-primary-500
-					 data-[hasvalue=true]:text-black data-[active=true]:bg-primary-50 data-[active=true]:text-primary-800 data-[active=true]:border-primary-700`,
+				"outline-grey": twMerge(
+					`border-current bg-white text-gray-400 border-gray-300 hover:bg-primary-50/40 hover:text-primary-800 hover:border-primary-700 
+				data-[hasvalue=true]:border-primary-500 data-[hasvalue=true]:text-black data-[active=true]:bg-primary-50 data-[active=true]:text-primary-800 data-[active=true]:border-primary-700`,
+					// styling when input invalid (used for select popovers):
+					`aria-[invalid=true]:!border-red-500 hover:aria-[invalid=true]:!bg-red-50 hover:aria-[invalid=true]:!text-red-500 [&>svg]:hover:aria-[invalid=true]:!text-red-500`
+				),
 				secondary: "bg-primary-600 text-white hover:bg-opacity-75",
 				text: "text-primary-700 hover:text-opacity-75",
 			},
