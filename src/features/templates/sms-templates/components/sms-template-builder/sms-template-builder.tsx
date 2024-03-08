@@ -102,12 +102,15 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 							name='type'
 							render={({ field }) => (
 								<Form.Item className='w-full max-w-[340px]'>
-									<Form.Label>Template Type *</Form.Label>
-									<SelectSingleTemplateType
-										onValueChange={(selectedType) => field.onChange(selectedType)}
-										placeholder='Select type'
-										value={field.value}
-									/>
+									<Form.Control>
+										<SelectSingleTemplateType
+											label='Template Type *'
+											onValueChange={(selectedType) => field.onChange(selectedType)}
+											placeholder='Select type'
+											size='lg'
+											value={field.value}
+										/>
+									</Form.Control>
 									<Form.Message />
 								</Form.Item>
 							)}

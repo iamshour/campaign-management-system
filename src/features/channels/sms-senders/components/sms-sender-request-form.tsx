@@ -40,7 +40,15 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 									{t("channels-common:fields.sender")} *
 									<IconTooltip content={t("components.smsSenderRequestForm.labels.name.iconTooltip")} />
 								</Form.Label>
-								<SenderNameInput onChange={field.onChange} readOnly={!!defaultValues?.sender} value={field.value} />
+								<Form.Control>
+									<SenderNameInput
+										{...field}
+										onChange={field.onChange}
+										readOnly={!!defaultValues?.sender}
+										size='lg'
+										value={field.value}
+									/>
+								</Form.Control>
 								<Form.Message />
 							</Form.Item>
 						)}
@@ -51,13 +59,16 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 						name='category'
 						render={({ field }) => (
 							<Form.Item className='w-full max-w-[340px]'>
-								<Form.Label>{t("channels-common:fields.type")} *</Form.Label>
-								<SelectSingleTemplateType
-									onValueChange={field.onChange}
-									placeholder={t("components.smsSenderRequestForm.placeholders.type")}
-									readOnly={!!defaultValues?.category}
-									value={field.value}
-								/>
+								<Form.Control>
+									<SelectSingleTemplateType
+										label={`${t("channels-common:fields.type")} *`}
+										onValueChange={field.onChange}
+										placeholder={t("components.smsSenderRequestForm.placeholders.type")}
+										readOnly={!!defaultValues?.category}
+										size='lg'
+										value={field.value}
+									/>
+								</Form.Control>
 								<Form.Message />
 							</Form.Item>
 						)}
@@ -69,13 +80,15 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 						render={({ field }) => (
 							<Form.Item>
 								<Form.Label>{t("channels-common:fields.country")} *</Form.Label>
-								<SelectCountryPopover
-									className='[&>*]:text-base [&>*]:font-normal'
-									onChange={(country) => field.onChange(country)}
-									readOnly={!!defaultValues?.country}
-									size='lg'
-									value={field.value}
-								/>
+								<Form.Control>
+									<SelectCountryPopover
+										className='[&>*]:text-base [&>*]:font-normal'
+										onChange={(country) => field.onChange(country)}
+										readOnly={!!defaultValues?.country}
+										size='lg'
+										value={field.value}
+									/>
+								</Form.Control>
 								<Form.Message />
 							</Form.Item>
 						)}
@@ -87,13 +100,15 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 						render={({ field }) => (
 							<Form.Item>
 								<Form.Label>{t("channels-common:fields.note")}</Form.Label>
-								<TextareaPopover
-									onValueChange={(v) => field.onChange(v)}
-									placeholder={t("components.smsSenderRequestForm.placeholders.note")}
-									size='lg'
-									triggerProps={{ className: "text-base" }}
-									value={field.value}
-								/>
+								<Form.Control>
+									<TextareaPopover
+										onValueChange={(v) => field.onChange(v)}
+										placeholder={t("components.smsSenderRequestForm.placeholders.note")}
+										size='lg'
+										triggerProps={{ className: "text-base" }}
+										value={field.value}
+									/>
+								</Form.Control>
 								<Form.Message />
 							</Form.Item>
 						)}
@@ -105,13 +120,15 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 						render={({ field }) => (
 							<Form.Item className='col-span-2'>
 								<Form.Label>{t("channels-common:fields.sampleContent")} *</Form.Label>
-								<Textarea
-									maxLength={500}
-									onChange={field.onChange}
-									placeholder={t("components.smsSenderRequestForm.placeholders.sampleContent")}
-									rows={3}
-									value={field.value}
-								/>
+								<Form.Control>
+									<Textarea
+										maxLength={500}
+										onChange={field.onChange}
+										placeholder={t("components.smsSenderRequestForm.placeholders.sampleContent")}
+										rows={3}
+										value={field.value}
+									/>
+								</Form.Control>
 								<Form.Message />
 							</Form.Item>
 						)}
