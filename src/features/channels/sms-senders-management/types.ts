@@ -5,7 +5,13 @@ import { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import { TemplateType } from "@/features/templates/common/types"
 import { DateRange } from "@/ui"
 
-import type { RequestActionType, SmsChannelTypeOption, SmsListingRequestStatus, SmsListingType } from "../common/types"
+import type {
+	ChannelType,
+	RequestActionType,
+	SmsListingRequestStatus,
+	SmsListingStatus,
+	SmsListingType,
+} from "../common/types"
 //#endregion
 
 /**
@@ -121,18 +127,28 @@ export type ExportOptOutSmsSendersParams = {
 }
 
 /**
- * Body Arguments passed to the `addBulkSmsListingRequests` mutation, used to send multiple new listing requests
+ * Body Arguments passed to the `addBulkSmsListings` mutation, used to send multiple new listings
  */
-export type AddBulkSmsListingRequestsBody = {
+export type AddBulkSmsListingsBody = {
 	channelSource: string
 	channelSourceRequestRouteList: {
-		channelSourceListingStatus?: SmsListingRequestStatus
+		channelSourceListingStatus?: Extract<SmsListingStatus, "APPROVED" | "BLOCKED">
 		country: Country
 		sample: string
 		templateType: TemplateType
 	}[]
-	channelType: SmsChannelTypeOption
+	channelType: ChannelType
 	companyId: string
 	email: string
 	note?: string
+}
+
+/**
+ * Body Arguments passed to the `addBulkSmsListingRequests` mutation, used to send multiple new listing requests
+ */
+export type AddBulkSmsListingRequestsBody = Omit<AddBulkSmsListingsBody, "channelSourceRequestRouteList"> & {
+	channelSourceRequestRouteList: Omit<
+		AddBulkSmsListingsBody["channelSourceRequestRouteList"][number],
+		"channelSourceListingStatus"
+	>[]
 }

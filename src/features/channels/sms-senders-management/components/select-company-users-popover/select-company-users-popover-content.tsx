@@ -3,11 +3,14 @@ import { ComboBoxPopper, OptionType } from "@/ui"
 import { useState } from "react"
 //#endregion
 
-const SelectCompanyPopoverContent = () => {
+const SelectCompanyUsersPopoverContent = ({ companyId }: { companyId: string }) => {
 	const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined)
 
+	// eslint-disable-next-line no-console
+	console.log("Fetching users by company Id: ", companyId)
+
 	const { list, loading } = {
-		list: [{ label: "KFC", value: "018dc671-f7d1-7e35-9a04-58764ff4c013" }] as OptionType[],
+		list: [{ label: "Ali", value: "018e1cdf-ee66-7780-b524-bf11973ccd0a" }] as OptionType[],
 		loading: false,
 	}
 
@@ -27,4 +30,4 @@ const SelectCompanyPopoverContent = () => {
 	return <ComboBoxPopper loading={loading} onSearch={setSearchTerm} options={list} searchTerm={searchTerm} />
 }
 
-export default SelectCompanyPopoverContent
+export default SelectCompanyUsersPopoverContent

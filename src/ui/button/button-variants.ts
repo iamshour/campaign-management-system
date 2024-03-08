@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge"
 
 const buttonVariants = cva(
 	`group relative border prevent-selection border-transparent rounded-md inline-flex items-center gap-2 truncate overflow-hidden justify-center text-sm font-medium ring-offset-white 
-	outline-0 transition-basic focus-visible:ring-2 focus-visible:ring-primary-500 disabled:pointer-events-none disabled:opacity-50 data-[active=true]:pointer-events-none [&_svg]:shrink-0`,
+	outline-0 transition-basic focus-visible:ring-2 focus-visible:ring-primary-500 disabled:pointer-events-none disabled:opacity-60 data-[active=true]:pointer-events-none [&_svg]:shrink-0`,
 	{
 		defaultVariants: { size: "default", variant: "default" },
 		variants: {

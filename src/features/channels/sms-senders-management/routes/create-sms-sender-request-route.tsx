@@ -3,31 +3,46 @@ import type { BulkListingsFunnelBase } from "@/features/channels/sms-senders-man
 
 import useGetChannelType from "@/core/hooks/useGetChannelType"
 import BulkListingsFunnel from "@/features/channels/sms-senders-management/components/bulk-listings-funnel/bulk-listings-funnel"
-import { emptyBulkListingsGroup } from "@/features/channels/sms-senders-management/components/bulk-listings-funnel/bulk-listings-funnel-configs"
-import CreateSmsSenderRequestBasicInfo from "@/features/channels/sms-senders-management/components/create-sms-sender-request-basic-info/create-sms-sender-request-basic-info"
-import { ExtendedAddBulkSmsListingRequestsBody } from "@/features/channels/sms-senders-management/components/sms-listing-request-create-peview/sms-listing-request-create-peview"
+// import { emptyBulkListingsGroup } from "@/features/channels/sms-senders-management/components/bulk-listings-funnel/bulk-listings-funnel-configs"
+import CreateSmsSenderRequestBasicInfo, {
+	type CreateSmsSenderRequestBasicInfoType,
+} from "@/features/channels/sms-senders-management/components/create-sms-sender-request-basic-info"
 import CreateSmsListingRequestConfirmDialog from "@/features/channels/sms-senders-management/dialogs/create-sms-listing-request-confirm-dialog/create-sms-listing-request-confirm-dialog"
 import formatAddBulkSmsListingRequestsBody from "@/features/channels/sms-senders-management/utils/format-add-bulk-sms-listing-requests-body"
 import { Button, Footer, Form } from "@/ui"
 import SectionHeading from "@/ui/section-heading/section-heading"
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useLocation } from "react-router-dom"
+
+import type { SmsListingRequestCreationPreviewData } from "../components/sms-listing-request-creation-preview"
 //#endregion
 
-export type SmsSenderRequestsForm = {
-	basicInfo: Record<"company" | "email" | "sender", string>
-} & BulkListingsFunnelBase
+export type SmsSenderRequestsForm = CreateSmsSenderRequestBasicInfoType & BulkListingsFunnelBase
 
 const CreateSmsSenderRequestView = () => {
 	const { state } = useLocation()
 
 	const form = useForm<SmsSenderRequestsForm>({
 		defaultValues: {
-			basicInfo: {},
-
-			bulkListingsGroups: [emptyBulkListingsGroup],
+			basicInfo: {
+				company: { label: "kfc", value: "018dc671-f7d1-7e35-9a04-58764ff4c013" },
+				email: { label: "Ali", value: "018e1cdf-ee66-7780-b524-bf11973ccd0a" },
+				sender: "Ali Shour",
+			},
+			// bulkListingsGroups: [emptyBulkListingsGroup],
+			bulkListingsGroups: [
+				{
+					listingsFields: [
+						{
+							content: "Custom Content here...",
+							country: "AC",
+						},
+					],
+					type: "OTP",
+				},
+			],
 		},
 	})
 
@@ -35,20 +50,15 @@ const CreateSmsSenderRequestView = () => {
 
 	const [confirmDialogOpen, setConfirmDialogOpen] = useState<boolean>(false)
 
-	const [formattedData, setFormattedData] = useState<ExtendedAddBulkSmsListingRequestsBody>()
+	const [formattedData, setFormattedData] = useState<SmsListingRequestCreationPreviewData>()
 
-	const [highlightedErrorRow, setHighlightedErrorRow] = useState<string>()
+	const onValidationSubmit = (data: SmsSenderRequestsForm) => {
+		if (!type) return
 
-	useEffect(() => {
-		const onErrorListingFormKey = setTimeout(() => {
-			if (highlightedErrorRow !== undefined) setHighlightedErrorRow(undefined)
-		}, 2000)
-
-		return () => clearTimeout(onErrorListingFormKey)
-	}, [highlightedErrorRow])
-
-	const onValidationSuccess = (data: SmsSenderRequestsForm) => {
-		const formattedData = formatAddBulkSmsListingRequestsBody(data, type!)
+		const formattedData = formatAddBulkSmsListingRequestsBody(
+			data,
+			type === "local" ? "SMS_LOCAL" : "SMS_INTERNATIONAL"
+		)
 
 		setFormattedData(formattedData)
 		setConfirmDialogOpen(true)
@@ -61,7 +71,7 @@ const CreateSmsSenderRequestView = () => {
 			</header>
 
 			<Form {...form}>
-				<form className='flex h-full flex-col gap-4 overflow-hidden' onSubmit={form.handleSubmit(onValidationSuccess)}>
+				<form className='flex h-full flex-col gap-4 overflow-hidden' onSubmit={form.handleSubmit(onValidationSubmit)}>
 					<div className='flex w-full flex-1 flex-col gap-6 overflow-y-auto rounded-xl bg-[#F7F7F7] p-4'>
 						<SectionHeading
 							description='Fill your sender ID info'
@@ -72,7 +82,6 @@ const CreateSmsSenderRequestView = () => {
 						<BulkListingsFunnel
 							bulkListingsGroups={form.getValues().bulkListingsGroups}
 							control={form.control as any}
-							highlightedErrorRow={highlightedErrorRow}
 						/>
 					</div>
 
@@ -81,18 +90,17 @@ const CreateSmsSenderRequestView = () => {
 							Cancel
 						</Button>
 
-						<Button type='submit'>Add</Button>
-
-						{confirmDialogOpen && formattedData && (
-							<CreateSmsListingRequestConfirmDialog
-								data={formattedData}
-								open={confirmDialogOpen}
-								setHighlightedErrorRow={setHighlightedErrorRow}
-								setOpen={setConfirmDialogOpen}
-							/>
-						)}
+						<Button className='px-10' type='submit'>
+							Add
+						</Button>
 					</Footer>
 				</form>
+
+				<CreateSmsListingRequestConfirmDialog
+					data={formattedData}
+					onOpenChange={setConfirmDialogOpen}
+					open={confirmDialogOpen && !!formattedData}
+				/>
 			</Form>
 		</div>
 	)

@@ -2,18 +2,27 @@
 import IconTooltip from "@/core/components/icon-tooltip/icon-tooltip"
 import SelectCompanyPopover from "@/features/channels/sms-senders-management/components/select-company-popover/select-company-popover"
 import SenderNameInput from "@/features/channels/sms-senders/components/sender-name-input"
-import { Form, Input } from "@/ui"
-import { Control } from "react-hook-form"
+import { Form, type OptionType } from "@/ui"
+import { Control, useFormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
+import SelectCompanyUsersPopover from "./select-company-users-popover/select-company-users-popover"
 //#endregion
 
+export type CreateSmsSenderRequestBasicInfoType = {
+	basicInfo: Record<"company" | "email", OptionType> & { sender: string }
+}
+
 interface CreateSmsSenderRequestBasicInfoProps {
-	control: Control<{ basicInfo: Record<"company" | "email" | "sender", string> }>
+	control: Control<CreateSmsSenderRequestBasicInfoType>
 }
 
 const CreateSmsSenderRequestBasicInfo = ({ control }: CreateSmsSenderRequestBasicInfoProps) => {
 	const { t } = useTranslation("channels-common")
+
+	const { getValues, setValue } = useFormContext()
+
+	const selectedCompanyId = getValues("basicInfo.company")?.value
 
 	return (
 		<div className='flex w-full flex-wrap gap-4'>
@@ -24,9 +33,14 @@ const CreateSmsSenderRequestBasicInfo = ({ control }: CreateSmsSenderRequestBasi
 					<Form.Item>
 						<SelectCompanyPopover
 							isMulti={false}
-							selection={{ label: field.value, value: field.value }}
+							selection={field.value}
 							size='lg'
-							updateSelection={(op) => field.onChange(op?.value)}
+							updateSelection={(option) => {
+								field.onChange(option)
+
+								// Clearing User Email when changing
+								setValue("basicInfo.email", undefined)
+							}}
 						/>
 						<Form.Message />
 					</Form.Item>
@@ -38,19 +52,14 @@ const CreateSmsSenderRequestBasicInfo = ({ control }: CreateSmsSenderRequestBasi
 				name='basicInfo.email'
 				render={({ field }) => (
 					<Form.Item>
-						<Form.Label>
-							Client Email
-							{/* {t("fields.firstName")} */}
-						</Form.Label>
-						<Form.Control>
-							<Input
-								className='rounded-lg bg-white'
-								// placeholder={t("components.contactForm.placeholders.firstName")}
-								placeholder='Enter email'
-								size='lg'
-								{...field}
-							/>
-						</Form.Control>
+						<SelectCompanyUsersPopover
+							companyId={selectedCompanyId}
+							disabled={!selectedCompanyId}
+							isMulti={false}
+							selection={field.value}
+							size='lg'
+							updateSelection={field.onChange}
+						/>
 						<Form.Message />
 					</Form.Item>
 				)}

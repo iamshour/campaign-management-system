@@ -9,31 +9,16 @@ const CreateSmsListingRequestConfirmDialogContent = lazy(
 //#endregion
 
 interface CreateSmsListingRequestConfirmDialogProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof CreateSmsListingRequestConfirmDialogContent>, "data"> {
-	open: boolean
+	extends Required<Pick<React.ComponentPropsWithRef<typeof Dialog>, "onOpenChange" | "open">>,
+		Pick<React.ComponentPropsWithoutRef<typeof CreateSmsListingRequestConfirmDialogContent>, "data"> {}
 
-	setHighlightedErrorRow: React.Dispatch<React.SetStateAction<string | undefined>>
-
-	setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-const CreateSmsListingRequestConfirmDialog = ({
-	data,
-	open,
-	setHighlightedErrorRow,
-	setOpen,
-}: CreateSmsListingRequestConfirmDialogProps) => {
+const CreateSmsListingRequestConfirmDialog = ({ data, ...props }: CreateSmsListingRequestConfirmDialogProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.createSmsListingRequestConfirm" })
 
 	return (
-		<Dialog onOpenChange={setOpen} open={open}>
+		<Dialog {...props}>
 			<Dialog.Content className='h-[922px] w-[1256px]' title={t("title")}>
-				<CreateSmsListingRequestConfirmDialogContent
-					data={data}
-					open={open}
-					setHighlightedErrorRow={setHighlightedErrorRow}
-					setOpen={setOpen}
-				/>
+				<CreateSmsListingRequestConfirmDialogContent closeDialog={() => props.onOpenChange(false)} data={data} />
 			</Dialog.Content>
 		</Dialog>
 	)

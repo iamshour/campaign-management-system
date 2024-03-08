@@ -10,7 +10,7 @@ const SelectCompanyPopover = ({ label, ...props }: React.ComponentPropsWithoutRe
 	const { t } = useTranslation("senders-management", { keyPrefix: "components.companyPopover" })
 
 	return (
-		<ComboBox className='w-[340px] max-w-full' label={label || t("label")} {...props}>
+		<ComboBox className='w-[340px] max-w-full' label={label || `${t("label")} *`} {...props}>
 			<ComboBox.Trigger>{t("placeholder")}</ComboBox.Trigger>
 
 			<ComboBox.Content>
