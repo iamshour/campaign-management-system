@@ -9,7 +9,6 @@ import { twMerge } from "tailwind-merge"
 import type { BulkListingsFunnelBase } from "./types"
 
 import { emptyListingField } from "./bulk-listings-funnel-configs"
-
 //#endregion
 
 interface ListingFieldProps {
@@ -43,6 +42,14 @@ const ListingField = ({
 		control,
 		name: `bulkListingsGroups.${SenderRequestsGroupsIdx}.listingsFields`,
 	})
+
+	// const { formState } = useFormContext()
+	// const error = formState.errors
+	// 				? formState.errors.bulkListingsGroups[SenderRequestsGroupsIdx].listingsFields[singleRequestIdx].country
+	// 				: undefined
+
+	// 			console.log("error", error)
+	// 			console.log("formState.errors", formState.errors)
 
 	return (
 		<>

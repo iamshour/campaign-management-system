@@ -17,9 +17,9 @@ interface BulkListingsFunnelProps
 	bulkListingsGroups: BulkListingsGroup[]
 
 	control: Control<BulkListingsFunnelBase>
-}
 
-interface BulkListingsFunnelProps {}
+	defaultValues?: BulkListingsGroup
+}
 
 const BulkListingsFunnel = ({ bulkListingsGroups, control, highlightedErrorRow }: BulkListingsFunnelProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "components.senderRequestFunnel.actions" })
@@ -75,7 +75,6 @@ const BulkListingsFunnel = ({ bulkListingsGroups, control, highlightedErrorRow }
 			<Button
 				className='me-auto mt-2 w-max shrink-0 gap-2 bg-primary-600'
 				// Max number of allowed types === 3 (PROMOTIONAL - TRANSACTIONAL - OTP)
-				// disabled={fields?.length >= 3 || disableNewRequest}
 				disabled={fields?.length >= 3}
 				onClick={() => append([emptyBulkListingsGroup])}
 				size='sm'

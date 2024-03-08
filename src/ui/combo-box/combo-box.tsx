@@ -31,6 +31,7 @@ type ComboBoxMultiProps = {
 
 export type ComboBoxContextType = Pick<React.ComponentPropsWithoutRef<typeof Button>, "size"> & {
 	creatable?: boolean
+	disabled?: boolean
 } & (ComboBoxMultiProps | ComboBoxSingleProps)
 
 const ComboBoxContextProvider = createContext<ComboBoxContextType>({} as ComboBoxContextType)
@@ -44,7 +45,11 @@ type ComboBoxProps = Pick<React.ComponentPropsWithoutRef<typeof Button>, "childr
 const ComboBox = ({ children, className, label, ...contextValue }: ComboBoxProps) => (
 	<ComboBoxContextProvider.Provider value={contextValue}>
 		<div className={twMerge("relative w-full max-w-[340px]", className)}>
-			{!!label?.length && <Label size={contextValue?.size}>{label}</Label>}
+			{!!label?.length && (
+				<Label disabled={contextValue?.disabled} size={contextValue?.size}>
+					{label}
+				</Label>
+			)}
 
 			<Popover>{children}</Popover>
 		</div>
@@ -52,10 +57,10 @@ const ComboBox = ({ children, className, label, ...contextValue }: ComboBoxProps
 )
 
 const ComboBoxTrigger = ({ children, className, ...props }: React.ComponentPropsWithoutRef<typeof Button>) => {
-	const { isMulti, selection, size } = useComboBoxContext()
+	const { disabled, isMulti, selection, size } = useComboBoxContext()
 
 	return (
-		<Popover.Trigger asChild>
+		<Popover.Trigger asChild disabled={disabled}>
 			<Button
 				hasValue={(isMulti && !!selection?.length) || (!isMulti && !!selection?.value?.length)}
 				size={size}

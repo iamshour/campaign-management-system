@@ -60,6 +60,10 @@
 			"label": "Company name",
 			"placeholder": "Select company"
 		},
+		"companyUsersPopover": {
+			"label": "Client email",
+			"placeholder": "Select client email"
+		},
 		"senderRequestFunnel": {
 			"actions": {
 				"addType": "Add Type",
@@ -80,7 +84,7 @@
 			"label": "Reason",
 			"placeholder": "Enter reason"
 		},
-		"smsListingRequestCreatePreview": {
+		"smsListingRequestCreationPreview": {
 			"message": "Are you sure you want to add this Sender request?",
 			"editDetails": "Edit Details",
 			"basicInfo": {

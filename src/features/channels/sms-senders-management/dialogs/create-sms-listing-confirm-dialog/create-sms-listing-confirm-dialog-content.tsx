@@ -1,37 +1,28 @@
 //#region Import
+import type { AddBulkSmsListingsBody } from "@/features/channels/sms-senders-management/types"
+
 import useGetChannelType from "@/core/hooks/useGetChannelType"
+import { useAddBulkSmsListingsMutation } from "@/features/channels/sms-senders-management/api"
 import { Button, Footer } from "@/ui"
 import { lazy, useState } from "react"
 import { useFormContext } from "react-hook-form"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
-
-import type { AddBulkSmsListingRequestsBody } from "../../types"
-
-import { useAddBulkSmsListingsMutation } from "../../api"
 const SmsListingRequestCreationPreview = lazy(
-	() =>
-		import(
-			"@/features/channels/sms-senders-management/components/sms-listing-request-create-peview/sms-listing-request-create-peview"
-		)
+	() => import("@/features/channels/sms-senders-management/components/sms-listing-request-creation-preview")
 )
 //#endregion
 
 export interface CreateSmsListingConfirmDialogContentProps
 	extends Pick<React.ComponentPropsWithoutRef<typeof SmsListingRequestCreationPreview>, "data"> {
-	open: boolean
-
-	setHighlightedErrorRow: React.Dispatch<React.SetStateAction<string | undefined>>
-
-	setOpen: React.Dispatch<React.SetStateAction<boolean>>
+	/**
+	 * Callback function used to close the dialog
+	 */
+	closeDialog: () => void
 }
 
-const CreateSmsListingConfirmDialogContent = ({
-	data,
-	setHighlightedErrorRow,
-	setOpen,
-}: CreateSmsListingConfirmDialogContentProps) => {
+const CreateSmsListingConfirmDialogContent = ({ closeDialog, data }: CreateSmsListingConfirmDialogContentProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.createSmsListingConfirm" })
 
 	const navigate = useNavigate()
@@ -47,7 +38,7 @@ const CreateSmsListingConfirmDialogContent = ({
 	const onSubmit = async () => {
 		if (!data) return
 
-		const body: AddBulkSmsListingRequestsBody = {
+		const body: AddBulkSmsListingsBody = {
 			...data,
 			channelSourceRequestRouteList: data.channelSourceRequestRouteList.map((row) => ({
 				...row,
@@ -65,7 +56,6 @@ const CreateSmsListingConfirmDialogContent = ({
 			})
 			.catch(() => {
 				// TODO: set errors in form and in state
-				setHighlightedErrorRow(`bulkListingsGroups.${1}.listingsFields.${0}`)
 				setErrorsIdx([2])
 				setError(`bulkListingsGroups.${1}.listingsFields.${0}.country`, {
 					message: "Error on country field",
@@ -76,10 +66,10 @@ const CreateSmsListingConfirmDialogContent = ({
 
 	return (
 		<>
-			<SmsListingRequestCreationPreview closeDialog={() => setOpen(false)} data={data} errorsIdx={errorsIdx} />
+			<SmsListingRequestCreationPreview closeDialog={closeDialog} data={data} errorsIdx={errorsIdx} />
 
 			<Footer>
-				<Button className='px-10' disabled={isLoading} onClick={() => setOpen(false)} variant='outline'>
+				<Button className='px-10' disabled={isLoading} onClick={closeDialog} variant='outline'>
 					{t("cancel")}
 				</Button>
 				<Button className='px-10' disabled={isLoading} loading={isLoading} onClick={onSubmit} type='button'>

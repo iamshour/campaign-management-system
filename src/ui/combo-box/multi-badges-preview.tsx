@@ -1,5 +1,8 @@
+//#region Import
+import type { OptionType } from "../types"
+
 import Badge from "../badge/badge"
-import { OptionType } from "../types"
+//#endregion
 
 interface MultiBadegesPreviewProps extends React.ComponentPropsWithoutRef<typeof Badge> {
 	selection: OptionType[]

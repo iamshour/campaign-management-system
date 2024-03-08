@@ -8,6 +8,7 @@ import { downloadFile } from "@/utils"
 
 import type {
 	AddBulkSmsListingRequestsBody,
+	AddBulkSmsListingsBody,
 	ExportOptOutSmsSendersParams,
 	GetSmsListingRequestsParams,
 	GetSmsOptedOutSendersParams,
@@ -94,14 +95,14 @@ const smsSendersManagementApis = api.injectEndpoints({
 			invalidatesTags: (res) => {
 				return res ? [{ id: "LIST", type: "SmsListingRequest" }] : []
 			},
-			query: (body) => ({ body, method: "POST", url: "/requests-bulk" }),
+			query: (body) => ({ body, method: "POST", url: "/channel-source/request/bulk" }),
 		}),
 
-		addBulkSmsListings: builder.mutation<any, AddBulkSmsListingRequestsBody>({
+		addBulkSmsListings: builder.mutation<any, AddBulkSmsListingsBody>({
 			invalidatesTags: (res) => {
 				return res ? [{ id: "LIST", type: "SmsListing" }] : []
 			},
-			query: (body) => ({ body, method: "POST", url: "/listings-bulk" }),
+			query: (body) => ({ body, method: "POST", url: "/channel-source/listing/bulk" }),
 		}),
 	}),
 })

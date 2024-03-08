@@ -1,39 +1,40 @@
-import { SmsChannelTypeOption } from "../../common/types"
-import { ExtendedAddBulkSmsListingRequestsBody } from "../components/sms-listing-request-create-peview/sms-listing-request-create-peview"
+//#region Import
+import type { ChannelType } from "@/features/channels/common/types"
+
+import type { SmsListingRequestCreationPreviewData } from "../components/sms-listing-request-creation-preview"
+
 import { SmsSenderRequestsForm } from "../routes/create-sms-sender-request-route"
+//#endregion
 
 /**
  * Function that takes the listing or listing request body from react hook form and transforms it to the backend format
  * @param data in format SmsSenderRequestsForm
  * @param channelType (local/international) to be taken from url and sent to backend on creation
  *
- * @returns formatted data in backend format (AddBulkSmsListingRequestsBody) but witth additional field listingFormKey used to locate each listing in form
+ * @returns formatted data in backend format (AddBulkSmsListingRequestsBody) but witth additional field errorKey used to locate each listing in form
  *
  */
-const formatAddBulkSmsListingRequestsBody = (data: SmsSenderRequestsForm, channelType: SmsChannelTypeOption) => {
-	let formattedList: ExtendedAddBulkSmsListingRequestsBody["channelSourceRequestRouteList"] = []
+const formatAddBulkSmsListingRequestsBody = (data: SmsSenderRequestsForm, channelType: ChannelType) => {
+	let formattedList: SmsListingRequestCreationPreviewData["channelSourceRequestRouteList"] = []
 
-	data.bulkListingsGroups?.forEach((group, groupIdx) => {
-		const { listingsFields, type } = group
-
+	data.bulkListingsGroups?.forEach(({ listingsFields, type }, groupIdx) => {
 		formattedList = formattedList.concat(
 			listingsFields.map((listing, listingIdx) => ({
-				channelSourceListingStatus: undefined,
-
+				channelSourceListingStatus: listing?.status,
 				country: listing.country!,
-				listingFormKey: `bulkListingsGroups.${groupIdx}.listingsFields.${listingIdx}`,
+				errorKey: `bulkListingsGroups.${groupIdx}.listingsFields.${listingIdx}`,
 				sample: listing.content!,
 				templateType: type!,
 			}))
 		)
 	})
 
-	const formattedData: ExtendedAddBulkSmsListingRequestsBody = {
+	const formattedData: SmsListingRequestCreationPreviewData = {
 		channelSource: data.basicInfo.sender,
 		channelSourceRequestRouteList: formattedList,
 		channelType: channelType,
-		companyId: data.basicInfo.company,
-		email: data.basicInfo.email,
+		companyId: data.basicInfo.company.value,
+		email: data.basicInfo.email.value,
 	}
 
 	return formattedData
