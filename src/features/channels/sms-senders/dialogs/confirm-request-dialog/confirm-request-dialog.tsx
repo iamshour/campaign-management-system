@@ -1,6 +1,4 @@
 //#region Import
-import type { AddSmsRequestBody } from "@/features/channels/sms-senders/types"
-
 import { SmsSenderRequestSchemaType } from "@/features/channels/sms-senders/schemas/sms-sender-request-schema"
 import { Button, Dialog } from "@/ui"
 import { useState } from "react"
@@ -23,7 +21,7 @@ interface ConfirmRequestDialogProps {
 	/**
 	 * Callback function to be called when user presses confirm
 	 */
-	onSubmit: (data: AddSmsRequestBody, form: UseFormReturn<SmsSenderRequestSchemaType>) => void
+	onSubmit: (data: SmsSenderRequestSchemaType, form: UseFormReturn<SmsSenderRequestSchemaType>) => void
 }
 
 const ConfirmRequestDialog = ({ children, formType, onSubmit }: ConfirmRequestDialogProps) => {

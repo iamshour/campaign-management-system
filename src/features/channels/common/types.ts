@@ -10,6 +10,11 @@ import type { SmsSenderRequestDetailsType } from "../sms-senders-management/type
 //#endregion
 
 /**
+ * Type options for the SMS Channel used on server
+ */
+export type ChannelType = "SMS_INTERNATIONAL" | "SMS_LOCAL"
+
+/**
  * Type options for the SMS Channel
  */
 export type SmsChannelTypeOption = "international" | "local"

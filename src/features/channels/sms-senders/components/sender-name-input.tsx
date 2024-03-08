@@ -16,6 +16,7 @@ const SenderNameInput = ({ onChange, value, ...props }: SenderNameInputProps) =>
 
 	const { suggestions } = useGetSmsSendersQuery(
 		{
+			channelType: "SMS_LOCAL", //TODO: use correct channelType
 			limit: 4,
 			name: value,
 			offset: 0,

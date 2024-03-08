@@ -1,7 +1,7 @@
 //#region Import
-
 import type { AddSmsRequestBody } from "@/features/channels/sms-senders/types"
 
+import useGetChannelType from "@/core/hooks/useGetChannelType"
 import { useAddSmsRequestMutation } from "@/features/channels/sms-senders/api"
 import SmsSenderRequestForm from "@/features/channels/sms-senders/components/sms-sender-request-form"
 import ConfirmRequestDialog from "@/features/channels/sms-senders/dialogs/confirm-request-dialog/confirm-request-dialog"
@@ -30,6 +30,8 @@ const SmsSenderRequestDialogContent = ({
 }: SmsSenderRequestDialogContentProps) => {
 	const { t } = useTranslation("sms-senders", { keyPrefix: `dialogs.smsSenderRequestDialog.${formType}` })
 
+	const { type } = useGetChannelType()
+
 	const [triggerAddSmsRequest, { isLoading }] = useAddSmsRequestMutation()
 
 	// tracking which button was clicked to show appropriate loader
@@ -43,8 +45,20 @@ const SmsSenderRequestDialogContent = ({
 	 *             actions such as sending back an error on a specific field
 	 */
 
-	const onSubmit = async (body: AddSmsRequestBody, form: UseFormReturn<SmsSenderRequestSchemaType>) => {
-		if (!body) return
+	const onSubmit = async (data: SmsSenderRequestSchemaType, form: UseFormReturn<SmsSenderRequestSchemaType>) => {
+		if (!data) return
+
+		const body: AddSmsRequestBody = {
+			channelSource: data.sender,
+			channelSourceRequestRoute: {
+				country: data.country,
+				sample: data.sampleContent,
+				templateType: data.category,
+			},
+			channelType: type === "international" ? "SMS_INTERNATIONAL" : "SMS_LOCAL",
+			companyId: "018dcbb3-d316-7c84-8e34-ee452339c468",
+			note: data.note,
+		}
 
 		await triggerAddSmsRequest(body).unwrap()
 

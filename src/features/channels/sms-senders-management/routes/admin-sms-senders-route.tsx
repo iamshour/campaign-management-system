@@ -33,6 +33,7 @@ const AdminSmsSendersRoute = () => {
 	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } = useGetSmsSendersQuery(
 		{
 			...paginationAndSorting,
+			channelType: type === "international" ? "SMS_INTERNATIONAL" : "SMS_LOCAL",
 			...filters,
 			...getSearchFilter<["name"]>(searchTerm, ["name"]),
 		},
