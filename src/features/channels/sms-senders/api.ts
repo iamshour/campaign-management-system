@@ -34,7 +34,7 @@ const smsSendersApi = api.injectEndpoints({
 			invalidatesTags: (res) => {
 				return res ? [{ id: "LIST", type: "SmsSender" }] : []
 			},
-			query: (body) => ({ body, method: "POST", url: "/requests" }),
+			query: (body) => ({ body, method: "POST", url: "/channel-source/request" }),
 		}),
 
 		activateSmsListing: builder.mutation<any, string>({

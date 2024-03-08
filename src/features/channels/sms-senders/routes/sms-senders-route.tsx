@@ -31,6 +31,7 @@ const SmsSendersRoute = () => {
 
 	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } = useGetSmsSendersQuery(
 		{
+			channelType: type === "international" ? "SMS_INTERNATIONAL" : "SMS_LOCAL",
 			...paginationAndSorting,
 			...filters,
 			...getSearchFilter<["name"]>(searchTerm, ["name"]),

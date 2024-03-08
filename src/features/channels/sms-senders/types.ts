@@ -1,6 +1,6 @@
 //#region Import
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
-import type { SmsListingRequestStatus, SmsListingStatus, SmsListingType } from "@/features/channels/common/types"
+import type { ChannelType, SmsListingRequestStatus, SmsListingStatus } from "@/features/channels/common/types"
 import type { TemplateType } from "@/features/templates/common/types"
 import type { DateRange } from "@/ui"
 import type { Country } from "react-phone-number-input"
@@ -31,6 +31,7 @@ export type SmsSenderType = {
  * Filters used in Filters bar, to be sent in params of request for api call `getSmsSenders`
  */
 export type SmsSenderFilter = DateRange & {
+	channelType: ChannelType
 	templateTypes?: TemplateType[]
 }
 
@@ -78,7 +79,14 @@ export type SmsRequestType = {
 /**
  * Body Arguments passed to the `addSmsRequest` mutation, used to send a new listing request
  */
-export type AddSmsRequestBody = Pick<SmsListingType, "category" | "country" | "sampleContent"> & {
+export type AddSmsRequestBody = {
+	channelSource: string
+	channelSourceRequestRoute: {
+		country: Country
+		sample: string
+		templateType: TemplateType
+	}
+	channelType: ChannelType
+	companyId: string
 	note?: string
-	sender: string
 }
