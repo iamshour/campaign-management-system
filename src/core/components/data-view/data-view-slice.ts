@@ -5,7 +5,7 @@ import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import { getObjectSize } from "@/utils"
 import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
-import type { DataViewFilterType, DataViewKey, DataViewRenderType, DataViewState } from "./types"
+import type { DataViewFilterType, DataViewKey, DataViewRenderType, DataViewState, Selection } from "./types"
 //#endregion
 
 const initialDataViewBaseState = { paginationAndSorting: { limit: 25, offset: 0 }, view: "LIST" as DataViewRenderType }
@@ -54,6 +54,24 @@ const dataViewSlice = createSlice({
 	initialState,
 	name: "dataView",
 	reducers: {
+		checkItem: (state, { payload }: PayloadAction<{ [K in DataViewKey]?: string }>) => {
+			const dataViewKey = Object.keys(payload)[0] as DataViewKey
+
+			const selectedItem = Object.values(payload)[0]
+
+			if (!selectedItem) return
+
+			const prevSelection = state[dataViewKey].selection
+
+			if (!prevSelection?.length || prevSelection === "ALL") {
+				state[dataViewKey].selection = [selectedItem]
+			} else if (prevSelection?.includes(selectedItem)) {
+				state[dataViewKey].selection = prevSelection?.filter((id) => id !== selectedItem)
+			} else {
+				state[dataViewKey].selection = [...prevSelection, selectedItem]
+			}
+		},
+
 		clearFilters: (state, { payload: dataViewKey }: PayloadAction<DataViewKey>) => {
 			const prevState = state[dataViewKey]
 
@@ -177,7 +195,7 @@ const dataViewSlice = createSlice({
 			}
 		},
 
-		updateSelection: (state, { payload }: PayloadAction<{ [K in DataViewKey]?: DataViewState<K>["selection"] }>) => {
+		updateSelection: (state, { payload }: PayloadAction<{ [K in DataViewKey]?: Selection }>) => {
 			const dataViewKey = Object.keys(payload)[0] as DataViewKey
 
 			const selection = Object.values(payload)[0]
@@ -188,6 +206,7 @@ const dataViewSlice = createSlice({
 })
 
 export const {
+	checkItem,
 	clearFilters,
 	clearSelection,
 	resetDataViewState,

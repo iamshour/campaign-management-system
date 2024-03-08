@@ -5,12 +5,12 @@ import { useDataViewContext } from "@/core/components/data-view/data-view-contex
 import { selectSelection } from "@/core/components/data-view/data-view-slice"
 import useSelector from "@/core/hooks/useSelector"
 import ExportOptOutSmsSendersDialog from "@/features/channels/sms-senders-management/dialogs/export-opt-out-sms-senders-dialog/export-opt-out-sms-senders-dialog"
+import ImportOptedOutSmsSendersDialog from "@/features/channels/sms-senders-management/dialogs/import-opted-out-sms-senders-dialog/import-opted-out-sms-senders-dialog"
+import OptInSmsSenderDialog from "@/features/channels/sms-senders-management/dialogs/opt-in-sms-sender-dialog/opt-in-sms-sender-dialog"
 import { Button } from "@/ui"
 import PajamasImport from "~icons/pajamas/import"
 import { memo } from "react"
 import { useTranslation } from "react-i18next"
-
-import OptInSmsSenderDialog from "../../dialogs/opt-in-sms-sender-dialog/opt-in-sms-sender-dialog"
 //#endregion
 
 const SmsOptedOutViewTopbar = memo(() => {
@@ -38,10 +38,12 @@ const SmsOptedOutViewTopbar = memo(() => {
 				</ExportOptOutSmsSendersDialog>
 			</div>
 
-			<Button variant='outline'>
-				<PajamasImport />
-				{t("import")}
-			</Button>
+			<ImportOptedOutSmsSendersDialog>
+				<Button variant='outline'>
+					<PajamasImport />
+					{t("import")}
+				</Button>
+			</ImportOptedOutSmsSendersDialog>
 		</div>
 	)
 })

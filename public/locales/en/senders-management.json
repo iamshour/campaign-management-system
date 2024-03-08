@@ -161,6 +161,18 @@
 			"label": "Export file name",
 			"placeholder": "Enter name",
 			"submit": "Export"
+		},
+		"importOptedOutSmsSenders": {
+			"title": "Import",
+			"label": "Import file",
+			"placeholder": "Enter name",
+			"tooltip": "Make sure the file includes only one column in valid phone number format",
+			"validationMessage": "Size less than 50 MB for CSV, and 30 MB for XLX",
+			"errors": {
+				"file-too-large": "File is too large, and exceeds the limit: 50MB for csv / 30MB for excel",
+				"file-invalid-type": "Invalid file upload. Your uploaded file should be of type: csv or excel."
+			},
+			"submit": "Import Now"
 		}
 	}
 }

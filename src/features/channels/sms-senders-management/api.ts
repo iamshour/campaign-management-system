@@ -85,6 +85,11 @@ const smsSendersManagementApis = api.injectEndpoints({
 			}),
 		}),
 
+		importOptedOutSmsSenders: builder.mutation<any, FormData>({
+			invalidatesTags: (res) => (res ? [{ id: "LIST", type: "OptInSender" }] : []),
+			query: (body) => ({ body, method: "PATCH", url: "/import-opted-out" }),
+		}),
+
 		addBulkSmsListingRequests: builder.mutation<any, AddBulkSmsListingRequestsBody>({
 			invalidatesTags: (res) => {
 				return res ? [{ id: "LIST", type: "SmsListingRequest" }] : []
@@ -109,6 +114,7 @@ export const {
 	useGetSmsOptedOutSendersQuery,
 	useOptInSmsSendersMutation,
 	useExportOptOutSmsSendersMutation,
+	useImportOptedOutSmsSendersMutation,
 	useAddBulkSmsListingRequestsMutation,
 	useAddBulkSmsListingsMutation,
 } = smsSendersManagementApis

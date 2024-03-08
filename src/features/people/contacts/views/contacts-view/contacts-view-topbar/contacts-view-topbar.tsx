@@ -31,7 +31,7 @@ const ContactsViewTopbar = memo(() => {
 
 				<ExportFieldsDialog exportsType='contacts'>
 					<Button className='px-1' variant='link'>
-						{t("ui:table.actions.export.label", { count: selection === "ALL" || !selection?.length ? 2 : 1 })}
+						{t("table.topbar.actions.export", { count: selection === "ALL" || !selection?.length ? 2 : 1 })}
 					</Button>
 				</ExportFieldsDialog>
 			</div>

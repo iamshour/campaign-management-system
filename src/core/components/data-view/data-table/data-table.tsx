@@ -10,7 +10,7 @@ import type { Selection } from "../types"
 import type { DataTableProps, RowData } from "./types"
 
 import { useDataViewContext } from "../data-view-context"
-import { selectSelection, updateSelection } from "../data-view-slice"
+import { checkItem, selectSelection, updateSelection } from "../data-view-slice"
 
 const DataTableColumnHeader = lazy(() => import("./data-table-column-header"))
 //#endregion
@@ -82,25 +82,6 @@ const DataTable = <TData extends RowData>({
 			dispatch(updateSelection({ [dataViewKey]: newSelection }))
 		},
 		[count, isCheckAllActive, dataViewKey, dispatch, list, selection]
-	)
-
-	const onCheckItem = useCallback(
-		(rowId: string) => {
-			if (!rowId) return
-
-			let updatedSelection
-
-			if (!selection?.length || selection === "ALL") {
-				updatedSelection = [rowId]
-			} else if (selection?.includes(rowId)) {
-				updatedSelection = selection?.filter((id) => id !== rowId)
-			} else {
-				updatedSelection = [...selection, rowId]
-			}
-
-			dispatch(updateSelection({ [dataViewKey]: updatedSelection }))
-		},
-		[selection, dataViewKey, dispatch]
 	)
 
 	return (
@@ -191,7 +172,7 @@ const DataTable = <TData extends RowData>({
 												<Checkbox
 													checked={selection === "ALL" || selection?.includes(row[rowIdSelector])}
 													className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
-													onCheckedChange={() => onCheckItem(row[rowIdSelector])}
+													onCheckedChange={() => dispatch(checkItem({ [dataViewKey]: row[rowIdSelector] }))}
 												/>
 											</TableCell>
 										)
