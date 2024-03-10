@@ -65,7 +65,7 @@
 				"local": "Activate Local SMS",
 				"international": "Activate International SMS"
 			},
-			"text": "You will need a Sender ID in order to send SMS campaigns, please request a sender ID registration to start sending campaigns",
+			"text": "You will need a Sender ID in order to send SMS campaigns, please request a sender registration to start sending campaigns",
 			"buttons": { "confirm": "Confirm" }
 		},
 		"confirmRequestDialog": {
@@ -95,20 +95,20 @@
 		},
 		"activateListingDialog": {
 			"title": "Activate",
-			"text": "Are you sure you want to activate this sender ID on this country?",
+			"text": "Are you sure you want to activate this sender on this country?",
 			"buttons": { "confirm": "Confirm" },
 			"message": { "success": "Listing successfully activated" }
 		},
 		"deactivateListingDialog": {
 			"title": "Deactivate",
-			"text": "Are you sure you want to deactivate the sender ID. You will no longer be able to use it in your campaigns. This action will lead to failing launched campaigns messages and suspending scheduled campaigns using the desired deactivated sender ID",
+			"text": "Are you sure you want to deactivate the sender. You will no longer be able to use it in your campaigns. This action will lead to failing launched campaigns messages and suspending scheduled campaigns using the desired deactivated sender",
 			"buttons": { "confirm": "Confirm" },
 			"message": { "success": "Listing successfully deactivated" }
 		}
 	},
 	"views": {
 		"emptyView": {
-			"title": "You don't have sender ID yet",
+			"title": "You don't have sender yet",
 			"text": "Request a Sender ID in order to start sending you're campaigns",
 			"buttons": {
 				"local": "Activate Local SMS",

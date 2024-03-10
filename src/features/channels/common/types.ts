@@ -7,14 +7,8 @@ import type { DateRange } from "@/ui"
 import type { Country } from "react-phone-number-input"
 
 import type { SmsSenderRequestDetailsType } from "../sms-senders-management/types"
-import type { SmsSenderType } from "../sms-senders/types"
 import type { ChannelSourceListingStatus, ChannelSourceRequestStatus, ChannelType } from "./types/data.types"
 //#endregion
-
-/**
- * Fields to allow search on, to be sent in params of request for api call `getSmsSenders`
- */
-type SmsSenderSearchFilter = { any?: true; name?: string }
 
 /**
  * Filters used in Filters bar, to be sent in params of request for api call `getSmsSenders`
@@ -22,19 +16,6 @@ type SmsSenderSearchFilter = { any?: true; name?: string }
 export type SmsSenderFilter = DateRange & {
 	channelType: ChannelType
 	templateTypes?: TemplateType[]
-}
-
-/**
- * Params passed to the `getSmsSenders` query, used for fetching SMS Senders List
- */
-export type GetSmsSendersParams = PaginationAndSorting<SmsSenderType> & SmsSenderFilter & SmsSenderSearchFilter
-
-/**
- * Type for the response body from backend when fetching senders list
- */
-export type SmsSenderServerType = Omit<SmsSenderType, "name" | "types"> & {
-	channelSourceName: string
-	templateTypes: TemplateType[]
 }
 
 /**

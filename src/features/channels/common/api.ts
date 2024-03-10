@@ -6,16 +6,18 @@ import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
 
-import type { GetSmsListingdParams, GetSmsSendersParams, SmsListingType, SmsSenderServerType } from "./types"
+import type { GetSmsListingdParams, SmsListingType } from "./types"
+import type { GetChannelSourcesParams } from "./types/api.types"
+import type { ChannelSource } from "./types/data.types"
 //#endregion
 
 const commonSmsChannelApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getSmsSenders: builder.query<GetListReturnType<SmsSenderServerType>, GetSmsSendersParams>({
+		getChannelSources: builder.query<GetListReturnType<ChannelSource>, GetChannelSourcesParams>({
 			providesTags: (result) =>
 				providesList(
 					result?.list?.map(({ id }) => id),
-					"SmsSender"
+					"ChannelSource"
 				),
 			query: (params) => ({
 				params,
@@ -46,4 +48,4 @@ const commonSmsChannelApi = api.injectEndpoints({
 	}),
 })
 
-export const { useGetSmsSendersQuery, useGetSmsListingsQuery, useGetSmsListingByIdQuery } = commonSmsChannelApi
+export const { useGetChannelSourcesQuery, useGetSmsListingsQuery, useGetSmsListingByIdQuery } = commonSmsChannelApi

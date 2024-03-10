@@ -9,14 +9,14 @@ import type { AddSmsRequestBody, SmsSenderType } from "./types"
 const smsSendersApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getSmsSenderById: builder.query<SmsSenderType, string>({
-			providesTags: (result) => [{ id: result?.id, type: "SmsSender" }],
+			providesTags: (result) => [{ id: result?.id, type: "ChannelSource" }],
 			// TODO: in integration; change below 65dda90d5cddf38ab869f080" ?? id to id
 			query: (id) => `/senders/${"65dda90d5cddf38ab869f080" ?? id}`,
 		}),
 
 		addSmsRequest: builder.mutation<any, AddSmsRequestBody>({
 			invalidatesTags: (res) => {
-				return res ? [{ id: "LIST", type: "SmsSender" }] : []
+				return res ? [{ id: "LIST", type: "ChannelSource" }] : []
 			},
 			query: (body) => ({ body, method: "POST", url: "/channel-source/request" }),
 		}),

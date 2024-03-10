@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next"
 import { useLocation } from "react-router-dom"
 //#endregion
 
-const AdminSmsSendersViewTopbar = memo(() => {
+const AdminChannelSourcesViewTopbar = memo(() => {
 	const { t } = useTranslation("senders-management")
 
 	const { pathname } = useLocation()
@@ -21,6 +21,6 @@ const AdminSmsSendersViewTopbar = memo(() => {
 	)
 })
 
-AdminSmsSendersViewTopbar.displayName = "AdminSmsSendersViewTopbar"
+AdminChannelSourcesViewTopbar.displayName = "AdminChannelSourcesViewTopbar"
 
-export default AdminSmsSendersViewTopbar
+export default AdminChannelSourcesViewTopbar

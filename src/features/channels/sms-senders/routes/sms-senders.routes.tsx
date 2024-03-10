@@ -5,15 +5,14 @@ const SmsSendersRoutesLayout = lazy(() => import("../layouts/sms-senders-routes-
 
 import SmsSenderRoute from "./sms-sender-route"
 
-const SmsSendersRoute = lazy(() => import("./sms-senders-route"))
-
+const ChannelSourcesRoute = lazy(() => import("./channel-sources-route"))
 //#endregion
 
 const SmsChannelRoutes = () => (
 	<Routes>
 		<Route element={<SmsSendersRoutesLayout />}>
-			<Route element={<SmsSendersRoute />} path='local-sms/senders' />
-			<Route element={<SmsSendersRoute />} path='international-sms/senders' />
+			<Route element={<ChannelSourcesRoute />} path='local-sms/senders' />
+			<Route element={<ChannelSourcesRoute />} path='international-sms/senders' />
 		</Route>
 
 		<Route element={<SmsSenderRoute />} path='local-sms/senders/:senderId' />

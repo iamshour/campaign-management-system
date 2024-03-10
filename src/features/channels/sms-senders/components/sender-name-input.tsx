@@ -1,7 +1,8 @@
 //#region Import
 import InputWithSearch from "@/core/components/input-with-search/input-with-search"
+import useGetChannelType from "@/core/hooks/useGetChannelType"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { useGetSmsSendersQuery } from "@/features/channels/common/api"
+import { useGetChannelSourcesQuery } from "@/features/channels/common/api"
 import { forwardRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 //#endregion
@@ -12,25 +13,17 @@ const SenderNameInput = forwardRef<React.ElementRef<typeof InputWithSearch>, Sen
 	({ onChange, value, ...props }, ref) => {
 		const { t } = useTranslation("sms-senders", { keyPrefix: "components.smsSenderRequestForm.placeholders" })
 
+		const { channelType } = useGetChannelType()
+
 		const [shouldFetch, setShouldFetch] = useState<boolean>(false)
 
-		const { suggestions } = useGetSmsSendersQuery(
-			{
-				channelType: "SMS_LOCAL", //TODO: use correct channelType
-				limit: 4,
-				name: value,
-				offset: 0,
-			},
+		const { suggestions } = useGetChannelSourcesQuery(
+			{ channelType, limit: 4, name: value, offset: 0 },
 			{
 				selectFromResult: ({ data, ...rest }) => ({
-					// TODO: in integration remove below 'filter' and 'slice' since filter and pagination will be done on backend
-					suggestions: data?.list
-						?.map((sender) => sender.channelSourceName)
-						?.filter((senderName) => senderName.includes(value))
-						?.slice(0, 4),
+					suggestions: data?.list?.map(({ channelSourceName }) => channelSourceName),
 					...rest,
 				}),
-
 				skip: !shouldFetch,
 				...baseQueryConfigs,
 			}

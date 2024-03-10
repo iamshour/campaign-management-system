@@ -42,7 +42,12 @@ const ReadonlyField = ({ children, className, label, showTooltip }: ReadonlyFiel
 	if (!children) return
 
 	return (
-		<div className={twMerge("w-full space-x-2 rounded-lg border border-[#E0E0E0] bg-white p-2", className)}>
+		<div
+			className={twMerge(
+				"w-full space-x-2 rounded-lg border border-[#E0E0E0] bg-white p-2",
+				showTooltip && "h-[120px]",
+				className
+			)}>
 			<Label className='text-base font-bold text-black'>{label}</Label>
 
 			{showTooltip ? (

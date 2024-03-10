@@ -2,10 +2,11 @@
 
 //#region Import
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
-import type { SmsListingsFilter, SmsListingType, SmsSenderFilter } from "@/features/channels/common/types"
+import type { SmsListingsFilter, SmsListingType } from "@/features/channels/common/types"
+import type { ChannelSourceFilter } from "@/features/channels/common/types/api.types"
+import type { ChannelSource } from "@/features/channels/common/types/data.types"
 import type { SmsOptedOutFilter, SmsOptedOutSenderType } from "@/features/channels/sms-senders-management/types"
 import type { ChannelSourceRequest } from "@/features/channels/sms-senders-management/types/data.types"
-import type { SmsSenderType } from "@/features/channels/sms-senders/types"
 import type {
 	IndustryFilter,
 	IndustryType,
@@ -65,14 +66,14 @@ export type DataViewKey =
 	| "industries"
 	| "international-sms-channel-source-requests-completed"
 	| "international-sms-channel-source-requests-pending"
+	| "international-sms-channel-sources"
 	| "international-sms-listings"
 	| "international-sms-opted-out-senders"
-	| "international-sms-senders"
 	| "local-sms-channel-source-requests-completed"
 	| "local-sms-channel-source-requests-pending"
+	| "local-sms-channel-sources"
 	| "local-sms-listings"
 	| "local-sms-opted-out-senders"
-	| "local-sms-senders"
 	| "segments"
 	| "sms-industry-templates"
 	| "sms-prebuilt-templates-dialog"
@@ -89,12 +90,12 @@ type DataViewEntryType = {
 	"international-sms-channel-source-requests-completed": ChannelSourceRequest
 	"international-sms-channel-source-requests-pending": ChannelSourceRequest
 	"international-sms-listings": SmsListingType
-	"international-sms-senders": SmsSenderType
+	"international-sms-channel-sources": ChannelSource
 	"local-sms-channel-source-requests-completed": ChannelSourceRequest
 	// LISTING REQUESTS TYPE
 	"local-sms-channel-source-requests-pending": ChannelSourceRequest
 	"local-sms-listings": SmsListingType
-	"local-sms-senders": SmsSenderType
+	"local-sms-channel-sources": ChannelSource
 	segments: Segment
 	"sms-industry-templates": SmsIndustryTemplateType
 	"sms-prebuilt-templates": SmsIndustryTemplateType
@@ -113,11 +114,11 @@ export type DataViewFilterType = {
 	industries: IndustryFilter
 	"international-sms-channel-source-requests-completed": ChannelSourceRequestFilter
 	"international-sms-channel-source-requests-pending": ChannelSourceRequestFilter
-	"international-sms-senders": SmsSenderFilter
+	"international-sms-channel-sources": ChannelSourceFilter
 	"local-sms-channel-source-requests-completed": ChannelSourceRequestFilter
 	// LISTING REQUESTS FILTER TYPES
 	"local-sms-channel-source-requests-pending": ChannelSourceRequestFilter
-	"local-sms-senders": SmsSenderFilter
+	"local-sms-channel-sources": ChannelSourceFilter
 	segments: DateRange
 	"sms-industry-templates": PrebuiltTemplateFilter
 	//#region CHANNELS

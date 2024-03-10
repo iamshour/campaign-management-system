@@ -58,7 +58,7 @@ const CreateSmsSenderRequestView = () => {
 				<form className='flex h-full flex-col gap-4 overflow-hidden' onSubmit={form.handleSubmit(onValidationSubmit)}>
 					<div className='flex w-full flex-1 flex-col gap-6 overflow-y-auto rounded-xl bg-[#F7F7F7] p-4'>
 						<SectionHeading
-							description='Fill your sender ID info'
+							description='Fill your sender info'
 							icon={MdiInformationVariantCircle}
 							label='Sender ID Basic Info'
 						/>

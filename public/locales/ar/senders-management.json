@@ -1,17 +1,17 @@
 {
 	"views": {
-		"smsListingRequestsPendingEmpty": {
+		"channelSourceRequestsPendingEmpty": {
 			"headline": "لم تتلق أي معرف مرسل بعد ",
 			"message": "لم تتلق أي طلبات من عميلك حتى الآن"
 		},
-		"smsListingRequestsPending": {
+		"channelSourceRequestsPending": {
 			"callToAction": "إضافة طلب معرف المرسل"
 		},
-		"smsListingRequestsCompletedEmpty": {
+		"channelSourceRequestsCompletedEmpty": {
 			"headline": "ليس لديك معرف المرسل بعد مع الحالة الكاملة ",
 			"message": "تحقق من الطلب الذي تلقيته في القائمة المعلقة لإكماله"
 		},
-		"adminSmsSendersView": {
+		"adminChannelSourcesView": {
 			"table": {
 				"callToAction": "إنشاء مرسل ",
 				"actionsCell": {
