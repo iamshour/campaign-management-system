@@ -3,7 +3,7 @@ import * as z from "zod"
 //#endregion
 
 const SmsListingActionReasonSchema = z.object({
-	actionReason: z
+	reason: z
 		.string()
 		.min(1, { message: "Action reason required" })
 		.max(500, { message: "Maximum 500 characters allowed" }),

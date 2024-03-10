@@ -28,7 +28,7 @@ const ActionReasonForm = ({ children, message, onSubmit }: ActionReasonFormProps
 
 	const form = useForm<SmsLisintgActionReasonSchemaType>({
 		defaultValues: {
-			actionReason: undefined,
+			reason: undefined,
 		},
 		resolver: zodResolver(SmsListingActionReasonSchema),
 	})
@@ -42,7 +42,7 @@ const ActionReasonForm = ({ children, message, onSubmit }: ActionReasonFormProps
 
 				<Form.Field
 					control={form.control}
-					name='actionReason'
+					name='reason'
 					render={({ field }) => (
 						<Form.Item className='col-span-2'>
 							<Form.Label>{t("label")}</Form.Label>

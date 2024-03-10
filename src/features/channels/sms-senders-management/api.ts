@@ -2,15 +2,16 @@
 
 //#region Import
 import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
+import type { ChannelSourceListingDetails } from "@/features/channels/common/types/data.types"
 import type {
 	ChannelSourceRequest,
 	ChannelSourceRequestDetails,
 } from "@/features/channels/sms-senders-management/types/data.types"
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
 import { downloadFile } from "@/utils"
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 
 import type {
 	AddBulkSmsListingRequestsBody,
@@ -19,14 +20,14 @@ import type {
 	GetSmsOptedOutSendersParams,
 	OptInSmsSendersBody,
 	SmsOptedOutSenderType,
-	SmsSenderRequestDetailsType,
-	UpdateSmsListingStatusBody,
 	UpdateSmsSourceRequestBody,
 	UserInCompany,
 } from "./types"
-import type { GetChannelSourceRequestsParams } from "./types/api.types"
-
-import { ChannelSourceListingDetails } from "../common/types/data.types"
+import type {
+	GetChannelSourceRequestAndListingByIdReturnType,
+	GetChannelSourceRequestsParams,
+	UpdateChannelSourceRequestActionBody,
+} from "./types/api.types"
 //#endregion
 
 // eslint-disable-next-line
@@ -43,12 +44,7 @@ const smsSendersManagementApis = api.injectEndpoints({
 		}),
 
 		getChannelSourceRequestAndListingById: builder.query<
-			ChannelSourceRequestDetails & {
-				channelSourceListingDetails: Pick<
-					ChannelSourceListingDetails,
-					"channelSourceListingStatus" | "channelSourceListingStatusReason"
-				>
-			},
+			GetChannelSourceRequestAndListingByIdReturnType,
 			Record<"channelSourceListingId" | "channelSourceRequestId", string>
 		>({
 			async queryFn({ channelSourceListingId, channelSourceRequestId }, _queryApi, _extraOptions, fetchWithBQ) {
@@ -78,19 +74,16 @@ const smsSendersManagementApis = api.injectEndpoints({
 			providesTags: (result, error, args) => [{ id: args.channelSourceRequestId, type: "ChannelSourceRequest" }],
 		}),
 
-		getSmsListingRequestById: builder.query<SmsSenderRequestDetailsType, string>({
-			providesTags: (result) => [{ id: result?.requestId, type: "ChannelSourceRequest" }],
-			query: (id) => ({ url: `/sms-sender-request-details/${id}` }),
-			transformResponse,
-		}),
-
-		updateSmsListingStatus: builder.mutation<any, UpdateSmsListingStatusBody>({
-			invalidatesTags: (res, error, { listingId }) => {
+		updateChannelSourceRequestAction: builder.mutation<any, UpdateChannelSourceRequestActionBody>({
+			invalidatesTags: (res, error, { channelSourceRequestId }) => {
 				if (!res) return []
 
-				return [{ id: listingId, type: "ChannelSourceRequest" }]
+				return [
+					{ id: channelSourceRequestId, type: "ChannelSourceRequest" },
+					{ id: "LIST", type: "ChannelSourceRequest" },
+				]
 			},
-			query: ({ listingId, ...body }) => ({ body, method: "PUT", url: `/source-request/status/${listingId}` }),
+			query: (body) => ({ body, method: "PUT", url: "/channel-source/request/action" }),
 		}),
 
 		updateSmsSourceRequest: builder.mutation<any, UpdateSmsSourceRequestBody>({
@@ -175,9 +168,8 @@ const smsSendersManagementApis = api.injectEndpoints({
 export const {
 	useGetChannelSourceRequestsQuery,
 	useGetChannelSourceRequestAndListingByIdQuery,
+	useUpdateChannelSourceRequestActionMutation,
 
-	useGetSmsListingRequestByIdQuery,
-	useUpdateSmsListingStatusMutation,
 	useUpdateSmsSourceRequestMutation,
 	useGetSmsOptedOutSendersQuery,
 	useOptInSmsSendersMutation,
