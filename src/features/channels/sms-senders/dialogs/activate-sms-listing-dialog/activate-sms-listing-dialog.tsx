@@ -7,7 +7,7 @@ const ActivateSmsListingDialogContent = lazy(() => import("./activate-sms-listin
 //#endregion
 
 interface ActivateSmsListingDialogProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof ActivateSmsListingDialogContent>, "listingId"> {
+	extends Pick<React.ComponentPropsWithoutRef<typeof ActivateSmsListingDialogContent>, "id"> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */

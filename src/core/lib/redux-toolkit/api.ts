@@ -72,7 +72,7 @@ const api = createApi({
 		// Related to Channels Feature
 		"ChannelSource",
 		"ChannelSourceRequest",
-		"SmsListing",
+		"ChannelSourceListing",
 		"OptInSender",
 		"Company",
 		"UserInCompany",

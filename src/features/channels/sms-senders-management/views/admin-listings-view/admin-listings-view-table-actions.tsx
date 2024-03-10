@@ -1,19 +1,18 @@
 //#region Import
-import type { SmsListingType } from "@/features/channels/common/types"
-import type { ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
+import type { ChannelSourceListing, ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
 
-import SmsListingActivateDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-activate-dialog/sms-listing-activate-dialog"
-import SmsListingBlockDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-block-dialog/sms-listing-block-dialog"
-import SmsListingSuspendDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-suspend-dialog/sms-listing-suspend-dialog"
+import ChannelSourceListingActivateDialog from "@/features/channels/sms-senders-management/dialogs/channel-source-listing-activate-dialog/channel-source-listing-activate-dialog"
+import ChannelSourceListingBlockDialog from "@/features/channels/sms-senders-management/dialogs/channel-source-listing-block-dialog/channel-source-listing-block-dialog"
+import ChannelSourceListingSuspendDialog from "@/features/channels/sms-senders-management/dialogs/channel-source-listing-suspend-dialog/channel-source-listing-suspend-dialog"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-const AdminSmsListingsTableActions = ({
-	status,
+const AdminListingsViewTableActions = ({
+	channelSourceListingStatus,
 	...props
-}: Pick<SmsListingType, "company" | "country" | "listingId" | "status">) => {
+}: Pick<ChannelSourceListing, "channelSourceListingStatus" | "company" | "country" | "id">) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "views.adminSmsListingsView.table.actionsCell" })
 
 	return (
@@ -25,32 +24,32 @@ const AdminSmsListingsTableActions = ({
 
 			{(Object.entries(allowedActionsPerStatusMap) as [ActionType, ChannelSourceListingStatus[]][]).map(
 				([actionType, allowedStatuses]) => {
-					if (!status || !allowedStatuses?.includes(status)) return
+					if (!status || !allowedStatuses?.includes(channelSourceListingStatus)) return
 
 					if (actionType === "ACTIVATE_LISTING")
 						return (
 							<ActionWrapper key={actionType}>
-								<SmsListingActivateDialog {...props}>
+								<ChannelSourceListingActivateDialog {...props}>
 									<ActionsDropdown.Item>{t("activate")}</ActionsDropdown.Item>
-								</SmsListingActivateDialog>
+								</ChannelSourceListingActivateDialog>
 							</ActionWrapper>
 						)
 
 					if (actionType === "BLOCK_LISTING")
 						return (
 							<ActionWrapper key={actionType}>
-								<SmsListingBlockDialog {...props}>
+								<ChannelSourceListingBlockDialog {...props}>
 									<ActionsDropdown.Item>{t("block")}</ActionsDropdown.Item>
-								</SmsListingBlockDialog>
+								</ChannelSourceListingBlockDialog>
 							</ActionWrapper>
 						)
 
 					if (actionType === "SUSPEND_LISTING")
 						return (
 							<ActionWrapper key={actionType}>
-								<SmsListingSuspendDialog {...props}>
+								<ChannelSourceListingSuspendDialog {...props}>
 									<ActionsDropdown.Item>{t("suspend")}</ActionsDropdown.Item>
-								</SmsListingSuspendDialog>
+								</ChannelSourceListingSuspendDialog>
 							</ActionWrapper>
 						)
 				}
@@ -59,7 +58,7 @@ const AdminSmsListingsTableActions = ({
 	)
 }
 
-export default AdminSmsListingsTableActions
+export default AdminListingsViewTableActions
 
 type ActionType = "ACTIVATE_LISTING" | "BLOCK_LISTING" | "SUSPEND_LISTING"
 

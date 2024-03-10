@@ -1,7 +1,6 @@
 /* eslint-disable perfectionist/sort-object-types*/
 
 //#region Import
-import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type { TemplateType } from "@/features/templates/common/types"
 import type { DateRange } from "@/ui"
 import type { Country } from "react-phone-number-input"
@@ -43,10 +42,3 @@ export type SmsListingsFilter = DateRange & {
 	status?: ChannelSourceListingStatus[]
 	type?: TemplateType[]
 }
-
-/**
- * Params passed to the `getSmsListings` query, used for fetching SMS Listings List
- */
-export type GetSmsListingdParams = PaginationAndSorting<SmsListingType> &
-	SmsListingsFilter &
-	Pick<SmsListingType, "channelType" | "sourceId">

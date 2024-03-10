@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next"
 import { useLocation } from "react-router-dom"
 //#endregion
 
-const AdminSmsListingsViewTopbar = memo(() => {
+const AdminListingsViewTopbar = memo(() => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "views.adminSmsListingsView.table" })
 
 	const { pathname } = useLocation()
@@ -27,6 +27,6 @@ const AdminSmsListingsViewTopbar = memo(() => {
 	)
 })
 
-AdminSmsListingsViewTopbar.displayName = "AdminSmsListingsViewTopbar"
+AdminListingsViewTopbar.displayName = "AdminListingsViewTopbar"
 
-export default AdminSmsListingsViewTopbar
+export default AdminListingsViewTopbar

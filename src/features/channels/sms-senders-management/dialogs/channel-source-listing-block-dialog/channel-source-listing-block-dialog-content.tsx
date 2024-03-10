@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsListingType } from "@/features/channels/common/types"
+import type { ChannelSourceListing } from "@/features/channels/common/types/data.types"
 import type { SmsLisintgActionReasonSchemaType } from "@/features/channels/sms-senders-management/schemas/sms-listing-action-reason-schema"
 
 import getCountryName from "@/core/utils/get-country-name"
@@ -10,16 +10,21 @@ import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-export interface SmsListingSuspendDialogContentProps extends Pick<SmsListingType, "country" | "listingId"> {
+export interface ChannelSourceListingBlockDialogProps extends Pick<ChannelSourceListing, "company" | "country" | "id"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
 	closeDialog: () => void
 }
 
-// eslint-disable-next-line
-const SmsListingSuspendDialogContent = ({ closeDialog, country, listingId }: SmsListingSuspendDialogContentProps) => {
-	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.smsListingSuspend" })
+const ChannelSourceListingBlockDialog = ({
+	closeDialog,
+	company,
+	country,
+	// eslint-disable-next-line
+	id,
+}: ChannelSourceListingBlockDialogProps) => {
+	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.smsListingBlock" })
 
 	const { closeDropdown } = useDropdownStateContext()
 
@@ -29,7 +34,7 @@ const SmsListingSuspendDialogContent = ({ closeDialog, country, listingId }: Sms
 	const onSubmit = async ({ reason }: SmsLisintgActionReasonSchemaType) => {
 		// await triggerUpdateSmsListing({
 		// 	listingId,
-		// 	status: "SUSPENDED",
+		// 	status: "BLOCKED",
 		// 	statusReason: actionReason,
 		// }).unwrap()
 
@@ -38,12 +43,12 @@ const SmsListingSuspendDialogContent = ({ closeDialog, country, listingId }: Sms
 	}
 
 	return (
-		<ActionReasonForm message={t("message", { country: getCountryName(country) })} onSubmit={onSubmit}>
-			<Button className='ms-auto w-max shrink-0 px-10' loading={false} type='submit'>
+		<ActionReasonForm message={t("message", { company, country: getCountryName(country) })} onSubmit={onSubmit}>
+			<Button className='ms-auto w-max px-10' loading={false} type='submit'>
 				{t("submit")}
 			</Button>
 		</ActionReasonForm>
 	)
 }
 
-export default SmsListingSuspendDialogContent
+export default ChannelSourceListingBlockDialog

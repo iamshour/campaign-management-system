@@ -1,6 +1,5 @@
 //#region Import
-import type { SmsListingType } from "@/features/channels/common/types"
-import type { ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
+import type { ChannelSourceListing, ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
 
 import ActivateSmsListingDialog from "@/features/channels/sms-senders/dialogs/activate-sms-listing-dialog/activate-sms-listing-dialog"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
@@ -30,60 +29,53 @@ const SmsSenderRequestDialog = lazy(
 )
 //#endregion
 
-const SmsListingActions = ({
-	category,
-	country,
-	listingId,
-	note,
-	sampleContent,
-	sender,
-	status,
-}: SmsListingType & Record<"note" | "sender", string>) => {
+const SmsListingActions = ({ channelSourceListingStatus, country, id, templateType }: ChannelSourceListing) => {
 	const { t } = useTranslation("sms-senders")
 
 	return (
 		<ActionsDropdown className='m-4'>
-			<ViewListingSampleContentDialog listingId={listingId}>
+			<ViewListingSampleContentDialog id={id}>
 				<ActionsDropdown.Item>{t("views.smsListingsView.actions.viewSampleContent")}</ActionsDropdown.Item>
 			</ViewListingSampleContentDialog>
 
-			{allowedActionsPerStatusMap["VIEW_STATUS_REASON"].includes(status) && (
+			{allowedActionsPerStatusMap["VIEW_STATUS_REASON"].includes(channelSourceListingStatus) && (
 				<>
 					<ActionsDropdown.Separator />
 
-					<ViewListingStatusReasonDialog listingId={listingId} status={status}>
-						<ActionsDropdown.Item>{t(`views.smsListingsView.actions.viewStatusReason.${status}`)}</ActionsDropdown.Item>
+					<ViewListingStatusReasonDialog channelSourceListingStatus={channelSourceListingStatus} id={id}>
+						<ActionsDropdown.Item>
+							{t(`views.smsListingsView.actions.viewStatusReason.${channelSourceListingStatus}`)}
+						</ActionsDropdown.Item>
 					</ViewListingStatusReasonDialog>
 				</>
 			)}
 
-			{allowedActionsPerStatusMap["ACTIVATE_LISTING"].includes(status) && (
+			{allowedActionsPerStatusMap["ACTIVATE_LISTING"].includes(channelSourceListingStatus) && (
 				<>
 					<ActionsDropdown.Separator />
 
-					<ActivateSmsListingDialog listingId={listingId}>
+					<ActivateSmsListingDialog id={id}>
 						<ActionsDropdown.Item>{t(`views.smsListingsView.actions.activate`)}</ActionsDropdown.Item>
 					</ActivateSmsListingDialog>
 				</>
 			)}
 
-			{allowedActionsPerStatusMap["DEACTIVATE_LISTING"].includes(status) && (
+			{allowedActionsPerStatusMap["DEACTIVATE_LISTING"].includes(channelSourceListingStatus) && (
 				<>
 					<ActionsDropdown.Separator />
 
-					<DeactivateSmsListingDialog listingId={listingId}>
+					<DeactivateSmsListingDialog id={id}>
 						<ActionsDropdown.Item>{t(`views.smsListingsView.actions.deactivate`)}</ActionsDropdown.Item>
 					</DeactivateSmsListingDialog>
 				</>
 			)}
 
-			{allowedActionsPerStatusMap["RESEND_REQUEST"].includes(status) && (
+			{allowedActionsPerStatusMap["RESEND_REQUEST"].includes(channelSourceListingStatus) && (
 				<>
 					<ActionsDropdown.Separator />
 
-					<SmsSenderRequestDialog
-						defaultValues={{ category, country, note, sampleContent, sender }}
-						formType='resendRequest'>
+					{/* TODO: FETCH DEFAULT VALUES (SAMPLE CONTENT + NOTE) TO BE PASSED AS DEFAULT VALUES */}
+					<SmsSenderRequestDialog defaultValues={{ country, templateType }} formType='resendRequest'>
 						<ActionsDropdown.Item>{t(`views.smsListingsView.actions.resendRequest`)}</ActionsDropdown.Item>
 					</SmsSenderRequestDialog>
 				</>

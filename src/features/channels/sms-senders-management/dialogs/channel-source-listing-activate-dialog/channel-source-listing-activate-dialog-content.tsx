@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsListingType } from "@/features/channels/common/types"
+import type { ChannelSourceListing } from "@/features/channels/common/types/data.types"
 
 import getCountryName from "@/core/utils/get-country-name"
 // import { updateChannelSourceRequestAction } from "@/features/channels/sms-senders-management/api"
@@ -8,21 +8,21 @@ import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-export interface SmsListingActivateDialogContentProps
-	extends Pick<SmsListingType, "company" | "country" | "listingId"> {
+export interface ChannelSourceListingActivateDialogContentProps
+	extends Pick<ChannelSourceListing, "company" | "country" | "id"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
 	closeDialog: () => void
 }
 
-const SmsListingActivateDialogContent = ({
+const ChannelSourceListingActivateDialogContent = ({
 	closeDialog,
 	company,
 	country,
 	// eslint-disable-next-line
-	listingId,
-}: SmsListingActivateDialogContentProps) => {
+	id,
+}: ChannelSourceListingActivateDialogContentProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.smsListingActivate" })
 
 	const { closeDropdown } = useDropdownStateContext()
@@ -50,4 +50,4 @@ const SmsListingActivateDialogContent = ({
 	)
 }
 
-export default SmsListingActivateDialogContent
+export default ChannelSourceListingActivateDialogContent

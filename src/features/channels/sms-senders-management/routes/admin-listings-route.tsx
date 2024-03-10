@@ -2,31 +2,32 @@
 import useGetChannelType from "@/core/hooks/useGetChannelType"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { useGetSmsListingsQuery } from "@/features/channels/common/api"
+import { useGetChannelSourceListingsQuery } from "@/features/channels/common/api"
 import { FullViewSkeleton } from "@/ui"
 import { lazy } from "react"
 import { useParams } from "react-router-dom"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 
-const AdminSmsListingsView = lazy(() => import("../views/admin-sms-listings-view/admin-sms-listings-view"))
+const AdminSmsListingsView = lazy(() => import("../views/admin-listings-view/admin-listings-view"))
 //#endregion
 
-const AdminSmsListingsRoute = () => {
-	const { senderId } = useParams()
+const AdminListingsRoute = () => {
+	const { channelSourceId } = useParams()
 
-	const { channelType, channelTypeInUrl } = useGetChannelType()
+	const { channelTypeInUrl } = useGetChannelType()
 
-	const dataViewKey = `${channelTypeInUrl!}-listings` as const
+	const dataViewKey = `${channelTypeInUrl!}-channel-source-listings` as const
 
 	const { filters, paginationAndSorting } = useSelector(({ dataView }) => dataView[dataViewKey])
 
-	const { count, error, isError, isFetching, isInitialLoading, isReady, list } = useGetSmsListingsQuery(
+	const { count, error, isError, isFetching, isInitialLoading, isReady, list } = useGetChannelSourceListingsQuery(
 		{
-			channelType,
-			sourceId: senderId!,
 			...filters,
 			...paginationAndSorting,
+			channelSourceId: channelSourceId!,
+			// SHOULD BE PASSED. BUT DOES NOT EXIST AT THE MOMENT
+			// channelType,
 			// send search filter here as well
 		},
 		{
@@ -38,7 +39,7 @@ const AdminSmsListingsRoute = () => {
 				list: data?.list,
 				...rest,
 			}),
-			skip: !senderId,
+			skip: !channelSourceId,
 			...baseQueryConfigs,
 		}
 	)
@@ -53,4 +54,4 @@ const AdminSmsListingsRoute = () => {
 		)
 }
 
-export default AdminSmsListingsRoute
+export default AdminListingsRoute

@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsListingType } from "@/features/channels/common/types"
+import type { ChannelSourceListing } from "@/features/channels/common/types/data.types"
 
 import { Dialog } from "@/ui"
 import { useTranslation } from "react-i18next"
@@ -8,20 +8,24 @@ import ViewListingStatusReasonDialogContent from "./view-listing-status-reason-d
 
 //#endregion
 
-interface ViewListingStatusReasonDialogProps extends Pick<SmsListingType, "listingId" | "status"> {
+interface ViewListingStatusReasonDialogProps extends Pick<ChannelSourceListing, "channelSourceListingStatus" | "id"> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */
 	children: React.ReactNode
 }
 
-const ViewListingStatusReasonDialog = ({ children, status, ...props }: ViewListingStatusReasonDialogProps) => {
+const ViewListingStatusReasonDialog = ({
+	channelSourceListingStatus,
+	children,
+	...props
+}: ViewListingStatusReasonDialogProps) => {
 	const { t } = useTranslation("sms-senders", { keyPrefix: "dialogs.viewListingStatusReasonDialog" })
 
 	return (
 		<Dialog>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
-			<Dialog.Content className='w-[412px]' title={t(`${status}.title`)}>
+			<Dialog.Content className='w-[412px]' title={t(`${channelSourceListingStatus}.title`)}>
 				<ViewListingStatusReasonDialogContent {...props} />
 			</Dialog.Content>
 		</Dialog>

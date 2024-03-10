@@ -1,9 +1,8 @@
 //#region Import
 import type { SmsSenderType } from "@/features/channels/sms-senders/types"
 
-import useGetChannelType from "@/core/hooks/useGetChannelType"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { useGetSmsListingsQuery } from "@/features/channels/common/api"
+import { useGetChannelSourceListingsQuery } from "@/features/channels/common/api"
 import SmsSenderRequestDialog from "@/features/channels/sms-senders/dialogs/sms-sender-request-dialog/sms-sender-request-dialog"
 import templateTypesOptions from "@/features/templates/common/constants/template-types-options"
 import { TemplateType } from "@/features/templates/common/types"
@@ -25,35 +24,33 @@ const SmsListingsView = memo(({ name, types }: SmsListingsViewrops) => {
 
 	const [paginationState, setPaginationState] = useState<{ limit: number; offset: number }>({ limit: 25, offset: 0 })
 
-	const { senderId } = useParams()
+	const { channelSourceId } = useParams()
 
-	const { channelType } = useGetChannelType()
-
-	const [typeFilter, setTypeFilter] = useState<TemplateType>(
+	const [templateType, setTemplateType] = useState<TemplateType>(
 		templateTypesOptions?.filter((type) => types.includes(type.value))[0]?.value
 	)
 
-	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } = useGetSmsListingsQuery(
-		{
-			channelType,
-			sourceId: senderId!,
-			type: [typeFilter],
-			...paginationState,
-		},
-		{
-			selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({
-				count: data?.count,
-				isEmptyView: !isFetching && !!isSuccess && !data?.list?.length,
-				isFetching,
-				isInitialLoading: !data && isLoading,
-				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-				list: data?.list,
-				...rest,
-			}),
-			skip: !typeFilter,
-			...baseQueryConfigs,
-		}
-	)
+	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } =
+		useGetChannelSourceListingsQuery(
+			{
+				channelSourceId: channelSourceId!,
+				templateType,
+				...paginationState,
+			},
+			{
+				selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({
+					count: data?.count,
+					isEmptyView: !isFetching && !!isSuccess && !data?.list?.length,
+					isFetching,
+					isInitialLoading: !data && isLoading,
+					isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
+					list: data?.list,
+					...rest,
+				}),
+				skip: !templateType || !channelSourceId,
+				...baseQueryConfigs,
+			}
+		)
 
 	if (isInitialLoading) return <FullViewSkeleton />
 
@@ -70,9 +67,9 @@ const SmsListingsView = memo(({ name, types }: SmsListingsViewrops) => {
 							?.filter((type) => types.includes(type.value))
 							?.map((type) => (
 								<Button
-									className={typeFilter !== type.value ? "bg-[#F7F7F7] font-normal text-black" : ""}
+									className={templateType !== type.value ? "bg-[#F7F7F7] font-normal text-black" : ""}
 									key={type.value}
-									onClick={() => setTypeFilter(type.value)}
+									onClick={() => setTemplateType(type.value)}
 									variant='secondary'>
 									{t(type.label)}
 								</Button>

@@ -1,6 +1,5 @@
 //#region Import
-import type { SmsListingType } from "@/features/channels/common/types"
-import type { ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
+import type { ChannelSourceListing, ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
 
 import DataViewDateCell from "@/core/components/data-view/data-view-date-cell"
 import getCountryName from "@/core/utils/get-country-name"
@@ -13,17 +12,18 @@ import { useTranslation } from "react-i18next"
 const SmsListingActions = lazy(() => import("./sms-listing-actions"))
 //#endregion
 
-const SmsListingCard = (smsListing: SmsListingType) => {
+const SmsListingCard = (smsListing: ChannelSourceListing) => {
 	const { t } = useTranslation("channels-common")
 
-	const { country, requestStatus, status, updatedAt } = smsListing
+	const { channelSourceListingStatus, country, lastChannelSourceRequestStatus, updatedAt } = smsListing
 
-	const color = smsListingStatusesColorsMap[status] || "#EDF3F7"
+	const color = smsListingStatusesColorsMap[channelSourceListingStatus] || "#EDF3F7"
 
 	const countryName = getCountryName(country)
 
 	// const listingStatus: ChannelSourceListingStatus = requestStatus === "PENDING" ? "PENDING" : status
-	const listingStatus: ChannelSourceListingStatus = requestStatus === "PENDING" ? "NEW" : status
+	const listingStatus: ChannelSourceListingStatus =
+		lastChannelSourceRequestStatus === "PENDING" ? "NEW" : channelSourceListingStatus
 
 	return (
 		<div className='flex h-[80px] w-[445px] max-w-full flex-row items-center rounded-md bg-[#F7F7F7]'>
@@ -45,7 +45,7 @@ const SmsListingCard = (smsListing: SmsListingType) => {
 
 			<Suspense fallback={<Skeleton className='h-[30px] w-[30px]' />}>
 				{/* TODO: NOTE AND SENDER MAY NOT BE FETCHED BY API  */}
-				<SmsListingActions {...smsListing} listingId='123' note='my note...' sender='Sender name 1' />
+				<SmsListingActions {...smsListing} />
 			</Suspense>
 		</div>
 	)

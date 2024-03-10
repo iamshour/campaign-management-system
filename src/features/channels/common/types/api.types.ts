@@ -2,8 +2,9 @@
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type { TemplateType } from "@/features/templates/common/types"
 import type { DateRange } from "@/ui"
+import type { Country } from "react-phone-number-input"
 
-import type { ChannelSource, ChannelType } from "./data.types"
+import type { ChannelSource, ChannelSourceListing, ChannelSourceListingStatus, ChannelType } from "./data.types"
 //#endregion
 
 export type ChannelSourceFilter = DateRange & {
@@ -19,3 +20,20 @@ type ChannelSourceSearchFilter = { any?: true; name?: string }
 export type GetChannelSourcesParams = ChannelSourceFilter &
 	PaginationAndSorting<ChannelSource> &
 	ChannelSourceSearchFilter
+
+export type ChannelSourceListingFilter = DateRange & {
+	channelSourceListingStatus?: ChannelSourceListingStatus
+	country?: Country
+	templateType?: TemplateType
+}
+
+type channelSourceListingSearch = { any?: true; companyName?: string }
+
+/**
+ * Params passed to the `getChannelSourceListings` query, used to fetch Channel Source Lisitngs by Channel Source ID
+ */
+export type GetChannelSourceListingsParams = ChannelSourceListingFilter &
+	channelSourceListingSearch &
+	PaginationAndSorting<ChannelSourceListing> & {
+		channelSourceId: string
+	}

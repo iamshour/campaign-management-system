@@ -23,14 +23,14 @@ const smsSendersApi = api.injectEndpoints({
 
 		activateSmsListing: builder.mutation<any, string>({
 			invalidatesTags: (res) => {
-				return res ? [{ id: "LIST", type: "SmsListing" }] : []
+				return res ? [{ id: "LIST", type: "ChannelSourceListing" }] : []
 			},
 			query: (listingId) => ({ method: "PUT", url: `/listings/${listingId}/active` }),
 		}),
 
 		deactivateSmsListing: builder.mutation<any, string>({
 			invalidatesTags: (res) => {
-				return res ? [{ id: "LIST", type: "SmsListing" }] : []
+				return res ? [{ id: "LIST", type: "ChannelSourceListing" }] : []
 			},
 			query: (listingId) => ({ method: "PUT", url: `/listings/${listingId}/deactivate` }),
 		}),
