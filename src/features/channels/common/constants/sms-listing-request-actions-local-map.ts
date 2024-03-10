@@ -1,11 +1,11 @@
 //#region Import
-import type { RequestActionType } from "../types"
+import type { ChannelSourceRequestAction } from "../types/data.types"
 //#endregion
 
-const smsListingRequestsActionsLocalMap: Record<RequestActionType, string> = {
-	APPROVED: "channels-common:listingRequestActions.approved",
-	REJECTED: "channels-common:listingRequestActions.rejected",
-	REJECTED_BLOCKED: "channels-common:listingRequestActions.rejectedAndBlocked",
+const smsListingRequestsActionsLocalMap: Record<ChannelSourceRequestAction, string> = {
+	APPROVE: "channels-common:listingRequestActions.approved",
+	BLOCK: "channels-common:listingRequestActions.rejectedAndBlocked",
+	REJECT: "channels-common:listingRequestActions.rejected",
 }
 
 export default smsListingRequestsActionsLocalMap

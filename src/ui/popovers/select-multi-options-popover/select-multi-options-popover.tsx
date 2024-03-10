@@ -2,14 +2,15 @@
 import LucideChevronDown from "~icons/lucide/chevron-down"
 import { twMerge } from "tailwind-merge"
 
-import Button from "../button/button"
-import MultiBadegesPreview from "../combo-box/multi-badges-preview"
-import Label from "../label/label"
-import Popover from "../popover/popover"
-import MultiSelectPopoverContent from "./multi-select-popover-content"
+import Button from "../../button/button"
+import Label from "../../label/label"
+import Popover from "../../popover/popover"
+import MultiBadegesPreview from "../select-async-options-popover/multi-badges-preview"
+import SelectMultiOptionsPopoverContent from "./select-multi-options-popover-content"
 //#endregion
 
-interface MultiSelectPopoverProps extends React.ComponentPropsWithoutRef<typeof MultiSelectPopoverContent> {
+interface SelectMultiOptionsPopoverProps
+	extends React.ComponentPropsWithoutRef<typeof SelectMultiOptionsPopoverContent> {
 	className?: string
 
 	contentProps?: React.ComponentPropsWithoutRef<typeof Popover.Content>
@@ -18,24 +19,31 @@ interface MultiSelectPopoverProps extends React.ComponentPropsWithoutRef<typeof 
 
 	placeholder?: React.ReactNode | string
 
+	required?: boolean
+
 	size?: React.ComponentPropsWithoutRef<typeof Button>["size"]
 
 	triggerProps?: React.ComponentPropsWithoutRef<typeof Button>
 }
 
-const MultiSelectPopover = ({
+const SelectMultiOptionsPopover = ({
 	className,
 	contentProps,
 	label,
 	placeholder = "Select Options",
+	required,
 	size,
 	triggerProps,
 	value,
 	...props
-}: MultiSelectPopoverProps) => {
+}: SelectMultiOptionsPopoverProps) => {
 	return (
 		<div className={twMerge("relative w-full max-w-[340px]", className)}>
-			{!!label?.length && <Label size={size}>{label}</Label>}
+			{!!label?.length && (
+				<Label size={size}>
+					{label} {required && "*"}
+				</Label>
+			)}
 
 			<Popover>
 				<Popover.Trigger asChild>
@@ -60,11 +68,11 @@ const MultiSelectPopover = ({
 				</Popover.Trigger>
 
 				<Popover.Content align='start' {...contentProps} className={twMerge("p-1", contentProps?.className)}>
-					<MultiSelectPopoverContent value={value} {...props} />
+					<SelectMultiOptionsPopoverContent value={value} {...props} />
 				</Popover.Content>
 			</Popover>
 		</div>
 	)
 }
 
-export default MultiSelectPopover
+export default SelectMultiOptionsPopover

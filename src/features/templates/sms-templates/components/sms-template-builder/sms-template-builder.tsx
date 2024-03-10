@@ -1,15 +1,16 @@
 //#region Import
 import SmsIndustryTemplateSchema from "@/features/industries/schemas/sms-industry-template-schema"
-import SelectSingleTemplateType from "@/features/templates/common/components/select-single-template-type"
-import templateLanguagesOptions from "@/features/templates/common/constants/template-languages-options"
+import SelectSingleLanguagePopover from "@/features/templates/common/components/select-single-language-popover"
+import SelectSingleTemplateTypePopover from "@/features/templates/common/components/select-single-template-type-popover"
 import DiscardTemplateChangesDialog from "@/features/templates/sms-templates/dialogs/discard-template-changes-dialog/discard-template-changes-dialog"
 import SmsTemplateSchema from "@/features/templates/sms-templates/schemas/sms-template-schema"
-import { Button, Footer, Form, Input, Select, Separator, useForm } from "@/ui"
+import { Button, Footer, Form, Input, Separator, useForm } from "@/ui"
 import SectionHeading from "@/ui/section-heading/section-heading"
 import { zodResolver } from "@hookform/resolvers/zod"
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
 import MdiMessageProcessing from "~icons/mdi/message-processing"
 import { useFormContext } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import MobileSmsPreview from "../mobile-sms-preview"
@@ -70,6 +71,8 @@ function SmsTemplateBuilder<TData extends SchemaType = typeof SmsTemplateSchema>
 }
 
 const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) => {
+	const { t } = useTranslation("templates-common", { keyPrefix: "components.smsTemplateBuilder" })
+
 	const { control, watch } = useFormContext()
 
 	return (
@@ -77,9 +80,9 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 			<div className='w-full max-w-[800px] flex-grow space-y-8 overflow-y-auto pe-2 sm:pe-4'>
 				<div className='space-y-8'>
 					<SectionHeading
-						description='Fill your template basic info'
+						description={t("sectionHeadings.basicInfo.description")}
 						icon={MdiInformationVariantCircle}
-						label='Template Basic Info'
+						label={t("sectionHeadings.basicInfo.label")}
 					/>
 
 					<div className='flex flex-row flex-wrap gap-6 ps-2'>
@@ -88,9 +91,14 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 							name='name'
 							render={({ field }) => (
 								<Form.Item className='w-full max-w-[340px]'>
-									<Form.Label>Template Name *</Form.Label>
+									<Form.Label>{t("fields.name.label")} *</Form.Label>
 									<Form.Control>
-										<Input className='w-full bg-white' placeholder='Enter name' size='lg' {...field} />
+										<Input
+											className='w-full bg-white'
+											placeholder={t("fields.name.placeholder")}
+											size='lg'
+											{...field}
+										/>
 									</Form.Control>
 									<Form.Message />
 								</Form.Item>
@@ -103,10 +111,10 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 							render={({ field }) => (
 								<Form.Item className='w-full max-w-[340px]'>
 									<Form.Control>
-										<SelectSingleTemplateType
-											label='Template Type *'
-											onValueChange={(selectedType) => field.onChange(selectedType)}
-											placeholder='Select type'
+										<SelectSingleTemplateTypePopover
+											label={t("fields.type.label")}
+											onValueChange={field.onChange}
+											required
 											size='lg'
 											value={field.value}
 										/>
@@ -121,19 +129,15 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 							name='language'
 							render={({ field }) => (
 								<Form.Item className='w-full max-w-[340px]'>
-									<Form.Label>Template Language *</Form.Label>
-									<Select onValueChange={(selectedLanguage) => field.onChange(selectedLanguage)} value={field.value}>
-										<Select.Trigger className='h-[50px] w-full !p-4 font-normal' hasValue={!!field.value?.length}>
-											<Select.Value placeholder='Select language' />
-										</Select.Trigger>
-										<Select.Content sideOffset={4}>
-											{templateLanguagesOptions.map(({ label, value }) => (
-												<Select.Item key={value} value={value}>
-													<Select.Text>{label}</Select.Text>
-												</Select.Item>
-											))}
-										</Select.Content>
-									</Select>
+									<Form.Control>
+										<SelectSingleLanguagePopover
+											label={t("fields.language.label")}
+											onValueChange={field.onChange}
+											required
+											size='lg'
+											value={field.value}
+										/>
+									</Form.Control>
 									<Form.Message />
 								</Form.Item>
 							)}
@@ -143,7 +147,11 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 
 				<Separator className='h-[2px]' />
 
-				<SectionHeading description='Fill your template text' icon={MdiMessageProcessing} label='Message Text' />
+				<SectionHeading
+					description={t("sectionHeadings.messageText.description")}
+					icon={MdiMessageProcessing}
+					label={t("sectionHeadings.messageText.label")}
+				/>
 
 				<SmsTemplateBodyTextarea />
 
@@ -155,17 +163,21 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 	)
 }
 
-const SmsTemplateBuilderFooter = ({ children }: { children?: React.ReactNode }) => (
-	<Footer className='mt-5 flex flex-row items-end md:justify-between'>
-		<DiscardTemplateChangesDialog>
-			<Button className='px-10' variant='outline'>
-				Cancel
-			</Button>
-		</DiscardTemplateChangesDialog>
+const SmsTemplateBuilderFooter = ({ children }: { children?: React.ReactNode }) => {
+	const { t } = useTranslation("templates-common", { keyPrefix: "components.smsTemplateBuilder.actions" })
 
-		<div className='flex flex-row space-x-4'>{children}</div>
-	</Footer>
-)
+	return (
+		<Footer className='mt-5 flex flex-row items-end md:justify-between'>
+			<DiscardTemplateChangesDialog>
+				<Button className='px-10' variant='outline'>
+					{t("cancel")}
+				</Button>
+			</DiscardTemplateChangesDialog>
+
+			<div className='flex flex-row space-x-4'>{children}</div>
+		</Footer>
+	)
+}
 
 SmsTemplateBuilder.Body = SmsTemplateBuilderBody
 SmsTemplateBuilder.Footer = SmsTemplateBuilderFooter

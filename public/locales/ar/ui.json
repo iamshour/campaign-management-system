@@ -26,7 +26,7 @@
 		"placeholder": "أدخل الرقم أعلاه",
 		"label": "اكتب '{{count}}' للتأكيد"
 	},
-	"comboBox": {
+	"selectAsyncOptionsPopover": {
 		"clearButton": "مسح المرشحات",
 		"placeholder": "اكتب للبحث",
 		"message": {

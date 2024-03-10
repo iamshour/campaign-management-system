@@ -1,5 +1,6 @@
 //#region Import
-import type { SmsListingStatus, SmsListingType } from "@/features/channels/common/types"
+import type { SmsListingType } from "@/features/channels/common/types"
+import type { ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
 
 import SmsListingActivateDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-activate-dialog/sms-listing-activate-dialog"
 import SmsListingBlockDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-block-dialog/sms-listing-block-dialog"
@@ -22,7 +23,7 @@ const AdminSmsListingsTableActions = ({
 
 			<ActionsDropdown.Item>{t("delete")}</ActionsDropdown.Item>
 
-			{(Object.entries(allowedActionsPerStatusMap) as [ActionType, SmsListingStatus[]][]).map(
+			{(Object.entries(allowedActionsPerStatusMap) as [ActionType, ChannelSourceListingStatus[]][]).map(
 				([actionType, allowedStatuses]) => {
 					if (!status || !allowedStatuses?.includes(status)) return
 
@@ -65,10 +66,13 @@ type ActionType = "ACTIVATE_LISTING" | "BLOCK_LISTING" | "SUSPEND_LISTING"
 /**
  * A mapping object used to allow specific user actions based on passed listing status
  */
-const allowedActionsPerStatusMap: Record<ActionType, SmsListingStatus[]> = {
-	ACTIVATE_LISTING: ["BLOCKED", "PENDING", "REJECTED", "SUSPENDED"],
-	BLOCK_LISTING: ["PENDING", "REJECTED", "SUSPENDED", "APPROVED"],
-	SUSPEND_LISTING: ["PENDING", "APPROVED"],
+const allowedActionsPerStatusMap: Record<ActionType, ChannelSourceListingStatus[]> = {
+	ACTIVATE_LISTING: ["BLOCKED", "NEW", "REJECTED", "SUSPENDED"],
+	BLOCK_LISTING: ["NEW", "REJECTED", "SUSPENDED", "APPROVED"],
+	SUSPEND_LISTING: ["NEW", "APPROVED"],
+	// ACTIVATE_LISTING: ["BLOCKED", "PENDING", "REJECTED", "SUSPENDED"],
+	// BLOCK_LISTING: ["PENDING", "REJECTED", "SUSPENDED", "APPROVED"],
+	// SUSPEND_LISTING: ["PENDING", "APPROVED"],
 }
 
 const ActionWrapper = ({ children }: { children: React.ReactNode }) => (

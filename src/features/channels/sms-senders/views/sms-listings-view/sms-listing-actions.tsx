@@ -1,5 +1,6 @@
 //#region Import
-import type { SmsListingStatus, SmsListingType } from "@/features/channels/common/types"
+import type { SmsListingType } from "@/features/channels/common/types"
+import type { ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
 
 import ActivateSmsListingDialog from "@/features/channels/sms-senders/dialogs/activate-sms-listing-dialog/activate-sms-listing-dialog"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
@@ -98,8 +99,9 @@ type ActionType = "ACTIVATE_LISTING" | "DEACTIVATE_LISTING" | "RESEND_REQUEST" |
 /**
  * A mapping object used to allow specific user actions based on passed listing status
  */
-const allowedActionsPerStatusMap: Record<ActionType, SmsListingStatus[]> = {
-	ACTIVATE_LISTING: ["DEACTIVATED"],
+const allowedActionsPerStatusMap: Record<ActionType, ChannelSourceListingStatus[]> = {
+	// ACTIVATE_LISTING: ["DEACTIVATED"],
+	ACTIVATE_LISTING: ["NEW"],
 	DEACTIVATE_LISTING: ["APPROVED", "BLOCKED", "REJECTED", "SUSPENDED"],
 	RESEND_REQUEST: ["REJECTED", "SUSPENDED"],
 	VIEW_STATUS_REASON: ["BLOCKED", "REJECTED", "SUSPENDED"],

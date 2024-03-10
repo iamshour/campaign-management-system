@@ -1,24 +1,22 @@
 //#region Import
+import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
+import type { TemplateType } from "@/features/templates/common/types"
 import type { Country } from "react-phone-number-input"
 
-import { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
-import { TemplateType } from "@/features/templates/common/types"
-import { DateRange } from "@/ui"
-
+import type { SmsListingType } from "../common/types"
 import type {
+	ChannelSourceListingStatus,
+	ChannelSourceRequestAction,
+	ChannelSourceRequestStatus,
 	ChannelType,
-	RequestActionType,
-	SmsListingRequestStatus,
-	SmsListingStatus,
-	SmsListingType,
-} from "../common/types"
+} from "../common/types/data.types"
 //#endregion
 
 /**
  * Shape of fetched SMS Sender
  */
 export type SmsListingRequest = {
-	action?: RequestActionType
+	action?: ChannelSourceRequestAction
 	company: string
 	country: Country
 	id: string
@@ -26,21 +24,6 @@ export type SmsListingRequest = {
 	type: TemplateType
 	updatedAt: string
 }
-
-export type SmsListingPendingRequestFilter = DateRange & {
-	country?: Country[]
-	type?: TemplateType[]
-}
-
-export type SmsListingCompletedRequestFilter = SmsListingPendingRequestFilter & {
-	action: RequestActionType[]
-}
-
-/**
- * Params passed to the `getSenderListingRequestsQuery` query, used to fetch Sender Listing Requests List
- */
-export type GetSmsListingRequestsParams = PaginationAndSorting<SmsListingRequest> &
-	SmsListingPendingRequestFilter & { status: SmsListingRequestStatus }
 
 /**
  * Params passed to the `getSenderListingRequestsQuery` query, used to fetch Sender Listing Requests List
@@ -51,11 +34,11 @@ export type SmsSenderRequestDetailsType = {
 	company: string
 	country: Country
 	listingDetails: Pick<SmsListingType, "status" | "statusReason">
-	requestAction?: RequestActionType
+	requestAction?: ChannelSourceRequestAction
 	requesterUserEmail: string
 	requestId: string
 	requestNote?: string
-	requestStatus: SmsListingRequestStatus
+	requestStatus: ChannelSourceRequestStatus
 	sampleContent: string
 	sourceName: string
 	updatedAt: string
@@ -69,10 +52,10 @@ export type UpdateSmsSourceRequestBody = {
 } & (
 	| {
 			actionReason: SmsSenderRequestDetailsType["actionReason"]
-			requestAction: Extract<SmsSenderRequestDetailsType["requestAction"], "REJECTED_BLOCKED" | "REJECTED">
+			requestAction: Extract<ChannelSourceRequestAction, "BLOCK" | "REJECT">
 	  }
 	| {
-			requestAction: Extract<SmsSenderRequestDetailsType["requestAction"], "APPROVED">
+			requestAction: Extract<ChannelSourceRequestAction, "APPROVE">
 	  }
 )
 
@@ -108,7 +91,8 @@ export type SmsOptedOutFilter = {
 /**
  * Params passed to the `getSenderListingRequestsQuery` query, used to fetch Sender Listing Requests List
  */
-export type GetSmsOptedOutSendersParams = PaginationAndSorting<SmsOptedOutSenderType> & SmsListingPendingRequestFilter
+// export type GetSmsOptedOutSendersParams = PaginationAndSorting<SmsOptedOutSenderType> & SmsListingPendingRequestFilter
+export type GetSmsOptedOutSendersParams = PaginationAndSorting<SmsOptedOutSenderType> & any
 
 /**
  * Body Arguments passed to the `optInSmsSenders` mutation, used to Opt in Sms Senders
@@ -132,15 +116,15 @@ export type ExportOptOutSmsSendersParams = {
 export type AddBulkSmsListingsBody = {
 	channelSource: string
 	channelSourceRequestRouteList: {
-		channelSourceListingStatus?: Extract<SmsListingStatus, "APPROVED" | "BLOCKED">
+		channelSourceListingStatus?: Extract<ChannelSourceListingStatus, "APPROVED" | "BLOCKED">
 		country: Country
 		sample: string
 		templateType: TemplateType
 	}[]
 	channelType: ChannelType
 	companyId: string
-	email: string
 	note?: string
+	userId: string
 }
 
 /**
@@ -151,4 +135,10 @@ export type AddBulkSmsListingRequestsBody = Omit<AddBulkSmsListingsBody, "channe
 		AddBulkSmsListingsBody["channelSourceRequestRouteList"][number],
 		"channelSourceListingStatus"
 	>[]
+}
+
+export type UserInCompany = {
+	companyId: string
+	email: string
+	id: string
 }

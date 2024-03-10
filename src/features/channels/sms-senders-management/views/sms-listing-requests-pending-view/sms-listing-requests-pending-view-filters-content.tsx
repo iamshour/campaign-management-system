@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsListingPendingRequestFilter } from "@/features/channels/sms-senders-management/types"
+import type { ChannelSourceRequestFilter } from "@/features/channels/sms-senders-management/types/api.types"
 import type { TemplateType } from "@/features/templates/common/types"
 
 import { useDataViewContext } from "@/core/components/data-view/data-view-context"
@@ -17,12 +17,12 @@ const SmsListingRequestsPendingViewFiltersContent = memo(() => {
 
 	const { dataViewKey } = useDataViewContext()
 
-	const filters = useSelector<SmsListingPendingRequestFilter>(
-		(state) => selectFilters(state, dataViewKey) as SmsListingPendingRequestFilter
+	const filters = useSelector<ChannelSourceRequestFilter>(
+		(state) => selectFilters(state, dataViewKey) as ChannelSourceRequestFilter
 	)
 
 	const updateState = useCallback(
-		(newFilters?: Partial<SmsListingPendingRequestFilter>) => dispatch(updateFilters({ [dataViewKey]: newFilters })),
+		(newFilters?: Partial<ChannelSourceRequestFilter>) => dispatch(updateFilters({ [dataViewKey]: newFilters })),
 		[dataViewKey, dispatch]
 	)
 
@@ -34,15 +34,17 @@ const SmsListingRequestsPendingViewFiltersContent = memo(() => {
 			/>
 
 			<SelectMultiTemplateTypesPopover
-				onValueChange={(selection) => updateState({ type: getListOfKey(selection, "value") as TemplateType[] })}
-				value={filters?.type}
+				onValueChange={(selection) =>
+					updateState({ templateTypes: getListOfKey(selection, "value") as TemplateType[] })
+				}
+				value={filters?.templateTypes}
 			/>
 
 			{/* TODO: MAKE IT MULTI SELECT  */}
 			<SelectCountryPopover
 				label='Target Country'
-				onChange={(v) => updateState({ country: [v] })}
-				value={filters?.country ? filters?.country[0] : undefined}
+				onChange={(v) => updateState({ countries: [v] })}
+				value={filters?.countries?.length ? filters?.countries[0] : undefined}
 			/>
 		</>
 	)

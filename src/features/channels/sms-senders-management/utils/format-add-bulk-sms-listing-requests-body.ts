@@ -1,15 +1,14 @@
 //#region Import
-import type { ChannelType } from "@/features/channels/common/types"
+import type { ChannelType } from "@/features/channels/common/types/data.types"
 
 import type { SmsListingRequestCreationPreviewData } from "../components/sms-listing-request-creation-preview"
-
-import { SmsSenderRequestsForm } from "../routes/create-sms-sender-request-route"
+import type { SmsSenderRequestsForm } from "../routes/create-sms-sender-request-route"
 //#endregion
 
 /**
  * Function that takes the listing or listing request body from react hook form and transforms it to the backend format
  * @param data in format SmsSenderRequestsForm
- * @param channelType (local/international) to be taken from url and sent to backend on creation
+ * @param channelType ("SMS_INTERNATIONAL" | "SMS_LOCAL") to be extracted from url and sent to backend on creation
  *
  * @returns formatted data in backend format (AddBulkSmsListingRequestsBody) but witth additional field errorKey used to locate each listing in form
  *
@@ -32,9 +31,9 @@ const formatAddBulkSmsListingRequestsBody = (data: SmsSenderRequestsForm, channe
 	const formattedData: SmsListingRequestCreationPreviewData = {
 		channelSource: data.basicInfo.sender,
 		channelSourceRequestRouteList: formattedList,
-		channelType: channelType,
+		channelType,
 		companyId: data.basicInfo.company.value,
-		email: data.basicInfo.email.value,
+		userId: data.basicInfo.email.value,
 	}
 
 	return formattedData

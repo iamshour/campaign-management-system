@@ -15,15 +15,15 @@ const AdminSmsListingsView = lazy(() => import("../views/admin-sms-listings-view
 const AdminSmsListingsRoute = () => {
 	const { senderId } = useParams()
 
-	const { channelType, type } = useGetChannelType()
+	const { channelType, channelTypeInUrl } = useGetChannelType()
 
-	const dataViewKey = `${type!}-sms-listings` as const
+	const dataViewKey = `${channelTypeInUrl!}-listings` as const
 
 	const { filters, paginationAndSorting } = useSelector(({ dataView }) => dataView[dataViewKey])
 
 	const { count, error, isError, isFetching, isInitialLoading, isReady, list } = useGetSmsListingsQuery(
 		{
-			channel: channelType,
+			channelType,
 			sourceId: senderId!,
 			...filters,
 			...paginationAndSorting,

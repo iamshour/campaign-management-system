@@ -1,104 +1,19 @@
 //#region Import
 import LucideCheck from "~icons/lucide/check"
-import LucideChevronDown from "~icons/lucide/chevron-down"
-import { createContext, useCallback, useContext, useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
-import type { OptionType } from "../types"
+import type { OptionType } from "../../types"
 
-import Badge from "../badge/badge"
-import Button from "../button/button"
-import Command from "../command/command"
-import Label from "../label/label"
-import Popover from "../popover/popover"
-import Skeleton from "../skeleton/skeleton"
-import MultiBadegesPreview from "./multi-badges-preview"
+import Button from "../../button/button"
+import Command from "../../command/command"
+import Skeleton from "../../skeleton/skeleton"
+import { useSelectAsyncOptionsPopover } from "./select-async-options-popover"
 //#endregion
 
-type ComboBoxSingleProps = {
-	isMulti: false
-	maxLimit?: undefined
-	selection?: OptionType
-	updateSelection: (option?: OptionType) => void
-}
-type ComboBoxMultiProps = {
-	isMulti: true
-	maxLimit?: number
-	selection: OptionType[]
-	updateSelection: (option: OptionType[]) => void
-}
-
-export type ComboBoxContextType = Pick<React.ComponentPropsWithoutRef<typeof Button>, "size"> & {
-	creatable?: boolean
-	disabled?: boolean
-} & (ComboBoxMultiProps | ComboBoxSingleProps)
-
-const ComboBoxContextProvider = createContext<ComboBoxContextType>({} as ComboBoxContextType)
-
-const useComboBoxContext = () => useContext(ComboBoxContextProvider)
-
-type ComboBoxProps = Pick<React.ComponentPropsWithoutRef<typeof Button>, "children" | "className"> & {
-	label?: string
-} & ComboBoxContextType
-
-const ComboBox = ({ children, className, label, ...contextValue }: ComboBoxProps) => (
-	<ComboBoxContextProvider.Provider value={contextValue}>
-		<div className={twMerge("relative w-full max-w-[340px]", className)}>
-			{!!label?.length && (
-				<Label disabled={contextValue?.disabled} size={contextValue?.size}>
-					{label}
-				</Label>
-			)}
-
-			<Popover>{children}</Popover>
-		</div>
-	</ComboBoxContextProvider.Provider>
-)
-
-const ComboBoxTrigger = ({ children, className, ...props }: React.ComponentPropsWithoutRef<typeof Button>) => {
-	const { disabled, isMulti, selection, size } = useComboBoxContext()
-
-	return (
-		<Popover.Trigger asChild disabled={disabled}>
-			<Button
-				hasValue={(isMulti && !!selection?.length) || (!isMulti && !!selection?.value?.length)}
-				size={size}
-				variant='outline-grey'
-				{...props}
-				className={twMerge(
-					"w-full justify-between overflow-hidden py-0 !font-normal",
-					props?.size === "lg" ? "text-base" : "px-3 text-sm",
-					className
-				)}>
-				<div className='h-full flex-1 truncate py-2.5 text-start'>
-					<div className='flex h-full items-center gap-1'>
-						{(isMulti && !selection?.length) || (!isMulti && !selection?.value?.length) ? (
-							children
-						) : isMulti ? (
-							<MultiBadegesPreview selection={selection} size={size} />
-						) : (
-							<Badge size={size}>{selection?.label}</Badge>
-						)}
-					</div>
-				</div>
-
-				<LucideChevronDown className='h-4 w-4' />
-			</Button>
-		</Popover.Trigger>
-	)
-}
-
-const ComboBoxContent = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof Popover.Content>) => (
-	<Popover.Content
-		align='start'
-		className={twMerge("h-[250px] w-[300px] border border-gray-300 p-0 flex-center", className)}
-		{...props}
-	/>
-)
-
 // TODO: Handle Infinite Loading in Component to handle changing offset/limit Values
-export function ComboBoxPopper({
+const SelectAsyncOptionsPopoverContent = ({
 	loading,
 	onSearch,
 	options = [],
@@ -109,13 +24,13 @@ export function ComboBoxPopper({
 	onSearch?: (v?: string) => void
 	options?: OptionType[]
 	searchTerm?: string
-}) {
+}) => {
 	const { t } = useTranslation("ui")
 
-	const { creatable, isMulti, maxLimit, selection, updateSelection } = useComboBoxContext()
+	const { creatable, isMulti, maxLimit, selection, updateSelection } = useSelectAsyncOptionsPopover()
 
 	/**
-	 * Boolean to check if Limit of selected Entries has been reached (Only passed in case of Multi Selection Combobox)
+	 * Boolean to check if Limit of selected Entries has been reached (Only passed in case of Multi Selection)
 	 */
 	const maxLimitReached = useMemo(
 		() => isMulti && !!maxLimit && maxLimit === selection?.length,
@@ -195,7 +110,11 @@ export function ComboBoxPopper({
 
 	return (
 		<Command className='!h-full' shouldFilter={onSearch === undefined}>
-			<Command.Input onValueChange={onSearch} placeholder={t("comboBox.placeholder")} value={searchTerm} />
+			<Command.Input
+				onValueChange={onSearch}
+				placeholder={t("selectAsyncOptionsPopover.placeholder")}
+				value={searchTerm}
+			/>
 
 			<Command.List className='flex-1 [&>div]:flex [&>div]:!h-full [&>div]:flex-col'>
 				{canShowCreatable && (
@@ -243,7 +162,7 @@ export function ComboBoxPopper({
 						<Command.Item
 							className='cursor-pointer justify-center text-center hover:text-primary-900'
 							onSelect={() => updateSelection([])}>
-							{t("comboBox.clearButton")}
+							{t("selectAsyncOptionsPopover.clearButton")}
 						</Command.Item>
 					</Command.Group>
 				)
@@ -252,7 +171,4 @@ export function ComboBoxPopper({
 	)
 }
 
-ComboBox.Trigger = ComboBoxTrigger
-ComboBox.Content = ComboBoxContent
-
-export default ComboBox
+export default SelectAsyncOptionsPopoverContent

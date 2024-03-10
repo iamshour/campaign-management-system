@@ -69,8 +69,10 @@ const api = createApi({
 		"SmsIndustryTemplate",
 		"SmsSender",
 		"SmsListing",
-		"SmsListingRequest",
+		"ChannelSourceRequest",
 		"OptInSender",
+		"Company",
+		"UserInCompany",
 	],
 })
 

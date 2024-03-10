@@ -1,6 +1,6 @@
 //#region Import
 import { useGetSegmentsQuery } from "@/features/people/segments/api"
-import { ComboBoxPopper } from "@/ui"
+import { SelectAsyncOptionsPopoverContent } from "@/ui"
 import { useState } from "react"
 //#endregion
 
@@ -19,7 +19,14 @@ const SelectSegmentsPopoverContent = () => {
 		}
 	)
 
-	return <ComboBoxPopper loading={loading} onSearch={setSearchTerm} options={list} searchTerm={searchTerm} />
+	return (
+		<SelectAsyncOptionsPopoverContent
+			loading={loading}
+			onSearch={setSearchTerm}
+			options={list}
+			searchTerm={searchTerm}
+		/>
+	)
 }
 
 export default SelectSegmentsPopoverContent

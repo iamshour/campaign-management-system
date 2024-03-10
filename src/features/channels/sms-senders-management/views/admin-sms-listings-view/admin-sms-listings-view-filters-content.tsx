@@ -1,5 +1,6 @@
 //#region Import
-import type { SmsListingsFilter, SmsListingStatus } from "@/features/channels/common/types"
+import type { SmsListingsFilter } from "@/features/channels/common/types"
+import type { ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
 import type { TemplateType } from "@/features/templates/common/types"
 
 import { useDataViewContext } from "@/core/components/data-view/data-view-context"
@@ -33,7 +34,9 @@ const AdminSmsListingsViewFiltersContent = memo(() => {
 			/>
 
 			<SelectMultiListingStatusesPopover
-				onValueChange={(selection) => updateState({ status: getListOfKey(selection, "value") as SmsListingStatus[] })}
+				onValueChange={(selection) =>
+					updateState({ status: getListOfKey(selection, "value") as ChannelSourceListingStatus[] })
+				}
 				value={filters?.status}
 			/>
 

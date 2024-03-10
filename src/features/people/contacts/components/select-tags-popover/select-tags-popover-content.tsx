@@ -1,6 +1,6 @@
 //#region Import
 import { useGetTagsQuery } from "@/features/people/contacts/api"
-import { ComboBoxPopper } from "@/ui"
+import { SelectAsyncOptionsPopoverContent } from "@/ui"
 import { useState } from "react"
 //#endregion
 
@@ -19,7 +19,14 @@ const SelectTagsPopoverContent = () => {
 		}
 	)
 
-	return <ComboBoxPopper loading={loading} onSearch={setSearchTerm} options={list} searchTerm={searchTerm} />
+	return (
+		<SelectAsyncOptionsPopoverContent
+			loading={loading}
+			onSearch={setSearchTerm}
+			options={list}
+			searchTerm={searchTerm}
+		/>
+	)
 }
 
 export default SelectTagsPopoverContent

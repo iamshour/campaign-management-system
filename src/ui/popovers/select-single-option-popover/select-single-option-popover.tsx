@@ -3,7 +3,7 @@ import { Label, OptionType, Select } from "@/ui"
 import { twMerge } from "tailwind-merge"
 //#endregion
 
-interface SingleSelectPopoverProps<T extends string> extends React.ComponentPropsWithoutRef<typeof Select<T>> {
+interface SelectSingleOptionPopoverProps<T extends string> extends React.ComponentPropsWithoutRef<typeof Select<T>> {
 	"aria-invalid"?: React.ComponentPropsWithoutRef<typeof Select.Trigger>["aria-invalid"]
 	className?: string
 	contentProps?: React.ComponentPropsWithoutRef<typeof Select.Content>
@@ -15,18 +15,23 @@ interface SingleSelectPopoverProps<T extends string> extends React.ComponentProp
 	triggerProps?: React.ComponentPropsWithoutRef<typeof Select.Trigger>
 }
 
-const SingleSelectPopover = <T extends string>({
+const SelectSingleOptionPopover = <T extends string>({
 	className,
 	contentProps,
 	label,
 	options,
 	placeholder,
+	required,
 	size,
 	triggerProps,
 	...props
-}: SingleSelectPopoverProps<T>) => (
+}: SelectSingleOptionPopoverProps<T>) => (
 	<div className={twMerge("relative w-[340px] max-w-full", className)}>
-		{!!label?.length && <Label size={size}>{label}</Label>}
+		{!!label?.length && (
+			<Label size={size}>
+				{label} {required && "*"}
+			</Label>
+		)}
 
 		<Select {...props}>
 			<Select.Trigger
@@ -53,4 +58,4 @@ const SingleSelectPopover = <T extends string>({
 	</div>
 )
 
-export default SingleSelectPopover
+export default SelectSingleOptionPopover

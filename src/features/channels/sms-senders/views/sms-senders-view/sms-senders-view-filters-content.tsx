@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsSenderFilter } from "@/features/channels/sms-senders/types"
+import type { SmsSenderFilter } from "@/features/channels/common/types"
 import type { TemplateType } from "@/features/templates/common/types"
 
 import { useDataViewContext } from "@/core/components/data-view/data-view-context"

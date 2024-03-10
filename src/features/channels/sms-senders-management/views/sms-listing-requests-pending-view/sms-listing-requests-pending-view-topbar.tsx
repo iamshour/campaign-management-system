@@ -9,11 +9,14 @@ import { useTranslation } from "react-i18next"
 const SmsListingRequestsPendingViewTopbar = memo(() => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "views.smsListingRequestsPending" })
 
-	const { name, pathname, type } = useGetChannelType()
+	const { channelTypeInUrl, pathname } = useGetChannelType()
 
 	return (
 		<div>
-			<Button as='link' state={{ from: pathname }} to={`/admin/channels/${type}-${name}/listing-requests/new-request`}>
+			<Button
+				as='link'
+				state={{ from: pathname }}
+				to={`/admin/channels/${channelTypeInUrl}/listing-requests/new-request`}>
 				<PhPlusBold />
 				{t("callToAction")}
 			</Button>

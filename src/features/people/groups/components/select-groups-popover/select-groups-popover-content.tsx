@@ -1,7 +1,7 @@
 //#region Import
 import getSearchFilter from "@/core/utils/get-search-filter"
 import { useGetGroupsQuery } from "@/features/people/groups/api"
-import { ComboBoxPopper } from "@/ui"
+import { SelectAsyncOptionsPopoverContent } from "@/ui"
 import { useState } from "react"
 //#endregion
 
@@ -24,7 +24,14 @@ const SelectGroupsPopoverContent = () => {
 		}
 	)
 
-	return <ComboBoxPopper loading={fetchLoading} onSearch={setSearchTerm} options={list} searchTerm={searchTerm} />
+	return (
+		<SelectAsyncOptionsPopoverContent
+			loading={fetchLoading}
+			onSearch={setSearchTerm}
+			options={list}
+			searchTerm={searchTerm}
+		/>
+	)
 }
 
 export default SelectGroupsPopoverContent

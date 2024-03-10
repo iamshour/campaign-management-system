@@ -1,11 +1,10 @@
 //#region Import
-import type { RequestActionType } from "../types"
-//#endregion
+import type { ChannelSourceRequestAction } from "../types/data.types"
 
-const smsListingRequestActionsColorsMap: Record<RequestActionType, string> = {
-	APPROVED: "#28B745",
-	REJECTED: "#F5788C",
-	REJECTED_BLOCKED: "#EB2344",
+const smsListingRequestActionsColorsMap: Record<ChannelSourceRequestAction, string> = {
+	APPROVE: "#28B745",
+	BLOCK: "#EB2344",
+	REJECT: "#F5788C",
 }
 
 export default smsListingRequestActionsColorsMap

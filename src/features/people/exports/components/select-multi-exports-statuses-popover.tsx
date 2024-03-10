@@ -1,5 +1,5 @@
 //#region Import
-import { MultiSelectPopover } from "@/ui"
+import { SelectMultiOptionsPopover } from "@/ui"
 import { useTranslation } from "react-i18next"
 
 import exportsStatusesOptions from "../constants/exports-statuses-options"
@@ -8,11 +8,11 @@ import exportsStatusesOptions from "../constants/exports-statuses-options"
 const SelectMultiExportsStatusesPopover = ({
 	label,
 	...props
-}: Omit<React.ComponentPropsWithoutRef<typeof MultiSelectPopover>, "options">) => {
+}: Omit<React.ComponentPropsWithoutRef<typeof SelectMultiOptionsPopover>, "options">) => {
 	const { t } = useTranslation("exports")
 
 	return (
-		<MultiSelectPopover
+		<SelectMultiOptionsPopover
 			{...props}
 			label={label || t("components.selectMultiExportsStatusesPopover.label")}
 			options={exportsStatusesOptions?.map((op) => ({ ...op, label: t(op.label) }))}

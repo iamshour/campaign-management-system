@@ -2,10 +2,11 @@
 import useGetChannelType from "@/core/hooks/useGetChannelType"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
+import getSearchFilter from "@/core/utils/get-search-filter"
 import { DataTableSkeleton } from "@/ui"
 import { lazy } from "react"
 
-import { useGetSmsListingRequestsQuery } from "../api"
+import { useGetChannelSourceRequestsQuery } from "../api"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 
@@ -19,20 +20,22 @@ const SmsListingRequestsCompletedView = lazy(
 //#endregion
 
 const SmsListingCompletedRequestsRoute = () => {
-	const { type } = useGetChannelType()
+	const { channelType, channelTypeInUrl } = useGetChannelType()
 
-	const dataViewKey = `${type!}-sms-listing-completed-requests` as const
+	const dataViewKey = `${channelTypeInUrl!}-channel-source-requests-completed` as const
 
 	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector(
 		({ dataView }) => dataView[dataViewKey]
 	)
 
 	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } =
-		useGetSmsListingRequestsQuery(
+		useGetChannelSourceRequestsQuery(
 			{
 				...filters,
 				...paginationAndSorting,
-				status: "COMPLETED",
+				...getSearchFilter<["channelSourceName", "companyName"]>(searchTerm, ["channelSourceName", "companyName"]),
+				channelSourceRequestStatus: "COMPLETED",
+				channelType,
 			},
 			{
 				selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({

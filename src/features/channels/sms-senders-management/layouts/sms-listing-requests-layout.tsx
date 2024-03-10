@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsListingRequestStatus } from "@/features/channels/common/types"
+import type { ChannelSourceRequestStatus } from "@/features/channels/common/types/data.types"
 
 import useGetChannelType from "@/core/hooks/useGetChannelType"
 import { Button } from "@/ui"
@@ -8,9 +8,9 @@ import { Outlet } from "react-router-dom"
 //#endregion
 
 const SmsListingRequestsLayout = () => {
-	const { name, pathname, type } = useGetChannelType()
+	const { channelTypeInUrl, pathname } = useGetChannelType()
 
-	const currentStatus: SmsListingRequestStatus | undefined = pathname?.match("pending")
+	const currentStatus: ChannelSourceRequestStatus | undefined = pathname?.match("pending")
 		? "PENDING"
 		: pathname?.match("completed")
 			? "COMPLETED"
@@ -23,13 +23,13 @@ const SmsListingRequestsLayout = () => {
 					active={currentStatus === "PENDING"}
 					as='link'
 					label='Pending'
-					to={`./${type}-${name}/listing-requests/pending`}
+					to={`./${channelTypeInUrl}/listing-requests/pending`}
 				/>
 				<FilterButton
 					active={currentStatus === "COMPLETED"}
 					as='link'
 					label='Completed'
-					to={`./${type}-${name}/listing-requests/completed`}
+					to={`./${channelTypeInUrl}/listing-requests/completed`}
 				/>
 			</div>
 

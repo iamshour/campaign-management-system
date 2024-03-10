@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next"
 const MAXSIZE = 512000
 
 const BuilderDropareaSection = () => {
-	const { t } = useTranslation("industries", { keyPrefix: "components.templateBuilder.backgroundField" })
+	const { t } = useTranslation("industries", { keyPrefix: "components.smsTemplateBuilder.backgroundField" })
 
 	const { control } = useFormContext<SmsIndustryTemplateSchemaType>()
 

@@ -25,7 +25,7 @@ const SmsListingRequestApproveDialogContent = ({
 	const [triggerUpdateSmsListing, { isLoading }] = useUpdateSmsSourceRequestMutation()
 
 	const handleSubmit = async () => {
-		await triggerUpdateSmsListing({ requestAction: "APPROVED", requestId }).unwrap()
+		await triggerUpdateSmsListing({ requestAction: "APPROVE", requestId }).unwrap()
 
 		closeDialog()
 	}

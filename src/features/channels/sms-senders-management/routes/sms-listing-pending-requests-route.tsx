@@ -2,10 +2,11 @@
 import useGetChannelType from "@/core/hooks/useGetChannelType"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
+import getSearchFilter from "@/core/utils/get-search-filter"
 import { DataTableSkeleton } from "@/ui"
 import { lazy } from "react"
 
-import { useGetSmsListingRequestsQuery } from "../api"
+import { useGetChannelSourceRequestsQuery } from "../api"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 
@@ -19,20 +20,22 @@ const SmsListingRequestsPendingView = lazy(
 //#endregion
 
 const SmsListingPendingRequestsRoute = () => {
-	const { type } = useGetChannelType()
+	const { channelType, channelTypeInUrl } = useGetChannelType()
 
-	const dataViewKey = `${type!}-sms-listing-pending-requests` as const
+	const dataViewKey = `${channelTypeInUrl!}-channel-source-requests-pending` as const
 
 	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector(
 		({ dataView }) => dataView[dataViewKey]
 	)
 
 	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } =
-		useGetSmsListingRequestsQuery(
+		useGetChannelSourceRequestsQuery(
 			{
 				...filters,
 				...paginationAndSorting,
-				status: "PENDING",
+				...getSearchFilter<["channelSourceName", "companyName"]>(searchTerm, ["channelSourceName", "companyName"]),
+				channelSourceRequestStatus: "PENDING",
+				channelType,
 			},
 			{
 				selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({

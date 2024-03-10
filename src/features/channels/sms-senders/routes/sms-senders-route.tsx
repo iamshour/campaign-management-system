@@ -6,7 +6,7 @@ import useGetChannelType from "@/core/hooks/useGetChannelType"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import getSearchFilter from "@/core/utils/get-search-filter"
-import { useGetSmsSendersQuery } from "@/features/channels/sms-senders/api"
+import { useGetSmsSendersQuery } from "@/features/channels/common/api"
 import { DataTableSkeleton } from "@/ui"
 import { lazy } from "react"
 
@@ -20,10 +20,10 @@ const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const SmsSendersRoute = () => {
-	const { type } = useGetChannelType()
+	const { channelType, channelTypeInUrl } = useGetChannelType()
 
 	// dataview Key: "local-sms-senders" | "international-sms-senders"
-	const dataViewKey: SmsSenderDataViewKeyOptions = `${type!}-sms-senders`
+	const dataViewKey: SmsSenderDataViewKeyOptions = `${channelTypeInUrl!}-senders`
 
 	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector<
 		DataViewState<typeof dataViewKey>
@@ -31,7 +31,7 @@ const SmsSendersRoute = () => {
 
 	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } = useGetSmsSendersQuery(
 		{
-			channelType: type === "international" ? "SMS_INTERNATIONAL" : "SMS_LOCAL",
+			channelType,
 			...paginationAndSorting,
 			...filters,
 			...getSearchFilter<["name"]>(searchTerm, ["name"]),
@@ -52,7 +52,7 @@ const SmsSendersRoute = () => {
 
 	if (isInitialLoading) return <DataTableSkeleton />
 
-	if (isEmptyView) return <SmsSendersViewEmpty channelType={type!} />
+	if (isEmptyView) return <SmsSendersViewEmpty />
 
 	if (isError) return <DisplayError error={error as any} showReloadButton />
 

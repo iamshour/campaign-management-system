@@ -1,49 +1,94 @@
 /* eslint-disable perfectionist/sort-objects*/
 
 //#region Import
+import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
+import type {
+	ChannelSourceRequest,
+	ChannelSourceRequestDetails,
+} from "@/features/channels/sms-senders-management/types/data.types"
+
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
-import { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import { downloadFile } from "@/utils"
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 
 import type {
 	AddBulkSmsListingRequestsBody,
 	AddBulkSmsListingsBody,
 	ExportOptOutSmsSendersParams,
-	GetSmsListingRequestsParams,
 	GetSmsOptedOutSendersParams,
 	OptInSmsSendersBody,
-	SmsListingRequest,
 	SmsOptedOutSenderType,
 	SmsSenderRequestDetailsType,
 	UpdateSmsListingStatusBody,
 	UpdateSmsSourceRequestBody,
+	UserInCompany,
 } from "./types"
+import type { GetChannelSourceRequestsParams } from "./types/api.types"
+
+import { ChannelSourceListingDetails } from "../common/types/data.types"
 //#endregion
 
 // eslint-disable-next-line
 const smsSendersManagementApis = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getSmsListingRequests: builder.query<GetListReturnType<SmsListingRequest>, GetSmsListingRequestsParams>({
+		getChannelSourceRequests: builder.query<GetListReturnType<ChannelSourceRequest>, GetChannelSourceRequestsParams>({
 			providesTags: (result) =>
 				providesList(
-					result?.list?.map(({ id }) => id),
-					"SmsListingRequest"
+					result?.list?.map(({ channelSourceRequestId }) => channelSourceRequestId),
+					"ChannelSourceRequest"
 				),
-			query: ({ status, ...params }) => ({ params, url: `/sms-listing-requests-${status?.toLocaleLowerCase()}` }),
+			query: (params) => ({ params, url: "/channel-source/request" }),
 			transformResponse,
 		}),
 
+		getChannelSourceRequestAndListingById: builder.query<
+			ChannelSourceRequestDetails & {
+				channelSourceListingDetails: Pick<
+					ChannelSourceListingDetails,
+					"channelSourceListingStatus" | "channelSourceListingStatusReason"
+				>
+			},
+			Record<"channelSourceListingId" | "channelSourceRequestId", string>
+		>({
+			async queryFn({ channelSourceListingId, channelSourceRequestId }, _queryApi, _extraOptions, fetchWithBQ) {
+				const channelSourceRequestDetails = await fetchWithBQ(`/channel-source/request/${channelSourceRequestId}`)
+
+				const channelSourceListingDetails = await fetchWithBQ(`/channel-source/listing/${channelSourceListingId}`)
+
+				if (channelSourceRequestDetails.error || channelSourceListingDetails.error)
+					return {
+						error: (channelSourceRequestDetails.error || channelSourceListingDetails.error) as FetchBaseQueryError,
+					}
+
+				const requestDetails = (channelSourceRequestDetails.data as { data: ChannelSourceRequestDetails })?.data
+
+				const listingDetails = (channelSourceListingDetails.data as { data: ChannelSourceListingDetails })?.data
+
+				return {
+					data: {
+						...requestDetails,
+						channelSourceListingDetails: {
+							channelSourceListingStatus: listingDetails?.channelSourceListingStatus,
+							channelSourceListingStatusReason: listingDetails?.channelSourceListingStatusReason,
+						},
+					},
+				}
+			},
+			providesTags: (result, error, args) => [{ id: args.channelSourceRequestId, type: "ChannelSourceRequest" }],
+		}),
+
 		getSmsListingRequestById: builder.query<SmsSenderRequestDetailsType, string>({
-			providesTags: (result) => [{ id: result?.requestId, type: "SmsListingRequest" }],
+			providesTags: (result) => [{ id: result?.requestId, type: "ChannelSourceRequest" }],
 			query: (id) => ({ url: `/sms-sender-request-details/${id}` }),
 			transformResponse,
 		}),
+
 		updateSmsListingStatus: builder.mutation<any, UpdateSmsListingStatusBody>({
 			invalidatesTags: (res, error, { listingId }) => {
 				if (!res) return []
 
-				return [{ id: listingId, type: "SmsListingRequest" }]
+				return [{ id: listingId, type: "ChannelSourceRequest" }]
 			},
 			query: ({ listingId, ...body }) => ({ body, method: "PUT", url: `/source-request/status/${listingId}` }),
 		}),
@@ -52,7 +97,7 @@ const smsSendersManagementApis = api.injectEndpoints({
 			invalidatesTags: (res, error, { requestId }) => {
 				if (!res) return []
 
-				return [{ id: requestId, type: "SmsListingRequest" }]
+				return [{ id: requestId, type: "ChannelSourceRequest" }]
 			},
 			query: ({ requestId, ...body }) => ({ body, method: "PUT", url: `/source-request/status/${requestId}` }),
 		}),
@@ -93,7 +138,7 @@ const smsSendersManagementApis = api.injectEndpoints({
 
 		addBulkSmsListingRequests: builder.mutation<any, AddBulkSmsListingRequestsBody>({
 			invalidatesTags: (res) => {
-				return res ? [{ id: "LIST", type: "SmsListingRequest" }] : []
+				return res ? [{ id: "LIST", type: "ChannelSourceRequest" }] : []
 			},
 			query: (body) => ({ body, method: "POST", url: "/channel-source/request/bulk" }),
 		}),
@@ -104,11 +149,33 @@ const smsSendersManagementApis = api.injectEndpoints({
 			},
 			query: (body) => ({ body, method: "POST", url: "/channel-source/listing/bulk" }),
 		}),
+
+		getCompaniesList: builder.query<GetListReturnType<Record<"id" | "name", string>>, undefined>({
+			providesTags: (result) =>
+				providesList(
+					result?.list?.map(({ id }) => id),
+					"Company"
+				),
+			query: () => "/company",
+			transformResponse,
+		}),
+
+		getUsersByCompanyId: builder.query<GetListReturnType<UserInCompany>, string>({
+			providesTags: (result) =>
+				providesList(
+					result?.list?.map(({ id }) => id),
+					"UserInCompany"
+				),
+			query: (params) => ({ url: "/user", params }),
+			transformResponse,
+		}),
 	}),
 })
 
 export const {
-	useGetSmsListingRequestsQuery,
+	useGetChannelSourceRequestsQuery,
+	useGetChannelSourceRequestAndListingByIdQuery,
+
 	useGetSmsListingRequestByIdQuery,
 	useUpdateSmsListingStatusMutation,
 	useUpdateSmsSourceRequestMutation,
@@ -118,4 +185,6 @@ export const {
 	useImportOptedOutSmsSendersMutation,
 	useAddBulkSmsListingRequestsMutation,
 	useAddBulkSmsListingsMutation,
+	useGetCompaniesListQuery,
+	useGetUsersByCompanyIdQuery,
 } = smsSendersManagementApis

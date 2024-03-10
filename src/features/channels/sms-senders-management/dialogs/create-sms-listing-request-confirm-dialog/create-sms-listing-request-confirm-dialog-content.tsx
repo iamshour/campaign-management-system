@@ -33,7 +33,7 @@ const CreateSmsListingRequestConfirmDialogContent = ({
 
 	const { setError } = useFormContext()
 
-	const { channelType } = useGetChannelType()
+	const { channelTypeInUrl } = useGetChannelType()
 
 	const [triggerAddBulkSmsListingRequests, { isLoading }] = useAddBulkSmsListingRequestsMutation()
 
@@ -46,16 +46,16 @@ const CreateSmsListingRequestConfirmDialogContent = ({
 			...data,
 			channelSourceRequestRouteList: data.channelSourceRequestRouteList.map((row) => ({
 				...row,
-				channelSourceListingStatus: undefined,
+				errorKey: undefined,
 			})),
 		}
 
-		triggerAddBulkSmsListingRequests(body)
+		await triggerAddBulkSmsListingRequests(body)
 			.unwrap()
 			.then(() => {
 				toast.success("Requests added successfully")
 
-				navigate(`/admin/channels/${channelType}/listing-requests`)
+				navigate(`/admin/channels/${channelTypeInUrl}/listing-requests`)
 			})
 			.catch(() => {
 				setErrorsIdx([2])

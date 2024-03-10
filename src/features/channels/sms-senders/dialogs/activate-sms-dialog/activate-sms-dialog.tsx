@@ -1,6 +1,5 @@
 //#region Import
-import type { SmsChannelTypeOption } from "@/features/channels/common/types"
-
+import { ChannelOrigin } from "@/core/utils/get-channel-type"
 import SmsSenderRequestDialog from "@/features/channels/sms-senders/dialogs/sms-sender-request-dialog/sms-sender-request-dialog"
 import { Button, Dialog } from "@/ui"
 import { useState } from "react"
@@ -11,7 +10,7 @@ interface ActivateSmsDialogProps {
 	/**
 	 * Type of channel (local/international), used to display dialog title
 	 */
-	channelType: SmsChannelTypeOption
+	channelOrigin: ChannelOrigin
 
 	/**
 	 * Trigger Button/Element for triggering Dilaog
@@ -19,7 +18,7 @@ interface ActivateSmsDialogProps {
 	children: React.ReactNode
 }
 
-const ActivateSmsDialog = ({ channelType, children }: ActivateSmsDialogProps) => {
+const ActivateSmsDialog = ({ channelOrigin, children }: ActivateSmsDialogProps) => {
 	const { t } = useTranslation("sms-senders")
 
 	const [open, setOpen] = useState(false)
@@ -30,7 +29,7 @@ const ActivateSmsDialog = ({ channelType, children }: ActivateSmsDialogProps) =>
 			<Dialog.Content
 				className='h-[] w-[438px] sm:h-[] sm:w-[438px]'
 				onInteractOutside={(e) => e.preventDefault()}
-				title={t(`dialogs.activateSmsDialog.title.${channelType}`)}>
+				title={t(`dialogs.activateSmsDialog.title.${channelOrigin}`)}>
 				<div className='p-2'>
 					<p>{t("dialogs.activateSmsDialog.text")}</p>
 
