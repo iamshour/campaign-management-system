@@ -12,9 +12,9 @@ import type { ChannelSourceListingStatus, ChannelSourceRequestStatus, ChannelTyp
 /* ******* */
 
 /**
- * Type options for the SMS Sender dataView key
+ * Type options for the SMS Channel Sources dataView key
  */
-export type SmsSenderDataViewKeyOptions = "international-sms-senders" | "local-sms-senders"
+export type SmsChannelSourceDataViewKey = "international-sms-channel-sources" | "local-sms-channel-sources"
 
 /**
  * Shape of fetched SMS Sender

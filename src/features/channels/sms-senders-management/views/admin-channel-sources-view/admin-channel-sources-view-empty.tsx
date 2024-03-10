@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next"
 import { useLocation } from "react-router-dom"
 //#endregion
 
-const AdminSmsSendersViewEmpty = () => {
+const AdminChannelSourcesViewEmpty = () => {
 	const { pathname } = useLocation()
 
 	const { t } = useTranslation("senders-management", { keyPrefix: "views" })
@@ -33,4 +33,4 @@ const AdminSmsSendersViewEmpty = () => {
 	)
 }
 
-export default AdminSmsSendersViewEmpty
+export default AdminChannelSourcesViewEmpty

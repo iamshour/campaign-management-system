@@ -14,11 +14,11 @@ const SmsListingRequestsLayout = lazy(() => import("../layouts/sms-listing-reque
 
 const SmsSendersManagementLayout = lazy(() => import("../layouts/sms-senders-management-layout"))
 
-const SmsListingPendingRequestsRoute = lazy(() => import("./sms-listing-pending-requests-route"))
+const ChannelSourceRequestsPendingRoute = lazy(() => import("./channel-source-requests-pending-route"))
 
-const SmsListingCompletedRequestsRoute = lazy(() => import("./sms-listing-completed-requests-route"))
+const ChannelSourceRequestsCompletedRoute = lazy(() => import("./channel-source-requests-completed-route"))
 
-const AdminSmsSendersRoute = lazy(() => import("./admin-sms-senders-route"))
+const AdminChannelSourcesRoute = lazy(() => import("./admin-channel-sources-route"))
 
 const SmsOptedOutSendersRoute = lazy(() => import("./sms-opted-out-senders-route"))
 //#endregion
@@ -26,15 +26,15 @@ const SmsOptedOutSendersRoute = lazy(() => import("./sms-opted-out-senders-route
 const SmsSendersManagementRoutes = () => (
 	<Routes>
 		<Route element={<SmsSendersManagementLayout />}>
-			<Route element={<AdminSmsSendersRoute />} path='local-sms/senders' />
-			<Route element={<AdminSmsSendersRoute />} path='international-sms/senders' />
+			<Route element={<AdminChannelSourcesRoute />} path='local-sms/senders' />
+			<Route element={<AdminChannelSourcesRoute />} path='international-sms/senders' />
 
 			<Route element={<SmsListingRequestsLayout />}>
-				<Route element={<SmsListingPendingRequestsRoute />} path='local-sms/listing-requests/pending' />
-				<Route element={<SmsListingCompletedRequestsRoute />} path='local-sms/listing-requests/completed' />
+				<Route element={<ChannelSourceRequestsPendingRoute />} path='local-sms/listing-requests/pending' />
+				<Route element={<ChannelSourceRequestsCompletedRoute />} path='local-sms/listing-requests/completed' />
 
-				<Route element={<SmsListingPendingRequestsRoute />} path='international-sms/listing-requests/pending' />
-				<Route element={<SmsListingCompletedRequestsRoute />} path='international-sms/listing-requests/completed' />
+				<Route element={<ChannelSourceRequestsPendingRoute />} path='international-sms/listing-requests/pending' />
+				<Route element={<ChannelSourceRequestsCompletedRoute />} path='international-sms/listing-requests/completed' />
 			</Route>
 
 			<Route element={<Navigate to='./senders' />} path='local-sms' />

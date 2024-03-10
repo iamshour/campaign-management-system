@@ -60,16 +60,19 @@ const api = createApi({
 	reducerPath: "api",
 	refetchOnReconnect: true,
 	tagTypes: [
+		// Related to People Feature
 		"Contact",
 		"Tag",
 		"Group",
 		"Segment",
+		// Related to Templates Feature
 		"SmsTemplate",
 		"Industry",
 		"SmsIndustryTemplate",
-		"SmsSender",
-		"SmsListing",
+		// Related to Channels Feature
+		"ChannelSource",
 		"ChannelSourceRequest",
+		"SmsListing",
 		"OptInSender",
 		"Company",
 		"UserInCompany",

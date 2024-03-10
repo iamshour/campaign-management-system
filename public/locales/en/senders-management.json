@@ -1,17 +1,18 @@
 {
 	"views": {
-		"smsListingRequestsPendingEmpty": {
-			"headline": "You didn't receive any sender ID yet",
-			"message": "You haven't received any requests from your client yet"
+		"channelSourceRequestsPendingEmpty": {
+			"headline": "You didn't receive any sender yet",
+			"message": "You haven't received any requests from your client yet",
+			"submit": "Add Sender Request"
 		},
-		"smsListingRequestsPending": {
-			"callToAction": "Add Sender ID Request"
+		"channelSourceRequestsPending": {
+			"callToAction": "Add Sender Request"
 		},
-		"smsListingRequestsCompletedEmpty": {
-			"headline": "You don't have sender ID yet with complete status",
+		"channelSourceRequestsCompletedEmpty": {
+			"headline": "You don't have sender yet with complete status",
 			"message": "Check the request you have received on pending list to complete them"
 		},
-		"adminSmsSendersView": {
+		"adminChannelSourcesView": {
 			"table": {
 				"callToAction": "Create Sender",
 				"actionsCell": {
@@ -21,8 +22,8 @@
 			}
 		},
 		"adminSmsSendersViewEmpty": {
-			"headline": "You don't have sender ID yet",
-			"message": "Create a new sender IDs"
+			"headline": "You don't have sender yet",
+			"message": "Create a new sender"
 		},
 		"adminSmsListingsView": {
 			"table": {
@@ -102,7 +103,7 @@
 	},
 
 	"dialogs": {
-		"smsListingRequestDetails": {
+		"channelSourceRequestDetails": {
 			"title": "View Sender Request Details",
 			"senderRequestInfo": "Sender request info",
 			"senderStatusInfo": "Sender status info"

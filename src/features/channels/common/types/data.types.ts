@@ -1,7 +1,6 @@
 //#region Import
+import type { TemplateType } from "@/features/templates/common/types"
 import type { Country } from "react-phone-number-input"
-
-import { TemplateType } from "@/features/templates/common/types"
 //#endregion
 
 export type ChannelSourceListingStatus = "APPROVED" | "BLOCKED" | "NEW" | "REJECTED" | "SUSPENDED"
@@ -29,4 +28,11 @@ export type ChannelSourceListingDetails = ChannelSourceListing & {
 	channelSourceId: string
 	channelSourceListingStatusReason: string
 	sample: string
+}
+
+export type ChannelSource = {
+	channelSourceName: string
+	createdAt: string
+	id: string
+	templateTypes: TemplateType[]
 }

@@ -129,20 +129,26 @@ interface DataViewBodyProps<TData extends RowData> extends DataTableProps<TData>
 	GridCard?: (props: TData) => JSX.Element
 }
 const DataViewBody = <TData extends RowData>({ GridCard, ...props }: DataViewBodyProps<TData>) => {
+	const dispatch = useDispatch()
+
 	const { columns, count, dataViewKey, list } = useDataViewContext<TData>()
 
 	const view = useSelector<DataViewRenderType | undefined>((state) => selectView(state, dataViewKey))
+
+	useEffect(() => {
+		if (view === "GRID" && !GridCard) {
+			// eslint-disable-next-line no-console
+			console.log("Grid Card Not Found. Rendering List instead.")
+			dispatch(toggleView({ [dataViewKey]: "LIST" }))
+		}
+	}, [view, dataViewKey, GridCard, dispatch])
 
 	if (view === "GRID") {
 		if (!count) return <NoResultsFound />
 
 		return (
 			<div className='flex max-w-full flex-wrap gap-6 overflow-y-auto p-4'>
-				{!GridCard ? (
-					<>Please pass a Grid Card to render Grid view properly</>
-				) : (
-					list.map((item, idx) => <GridCard key={idx} {...item} />)
-				)}
+				{!!GridCard && list.map((item, idx) => <GridCard key={idx} {...item} />)}
 			</div>
 		)
 	}
