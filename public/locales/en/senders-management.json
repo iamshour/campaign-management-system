@@ -111,23 +111,28 @@
 			"title": "View Sender Details",
 			"otherInfo": "Other info"
 		},
-		"listingRequestApprove": {
+		"channelSourceRequestApprove": {
 			"title": "Approve Request",
 			"tooltip": "Approve",
 			"message": "Are you sure you want to approve the sender {{name}} request for the target country {{country}}?",
-			"submit": "Confirm"
+			"submit": "Confirm",
+			"successToast": "Request Approved successfully."
 		},
-		"listingRequestReject": {
-			"title": "Reject Request",
-			"tooltip": "Reject",
-			"message": "Are you sure you want to reject the sender {{sender}} request for the target country {{country}}?",
-			"submit": "Confirm"
-		},
-		"listingRequestRejectAndBlock": {
-			"title": "Reject & Block Request",
-			"tooltip": "Reject & Block",
-			"message": "Are you sure you want to reject & Block the sender {{sender}} request for the target country {{country}}?",
-			"submit": "Confirm"
+		"channelSourceRequestRejection": {
+			"REJECT": {
+				"title": "Reject Request",
+				"tooltip": "Reject",
+				"message": "Are you sure you want to reject the sender {{sender}} request for the target country {{country}}?",
+				"submit": "Confirm",
+				"successToast": "Request rejected successfully."
+			},
+			"BLOCK": {
+				"title": "Reject & Block Request",
+				"tooltip": "Reject & Block",
+				"message": "Are you sure you want to reject & Block the sender {{sender}} request for the target country {{country}}?",
+				"submit": "Confirm",
+				"successToast": "Request rejected & blocked successfully."
+			}
 		},
 		"smsListingBlock": {
 			"title": "Block Sender Listing",

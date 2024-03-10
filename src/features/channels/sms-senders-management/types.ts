@@ -59,22 +59,6 @@ export type UpdateSmsSourceRequestBody = {
 	  }
 )
 
-/**
- * Body Arguments passed to the `updateSmsListingStatus` mutation, used to update status for an sms listing
- * P.S. `statusReason` is only required if status is 'BLOCKED' or 'REJECTED'
- */
-export type UpdateSmsListingStatusBody = {
-	listingId: SmsListingType["listingId"]
-} & (
-	| {
-			status: Extract<SmsListingType["status"], "APPROVED">
-	  }
-	| {
-			status: Extract<SmsListingType["status"], "BLOCKED" | "REJECTED" | "SUSPENDED">
-			statusReason: SmsListingType["statusReason"]
-	  }
-)
-
 export type SmsOptedOutSenderType = {
 	country: Country
 	id: string

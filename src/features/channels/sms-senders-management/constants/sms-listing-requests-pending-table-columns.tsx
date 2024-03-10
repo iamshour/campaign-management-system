@@ -51,9 +51,9 @@ const smsListingRequestsPendingTableColumns: ColumnType<ChannelSourceRequest>[] 
 		accessorKey: "actions",
 		cell: (_, { channelSourceName, channelSourceRequestId, country }) => (
 			<SmsListingRequestsPendingActions
+				channelSourceName={channelSourceName}
+				channelSourceRequestId={channelSourceRequestId}
 				country={country}
-				requestId={channelSourceRequestId}
-				sourceName={channelSourceName}
 			/>
 		),
 		preventCellClick: true,

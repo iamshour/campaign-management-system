@@ -2,17 +2,17 @@
 import { Dialog, Tooltip } from "@/ui"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
-const SmsListingRequestRejectDialogContent = lazy(() => import("./sms-listing-request-reject-dialog-content"))
+const ChannelSourceRequestRejectDialogContent = lazy(() => import("./channel-source-request-reject-dialog-content"))
 //#endregion
 
-interface SmsListingRequestRejectDialogProps
-	extends Omit<React.ComponentPropsWithoutRef<typeof SmsListingRequestRejectDialogContent>, "closeDialog"> {
+interface ChannelSourceRequestRejectDialogProps
+	extends Omit<React.ComponentPropsWithoutRef<typeof ChannelSourceRequestRejectDialogContent>, "closeDialog"> {
 	children: React.ReactNode
 }
 
-const SmsListingRequestRejectDialog = ({ children, withBlock, ...props }: SmsListingRequestRejectDialogProps) => {
+const ChannelSourceRequestRejectDialog = ({ action, children, ...props }: ChannelSourceRequestRejectDialogProps) => {
 	const { t } = useTranslation("senders-management", {
-		keyPrefix: withBlock ? "dialogs.listingRequestRejectAndBlock" : "dialogs.listingRequestReject",
+		keyPrefix: `dialogs.channelSourceRequestRejection.${action}`,
 	})
 
 	const [open, setOpen] = useState(false)
@@ -26,10 +26,10 @@ const SmsListingRequestRejectDialog = ({ children, withBlock, ...props }: SmsLis
 			</Tooltip>
 
 			<Dialog.Content className='h-[401px] w-[416px] xs:h-[377px] sm:h-[385px]' title={t("title")}>
-				<SmsListingRequestRejectDialogContent closeDialog={() => setOpen(false)} withBlock={withBlock} {...props} />
+				<ChannelSourceRequestRejectDialogContent action={action} closeDialog={() => setOpen(false)} {...props} />
 			</Dialog.Content>
 		</Dialog>
 	)
 }
 
-export default SmsListingRequestRejectDialog
+export default ChannelSourceRequestRejectDialog
