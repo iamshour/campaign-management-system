@@ -2,7 +2,7 @@
 import { lazy } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 
-const AdminSmsListingsRoute = lazy(() => import("./admin-sms-listings-route"))
+const AdminListingsRoute = lazy(() => import("./admin-listings-route"))
 
 const CreateSmsSenderRoute = lazy(() => import("./create-sms-sender-route"))
 
@@ -50,8 +50,8 @@ const SmsSendersManagementRoutes = () => (
 		<Route element={<CreateSmsSenderRoute />} path='local-sms/senders/new-sender' />
 		<Route element={<CreateSmsSenderRoute />} path='international-sms/senders/new-sender' />
 
-		<Route element={<AdminSmsListingsRoute />} path='local-sms/senders/:senderId' />
-		<Route element={<AdminSmsListingsRoute />} path='international-sms/senders/:senderId' />
+		<Route element={<AdminListingsRoute />} path='local-sms/senders/:channelSourceId' />
+		<Route element={<AdminListingsRoute />} path='international-sms/senders/:channelSourceId' />
 
 		<Route element={<SmsOptedOutSendersRoute />} path='local-sms/senders/:senderId/opted-out' />
 		<Route element={<SmsOptedOutSendersRoute />} path='international-sms/senders/:senderId/opted-out' />

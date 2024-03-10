@@ -1,32 +1,32 @@
 //#region Import
 import type { DataViewKey } from "@/core/components/data-view/types"
 import type { SharedListViewProps } from "@/core/types"
-import type { SmsListingType } from "@/features/channels/common/types"
+import type { ChannelSourceListing } from "@/features/channels/common/types/data.types"
 
 import DataView from "@/core/components/data-view/data-view"
-import smsListingsTableColumns from "@/features/channels/sms-senders-management/constants/sms-listings-table-columns"
+import adminListingsTableColumns from "@/features/channels/sms-senders-management/constants/admin-listings-table-columns"
 import SmsListingDetailsDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-details-dialog/sms-listing-details-dialog"
 import { lazy, useState } from "react"
 
-const AdminSmsSendersViewTopbar = lazy(() => import("./admin-sms-listings-view-topbar"))
+const AdminSmsSendersViewTopbar = lazy(() => import("./admin-listings-view-topbar"))
 
-const AdminSmsListingsViewFiltersContent = lazy(() => import("./admin-sms-listings-view-filters-content"))
+const AdminListingsViewFiltersContent = lazy(() => import("./admin-listings-view-filters-content"))
 //#endregion
 
-interface AdminSmsListingsViewProps extends SharedListViewProps<SmsListingType> {
-	dataViewKey: Extract<DataViewKey, "international-sms-listings" | "local-sms-listings">
+interface AdminListingsViewProps extends SharedListViewProps<ChannelSourceListing> {
+	dataViewKey: Extract<DataViewKey, "international-sms-channel-source-listings" | "local-sms-channel-source-listings">
 }
 
-const AdminSmsListingsView = (props: AdminSmsListingsViewProps) => {
+const AdminListingsView = (props: AdminListingsViewProps) => {
 	const [listingId, setListingId] = useState<string | undefined>(undefined)
 
 	return (
 		<>
-			<DataView columns={smsListingsTableColumns} {...props}>
+			<DataView columns={adminListingsTableColumns} {...props}>
 				<DataView.FiltersBar>
 					<DataView.FiltersBar.Header />
 					<DataView.FiltersBar.Content>
-						<AdminSmsListingsViewFiltersContent />
+						<AdminListingsViewFiltersContent />
 					</DataView.FiltersBar.Content>
 					<DataView.FiltersBar.Footer />
 				</DataView.FiltersBar>
@@ -51,4 +51,4 @@ const AdminSmsListingsView = (props: AdminSmsListingsViewProps) => {
 	)
 }
 
-export default AdminSmsListingsView
+export default AdminListingsView

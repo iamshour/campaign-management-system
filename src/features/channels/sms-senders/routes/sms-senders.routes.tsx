@@ -15,8 +15,8 @@ const SmsChannelRoutes = () => (
 			<Route element={<ChannelSourcesRoute />} path='international-sms/senders' />
 		</Route>
 
-		<Route element={<SmsSenderRoute />} path='local-sms/senders/:senderId' />
-		<Route element={<SmsSenderRoute />} path='international-sms/senders/:senderId' />
+		<Route element={<SmsSenderRoute />} path='local-sms/senders/:channelSourceId' />
+		<Route element={<SmsSenderRoute />} path='international-sms/senders/:channelSourceId' />
 
 		<Route element={<Navigate to='local-sms/senders' />} path='*' />
 	</Routes>

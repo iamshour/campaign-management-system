@@ -7,7 +7,7 @@ import ViewListingSampleContentDialogContent from "./view-listing-sample-content
 //#endregion
 
 interface ViewListingSampleContentDialogProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof ViewListingSampleContentDialogContent>, "listingId"> {
+	extends Pick<React.ComponentPropsWithoutRef<typeof ViewListingSampleContentDialogContent>, "id"> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */

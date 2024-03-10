@@ -56,13 +56,13 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 
 					<Form.Field
 						control={form.control}
-						name='category'
+						name='templateType'
 						render={({ field }) => (
 							<Form.Item className='w-full max-w-[340px]'>
 								<Form.Control>
 									<SelectSingleTemplateTypePopover
 										onValueChange={field.onChange}
-										readOnly={!!defaultValues?.category}
+										readOnly={!!defaultValues?.templateType}
 										required
 										size='lg'
 										value={field.value}

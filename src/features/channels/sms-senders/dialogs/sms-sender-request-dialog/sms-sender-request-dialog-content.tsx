@@ -44,7 +44,6 @@ const SmsSenderRequestDialogContent = ({
 	 * @param form form passed from the `SmsSenderRequestForm` component, which we can access to reset from data, or handle other
 	 *             actions such as sending back an error on a specific field
 	 */
-
 	const onSubmit = async (data: SmsSenderRequestSchemaType, form: UseFormReturn<SmsSenderRequestSchemaType>) => {
 		if (!data) return
 
@@ -53,7 +52,7 @@ const SmsSenderRequestDialogContent = ({
 			channelSourceRequestRoute: {
 				country: data.country,
 				sample: data.sampleContent,
-				templateType: data.category,
+				templateType: data.templateType,
 			},
 			channelType,
 			companyId: "018dcbb3-d316-7c84-8e34-ee452339c468",

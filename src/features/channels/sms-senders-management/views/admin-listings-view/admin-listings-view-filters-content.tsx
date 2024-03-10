@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsListingsFilter } from "@/features/channels/common/types"
+import type { ChannelSourceListingFilter } from "@/features/channels/common/types/api.types"
 import type { ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
 import type { TemplateType } from "@/features/templates/common/types"
 
@@ -10,19 +10,20 @@ import useSelector from "@/core/hooks/useSelector"
 import SelectMultiListingStatusesPopover from "@/features/channels/sms-senders-management/components/select-multi-listing-statuses-popover"
 import SelectMultiTemplateTypesPopover from "@/features/templates/common/components/select-multi-template-types-popover"
 import { DateRangePicker, SelectCountryPopover } from "@/ui"
-import { getListOfKey } from "@/utils"
 import { memo, useCallback } from "react"
 //#endregion
 
-const AdminSmsListingsViewFiltersContent = memo(() => {
+const AdminListingsViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
 	const { dataViewKey } = useDataViewContext()
 
-	const filters = useSelector<SmsListingsFilter>((state) => selectFilters(state, dataViewKey) as SmsListingsFilter)
+	const filters = useSelector<ChannelSourceListingFilter>(
+		(state) => selectFilters(state, dataViewKey) as ChannelSourceListingFilter
+	)
 
 	const updateState = useCallback(
-		(newFilters?: Partial<SmsListingsFilter>) => dispatch(updateFilters({ [dataViewKey]: newFilters })),
+		(newFilters?: Partial<ChannelSourceListingFilter>) => dispatch(updateFilters({ [dataViewKey]: newFilters })),
 		[dataViewKey, dispatch]
 	)
 
@@ -32,29 +33,31 @@ const AdminSmsListingsViewFiltersContent = memo(() => {
 				dateRange={{ endDate: filters?.endDate, startDate: filters?.startDate }}
 				updateDateRange={updateState}
 			/>
-
 			<SelectMultiListingStatusesPopover
 				onValueChange={(selection) =>
-					updateState({ status: getListOfKey(selection, "value") as ChannelSourceListingStatus[] })
+					updateState({
+						channelSourceListingStatus: (selection?.length ? selection[0] : undefined) as
+							| ChannelSourceListingStatus
+							| undefined,
+					})
 				}
-				value={filters?.status}
+				value={filters?.channelSourceListingStatus ? [filters?.channelSourceListingStatus] : undefined}
 			/>
-
 			<SelectMultiTemplateTypesPopover
-				onValueChange={(selection) => updateState({ type: getListOfKey(selection, "value") as TemplateType[] })}
-				value={filters?.type}
+				onValueChange={(selection) =>
+					updateState({ templateType: (selection?.length ? selection[0] : undefined) as TemplateType | undefined })
+				}
+				value={filters?.templateType ? [filters?.templateType] : undefined}
 			/>
-
-			{/* TODO: MAKE IT MULTI SELECT  */}
 			<SelectCountryPopover
 				label='Target Country'
-				onChange={(v) => updateState({ country: [v] })}
-				value={filters?.country ? filters?.country[0] : undefined}
+				onChange={(country) => updateState({ country })}
+				value={filters?.country}
 			/>
 		</>
 	)
 })
 
-AdminSmsListingsViewFiltersContent.displayName = "AdminSmsListingsViewFiltersContent"
+AdminListingsViewFiltersContent.displayName = "AdminListingsViewFiltersContent"
 
-export default AdminSmsListingsViewFiltersContent
+export default AdminListingsViewFiltersContent

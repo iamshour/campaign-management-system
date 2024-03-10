@@ -138,7 +138,7 @@ const smsSendersManagementApis = api.injectEndpoints({
 
 		addBulkSmsListings: builder.mutation<any, AddBulkSmsListingsBody>({
 			invalidatesTags: (res) => {
-				return res ? [{ id: "LIST", type: "SmsListing" }] : []
+				return res ? [{ id: "LIST", type: "ChannelSourceListing" }] : []
 			},
 			query: (body) => ({ body, method: "POST", url: "/channel-source/listing/bulk" }),
 		}),

@@ -6,7 +6,7 @@ import smsListingStatusesLocaleMap from "@/features/channels/common/constants/sm
 import { useTranslation } from "react-i18next"
 //#endregion
 
-const AdminSmsListingsViewStatusTableCell = ({ status }: { status: ChannelSourceListingStatus }) => {
+const AdminListingsViewStatusTableCell = ({ status }: { status: ChannelSourceListingStatus }) => {
 	const { t } = useTranslation("channels-common")
 
 	return (
@@ -16,4 +16,4 @@ const AdminSmsListingsViewStatusTableCell = ({ status }: { status: ChannelSource
 	)
 }
 
-export default AdminSmsListingsViewStatusTableCell
+export default AdminListingsViewStatusTableCell

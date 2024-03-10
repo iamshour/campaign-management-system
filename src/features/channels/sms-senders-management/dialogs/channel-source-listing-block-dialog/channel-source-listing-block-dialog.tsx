@@ -3,15 +3,15 @@ import { Dialog } from "@/ui"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-const SmsListingBlockDialogContent = lazy(() => import("./sms-listing-block-dialog-content"))
+const ChannelSourceListingBlockDialogContent = lazy(() => import("./channel-source-listing-block-dialog-content"))
 //#endregion
 
-interface SmsListingBlockDialogProps
-	extends Omit<React.ComponentPropsWithoutRef<typeof SmsListingBlockDialogContent>, "closeDialog"> {
+interface ChannelSourceListingBlockDialogProps
+	extends Omit<React.ComponentPropsWithoutRef<typeof ChannelSourceListingBlockDialogContent>, "closeDialog"> {
 	children: React.ReactNode
 }
 
-const SmsListingBlockDialog = ({ children, ...props }: SmsListingBlockDialogProps) => {
+const ChannelSourceListingBlockDialog = ({ children, ...props }: ChannelSourceListingBlockDialogProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.smsListingBlock" })
 
 	const [open, setOpen] = useState(false)
@@ -21,10 +21,10 @@ const SmsListingBlockDialog = ({ children, ...props }: SmsListingBlockDialogProp
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
 			<Dialog.Content className='h-[449px] w-[416px] sm:h-[457px]' title={t("title")}>
-				<SmsListingBlockDialogContent closeDialog={() => setOpen(false)} {...props} />
+				<ChannelSourceListingBlockDialogContent closeDialog={() => setOpen(false)} {...props} />
 			</Dialog.Content>
 		</Dialog>
 	)
 }
 
-export default SmsListingBlockDialog
+export default ChannelSourceListingBlockDialog
