@@ -1,5 +1,5 @@
 //#region Import
-import { MultiSelectPopover } from "@/ui"
+import { SelectMultiOptionsPopover } from "@/ui"
 import { useTranslation } from "react-i18next"
 
 import templateLanguagesOptions from "../constants/template-languages-options"
@@ -8,15 +8,15 @@ import templateLanguagesOptions from "../constants/template-languages-options"
 const SelectMultiLanguagesPopover = ({
 	label,
 	...props
-}: Omit<React.ComponentPropsWithoutRef<typeof MultiSelectPopover>, "options">) => {
-	const { t } = useTranslation("templates-common", { keyPrefix: "components.selectMultiLanguagesPopover" })
+}: Omit<React.ComponentPropsWithoutRef<typeof SelectMultiOptionsPopover>, "options">) => {
+	const { t } = useTranslation("templates-common")
 
 	return (
-		<MultiSelectPopover
+		<SelectMultiOptionsPopover
 			{...props}
-			label={label || t("label")}
-			options={templateLanguagesOptions}
-			placeholder={t("placeholder")}
+			label={label || t("components.selectMultiLanguagesPopover.label")}
+			options={templateLanguagesOptions.map(({ label, value }) => ({ label: t(label), value }))}
+			placeholder={t("components.selectMultiLanguagesPopoverplaceholder")}
 		/>
 	)
 }

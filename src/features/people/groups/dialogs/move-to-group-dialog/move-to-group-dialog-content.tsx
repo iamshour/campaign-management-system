@@ -104,7 +104,6 @@ const MoveToGroupDialogContent = ({ closeDialog, id }: MoveToGroupDialogContentP
 						<Form.Item>
 							<Suspense fallback={<Skeleton className='h-[72px] w-[340px]' />}>
 								<SelectGroupsPopover
-									isMulti={false}
 									selection={field.value}
 									size='lg'
 									updateSelection={(group) => form.setValue("group", group)}

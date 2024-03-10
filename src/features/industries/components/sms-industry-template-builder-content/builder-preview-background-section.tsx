@@ -12,7 +12,7 @@ interface BuilderPreviewBackgroundSectionProps {
 }
 
 const BuilderPreviewBackgroundSection = ({ src }: BuilderPreviewBackgroundSectionProps) => {
-	const { t } = useTranslation("industries", { keyPrefix: "components.templateBuilder.backgroundField.dropArea" })
+	const { t } = useTranslation("industries", { keyPrefix: "components.smsTemplateBuilder.backgroundField.dropArea" })
 
 	const { setValue } = useFormContext<SmsIndustryTemplateSchemaType>()
 

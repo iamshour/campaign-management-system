@@ -3,22 +3,26 @@ import LucideCheck from "~icons/lucide/check"
 import { Fragment, useCallback } from "react"
 import { twMerge } from "tailwind-merge"
 
-import type { OptionType } from "../types"
+import type { OptionType } from "../../types"
 
-import Button from "../button/button"
-import Separator from "../separator/separator"
+import Button from "../../button/button"
+import Separator from "../../separator/separator"
 //#endregion
 
-interface MultiSelectPopoverContentProps {
-	onValueChange: (value: OptionType[]) => void
-	options: OptionType[]
-	value: OptionType[]
+interface SelectMultiOptionsPopoverContentProps<T extends OptionType = OptionType> {
+	onValueChange: (value: T[]) => void
+	options: T[]
+	value: T[]
 }
 
-const MultiSelectPopoverContent = ({ onValueChange, options, value }: MultiSelectPopoverContentProps) => {
+const SelectMultiOptionsPopoverContent = <T extends OptionType>({
+	onValueChange,
+	options,
+	value,
+}: SelectMultiOptionsPopoverContentProps<T>) => {
 	const isSelected = useCallback((entry: string) => value?.some((obj) => obj?.value === entry), [value])
 
-	const onSelect = (option: OptionType) => {
+	const onSelect = (option: T) => {
 		if (isSelected(option?.value)) return onValueChange(value?.filter((obj) => obj?.value !== option?.value))
 
 		// Else, wasn't selected...
@@ -51,4 +55,4 @@ const MultiSelectPopoverContent = ({ onValueChange, options, value }: MultiSelec
 	)
 }
 
-export default MultiSelectPopoverContent
+export default SelectMultiOptionsPopoverContent

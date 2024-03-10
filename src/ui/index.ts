@@ -24,14 +24,13 @@ export { default as Collapsible } from "./collapsible/collapsible"
 
 export { default as ColorInput } from "./color-input/color-input"
 
-// RE-EXPORTING COMPONENTS
-export { default as ComboBox } from "./combo-box/combo-box"
-
 export { default as Command } from "./command/command"
 
 export { default as CompactTable } from "./compact-table/compact-table"
 
 export { default as DateRangePicker } from "./date-range-picker/date-range-picker"
+
+export type { DateRange } from "./date-range-picker/date-range-picker"
 
 export { default as Dialog } from "./dialog/dialog"
 
@@ -51,17 +50,28 @@ export { default as Input } from "./input/input"
 
 export { default as Label } from "./label/label"
 
-export { default as MultiSelectPopover } from "./multi-select-popover/multi-select-popover"
-
 export { default as NavTabs } from "./nav-tabs/nav-tabs"
 
 export { default as Pagination } from "./pagination/pagination"
+
+export type { PaginationProps } from "./pagination/pagination"
 
 export { default as PhoneInput } from "./phone-input/phone-input"
 
 export { default as PhoneInputReadonly } from "./phone-input/phone-input-readonly"
 
 export { default as Popover } from "./popover/popover"
+
+// RE-EXPORTING COMPONENTS
+export { default as SelectAsyncOptionsPopover } from "./popovers/select-async-options-popover/select-async-options-popover"
+
+export { default as SelectAsyncOptionsPopoverContent } from "./popovers/select-async-options-popover/select-async-options-popover-content"
+
+export { default as SelectCountryPopover } from "./popovers/select-country-popover/select-country-popover"
+
+export { default as SelectMultiOptionsPopover } from "./popovers/select-multi-options-popover/select-multi-options-popover"
+
+export { default as SelectSingleOptionPopover } from "./popovers/select-single-option-popover/select-single-option-popover"
 
 export { default as RadioGroup } from "./radio-group/radio-group"
 
@@ -74,10 +84,6 @@ export { default as ReadonlyInput } from "./readonly-input/readonly-input"
 export { default as SearchInput } from "./search-input/search-Input"
 
 export { default as SectionHeading } from "./section-heading/section-heading"
-
-export { default as SelectCountry } from "./select-country-popover/select-country-popover"
-
-export { default as SelectCountryPopover } from "./select-country-popover/select-country-popover"
 
 export { default as Select } from "./select/select"
 
@@ -106,9 +112,3 @@ export { default as Tooltip } from "./tooltip/tooltip"
 export { default as isoCountryOptions } from "./utils/iso-country-options"
 
 export { Slot } from "@radix-ui/react-slot"
-
-export * from "./combo-box/combo-box"
-
-export type { DateRange } from "./date-range-picker/date-range-picker"
-
-export type { PaginationProps } from "./pagination/pagination"

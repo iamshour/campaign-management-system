@@ -5,7 +5,7 @@ import getCountryName from "@/core/utils/get-country-name"
 import TemplateTypesTableColumn from "@/features/templates/common/components/template-types-table-cell"
 import { lazy } from "react"
 
-import type { SmsListingRequest } from "../types"
+import type { ChannelSourceRequest } from "../types/data.types"
 
 import smsListingRequestsFieldsLocaleMap from "./sms-listing-requests-fields-locale-map"
 
@@ -18,19 +18,20 @@ const SmsListingRequestsPendingActions = lazy(
 const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-view-date-cell"))
 //#endregion
 
-const smsListingRequestsPendingTableColumns: ColumnType<SmsListingRequest>[] = [
+const smsListingRequestsPendingTableColumns: ColumnType<ChannelSourceRequest>[] = [
 	{
 		accessorKey: "company",
+		cell: (_, { company }) => company.name,
 		header: smsListingRequestsFieldsLocaleMap.company,
 		sortable: true,
 	},
 	{
-		accessorKey: "sender",
+		accessorKey: "channelSourceName",
 		header: smsListingRequestsFieldsLocaleMap.sender,
 		sortable: true,
 	},
 	{
-		accessorKey: "type",
+		accessorKey: "templateType",
 		cell: (type) => <TemplateTypesTableColumn types={[type]} />,
 		header: smsListingRequestsFieldsLocaleMap.type,
 	},
@@ -48,8 +49,12 @@ const smsListingRequestsPendingTableColumns: ColumnType<SmsListingRequest>[] = [
 	},
 	{
 		accessorKey: "actions",
-		cell: (_, { country, id, sender }) => (
-			<SmsListingRequestsPendingActions country={country} requestId={id} sourceName={sender} />
+		cell: (_, { channelSourceName, channelSourceRequestId, country }) => (
+			<SmsListingRequestsPendingActions
+				country={country}
+				requestId={channelSourceRequestId}
+				sourceName={channelSourceName}
+			/>
 		),
 		preventCellClick: true,
 	},

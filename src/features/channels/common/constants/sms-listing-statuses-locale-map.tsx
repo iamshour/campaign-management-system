@@ -1,12 +1,13 @@
 //#region Import
-import type { SmsListingStatus } from "@/features/channels/common/types"
+import type { ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
 //#endregion
 
-const smsListingStatusesLocaleMap: Record<SmsListingStatus, string> = {
+const smsListingStatusesLocaleMap: Record<ChannelSourceListingStatus, string> = {
 	APPROVED: "channels-common:listingStatuses.approved",
 	BLOCKED: "channels-common:listingStatuses.blocked",
-	DEACTIVATED: "channels-common:listingStatuses.deactivated",
-	PENDING: "channels-common:listingStatuses.pending",
+	NEW: "channels-common:listingStatuses.pending",
+	// DEACTIVATED: "channels-common:listingStatuses.deactivated",
+	// PENDING: "channels-common:listingStatuses.pending",
 	REJECTED: "channels-common:listingStatuses.rejected",
 	SUSPENDED: "channels-common:listingStatuses.suspended",
 }

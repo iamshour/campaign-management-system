@@ -18,7 +18,7 @@ const SelectGroupsPopover = lazy(
 
 const SelectSegmentsPopover = lazy(() => import("../select-segments-popover/select-segments-popover"))
 
-const SelectCountryPopover = lazy(() => import("@/ui/select-country-popover/select-country-popover"))
+const SelectCountryPopover = lazy(() => import("@/ui/popovers/select-country-popover/select-country-popover"))
 //#endregion
 
 type SegmentSpecificationProps = Omit<SegmentRuleType, "contactSegmentRuleCondition"> &
@@ -38,7 +38,6 @@ const SegmentSpecification = memo(
 				return (
 					<SelectTagsPopover
 						creatable
-						isMulti={false}
 						label={`${t("label")} *`}
 						selection={specification ? { label: specification, value: specification } : undefined}
 						updateSelection={(option) => onSelectValueChange({ specification: option?.value })}
@@ -48,7 +47,6 @@ const SegmentSpecification = memo(
 			case "GROUPS":
 				return (
 					<SelectGroupsPopover
-						isMulti={false}
 						label={`${t("label")} *`}
 						selection={group}
 						updateSelection={(group) => onSelectValueChange({ group })}
@@ -67,7 +65,6 @@ const SegmentSpecification = memo(
 			case "SEGMENTS":
 				return (
 					<SelectSegmentsPopover
-						isMulti={false}
 						label={`${t("label")} *`}
 						selection={segment}
 						updateSelection={(segment) => onSelectValueChange({ segment })}

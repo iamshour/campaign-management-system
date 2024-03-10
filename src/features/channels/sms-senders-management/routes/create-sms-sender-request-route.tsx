@@ -17,6 +17,8 @@ import { useForm } from "react-hook-form"
 import { useLocation } from "react-router-dom"
 
 import type { SmsListingRequestCreationPreviewData } from "../components/sms-listing-request-creation-preview"
+
+import { emptyBulkListingsGroup } from "../components/bulk-listings-funnel/bulk-listings-funnel-configs"
 //#endregion
 
 export type SmsSenderRequestsForm = CreateSmsSenderRequestBasicInfoType & BulkListingsFunnelBase
@@ -26,39 +28,21 @@ const CreateSmsSenderRequestView = () => {
 
 	const form = useForm<SmsSenderRequestsForm>({
 		defaultValues: {
-			basicInfo: {
-				company: { label: "kfc", value: "018dc671-f7d1-7e35-9a04-58764ff4c013" },
-				email: { label: "Ali", value: "018e1cdf-ee66-7780-b524-bf11973ccd0a" },
-				sender: "Ali Shour",
-			},
-			// bulkListingsGroups: [emptyBulkListingsGroup],
-			bulkListingsGroups: [
-				{
-					listingsFields: [
-						{
-							content: "Custom Content here...",
-							country: "AC",
-						},
-					],
-					type: "OTP",
-				},
-			],
+			basicInfo: {},
+			bulkListingsGroups: [emptyBulkListingsGroup],
 		},
 	})
 
-	const { name, type } = useGetChannelType()
+	const { channelType, channelTypeInUrl } = useGetChannelType()
 
 	const [confirmDialogOpen, setConfirmDialogOpen] = useState<boolean>(false)
 
 	const [formattedData, setFormattedData] = useState<SmsListingRequestCreationPreviewData>()
 
 	const onValidationSubmit = (data: SmsSenderRequestsForm) => {
-		if (!type) return
+		if (!channelType) return
 
-		const formattedData = formatAddBulkSmsListingRequestsBody(
-			data,
-			type === "local" ? "SMS_LOCAL" : "SMS_INTERNATIONAL"
-		)
+		const formattedData = formatAddBulkSmsListingRequestsBody(data, channelType)
 
 		setFormattedData(formattedData)
 		setConfirmDialogOpen(true)
@@ -86,7 +70,10 @@ const CreateSmsSenderRequestView = () => {
 					</div>
 
 					<Footer>
-						<Button as='link' to={state?.from || `/admin/channels/${type}-${name}/listing-requests`} variant='outline'>
+						<Button
+							as='link'
+							to={state?.from || `/admin/channels/${channelTypeInUrl}/listing-requests`}
+							variant='outline'>
 							Cancel
 						</Button>
 
@@ -107,3 +94,23 @@ const CreateSmsSenderRequestView = () => {
 }
 
 export default CreateSmsSenderRequestView
+
+// const exampleValue = {
+// 	basicInfo: {
+// 		company: { label: "kfc", value: "018dc671-f7d1-7e35-9a04-58764ff4c013" },
+// 		email: { label: "Ali", value: "018e1cdf-ee66-7780-b524-bf11973ccd0a" },
+// 		sender: "Ali Shour",
+// 	},
+// 	// bulkListingsGroups: [emptyBulkListingsGroup],
+// 	bulkListingsGroups: [
+// 		{
+// 			listingsFields: [
+// 				{
+// 					content: "Custom Content here...",
+// 					country: "AC",
+// 				},
+// 			],
+// 			type: "OTP",
+// 		},
+// 	],
+// }

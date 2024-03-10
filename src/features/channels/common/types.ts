@@ -7,26 +7,35 @@ import type { DateRange } from "@/ui"
 import type { Country } from "react-phone-number-input"
 
 import type { SmsSenderRequestDetailsType } from "../sms-senders-management/types"
+import type { SmsSenderType } from "../sms-senders/types"
+import type { ChannelSourceListingStatus, ChannelSourceRequestStatus, ChannelType } from "./types/data.types"
 //#endregion
 
 /**
- * Type options for the SMS Channel used on server
+ * Fields to allow search on, to be sent in params of request for api call `getSmsSenders`
  */
-export type ChannelType = "SMS_INTERNATIONAL" | "SMS_LOCAL"
+type SmsSenderSearchFilter = { any?: true; name?: string }
 
 /**
- * Type options for the SMS Channel
+ * Filters used in Filters bar, to be sent in params of request for api call `getSmsSenders`
  */
-export type SmsChannelTypeOption = "international" | "local"
+export type SmsSenderFilter = DateRange & {
+	channelType: ChannelType
+	templateTypes?: TemplateType[]
+}
 
 /**
- * Status options for the SMS Listing
+ * Params passed to the `getSmsSenders` query, used for fetching SMS Senders List
  */
-export type SmsListingStatus = "APPROVED" | "BLOCKED" | "DEACTIVATED" | "PENDING" | "REJECTED" | "SUSPENDED"
+export type GetSmsSendersParams = PaginationAndSorting<SmsSenderType> & SmsSenderFilter & SmsSenderSearchFilter
 
-export type RequestActionType = "APPROVED" | "REJECTED_BLOCKED" | "REJECTED"
-
-export type SmsListingRequestStatus = "COMPLETED" | "PENDING"
+/**
+ * Type for the response body from backend when fetching senders list
+ */
+export type SmsSenderServerType = Omit<SmsSenderType, "name" | "types"> & {
+	channelSourceName: string
+	templateTypes: TemplateType[]
+}
 
 /**
  * Shape of fetched SMS Sender Listing
@@ -38,35 +47,19 @@ export type SmsListingType = Pick<
 	companyId: string
 	listingId: string
 	sourceId: string
-	status: SmsListingStatus
+	status: ChannelSourceListingStatus
 	statusReason: string
 	// MAY NOT EXIST
-	requestStatus: SmsListingRequestStatus
-	channel: "international-sms" | "local-sms"
+	requestStatus: ChannelSourceRequestStatus
+	channelType: ChannelType
 }
-
-// MAY LOOK LIKE THIS:
-// export type SmsListingType = Pick<
-// 	SmsSenderRequestDetailsType,
-// 	"category" | "company" | "country" | "updatedAt"
-// > & {
-// 	listingId: string
-// 	companyId: string
-// 	status: SmsListingStatus
-// }
-// export type GetSmsListingByIdReturnType = SmsListingType & Pick<SmsSenderRequestDetailsType, "sampleContent"> & {
-// 	sourceId: string
-// 	statusReason: string
-// 	requestStatus: SmsListingRequestStatus
-// 	channel: "international-sms" | "local-sms"
-// }
 
 /**
  * Filters used in Filters bar, to be sent in params of request for api call `getSmsListings`
  */
 export type SmsListingsFilter = DateRange & {
 	country?: Country[]
-	status?: SmsListingStatus[]
+	status?: ChannelSourceListingStatus[]
 	type?: TemplateType[]
 }
 
@@ -75,4 +68,4 @@ export type SmsListingsFilter = DateRange & {
  */
 export type GetSmsListingdParams = PaginationAndSorting<SmsListingType> &
 	SmsListingsFilter &
-	Pick<SmsListingType, "channel" | "sourceId">
+	Pick<SmsListingType, "channelType" | "sourceId">

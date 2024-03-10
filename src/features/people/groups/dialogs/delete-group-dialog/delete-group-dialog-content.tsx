@@ -69,7 +69,6 @@ const DeleteGroupDialogContent = ({ closeDialog, groupId }: DeleteGroupDialogCon
 			) : (
 				<SelectGroupsPopover
 					className='!w-full !max-w-full'
-					isMulti={false}
 					selection={selectedGroupToMoveTo}
 					size='lg'
 					updateSelection={setSelectedGroupToMoveTo}

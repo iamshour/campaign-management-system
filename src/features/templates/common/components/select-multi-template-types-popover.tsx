@@ -1,5 +1,5 @@
 //#region Import
-import { MultiSelectPopover } from "@/ui"
+import { SelectMultiOptionsPopover } from "@/ui"
 import { useTranslation } from "react-i18next"
 
 import templateTypesLocaleMap from "../constants/template-types-local-map"
@@ -8,7 +8,7 @@ import { TemplateType } from "../types"
 //#endregion
 
 interface SelectMultiTemplateTypesPopoverProps
-	extends Omit<React.ComponentPropsWithoutRef<typeof MultiSelectPopover>, "options" | "value"> {
+	extends Omit<React.ComponentPropsWithoutRef<typeof SelectMultiOptionsPopover>, "options" | "value"> {
 	value?: TemplateType[]
 }
 
@@ -21,7 +21,7 @@ const SelectMultiTemplateTypesPopover = ({
 	const { t } = useTranslation("templates-common")
 
 	return (
-		<MultiSelectPopover
+		<SelectMultiOptionsPopover
 			label={label ?? t("components.selectMultiTemplateTypesPopover.label")}
 			options={templateTypesOptions?.map(({ label, value }) => ({ label: t(label), value }))}
 			placeholder={placeholder ?? t("components.selectMultiTemplateTypesPopover.placeholder")}

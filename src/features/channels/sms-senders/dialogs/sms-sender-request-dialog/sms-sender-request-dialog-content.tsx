@@ -30,7 +30,7 @@ const SmsSenderRequestDialogContent = ({
 }: SmsSenderRequestDialogContentProps) => {
 	const { t } = useTranslation("sms-senders", { keyPrefix: `dialogs.smsSenderRequestDialog.${formType}` })
 
-	const { type } = useGetChannelType()
+	const { channelType } = useGetChannelType()
 
 	const [triggerAddSmsRequest, { isLoading }] = useAddSmsRequestMutation()
 
@@ -55,7 +55,7 @@ const SmsSenderRequestDialogContent = ({
 				sample: data.sampleContent,
 				templateType: data.category,
 			},
-			channelType: type === "international" ? "SMS_INTERNATIONAL" : "SMS_LOCAL",
+			channelType,
 			companyId: "018dcbb3-d316-7c84-8e34-ee452339c468",
 			note: data.note,
 		}

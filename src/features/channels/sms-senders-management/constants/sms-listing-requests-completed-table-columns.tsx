@@ -1,11 +1,10 @@
 //#region Import
 import type { ColumnType } from "@/core/components/data-view/data-table/types"
+import type { ChannelSourceRequest } from "@/features/channels/sms-senders-management/types/data.types"
 
 import getCountryName from "@/core/utils/get-country-name"
 import TemplateTypesTableColumn from "@/features/templates/common/components/template-types-table-cell"
 import { lazy } from "react"
-
-import type { SmsListingRequest } from "../types"
 
 import smsListingRequestsFieldsLocaleMap from "./sms-listing-requests-fields-locale-map"
 
@@ -18,20 +17,21 @@ const SmsListingRequestsCompletedViewActionColumn = lazy(
 const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-view-date-cell"))
 //#endregion
 
-const smsListingRequestsCompletedTableColumns: ColumnType<SmsListingRequest>[] = [
+const smsListingRequestsCompletedTableColumns: ColumnType<ChannelSourceRequest>[] = [
 	{
 		accessorKey: "company",
+		cell: (_, { company }) => company.name,
 		header: smsListingRequestsFieldsLocaleMap.company,
 		sortable: true,
 	},
 	{
-		accessorKey: "sender",
+		accessorKey: "channelSourceName",
 		header: smsListingRequestsFieldsLocaleMap.sender,
 		sortable: true,
 	},
 	{
-		accessorKey: "type",
-		cell: (_, { type }) => <TemplateTypesTableColumn types={[type]} />,
+		accessorKey: "templateType",
+		cell: (_, { templateType }) => <TemplateTypesTableColumn types={[templateType]} />,
 		header: smsListingRequestsFieldsLocaleMap.type,
 	},
 	{

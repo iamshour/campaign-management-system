@@ -8,18 +8,54 @@
 			"label": "Language",
 			"placeholder": "Select languages"
 		},
-		"selectSingleTemplateTypePopover": {
-			"label": "Template Type",
-			"placeholder": "Select type"
-		},
 		"selectMultiTemplateTypesPopover": {
 			"label": "Types",
 			"placeholder": "Select types"
+		},
+		"selectSingleTemplateTypePopover": {
+			"label": "Type",
+			"placeholder": "Select type"
+		},
+		"selectSingleLanguagePopover": {
+			"label": "Language",
+			"placeholder": "Select language"
+		},
+		"smsTemplateBuilder": {
+			"fields": {
+				"name": {
+					"label": "Template Name",
+					"placeholder": "Enter name"
+				},
+				"type": {
+					"label": "Template Type"
+				},
+				"language": {
+					"label": "Template Language"
+				}
+			},
+			"sectionHeadings": {
+				"basicInfo": {
+					"label": "Template Basic Info",
+					"description": "Fill your template basic info"
+				},
+				"messageText": {
+					"label": "Message Text",
+					"description": "Fill your template text"
+				}
+			},
+			"actions": {
+				"cancel": "Cancel"
+			}
 		}
 	},
 	"templateTypes": {
 		"otp": "OTP",
 		"promotional": "Promotional",
 		"transactional": "Transactional"
+	},
+	"templateLanguages": {
+		"arabic": "Arabic",
+		"english": "English",
+		"other": "Other"
 	}
 }

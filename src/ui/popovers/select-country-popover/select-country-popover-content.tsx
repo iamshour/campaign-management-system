@@ -4,10 +4,10 @@ import { useTranslation } from "react-i18next"
 import { type Country, getCountryCallingCode } from "react-phone-number-input"
 import { twMerge } from "tailwind-merge"
 
-import Command from "../command/command"
-import Skeleton from "../skeleton/skeleton"
+import Command from "../../command/command"
+import Skeleton from "../../skeleton/skeleton"
 
-const FlagIcon = lazy(() => import("../phone-input/flag-icon"))
+const FlagIcon = lazy(() => import("../../phone-input/flag-icon"))
 //#endregion
 
 export type CountryOption = { label: string; value: Country }
@@ -51,7 +51,7 @@ const SelectCountryPopoverContent = <T extends CountryOption>({
 
 	return (
 		<Command>
-			<Command.Input placeholder={t("comboBox.placeholder")} />
+			<Command.Input placeholder={t("selectAsyncOptionsPopover.placeholder")} />
 			<Command.List>
 				<Command.Empty className='min-h-[250px] w-full flex-center'>{t("noResultsComponent")}</Command.Empty>
 				<Command.Group>

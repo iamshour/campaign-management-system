@@ -19,7 +19,7 @@ type CommonTypes = ButtonVariantsType & {
 	disabled?: boolean
 
 	/**
-	 * Boolean used if the button holds some value (i.e. When used as combobox trigger, etc..)
+	 * Boolean used if the button holds some value (i.e. When used as Component trigger, etc..)
 	 */
 	hasValue?: boolean
 

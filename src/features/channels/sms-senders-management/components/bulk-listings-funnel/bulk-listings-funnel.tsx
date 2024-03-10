@@ -1,7 +1,7 @@
 //#region Import
 import type { TemplateType } from "@/features/templates/common/types"
 
-import SelectSingleTemplateType from "@/features/templates/common/components/select-single-template-type"
+import SelectSingleTemplateTypePopover from "@/features/templates/common/components/select-single-template-type-popover"
 import { Button, Form } from "@/ui"
 import { type Control, useFieldArray } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -46,7 +46,7 @@ const BulkListingsFunnel = ({ bulkListingsGroups, control, highlightedErrorRow }
 						render={({ field }) => (
 							<Form.Item className='w-full max-w-[340px]'>
 								<Form.Control>
-									<SelectSingleTemplateType
+									<SelectSingleTemplateTypePopover
 										label='Template Type *'
 										onValueChange={(selectedType) => {
 											onTypeSelect(selectedType)

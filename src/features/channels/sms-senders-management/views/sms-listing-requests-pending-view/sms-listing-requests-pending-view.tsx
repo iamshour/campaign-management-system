@@ -1,7 +1,8 @@
 //#region Import
 import type { DataViewKey } from "@/core/components/data-view/types"
 import type { SharedListViewProps } from "@/core/types"
-import type { SmsListingRequest } from "@/features/channels/sms-senders-management/types"
+import type { FetchListingRequestDetailsIds } from "@/features/channels/common/types/data.types"
+import type { ChannelSourceRequest } from "@/features/channels/sms-senders-management/types/data.types"
 
 import DataView from "@/core/components/data-view/data-view"
 import smsListingRequestsPendingTableColumns from "@/features/channels/sms-senders-management/constants/sms-listing-requests-pending-table-columns"
@@ -15,12 +16,15 @@ const SmsListingRequestsPendingViewFiltersContent = lazy(
 )
 //#endregion
 
-interface SmsListingRequestsPendingViewProps extends SharedListViewProps<SmsListingRequest> {
-	dataViewKey: Extract<DataViewKey, "international-sms-listing-pending-requests" | "local-sms-listing-pending-requests">
+interface SmsListingRequestsPendingViewProps extends SharedListViewProps<ChannelSourceRequest> {
+	dataViewKey: Extract<
+		DataViewKey,
+		"international-sms-channel-source-requests-pending" | "local-sms-channel-source-requests-pending"
+	>
 }
 
 const SmsListingRequestsPendingView = (props: SmsListingRequestsPendingViewProps) => {
-	const [requestId, setRequestId] = useState<string | undefined>(undefined)
+	const [ids, setIds] = useState<FetchListingRequestDetailsIds | undefined>(undefined)
 
 	return (
 		<>
@@ -38,16 +42,21 @@ const SmsListingRequestsPendingView = (props: SmsListingRequestsPendingViewProps
 						<SmsListingRequestsPendingViewTopbar />
 					</DataView.TopBar>
 
-					<DataView.Body onRowClick={({ id }) => setRequestId(id)} />
+					<DataView.Body<ChannelSourceRequest>
+						classNames={{ emptyTableCell: "h-[calc(100vh-410px)]" }}
+						onRowClick={({ channelSourceListingId, channelSourceRequestId }) =>
+							setIds({ channelSourceListingId, channelSourceRequestId })
+						}
+					/>
 
 					<DataView.Pagination pageLimits={[20, 40, 60, 80]} />
 				</DataView.Content>
 			</DataView>
 
 			<SmsListingRequestDetailsDialog
-				id={requestId}
-				onOpenChange={(open) => !open && setRequestId(undefined)}
-				open={!!requestId?.length}
+				ids={ids}
+				onOpenChange={(open) => !open && setIds(undefined)}
+				open={ids !== undefined}
 			/>
 		</>
 	)

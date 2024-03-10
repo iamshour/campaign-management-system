@@ -3,7 +3,7 @@ import RadixIconsGlobe from "~icons/radix-icons/globe"
 import flags from "react-phone-number-input/flags"
 import { twMerge } from "tailwind-merge"
 
-import type { CountryOption } from "../select-country-popover/select-country-popover-content"
+import type { CountryOption } from "../popovers/select-country-popover/select-country-popover-content"
 //#endregion
 
 type FlagIconProps = Partial<CountryOption> & React.SVGProps<SVGSVGElement>

@@ -65,12 +65,7 @@ const SegmentSelectionTab = () => {
 		<>
 			<p>{t("selectSegment")}</p>
 
-			<SelectSegmentsPopover
-				isMulti={false}
-				label='Segment *'
-				selection={selectedSegmentOption}
-				updateSelection={onSegmentSelection}
-			/>
+			<SelectSegmentsPopover label='Segment *' selection={selectedSegmentOption} updateSelection={onSegmentSelection} />
 
 			{!!selectedSegmentOption?.value && (
 				<div className='relative flex flex-1 flex-col gap-4 overflow-hidden rounded-xl bg-[#F7F7F7] p-4'>

@@ -4,7 +4,7 @@ import TextareaPopover from "@/core/components/textarea-popover/textarea-popover
 import SmsSenderRequestSchema, {
 	type SmsSenderRequestSchemaType,
 } from "@/features/channels/sms-senders/schemas/sms-sender-request-schema"
-import SelectSingleTemplateType from "@/features/templates/common/components/select-single-template-type"
+import SelectSingleTemplateTypePopover from "@/features/templates/common/components/select-single-template-type-popover"
 import { Footer, Form, SelectCountryPopover, Textarea, useForm } from "@/ui"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslation } from "react-i18next"
@@ -60,11 +60,10 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 						render={({ field }) => (
 							<Form.Item className='w-full max-w-[340px]'>
 								<Form.Control>
-									<SelectSingleTemplateType
-										label={`${t("channels-common:fields.type")} *`}
+									<SelectSingleTemplateTypePopover
 										onValueChange={field.onChange}
-										placeholder={t("components.smsSenderRequestForm.placeholders.type")}
 										readOnly={!!defaultValues?.category}
+										required
 										size='lg'
 										value={field.value}
 									/>
@@ -83,7 +82,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 								<Form.Control>
 									<SelectCountryPopover
 										className='[&>*]:text-base [&>*]:font-normal'
-										onChange={(country) => field.onChange(country)}
+										onChange={field.onChange}
 										readOnly={!!defaultValues?.country}
 										size='lg'
 										value={field.value}
@@ -102,7 +101,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 								<Form.Label>{t("channels-common:fields.note")}</Form.Label>
 								<Form.Control>
 									<TextareaPopover
-										onValueChange={(v) => field.onChange(v)}
+										onValueChange={field.onChange}
 										placeholder={t("components.smsSenderRequestForm.placeholders.note")}
 										size='lg'
 										triggerProps={{ className: "text-base" }}

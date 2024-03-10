@@ -9,7 +9,7 @@ const useGetChannelType = () => {
 
 	const channel = getChannelType(pathname)
 
-	if (!channel?.name) throw new Error("Channel Could not be found!")
+	if (!channel?.channelName || !channel?.channelType) throw new Error("Channel Could not be found!")
 
 	// Returning channel, as well as pathname, since pathname is used sometimes whilst getting channel type
 	return { ...channel, pathname }

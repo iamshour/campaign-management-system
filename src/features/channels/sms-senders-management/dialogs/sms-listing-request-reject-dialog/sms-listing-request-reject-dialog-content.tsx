@@ -38,7 +38,7 @@ const SmsListingRequestRejectDialogContent = ({
 	const onSubmit = async ({ actionReason }: SmsLisintgActionReasonSchemaType) => {
 		await triggerUpdateSmsListing({
 			actionReason,
-			requestAction: withBlock ? "REJECTED_BLOCKED" : "REJECTED",
+			requestAction: withBlock ? "BLOCK" : "REJECT",
 			requestId,
 		}).unwrap()
 

@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next"
 const SmsListingRequestsPendingEmpty = () => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "views" })
 
-	const { name, pathname, type } = useGetChannelType()
+	const { channelTypeInUrl, pathname } = useGetChannelType()
 
 	return (
 		<div className='flex h-full w-full flex-col gap-[14px] p-4 flex-center prevent-selection'>
@@ -21,7 +21,7 @@ const SmsListingRequestsPendingEmpty = () => {
 				className='min-w-[200px]'
 				size='default'
 				state={{ from: pathname }}
-				to={`/admin/channels/${type}-${name}/listing-requests/new-request`}>
+				to={`/admin/channels/${channelTypeInUrl}/listing-requests/new-request`}>
 				{t("smsListingRequestsPending.callToAction")}
 			</Button>
 		</div>

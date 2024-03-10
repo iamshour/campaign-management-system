@@ -35,7 +35,7 @@ const SmsListingsView = memo(({ name, types }: SmsListingsViewrops) => {
 
 	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } = useGetSmsListingsQuery(
 		{
-			channel: channelType,
+			channelType,
 			sourceId: senderId!,
 			type: [typeFilter],
 			...paginationState,

@@ -62,12 +62,12 @@ const SmsListingRequestCreationPreview = ({
 						size='lg'
 						value={data.companyId}
 					/>
-					{data.email && (
+					{data.userId && (
 						<ReadonlyInput
 							className='w-[340px] rounded-lg bg-white ring-0'
 							label={t("basicInfo.email")}
 							size='lg'
-							value={data.email}
+							value={data.userId}
 						/>
 					)}
 					<ReadonlyInput

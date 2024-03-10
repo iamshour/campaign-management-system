@@ -1,5 +1,5 @@
 //#region Import
-import { MultiSelectPopover } from "@/ui"
+import { SelectMultiOptionsPopover } from "@/ui"
 import { useTranslation } from "react-i18next"
 
 import templateStatusesOptions from "../constants/template-statuses-options"
@@ -8,11 +8,11 @@ import templateStatusesOptions from "../constants/template-statuses-options"
 const SelectMultiTemplateStatusesPopover = ({
 	label,
 	...props
-}: Omit<React.ComponentPropsWithoutRef<typeof MultiSelectPopover>, "options">) => {
+}: Omit<React.ComponentPropsWithoutRef<typeof SelectMultiOptionsPopover>, "options">) => {
 	const { t } = useTranslation("templates-common", { keyPrefix: "components.selectMultiTemplateStatusesPopover" })
 
 	return (
-		<MultiSelectPopover
+		<SelectMultiOptionsPopover
 			{...props}
 			label={label || t("label")}
 			options={templateStatusesOptions}

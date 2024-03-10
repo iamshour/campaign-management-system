@@ -16,9 +16,9 @@ const SmsOptedOutSendersView = lazy(() => import("../views/sms-opted-out-senders
 const SmsOptedOutSendersRoute = () => {
 	const { senderId } = useParams()
 
-	const { type } = useGetChannelType()
+	const { channelTypeInUrl } = useGetChannelType()
 
-	const dataViewKey = `${type!}-sms-opted-out-senders` as const
+	const dataViewKey = `${channelTypeInUrl!}-opted-out-senders` as const
 
 	const { filters, paginationAndSorting } = useSelector(({ dataView }) => dataView[dataViewKey])
 

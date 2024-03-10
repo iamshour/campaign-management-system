@@ -1,22 +1,25 @@
 //#region Import
-import { ComboBox } from "@/ui"
+import { SelectAsyncOptionsPopover } from "@/ui"
 import { lazy } from "react"
 import { useTranslation } from "react-i18next"
 
 const SelectTagsPopoverContent = lazy(() => import("./select-tags-popover-content"))
 //#endregion
 
-const SelectTagsPopover = ({ label, ...props }: React.ComponentPropsWithoutRef<typeof ComboBox>) => {
+const SelectTagsPopover = ({
+	label,
+	placeholder,
+	...props
+}: React.ComponentPropsWithoutRef<typeof SelectAsyncOptionsPopover>) => {
 	const { t } = useTranslation("contacts", { keyPrefix: "components.tagsPopover" })
 
 	return (
-		<ComboBox label={label ?? t("label")} {...props}>
-			<ComboBox.Trigger>{t(props?.isMulti ? "placeholder.multi" : "placeholder.single")}</ComboBox.Trigger>
-
-			<ComboBox.Content>
-				<SelectTagsPopoverContent />
-			</ComboBox.Content>
-		</ComboBox>
+		<SelectAsyncOptionsPopover
+			label={label ?? t("label")}
+			placeholder={placeholder ?? t(props?.isMulti ? "placeholder.multi" : "placeholder.single")}
+			{...props}>
+			<SelectTagsPopoverContent />
+		</SelectAsyncOptionsPopover>
 	)
 }
 

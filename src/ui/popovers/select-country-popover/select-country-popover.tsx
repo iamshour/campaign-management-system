@@ -4,17 +4,17 @@ import { forwardRef, lazy, Suspense, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
-import Button from "../button/button"
-import Label from "../label/label"
-import Popover from "../popover/popover"
-import Skeleton from "../skeleton/skeleton"
-import isoCountryOptions from "../utils/iso-country-options"
+import Button from "../../button/button"
+import Label from "../../label/label"
+import Popover from "../../popover/popover"
+import Skeleton from "../../skeleton/skeleton"
+import isoCountryOptions from "../../utils/iso-country-options"
 
 const SelectCountryPopoverContent = lazy(() => import("./select-country-popover-content"))
 
 const MaterialSymbolsLock = lazy(() => import("~icons/material-symbols/lock"))
 
-const FlagIcon = lazy(() => import("../phone-input/flag-icon"))
+const FlagIcon = lazy(() => import("../../phone-input/flag-icon"))
 //#endregion
 
 interface SelectCountryPopoverProps

@@ -1,5 +1,5 @@
 //#region Import
-import { ComboBoxPopper, type OptionType } from "@/ui"
+import { type OptionType, SelectAsyncOptionsPopoverContent } from "@/ui"
 import { useState } from "react"
 //#endregion
 
@@ -23,11 +23,9 @@ const SelectExportedByPopoverContent = () => {
 		{ label: "ohigyutf tvhcr", value: "23432rdfw" },
 	]
 
-	const loading = false
-
 	return (
-		<ComboBoxPopper
-			loading={loading}
+		<SelectAsyncOptionsPopoverContent
+			loading={false}
 			onSearch={setSearchTerm}
 			options={list as OptionType[] | undefined}
 			searchTerm={searchTerm}

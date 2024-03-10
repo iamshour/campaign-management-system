@@ -5,7 +5,6 @@ import { lazy } from "react"
 
 import type { SmsSenderType } from "../types"
 
-import SmsSendersListViewTableActions from "../views/sms-senders-view/sms-senders-list-view-table-actions"
 import smsSenderFieldsLocaleMap from "./sms-sender-fields-locale-map"
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -31,10 +30,6 @@ const smsSendersTableColumns: ColumnType<SmsSenderType>[] = [
 		cell: (date) => <DataViewDateCell date={date} />,
 		header: smsSenderFieldsLocaleMap.createdAt,
 		sortable: true,
-	},
-	{
-		accessorKey: "actions",
-		cell: (_, { id, name }) => <SmsSendersListViewTableActions id={id} name={name} />,
 	},
 ]
 

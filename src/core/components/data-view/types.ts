@@ -2,15 +2,10 @@
 
 //#region Import
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
-import type { SmsListingsFilter, SmsListingType } from "@/features/channels/common/types"
-import type {
-	SmsListingCompletedRequestFilter,
-	SmsListingPendingRequestFilter,
-	SmsListingRequest,
-	SmsOptedOutFilter,
-	SmsOptedOutSenderType,
-} from "@/features/channels/sms-senders-management/types"
-import type { SmsSenderFilter, SmsSenderType } from "@/features/channels/sms-senders/types"
+import type { SmsListingsFilter, SmsListingType, SmsSenderFilter } from "@/features/channels/common/types"
+import type { SmsOptedOutFilter, SmsOptedOutSenderType } from "@/features/channels/sms-senders-management/types"
+import type { ChannelSourceRequest } from "@/features/channels/sms-senders-management/types/data.types"
+import type { SmsSenderType } from "@/features/channels/sms-senders/types"
 import type {
 	IndustryFilter,
 	IndustryType,
@@ -27,6 +22,8 @@ import type { ContactGroupFilter, Group } from "@/features/people/groups/types"
 import type { Segment } from "@/features/people/segments/types"
 import type { SmsTemplateType, TemplateFilter } from "@/features/templates/sms-templates/types"
 import type { DateRange } from "@/ui"
+
+import { ChannelSourceRequestFilter } from "@/features/channels/sms-senders-management/types/api.types"
 
 import type { ColumnType } from "./data-table/types"
 //#endregion
@@ -66,13 +63,13 @@ export type DataViewKey =
 	| "contacts"
 	| "groups"
 	| "industries"
-	| "international-sms-listing-completed-requests"
-	| "international-sms-listing-pending-requests"
+	| "international-sms-channel-source-requests-completed"
+	| "international-sms-channel-source-requests-pending"
 	| "international-sms-listings"
 	| "international-sms-opted-out-senders"
 	| "international-sms-senders"
-	| "local-sms-listing-completed-requests"
-	| "local-sms-listing-pending-requests"
+	| "local-sms-channel-source-requests-completed"
+	| "local-sms-channel-source-requests-pending"
 	| "local-sms-listings"
 	| "local-sms-opted-out-senders"
 	| "local-sms-senders"
@@ -89,13 +86,13 @@ type DataViewEntryType = {
 	"contacts-in-group": Contact
 	groups: Group
 	industries: IndustryType
-	"international-sms-listing-completed-requests": SmsListingRequest
-	"international-sms-listing-pending-requests": SmsListingRequest
+	"international-sms-channel-source-requests-completed": ChannelSourceRequest
+	"international-sms-channel-source-requests-pending": ChannelSourceRequest
 	"international-sms-listings": SmsListingType
 	"international-sms-senders": SmsSenderType
-	"local-sms-listing-completed-requests": SmsListingRequest
+	"local-sms-channel-source-requests-completed": ChannelSourceRequest
 	// LISTING REQUESTS TYPE
-	"local-sms-listing-pending-requests": SmsListingRequest
+	"local-sms-channel-source-requests-pending": ChannelSourceRequest
 	"local-sms-listings": SmsListingType
 	"local-sms-senders": SmsSenderType
 	segments: Segment
@@ -114,12 +111,12 @@ export type DataViewFilterType = {
 	"contacts-in-group": Omit<ContactTableFiltersType, "groups">
 	groups: ContactGroupFilter
 	industries: IndustryFilter
-	"international-sms-listing-completed-requests": SmsListingCompletedRequestFilter
-	"international-sms-listing-pending-requests": SmsListingPendingRequestFilter
+	"international-sms-channel-source-requests-completed": ChannelSourceRequestFilter
+	"international-sms-channel-source-requests-pending": ChannelSourceRequestFilter
 	"international-sms-senders": SmsSenderFilter
-	"local-sms-listing-completed-requests": SmsListingCompletedRequestFilter
+	"local-sms-channel-source-requests-completed": ChannelSourceRequestFilter
 	// LISTING REQUESTS FILTER TYPES
-	"local-sms-listing-pending-requests": SmsListingPendingRequestFilter
+	"local-sms-channel-source-requests-pending": ChannelSourceRequestFilter
 	"local-sms-senders": SmsSenderFilter
 	segments: DateRange
 	"sms-industry-templates": PrebuiltTemplateFilter

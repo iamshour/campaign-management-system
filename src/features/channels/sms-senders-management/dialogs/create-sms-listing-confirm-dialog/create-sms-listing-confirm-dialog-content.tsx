@@ -29,7 +29,7 @@ const CreateSmsListingConfirmDialogContent = ({ closeDialog, data }: CreateSmsLi
 
 	const { setError } = useFormContext()
 
-	const { channelType } = useGetChannelType()
+	const { channelTypeInUrl } = useGetChannelType()
 
 	const [triggerAddBulkSmsListings, { isLoading }] = useAddBulkSmsListingsMutation()
 
@@ -52,7 +52,7 @@ const CreateSmsListingConfirmDialogContent = ({ closeDialog, data }: CreateSmsLi
 				toast.success("Requests added successfully")
 
 				// TODO: update below url to include sender id (/admin/channels/international-sms/senders/65ddd387c204f09220f1b518)
-				navigate(`/admin/channels/${channelType}/senders`)
+				navigate(`/admin/channels/${channelTypeInUrl}/senders`)
 			})
 			.catch(() => {
 				// TODO: set errors in form and in state

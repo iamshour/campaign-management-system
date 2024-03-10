@@ -32,7 +32,6 @@ const CreateSmsSenderRequestBasicInfo = ({ control }: CreateSmsSenderRequestBasi
 				render={({ field }) => (
 					<Form.Item>
 						<SelectCompanyPopover
-							isMulti={false}
 							selection={field.value}
 							size='lg'
 							updateSelection={(option) => {
@@ -55,7 +54,6 @@ const CreateSmsSenderRequestBasicInfo = ({ control }: CreateSmsSenderRequestBasi
 						<SelectCompanyUsersPopover
 							companyId={selectedCompanyId}
 							disabled={!selectedCompanyId}
-							isMulti={false}
 							selection={field.value}
 							size='lg'
 							updateSelection={field.onChange}

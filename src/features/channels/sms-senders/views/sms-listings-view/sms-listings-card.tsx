@@ -1,5 +1,6 @@
 //#region Import
-import type { SmsListingStatus, SmsListingType } from "@/features/channels/common/types"
+import type { SmsListingType } from "@/features/channels/common/types"
+import type { ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
 
 import DataViewDateCell from "@/core/components/data-view/data-view-date-cell"
 import getCountryName from "@/core/utils/get-country-name"
@@ -21,7 +22,8 @@ const SmsListingCard = (smsListing: SmsListingType) => {
 
 	const countryName = getCountryName(country)
 
-	const listingStatus: SmsListingStatus = requestStatus === "PENDING" ? "PENDING" : status
+	// const listingStatus: ChannelSourceListingStatus = requestStatus === "PENDING" ? "PENDING" : status
+	const listingStatus: ChannelSourceListingStatus = requestStatus === "PENDING" ? "NEW" : status
 
 	return (
 		<div className='flex h-[80px] w-[445px] max-w-full flex-row items-center rounded-md bg-[#F7F7F7]'>

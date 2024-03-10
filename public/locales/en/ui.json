@@ -32,7 +32,7 @@
 		"placeholder": "Enter the number above",
 		"label": "Type '{{count}}' to confirm'"
 	},
-	"comboBox": {
+	"selectAsyncOptionsPopover": {
 		"clearButton": "Clear filters",
 		"placeholder": "Type to search",
 		"message": {

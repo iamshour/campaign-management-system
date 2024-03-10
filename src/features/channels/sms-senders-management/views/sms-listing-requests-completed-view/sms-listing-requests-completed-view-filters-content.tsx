@@ -1,12 +1,12 @@
 //#region Import
-import type { SmsListingCompletedRequestFilter } from "@/features/channels/sms-senders-management/types"
+import type { ChannelSourceRequestFilter } from "@/features/channels/sms-senders-management/types/api.types"
 import type { TemplateType } from "@/features/templates/common/types"
 
 import { useDataViewContext } from "@/core/components/data-view/data-view-context"
 import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { RequestActionType } from "@/features/channels/common/types"
+import { ChannelSourceRequestAction } from "@/features/channels/common/types/data.types"
 import SelectMultiTemplateTypesPopover from "@/features/templates/common/components/select-multi-template-types-popover"
 import { DateRangePicker, SelectCountryPopover } from "@/ui"
 import { getListOfKey } from "@/utils"
@@ -20,12 +20,12 @@ const SmsListingRequestsCompletedViewFiltersContent = memo(() => {
 
 	const { dataViewKey } = useDataViewContext()
 
-	const filters = useSelector<SmsListingCompletedRequestFilter>(
-		(state) => selectFilters(state, dataViewKey) as SmsListingCompletedRequestFilter
+	const filters = useSelector<ChannelSourceRequestFilter>(
+		(state) => selectFilters(state, dataViewKey) as ChannelSourceRequestFilter
 	)
 
 	const updateState = useCallback(
-		(newFilters?: Partial<SmsListingCompletedRequestFilter>) => dispatch(updateFilters({ [dataViewKey]: newFilters })),
+		(newFilters?: Partial<ChannelSourceRequestFilter>) => dispatch(updateFilters({ [dataViewKey]: newFilters })),
 		[dataViewKey, dispatch]
 	)
 
@@ -37,20 +37,24 @@ const SmsListingRequestsCompletedViewFiltersContent = memo(() => {
 			/>
 
 			<SelectMultiListingRequestActionsPopover
-				onValueChange={(selection) => updateState({ action: getListOfKey(selection, "value") as RequestActionType[] })}
-				value={filters?.action}
+				onValueChange={(selection) =>
+					updateState({ actions: getListOfKey(selection, "value") as ChannelSourceRequestAction[] })
+				}
+				value={filters?.actions}
 			/>
 
 			<SelectMultiTemplateTypesPopover
-				onValueChange={(selection) => updateState({ type: getListOfKey(selection, "value") as TemplateType[] })}
-				value={filters?.type}
+				onValueChange={(selection) =>
+					updateState({ templateTypes: getListOfKey(selection, "value") as TemplateType[] })
+				}
+				value={filters?.templateTypes}
 			/>
 
 			{/* TODO: MAKE IT MULTI SELECT  */}
 			<SelectCountryPopover
 				label='Target Country'
-				onChange={(v) => updateState({ country: [v] })}
-				value={filters?.country ? filters?.country[0] : undefined}
+				onChange={(v) => updateState({ countries: [v] })}
+				value={filters?.countries?.length ? filters?.countries[0] : undefined}
 			/>
 		</>
 	)
