@@ -3,11 +3,12 @@ import type { SmsLisintgActionReasonSchemaType } from "@/features/channels/sms-s
 
 import getCountryName from "@/core/utils/get-country-name"
 import { ChannelSourceListing } from "@/features/channels/common/types/data.types"
-// import { useUpdateSmsListingStatusMutation } from "@/features/channels/sms-senders-management/api"
+import { useUpdateChannelSourceListingStatusMutation } from "@/features/channels/sms-senders-management/api"
 import ActionReasonForm from "@/features/channels/sms-senders-management/components/action-reason-form"
 import { Button } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
-import { useTranslation } from "react-i18next"
+import toast from "react-hot-toast"
+import { Trans, useTranslation } from "react-i18next"
 //#endregion
 
 export interface ChannelSourceListingSuspendDialogContentProps extends Pick<ChannelSourceListing, "country" | "id"> {
@@ -17,29 +18,40 @@ export interface ChannelSourceListingSuspendDialogContentProps extends Pick<Chan
 	closeDialog: () => void
 }
 
-// eslint-disable-next-line
-const ChannelSourceListingSuspendDialogContent = ({ closeDialog, country, id }: ChannelSourceListingSuspendDialogContentProps) => {
-	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.smsListingSuspend" })
+const ChannelSourceListingSuspendDialogContent = ({
+	closeDialog,
+	country,
+	id,
+}: ChannelSourceListingSuspendDialogContentProps) => {
+	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.channelSourceListingSuspend" })
 
 	const { closeDropdown } = useDropdownStateContext()
 
-	// const [triggerUpdateSmsListing, { isLoading }] = useUpdateSmsListingStatusMutation()
+	const [triggerUpdateChannelSourceListingStatus, { isLoading }] = useUpdateChannelSourceListingStatusMutation()
 
-	// eslint-disable-next-line
 	const onSubmit = async ({ reason }: SmsLisintgActionReasonSchemaType) => {
-		// await triggerUpdateSmsListing({
-		// 	listingId,
-		// 	status: "SUSPENDED",
-		// 	statusReason: actionReason,
-		// }).unwrap()
+		await triggerUpdateChannelSourceListingStatus({
+			channelSourceListingId: id,
+			channelSourceListingStatus: "SUSPENDED",
+			channelSourceListingStatusReason: reason,
+		}).unwrap()
+
+		toast.success(t("successToast"))
 
 		closeDropdown()
 		closeDialog()
 	}
 
 	return (
-		<ActionReasonForm message={t("message", { country: getCountryName(country) })} onSubmit={onSubmit}>
-			<Button className='ms-auto w-max shrink-0 px-10' loading={false} type='submit'>
+		<ActionReasonForm
+			message={
+				<Trans
+					i18nKey='senders-management:dialogs.channelSourceListingSuspend.message'
+					values={{ country: getCountryName(country) }}
+				/>
+			}
+			onSubmit={onSubmit}>
+			<Button className='ms-auto w-max shrink-0 px-10' loading={isLoading} type='submit'>
 				{t("submit")}
 			</Button>
 		</ActionReasonForm>

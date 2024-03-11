@@ -16,7 +16,7 @@ const ActionsDropdown = ({ children, className, Icon = BiThreeDotsVertical, icon
 	const [open, setOpen] = useState(false)
 
 	return (
-		<Dropdown onOpenChange={setOpen} open={open}>
+		<Dropdown modal={false} onOpenChange={setOpen} open={open}>
 			<Dropdown.Trigger
 				className={twMerge("h-max w-max p-1.5 text-[#939393] hover:text-[#2DAEF5]", className)}
 				showArrow={false}
