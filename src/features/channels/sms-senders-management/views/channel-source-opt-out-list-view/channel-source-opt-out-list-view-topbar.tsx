@@ -13,7 +13,7 @@ import { memo } from "react"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-const ChannelSourceOptedOutListViewTopbar = memo(() => {
+const ChannelSourceOptOutListViewTopbar = memo(() => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "views.smsOptedOutSenders.table.topbar.actions" })
 
 	const { count, dataViewKey } = useDataViewContext()
@@ -48,6 +48,6 @@ const ChannelSourceOptedOutListViewTopbar = memo(() => {
 	)
 })
 
-ChannelSourceOptedOutListViewTopbar.displayName = "ChannelSourceOptedOutListViewTopbar"
+ChannelSourceOptOutListViewTopbar.displayName = "ChannelSourceOptOutListViewTopbar"
 
-export default ChannelSourceOptedOutListViewTopbar
+export default ChannelSourceOptOutListViewTopbar

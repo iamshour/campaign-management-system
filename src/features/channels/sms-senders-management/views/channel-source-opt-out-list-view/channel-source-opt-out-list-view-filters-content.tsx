@@ -9,7 +9,7 @@ import { SelectCountryPopover } from "@/ui"
 import { memo, useCallback } from "react"
 //#endregion
 
-const ChannelSourceOptedOutListViewFiltersContent = memo(() => {
+const ChannelSourceOptOutListViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
 	const { dataViewKey } = useDataViewContext()
@@ -33,6 +33,6 @@ const ChannelSourceOptedOutListViewFiltersContent = memo(() => {
 	)
 })
 
-ChannelSourceOptedOutListViewFiltersContent.displayName = "ChannelSourceOptedOutListViewFiltersContent"
+ChannelSourceOptOutListViewFiltersContent.displayName = "ChannelSourceOptOutListViewFiltersContent"
 
-export default ChannelSourceOptedOutListViewFiltersContent
+export default ChannelSourceOptOutListViewFiltersContent

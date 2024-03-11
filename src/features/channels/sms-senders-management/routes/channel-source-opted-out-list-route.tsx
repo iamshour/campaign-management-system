@@ -11,8 +11,8 @@ import { useGetChannelSourceOptOutListQuery } from "../api"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 
-const ChannelSourceOptedOutListView = lazy(
-	() => import("../views/channel-source-opted-out-list-view/channel-source-opted-out-list-view")
+const ChannelSourceOptOutListView = lazy(
+	() => import("../views/channel-source-opt-out-list-view/channel-source-opt-out-list-view")
 )
 //#endregion
 
@@ -33,8 +33,16 @@ const ChannelSourceOptedOutListRoute = () => {
 			channelSourceId: channelSourceId!,
 		},
 		{
-			selectFromResult: ({ data, isFetching, isLoading, ...rest }) => ({
+			selectFromResult: ({
+				data,
+				// isEmptyView,
+				// isSuccess,
+				isFetching,
+				isLoading,
+				...rest
+			}) => ({
 				count: data?.count,
+				// isEmptyView: !isFetching && !!isSuccess && !data?.count && !(appliedFiltersCount || !!searchTerm?.length),
 				isFetching,
 				isInitialLoading: !data && isLoading,
 				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
@@ -48,11 +56,13 @@ const ChannelSourceOptedOutListRoute = () => {
 
 	if (isInitialLoading) return <FullViewSkeleton />
 
+	// if (isEmptyView) return <>No Data Found</>
+
 	if (isError) return <DisplayError error={error as any} />
 
 	if (isReady)
 		return (
-			<ChannelSourceOptedOutListView
+			<ChannelSourceOptOutListView
 				count={count || 0}
 				dataViewKey={dataViewKey}
 				isFetching={isFetching}

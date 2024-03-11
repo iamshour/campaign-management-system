@@ -25,6 +25,7 @@ import type {
 	GetChannelSourceOptOutListParams,
 	GetChannelSourceRequestAndListingByIdReturnType,
 	GetChannelSourceRequestsParams,
+	ImportOptOutFileBody,
 	UpdateChannelSourceListingStatusBody,
 	UpdateChannelSourceRequestActionBody,
 } from "./types/api.types"
@@ -130,6 +131,15 @@ const smsSendersManagementApis = api.injectEndpoints({
 			}
 		),
 
+		importOptOutFile: builder.mutation<any, ImportOptOutFileBody>({
+			invalidatesTags: (res) => (res ? [{ id: "LIST", type: "ChannelSourceOptedOut" }] : []),
+			query: ({ channelSourceId, optOutFile }) => ({
+				body: optOutFile,
+				method: "POST",
+				url: `/channel-source/${channelSourceId}/opt-out/import`,
+			}),
+		}),
+
 		// ---------------------------------
 
 		optInSmsSenders: builder.mutation<any, OptInSmsSendersBody>({
@@ -149,11 +159,6 @@ const smsSendersManagementApis = api.injectEndpoints({
 				url: "/opt-out-export",
 				params: { fileName, ...params },
 			}),
-		}),
-
-		importOptedOutSmsSenders: builder.mutation<any, FormData>({
-			invalidatesTags: (res) => (res ? [{ id: "LIST", type: "ChannelSourceOptedOut" }] : []),
-			query: (body) => ({ body, method: "PATCH", url: "/import-opted-out" }),
 		}),
 
 		addBulkSmsListingRequests: builder.mutation<any, AddBulkSmsListingRequestsBody>({
@@ -199,10 +204,10 @@ export const {
 	useUpdateChannelSourceListingStatusMutation,
 	useActivateChannelSourceListingMutation,
 	useGetChannelSourceOptOutListQuery,
+	useImportOptOutFileMutation,
 
 	useOptInSmsSendersMutation,
 	useExportOptOutSmsSendersMutation,
-	useImportOptedOutSmsSendersMutation,
 	useAddBulkSmsListingRequestsMutation,
 	useAddBulkSmsListingsMutation,
 	useGetCompaniesListQuery,

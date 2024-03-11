@@ -98,3 +98,8 @@ export type GetChannelSourceOptOutListParams = channelSourceOptOutSearchFilter &
 	PaginationAndSorting<ChannelSourceOptOut> & {
 		channelSourceId: string
 	}
+
+export type ImportOptOutFileBody = {
+	channelSourceId: string
+	optOutFile: FormData
+}

@@ -9,21 +9,21 @@ import useDispatch from "@/core/hooks/useDispatch"
 import smsOptedOutSendersTableColumns from "@/features/channels/sms-senders-management/constants/sms-opted-out-senders-table-columns"
 import { lazy } from "react"
 
-const SmsOptedOutViewTopbar = lazy(() => import("./channel-source-opted-out-list-view-topbar"))
+const ChannelSourceOptOutListViewTopbar = lazy(() => import("./channel-source-opt-out-list-view-topbar"))
 
-const ChannelSourceOptedOutListViewFiltersContent = lazy(
-	() => import("./channel-source-opted-out-list-view-filters-content")
+const ChannelSourceOptOutListViewFiltersContent = lazy(
+	() => import("./channel-source-opt-out-list-view-filters-content")
 )
 //#endregion
 
-interface ChannelSourceOptedOutListViewProps extends SharedListViewProps<ChannelSourceOptOut> {
+interface ChannelSourceOptOutListViewProps extends SharedListViewProps<ChannelSourceOptOut> {
 	dataViewKey: Extract<
 		DataViewKey,
 		"international-sms-channel-source-opted-out-list" | "local-sms-channel-source-opted-out-list"
 	>
 }
 
-const ChannelSourceOptedOutListView = (props: ChannelSourceOptedOutListViewProps) => {
+const ChannelSourceOptOutListView = (props: ChannelSourceOptOutListViewProps) => {
 	const dispatch = useDispatch()
 
 	return (
@@ -31,17 +31,20 @@ const ChannelSourceOptedOutListView = (props: ChannelSourceOptedOutListViewProps
 			<DataView.FiltersBar>
 				<DataView.FiltersBar.Header />
 				<DataView.FiltersBar.Content>
-					<ChannelSourceOptedOutListViewFiltersContent />
+					<ChannelSourceOptOutListViewFiltersContent />
 				</DataView.FiltersBar.Content>
 				<DataView.FiltersBar.Footer />
 			</DataView.FiltersBar>
 
 			<DataView.Content>
 				<DataView.TopBar>
-					<SmsOptedOutViewTopbar />
+					<ChannelSourceOptOutListViewTopbar />
 				</DataView.TopBar>
 
-				<DataView.Body onRowClick={({ id }) => dispatch(checkItem({ [props.dataViewKey]: id }))} />
+				<DataView.Body
+					classNames={{ emptyTableCell: "h-[calc(100vh-269px)]" }}
+					onRowClick={({ id }) => dispatch(checkItem({ [props.dataViewKey]: id }))}
+				/>
 
 				<DataView.Pagination pageLimits={[20, 40, 60, 80]}>
 					<DataView.Pagination.Message />
@@ -51,4 +54,4 @@ const ChannelSourceOptedOutListView = (props: ChannelSourceOptedOutListViewProps
 	)
 }
 
-export default ChannelSourceOptedOutListView
+export default ChannelSourceOptOutListView

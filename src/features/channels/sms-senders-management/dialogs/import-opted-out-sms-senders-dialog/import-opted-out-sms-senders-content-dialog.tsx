@@ -1,11 +1,12 @@
 //#region Import
 import IconTooltip from "@/core/components/icon-tooltip/icon-tooltip"
 import fileMimeTypes from "@/core/constants/file-mime-types"
-import { useImportOptedOutSmsSendersMutation } from "@/features/channels/sms-senders-management/api"
+import { useImportOptOutFileMutation } from "@/features/channels/sms-senders-management/api"
 import { Button, DropFileArea, Form, useForm } from "@/ui"
 import { zodResolver } from "@hookform/resolvers/zod"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
+import { useParams } from "react-router-dom"
 import * as z from "zod"
 //#endregion
 
@@ -25,14 +26,22 @@ type ImportOptoutSchemaType = z.infer<typeof ImportOptoutSchema>
 const ImportOptedOutSmsSendersDialogContent = ({ closeDialog }: ImportOptedOutSmsSendersDialogContentProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.importOptedOutSmsSenders" })
 
+	const { channelSourceId } = useParams()
+
 	const form = useForm<ImportOptoutSchemaType>({
 		resolver: zodResolver(ImportOptoutSchema),
 	})
 
-	const [triggerImportOptedOutSmsSenders, { isLoading }] = useImportOptedOutSmsSendersMutation()
+	const [triggerImportOptedOutSmsSenders, { isLoading }] = useImportOptOutFileMutation()
 
 	const onSubmit = async (data: ImportOptoutSchemaType) => {
-		await triggerImportOptedOutSmsSenders(data as any).unwrap()
+		if (!data?.file) return
+
+		const optOutFile = new FormData()
+
+		optOutFile.append("optOutFile", data?.file, "optOutFile")
+
+		await triggerImportOptedOutSmsSenders({ channelSourceId: channelSourceId!, optOutFile }).unwrap()
 
 		closeDialog()
 	}
