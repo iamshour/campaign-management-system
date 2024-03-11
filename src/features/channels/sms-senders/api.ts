@@ -3,12 +3,13 @@
 //#region Import
 import api from "@/core/lib/redux-toolkit/api"
 
-import type { AddSmsRequestBody, SmsSenderType } from "./types"
+import type { ChannelSource } from "../common/types/data.types"
+import type { AddSmsRequestBody } from "./types"
 //#endregion
 
 const smsSendersApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getSmsSenderById: builder.query<SmsSenderType, string>({
+		getSmsSenderById: builder.query<ChannelSource, string>({
 			providesTags: (result) => [{ id: result?.id, type: "ChannelSource" }],
 			// TODO: in integration; change below 65dda90d5cddf38ab869f080" ?? id to id
 			query: (id) => `/senders/${"65dda90d5cddf38ab869f080" ?? id}`,

@@ -4,6 +4,7 @@
 import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import type { ChannelSourceListingDetails } from "@/features/channels/common/types/data.types"
 import type {
+	ChannelSourceOptOut,
 	ChannelSourceRequest,
 	ChannelSourceRequestDetails,
 } from "@/features/channels/sms-senders-management/types/data.types"
@@ -17,13 +18,11 @@ import type {
 	AddBulkSmsListingRequestsBody,
 	AddBulkSmsListingsBody,
 	ExportOptOutSmsSendersParams,
-	GetSmsOptedOutSendersParams,
 	OptInSmsSendersBody,
-	SmsOptedOutSenderType,
-	UpdateSmsSourceRequestBody,
 	UserInCompany,
 } from "./types"
 import type {
+	GetChannelSourceOptOutListParams,
 	GetChannelSourceRequestAndListingByIdReturnType,
 	GetChannelSourceRequestsParams,
 	UpdateChannelSourceListingStatusBody,
@@ -119,29 +118,22 @@ const smsSendersManagementApis = api.injectEndpoints({
 			}),
 		}),
 
+		getChannelSourceOptOutList: builder.query<GetListReturnType<ChannelSourceOptOut>, GetChannelSourceOptOutListParams>(
+			{
+				providesTags: (result) =>
+					providesList(
+						result?.list?.map(({ id }) => id),
+						"ChannelSourceOptedOut"
+					),
+				query: ({ channelSourceId, ...params }) => ({ params, url: `/channel-source/${channelSourceId}/opt-out` }),
+				transformResponse,
+			}
+		),
+
 		// ---------------------------------
 
-		updateSmsSourceRequest: builder.mutation<any, UpdateSmsSourceRequestBody>({
-			invalidatesTags: (res, error, { requestId }) => {
-				if (!res) return []
-
-				return [{ id: requestId, type: "ChannelSourceRequest" }]
-			},
-			query: ({ requestId, ...body }) => ({ body, method: "PUT", url: `/source-request/status/${requestId}` }),
-		}),
-
-		getSmsOptedOutSenders: builder.query<GetListReturnType<SmsOptedOutSenderType>, GetSmsOptedOutSendersParams>({
-			providesTags: (result) =>
-				providesList(
-					result?.list?.map(({ id }) => id),
-					"OptInSender"
-				),
-			query: (params) => ({ params, url: "/sms-opted-out" }),
-			transformResponse,
-		}),
-
 		optInSmsSenders: builder.mutation<any, OptInSmsSendersBody>({
-			invalidatesTags: (res) => (res ? [{ id: "LIST", type: "OptInSender" }] : []),
+			invalidatesTags: (res) => (res ? [{ id: "LIST", type: "ChannelSourceOptedOut" }] : []),
 			query: (body) => ({ body, method: "POST", url: "/opt-in-senders" }),
 		}),
 
@@ -160,7 +152,7 @@ const smsSendersManagementApis = api.injectEndpoints({
 		}),
 
 		importOptedOutSmsSenders: builder.mutation<any, FormData>({
-			invalidatesTags: (res) => (res ? [{ id: "LIST", type: "OptInSender" }] : []),
+			invalidatesTags: (res) => (res ? [{ id: "LIST", type: "ChannelSourceOptedOut" }] : []),
 			query: (body) => ({ body, method: "PATCH", url: "/import-opted-out" }),
 		}),
 
@@ -206,9 +198,8 @@ export const {
 	useUpdateChannelSourceRequestActionMutation,
 	useUpdateChannelSourceListingStatusMutation,
 	useActivateChannelSourceListingMutation,
+	useGetChannelSourceOptOutListQuery,
 
-	useUpdateSmsSourceRequestMutation,
-	useGetSmsOptedOutSendersQuery,
 	useOptInSmsSendersMutation,
 	useExportOptOutSmsSendersMutation,
 	useImportOptedOutSmsSendersMutation,

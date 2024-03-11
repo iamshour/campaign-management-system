@@ -20,7 +20,7 @@ const ChannelSourceRequestsCompletedRoute = lazy(() => import("./channel-source-
 
 const AdminChannelSourcesRoute = lazy(() => import("./admin-channel-sources-route"))
 
-const SmsOptedOutSendersRoute = lazy(() => import("./sms-opted-out-senders-route"))
+const ChannelSourceOptedOutListRoute = lazy(() => import("./channel-source-opted-out-list-route"))
 //#endregion
 
 const SmsSendersManagementRoutes = () => (
@@ -53,8 +53,8 @@ const SmsSendersManagementRoutes = () => (
 		<Route element={<AdminListingsRoute />} path='local-sms/senders/:channelSourceId' />
 		<Route element={<AdminListingsRoute />} path='international-sms/senders/:channelSourceId' />
 
-		<Route element={<SmsOptedOutSendersRoute />} path='local-sms/senders/:senderId/opted-out' />
-		<Route element={<SmsOptedOutSendersRoute />} path='international-sms/senders/:senderId/opted-out' />
+		<Route element={<ChannelSourceOptedOutListRoute />} path='local-sms/senders/:channelSourceId/opted-out' />
+		<Route element={<ChannelSourceOptedOutListRoute />} path='international-sms/senders/:channelSourceId/opted-out' />
 
 		<Route element={<DisplayError error={{ status: 404 }} />} path='*' />
 	</Routes>

@@ -73,7 +73,7 @@ const api = createApi({
 		"ChannelSource",
 		"ChannelSourceRequest",
 		"ChannelSourceListing",
-		"OptInSender",
+		"ChannelSourceOptedOut",
 		"Company",
 		"UserInCompany",
 	],

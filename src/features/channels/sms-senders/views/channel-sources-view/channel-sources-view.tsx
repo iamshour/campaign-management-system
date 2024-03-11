@@ -1,8 +1,9 @@
 //#region Import
+import type { ColumnType } from "@/core/components/data-view/data-table/types"
 import type { SharedListViewProps } from "@/core/types"
-import type { SmsChannelSourceDataViewKey, SmsSenderType } from "@/features/channels/sms-senders/types"
+import type { ChannelSource } from "@/features/channels/common/types/data.types"
+import type { SmsChannelSourceDataViewKey } from "@/features/channels/sms-senders/types"
 
-import { ColumnType } from "@/core/components/data-view/data-table/types"
 import DataView from "@/core/components/data-view/data-view"
 import channelSourcesTableColumns from "@/features/channels/sms-senders/constants/channel-sources-table-columns"
 import { lazy } from "react"
@@ -17,7 +18,7 @@ const ChannelSourcesViewFiltersContent = lazy(() => import("./channel-sources-vi
 const ChannelSourcesListViewTableActions = lazy(() => import("./channel-sources-list-view-table-actions"))
 //#endregion
 
-interface ChannelSourcesViewProps extends SharedListViewProps<SmsSenderType> {
+interface ChannelSourcesViewProps extends SharedListViewProps<ChannelSource> {
 	dataViewKey: SmsChannelSourceDataViewKey
 }
 const ChannelSourcesView = ({ dataViewKey, ...props }: ChannelSourcesViewProps) => {
@@ -50,10 +51,12 @@ const ChannelSourcesView = ({ dataViewKey, ...props }: ChannelSourcesViewProps) 
 
 export default ChannelSourcesView
 
-const columns: ColumnType<SmsSenderType>[] = [
+const columns: ColumnType<ChannelSource>[] = [
 	...channelSourcesTableColumns,
 	{
 		accessorKey: "actions",
-		cell: (_, { id, name }) => <ChannelSourcesListViewTableActions id={id} name={name} />,
+		cell: (_, { channelSourceName, id }) => (
+			<ChannelSourcesListViewTableActions channelSourceName={channelSourceName} id={id} />
+		),
 	},
 ]

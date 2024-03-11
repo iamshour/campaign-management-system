@@ -9,16 +9,17 @@ import SmsListingsView from "../views/sms-listings-view/sms-listings-view"
 //#endregion
 
 const SmsSenderRoute = () => {
-	const params = useParams()
-
-	const senderId = params.senderId
+	const { senderId } = useParams()
 
 	const { isError, isInitialLoading, isReady, name, types } = useGetSmsSenderByIdQuery(senderId!, {
 		selectFromResult: ({ data, isLoading, ...rest }) => ({
 			isInitialLoading: data === undefined && isLoading,
-			isReady: !isLoading && Boolean(data?.types),
-			name: data?.name,
-			types: data?.types,
+			isReady: !isLoading,
+			// isReady: !isLoading && Boolean(data?.types),
+			// name: data?.name,
+			// types: data?.types,
+			name: "Example",
+			types: [],
 			...rest,
 		}),
 		skip: !senderId,
@@ -31,7 +32,7 @@ const SmsSenderRoute = () => {
 
 	if (!types?.length || !name?.length) return <NoResultsFound />
 
-	if (isReady) return <SmsListingsView name={name} types={types} />
+	if (isReady) return <SmsListingsView channelSourceName={name} templateTypes={types} />
 }
 
 export default SmsSenderRoute

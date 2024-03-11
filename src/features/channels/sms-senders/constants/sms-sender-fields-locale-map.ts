@@ -1,11 +1,11 @@
 //#region Import
-import type { SmsSenderType } from "../types"
+import type { ChannelSource } from "@/features/channels/common/types/data.types"
 //#endregion
 
-const smsSenderFieldsLocaleMap: Partial<Record<keyof SmsSenderType, string>> = {
+const smsSenderFieldsLocaleMap: Partial<Record<keyof ChannelSource, string>> = {
+	channelSourceName: "channels-common:fields.sender",
 	createdAt: "channels-common:fields.createdAt",
-	name: "channels-common:fields.sender",
-	types: "channels-common:fields.type",
+	templateTypes: "channels-common:fields.type",
 }
 
 export default smsSenderFieldsLocaleMap

@@ -1,7 +1,7 @@
 //#region Import
 import type { DataViewKey } from "@/core/components/data-view/types"
 import type { SharedListViewProps } from "@/core/types"
-import type { SmsOptedOutSenderType } from "@/features/channels/sms-senders-management/types"
+import type { ChannelSourceOptOut } from "@/features/channels/sms-senders-management/types/data.types"
 
 import DataView from "@/core/components/data-view/data-view"
 import { checkItem } from "@/core/components/data-view/data-view-slice"
@@ -9,16 +9,21 @@ import useDispatch from "@/core/hooks/useDispatch"
 import smsOptedOutSendersTableColumns from "@/features/channels/sms-senders-management/constants/sms-opted-out-senders-table-columns"
 import { lazy } from "react"
 
-const SmsOptedOutViewTopbar = lazy(() => import("./sms-opted-out-view-topbar"))
+const SmsOptedOutViewTopbar = lazy(() => import("./channel-source-opted-out-list-view-topbar"))
 
-const SmsOptedOutSendersViewFiltersContent = lazy(() => import("./sms-opted-out-senders-view-filters-content"))
+const ChannelSourceOptedOutListViewFiltersContent = lazy(
+	() => import("./channel-source-opted-out-list-view-filters-content")
+)
 //#endregion
 
-interface SmsOptedOutSendersViewProps extends SharedListViewProps<SmsOptedOutSenderType> {
-	dataViewKey: Extract<DataViewKey, "international-sms-opted-out-senders" | "local-sms-opted-out-senders">
+interface ChannelSourceOptedOutListViewProps extends SharedListViewProps<ChannelSourceOptOut> {
+	dataViewKey: Extract<
+		DataViewKey,
+		"international-sms-channel-source-opted-out-list" | "local-sms-channel-source-opted-out-list"
+	>
 }
 
-const SmsOptedOutSendersView = (props: SmsOptedOutSendersViewProps) => {
+const ChannelSourceOptedOutListView = (props: ChannelSourceOptedOutListViewProps) => {
 	const dispatch = useDispatch()
 
 	return (
@@ -26,7 +31,7 @@ const SmsOptedOutSendersView = (props: SmsOptedOutSendersViewProps) => {
 			<DataView.FiltersBar>
 				<DataView.FiltersBar.Header />
 				<DataView.FiltersBar.Content>
-					<SmsOptedOutSendersViewFiltersContent />
+					<ChannelSourceOptedOutListViewFiltersContent />
 				</DataView.FiltersBar.Content>
 				<DataView.FiltersBar.Footer />
 			</DataView.FiltersBar>
@@ -46,4 +51,4 @@ const SmsOptedOutSendersView = (props: SmsOptedOutSendersViewProps) => {
 	)
 }
 
-export default SmsOptedOutSendersView
+export default ChannelSourceOptedOutListView

@@ -5,20 +5,20 @@ import getCountryName from "@/core/utils/get-country-name"
 import { Button } from "@/ui"
 import MaterialSymbolsSyncRounded from "~icons/material-symbols/sync-rounded"
 
-import type { SmsOptedOutSenderType } from "../types"
+import type { ChannelSourceOptOut } from "../types/data.types"
 
 import OptInSmsSenderDialog from "../dialogs/opt-in-sms-sender-dialog/opt-in-sms-sender-dialog"
 import smsOptedOutFieldsLocaleMap from "./sms-opted-out-fields-locale-map"
 //#endregion
 
-const smsOptedOutSendersTableColumns: ColumnType<SmsOptedOutSenderType>[] = [
+const smsOptedOutSendersTableColumns: ColumnType<ChannelSourceOptOut>[] = [
 	{
 		accessorKey: "selection",
 		rowIdSelector: "id",
 	},
 	{
-		accessorKey: "phoneNumber",
-		header: smsOptedOutFieldsLocaleMap.phoneNumber,
+		accessorKey: "recipient",
+		header: smsOptedOutFieldsLocaleMap.recipient,
 	},
 	{
 		accessorKey: "country",
