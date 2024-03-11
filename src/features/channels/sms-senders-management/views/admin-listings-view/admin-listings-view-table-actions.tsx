@@ -47,7 +47,7 @@ const AdminListingsViewTableActions = ({
 					if (actionType === "SUSPEND_LISTING")
 						return (
 							<ActionWrapper key={actionType}>
-								<ChannelSourceListingSuspendDialog {...props}>
+								<ChannelSourceListingSuspendDialog country={props.country} id={props.id}>
 									<ActionsDropdown.Item>{t("suspend")}</ActionsDropdown.Item>
 								</ChannelSourceListingSuspendDialog>
 							</ActionWrapper>

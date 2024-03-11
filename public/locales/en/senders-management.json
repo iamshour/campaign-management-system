@@ -141,10 +141,11 @@
 			"submit": "Confirm",
 			"successToast": "Sender listing blocked successfully."
 		},
-		"smsListingSuspend": {
+		"channelSourceListingSuspend": {
 			"title": "Suspend Sender",
-			"message": "Are you sure you wish to Suspend this sender for {{Lebanon}}? The client using it will be unable to send messages through this sender to the chosen country.",
-			"submit": "Confirm"
+			"message": "Are you sure you wish to Suspend this sender for <strong>{{country}}</strong>? The client using it will be unable to send messages through this sender to the chosen country.",
+			"submit": "Confirm",
+			"successToast": "Sender listing suspended successfully."
 		},
 		"channelSourceListingActivate": {
 			"title": "Activate Sender",

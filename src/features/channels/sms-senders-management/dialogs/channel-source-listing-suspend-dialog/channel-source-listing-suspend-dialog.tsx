@@ -12,7 +12,7 @@ interface ChannelSourceListingSuspendDialogProps
 }
 
 const ChannelSourceListingSuspendDialog = ({ children, ...props }: ChannelSourceListingSuspendDialogProps) => {
-	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.smsListingSuspend" })
+	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.channelSourceListingSuspend" })
 
 	const [open, setOpen] = useState(false)
 
@@ -20,7 +20,7 @@ const ChannelSourceListingSuspendDialog = ({ children, ...props }: ChannelSource
 		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
-			<Dialog.Content className='h-[401px] w-[416px] sm:h-[409px]' title={t("title")}>
+			<Dialog.Content className='h-[425px] w-[416px] sm:h-[433px]' title={t("title")}>
 				<ChannelSourceListingSuspendDialogContent closeDialog={() => setOpen(false)} {...props} />
 			</Dialog.Content>
 		</Dialog>
