@@ -26,6 +26,7 @@ import type {
 import type {
 	GetChannelSourceRequestAndListingByIdReturnType,
 	GetChannelSourceRequestsParams,
+	UpdateChannelSourceListingStatusBody,
 	UpdateChannelSourceRequestActionBody,
 } from "./types/api.types"
 //#endregion
@@ -85,6 +86,24 @@ const smsSendersManagementApis = api.injectEndpoints({
 			},
 			query: (body) => ({ body, method: "PUT", url: "/channel-source/request/action" }),
 		}),
+
+		updateChannelSourceListingStatus: builder.mutation<any, UpdateChannelSourceListingStatusBody>({
+			invalidatesTags: (res, error, { channelSourceListingId }) => {
+				if (!res) return []
+
+				return [
+					{ id: channelSourceListingId, type: "ChannelSourceListing" },
+					{ id: "LIST", type: "ChannelSourceListing" },
+				]
+			},
+			query: ({ channelSourceListingId, ...body }) => ({
+				body,
+				method: "PUT",
+				url: `/channel-source/listing/${channelSourceListingId}/status`,
+			}),
+		}),
+
+		// ---------------------------------
 
 		updateSmsSourceRequest: builder.mutation<any, UpdateSmsSourceRequestBody>({
 			invalidatesTags: (res, error, { requestId }) => {
@@ -169,6 +188,7 @@ export const {
 	useGetChannelSourceRequestsQuery,
 	useGetChannelSourceRequestAndListingByIdQuery,
 	useUpdateChannelSourceRequestActionMutation,
+	useUpdateChannelSourceListingStatusMutation,
 
 	useUpdateSmsSourceRequestMutation,
 	useGetSmsOptedOutSendersQuery,

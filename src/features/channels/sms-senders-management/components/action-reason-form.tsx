@@ -15,7 +15,7 @@ interface ActionReasonFormProps {
 	/**
 	 * Message to be displayed inside Form
 	 */
-	message: string
+	message: React.ReactNode | string
 
 	/**
 	 * Callback funciton used to return reason

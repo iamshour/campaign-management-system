@@ -74,7 +74,7 @@ const ChannelSourceRequestDetailsDialogContent = ({ ids }: ChannelSourceRequestD
 					)}
 
 					{!!data?.action && (
-						<ReadonlyField label={t("fields.action")}>
+						<ReadonlyField className='h-[120px]' label={t("fields.action")}>
 							<ColoredBullet color={smsListingRequestActionsColorsMap[data.action]} />
 							{t(smsListingRequestsActionsLocalMap[data.action])}
 						</ReadonlyField>
