@@ -108,7 +108,7 @@
 			"senderRequestInfo": "Sender request info",
 			"senderStatusInfo": "Sender status info"
 		},
-		"smsListingDetails": {
+		"adminListingDetails": {
 			"title": "View Sender Details",
 			"otherInfo": "Other info"
 		},
@@ -146,10 +146,11 @@
 			"message": "Are you sure you wish to Suspend this sender for {{Lebanon}}? The client using it will be unable to send messages through this sender to the chosen country.",
 			"submit": "Confirm"
 		},
-		"smsListingActivate": {
+		"channelSourceListingActivate": {
 			"title": "Activate Sender",
-			"message": "Are you sure you wish to approve this sender for {{country}}? The company with access will be able to send messages through this sender to the chosen country.",
-			"submit": "Confirm"
+			"message": "Are you sure you wish to approve this sender for <strong>{{country}}</strong>? The company with access will be able to send messages through this sender to the chosen country.",
+			"submit": "Confirm",
+			"successToast": "Sender listing activated successfully."
 		},
 		"smsOptInSender": {
 			"title": "Opt-in Phone Number",

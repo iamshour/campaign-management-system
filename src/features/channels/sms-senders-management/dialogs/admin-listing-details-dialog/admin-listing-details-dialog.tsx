@@ -3,10 +3,10 @@ import { Dialog } from "@/ui"
 import { lazy } from "react"
 import { useTranslation } from "react-i18next"
 
-const SmsListingDetailsDialogContent = lazy(() => import("./sms-listing-details-dialog-content"))
+const AdminListingDetailsDialogContent = lazy(() => import("./admin-listing-details-dialog-content"))
 //#endregion
 
-interface SmsListingDetailsDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
+interface AdminListingDetailsDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
 	/**
 	 * Useful in case we want to trigger this dialog by passing a button as children
 	 */
@@ -17,8 +17,8 @@ interface SmsListingDetailsDialogProps extends React.ComponentPropsWithoutRef<ty
 	id?: string
 }
 
-const SmsListingDetailsDialog = ({ children, id, ...props }: SmsListingDetailsDialogProps) => {
-	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.smsListingDetails" })
+const AdminListingDetailsDialog = ({ children, id, ...props }: AdminListingDetailsDialogProps) => {
+	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.adminListingDetails" })
 
 	if (!id) return
 
@@ -26,10 +26,10 @@ const SmsListingDetailsDialog = ({ children, id, ...props }: SmsListingDetailsDi
 		<Dialog {...props}>
 			{!!children && <Dialog.Trigger asChild>{children}</Dialog.Trigger>}
 			<Dialog.Content className='h-[750px] w-[382px] sm:h-[541.51px] sm:w-[762px]' title={t("title")}>
-				<SmsListingDetailsDialogContent id={id} />
+				<AdminListingDetailsDialogContent id={id} />
 			</Dialog.Content>
 		</Dialog>
 	)
 }
 
-export default SmsListingDetailsDialog
+export default AdminListingDetailsDialog

@@ -5,7 +5,7 @@ import type { ChannelSourceListing } from "@/features/channels/common/types/data
 
 import DataView from "@/core/components/data-view/data-view"
 import adminListingsTableColumns from "@/features/channels/sms-senders-management/constants/admin-listings-table-columns"
-import SmsListingDetailsDialog from "@/features/channels/sms-senders-management/dialogs/sms-listing-details-dialog/sms-listing-details-dialog"
+import AdminListingDetailsDialog from "@/features/channels/sms-senders-management/dialogs/admin-listing-details-dialog/admin-listing-details-dialog"
 import { lazy, useState } from "react"
 
 const AdminSmsSendersViewTopbar = lazy(() => import("./admin-listings-view-topbar"))
@@ -45,7 +45,7 @@ const AdminListingsView = (props: AdminListingsViewProps) => {
 				</DataView.Content>
 			</DataView>
 
-			<SmsListingDetailsDialog
+			<AdminListingDetailsDialog
 				id={listingId}
 				onOpenChange={(open) => !open && setListingId(undefined)}
 				open={!!listingId?.length}

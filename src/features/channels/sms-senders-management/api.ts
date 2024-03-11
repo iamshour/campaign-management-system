@@ -103,6 +103,22 @@ const smsSendersManagementApis = api.injectEndpoints({
 			}),
 		}),
 
+		activateChannelSourceListing: builder.mutation<any, { active: boolean; channelSourceListingId: string }>({
+			invalidatesTags: (res, error, { channelSourceListingId }) => {
+				if (!res) return []
+
+				return [
+					{ id: channelSourceListingId, type: "ChannelSourceListing" },
+					{ id: "LIST", type: "ChannelSourceListing" },
+				]
+			},
+			query: ({ channelSourceListingId, ...body }) => ({
+				body,
+				method: "PUT",
+				url: `/channel-source/listing/${channelSourceListingId}/active`,
+			}),
+		}),
+
 		// ---------------------------------
 
 		updateSmsSourceRequest: builder.mutation<any, UpdateSmsSourceRequestBody>({
@@ -189,6 +205,7 @@ export const {
 	useGetChannelSourceRequestAndListingByIdQuery,
 	useUpdateChannelSourceRequestActionMutation,
 	useUpdateChannelSourceListingStatusMutation,
+	useActivateChannelSourceListingMutation,
 
 	useUpdateSmsSourceRequestMutation,
 	useGetSmsOptedOutSendersQuery,

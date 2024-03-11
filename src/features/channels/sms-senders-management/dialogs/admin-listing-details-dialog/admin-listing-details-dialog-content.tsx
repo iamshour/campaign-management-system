@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next"
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
-const SmsListingDetailsDialogContent = ({ id }: { id: string }) => {
+const AdminListingDetailsDialogContent = ({ id }: { id: string }) => {
 	const { t } = useTranslation("channels-common")
 
 	const { data, isError, isFetching } = useGetChannelSourceListingByIdQuery(id, { skip: !id, ...baseQueryConfigs })
@@ -31,7 +31,7 @@ const SmsListingDetailsDialogContent = ({ id }: { id: string }) => {
 				<SectionHeading
 					className='text-base'
 					icon={MaterialSymbolsPerson}
-					label={t("senders-management:dialogs.smsListingDetails.otherInfo")}
+					label={t("senders-management:dialogs.adminListingDetails.otherInfo")}
 				/>
 
 				<div className='grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-4'>
@@ -68,7 +68,7 @@ const SmsListingDetailsDialogContent = ({ id }: { id: string }) => {
 	)
 }
 
-export default SmsListingDetailsDialogContent
+export default AdminListingDetailsDialogContent
 
 const ColoredBullet = ({ color }: { color: string }) => (
 	<span className='me-2 inline-block h-3 w-3 rounded-full' style={{ backgroundColor: color }} />
