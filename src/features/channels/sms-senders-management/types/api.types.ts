@@ -2,6 +2,7 @@
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type {
 	ChannelSourceListingDetails,
+	ChannelSourceListingStatus,
 	ChannelSourceRequestAction,
 	ChannelSourceRequestStatus,
 	ChannelType,
@@ -46,8 +47,8 @@ export type GetChannelSourceRequestAndListingByIdReturnType = ChannelSourceReque
 }
 
 /**
- * Body Arguments passed to the `updateSmsListingStatus` mutation, used to update status for an sms listing
- * P.S. `statusReason` is only required if status is 'BLOCKED' or 'REJECTED'
+ * Body Arguments passed to the `updateChannelSourceRequestAction` mutation, used to provide an action for a channel source request
+ * P.S. `reason` is only required if action is 'BLOCK' or 'REJECT'
  */
 export type UpdateChannelSourceRequestActionBody = {
 	channelSourceRequestId: string
@@ -58,5 +59,21 @@ export type UpdateChannelSourceRequestActionBody = {
 	| {
 			action: Extract<ChannelSourceRequestAction, "BLOCK" | "REJECT">
 			reason: string
+	  }
+)
+
+/**
+ * Body Arguments passed to the `updateChannelSourceListingStatus` mutation, used to update status for a channel source listing
+ * P.S. `channelSourceListingStatusReason` is only required if “channelSourceListingStatus” is Rejected/Blocked/Suspended (Refer to Page 145 in SRD)
+ */
+export type UpdateChannelSourceListingStatusBody = {
+	channelSourceListingId: string
+} & (
+	| {
+			channelSourceListingStatus: Extract<ChannelSourceListingStatus, "APPROVED" | "NEW">
+	  }
+	| {
+			channelSourceListingStatus: Extract<ChannelSourceListingStatus, "BLOCKED" | "REJECTED" | "SUSPENDED">
+			channelSourceListingStatusReason: string
 	  }
 )

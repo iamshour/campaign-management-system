@@ -36,7 +36,10 @@ const AdminListingsView = (props: AdminListingsViewProps) => {
 						<AdminSmsSendersViewTopbar />
 					</DataView.TopBar>
 
-					<DataView.Body onRowClick={({ id }) => setListingId(id)} />
+					<DataView.Body
+						classNames={{ emptyTableCell: "h-[calc(100vh-268px)]" }}
+						onRowClick={({ id }) => setListingId(id)}
+					/>
 
 					<DataView.Pagination pageLimits={[20, 40, 60, 80]} />
 				</DataView.Content>

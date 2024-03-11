@@ -34,19 +34,31 @@ const AdminListingsViewFiltersContent = memo(() => {
 				updateDateRange={updateState}
 			/>
 			<SelectMultiListingStatusesPopover
-				onValueChange={(selection) =>
-					updateState({
-						channelSourceListingStatus: (selection?.length ? selection[0] : undefined) as
-							| ChannelSourceListingStatus
-							| undefined,
-					})
-				}
+				onValueChange={(selection) => {
+					let channelSourceListingStatus: ChannelSourceListingStatus | undefined
+
+					if (!selection) channelSourceListingStatus = undefined
+
+					if (selection?.length === 1) channelSourceListingStatus = selection[0]?.value as ChannelSourceListingStatus
+
+					if (selection?.length > 1) channelSourceListingStatus = selection[1]?.value as ChannelSourceListingStatus
+
+					updateState({ channelSourceListingStatus })
+				}}
 				value={filters?.channelSourceListingStatus ? [filters?.channelSourceListingStatus] : undefined}
 			/>
 			<SelectMultiTemplateTypesPopover
-				onValueChange={(selection) =>
-					updateState({ templateType: (selection?.length ? selection[0] : undefined) as TemplateType | undefined })
-				}
+				onValueChange={(selection) => {
+					let templateType: TemplateType | undefined
+
+					if (!selection) templateType = undefined
+
+					if (selection?.length === 1) templateType = selection[0]?.value as TemplateType
+
+					if (selection?.length > 1) templateType = selection[1]?.value as TemplateType
+
+					updateState({ templateType })
+				}}
 				value={filters?.templateType ? [filters?.templateType] : undefined}
 			/>
 			<SelectCountryPopover

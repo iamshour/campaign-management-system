@@ -6,9 +6,8 @@ import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
 
-import type { SmsListingType } from "./types"
 import type { GetChannelSourceListingsParams, GetChannelSourcesParams } from "./types/api.types"
-import type { ChannelSource, ChannelSourceListing } from "./types/data.types"
+import type { ChannelSource, ChannelSourceListing, ChannelSourceListingDetails } from "./types/data.types"
 //#endregion
 
 const commonSmsChannelApi = api.injectEndpoints({
@@ -39,13 +38,13 @@ const commonSmsChannelApi = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		getSmsListingById: builder.query<SmsListingType, string>({
-			providesTags: (result) => [{ id: result?.listingId, type: "ChannelSourceListing" }],
-			// TODO: in integration; change below 65ddd3877ce29dce66cdf0d9" ?? id to id
-			query: (id) => `/listings/${"65ddd3877ce29dce66cdf0d9" ?? id}`,
+		getChannelSourceListingById: builder.query<ChannelSourceListingDetails, string>({
+			providesTags: (result) => [{ id: result?.id, type: "ChannelSourceListing" }],
+			query: (channelSourceListingId) => `/channel-source/listing/${channelSourceListingId}`,
+			transformResponse,
 		}),
 	}),
 })
 
-export const { useGetChannelSourcesQuery, useGetChannelSourceListingsQuery, useGetSmsListingByIdQuery } =
+export const { useGetChannelSourcesQuery, useGetChannelSourceListingsQuery, useGetChannelSourceListingByIdQuery } =
 	commonSmsChannelApi

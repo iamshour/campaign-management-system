@@ -135,10 +135,11 @@
 				"successToast": "Request rejected & blocked successfully."
 			}
 		},
-		"smsListingBlock": {
+		"channelSourceListingBlock": {
 			"title": "Block Sender Listing",
-			"message": "Are you sure you wish to block this sender for {{company}} towards {{country}}? The client will be unable to send messages through this sender to the chosen country and it will appear as Blocked at the clients list end.",
-			"submit": "Confirm"
+			"message": "Are you sure you wish to block this sender for <strong>{{company}}</strong> towards <strong>{{country}}</strong>? The client will be unable to send messages through this sender to the chosen country and it will appear as Blocked at the clients list end.",
+			"submit": "Confirm",
+			"successToast": "Sender listing blocked successfully."
 		},
 		"smsListingSuspend": {
 			"title": "Suspend Sender",

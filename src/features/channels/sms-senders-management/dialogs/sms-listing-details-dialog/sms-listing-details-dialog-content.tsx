@@ -2,7 +2,7 @@
 import DataViewDateCell from "@/core/components/data-view/data-view-date-cell"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import getCountryName from "@/core/utils/get-country-name"
-import { useGetSmsListingByIdQuery } from "@/features/channels/common/api"
+import { useGetChannelSourceListingByIdQuery } from "@/features/channels/common/api"
 import smsListingStatusesColorsMap from "@/features/channels/common/constants/sms-listing-statuses-colors-map"
 import smsListingStatusesLocaleMap from "@/features/channels/common/constants/sms-listing-statuses-locale-map"
 import ReadonlyField from "@/features/channels/sms-senders-management/components/readonly-field"
@@ -19,11 +19,11 @@ const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 const SmsListingDetailsDialogContent = ({ id }: { id: string }) => {
 	const { t } = useTranslation("channels-common")
 
-	const { data, isError, isFetching } = useGetSmsListingByIdQuery(id, { skip: !id, ...baseQueryConfigs })
+	const { data, isError, isFetching } = useGetChannelSourceListingByIdQuery(id, { skip: !id, ...baseQueryConfigs })
 
 	if (isFetching) return <Skeleton className='h-full' />
 
-	if (!isFetching && (!!isError || !data)) return <DisplayError />
+	if (!isFetching && (!!isError || !data?.id?.length)) return <DisplayError />
 
 	return (
 		<div className='flex flex-1 flex-col gap-4 overflow-y-auto'>
@@ -35,12 +35,12 @@ const SmsListingDetailsDialogContent = ({ id }: { id: string }) => {
 				/>
 
 				<div className='grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-4'>
-					<ReadonlyField label={t("fields.company")}>{data?.company}</ReadonlyField>
+					<ReadonlyField label={t("fields.company")}>{data?.company.name}</ReadonlyField>
 
 					{/* FIXME: SENDER DOES NOT EXIST IN LISTING.. IN DESIGN IT DOES  */}
-					<ReadonlyField label={t("fields.sender")}>{data?.sourceId}</ReadonlyField>
+					<ReadonlyField label={t("fields.sender")}>{data?.channelSourceId}</ReadonlyField>
 
-					<ReadonlyField label={t("fields.type")}>{t(templateTypesLocaleMap[data!.category!])}</ReadonlyField>
+					<ReadonlyField label={t("fields.type")}>{t(templateTypesLocaleMap[data!.templateType])}</ReadonlyField>
 
 					<ReadonlyField label={t("fields.country")}>{getCountryName(data!.country)}</ReadonlyField>
 
@@ -49,17 +49,17 @@ const SmsListingDetailsDialogContent = ({ id }: { id: string }) => {
 					</ReadonlyField>
 
 					<ReadonlyField label={t("fields.listingStatus")}>
-						<ColoredBullet color={smsListingStatusesColorsMap[data!.status!]} />
-						{t(smsListingStatusesLocaleMap[data!.status!])}
+						<ColoredBullet color={smsListingStatusesColorsMap[data!.channelSourceListingStatus]} />
+						{t(smsListingStatusesLocaleMap[data!.channelSourceListingStatus])}
 					</ReadonlyField>
 
 					<ReadonlyField label={t("fields.sampleContent")} showTooltip>
-						{data!.sampleContent}
+						{data!.sample}
 					</ReadonlyField>
 
-					{!!data?.statusReason && (
+					{!!data?.channelSourceListingStatusReason && (
 						<ReadonlyField label={t("fields.action")} showTooltip>
-							{data!.statusReason}
+							{data!.channelSourceListingStatusReason}
 						</ReadonlyField>
 					)}
 				</div>

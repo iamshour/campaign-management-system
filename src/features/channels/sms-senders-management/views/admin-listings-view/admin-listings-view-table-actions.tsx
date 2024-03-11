@@ -24,7 +24,7 @@ const AdminListingsViewTableActions = ({
 
 			{(Object.entries(allowedActionsPerStatusMap) as [ActionType, ChannelSourceListingStatus[]][]).map(
 				([actionType, allowedStatuses]) => {
-					if (!status || !allowedStatuses?.includes(channelSourceListingStatus)) return
+					if (!channelSourceListingStatus || !allowedStatuses?.includes(channelSourceListingStatus)) return
 
 					if (actionType === "ACTIVATE_LISTING")
 						return (

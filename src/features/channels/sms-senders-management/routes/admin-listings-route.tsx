@@ -2,6 +2,7 @@
 import useGetChannelType from "@/core/hooks/useGetChannelType"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
+import getSearchFilter from "@/core/utils/get-search-filter"
 import { useGetChannelSourceListingsQuery } from "@/features/channels/common/api"
 import { FullViewSkeleton } from "@/ui"
 import { lazy } from "react"
@@ -19,13 +20,14 @@ const AdminListingsRoute = () => {
 
 	const dataViewKey = `${channelTypeInUrl!}-channel-source-listings` as const
 
-	const { filters, paginationAndSorting } = useSelector(({ dataView }) => dataView[dataViewKey])
+	const { filters, paginationAndSorting, searchTerm } = useSelector(({ dataView }) => dataView[dataViewKey])
 
 	const { count, error, isError, isFetching, isInitialLoading, isReady, list } = useGetChannelSourceListingsQuery(
 		{
 			...filters,
 			...paginationAndSorting,
 			channelSourceId: channelSourceId!,
+			...getSearchFilter<["companyName"]>(searchTerm, ["companyName"]),
 			// SHOULD BE PASSED. BUT DOES NOT EXIST AT THE MOMENT
 			// channelType,
 			// send search filter here as well
