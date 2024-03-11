@@ -3,6 +3,7 @@ import IconTooltip from "@/core/components/icon-tooltip/icon-tooltip"
 import fileMimeTypes from "@/core/constants/file-mime-types"
 import { useImportOptOutFileMutation } from "@/features/channels/sms-senders-management/api"
 import { Button, DropFileArea, Form, useForm } from "@/ui"
+import { getFileExtension } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -10,7 +11,7 @@ import { useParams } from "react-router-dom"
 import * as z from "zod"
 //#endregion
 
-export interface ImportOptedOutSmsSendersDialogContentProps {
+export interface ImportChannelSourceOptOutDialogContentProps {
 	/**
 	 * Callback function used to close the dialog
 	 */
@@ -23,8 +24,8 @@ const ImportOptoutSchema = z.object({
 
 type ImportOptoutSchemaType = z.infer<typeof ImportOptoutSchema>
 
-const ImportOptedOutSmsSendersDialogContent = ({ closeDialog }: ImportOptedOutSmsSendersDialogContentProps) => {
-	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.importOptedOutSmsSenders" })
+const ImportChannelSourceOptOutDialogContent = ({ closeDialog }: ImportChannelSourceOptOutDialogContentProps) => {
+	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.importChannelSourceOptOut" })
 
 	const { channelSourceId } = useParams()
 
@@ -42,6 +43,8 @@ const ImportOptedOutSmsSendersDialogContent = ({ closeDialog }: ImportOptedOutSm
 		optOutFile.append("optOutFile", data?.file, "optOutFile")
 
 		await triggerImportOptedOutSmsSenders({ channelSourceId: channelSourceId!, optOutFile }).unwrap()
+
+		toast.success(t("successToast"))
 
 		closeDialog()
 	}
@@ -81,6 +84,7 @@ const ImportOptedOutSmsSendersDialogContent = ({ closeDialog }: ImportOptedOutSm
 									}}
 									onRemove={() => onChange(undefined)}
 									preventDropOnDocument
+									validator={validator}
 								/>
 							</Form.Control>
 							<span className='inline-flex w-full items-center justify-between pt-2'>
@@ -100,4 +104,31 @@ const ImportOptedOutSmsSendersDialogContent = ({ closeDialog }: ImportOptedOutSm
 	)
 }
 
-export default ImportOptedOutSmsSendersDialogContent
+export default ImportChannelSourceOptOutDialogContent
+
+const validator = (file: File) => {
+	if (!file) return null
+
+	const fileExtension = getFileExtension(file.name)
+
+	const allowedExtensions = ["csv", "xlsx"]
+
+	const allowedLimits: Record<(typeof allowedExtensions)[number], number> = {
+		csv: 50000000,
+		xlsx: 30000000,
+	}
+
+	if (!fileExtension || !allowedExtensions?.includes(fileExtension)) return null
+
+	const fileSize = Number(file?.size)
+
+	const currentLimit = allowedLimits[fileExtension]
+
+	if (fileSize > Number(currentLimit))
+		return {
+			code: "file-too-large",
+			message: `File is larger than ${currentLimit}`,
+		}
+
+	return null
+}

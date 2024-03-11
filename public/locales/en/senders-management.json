@@ -175,7 +175,7 @@
 			"placeholder": "Enter name",
 			"submit": "Export"
 		},
-		"importOptedOutSmsSenders": {
+		"importChannelSourceOptOut": {
 			"title": "Import",
 			"label": "Import file",
 			"placeholder": "Enter name",
@@ -185,7 +185,8 @@
 				"file-too-large": "File is too large, and exceeds the limit: 50MB for csv / 30MB for excel",
 				"file-invalid-type": "Invalid file upload. Your uploaded file should be of type: csv or excel."
 			},
-			"submit": "Import Now"
+			"submit": "Import Now",
+			"successToast": "File imported successfully."
 		}
 	}
 }
