@@ -4,8 +4,14 @@
 import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type { ChannelSourceFilter, ChannelSourceListingFilter } from "@/features/channels/common/types/api.types"
 import type { ChannelSource, ChannelSourceListing } from "@/features/channels/common/types/data.types"
-import type { SmsOptedOutFilter, SmsOptedOutSenderType } from "@/features/channels/sms-senders-management/types"
-import type { ChannelSourceRequest } from "@/features/channels/sms-senders-management/types/data.types"
+import type {
+	ChannelSourceOptOutFilter,
+	ChannelSourceRequestFilter,
+} from "@/features/channels/sms-senders-management/types/api.types"
+import type {
+	ChannelSourceOptOut,
+	ChannelSourceRequest,
+} from "@/features/channels/sms-senders-management/types/data.types"
 import type {
 	IndustryFilter,
 	IndustryType,
@@ -22,8 +28,6 @@ import type { ContactGroupFilter, Group } from "@/features/people/groups/types"
 import type { Segment } from "@/features/people/segments/types"
 import type { SmsTemplateType, TemplateFilter } from "@/features/templates/sms-templates/types"
 import type { DateRange } from "@/ui"
-
-import { ChannelSourceRequestFilter } from "@/features/channels/sms-senders-management/types/api.types"
 
 import type { ColumnType } from "./data-table/types"
 //#endregion
@@ -64,15 +68,15 @@ export type DataViewKey =
 	| "groups"
 	| "industries"
 	| "international-sms-channel-source-listings"
+	| "international-sms-channel-source-opted-out-list"
 	| "international-sms-channel-source-requests-completed"
 	| "international-sms-channel-source-requests-pending"
 	| "international-sms-channel-sources"
-	| "international-sms-opted-out-senders"
 	| "local-sms-channel-source-listings"
+	| "local-sms-channel-source-opted-out-list"
 	| "local-sms-channel-source-requests-completed"
 	| "local-sms-channel-source-requests-pending"
 	| "local-sms-channel-sources"
-	| "local-sms-opted-out-senders"
 	| "segments"
 	| "sms-industry-templates"
 	| "sms-prebuilt-templates-dialog"
@@ -100,8 +104,8 @@ type DataViewEntryType = {
 	"sms-prebuilt-templates": SmsIndustryTemplateType
 	"sms-prebuilt-templates-dialog": SmsIndustryTemplateType
 	"sms-templates": SmsTemplateType
-	"local-sms-opted-out-senders": SmsOptedOutSenderType
-	"international-sms-opted-out-senders": SmsOptedOutSenderType
+	"local-sms-channel-source-opted-out-list": ChannelSourceOptOut
+	"international-sms-channel-source-opted-out-list": ChannelSourceOptOut
 }
 
 export type DataViewFilterType = {
@@ -126,8 +130,8 @@ export type DataViewFilterType = {
 	"sms-prebuilt-templates": PrebuiltTemplateFilter
 	"sms-prebuilt-templates-dialog": PrebuiltTemplateFilter
 	"sms-templates": TemplateFilter
-	"local-sms-opted-out-senders": SmsOptedOutFilter
-	"international-sms-opted-out-senders": SmsOptedOutFilter
+	"local-sms-channel-source-opted-out-list": ChannelSourceOptOutFilter
+	"international-sms-channel-source-opted-out-list": ChannelSourceOptOutFilter
 	//#endregion
 }
 

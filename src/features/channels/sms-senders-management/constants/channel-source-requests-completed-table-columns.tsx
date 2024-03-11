@@ -26,13 +26,13 @@ const channelSourceRequestsCompletedTableColumns: ColumnType<ChannelSourceReques
 	},
 	{
 		accessorKey: "channelSourceName",
-		header: smsListingRequestsFieldsLocaleMap.sender,
+		header: smsListingRequestsFieldsLocaleMap.channelSourceName,
 		sortable: true,
 	},
 	{
 		accessorKey: "templateType",
 		cell: (_, { templateType }) => <TemplateTypesTableColumn types={[templateType]} />,
-		header: smsListingRequestsFieldsLocaleMap.type,
+		header: smsListingRequestsFieldsLocaleMap.templateType,
 	},
 	{
 		accessorKey: "country",

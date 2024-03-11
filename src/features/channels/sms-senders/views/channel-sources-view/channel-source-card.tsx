@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsSenderType } from "@/features/channels/sms-senders/types"
+import type { ChannelSource } from "@/features/channels/common/types/data.types"
 
 import DataViewDateCell from "@/core/components/data-view/data-view-date-cell"
 import TemplateTypesTableColumn from "@/features/templates/common/components/template-types-table-cell"
@@ -8,10 +8,11 @@ import BitcoinIconsVisibleFilled from "~icons/bitcoin-icons/visible-filled"
 import IcRoundSender from "~icons/ic/round-group"
 import { lazy, Suspense } from "react"
 import { useTranslation } from "react-i18next"
+
 const ChannelSourcesGridViewTableActions = lazy(() => import("./channel-sources-grid-view-table-actions"))
 //#endregion
 
-const ChannelSourceCard = ({ createdAt = "", id, name, types }: SmsSenderType) => {
+const ChannelSourceCard = ({ channelSourceName, createdAt = "", id, templateTypes }: ChannelSource) => {
 	const { t } = useTranslation("sms-senders")
 
 	return (
@@ -23,19 +24,19 @@ const ChannelSourceCard = ({ createdAt = "", id, name, types }: SmsSenderType) =
 						<p className='sr-only'>Sender Avatar</p>
 					</span>
 					<p className='flex-1 truncate text-base font-bold'>
-						{t("grid.card.sender")}: {name}
+						{t("grid.card.sender")}: {channelSourceName}
 					</p>
 				</div>
 
 				<Suspense fallback={<Skeleton className='h-[40px] w-[40px]' />}>
-					<ChannelSourcesGridViewTableActions name={name} />
+					<ChannelSourcesGridViewTableActions channelSourceName={channelSourceName} />
 				</Suspense>
 			</div>
 
 			<ul className='w-full flex-1 space-y-2 p-4'>
 				<li className='flex gap-2 text-base'>
 					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("channels-common:fields.type")}:</span>
-					<TemplateTypesTableColumn types={types} />
+					<TemplateTypesTableColumn types={templateTypes} />
 				</li>
 				<li className='flex gap-2 text-base'>
 					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("channels-common:fields.createdAt")}:</span>

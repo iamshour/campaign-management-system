@@ -11,7 +11,7 @@ import type { TemplateType } from "@/features/templates/common/types"
 import type { DateRange } from "@/ui"
 import type { Country } from "react-phone-number-input"
 
-import type { ChannelSourceRequest, ChannelSourceRequestDetails } from "./data.types"
+import type { ChannelSourceOptOut, ChannelSourceRequest, ChannelSourceRequestDetails } from "./data.types"
 //#endregion
 
 export type ChannelSourceRequestFilter = DateRange & {
@@ -77,3 +77,24 @@ export type UpdateChannelSourceListingStatusBody = {
 			channelSourceListingStatusReason: string
 	  }
 )
+
+type channelSourceOptOutSearchFilter = {
+	any?: true
+	recipient?: string
+	// TODO: ASK ABOUT THIS ????
+	// "empty": true
+}
+
+export type ChannelSourceOptOutFilter = {
+	countries?: Country[]
+	empty?: boolean
+}
+
+/**
+ * Params passed to the `getChannelSourceRequests` query, used to fetch Channel Source requests
+ */
+export type GetChannelSourceOptOutListParams = channelSourceOptOutSearchFilter &
+	ChannelSourceOptOutFilter &
+	PaginationAndSorting<ChannelSourceOptOut> & {
+		channelSourceId: string
+	}

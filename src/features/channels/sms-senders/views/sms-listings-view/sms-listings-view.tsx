@@ -1,11 +1,11 @@
 //#region Import
-import type { SmsSenderType } from "@/features/channels/sms-senders/types"
+import type { ChannelSource } from "@/features/channels/common/types/data.types"
+import type { TemplateType } from "@/features/templates/common/types"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetChannelSourceListingsQuery } from "@/features/channels/common/api"
 import SmsSenderRequestDialog from "@/features/channels/sms-senders/dialogs/sms-sender-request-dialog/sms-sender-request-dialog"
 import templateTypesOptions from "@/features/templates/common/constants/template-types-options"
-import { TemplateType } from "@/features/templates/common/types"
 import { Button, FullViewSkeleton, NoResultsFound, Pagination } from "@/ui"
 import DisplayError from "@/ui/errors/display-error"
 import HeroiconsPlus16Solid from "~icons/heroicons/plus-16-solid"
@@ -17,9 +17,9 @@ import { twMerge } from "tailwind-merge"
 import SmsListingCard from "./sms-listings-card"
 //#endregion
 
-interface SmsListingsViewrops extends Pick<SmsSenderType, "name" | "types"> {}
+interface SmsListingsViewrops extends Pick<ChannelSource, "channelSourceName" | "templateTypes"> {}
 
-const SmsListingsView = memo(({ name, types }: SmsListingsViewrops) => {
+const SmsListingsView = memo(({ channelSourceName, templateTypes }: SmsListingsViewrops) => {
 	const { t } = useTranslation("sms-senders")
 
 	const [paginationState, setPaginationState] = useState<{ limit: number; offset: number }>({ limit: 25, offset: 0 })
@@ -27,7 +27,7 @@ const SmsListingsView = memo(({ name, types }: SmsListingsViewrops) => {
 	const { channelSourceId } = useParams()
 
 	const [templateType, setTemplateType] = useState<TemplateType>(
-		templateTypesOptions?.filter((type) => types.includes(type.value))[0]?.value
+		templateTypesOptions?.filter((type) => templateTypes.includes(type.value))[0]?.value
 	)
 
 	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } =
@@ -64,7 +64,7 @@ const SmsListingsView = memo(({ name, types }: SmsListingsViewrops) => {
 				<div className='mb-8 flex flex-row flex-wrap justify-between'>
 					<div className='flex flex-row gap-5'>
 						{templateTypesOptions
-							?.filter((type) => types.includes(type.value))
+							?.filter((type) => templateTypes.includes(type.value))
 							?.map((type) => (
 								<Button
 									className={templateType !== type.value ? "bg-[#F7F7F7] font-normal text-black" : ""}
@@ -76,7 +76,7 @@ const SmsListingsView = memo(({ name, types }: SmsListingsViewrops) => {
 							))}
 					</div>
 
-					<SmsSenderRequestDialog defaultValues={{ sender: name }} formType='addRequest'>
+					<SmsSenderRequestDialog defaultValues={{ sender: channelSourceName }} formType='addRequest'>
 						<Button>
 							<HeroiconsPlus16Solid />
 							{t("views.smsListingsView.actions.addRequest")}

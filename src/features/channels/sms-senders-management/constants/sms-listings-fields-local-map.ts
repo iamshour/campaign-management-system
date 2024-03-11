@@ -1,12 +1,12 @@
 //#region Import
-import type { SmsListingType } from "@/features/channels/common/types"
+import type { ChannelSourceListing } from "@/features/channels/common/types/data.types"
 //#endregion
 
-const smsListingsFieldsLocalMap: Partial<Record<keyof SmsListingType, string>> = {
-	category: "channels-common:fields.type",
+const smsListingsFieldsLocalMap: Partial<Record<keyof ChannelSourceListing, string>> = {
+	channelSourceListingStatus: "channels-common:fields.listingStatus",
 	company: "channels-common:fields.company",
 	country: "channels-common:fields.country",
-	status: "channels-common:fields.listingStatus",
+	templateType: "channels-common:fields.type",
 	updatedAt: "channels-common:fields.updatedAt",
 }
 

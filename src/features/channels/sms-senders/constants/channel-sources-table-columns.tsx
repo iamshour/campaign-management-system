@@ -1,9 +1,8 @@
 //#region Import
 import type { ColumnType } from "@/core/components/data-view/data-table/types"
+import type { ChannelSource } from "@/features/channels/common/types/data.types"
 
 import { lazy } from "react"
-
-import type { SmsSenderType } from "../types"
 
 import smsSenderFieldsLocaleMap from "./sms-sender-fields-locale-map"
 
@@ -14,16 +13,16 @@ const TemplateTypesTableColumn = lazy(() => import("@/features/templates/common/
 const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-view-date-cell"))
 //#endregion
 
-const channelSourcesTableColumns: ColumnType<SmsSenderType>[] = [
+const channelSourcesTableColumns: ColumnType<ChannelSource>[] = [
 	{
-		accessorKey: "name",
-		header: smsSenderFieldsLocaleMap.name,
+		accessorKey: "channelSourceName",
+		header: smsSenderFieldsLocaleMap.channelSourceName,
 		sortable: true,
 	},
 	{
-		accessorKey: "types",
-		cell: (_, { types }) => <TemplateTypesTableColumn types={types} />,
-		header: smsSenderFieldsLocaleMap.types,
+		accessorKey: "templateTypes",
+		cell: (_, { templateTypes }) => <TemplateTypesTableColumn types={templateTypes} />,
+		header: smsSenderFieldsLocaleMap.templateTypes,
 	},
 	{
 		accessorKey: "createdAt",

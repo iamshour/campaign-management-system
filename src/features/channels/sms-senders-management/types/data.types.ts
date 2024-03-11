@@ -26,3 +26,10 @@ export type ChannelSourceRequestDetails = ChannelSourceRequest & {
 	sample: string
 	userEmail: string
 }
+
+export type ChannelSourceOptOut = {
+	channelSourceId: string
+	country: Country
+	id: string
+	recipient: string
+}

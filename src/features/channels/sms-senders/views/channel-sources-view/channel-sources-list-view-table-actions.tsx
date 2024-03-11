@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsSenderType } from "@/features/channels/sms-senders/types"
+import type { ChannelSource } from "@/features/channels/common/types/data.types"
 
 import SmsSenderRequestDialog from "@/features/channels/sms-senders/dialogs/sms-sender-request-dialog/sms-sender-request-dialog"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
@@ -7,14 +7,17 @@ import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 //#endregion
 
-const ChannelSourcesListViewTableActions = ({ id, name }: Pick<SmsSenderType, "id" | "name">) => {
+const ChannelSourcesListViewTableActions = ({
+	channelSourceName,
+	id,
+}: Pick<ChannelSource, "channelSourceName" | "id">) => {
 	const { t } = useTranslation("sms-senders")
 
 	const navigate = useNavigate()
 
 	return (
 		<ActionsDropdown>
-			<SmsSenderRequestDialog defaultValues={{ sender: name }} formType='addRequest'>
+			<SmsSenderRequestDialog defaultValues={{ sender: channelSourceName }} formType='addRequest'>
 				<ActionsDropdown.Item>{t("table.actions.addRequest")}</ActionsDropdown.Item>
 			</SmsSenderRequestDialog>
 

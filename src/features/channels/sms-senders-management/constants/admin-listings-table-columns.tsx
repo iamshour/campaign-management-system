@@ -32,7 +32,7 @@ const adminListingsTableColumns: ColumnType<ChannelSourceListing>[] = [
 	{
 		accessorKey: "templateType",
 		cell: (_, { templateType }) => <TemplateTypesTableColumn types={[templateType]} />,
-		header: smsListingsFieldsLocalMap.category,
+		header: smsListingsFieldsLocalMap.templateType,
 	},
 	{
 		accessorKey: "country",
@@ -44,7 +44,7 @@ const adminListingsTableColumns: ColumnType<ChannelSourceListing>[] = [
 		cell: (_, { channelSourceListingStatus }) => (
 			<AdminSmsListingsViewStatusTableCell status={channelSourceListingStatus} />
 		),
-		header: smsListingsFieldsLocalMap.status,
+		header: smsListingsFieldsLocalMap.channelSourceListingStatus,
 	},
 	{
 		accessorKey: "updatedAt",

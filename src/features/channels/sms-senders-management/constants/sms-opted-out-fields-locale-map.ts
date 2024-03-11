@@ -1,10 +1,10 @@
 //#region Import
-import { SmsOptedOutSenderType } from "../types"
+import type { ChannelSourceOptOut } from "../types/data.types"
 //#endregion
 
-const smsOptedOutFieldsLocaleMap: Partial<Record<keyof SmsOptedOutSenderType, string>> = {
+const smsOptedOutFieldsLocaleMap: Partial<Record<keyof ChannelSourceOptOut, string>> = {
 	country: "channels-common:fields.country",
-	phoneNumber: "senders-management:views.smsOptedOutSenders.fields.phoneNumbers",
+	recipient: "senders-management:views.smsOptedOutSenders.fields.phoneNumbers",
 }
 
 export default smsOptedOutFieldsLocaleMap
