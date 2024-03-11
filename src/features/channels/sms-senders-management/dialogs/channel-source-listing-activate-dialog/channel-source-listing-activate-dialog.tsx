@@ -12,7 +12,7 @@ interface ChannelSourceListingActivateDialogProps
 }
 
 const ChannelSourceListingActivateDialog = ({ children, ...props }: ChannelSourceListingActivateDialogProps) => {
-	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.smsListingActivate" })
+	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.channelSourceListingActivate" })
 
 	const [open, setOpen] = useState(false)
 

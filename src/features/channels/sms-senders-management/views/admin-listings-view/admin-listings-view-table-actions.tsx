@@ -29,7 +29,7 @@ const AdminListingsViewTableActions = ({
 					if (actionType === "ACTIVATE_LISTING")
 						return (
 							<ActionWrapper key={actionType}>
-								<ChannelSourceListingActivateDialog {...props}>
+								<ChannelSourceListingActivateDialog country={props.country} id={props.id}>
 									<ActionsDropdown.Item>{t("activate")}</ActionsDropdown.Item>
 								</ChannelSourceListingActivateDialog>
 							</ActionWrapper>
@@ -69,9 +69,6 @@ const allowedActionsPerStatusMap: Record<ActionType, ChannelSourceListingStatus[
 	ACTIVATE_LISTING: ["BLOCKED", "NEW", "REJECTED", "SUSPENDED"],
 	BLOCK_LISTING: ["NEW", "REJECTED", "SUSPENDED", "APPROVED"],
 	SUSPEND_LISTING: ["NEW", "APPROVED"],
-	// ACTIVATE_LISTING: ["BLOCKED", "PENDING", "REJECTED", "SUSPENDED"],
-	// BLOCK_LISTING: ["PENDING", "REJECTED", "SUSPENDED", "APPROVED"],
-	// SUSPEND_LISTING: ["PENDING", "APPROVED"],
 }
 
 const ActionWrapper = ({ children }: { children: React.ReactNode }) => (
