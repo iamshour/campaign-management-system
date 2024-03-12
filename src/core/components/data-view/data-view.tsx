@@ -222,17 +222,17 @@ const PaginationMessage = memo(() => {
 	const isEverythingSelected = useMemo(() => selection === "ALL" || selection?.length === count, [count, selection])
 
 	return (
-		<div className='text-muted-foreground m-4 flex w-max flex-wrap items-center text-xs'>
-			<div className='h-full gap-2 rounded-s-md border-e-4 border-e-white bg-gray-200/60 px-4 text-black inline-flex-center'>
+		<div className='text-muted-foreground m-4 ms-0 flex w-max flex-wrap items-center text-xs'>
+			<div className='h-[32px] gap-2 rounded-s-md border-e-4 border-e-white bg-gray-200/60 px-4 text-black inline-flex-center'>
 				<span className='font-medium'>{t("totalEntries")}:</span> {count}
 			</div>
 			<div
-				className='h-full gap-2 border-e-4 border-e-white bg-gray-200/60 px-4 text-black transition-colors inline-flex-center data-[active=true]:bg-primary-50'
+				className='h-[32px] gap-2 border-e-4 border-e-white bg-gray-200/60 px-4 text-black transition-colors inline-flex-center data-[active=true]:bg-primary-50'
 				data-active={!!selectionPerPage}>
 				<span className='font-medium'>{t("selectedPerPage")}:</span> {selectionPerPage}
 			</div>
 			<div
-				className='h-full gap-2 rounded-e-md bg-gray-200/60 px-4 text-black transition-colors inline-flex-center data-[active=true]:bg-primary-50'
+				className='h-[32px] gap-2 rounded-e-md bg-gray-200/60 px-4 text-black transition-colors inline-flex-center data-[active=true]:bg-primary-50'
 				data-active={!!selection?.length}>
 				<span className='font-medium'>{t("totalSelected")}:</span>
 				{!selection ? 0 : selection === "ALL" ? count : selection?.length}

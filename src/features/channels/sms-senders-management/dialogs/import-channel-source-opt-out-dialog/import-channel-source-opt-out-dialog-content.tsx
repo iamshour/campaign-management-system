@@ -1,7 +1,7 @@
 //#region Import
 import IconTooltip from "@/core/components/icon-tooltip/icon-tooltip"
 import fileMimeTypes from "@/core/constants/file-mime-types"
-import { useImportOptOutFileMutation } from "@/features/channels/sms-senders-management/api"
+import { useImportChannelSourceOptOutMutation } from "@/features/channels/sms-senders-management/api"
 import { Button, DropFileArea, Form, useForm } from "@/ui"
 import { getFileExtension } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -33,7 +33,7 @@ const ImportChannelSourceOptOutDialogContent = ({ closeDialog }: ImportChannelSo
 		resolver: zodResolver(ImportOptoutSchema),
 	})
 
-	const [triggerImportOptedOutSmsSenders, { isLoading }] = useImportOptOutFileMutation()
+	const [triggerImportOptedOutSmsSenders, { isLoading }] = useImportChannelSourceOptOutMutation()
 
 	const onSubmit = async (data: ImportOptoutSchemaType) => {
 		if (!data?.file) return

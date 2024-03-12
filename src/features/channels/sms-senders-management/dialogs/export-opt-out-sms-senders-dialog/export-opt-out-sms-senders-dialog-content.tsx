@@ -1,16 +1,18 @@
 //#region Import
-import type { ExportOptOutSmsSendersParams } from "@/features/channels/sms-senders-management/types"
+import type { ExportChannelSourceOptOutListParams } from "@/features/channels/sms-senders-management/types/api.types"
 
 import { useDataViewContext } from "@/core/components/data-view/data-view-context"
 import { clearSelection } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { useExportOptOutSmsSendersMutation } from "@/features/channels/sms-senders-management/api"
+import getSearchFilter from "@/core/utils/get-search-filter"
+import { useExportChannelSourceOptOutListMutation } from "@/features/channels/sms-senders-management/api"
 import { Button, Form, Input, useForm } from "@/ui"
 import { cleanObject, generateFileName } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
+import { useParams } from "react-router-dom"
 import * as z from "zod"
 //#endregion
 
@@ -34,13 +36,14 @@ const ExportOptOutSmsSendersDialogContent = ({ onClose }: ExportOptOutSmsSenders
 
 	const dispatch = useDispatch()
 
-	const { dataViewKey } = useDataViewContext()
+	const { channelSourceId } = useParams()
 
-	// Send Filters as part of Payload
-	const {
-		// filters, searchTerm,
-		selection,
-	} = useSelector(({ dataView }) => dataView[dataViewKey])
+	const { dataViewKey } = useDataViewContext<
+		any,
+		"international-sms-channel-source-opted-out-list" | "local-sms-channel-source-opted-out-list"
+	>()
+
+	const { filters, searchTerm, selection } = useSelector(({ dataView }) => dataView[dataViewKey])
 
 	const defaultFileName = generateFileName(companyName, "opt-out")
 
@@ -52,22 +55,26 @@ const ExportOptOutSmsSendersDialogContent = ({ onClose }: ExportOptOutSmsSenders
 		resolver: zodResolver(exportOptOutSchema),
 	})
 
-	const [submitExport, { isLoading }] = useExportOptOutSmsSendersMutation()
+	const [submitExport, { isLoading }] = useExportChannelSourceOptOutListMutation()
 
 	const onSubmit = async ({ fileName }: ExportOptOutSchemaType) => {
-		const body: ExportOptOutSmsSendersParams = {
+		if (!channelSourceId) return
+
+		const params: ExportChannelSourceOptOutListParams = {
+			channelSourceId,
 			fileName,
-			ids: !!selection && selection !== "ALL" ? selection : undefined,
-			// TODO: Send Search & filters as well
+			optOutsIdsList: !!selection && selection !== "ALL" ? selection : undefined,
+			...filters,
+			...getSearchFilter<["recipient"]>(searchTerm, ["recipient"]),
 		}
 
 		// Cleaning Body from all undefined/empty/nullish objects/nested objects
-		const cleanBody = cleanObject(body)
+		const cleanBody = cleanObject(params)
 
 		await submitExport(cleanBody).unwrap()
 
 		// Clearing Selection list if contacts were selected using their Ids
-		if (cleanBody?.ids) dispatch(clearSelection(dataViewKey))
+		if (cleanBody?.optOutsIdsList) dispatch(clearSelection(dataViewKey))
 
 		toast.success("Success!")
 

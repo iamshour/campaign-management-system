@@ -1,15 +1,17 @@
 //#region Import
-import type { OptInSmsSendersBody } from "@/features/channels/sms-senders-management/types"
+import type { OptInOptedOutChannelSourceListBody } from "@/features/channels/sms-senders-management/types/api.types"
 
 import { useDataViewContext } from "@/core/components/data-view/data-view-context"
 import { clearSelection } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { useOptInSmsSendersMutation } from "@/features/channels/sms-senders-management/api"
+import getSearchFilter from "@/core/utils/get-search-filter"
+import { useOptInOptedOutChannelSourceListMutation } from "@/features/channels/sms-senders-management/api"
 import { Button } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { cleanObject } from "@/utils"
 import { useTranslation } from "react-i18next"
+import { useParams } from "react-router-dom"
 //#endregion
 
 export interface OptInSmsSenderDialogContentProps {
@@ -29,31 +31,36 @@ const OptInSmsSenderDialogContent = ({ closeDialog, id }: OptInSmsSenderDialogCo
 
 	const dispatch = useDispatch()
 
-	const { dataViewKey } = useDataViewContext()
+	const { channelSourceId } = useParams()
+
+	const { dataViewKey } = useDataViewContext<
+		any,
+		"international-sms-channel-source-opted-out-list" | "local-sms-channel-source-opted-out-list"
+	>()
 
 	const { closeDropdown } = useDropdownStateContext()
 
-	// Send Filters as part of Payload
-	const {
-		// filters, searchTerm,
-		selection,
-	} = useSelector(({ dataView }) => dataView[dataViewKey])
+	const { filters, searchTerm, selection } = useSelector(({ dataView }) => dataView[dataViewKey])
 
-	const [triggerOptInSmsSender, { isLoading }] = useOptInSmsSendersMutation()
+	const [triggerOptInOptedOutChannelSourceList, { isLoading }] = useOptInOptedOutChannelSourceListMutation()
 
 	const onSubmit = async () => {
-		const body: OptInSmsSendersBody = {
-			ids: id?.length ? [id] : !!selection && selection !== "ALL" ? selection : undefined,
-			// TODO: Send Search Filters as well as Filters from filters bar (using rtk)
+		if (!channelSourceId) return
+
+		const body: OptInOptedOutChannelSourceListBody = {
+			channelSourceId,
+			channelSourceOptOutFilter: filters,
+			channelSourceOptOutSearchFilter: getSearchFilter<["recipient"]>(searchTerm, ["recipient"]),
+			optOutsIdsList: id?.length ? [id] : !!selection && selection !== "ALL" ? selection : undefined,
 		}
 
 		// Cleaning Body from all undefined/empty/nullish objects/nested objects
 		const cleanBody = cleanObject(body)
 
-		await triggerOptInSmsSender(body).unwrap()
+		await triggerOptInOptedOutChannelSourceList(cleanBody).unwrap()
 
 		// Clearing Selection list if contacts were selected using their Ids
-		if (cleanBody?.ids) dispatch(clearSelection(dataViewKey))
+		if (cleanBody?.optOutsIdsList) dispatch(clearSelection(dataViewKey))
 
 		if (closeDropdown !== undefined) closeDropdown()
 
