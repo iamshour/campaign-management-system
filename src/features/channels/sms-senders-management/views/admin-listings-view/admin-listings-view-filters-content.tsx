@@ -10,6 +10,7 @@ import useSelector from "@/core/hooks/useSelector"
 import SelectMultiListingStatusesPopover from "@/features/channels/sms-senders-management/components/select-multi-listing-statuses-popover"
 import SelectMultiTemplateTypesPopover from "@/features/templates/common/components/select-multi-template-types-popover"
 import { DateRangePicker, SelectCountryPopover } from "@/ui"
+import { getListOfKey } from "@/utils"
 import { memo, useCallback } from "react"
 //#endregion
 
@@ -34,37 +35,25 @@ const AdminListingsViewFiltersContent = memo(() => {
 				updateDateRange={updateState}
 			/>
 			<SelectMultiListingStatusesPopover
-				onValueChange={(selection) => {
-					let channelSourceListingStatus: ChannelSourceListingStatus | undefined
-
-					if (!selection) channelSourceListingStatus = undefined
-
-					if (selection?.length === 1) channelSourceListingStatus = selection[0]?.value as ChannelSourceListingStatus
-
-					if (selection?.length > 1) channelSourceListingStatus = selection[1]?.value as ChannelSourceListingStatus
-
-					updateState({ channelSourceListingStatus })
-				}}
-				value={filters?.channelSourceListingStatus ? [filters?.channelSourceListingStatus] : undefined}
+				onValueChange={(selection) =>
+					updateState({
+						channelSourceListingStatuses: getListOfKey(selection, "value") as ChannelSourceListingStatus[],
+					})
+				}
+				value={filters?.channelSourceListingStatuses}
 			/>
 			<SelectMultiTemplateTypesPopover
-				onValueChange={(selection) => {
-					let templateType: TemplateType | undefined
-
-					if (!selection) templateType = undefined
-
-					if (selection?.length === 1) templateType = selection[0]?.value as TemplateType
-
-					if (selection?.length > 1) templateType = selection[1]?.value as TemplateType
-
-					updateState({ templateType })
-				}}
-				value={filters?.templateType ? [filters?.templateType] : undefined}
+				onValueChange={(selection) =>
+					updateState({ templateTypes: getListOfKey(selection, "value") as TemplateType[] })
+				}
+				value={filters?.templateTypes}
 			/>
+
+			{/* TODO: MAKE IT MULTI SELECT  */}
 			<SelectCountryPopover
 				label='Target Country'
-				onChange={(country) => updateState({ country })}
-				value={filters?.country}
+				onChange={(v) => updateState({ countries: [v] })}
+				value={filters?.countries?.length ? filters?.countries[0] : undefined}
 			/>
 		</>
 	)

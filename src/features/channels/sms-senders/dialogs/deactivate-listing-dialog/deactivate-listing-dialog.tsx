@@ -21,7 +21,7 @@ const DeactivateListingDialog = ({ children, ...props }: DeactivateListingDialog
 	return (
 		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
-			<Dialog.Content className='w-[439px]' title={t("title")}>
+			<Dialog.Content className='h-[290px] w-[439px]' title={t("title")}>
 				<DeactivateListingDialogContent closeDialog={() => setOpen(false)} {...props} />
 			</Dialog.Content>
 		</Dialog>

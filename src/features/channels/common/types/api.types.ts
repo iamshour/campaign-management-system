@@ -22,9 +22,9 @@ export type GetChannelSourcesParams = ChannelSourceFilter &
 	ChannelSourceSearchFilter
 
 export type ChannelSourceListingFilter = DateRange & {
-	channelSourceListingStatus?: ChannelSourceListingStatus
-	country?: Country
-	templateType?: TemplateType
+	channelSourceListingStatuses?: ChannelSourceListingStatus[]
+	countries?: Country[]
+	templateTypes?: TemplateType[]
 }
 
 type channelSourceListingSearch = { any?: true; companyName?: string }
