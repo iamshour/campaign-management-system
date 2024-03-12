@@ -11,6 +11,15 @@ export type ChannelSourceRequestAction = "APPROVE" | "BLOCK" | "REJECT"
 
 export type ChannelSourceRequestStatus = "COMPLETED" | "PENDING"
 
+/**
+ * Request details info to be used as the body of AddChannelSourceRequestBody[channelSourceRequestRoute]
+ */
+export type ChannelSourceRequestInfo = {
+	country: Country
+	sample: string
+	templateType: TemplateType
+}
+
 export type FetchListingRequestDetailsIds = Record<"channelSourceListingId" | "channelSourceRequestId", string>
 
 export type ChannelSourceListing = {

@@ -1,5 +1,5 @@
 //#region Import
-import type { AddChannelSourceRequestBody } from "@/features/channels/sms-senders/types"
+import type { AddChannelSourceRequestBody } from "@/features/channels/sms-senders/types/api.types"
 
 import useGetChannelType from "@/core/hooks/useGetChannelType"
 import { useAddChannelSourceRequestMutation } from "@/features/channels/sms-senders/api"

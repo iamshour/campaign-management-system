@@ -4,7 +4,7 @@
 import api from "@/core/lib/redux-toolkit/api"
 import { transformResponse } from "@/core/lib/redux-toolkit/helpers"
 
-import type { AddChannelSourceRequestBody, ToggleChannelSourceListingActivationBody } from "./types"
+import type { AddChannelSourceRequestBody, ToggleChannelSourceListingActivationBody } from "./types/api.types"
 
 import { ChannelSource } from "../common/types/data.types"
 //#endregion
