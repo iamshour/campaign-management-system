@@ -21,7 +21,7 @@ const ActivateListingDialog = ({ children, ...props }: ActivateListingDialogProp
 	return (
 		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
-			<Dialog.Content className='w-[439px]' title={t("title")}>
+			<Dialog.Content className='h-[220px] w-[439px]' title={t("title")}>
 				<ActivateListingDialogContent closeDialog={() => setOpen(false)} {...props} />
 			</Dialog.Content>
 		</Dialog>

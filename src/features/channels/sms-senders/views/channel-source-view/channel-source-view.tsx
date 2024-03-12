@@ -34,7 +34,7 @@ const ChannelSourceView = memo(({ channelSourceName, templateTypes }: ChannelSou
 		useGetChannelSourceListingsQuery(
 			{
 				channelSourceId: channelSourceId!,
-				templateType,
+				templateTypes: [templateType],
 				...paginationState,
 			},
 			{
