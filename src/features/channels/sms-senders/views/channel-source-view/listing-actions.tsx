@@ -24,8 +24,11 @@ const DeactivateListingDialog = lazy(
 	() => import("@/features/channels/sms-senders/dialogs/deactivate-listing-dialog/deactivate-listing-dialog")
 )
 
-const ChannelSourceRequestDialog = lazy(
-	() => import("@/features/channels/sms-senders/dialogs/channel-source-request-dialog/channel-source-request-dialog")
+const ResendChannelSourceRequestDialog = lazy(
+	() =>
+		import(
+			"@/features/channels/sms-senders/dialogs/resend-channel-source-request-dialog/resend-channel-source-request-dialog"
+		)
 )
 //#endregion
 
@@ -78,9 +81,9 @@ const ListingActions = ({
 				<>
 					<ActionsDropdown.Separator />
 
-					<ChannelSourceRequestDialog formType='resendRequest'>
+					<ResendChannelSourceRequestDialog listingId={id}>
 						<ActionsDropdown.Item>{t(`views.channelSourceView.actions.resendRequest`)}</ActionsDropdown.Item>
-					</ChannelSourceRequestDialog>
+					</ResendChannelSourceRequestDialog>
 				</>
 			)}
 		</ActionsDropdown>

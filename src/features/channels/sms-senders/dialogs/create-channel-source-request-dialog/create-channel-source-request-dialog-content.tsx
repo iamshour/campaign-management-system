@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
 //#endregion
 
-export interface ChannelSourceRequestDialogContentProps
+export interface CreateChannelSourceRequestDialogContentProps
 	extends Pick<React.ComponentPropsWithoutRef<typeof ChannelSourceRequestForm>, "defaultValues">,
 		Pick<React.ComponentPropsWithoutRef<typeof ConfirmRequestDialog>, "formType"> {
 	/**
@@ -24,18 +24,18 @@ export interface ChannelSourceRequestDialogContentProps
 
 type ButtonClicked = "multiRequest" | "singleRequest"
 
-const ChannelSourceRequestDialogContent = ({
+const CreateChannelSourceRequestDialogContent = ({
 	closeDialog,
 	formType = "newRequest",
 	...props
-}: ChannelSourceRequestDialogContentProps) => {
-	const { t } = useTranslation("sms-senders", { keyPrefix: `dialogs.channelSourceRequestDialog.${formType}` })
+}: CreateChannelSourceRequestDialogContentProps) => {
+	const { t } = useTranslation("sms-senders", { keyPrefix: `dialogs.createChannelSourceRequestDialog` })
 
 	const { channelSourceId } = useParams()
 
 	const { channelType } = useGetChannelType()
 
-	const [triggerAddChannelSourceRequest, { isLoading }] = useAddChannelSourceRequestMutation()
+	const [triggerChannelSourceRequest, { isLoading }] = useAddChannelSourceRequestMutation()
 
 	// tracking which button was clicked to show appropriate loader
 	const [buttonClicked, setButtonClicked] = useState<ButtonClicked | undefined>()
@@ -55,7 +55,7 @@ const ChannelSourceRequestDialogContent = ({
 
 		const body: AddChannelSourceRequestBody = {
 			channelSource: data.sender,
-			channelSourceId: ["addRequest", "resendRequest"].includes(formType) ? channelSourceId : undefined,
+			channelSourceId: formType === "addRequest" ? channelSourceId : undefined,
 			channelSourceRequestRoute: {
 				country: data.country,
 				sample: data.sampleContent,
@@ -66,7 +66,7 @@ const ChannelSourceRequestDialogContent = ({
 			note: data.note,
 		}
 
-		await triggerAddChannelSourceRequest(body).unwrap()
+		await triggerChannelSourceRequest(body).unwrap()
 
 		form.reset()
 
@@ -80,18 +80,16 @@ const ChannelSourceRequestDialogContent = ({
 
 	return (
 		<ChannelSourceRequestForm {...props}>
-			{formType !== "resendRequest" && (
-				<ConfirmRequestDialog formType={formType} onSubmit={onSubmit}>
-					<Button
-						disabled={isLoading}
-						loading={isLoading && buttonClicked === "multiRequest"}
-						onClick={() => setButtonClicked("multiRequest")}
-						type='button'
-						variant='outline'>
-						{t("buttons.multiRequest")}
-					</Button>
-				</ConfirmRequestDialog>
-			)}
+			<ConfirmRequestDialog formType={formType} onSubmit={onSubmit}>
+				<Button
+					disabled={isLoading}
+					loading={isLoading && buttonClicked === "multiRequest"}
+					onClick={() => setButtonClicked("multiRequest")}
+					type='button'
+					variant='outline'>
+					{t("buttons.multiRequest")}
+				</Button>
+			</ConfirmRequestDialog>
 
 			<ConfirmRequestDialog formType={formType} onSubmit={onSubmit}>
 				<Button
@@ -107,4 +105,4 @@ const ChannelSourceRequestDialogContent = ({
 	)
 }
 
-export default ChannelSourceRequestDialogContent
+export default CreateChannelSourceRequestDialogContent

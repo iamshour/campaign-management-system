@@ -4,7 +4,11 @@
 import api from "@/core/lib/redux-toolkit/api"
 import { transformResponse } from "@/core/lib/redux-toolkit/helpers"
 
-import type { AddChannelSourceRequestBody, ToggleChannelSourceListingActivationBody } from "./types/api.types"
+import type {
+	AddChannelSourceRequestBody,
+	ResendChannelSourceRequestBody,
+	ToggleChannelSourceListingActivationBody,
+} from "./types/api.types"
 
 import { ChannelSource } from "../common/types/data.types"
 //#endregion
@@ -30,6 +34,19 @@ const smsSendersApi = api.injectEndpoints({
 			query: ({ channelSourceId, ...body }) => ({ body, method: "POST", url: "/channel-source/request" }),
 		}),
 
+		resendChannelSourceRequest: builder.mutation<any, ResendChannelSourceRequestBody>({
+			invalidatesTags: (res, _error, { channelSourceId }) =>
+				res
+					? [
+							{ id: "LIST", type: "ChannelSource" },
+							{ id: channelSourceId, type: "ChannelSource" },
+							{ id: "LIST", type: "ChannelSourceListing" },
+						]
+					: [],
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			query: ({ channelSourceId, ...body }) => ({ body, method: "POST", url: "/channel-source/request/resend" }),
+		}),
+
 		toggleChannelSourceListingActivation: builder.mutation<any, ToggleChannelSourceListingActivationBody>({
 			invalidatesTags: (res) => {
 				return res ? [{ id: "LIST", type: "ChannelSourceListing" }] : []
@@ -42,5 +59,6 @@ const smsSendersApi = api.injectEndpoints({
 export const {
 	useGetChannelSourceByIdQuery,
 	useAddChannelSourceRequestMutation,
+	useResendChannelSourceRequestMutation,
 	useToggleChannelSourceListingActivationMutation,
 } = smsSendersApi

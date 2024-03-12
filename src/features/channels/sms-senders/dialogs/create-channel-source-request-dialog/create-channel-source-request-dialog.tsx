@@ -4,11 +4,14 @@ import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-const ChannelSourceRequestDialogContent = lazy(() => import("./channel-source-request-dialog-content"))
+const CreateChannelSourceRequestDialogContent = lazy(() => import("./create-channel-source-request-dialog-content"))
 //#endregion
 
-interface ChannelSourceRequestDialogProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof ChannelSourceRequestDialogContent>, "defaultValues" | "formType"> {
+interface CreateChannelSourceRequestDialogProps
+	extends Pick<
+		React.ComponentPropsWithoutRef<typeof CreateChannelSourceRequestDialogContent>,
+		"defaultValues" | "formType"
+	> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */
@@ -20,13 +23,13 @@ interface ChannelSourceRequestDialogProps
 	closeActivateSmsDialog?: () => void
 }
 
-const ChannelSourceRequestDialog = ({
+const CreateChannelSourceRequestDialog = ({
 	children,
 	closeActivateSmsDialog,
 	formType,
 	...props
-}: ChannelSourceRequestDialogProps) => {
-	const { t } = useTranslation("sms-senders", { keyPrefix: `dialogs.channelSourceRequestDialog.${formType}` })
+}: CreateChannelSourceRequestDialogProps) => {
+	const { t } = useTranslation("sms-senders", { keyPrefix: `dialogs.createChannelSourceRequestDialog` })
 
 	const [open, setOpen] = useState(false)
 
@@ -39,7 +42,7 @@ const ChannelSourceRequestDialog = ({
 		// close action drop-down
 		closeDropdown && closeDropdown()
 
-		// close ChannelSourceRequestDialog
+		// close CreateChannelSourceRequestDialog
 		setOpen(false)
 	}
 
@@ -49,11 +52,11 @@ const ChannelSourceRequestDialog = ({
 			<Dialog.Content
 				className='h-[712px] w-[382px] sm:h-[516px] sm:w-[746px]'
 				onInteractOutside={(e) => e.preventDefault()}
-				title={t("title")}>
-				<ChannelSourceRequestDialogContent closeDialog={onCloseDialog} formType={formType} {...props} />
+				title={t(`title.${formType}`)}>
+				<CreateChannelSourceRequestDialogContent closeDialog={onCloseDialog} formType={formType} {...props} />
 			</Dialog.Content>
 		</Dialog>
 	)
 }
 
-export default ChannelSourceRequestDialog
+export default CreateChannelSourceRequestDialog
