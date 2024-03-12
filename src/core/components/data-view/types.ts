@@ -32,7 +32,8 @@ import type { DateRange } from "@/ui"
 import type { ColumnType } from "./data-table/types"
 //#endregion
 
-export interface DataViewProps<TData> extends Pick<React.HTMLAttributes<HTMLDivElement>, "children" | "className"> {
+export interface DataViewProps<TData, K extends DataViewKey = DataViewKey>
+	extends Pick<React.HTMLAttributes<HTMLDivElement>, "children" | "className"> {
 	/**
 	 * Array of Columns to be rendered
 	 */
@@ -43,7 +44,7 @@ export interface DataViewProps<TData> extends Pick<React.HTMLAttributes<HTMLDivE
 	 */
 	count: number
 
-	dataViewKey: DataViewKey
+	dataViewKey: K
 
 	/**
 	 * Boolean used to show skeleton in each cell when an asynchronous acrion is pending

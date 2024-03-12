@@ -17,7 +17,6 @@ import type { ChannelSourceOptOut, ChannelSourceRequest, ChannelSourceRequestDet
 export type ChannelSourceRequestFilter = DateRange & {
 	actions?: ChannelSourceRequestAction[]
 	channelSourceRequestStatus: ChannelSourceRequestStatus
-
 	channelType: ChannelType
 	countries?: Country[]
 	templateTypes?: TemplateType[]
@@ -78,28 +77,40 @@ export type UpdateChannelSourceListingStatusBody = {
 	  }
 )
 
-type channelSourceOptOutSearchFilter = {
-	any?: true
-	recipient?: string
-	// TODO: ASK ABOUT THIS ????
-	// "empty": true
-}
+type ChannelSourceOptOutSearchFilter = { any?: true; recipient?: string }
 
-export type ChannelSourceOptOutFilter = {
-	countries?: Country[]
-	empty?: boolean
-}
+export type ChannelSourceOptOutFilter = { countries?: Country[] }
 
 /**
  * Params passed to the `getChannelSourceRequests` query, used to fetch Channel Source requests
  */
-export type GetChannelSourceOptOutListParams = channelSourceOptOutSearchFilter &
+export type GetChannelSourceOptOutListParams = ChannelSourceOptOutSearchFilter &
 	ChannelSourceOptOutFilter &
 	PaginationAndSorting<ChannelSourceOptOut> & {
 		channelSourceId: string
 	}
 
-export type ImportOptOutFileBody = {
+export type ImportChannelSourceOptOutBody = {
 	channelSourceId: string
 	optOutFile: FormData
+}
+
+/**
+ * Params passed to the `exportOptOutList` query, used to fetch export channel source opted out List
+ */
+export type ExportChannelSourceOptOutListParams = ChannelSourceOptOutSearchFilter &
+	ChannelSourceOptOutFilter & {
+		channelSourceId: string
+		fileName: string
+		optOutsIdsList: string[] | undefined
+	}
+
+/**
+ * Body Arguments passed to the `optInOptedOutChannelSourceList` mutation, used to opt in opted out destinations
+ */
+export type OptInOptedOutChannelSourceListBody = {
+	channelSourceId: string
+	channelSourceOptOutFilter: ChannelSourceOptOutFilter | undefined
+	channelSourceOptOutSearchFilter: ChannelSourceOptOutSearchFilter | undefined
+	optOutsIdsList: string[] | undefined
 }
