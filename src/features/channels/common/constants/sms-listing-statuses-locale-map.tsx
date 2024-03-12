@@ -1,8 +1,8 @@
 //#region Import
-import type { ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
+import { ChannelSourceListingDisplayStatus } from "@/features/channels/sms-senders/types/data.types"
 //#endregion
 
-const smsListingStatusesLocaleMap: Record<"DEACTIVATED" | "PENDING" | ChannelSourceListingStatus, string> = {
+const smsListingStatusesLocaleMap: Record<ChannelSourceListingDisplayStatus, string> = {
 	APPROVED: "channels-common:listingStatuses.approved",
 	BLOCKED: "channels-common:listingStatuses.blocked",
 	DEACTIVATED: "channels-common:listingStatuses.deactivated",

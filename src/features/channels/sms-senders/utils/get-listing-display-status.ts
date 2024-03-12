@@ -1,4 +1,8 @@
-import type { ChannelSourceListing, ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
+//#region Import
+import type { ChannelSourceListing } from "@/features/channels/common/types/data.types"
+
+import { ChannelSourceListingDisplayStatus } from "@/features/channels/sms-senders/types/data.types"
+//#endregion
 
 /**
  * Function that return the listing status to be displayed in ListingCard, and to be used to select the card color.
@@ -20,7 +24,7 @@ const getListingDisplayStatus = (
 	active: ChannelSourceListing["active"],
 	channelSourceListingStatus: ChannelSourceListing["channelSourceListingStatus"],
 	lastChannelSourceRequestStatus: ChannelSourceListing["lastChannelSourceRequestStatus"]
-): "DEACTIVATED" | "PENDING" | ChannelSourceListingStatus => {
+): ChannelSourceListingDisplayStatus => {
 	if (active === false) return "DEACTIVATED"
 
 	if (

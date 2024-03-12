@@ -2,7 +2,7 @@
 import type { ColumnType } from "@/core/components/data-view/data-table/types"
 import type { SharedListViewProps } from "@/core/types"
 import type { ChannelSource } from "@/features/channels/common/types/data.types"
-import type { SmsChannelSourceDataViewKey } from "@/features/channels/sms-senders/types"
+import type { SmsChannelSourceDataViewKey } from "@/features/channels/sms-senders/types/data.types"
 
 import DataView from "@/core/components/data-view/data-view"
 import channelSourcesTableColumns from "@/features/channels/sms-senders/constants/channel-sources-table-columns"

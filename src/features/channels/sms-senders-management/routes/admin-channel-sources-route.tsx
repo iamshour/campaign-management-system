@@ -1,6 +1,6 @@
 //#region Import
 import type { DataViewState } from "@/core/components/data-view/types"
-import type { SmsChannelSourceDataViewKey } from "@/features/channels/sms-senders/types"
+import type { SmsChannelSourceDataViewKey } from "@/features/channels/sms-senders/types/data.types"
 
 import useGetChannelType from "@/core/hooks/useGetChannelType"
 import useSelector from "@/core/hooks/useSelector"
