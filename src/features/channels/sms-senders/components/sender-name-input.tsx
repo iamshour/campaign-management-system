@@ -11,7 +11,7 @@ interface SenderNameInputProps extends Omit<React.ComponentPropsWithoutRef<typeo
 
 const SenderNameInput = forwardRef<React.ElementRef<typeof InputWithSearch>, SenderNameInputProps>(
 	({ onChange, value, ...props }, ref) => {
-		const { t } = useTranslation("sms-senders", { keyPrefix: "components.smsSenderRequestForm.placeholders" })
+		const { t } = useTranslation("sms-senders", { keyPrefix: "components.channelSourceRequestForm.placeholders" })
 
 		const { channelType } = useGetChannelType()
 

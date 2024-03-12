@@ -1,9 +1,9 @@
 //#region Import
-import { Dialog } from "@/ui"
+import { Dialog, Skeleton } from "@/ui"
+import { lazy, Suspense } from "react"
 import { useTranslation } from "react-i18next"
 
-import ViewListingSampleContentDialogContent from "./view-listing-sample-content-dialog-content"
-
+const ViewListingSampleContentDialogContent = lazy(() => import("./view-listing-sample-content-dialog-content"))
 //#endregion
 
 interface ViewListingSampleContentDialogProps
@@ -20,8 +20,10 @@ const ViewListingSampleContentDialog = ({ children, ...props }: ViewListingSampl
 	return (
 		<Dialog>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
-			<Dialog.Content className='w-[412px]' title={t(`title`)}>
-				<ViewListingSampleContentDialogContent {...props} />
+			<Dialog.Content className='min-h-[200px] w-[412px] ' title={t(`title`)}>
+				<Suspense fallback={<Skeleton className='h-[119px]' />}>
+					<ViewListingSampleContentDialogContent {...props} />
+				</Suspense>
 			</Dialog.Content>
 		</Dialog>
 	)

@@ -6,7 +6,7 @@ import { REGEX_ALPHANUMERICAL } from "@/core/constants/regex"
 import * as z from "zod"
 //#endregion
 
-const SmsSenderRequestSchema = z.object({
+const ChannelSourceRequestSchema = z.object({
 	country: z.custom<Country>((val) => !!val, "Required"),
 	note: z.string().max(500, { message: "Maximum 500 Characters allowed" }).optional(),
 	sampleContent: z.string().min(1, { message: "Required" }).max(500, { message: "Maximum 500 Characters allowed" }),
@@ -21,6 +21,6 @@ const SmsSenderRequestSchema = z.object({
 	templateType: z.custom<TemplateType>((val) => !!val, "Required"),
 })
 
-export default SmsSenderRequestSchema
+export default ChannelSourceRequestSchema
 
-export type SmsSenderRequestSchemaType = z.infer<typeof SmsSenderRequestSchema>
+export type ChannelSourceRequestSchemaType = z.infer<typeof ChannelSourceRequestSchema>

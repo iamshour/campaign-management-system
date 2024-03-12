@@ -28,7 +28,7 @@ const SelectSingleOptionPopover = <T extends string>({
 }: SelectSingleOptionPopoverProps<T>) => (
 	<div className={twMerge("relative w-[340px] max-w-full", className)}>
 		{!!label?.length && (
-			<Label size={size}>
+			<Label aria-invalid={props["aria-invalid"]} size={size}>
 				{label} {required && "*"}
 			</Label>
 		)}

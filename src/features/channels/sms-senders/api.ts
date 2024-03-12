@@ -2,45 +2,45 @@
 
 //#region Import
 import api from "@/core/lib/redux-toolkit/api"
+import { transformResponse } from "@/core/lib/redux-toolkit/helpers"
 
-import type { ChannelSource } from "../common/types/data.types"
-import type { AddSmsRequestBody } from "./types"
+import type { AddChannelSourceRequestBody, ToggleChannelSourceListingActivationBody } from "./types"
+
+import { ChannelSource } from "../common/types/data.types"
 //#endregion
 
 const smsSendersApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getSmsSenderById: builder.query<ChannelSource, string>({
+		getChannelSourceById: builder.query<ChannelSource, string>({
 			providesTags: (result) => [{ id: result?.id, type: "ChannelSource" }],
-			// TODO: in integration; change below 65dda90d5cddf38ab869f080" ?? id to id
-			query: (id) => `/senders/${"65dda90d5cddf38ab869f080" ?? id}`,
+			query: (id) => `/senders/${id}`,
+			transformResponse,
 		}),
 
-		addSmsRequest: builder.mutation<any, AddSmsRequestBody>({
-			invalidatesTags: (res) => {
-				return res ? [{ id: "LIST", type: "ChannelSource" }] : []
-			},
-			query: (body) => ({ body, method: "POST", url: "/channel-source/request" }),
+		addChannelSourceRequest: builder.mutation<any, AddChannelSourceRequestBody>({
+			invalidatesTags: (res, _error, { channelSourceId }) =>
+				res
+					? [
+							{ id: "LIST", type: "ChannelSource" },
+							{ id: channelSourceId, type: "ChannelSource" },
+							{ id: "LIST", type: "ChannelSourceListing" },
+						]
+					: [],
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			query: ({ channelSourceId, ...body }) => ({ body, method: "POST", url: "/channel-source/request" }),
 		}),
 
-		activateSmsListing: builder.mutation<any, string>({
+		toggleChannelSourceListingActivation: builder.mutation<any, ToggleChannelSourceListingActivationBody>({
 			invalidatesTags: (res) => {
 				return res ? [{ id: "LIST", type: "ChannelSourceListing" }] : []
 			},
-			query: (listingId) => ({ method: "PUT", url: `/listings/${listingId}/active` }),
-		}),
-
-		deactivateSmsListing: builder.mutation<any, string>({
-			invalidatesTags: (res) => {
-				return res ? [{ id: "LIST", type: "ChannelSourceListing" }] : []
-			},
-			query: (listingId) => ({ method: "PUT", url: `/listings/${listingId}/deactivate` }),
+			query: ({ listingId, ...body }) => ({ body, method: "PUT", url: `/channel-source/listing/${listingId}/active` }),
 		}),
 	}),
 })
 
 export const {
-	useAddSmsRequestMutation,
-	useGetSmsSenderByIdQuery,
-	useActivateSmsListingMutation,
-	useDeactivateSmsListingMutation,
+	useGetChannelSourceByIdQuery,
+	useAddChannelSourceRequestMutation,
+	useToggleChannelSourceListingActivationMutation,
 } = smsSendersApi

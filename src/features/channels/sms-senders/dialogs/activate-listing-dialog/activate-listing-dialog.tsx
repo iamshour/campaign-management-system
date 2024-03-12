@@ -3,17 +3,17 @@ import { Dialog } from "@/ui"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-const ActivateSmsListingDialogContent = lazy(() => import("./activate-sms-listing-dialog-content"))
+const ActivateListingDialogContent = lazy(() => import("./activate-listing-dialog-content"))
 //#endregion
 
-interface ActivateSmsListingDialogProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof ActivateSmsListingDialogContent>, "id"> {
+interface ActivateListingDialogProps
+	extends Pick<React.ComponentPropsWithoutRef<typeof ActivateListingDialogContent>, "id"> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */
 	children: React.ReactNode
 }
-const ActivateSmsListingDialog = ({ children, ...props }: ActivateSmsListingDialogProps) => {
+const ActivateListingDialog = ({ children, ...props }: ActivateListingDialogProps) => {
 	const { t } = useTranslation("sms-senders", { keyPrefix: "dialogs.activateListingDialog" })
 
 	const [open, setOpen] = useState(false)
@@ -22,10 +22,10 @@ const ActivateSmsListingDialog = ({ children, ...props }: ActivateSmsListingDial
 		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 			<Dialog.Content className='w-[439px]' title={t("title")}>
-				<ActivateSmsListingDialogContent closeDialog={() => setOpen(false)} {...props} />
+				<ActivateListingDialogContent closeDialog={() => setOpen(false)} {...props} />
 			</Dialog.Content>
 		</Dialog>
 	)
 }
 
-export default ActivateSmsListingDialog
+export default ActivateListingDialog

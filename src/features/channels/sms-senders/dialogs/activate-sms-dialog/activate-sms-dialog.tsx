@@ -1,6 +1,6 @@
 //#region Import
 import { ChannelOrigin } from "@/core/utils/get-channel-type"
-import SmsSenderRequestDialog from "@/features/channels/sms-senders/dialogs/sms-sender-request-dialog/sms-sender-request-dialog"
+import ChannelSourceRequestDialog from "@/features/channels/sms-senders/dialogs/channel-source-request-dialog/channel-source-request-dialog"
 import { Button, Dialog } from "@/ui"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -33,11 +33,11 @@ const ActivateSmsDialog = ({ channelOrigin, children }: ActivateSmsDialogProps) 
 				<div className='p-2'>
 					<p>{t("dialogs.activateSmsDialog.text")}</p>
 
-					<SmsSenderRequestDialog closeActivateSmsDialog={() => setOpen(false)} formType='newRequest'>
+					<ChannelSourceRequestDialog closeActivateSmsDialog={() => setOpen(false)} formType='newRequest'>
 						<Button className='ms-auto mt-8 block' type='button'>
 							{t("dialogs.activateSmsDialog.buttons.confirm")}
 						</Button>
-					</SmsSenderRequestDialog>
+					</ChannelSourceRequestDialog>
 				</div>
 			</Dialog.Content>
 		</Dialog>

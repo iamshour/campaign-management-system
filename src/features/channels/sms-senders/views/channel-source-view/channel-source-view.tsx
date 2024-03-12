@@ -4,7 +4,7 @@ import type { TemplateType } from "@/features/templates/common/types"
 
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetChannelSourceListingsQuery } from "@/features/channels/common/api"
-import SmsSenderRequestDialog from "@/features/channels/sms-senders/dialogs/sms-sender-request-dialog/sms-sender-request-dialog"
+import ChannelSourceRequestDialog from "@/features/channels/sms-senders/dialogs/channel-source-request-dialog/channel-source-request-dialog"
 import templateTypesOptions from "@/features/templates/common/constants/template-types-options"
 import { Button, FullViewSkeleton, NoResultsFound, Pagination } from "@/ui"
 import DisplayError from "@/ui/errors/display-error"
@@ -14,12 +14,12 @@ import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
 
-import SmsListingCard from "./sms-listings-card"
+import ListingCard from "./listings-card"
 //#endregion
 
-interface SmsListingsViewrops extends Pick<ChannelSource, "channelSourceName" | "templateTypes"> {}
+interface ChannelSourceViewrops extends Pick<ChannelSource, "channelSourceName" | "templateTypes"> {}
 
-const SmsListingsView = memo(({ channelSourceName, templateTypes }: SmsListingsViewrops) => {
+const ChannelSourceView = memo(({ channelSourceName, templateTypes }: ChannelSourceViewrops) => {
 	const { t } = useTranslation("sms-senders")
 
 	const [paginationState, setPaginationState] = useState<{ limit: number; offset: number }>({ limit: 25, offset: 0 })
@@ -76,17 +76,17 @@ const SmsListingsView = memo(({ channelSourceName, templateTypes }: SmsListingsV
 							))}
 					</div>
 
-					<SmsSenderRequestDialog defaultValues={{ sender: channelSourceName }} formType='addRequest'>
+					<ChannelSourceRequestDialog defaultValues={{ sender: channelSourceName }} formType='addRequest'>
 						<Button>
 							<HeroiconsPlus16Solid />
-							{t("views.smsListingsView.actions.addRequest")}
+							{t("views.channelSourceView.actions.addRequest")}
 						</Button>
-					</SmsSenderRequestDialog>
+					</ChannelSourceRequestDialog>
 				</div>
 
 				<div className='flex-1 overflow-y-auto'>
 					<div className='flex flex-row flex-wrap gap-9 '>
-						{list?.map((listing, idx) => <SmsListingCard key={idx} {...listing} />)}
+						{list?.map((listing, idx) => <ListingCard key={idx} {...listing} />)}
 					</div>
 				</div>
 
@@ -99,6 +99,6 @@ const SmsListingsView = memo(({ channelSourceName, templateTypes }: SmsListingsV
 		)
 })
 
-SmsListingsView.displayName = "SmsListingsView"
+ChannelSourceView.displayName = "ChannelSourceView"
 
-export default SmsListingsView
+export default ChannelSourceView

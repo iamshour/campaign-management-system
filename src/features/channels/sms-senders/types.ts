@@ -11,10 +11,11 @@ import type { ChannelType } from "../common/types/data.types"
 export type SmsChannelSourceDataViewKey = "international-sms-channel-sources" | "local-sms-channel-sources"
 
 /**
- * Body Arguments passed to the `addSmsRequest` mutation, used to send a new listing request
+ * Body Arguments passed to the `addChannelSourceRequest` mutation, used to send a new listing request
  */
-export type AddSmsRequestBody = {
+export type AddChannelSourceRequestBody = {
 	channelSource: string
+	channelSourceId?: string
 	channelSourceRequestRoute: {
 		country: Country
 		sample: string
@@ -23,4 +24,12 @@ export type AddSmsRequestBody = {
 	channelType: ChannelType
 	companyId: string
 	note?: string
+}
+
+/**
+ * Body Arguments passed to the `toggleChannelSourceListingActivation` mutation, used to activate and deactivate
+ */
+export type ToggleChannelSourceListingActivationBody = {
+	active: boolean
+	listingId: string
 }
