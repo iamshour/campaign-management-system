@@ -3,17 +3,17 @@ import { Dialog } from "@/ui"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-const DeactivateSmsListingDialogContent = lazy(() => import("./deactivate-sms-listing-dialog-content"))
+const DeactivateListingDialogContent = lazy(() => import("./deactivate-listing-dialog-content"))
 //#endregion
 
-interface DeactivateSmsListingDialogProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof DeactivateSmsListingDialogContent>, "id"> {
+interface DeactivateListingDialogProps
+	extends Pick<React.ComponentPropsWithoutRef<typeof DeactivateListingDialogContent>, "id"> {
 	/**
 	 * Trigger Button/Element for triggering Dilaog
 	 */
 	children: React.ReactNode
 }
-const DeactivateSmsListingDialog = ({ children, ...props }: DeactivateSmsListingDialogProps) => {
+const DeactivateListingDialog = ({ children, ...props }: DeactivateListingDialogProps) => {
 	const { t } = useTranslation("sms-senders", { keyPrefix: "dialogs.deactivateListingDialog" })
 
 	const [open, setOpen] = useState(false)
@@ -22,10 +22,10 @@ const DeactivateSmsListingDialog = ({ children, ...props }: DeactivateSmsListing
 		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 			<Dialog.Content className='w-[439px]' title={t("title")}>
-				<DeactivateSmsListingDialogContent closeDialog={() => setOpen(false)} {...props} />
+				<DeactivateListingDialogContent closeDialog={() => setOpen(false)} {...props} />
 			</Dialog.Content>
 		</Dialog>
 	)
 }
 
-export default DeactivateSmsListingDialog
+export default DeactivateListingDialog

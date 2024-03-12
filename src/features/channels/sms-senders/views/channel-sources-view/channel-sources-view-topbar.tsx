@@ -1,5 +1,5 @@
 //#region Import
-import SmsSenderRequestDialog from "@/features/channels/sms-senders/dialogs/sms-sender-request-dialog/sms-sender-request-dialog"
+import ChannelSourceRequestDialog from "@/features/channels/sms-senders/dialogs/channel-source-request-dialog/channel-source-request-dialog"
 import { Button } from "@/ui"
 import HeroiconsPlus16Solid from "~icons/heroicons/plus-16-solid"
 import { memo } from "react"
@@ -11,12 +11,12 @@ const ChannelSourcesViewTopbar = memo(() => {
 
 	return (
 		<div className='flex w-full items-end justify-end'>
-			<SmsSenderRequestDialog formType='newRequest'>
+			<ChannelSourceRequestDialog formType='newRequest'>
 				<Button>
 					<HeroiconsPlus16Solid />
 					{t("table.actions.requestSender")}
 				</Button>
-			</SmsSenderRequestDialog>
+			</ChannelSourceRequestDialog>
 		</div>
 	)
 })

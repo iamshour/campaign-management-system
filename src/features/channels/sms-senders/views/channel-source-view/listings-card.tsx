@@ -1,5 +1,5 @@
 //#region Import
-import type { ChannelSourceListing, ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
+import type { ChannelSourceListing } from "@/features/channels/common/types/data.types"
 
 import DataViewDateCell from "@/core/components/data-view/data-view-date-cell"
 import getCountryName from "@/core/utils/get-country-name"
@@ -9,21 +9,26 @@ import { Skeleton } from "@/ui"
 import { lazy, Suspense } from "react"
 import { useTranslation } from "react-i18next"
 
-const SmsListingActions = lazy(() => import("./sms-listing-actions"))
+import getListingDisplayStatus from "../../utils/get-listing-display-status"
+
+const ListingActions = lazy(() => import("./listing-actions"))
 //#endregion
 
-const SmsListingCard = (smsListing: ChannelSourceListing) => {
+const ListingCard = ({
+	active,
+	channelSourceListingStatus,
+	country,
+	id,
+	lastChannelSourceRequestStatus,
+	updatedAt,
+}: ChannelSourceListing) => {
 	const { t } = useTranslation("channels-common")
 
-	const { channelSourceListingStatus, country, lastChannelSourceRequestStatus, updatedAt } = smsListing
+	const listingStatus = getListingDisplayStatus(active, channelSourceListingStatus, lastChannelSourceRequestStatus)
 
-	const color = smsListingStatusesColorsMap[channelSourceListingStatus] || "#EDF3F7"
+	const color = smsListingStatusesColorsMap[listingStatus] || "#EDF3F7"
 
 	const countryName = getCountryName(country)
-
-	// const listingStatus: ChannelSourceListingStatus = requestStatus === "PENDING" ? "PENDING" : status
-	const listingStatus: ChannelSourceListingStatus =
-		lastChannelSourceRequestStatus === "PENDING" ? "NEW" : channelSourceListingStatus
 
 	return (
 		<div className='flex h-[80px] w-[445px] max-w-full flex-row items-center rounded-md bg-[#F7F7F7]'>
@@ -44,11 +49,10 @@ const SmsListingCard = (smsListing: ChannelSourceListing) => {
 			</ul>
 
 			<Suspense fallback={<Skeleton className='h-[30px] w-[30px]' />}>
-				{/* TODO: NOTE AND SENDER MAY NOT BE FETCHED BY API  */}
-				<SmsListingActions {...smsListing} />
+				<ListingActions active={active} channelSourceListingStatus={channelSourceListingStatus} id={id} />
 			</Suspense>
 		</div>
 	)
 }
 
-export default SmsListingCard
+export default ListingCard

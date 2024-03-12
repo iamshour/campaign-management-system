@@ -1,26 +1,26 @@
 //#region Import
 import type { ChannelSourceListing } from "@/features/channels/common/types/data.types"
 
-import { useDeactivateSmsListingMutation } from "@/features/channels/sms-senders/api"
+import { useToggleChannelSourceListingActivationMutation } from "@/features/channels/sms-senders/api"
 import { Button } from "@/ui"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-export interface DeactivateSmsListingDialogContentProps extends Pick<ChannelSourceListing, "id"> {
+export interface DeactivateListingDialogContentProps extends Pick<ChannelSourceListing, "id"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
 	closeDialog: () => void
 }
 
-const DeactivateSmsListingDialogContent = ({ closeDialog, id }: DeactivateSmsListingDialogContentProps) => {
+const DeactivateListingDialogContent = ({ closeDialog, id }: DeactivateListingDialogContentProps) => {
 	const { t } = useTranslation("sms-senders", { keyPrefix: "dialogs.deactivateListingDialog" })
 
-	const [triggerDeactivateSmsListing, { isLoading }] = useDeactivateSmsListingMutation()
+	const [triggerToggleChannelSourceListingActivation, { isLoading }] = useToggleChannelSourceListingActivationMutation()
 
 	const deactivateListing = async () => {
-		await triggerDeactivateSmsListing(id).unwrap()
+		await triggerToggleChannelSourceListingActivation({ active: false, listingId: id }).unwrap()
 
 		toast.success(t(`message.success`))
 
@@ -37,4 +37,4 @@ const DeactivateSmsListingDialogContent = ({ closeDialog, id }: DeactivateSmsLis
 	)
 }
 
-export default DeactivateSmsListingDialogContent
+export default DeactivateListingDialogContent

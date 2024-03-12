@@ -1,5 +1,5 @@
 //#region Import
-import { SmsSenderRequestSchemaType } from "@/features/channels/sms-senders/schemas/sms-sender-request-schema"
+import { ChannelSourceRequestSchemaType } from "@/features/channels/sms-senders/schemas/channel-source-request-schema"
 import { Button, Dialog } from "@/ui"
 import { useState } from "react"
 import { useFormContext, UseFormReturn } from "react-hook-form"
@@ -21,7 +21,7 @@ interface ConfirmRequestDialogProps {
 	/**
 	 * Callback function to be called when user presses confirm
 	 */
-	onSubmit: (data: SmsSenderRequestSchemaType, form: UseFormReturn<SmsSenderRequestSchemaType>) => void
+	onSubmit: (data: ChannelSourceRequestSchemaType, form: UseFormReturn<ChannelSourceRequestSchemaType>) => void
 }
 
 const ConfirmRequestDialog = ({ children, formType, onSubmit }: ConfirmRequestDialogProps) => {
@@ -29,7 +29,7 @@ const ConfirmRequestDialog = ({ children, formType, onSubmit }: ConfirmRequestDi
 
 	const [open, setOpen] = useState(false)
 
-	const form = useFormContext<SmsSenderRequestSchemaType>()
+	const form = useFormContext<ChannelSourceRequestSchemaType>()
 
 	const onOpenChange = () => {
 		if (!open) {

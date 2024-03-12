@@ -4,7 +4,7 @@
 			"local": "Local",
 			"international": "International"
 		},
-		"smsSenderRequestForm": {
+		"channelSourceRequestForm": {
 			"placeholders": {
 				"name": "Enter name",
 				"type": "Select type",
@@ -27,7 +27,7 @@
 		}
 	},
 	"dialogs": {
-		"smsSenderRequestDialog": {
+		"channelSourceRequestDialog": {
 			"newRequest": {
 				"title": "Request Sender",
 				"buttons": {
@@ -115,7 +115,7 @@
 				"international": "Activate International SMS"
 			}
 		},
-		"smsListingsView": {
+		"channelSourceView": {
 			"actions": {
 				"viewSampleContent": "View Sample Content",
 				"viewStatusReason": {

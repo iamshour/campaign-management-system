@@ -3,7 +3,7 @@ import { lazy } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
 const SmsSendersRoutesLayout = lazy(() => import("../layouts/sms-senders-routes-layout"))
 
-import SmsSenderRoute from "./sms-sender-route"
+import ChannelSourceRoute from "./channel-source-route"
 
 const ChannelSourcesRoute = lazy(() => import("./channel-sources-route"))
 //#endregion
@@ -15,8 +15,8 @@ const SmsChannelRoutes = () => (
 			<Route element={<ChannelSourcesRoute />} path='international-sms/senders' />
 		</Route>
 
-		<Route element={<SmsSenderRoute />} path='local-sms/senders/:channelSourceId' />
-		<Route element={<SmsSenderRoute />} path='international-sms/senders/:channelSourceId' />
+		<Route element={<ChannelSourceRoute />} path='local-sms/senders/:channelSourceId' />
+		<Route element={<ChannelSourceRoute />} path='international-sms/senders/:channelSourceId' />
 
 		<Route element={<Navigate to='local-sms/senders' />} path='*' />
 	</Routes>

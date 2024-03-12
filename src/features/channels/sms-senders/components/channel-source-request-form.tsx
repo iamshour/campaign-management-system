@@ -1,9 +1,9 @@
 //#region Import
 import IconTooltip from "@/core/components/icon-tooltip/icon-tooltip"
 import TextareaPopover from "@/core/components/textarea-popover/textarea-popover"
-import SmsSenderRequestSchema, {
-	type SmsSenderRequestSchemaType,
-} from "@/features/channels/sms-senders/schemas/sms-sender-request-schema"
+import ChannelSourceRequestSchema, {
+	type ChannelSourceRequestSchemaType,
+} from "@/features/channels/sms-senders/schemas/channel-source-request-schema"
 import SelectSingleTemplateTypePopover from "@/features/templates/common/components/select-single-template-type-popover"
 import { Footer, Form, SelectCountryPopover, Textarea, useForm } from "@/ui"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -12,19 +12,19 @@ import { useTranslation } from "react-i18next"
 import SenderNameInput from "./sender-name-input"
 //#endregion
 
-interface SmsSenderRequestFormProps {
+interface ChannelSourceRequestFormProps {
 	children: React.ReactNode
 
-	defaultValues?: Partial<SmsSenderRequestSchemaType>
+	defaultValues?: Partial<ChannelSourceRequestSchemaType>
 }
 
-const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormProps) => {
+const ChannelSourceRequestForm = ({ children, defaultValues }: ChannelSourceRequestFormProps) => {
 	const { t } = useTranslation("sms-senders")
 
-	const form = useForm<SmsSenderRequestSchemaType>({
+	const form = useForm<ChannelSourceRequestSchemaType>({
 		defaultValues,
 		mode: "onChange",
-		resolver: zodResolver(SmsSenderRequestSchema),
+		resolver: zodResolver(ChannelSourceRequestSchema),
 	})
 
 	return (
@@ -38,7 +38,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 							<Form.Item>
 								<Form.Label className='flex flex-row items-center gap-2'>
 									{t("channels-common:fields.sender")} *
-									<IconTooltip content={t("components.smsSenderRequestForm.labels.name.iconTooltip")} />
+									<IconTooltip content={t("components.channelSourceRequestForm.labels.name.iconTooltip")} />
 								</Form.Label>
 								<Form.Control>
 									<SenderNameInput
@@ -102,7 +102,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 								<Form.Control>
 									<TextareaPopover
 										onValueChange={field.onChange}
-										placeholder={t("components.smsSenderRequestForm.placeholders.note")}
+										placeholder={t("components.channelSourceRequestForm.placeholders.note")}
 										size='lg'
 										triggerProps={{ className: "text-base" }}
 										value={field.value}
@@ -123,7 +123,7 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 									<Textarea
 										maxLength={500}
 										onChange={field.onChange}
-										placeholder={t("components.smsSenderRequestForm.placeholders.sampleContent")}
+										placeholder={t("components.channelSourceRequestForm.placeholders.sampleContent")}
 										rows={3}
 										value={field.value}
 									/>
@@ -140,4 +140,4 @@ const SmsSenderRequestForm = ({ children, defaultValues }: SmsSenderRequestFormP
 	)
 }
 
-export default SmsSenderRequestForm
+export default ChannelSourceRequestForm

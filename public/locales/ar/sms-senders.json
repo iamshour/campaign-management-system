@@ -12,7 +12,7 @@
 			"local": "محلي",
 			"international": "دولي"
 		},
-		"smsSenderRequestForm": {
+		"channelSourceRequestForm": {
 			"placeholders": {
 				"name": "أدخل الاسم",
 				"type": "اختر صنف",
@@ -35,7 +35,7 @@
 		}
 	},
 	"dialogs": {
-		"smsSenderRequestDialog": {
+		"channelSourceRequestDialog": {
 			"newRequest": {
 				"title": "طلب المرسل ",
 				"buttons": {
@@ -123,7 +123,7 @@
 				"international": "تنشيط الرسائل القصيرة الدولية"
 			}
 		},
-		"smsListingsView": {
+		"channelSourceView": {
 			"actions": {
 				"viewSampleContent": "عرض نموذج المحتوى ",
 				"viewStatusReason": {

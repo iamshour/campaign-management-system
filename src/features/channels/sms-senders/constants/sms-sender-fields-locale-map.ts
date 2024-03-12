@@ -2,10 +2,10 @@
 import type { ChannelSource } from "@/features/channels/common/types/data.types"
 //#endregion
 
-const smsSenderFieldsLocaleMap: Partial<Record<keyof ChannelSource, string>> = {
+const channelSourceFieldsLocaleMap: Partial<Record<keyof ChannelSource, string>> = {
 	channelSourceName: "channels-common:fields.sender",
 	createdAt: "channels-common:fields.createdAt",
 	templateTypes: "channels-common:fields.type",
 }
 
-export default smsSenderFieldsLocaleMap
+export default channelSourceFieldsLocaleMap

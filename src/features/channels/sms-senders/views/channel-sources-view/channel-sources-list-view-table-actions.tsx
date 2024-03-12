@@ -1,7 +1,7 @@
 //#region Import
 import type { ChannelSource } from "@/features/channels/common/types/data.types"
 
-import SmsSenderRequestDialog from "@/features/channels/sms-senders/dialogs/sms-sender-request-dialog/sms-sender-request-dialog"
+import ChannelSourceRequestDialog from "@/features/channels/sms-senders/dialogs/channel-source-request-dialog/channel-source-request-dialog"
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
@@ -17,9 +17,9 @@ const ChannelSourcesListViewTableActions = ({
 
 	return (
 		<ActionsDropdown>
-			<SmsSenderRequestDialog defaultValues={{ sender: channelSourceName }} formType='addRequest'>
+			<ChannelSourceRequestDialog defaultValues={{ sender: channelSourceName }} formType='addRequest'>
 				<ActionsDropdown.Item>{t("table.actions.addRequest")}</ActionsDropdown.Item>
-			</SmsSenderRequestDialog>
+			</ChannelSourceRequestDialog>
 
 			<ActionsDropdown.Separator />
 

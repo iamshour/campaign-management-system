@@ -1,19 +1,20 @@
 //#region Import
-import type { AddSmsRequestBody } from "@/features/channels/sms-senders/types"
+import type { AddChannelSourceRequestBody } from "@/features/channels/sms-senders/types"
 
 import useGetChannelType from "@/core/hooks/useGetChannelType"
-import { useAddSmsRequestMutation } from "@/features/channels/sms-senders/api"
-import SmsSenderRequestForm from "@/features/channels/sms-senders/components/sms-sender-request-form"
+import { useAddChannelSourceRequestMutation } from "@/features/channels/sms-senders/api"
+import ChannelSourceRequestForm from "@/features/channels/sms-senders/components/channel-source-request-form"
 import ConfirmRequestDialog from "@/features/channels/sms-senders/dialogs/confirm-request-dialog/confirm-request-dialog"
-import { SmsSenderRequestSchemaType } from "@/features/channels/sms-senders/schemas/sms-sender-request-schema"
+import { ChannelSourceRequestSchemaType } from "@/features/channels/sms-senders/schemas/channel-source-request-schema"
 import { Button, type UseFormReturn } from "@/ui"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
+import { useParams } from "react-router-dom"
 //#endregion
 
-export interface SmsSenderRequestDialogContentProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof SmsSenderRequestForm>, "defaultValues">,
+export interface ChannelSourceRequestDialogContentProps
+	extends Pick<React.ComponentPropsWithoutRef<typeof ChannelSourceRequestForm>, "defaultValues">,
 		Pick<React.ComponentPropsWithoutRef<typeof ConfirmRequestDialog>, "formType"> {
 	/**
 	 * Callback function used to close the dialog
@@ -23,32 +24,38 @@ export interface SmsSenderRequestDialogContentProps
 
 type ButtonClicked = "multiRequest" | "singleRequest"
 
-const SmsSenderRequestDialogContent = ({
+const ChannelSourceRequestDialogContent = ({
 	closeDialog,
 	formType = "newRequest",
 	...props
-}: SmsSenderRequestDialogContentProps) => {
-	const { t } = useTranslation("sms-senders", { keyPrefix: `dialogs.smsSenderRequestDialog.${formType}` })
+}: ChannelSourceRequestDialogContentProps) => {
+	const { t } = useTranslation("sms-senders", { keyPrefix: `dialogs.channelSourceRequestDialog.${formType}` })
+
+	const { channelSourceId } = useParams()
 
 	const { channelType } = useGetChannelType()
 
-	const [triggerAddSmsRequest, { isLoading }] = useAddSmsRequestMutation()
+	const [triggerAddChannelSourceRequest, { isLoading }] = useAddChannelSourceRequestMutation()
 
 	// tracking which button was clicked to show appropriate loader
 	const [buttonClicked, setButtonClicked] = useState<ButtonClicked | undefined>()
 
 	/**
-	 * Used to send validated data from the `SmsSenderRequestForm` component to the server, for adding the request entry
+	 * Used to send validated data from the `ChannelSourceRequestForm` component to the server, for adding the request entry
 	 *
-	 * @param body Validated data passed back from the `SmsSenderRequestForm` component
-	 * @param form form passed from the `SmsSenderRequestForm` component, which we can access to reset from data, or handle other
+	 * @param body Validated data passed back from the `ChannelSourceRequestForm` component
+	 * @param form form passed from the `ChannelSourceRequestForm` component, which we can access to reset from data, or handle other
 	 *             actions such as sending back an error on a specific field
 	 */
-	const onSubmit = async (data: SmsSenderRequestSchemaType, form: UseFormReturn<SmsSenderRequestSchemaType>) => {
+	const onSubmit = async (
+		data: ChannelSourceRequestSchemaType,
+		form: UseFormReturn<ChannelSourceRequestSchemaType>
+	) => {
 		if (!data) return
 
-		const body: AddSmsRequestBody = {
+		const body: AddChannelSourceRequestBody = {
 			channelSource: data.sender,
+			channelSourceId: ["addRequest", "resendRequest"].includes(formType) ? channelSourceId : undefined,
 			channelSourceRequestRoute: {
 				country: data.country,
 				sample: data.sampleContent,
@@ -59,7 +66,7 @@ const SmsSenderRequestDialogContent = ({
 			note: data.note,
 		}
 
-		await triggerAddSmsRequest(body).unwrap()
+		await triggerAddChannelSourceRequest(body).unwrap()
 
 		form.reset()
 
@@ -72,7 +79,7 @@ const SmsSenderRequestDialogContent = ({
 	}
 
 	return (
-		<SmsSenderRequestForm {...props}>
+		<ChannelSourceRequestForm {...props}>
 			{formType !== "resendRequest" && (
 				<ConfirmRequestDialog formType={formType} onSubmit={onSubmit}>
 					<Button
@@ -96,8 +103,8 @@ const SmsSenderRequestDialogContent = ({
 					{t("buttons.singleRequest")}
 				</Button>
 			</ConfirmRequestDialog>
-		</SmsSenderRequestForm>
+		</ChannelSourceRequestForm>
 	)
 }
 
-export default SmsSenderRequestDialogContent
+export default ChannelSourceRequestDialogContent

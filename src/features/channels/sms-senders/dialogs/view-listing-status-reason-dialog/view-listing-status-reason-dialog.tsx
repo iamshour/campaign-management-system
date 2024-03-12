@@ -1,10 +1,11 @@
 //#region Import
 import type { ChannelSourceListing } from "@/features/channels/common/types/data.types"
 
-import { Dialog } from "@/ui"
+import { Dialog, Skeleton } from "@/ui"
+import { lazy, Suspense } from "react"
 import { useTranslation } from "react-i18next"
 
-import ViewListingStatusReasonDialogContent from "./view-listing-status-reason-dialog-content"
+const ViewListingStatusReasonDialogContent = lazy(() => import("./view-listing-status-reason-dialog-content"))
 
 //#endregion
 
@@ -25,8 +26,10 @@ const ViewListingStatusReasonDialog = ({
 	return (
 		<Dialog>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
-			<Dialog.Content className='w-[412px]' title={t(`${channelSourceListingStatus}.title`)}>
-				<ViewListingStatusReasonDialogContent {...props} />
+			<Dialog.Content className='min-h-[200px] w-[412px]' title={t(`${channelSourceListingStatus}.title`)}>
+				<Suspense fallback={<Skeleton className='h-[119px]' />}>
+					<ViewListingStatusReasonDialogContent {...props} />
+				</Suspense>
 			</Dialog.Content>
 		</Dialog>
 	)
