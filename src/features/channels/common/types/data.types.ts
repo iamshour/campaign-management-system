@@ -36,6 +36,7 @@ export type ChannelSourceListing = {
 export type ChannelSourceListingDetails = ChannelSourceListing & {
 	channelSourceId: string
 	channelSourceListingStatusReason: string
+	channelSourceName: string
 	sample: string
 }
 

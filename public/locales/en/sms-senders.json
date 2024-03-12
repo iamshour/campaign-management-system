@@ -27,38 +27,21 @@
 		}
 	},
 	"dialogs": {
-		"channelSourceRequestDialog": {
-			"newRequest": {
-				"title": "Request Sender",
-				"buttons": {
-					"multiRequest": "Send & Add Another",
-					"singleRequest": "Send Request"
-				},
-				"message": {
-					"multiRequestSuccess": "Your request has been successfully sent, you can send another request",
-					"singleRequestSuccess": "Your request has been sent successfully"
-				}
+		"createChannelSourceRequestDialog": {
+			"title": { "newRequest": "Request Sender", "addRequest": "Add Request" },
+			"buttons": {
+				"multiRequest": "Send & Add Another",
+				"singleRequest": "Send Request"
 			},
-			"addRequest": {
-				"title": "Add Request",
-				"buttons": {
-					"multiRequest": "Send & Add Another",
-					"singleRequest": "Send Request"
-				},
-				"message": {
-					"multiRequestSuccess": "Your request has been successfully sent, you can send another request",
-					"singleRequestSuccess": "Your request has been sent successfully"
-				}
-			},
-			"resendRequest": {
-				"title": "Resend Request",
-				"buttons": {
-					"singleRequest": "Resend Request"
-				},
-				"message": {
-					"singleRequestSuccess": "Your request has been resent successfully"
-				}
+			"message": {
+				"multiRequestSuccess": "Your request has been successfully sent, you can send another request",
+				"singleRequestSuccess": "Your request has been sent successfully"
 			}
+		},
+		"resendChannelSourceRequestDialog": {
+			"title": "Resend Request",
+			"submit": "Resend Request",
+			"message": "Your request has been resent successfully"
 		},
 		"activateSmsDialog": {
 			"title": {
