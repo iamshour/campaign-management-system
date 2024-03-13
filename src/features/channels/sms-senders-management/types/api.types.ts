@@ -112,5 +112,5 @@ export type OptInOptedOutChannelSourceListBody = {
 	channelSourceId: string
 	channelSourceOptOutFilter: ChannelSourceOptOutFilter | undefined
 	channelSourceOptOutSearchFilter: ChannelSourceOptOutSearchFilter | undefined
-	optOutsIdsList: string[] | undefined
+	optedOutIds: string[] | undefined
 }
