@@ -1,18 +1,18 @@
 //#region Import
-import { lazy } from "react"
-import { Navigate, Route, Routes } from "react-router-dom"
+import { FullViewSkeleton } from "@/ui"
+import { lazy, Suspense } from "react"
+import { Navigate, Outlet, Route, Routes } from "react-router-dom"
+
+import SmsListingRequestsLayout from "../layouts/sms-listing-requests-layout"
+import SmsSendersManagementLayout from "../layouts/sms-senders-management-layout"
 
 const AdminListingsRoute = lazy(() => import("./admin-listings-route"))
 
 const CreateSmsSenderRoute = lazy(() => import("./create-sms-sender-route"))
 
-const CreateSmsSenderRequestRoute = lazy(() => import("./create-sms-sender-request-route"))
+const CreateChannelSourceRequestRoute = lazy(() => import("./create-channel-source-request-route"))
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
-
-const SmsListingRequestsLayout = lazy(() => import("../layouts/sms-listing-requests-layout"))
-
-const SmsSendersManagementLayout = lazy(() => import("../layouts/sms-senders-management-layout"))
 
 const ChannelSourceRequestsPendingRoute = lazy(() => import("./channel-source-requests-pending-route"))
 
@@ -44,11 +44,13 @@ const SmsSendersManagementRoutes = () => (
 			<Route element={<Navigate to='./pending' />} path='international-sms/listing-requests' />
 		</Route>
 
-		<Route element={<CreateSmsSenderRequestRoute />} path='local-sms/listing-requests/new-request' />
-		<Route element={<CreateSmsSenderRequestRoute />} path='international-sms/listing-requests/new-request' />
+		<Route element={<FullViewSuspense />}>
+			<Route element={<CreateChannelSourceRequestRoute />} path='local-sms/listing-requests/new-request' />
+			<Route element={<CreateChannelSourceRequestRoute />} path='international-sms/listing-requests/new-request' />
 
-		<Route element={<CreateSmsSenderRoute />} path='local-sms/senders/new-sender' />
-		<Route element={<CreateSmsSenderRoute />} path='international-sms/senders/new-sender' />
+			<Route element={<CreateSmsSenderRoute />} path='local-sms/senders/new-sender' />
+			<Route element={<CreateSmsSenderRoute />} path='international-sms/senders/new-sender' />
+		</Route>
 
 		<Route element={<AdminListingsRoute />} path='local-sms/senders/:channelSourceId' />
 		<Route element={<AdminListingsRoute />} path='international-sms/senders/:channelSourceId' />
@@ -61,3 +63,9 @@ const SmsSendersManagementRoutes = () => (
 )
 
 export default SmsSendersManagementRoutes
+
+const FullViewSuspense = () => (
+	<Suspense fallback={<FullViewSkeleton />}>
+		<Outlet />
+	</Suspense>
+)

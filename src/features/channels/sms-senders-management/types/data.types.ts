@@ -33,3 +33,9 @@ export type ChannelSourceOptOut = {
 	id: string
 	recipient: string
 }
+
+export type UserInCompany = {
+	companyId: string
+	email: string
+	id: string
+}

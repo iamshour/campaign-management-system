@@ -2,22 +2,20 @@
 import IconTooltip from "@/core/components/icon-tooltip/icon-tooltip"
 import SelectCompanyPopover from "@/features/channels/sms-senders-management/components/select-company-popover/select-company-popover"
 import SenderNameInput from "@/features/channels/sms-senders/components/sender-name-input"
-import { Form, type OptionType } from "@/ui"
+import { Form } from "@/ui"
 import { Control, useFormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+
+import type { ChannelSourceRequestBulkSchemaType } from "../schemas/channel-source-request-bulk-schema"
 
 import SelectCompanyUsersPopover from "./select-company-users-popover/select-company-users-popover"
 //#endregion
 
-export type CreateSmsSenderRequestBasicInfoType = {
-	basicInfo: Record<"company" | "email", OptionType> & { sender: string }
+interface CreateChannelSourceRequestBasicInfoProps {
+	control: Control<ChannelSourceRequestBulkSchemaType>
 }
 
-interface CreateSmsSenderRequestBasicInfoProps {
-	control: Control<CreateSmsSenderRequestBasicInfoType>
-}
-
-const CreateSmsSenderRequestBasicInfo = ({ control }: CreateSmsSenderRequestBasicInfoProps) => {
+const CreateChannelSourceRequestBasicInfo = ({ control }: CreateChannelSourceRequestBasicInfoProps) => {
 	const { t } = useTranslation("channels-common")
 
 	const { getValues, setValue } = useFormContext()
@@ -31,16 +29,18 @@ const CreateSmsSenderRequestBasicInfo = ({ control }: CreateSmsSenderRequestBasi
 				name={`basicInfo.company`}
 				render={({ field }) => (
 					<Form.Item>
-						<SelectCompanyPopover
-							selection={field.value}
-							size='lg'
-							updateSelection={(option) => {
-								field.onChange(option)
+						<Form.Control>
+							<SelectCompanyPopover
+								selection={field.value}
+								size='lg'
+								updateSelection={(option) => {
+									field.onChange(option)
 
-								// Clearing User Email when changing
-								setValue("basicInfo.email", undefined)
-							}}
-						/>
+									// Clearing User Email when changing
+									setValue("basicInfo.email", undefined)
+								}}
+							/>
+						</Form.Control>
 						<Form.Message />
 					</Form.Item>
 				)}
@@ -51,13 +51,15 @@ const CreateSmsSenderRequestBasicInfo = ({ control }: CreateSmsSenderRequestBasi
 				name='basicInfo.email'
 				render={({ field }) => (
 					<Form.Item>
-						<SelectCompanyUsersPopover
-							companyId={selectedCompanyId}
-							disabled={!selectedCompanyId}
-							selection={field.value}
-							size='lg'
-							updateSelection={field.onChange}
-						/>
+						<Form.Control>
+							<SelectCompanyUsersPopover
+								companyId={selectedCompanyId}
+								disabled={!selectedCompanyId}
+								selection={field.value}
+								size='lg'
+								updateSelection={field.onChange}
+							/>
+						</Form.Control>
 						<Form.Message />
 					</Form.Item>
 				)}
@@ -72,7 +74,9 @@ const CreateSmsSenderRequestBasicInfo = ({ control }: CreateSmsSenderRequestBasi
 							{t("fields.sender")} *
 							<IconTooltip content='tooltip content here...' />
 						</Form.Label>
-						<SenderNameInput className='rounded-lg bg-white' onChange={field.onChange} value={field.value} />
+						<Form.Control>
+							<SenderNameInput className='rounded-lg bg-white' onChange={field.onChange} value={field.value} />
+						</Form.Control>
 						<Form.Message />
 					</Form.Item>
 				)}
@@ -81,4 +85,4 @@ const CreateSmsSenderRequestBasicInfo = ({ control }: CreateSmsSenderRequestBasi
 	)
 }
 
-export default CreateSmsSenderRequestBasicInfo
+export default CreateChannelSourceRequestBasicInfo

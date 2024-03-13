@@ -1,6 +1,7 @@
 //#region Import
 import useGetChannelType from "@/core/hooks/useGetChannelType"
-import { NavTabs } from "@/ui"
+import { DataTableSkeleton, NavTabs } from "@/ui"
+import { Suspense } from "react"
 import { Outlet } from "react-router-dom"
 //#endregion
 
@@ -14,7 +15,9 @@ const SmsSendersManagementLayout = () => {
 				<NavTabs.Item to={`./${channelTypeInUrl}/listing-requests`}>Requests</NavTabs.Item>
 			</NavTabs>
 
-			<Outlet />
+			<Suspense fallback={<DataTableSkeleton />}>
+				<Outlet />
+			</Suspense>
 		</div>
 	)
 }

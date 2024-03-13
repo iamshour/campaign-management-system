@@ -2,7 +2,8 @@
 import type { ChannelType } from "@/features/channels/common/types/data.types"
 
 import type { SmsListingRequestCreationPreviewData } from "../components/sms-listing-request-creation-preview"
-import type { SmsSenderRequestsForm } from "../routes/create-sms-sender-request-route"
+import type { ChannelSourceRequestBulkSchemaType } from "../schemas/channel-source-request-bulk-schema"
+// import type { SmsSenderRequestsForm } from "../routes/create-sms-sender-request-route"
 //#endregion
 
 /**
@@ -13,27 +14,30 @@ import type { SmsSenderRequestsForm } from "../routes/create-sms-sender-request-
  * @returns formatted data in backend format (AddBulkSmsListingRequestsBody) but witth additional field errorKey used to locate each listing in form
  *
  */
-const formatAddBulkSmsListingRequestsBody = (data: SmsSenderRequestsForm, channelType: ChannelType) => {
+const formatAddBulkSmsListingRequestsBody = (
+	{ basicInfo: { company, email, sender }, bulkListingsGroups }: ChannelSourceRequestBulkSchemaType,
+	channelType: ChannelType
+) => {
 	let formattedList: SmsListingRequestCreationPreviewData["channelSourceRequestRouteList"] = []
 
-	data.bulkListingsGroups?.forEach(({ listingsFields, type }, groupIdx) => {
+	bulkListingsGroups?.forEach(({ listingsFields, templateType }, groupIdx) => {
 		formattedList = formattedList.concat(
-			listingsFields.map((listing, listingIdx) => ({
-				channelSourceListingStatus: listing?.status,
-				country: listing.country!,
+			listingsFields.map(({ country, sampleContent }, listingIdx) => ({
+				// channelSourceListingStatus: listing?.status,
+				country,
 				errorKey: `bulkListingsGroups.${groupIdx}.listingsFields.${listingIdx}`,
-				sample: listing.content!,
-				templateType: type!,
+				sample: sampleContent,
+				templateType,
 			}))
 		)
 	})
 
 	const formattedData: SmsListingRequestCreationPreviewData = {
-		channelSource: data.basicInfo.sender,
+		channelSource: sender,
 		channelSourceRequestRouteList: formattedList,
 		channelType,
-		companyId: data.basicInfo.company.value,
-		userId: data.basicInfo.email.value,
+		companyId: company.value,
+		userId: email.value,
 	}
 
 	return formattedData

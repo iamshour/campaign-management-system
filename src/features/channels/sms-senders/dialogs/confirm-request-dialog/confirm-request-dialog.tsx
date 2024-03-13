@@ -1,5 +1,5 @@
 //#region Import
-import { ChannelSourceRequestSchemaType } from "@/features/channels/sms-senders/schemas/channel-source-request-schema"
+import { ChannelSourceRequestSchemaType } from "@/features/channels/common/schemas/channel-source-request-schema"
 import { Button, Dialog } from "@/ui"
 import { useState } from "react"
 import { useFormContext, UseFormReturn } from "react-hook-form"

@@ -79,7 +79,7 @@ export type UpdateChannelSourceListingStatusBody = {
 
 type ChannelSourceOptOutSearchFilter = { any?: true; recipient?: string }
 
-export type ChannelSourceOptOutFilter = { countries?: Country[] }
+export type ChannelSourceOptOutFilter = { countries: Country[] | undefined }
 
 /**
  * Params passed to the `getChannelSourceRequests` query, used to fetch Channel Source requests

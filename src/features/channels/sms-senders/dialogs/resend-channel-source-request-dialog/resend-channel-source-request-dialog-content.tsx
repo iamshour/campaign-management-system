@@ -1,10 +1,10 @@
 //#region Import
+import type { ChannelSourceRequestSchemaType } from "@/features/channels/common/schemas/channel-source-request-schema"
 import type { ResendChannelSourceRequestBody } from "@/features/channels/sms-senders/types/api.types"
 
 import { useResendChannelSourceRequestMutation } from "@/features/channels/sms-senders/api"
 import ChannelSourceRequestForm from "@/features/channels/sms-senders/components/channel-source-request-form"
 import ConfirmRequestDialog from "@/features/channels/sms-senders/dialogs/confirm-request-dialog/confirm-request-dialog"
-import { ChannelSourceRequestSchemaType } from "@/features/channels/sms-senders/schemas/channel-source-request-schema"
 import { Button, type UseFormReturn } from "@/ui"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"

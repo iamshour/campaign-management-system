@@ -2,10 +2,10 @@
 import type { AddChannelSourceRequestBody } from "@/features/channels/sms-senders/types/api.types"
 
 import useGetChannelType from "@/core/hooks/useGetChannelType"
+import { ChannelSourceRequestSchemaType } from "@/features/channels/common/schemas/channel-source-request-schema"
 import { useAddChannelSourceRequestMutation } from "@/features/channels/sms-senders/api"
 import ChannelSourceRequestForm from "@/features/channels/sms-senders/components/channel-source-request-form"
 import ConfirmRequestDialog from "@/features/channels/sms-senders/dialogs/confirm-request-dialog/confirm-request-dialog"
-import { ChannelSourceRequestSchemaType } from "@/features/channels/sms-senders/schemas/channel-source-request-schema"
 import { Button, type UseFormReturn } from "@/ui"
 import { useState } from "react"
 import toast from "react-hot-toast"

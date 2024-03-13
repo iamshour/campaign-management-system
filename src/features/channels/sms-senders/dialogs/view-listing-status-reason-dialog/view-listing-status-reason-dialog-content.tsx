@@ -4,7 +4,9 @@ import type { ChannelSourceListing } from "@/features/channels/common/types/data
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetChannelSourceListingByIdQuery } from "@/features/channels/common/api"
 import { Skeleton } from "@/ui"
-import DisplayError from "@/ui/errors/display-error"
+import { lazy } from "react"
+
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 export interface ViewListingStatusReasonDialogContentProps extends Pick<ChannelSourceListing, "id"> {}

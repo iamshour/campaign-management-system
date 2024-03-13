@@ -159,7 +159,7 @@
 			"tooltip": "Opt-in",
 			"submit": "Confirm"
 		},
-		"createSmsListingRequestConfirm": {
+		"createChannelSourceRequestConfirm": {
 			"title": "Confirm Request",
 			"submit": "Confirm",
 			"cancel": "Cancel"

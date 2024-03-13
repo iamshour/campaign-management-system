@@ -6,52 +6,12 @@ import { getObjectSize } from "@/utils"
 import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 import type { DataViewFilterType, DataViewKey, DataViewRenderType, DataViewState, Selection } from "./types"
+
+import dataViewSliceInitialState from "./data-view-slice-initial-state"
 //#endregion
 
-const initialDataViewBaseState = { paginationAndSorting: { limit: 25, offset: 0 }, view: "LIST" as DataViewRenderType }
-
-const initialSmsChannelsTablesState = {
-	paginationAndSorting: { limit: 20, offset: 0 },
-	view: "LIST" as DataViewRenderType,
-}
-
-const initialCompactDataViewBaseState = {
-	paginationAndSorting: { limit: 10, offset: 0 },
-	view: "LIST" as DataViewRenderType,
-}
-
-const initialState: { [K in DataViewKey]: DataViewState<K> } = {
-	"add-contacts-to-group": initialDataViewBaseState,
-	contacts: initialDataViewBaseState,
-	"contacts-exports": initialDataViewBaseState,
-	"contacts-in-group": initialDataViewBaseState,
-	groups: initialCompactDataViewBaseState,
-	industries: initialDataViewBaseState,
-	"international-sms-channel-source-listings": initialSmsChannelsTablesState,
-	"international-sms-channel-source-opted-out-list": initialSmsChannelsTablesState,
-	"international-sms-channel-source-requests-completed": initialSmsChannelsTablesState,
-	"international-sms-channel-source-requests-pending": initialSmsChannelsTablesState,
-	"international-sms-channel-sources": initialSmsChannelsTablesState,
-	"local-sms-channel-source-listings": initialSmsChannelsTablesState,
-	"local-sms-channel-source-opted-out-list": initialSmsChannelsTablesState,
-	"local-sms-channel-source-requests-completed": initialSmsChannelsTablesState,
-	"local-sms-channel-source-requests-pending": initialSmsChannelsTablesState,
-	"local-sms-channel-sources": initialSmsChannelsTablesState,
-	segments: initialDataViewBaseState,
-	"sms-industry-templates": initialCompactDataViewBaseState,
-	"sms-prebuilt-templates": {
-		...initialCompactDataViewBaseState,
-		filters: { filterBy: "ALL", industryId: "ALL" },
-	},
-	"sms-prebuilt-templates-dialog": {
-		...initialCompactDataViewBaseState,
-		filters: { filterBy: "ALL", industryId: "ALL" },
-	},
-	"sms-templates": initialCompactDataViewBaseState,
-}
-
 const dataViewSlice = createSlice({
-	initialState,
+	initialState: dataViewSliceInitialState,
 	name: "dataView",
 	reducers: {
 		checkItem: (state, { payload }: PayloadAction<{ [K in DataViewKey]?: string }>) => {
@@ -101,7 +61,7 @@ const dataViewSlice = createSlice({
 		resetDataViewState: (state, { payload: dataViewKey }: PayloadAction<DataViewKey>) => {
 			return {
 				...state,
-				[dataViewKey]: initialState[dataViewKey],
+				[dataViewKey]: dataViewSliceInitialState[dataViewKey],
 			}
 		},
 

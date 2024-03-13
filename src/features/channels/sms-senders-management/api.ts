@@ -7,6 +7,7 @@ import type {
 	ChannelSourceOptOut,
 	ChannelSourceRequest,
 	ChannelSourceRequestDetails,
+	UserInCompany,
 } from "@/features/channels/sms-senders-management/types/data.types"
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 
@@ -14,7 +15,7 @@ import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
 import { downloadFile } from "@/utils"
 
-import type { AddBulkSmsListingRequestsBody, AddBulkSmsListingsBody, UserInCompany } from "./types"
+import type { AddBulkSmsListingRequestsBody, AddBulkSmsListingsBody } from "./types"
 import type {
 	ExportChannelSourceOptOutListParams,
 	GetChannelSourceOptOutListParams,
@@ -185,7 +186,7 @@ const smsSendersManagementApis = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		getUsersByCompanyId: builder.query<GetListReturnType<UserInCompany>, string>({
+		getUsersByCompanyId: builder.query<GetListReturnType<UserInCompany>, { companyId: string }>({
 			providesTags: (result) =>
 				providesList(
 					result?.list?.map(({ id }) => id),

@@ -33,10 +33,10 @@ const ChannelSourcesRoute = () => {
 
 	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } = useGetChannelSourcesQuery(
 		{
-			channelType,
 			...paginationAndSorting,
 			...filters,
 			...getSearchFilter<["name"]>(searchTerm, ["name"]),
+			channelType,
 		},
 		{
 			selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({

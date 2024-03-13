@@ -5,11 +5,11 @@ import type { Country } from "react-phone-number-input"
 //#endregion
 
 export type ListingField = {
-	content?: string
 	country?: Country
+	sampleContent?: string
 	status?: Extract<ChannelSourceListingStatus, "APPROVED" | "BLOCKED">
 }
 
-export type BulkListingsGroup = { listingsFields: ListingField[]; type?: TemplateType }
+export type BulkListingsGroup = { listingsFields: ListingField[]; templateType?: TemplateType }
 
 export type BulkListingsFunnelBase = { bulkListingsGroups: BulkListingsGroup[] }
