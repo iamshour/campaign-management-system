@@ -34,11 +34,14 @@ const AdminListingsRoute = () => {
 		},
 		{
 			selectFromResult: ({ data, isFetching, isLoading, ...rest }) => ({
-				count: data?.count,
+				count: data?.channelSourceListings?.count,
 				isFetching,
 				isInitialLoading: !data && isLoading,
-				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-				list: data?.list,
+				isReady:
+					!isLoading &&
+					data?.channelSourceListings?.list !== undefined &&
+					data?.channelSourceListings?.count !== undefined,
+				list: data?.channelSourceListings?.list,
 				...rest,
 			}),
 			skip: !channelSourceId,

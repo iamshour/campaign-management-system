@@ -37,12 +37,12 @@ const ListingActions = ({
 	channelSourceListingStatus,
 	id,
 }: Pick<ChannelSourceListing, "active" | "channelSourceListingStatus" | "id">) => {
-	const { t } = useTranslation("sms-senders")
+	const { t } = useTranslation("sms-senders", { keyPrefix: "components.listingCard.actions" })
 
 	return (
 		<ActionsDropdown className='m-4'>
 			<ViewListingSampleContentDialog id={id}>
-				<ActionsDropdown.Item>{t("views.channelSourceView.actions.viewSampleContent")}</ActionsDropdown.Item>
+				<ActionsDropdown.Item>{t("viewSampleContent")}</ActionsDropdown.Item>
 			</ViewListingSampleContentDialog>
 
 			{allowedActionsPerStatusMap["VIEW_STATUS_REASON"].includes(channelSourceListingStatus) && (
@@ -50,9 +50,7 @@ const ListingActions = ({
 					<ActionsDropdown.Separator />
 
 					<ViewListingStatusReasonDialog channelSourceListingStatus={channelSourceListingStatus} id={id}>
-						<ActionsDropdown.Item>
-							{t(`views.channelSourceView.actions.viewStatusReason.${channelSourceListingStatus}`)}
-						</ActionsDropdown.Item>
+						<ActionsDropdown.Item>{t(`viewStatusReason.${channelSourceListingStatus}`)}</ActionsDropdown.Item>
 					</ViewListingStatusReasonDialog>
 				</>
 			)}
@@ -62,7 +60,7 @@ const ListingActions = ({
 					<ActionsDropdown.Separator />
 
 					<ActivateListingDialog id={id}>
-						<ActionsDropdown.Item>{t(`views.channelSourceView.actions.activate`)}</ActionsDropdown.Item>
+						<ActionsDropdown.Item>{t(`activate`)}</ActionsDropdown.Item>
 					</ActivateListingDialog>
 				</>
 			)}
@@ -72,7 +70,7 @@ const ListingActions = ({
 					<ActionsDropdown.Separator />
 
 					<DeactivateListingDialog id={id}>
-						<ActionsDropdown.Item>{t(`views.channelSourceView.actions.deactivate`)}</ActionsDropdown.Item>
+						<ActionsDropdown.Item>{t(`deactivate`)}</ActionsDropdown.Item>
 					</DeactivateListingDialog>
 				</>
 			)}
@@ -82,7 +80,7 @@ const ListingActions = ({
 					<ActionsDropdown.Separator />
 
 					<ResendChannelSourceRequestDialog listingId={id}>
-						<ActionsDropdown.Item>{t(`views.channelSourceView.actions.resendRequest`)}</ActionsDropdown.Item>
+						<ActionsDropdown.Item>{t(`resendRequest`)}</ActionsDropdown.Item>
 					</ResendChannelSourceRequestDialog>
 				</>
 			)}

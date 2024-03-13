@@ -6,8 +6,12 @@ import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
 
-import type { GetChannelSourceListingsParams, GetChannelSourcesParams } from "./types/api.types"
-import type { ChannelSource, ChannelSourceListing, ChannelSourceListingDetails } from "./types/data.types"
+import type {
+	GetChannelSourceListingsParams,
+	GetChannelSourceListingsReturnType,
+	GetChannelSourcesParams,
+} from "./types/api.types"
+import type { ChannelSource, ChannelSourceListingDetails } from "./types/data.types"
 //#endregion
 
 const commonSmsChannelApi = api.injectEndpoints({
@@ -25,10 +29,10 @@ const commonSmsChannelApi = api.injectEndpoints({
 			transformResponse,
 		}),
 
-		getChannelSourceListings: builder.query<GetListReturnType<ChannelSourceListing>, GetChannelSourceListingsParams>({
+		getChannelSourceListings: builder.query<GetChannelSourceListingsReturnType, GetChannelSourceListingsParams>({
 			providesTags: (result) =>
 				providesList(
-					result?.list?.map(({ id }) => id),
+					result?.channelSourceListings?.list?.map(({ id }) => id),
 					"ChannelSourceListing"
 				),
 			query: ({ channelSourceId, ...params }) => ({

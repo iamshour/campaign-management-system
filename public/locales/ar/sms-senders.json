@@ -12,6 +12,19 @@
 				"sampleContent": "أدخل المحتوى"
 			},
 			"labels": { "name": { "iconTooltip": "الوصف يذهب هنا " } }
+		},
+		"listingCard": {
+			"actions": {
+				"viewSampleContent": "عرض نموذج المحتوى ",
+				"viewStatusReason": {
+					"SUSPENDED": "عرض سبب تعليق ",
+					"BLOCKED": "عرض العقل ",
+					"REJECTED": "عرض رفض العقل"
+				},
+				"activate": "تفعيل",
+				"deactivate": "إلغاء تنشيط ",
+				"resendRequest": "طلب إعادة الالتزام"
+			}
 		}
 	},
 	"table": {
@@ -28,7 +41,7 @@
 	},
 	"dialogs": {
 		"createChannelSourceRequestDialog": {
-			"title": { "newRequest": "طلب المرسل", "addRequest": "أضف الطلب" },
+			"title": { "newRequest": "طلب المرسل", "addRequest": "إضافة طلب" },
 			"buttons": {
 				"multiRequest": "أرسل وإضافة آخر ",
 				"singleRequest": "ارسل طلب"
@@ -97,19 +110,12 @@
 				"local": "تنشيط الرسائل القصيرة المحلية ",
 				"international": "تنشيط الرسائل القصيرة الدولية"
 			}
-		},
-		"channelSourceView": {
+		}
+	},
+	"routes": {
+		"channelSourceRoute": {
 			"actions": {
-				"viewSampleContent": "عرض نموذج المحتوى ",
-				"viewStatusReason": {
-					"SUSPENDED": "عرض سبب تعليق ",
-					"BLOCKED": "عرض العقل ",
-					"REJECTED": "عرض رفض العقل"
-				},
-				"activate": "تفعيل",
-				"deactivate": "إلغاء تنشيط ",
-				"addRequest": "أضف طلب ",
-				"resendRequest": "طلب إعادة الالتزام"
+				"addRequest": "أضف الطلب"
 			}
 		}
 	}

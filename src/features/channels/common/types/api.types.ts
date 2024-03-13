@@ -37,3 +37,15 @@ export type GetChannelSourceListingsParams = ChannelSourceListingFilter &
 	PaginationAndSorting<ChannelSourceListing> & {
 		channelSourceId: string
 	}
+
+/**
+ * Return type of the `getChannelSourceListings` query, used to fetch Channel Source Lisitngs by Channel Source ID
+ */
+export type GetChannelSourceListingsReturnType = {
+	channelSourceId: string
+	channelSourceListings: {
+		count: number
+		list: ChannelSourceListing[]
+	}
+	channelSourceName: string
+}

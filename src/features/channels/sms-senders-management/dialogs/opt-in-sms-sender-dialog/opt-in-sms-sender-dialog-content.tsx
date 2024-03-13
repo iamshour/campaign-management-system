@@ -51,7 +51,7 @@ const OptInSmsSenderDialogContent = ({ closeDialog, id }: OptInSmsSenderDialogCo
 			channelSourceId,
 			channelSourceOptOutFilter: filters,
 			channelSourceOptOutSearchFilter: getSearchFilter<["recipient"]>(searchTerm, ["recipient"]),
-			optOutsIdsList: id?.length ? [id] : !!selection && selection !== "ALL" ? selection : undefined,
+			optedOutIds: id?.length ? [id] : !!selection && selection !== "ALL" ? selection : undefined,
 		}
 
 		// Cleaning Body from all undefined/empty/nullish objects/nested objects
@@ -60,7 +60,7 @@ const OptInSmsSenderDialogContent = ({ closeDialog, id }: OptInSmsSenderDialogCo
 		await triggerOptInOptedOutChannelSourceList(cleanBody).unwrap()
 
 		// Clearing Selection list if contacts were selected using their Ids
-		if (cleanBody?.optOutsIdsList) dispatch(clearSelection(dataViewKey))
+		if (cleanBody?.optedOutIds) dispatch(clearSelection(dataViewKey))
 
 		if (closeDropdown !== undefined) closeDropdown()
 

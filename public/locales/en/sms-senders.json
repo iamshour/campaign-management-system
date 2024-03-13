@@ -12,6 +12,19 @@
 				"sampleContent": "Enter content"
 			},
 			"labels": { "name": { "iconTooltip": "Description Goes Here" } }
+		},
+		"listingCard": {
+			"actions": {
+				"viewSampleContent": "View Sample Content",
+				"viewStatusReason": {
+					"SUSPENDED": "View Suspend Reason",
+					"BLOCKED": "View Block Reason",
+					"REJECTED": "View Reject Reason"
+				},
+				"activate": "Activate",
+				"deactivate": "Deactivate",
+				"resendRequest": "Resend Request"
+			}
 		}
 	},
 	"table": {
@@ -97,19 +110,12 @@
 				"local": "Activate Local SMS",
 				"international": "Activate International SMS"
 			}
-		},
-		"channelSourceView": {
+		}
+	},
+	"routes": {
+		"channelSourceRoute": {
 			"actions": {
-				"viewSampleContent": "View Sample Content",
-				"viewStatusReason": {
-					"SUSPENDED": "View Suspend Reason",
-					"BLOCKED": "View Block Reason",
-					"REJECTED": "View Reject Reason"
-				},
-				"activate": "Activate",
-				"deactivate": "Deactivate",
-				"addRequest": "Add Request",
-				"resendRequest": "Resend Request"
+				"addRequest": "Add Request"
 			}
 		}
 	}

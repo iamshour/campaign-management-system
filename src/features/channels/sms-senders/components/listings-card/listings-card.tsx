@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next"
 
 import getListingDisplayStatus from "../../utils/get-listing-display-status"
 
-const ListingActions = lazy(() => import("./listing-actions"))
+const ListingActions = lazy(() => import("./listing-card-actions"))
 //#endregion
 
 const ListingCard = ({
