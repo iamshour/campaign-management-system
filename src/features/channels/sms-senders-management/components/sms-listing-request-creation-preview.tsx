@@ -2,12 +2,14 @@
 import type { AddBulkSmsListingsBody } from "@/features/channels/sms-senders-management/types"
 
 import getCountryName from "@/core/utils/get-country-name"
-import { Button, CompactTable, ReadonlyInput, SectionHeading } from "@/ui"
+import { Button, CompactTable, ReadonlyInput, SectionHeading, Tooltip } from "@/ui"
 import JamTriangleDangerF from "~icons/jam/triangle-danger-f"
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 //#endregion
+
+export type ListingError = { errorIdx: number; errorMessage: string }
 
 export type SmsListingRequestCreationPreviewData = Omit<AddBulkSmsListingsBody, "channelSourceRequestRouteList"> & {
 	channelSourceRequestRouteList: (AddBulkSmsListingsBody["channelSourceRequestRouteList"][number] & {
@@ -23,13 +25,13 @@ export interface SmsListingRequestCreationPreviewProps {
 
 	data: SmsListingRequestCreationPreviewData
 
-	errorsIdx: number[]
+	errors: ListingError[]
 }
 
 const SmsListingRequestCreationPreview = ({
 	closeDialog,
 	data,
-	errorsIdx = [],
+	errors = [],
 }: SmsListingRequestCreationPreviewProps) => {
 	const { t } = useTranslation("senders-management", {
 		keyPrefix: "components.smsListingRequestCreationPreview",
@@ -46,16 +48,19 @@ const SmsListingRequestCreationPreview = ({
 	}
 
 	return (
-		<div className='flex h-full flex-col gap-8 p-2'>
+		<div className='flex h-full flex-col gap-8 overflow-hidden p-2'>
 			<p>{t("message")}</p>
 
-			<div className='relative flex flex-1 flex-col rounded-xl bg-[#F7F7F7] p-6'>
-				<Button className='absolute right-4 top-4' onClick={closeDialog} type='button' variant='link'>
-					{t("editDetails")}
-				</Button>
-				<SectionHeading icon={MdiInformationVariantCircle} label='Sender ID Basic Info' />
+			<div className='relative flex flex-1 flex-col space-y-4 overflow-hidden rounded-xl bg-[#F7F7F7] p-6'>
+				<header className='flex w-full items-start justify-between'>
+					<SectionHeading icon={MdiInformationVariantCircle} label='Sender ID Basic Info' />
 
-				<div className='mb-5 flex w-full flex-row flex-wrap gap-x-6 gap-y-3'>
+					<Button onClick={closeDialog} type='button' variant='link'>
+						{t("editDetails")}
+					</Button>
+				</header>
+
+				<div className='flex w-full flex-row flex-wrap gap-x-6 gap-y-3'>
 					<ReadonlyInput
 						className='w-[340px] rounded-lg bg-white ring-0'
 						label={t("basicInfo.company")}
@@ -77,9 +82,10 @@ const SmsListingRequestCreationPreview = ({
 						value={data.channelSource}
 					/>
 				</div>
+
 				{!!data?.channelSourceRequestRouteList?.length && (
 					<div className='flex-1 overflow-hidden rounded-xl bg-white py-2'>
-						<CompactTable className='h-max rounded-none'>
+						<CompactTable className='h-max max-h-full rounded-none'>
 							<CompactTable.Header>
 								<CompactTable.Row className='hover:bg-white'>
 									<CompactTable.Head className='px-3 pl-11 font-bold uppercase text-black even:bg-gray-50/75'>
@@ -99,40 +105,50 @@ const SmsListingRequestCreationPreview = ({
 								</CompactTable.Row>
 							</CompactTable.Header>
 							<CompactTable.Body>
-								{data.channelSourceRequestRouteList.map((listing, listingIdx) => (
-									<CompactTable.Row
-										className={twMerge(
-											"hover:bg-[#2DAEF533]",
-											errorsIdx?.includes(listingIdx) && "cursor-pointer bg-[#FCD7DD] "
-										)}
-										key={listingIdx}
-										onClick={errorsIdx?.includes(listingIdx) ? onRowClick(listing.errorKey) : undefined}>
-										<CompactTable.Cell
-											className='flex max-w-[200px] flex-row px-2.5 py-2 pl-11 text-xs'
-											key={`${listingIdx}_type`}>
-											{errorsIdx?.includes(listingIdx) && (
-												<JamTriangleDangerF className='-ml-6 mr-2 h-4 w-4 text-[#EB2344]' />
+								{data.channelSourceRequestRouteList.map((listing, listingIdx) => {
+									const rowHasError = !!errors?.length && errors?.some((error) => error.errorIdx === listingIdx)
+
+									return (
+										<CompactTable.Row
+											className={twMerge(
+												"hover:bg-[#2DAEF533]",
+												rowHasError && "cursor-pointer bg-[#FCD7DD] hover:bg-[#f7c8cf]"
 											)}
-											{listing.templateType}
-										</CompactTable.Cell>
-										<CompactTable.Cell className='max-w-[200px] px-2.5 py-2 text-xs' key={`${listingIdx}_country`}>
-											{getCountryName(listing.country)}
-										</CompactTable.Cell>
-										<CompactTable.Cell
-											className='max-w-[200px] truncate px-2.5 py-2 text-xs last:pr-11'
-											key={`${listingIdx}_content`}
-											title={listing.sample}>
-											{listing.sample}
-										</CompactTable.Cell>
-										{listing.channelSourceListingStatus && (
+											key={listingIdx}
+											onClick={rowHasError ? onRowClick(listing.errorKey) : undefined}>
 											<CompactTable.Cell
-												className='max-w-[200px] px-2.5 py-2 text-xs last:pr-11'
-												key={`${listingIdx}_status`}>
-												{listing.channelSourceListingStatus}
+												className='flex max-w-[200px] flex-row px-2.5 py-2 pl-11 text-xs'
+												key={`${listingIdx}_type`}>
+												{rowHasError && (
+													<Tooltip
+														content={errors?.find((err) => err.errorIdx === listingIdx)?.errorMessage || ""}
+														sideOffset={6}>
+														<span>
+															<JamTriangleDangerF className='-ml-6 mr-2 h-4 w-4 text-[#EB2344]' />
+														</span>
+													</Tooltip>
+												)}
+												{listing.templateType}
 											</CompactTable.Cell>
-										)}
-									</CompactTable.Row>
-								))}
+											<CompactTable.Cell className='max-w-[200px] px-2.5 py-2 text-xs'>
+												{getCountryName(listing.country)}
+											</CompactTable.Cell>
+											<CompactTable.Cell
+												className='max-w-[200px] truncate px-2.5 py-2 text-xs last:pr-11'
+												key={`${listingIdx}_content`}
+												title={listing.sample}>
+												{listing.sample}
+											</CompactTable.Cell>
+											{listing.channelSourceListingStatus && (
+												<CompactTable.Cell
+													className='max-w-[200px] px-2.5 py-2 text-xs last:pr-11'
+													key={`${listingIdx}_status`}>
+													{listing.channelSourceListingStatus}
+												</CompactTable.Cell>
+											)}
+										</CompactTable.Row>
+									)
+								})}
 							</CompactTable.Body>
 						</CompactTable>
 					</div>

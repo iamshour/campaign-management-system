@@ -2,7 +2,8 @@
 import type { ChannelSourceRequestStatus } from "@/features/channels/common/types/data.types"
 
 import useGetChannelType from "@/core/hooks/useGetChannelType"
-import { Button } from "@/ui"
+import { Button, DataTableSkeleton } from "@/ui"
+import { Suspense } from "react"
 import { Outlet } from "react-router-dom"
 
 //#endregion
@@ -34,7 +35,9 @@ const SmsListingRequestsLayout = () => {
 			</div>
 
 			<div className='h-full overflow-hidden'>
-				<Outlet />
+				<Suspense fallback={<DataTableSkeleton />}>
+					<Outlet />
+				</Suspense>
 			</div>
 		</div>
 	)

@@ -146,7 +146,7 @@
 			"tooltip": "الاشتراك ",
 			"submit": "يتأكد"
 		},
-		"createSmsListingRequestConfirm": {
+		"createChannelSourceRequestConfirm": {
 			"title": "تأكيد الطلب ",
 			"submit": "يتأكد",
 			"cancel": "يلغي"

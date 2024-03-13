@@ -3,9 +3,10 @@ import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetChannelSourceListingByIdQuery } from "@/features/channels/common/api"
 import { Dialog, Skeleton } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
-import DisplayError from "@/ui/errors/display-error"
 import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
+
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 
 const ResendChannelSourceRequestDialogContent = lazy(() => import("./resend-channel-source-request-dialog-content"))
 //#endregion

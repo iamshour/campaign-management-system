@@ -3,7 +3,7 @@ import IconTooltip from "@/core/components/icon-tooltip/icon-tooltip"
 import TextareaPopover from "@/core/components/textarea-popover/textarea-popover"
 import ChannelSourceRequestSchema, {
 	type ChannelSourceRequestSchemaType,
-} from "@/features/channels/sms-senders/schemas/channel-source-request-schema"
+} from "@/features/channels/common/schemas/channel-source-request-schema"
 import SelectSingleTemplateTypePopover from "@/features/templates/common/components/select-single-template-type-popover"
 import { Footer, Form, SelectCountryPopover, Textarea, useForm } from "@/ui"
 import { zodResolver } from "@hookform/resolvers/zod"

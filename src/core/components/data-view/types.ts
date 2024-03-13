@@ -85,52 +85,64 @@ export type DataViewKey =
 	| "sms-templates"
 
 type DataViewEntryType = {
-	"add-contacts-to-group": Contact
+	//#region PEOPLE MANAGEMENT
 	contacts: Contact
-	"contacts-exports": ContactExports
 	"contacts-in-group": Contact
+	"add-contacts-to-group": Contact
 	groups: Group
-	industries: IndustryType
-	"international-sms-channel-source-requests-completed": ChannelSourceRequest
-	"international-sms-channel-source-requests-pending": ChannelSourceRequest
-	"international-sms-channel-source-listings": ChannelSourceListing
-	"international-sms-channel-sources": ChannelSource
-	"local-sms-channel-source-requests-completed": ChannelSourceRequest
-	// LISTING REQUESTS TYPE
-	"local-sms-channel-source-requests-pending": ChannelSourceRequest
-	"local-sms-channel-source-listings": ChannelSourceListing
-	"local-sms-channel-sources": ChannelSource
+	"contacts-exports": ContactExports
 	segments: Segment
-	"sms-industry-templates": SmsIndustryTemplateType
+	//#endregion
+
+	//#region TEMPLATES MANAGEMENT
+	industries: IndustryType
+	"sms-templates": SmsTemplateType
 	"sms-prebuilt-templates": SmsIndustryTemplateType
 	"sms-prebuilt-templates-dialog": SmsIndustryTemplateType
-	"sms-templates": SmsTemplateType
+	"sms-industry-templates": SmsIndustryTemplateType
+	//#endregion
+
+	//#region CHANNELS MANAGEMENT
+	"local-sms-channel-source-requests-pending": ChannelSourceRequest
+	"local-sms-channel-source-requests-completed": ChannelSourceRequest
+	"international-sms-channel-source-requests-pending": ChannelSourceRequest
+	"international-sms-channel-source-requests-completed": ChannelSourceRequest
+	"local-sms-channel-sources": ChannelSource
+	"international-sms-channel-sources": ChannelSource
+	"local-sms-channel-source-listings": ChannelSourceListing
+	"international-sms-channel-source-listings": ChannelSourceListing
 	"local-sms-channel-source-opted-out-list": ChannelSourceOptOut
 	"international-sms-channel-source-opted-out-list": ChannelSourceOptOut
+	//#endregion
 }
 
 export type DataViewFilterType = {
-	"add-contacts-to-group": ContactTableFiltersType
+	//#region PEOPLE MANAGEMENT
 	contacts: ContactTableFiltersType & ContactTableAdvancedFiltersType
-	"contacts-exports": ContactExportFilter
 	"contacts-in-group": Omit<ContactTableFiltersType, "groups">
+	"add-contacts-to-group": ContactTableFiltersType
 	groups: ContactGroupFilter
-	industries: IndustryFilter
-	"international-sms-channel-source-requests-completed": ChannelSourceRequestFilter
-	"international-sms-channel-source-requests-pending": ChannelSourceRequestFilter
-	"international-sms-channel-sources": ChannelSourceFilter
-	"local-sms-channel-source-requests-completed": ChannelSourceRequestFilter
-	// LISTING REQUESTS FILTER TYPES
-	"local-sms-channel-source-requests-pending": ChannelSourceRequestFilter
-	"local-sms-channel-sources": ChannelSourceFilter
+	"contacts-exports": ContactExportFilter
 	segments: DateRange
-	"sms-industry-templates": PrebuiltTemplateFilter
-	//#region CHANNELS
-	"local-sms-channel-source-listings": ChannelSourceListingFilter
-	"international-sms-channel-source-listings": ChannelSourceListingFilter
+	//#endregion
+
+	//#region TEMPLATES MANAGEMENT
+	industries: IndustryFilter
+	"sms-templates": TemplateFilter
 	"sms-prebuilt-templates": PrebuiltTemplateFilter
 	"sms-prebuilt-templates-dialog": PrebuiltTemplateFilter
-	"sms-templates": TemplateFilter
+	"sms-industry-templates": PrebuiltTemplateFilter
+	//#endregion
+
+	//#region CHANNELS MANAGEMENT
+	"local-sms-channel-source-requests-pending": ChannelSourceRequestFilter
+	"local-sms-channel-source-requests-completed": ChannelSourceRequestFilter
+	"international-sms-channel-source-requests-pending": ChannelSourceRequestFilter
+	"international-sms-channel-source-requests-completed": ChannelSourceRequestFilter
+	"local-sms-channel-sources": ChannelSourceFilter
+	"international-sms-channel-sources": ChannelSourceFilter
+	"local-sms-channel-source-listings": ChannelSourceListingFilter
+	"international-sms-channel-source-listings": ChannelSourceListingFilter
 	"local-sms-channel-source-opted-out-list": ChannelSourceOptOutFilter
 	"international-sms-channel-source-opted-out-list": ChannelSourceOptOutFilter
 	//#endregion
@@ -139,7 +151,7 @@ export type DataViewFilterType = {
 export type DataViewState<K extends DataViewKey> = {
 	appliedFiltersCount?: number
 
-	filters?: DataViewFilterType[K]
+	filters: DataViewFilterType[K]
 
 	paginationAndSorting: PaginationAndSorting<DataViewEntryType[K]>
 

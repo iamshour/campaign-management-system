@@ -12,8 +12,7 @@ import { emptyBulkListingsGroup } from "./bulk-listings-funnel-configs"
 import ListingField from "./listing-field"
 //#endregion
 
-interface BulkListingsFunnelProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof ListingField>, "highlightedErrorRow"> {
+interface BulkListingsFunnelProps {
 	bulkListingsGroups: BulkListingsGroup[]
 
 	control: Control<BulkListingsFunnelBase>
@@ -21,7 +20,7 @@ interface BulkListingsFunnelProps
 	defaultValues?: BulkListingsGroup
 }
 
-const BulkListingsFunnel = ({ bulkListingsGroups, control, highlightedErrorRow }: BulkListingsFunnelProps) => {
+const BulkListingsFunnel = ({ bulkListingsGroups, control }: BulkListingsFunnelProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "components.senderRequestFunnel.actions" })
 
 	const { append, fields, remove, update } = useFieldArray({ control, name: "bulkListingsGroups" })
@@ -30,8 +29,8 @@ const BulkListingsFunnel = ({ bulkListingsGroups, control, highlightedErrorRow }
 		if (!selectedType) return
 
 		bulkListingsGroups?.forEach((field, idx) => {
-			if (field.type === selectedType) {
-				update(idx, { listingsFields: field.listingsFields, type: undefined })
+			if (field.templateType === selectedType) {
+				update(idx, { listingsFields: field.listingsFields, templateType: undefined })
 			}
 		})
 	}
@@ -42,7 +41,7 @@ const BulkListingsFunnel = ({ bulkListingsGroups, control, highlightedErrorRow }
 				<div className='flex w-full flex-col gap-4 rounded-xl bg-white p-4' key={id}>
 					<Form.Field
 						control={control}
-						name={`bulkListingsGroups.${SenderRequestsGroupsIdx}.type`}
+						name={`bulkListingsGroups.${SenderRequestsGroupsIdx}.templateType`}
 						render={({ field }) => (
 							<Form.Item className='w-full max-w-[340px]'>
 								<Form.Control>
@@ -64,8 +63,6 @@ const BulkListingsFunnel = ({ bulkListingsGroups, control, highlightedErrorRow }
 
 					<ListingField
 						control={control}
-						highlightedErrorRow={highlightedErrorRow}
-						// disableNewRequest={disableNewRequest}
 						removeType={fields?.length > 1 ? () => remove(SenderRequestsGroupsIdx) : undefined}
 						SenderRequestsGroupsIdx={SenderRequestsGroupsIdx}
 					/>

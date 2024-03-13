@@ -1,4 +1,5 @@
 //#region Import
+import type { ListingError } from "@/features/channels/sms-senders-management/components/sms-listing-request-creation-preview"
 import type { AddBulkSmsListingsBody } from "@/features/channels/sms-senders-management/types"
 
 import useGetChannelType from "@/core/hooks/useGetChannelType"
@@ -9,6 +10,8 @@ import { useFormContext } from "react-hook-form"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
+
+import getBulkCreationErrorsList from "../../utils/get-bulk-creation-errors-list"
 const SmsListingRequestCreationPreview = lazy(
 	() => import("@/features/channels/sms-senders-management/components/sms-listing-request-creation-preview")
 )
@@ -33,7 +36,7 @@ const CreateSmsListingConfirmDialogContent = ({ closeDialog, data }: CreateSmsLi
 
 	const [triggerAddBulkSmsListings, { isLoading }] = useAddBulkSmsListingsMutation()
 
-	const [errorsIdx, setErrorsIdx] = useState<number[]>([])
+	const [errors, setErrors] = useState<ListingError[]>([])
 
 	const onSubmit = async () => {
 		if (!data) return
@@ -43,6 +46,7 @@ const CreateSmsListingConfirmDialogContent = ({ closeDialog, data }: CreateSmsLi
 			channelSourceRequestRouteList: data.channelSourceRequestRouteList.map((row) => ({
 				...row,
 				channelSourceListingStatus: undefined,
+				errorKey: undefined,
 			})),
 		}
 
@@ -54,19 +58,18 @@ const CreateSmsListingConfirmDialogContent = ({ closeDialog, data }: CreateSmsLi
 				// TODO: update below url to include sender id (/admin/channels/international-sms/senders/65ddd387c204f09220f1b518)
 				navigate(`/admin/channels/${channelTypeInUrl}/senders`)
 			})
-			.catch(() => {
-				// TODO: set errors in form and in state
-				setErrorsIdx([2])
-				setError(`bulkListingsGroups.${1}.listingsFields.${0}.country`, {
-					message: "Error on country field",
-					type: "backend_error",
-				})
+			.catch((error) => {
+				if (error?.data?.statusCode === 4011303 && error?.data?.data !== undefined) {
+					const errors = getBulkCreationErrorsList({ data, errorsData: error?.data?.data, setError })
+
+					setErrors(errors)
+				}
 			})
 	}
 
 	return (
 		<>
-			<SmsListingRequestCreationPreview closeDialog={closeDialog} data={data} errorsIdx={errorsIdx} />
+			{!!data && <SmsListingRequestCreationPreview closeDialog={closeDialog} data={data} errors={errors} />}
 
 			<Footer>
 				<Button className='px-10' disabled={isLoading} onClick={closeDialog} variant='outline'>

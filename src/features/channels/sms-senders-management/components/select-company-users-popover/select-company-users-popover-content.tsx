@@ -7,14 +7,17 @@ import { useState } from "react"
 const SelectCompanyUsersPopoverContent = ({ companyId }: { companyId: string }) => {
 	const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined)
 
-	const { list, loading } = useGetUsersByCompanyIdQuery(companyId, {
-		selectFromResult: ({ data, isLoading, ...rest }) => ({
-			count: data?.count,
-			list: data?.list?.map(({ email, id }) => ({ label: email, value: id })),
-			loading: isLoading,
-			...rest,
-		}),
-	})
+	const { list, loading } = useGetUsersByCompanyIdQuery(
+		{ companyId },
+		{
+			selectFromResult: ({ data, isLoading, ...rest }) => ({
+				count: data?.count,
+				list: data?.list?.map(({ email, id }) => ({ label: email, value: id })),
+				loading: isLoading,
+				...rest,
+			}),
+		}
+	)
 
 	return (
 		<SelectAsyncOptionsPopoverContent
