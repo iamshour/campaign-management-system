@@ -110,6 +110,10 @@
 				"local": "Activate Local SMS",
 				"international": "Activate International SMS"
 			}
+		},
+		"channelSourceListingsViewEmpty": {
+			"title": "No listing In this type",
+			"text": "You can request a list or check another type"
 		}
 	},
 	"routes": {
