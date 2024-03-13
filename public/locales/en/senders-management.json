@@ -53,6 +53,13 @@
 					}
 				}
 			}
+		},
+		"channelSourceOptOutListViewEmpty": {
+			"firstLabelHint": "You can click on the import section.",
+			"secondLabelHint": "You can create new contacts or import your own list of contacts to start sending you campaigns.",
+			"headline": "You don't have any opt-out list yet",
+			"message": "Import a new List",
+			"callToAction": "Import"
 		}
 	},
 

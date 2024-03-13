@@ -8,6 +8,7 @@ import { lazy } from "react"
 import { useParams } from "react-router-dom"
 
 import { useGetChannelSourceOptOutListQuery } from "../api"
+import ChannelSourceOptOutListViewEmpty from "../views/channel-source-opt-out-list-view/channel-source-opt-out-list-view-empty"
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 
@@ -23,40 +24,36 @@ const ChannelSourceOptedOutListRoute = () => {
 
 	const dataViewKey = `${channelTypeInUrl!}-channel-source-opted-out-list` as const
 
-	const { filters, paginationAndSorting, searchTerm } = useSelector(({ dataView }) => dataView[dataViewKey])
-
-	const { count, error, isError, isFetching, isInitialLoading, isReady, list } = useGetChannelSourceOptOutListQuery(
-		{
-			...filters,
-			...paginationAndSorting,
-			...getSearchFilter<["recipient"]>(searchTerm, ["recipient"]),
-			channelSourceId: channelSourceId!,
-		},
-		{
-			selectFromResult: ({
-				data,
-				// isEmptyView,
-				// isSuccess,
-				isFetching,
-				isLoading,
-				...rest
-			}) => ({
-				count: data?.count,
-				// isEmptyView: !isFetching && !!isSuccess && !data?.count && !(appliedFiltersCount || !!searchTerm?.length),
-				isFetching,
-				isInitialLoading: !data && isLoading,
-				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-				list: data?.list,
-				...rest,
-			}),
-			skip: !channelSourceId,
-			...baseQueryConfigs,
-		}
+	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector(
+		({ dataView }) => dataView[dataViewKey]
 	)
+
+	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } =
+		useGetChannelSourceOptOutListQuery(
+			{
+				...filters,
+				...paginationAndSorting,
+				...getSearchFilter<["recipient"]>(searchTerm, ["recipient"]),
+				channelSourceId: channelSourceId!,
+			},
+			{
+				selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({
+					count: data?.count,
+					isEmptyView: !isFetching && !!isSuccess && !data?.count && !(appliedFiltersCount || !!searchTerm?.length),
+					isFetching,
+					isInitialLoading: !data && isLoading,
+					isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
+					list: data?.list,
+					...rest,
+				}),
+				skip: !channelSourceId,
+				...baseQueryConfigs,
+			}
+		)
 
 	if (isInitialLoading) return <FullViewSkeleton />
 
-	// if (isEmptyView) return <>No Data Found</>
+	if (isEmptyView) return <ChannelSourceOptOutListViewEmpty />
 
 	if (isError) return <DisplayError error={error as any} />
 

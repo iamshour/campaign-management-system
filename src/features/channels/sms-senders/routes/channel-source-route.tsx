@@ -6,13 +6,15 @@ import { useGetChannelSourceListingsQuery } from "@/features/channels/common/api
 import ListingCard from "@/features/channels/sms-senders/components/listings-card/listings-card"
 import CreateChannelSourceRequestDialog from "@/features/channels/sms-senders/dialogs/create-channel-source-request-dialog/create-channel-source-request-dialog"
 import templateTypesOptions from "@/features/templates/common/constants/template-types-options"
-import { Button, FullViewSkeleton, NoResultsFound, Pagination } from "@/ui"
+import { Button, FullViewSkeleton, Pagination } from "@/ui"
 import DisplayError from "@/ui/errors/display-error"
 import HeroiconsPlus16Solid from "~icons/heroicons/plus-16-solid"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
+
+import ChannelSourceListingsViewEmpty from "../views/channel-source-listings-view-empty"
 //#endregion
 
 const ChannelSourceRoute = () => {
@@ -79,7 +81,7 @@ const ChannelSourceRoute = () => {
 				</div>
 
 				{isEmptyView ? (
-					<NoResultsFound />
+					<ChannelSourceListingsViewEmpty />
 				) : (
 					<div className='flex-1 overflow-y-auto'>
 						<div className='flex flex-row flex-wrap gap-9 '>
@@ -88,11 +90,13 @@ const ChannelSourceRoute = () => {
 					</div>
 				)}
 
-				<Pagination
-					count={count || 0}
-					pagination={{ limit: paginationState?.limit, offset: paginationState?.offset }}
-					updatePagination={({ limit, offset }) => setPaginationState({ limit: limit ?? 0, offset: offset ?? 0 })}
-				/>
+				{!isEmptyView && (
+					<Pagination
+						count={count || 0}
+						pagination={{ limit: paginationState?.limit, offset: paginationState?.offset }}
+						updatePagination={({ limit, offset }) => setPaginationState({ limit: limit ?? 0, offset: offset ?? 0 })}
+					/>
+				)}
 			</div>
 		)
 }
