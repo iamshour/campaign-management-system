@@ -40,7 +40,7 @@ const ChannelSourceCard = ({ channelSourceName, createdAt = "", id, templateType
 				</li>
 				<li className='flex gap-2 text-base'>
 					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("channels-common:fields.createdAt")}:</span>
-					<DataViewDateCell date={createdAt} dateFormat='MM-dd-yyyy' />
+					<DataViewDateCell date={createdAt} dateFormat='MM-dd-yyyy | hh:mm aaa' />
 				</li>
 			</ul>
 
