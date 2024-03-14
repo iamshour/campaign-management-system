@@ -1,8 +1,11 @@
 //#region Import
 import type { ChannelType } from "@/features/channels/common/types/data.types"
 
-import type { SmsListingRequestCreationPreviewData } from "../components/sms-listing-request-creation-preview"
-import type { ChannelSourceRequestBulkSchemaType } from "../schemas/channel-source-request-bulk-schema"
+import * as z from "zod"
+
+import type { BulkRequestsFormSchemaType } from "../components/bulk-requests-form/configs"
+import type { BulkPreviewData } from "../components/bulk-requests-form/types"
+
 // import type { SmsSenderRequestsForm } from "../routes/create-sms-sender-request-route"
 //#endregion
 
@@ -15,15 +18,15 @@ import type { ChannelSourceRequestBulkSchemaType } from "../schemas/channel-sour
  *
  */
 const formatAddBulkSmsListingRequestsBody = (
-	{ basicInfo: { company, email, sender }, bulkListingsGroups }: ChannelSourceRequestBulkSchemaType,
+	{ basicInfo: { company, ...restBasicInfo }, bulkListingsGroups }: z.infer<BulkRequestsFormSchemaType>,
 	channelType: ChannelType
 ) => {
-	let formattedList: SmsListingRequestCreationPreviewData["channelSourceRequestRouteList"] = []
+	let formattedList: BulkPreviewData["channelSourceRequestRouteList"] = []
 
 	bulkListingsGroups?.forEach(({ listingsFields, templateType }, groupIdx) => {
 		formattedList = formattedList.concat(
-			listingsFields.map(({ country, sampleContent }, listingIdx) => ({
-				// channelSourceListingStatus: listing?.status,
+			listingsFields.map(({ country, sampleContent, ...listing }, listingIdx) => ({
+				channelSourceListingStatus: ("status" in listing ? listing?.status : undefined) as any,
 				country,
 				errorKey: `bulkListingsGroups.${groupIdx}.listingsFields.${listingIdx}`,
 				sample: sampleContent,
@@ -32,12 +35,12 @@ const formatAddBulkSmsListingRequestsBody = (
 		)
 	})
 
-	const formattedData: SmsListingRequestCreationPreviewData = {
-		channelSource: sender,
+	const formattedData: BulkPreviewData = {
+		channelSource: "sender" in restBasicInfo ? restBasicInfo?.sender : undefined,
 		channelSourceRequestRouteList: formattedList,
 		channelType,
-		companyId: company.value,
-		userId: email.value,
+		company,
+		email: "email" in restBasicInfo ? restBasicInfo?.email : undefined,
 	}
 
 	return formattedData

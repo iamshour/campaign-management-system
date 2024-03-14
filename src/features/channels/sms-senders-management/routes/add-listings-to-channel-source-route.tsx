@@ -2,18 +2,18 @@
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
-import { useAddBulkChannelSourceRequestsMutation } from "../api"
+import { useAddBulkChannelSourceListingsMutation } from "../api"
 import BulkRequestsForm from "../components/bulk-requests-form/bulk-requests-form"
 import { AddBulkChannelSourceRequestsBody } from "../types/api.types"
 //#endregion
 
-const CreateChannelSourceRequestRoute = () => {
-	const { t } = useTranslation("senders-management", { keyPrefix: `routes.createChannelSourceRequest` })
+const AddListingsToChannelSourceRoute = () => {
+	const { t } = useTranslation("senders-management", { keyPrefix: `routes.addListingsToChannelSource` })
 
-	const [triggerAddBulkSmsListingRequests] = useAddBulkChannelSourceRequestsMutation()
+	const [triggerAddBulkChannelSourceListings] = useAddBulkChannelSourceListingsMutation()
 
 	const onSubmit = async (body: AddBulkChannelSourceRequestsBody) => {
-		const promise = await triggerAddBulkSmsListingRequests(body).unwrap()
+		const promise = await triggerAddBulkChannelSourceListings(body).unwrap()
 
 		toast.success("Requests added successfully")
 
@@ -26,9 +26,9 @@ const CreateChannelSourceRequestRoute = () => {
 				<h3 className='text-xl font-medium'>{t("header")}</h3>
 			</header>
 
-			<BulkRequestsForm funnelKey='CHANNEL_SOURCE_REQUEST' onSubmit={onSubmit} />
+			<BulkRequestsForm funnelKey='CHANNEL_LISTING' onSubmit={onSubmit} />
 		</div>
 	)
 }
 
-export default CreateChannelSourceRequestRoute
+export default AddListingsToChannelSourceRoute

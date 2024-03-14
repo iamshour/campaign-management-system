@@ -63,7 +63,7 @@ const InputWithSearch = forwardRef<React.ElementRef<typeof Popover.Trigger>, Inp
 
 		return (
 			<Popover onOpenChange={(focus) => !focus && setOpen(false)} open={shouldShowPopover}>
-				<Popover.Trigger className={twMerge("max-w-full", readOnly && "pointer-events-none")} ref={ref}>
+				<Popover.Trigger className={twMerge("h-max max-w-full", readOnly && "pointer-events-none")} ref={ref}>
 					<Input
 						autoComplete='off'
 						onChange={onInputChange}
@@ -72,7 +72,7 @@ const InputWithSearch = forwardRef<React.ElementRef<typeof Popover.Trigger>, Inp
 						ref={inputRef}
 						size='lg'
 						spellCheck='false'
-						value={value}
+						value={value || ""}
 						{...props}
 					/>
 				</Popover.Trigger>

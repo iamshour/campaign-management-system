@@ -15,6 +15,7 @@ const iconVariants = cva(
 			},
 			variant: {
 				default: "text-gray-400 group-focus-within:text-primary-600 data-[hasvalue=true]:text-primary-600",
+				light: "text-gray-400 group-focus-within:text-primary-600 data-[hasvalue=true]:text-primary-600",
 				underlined: "text-gray-400 group-focus-within:text-primary-600 data-[hasvalue=true]:text-primary-600",
 			},
 		},

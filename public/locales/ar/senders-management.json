@@ -1,4 +1,16 @@
 {
+	"routes": {
+		"createChannelSource": {
+			"header": "إنشاء مصدر القناة"
+		},
+		"createChannelSourceRequest": {
+			"header": "إنشاء طلب معرف المرسل"
+		},
+		"addListingsToChannelSource": {
+			"header": "إضافة قوائم"
+		}
+	},
+
 	"views": {
 		"channelSourceRequestsPendingEmpty": {
 			"headline": "لم تتلق أي معرف مرسل بعد ",
@@ -83,24 +95,13 @@
 			"label": "حالة",
 			"placeholder": "حدد الحالات"
 		},
+		"selectSingleListingStatusPopover": {
+			"label": "حالة",
+			"placeholder": "حدد الحالة"
+		},
 		"actionReasonForm": {
 			"label": "سبب",
 			"placeholder": "أدخل العقل"
-		},
-		"smsListingRequestCreatePreview": {
-			"message": "هل أنت متأكد من أنك تريد إضافة طلب المرسل هذا؟ ",
-			"editDetails": "عدل التفاصيل",
-			"basicInfo": {
-				"company": "اسم الشركة",
-				"email": "البريد الإلكتروني العميل ",
-				"sender": "مرسل"
-			},
-			"requestsTable": {
-				"type": "يكتب",
-				"country": "البلد المستهدف",
-				"content": "عينة من المحتوى ",
-				"status": "حالة"
-			}
 		}
 	},
 
@@ -153,21 +154,77 @@
 			"tooltip": "الاشتراك ",
 			"submit": "يتأكد"
 		},
-		"createChannelSourceRequestConfirm": {
-			"title": "تأكيد الطلب ",
-			"submit": "يتأكد",
-			"cancel": "يلغي"
-		},
-		"createSmsListingConfirm": {
-			"title": "تأكيد القائمة ",
-			"submit": "يتأكد",
-			"cancel": "يلغي"
-		},
 		"exportOptOutSmsSenders": {
 			"title": "يصدّر",
 			"label": "اسم ملف التصدير ",
 			"placeholder": "أدخل الاسم",
 			"submit": "يصدّر"
+		},
+		"importChannelSourceOptOut": {
+			"title": "يستورد",
+			"label": "استيراد ملف",
+			"placeholder": "أدخل الاسم",
+			"tooltip": "تأكد من أن الملف يتضمن عمودًا واحدًا فقط بتنسيق رقم هاتف صالح ",
+			"validationMessage": "حجم أقل من 50 ميجابايت ل CSV ، و 30 ميغابايت ل XLX ",
+			"errors": {
+				"file-too-large": "الملف كبير جدًا ، ويتجاوز الحد: 50 ميجابايت لـ CSV / 30MB لـ Excel ",
+				"file-invalid-type": "تحميل ملف غير صالح.يجب أن يكون ملفك الذي تم تحميله من النوع: CSV أو Excel."
+			},
+			"submit": "الاستيراد الآن ",
+			"successToast": "تم استيراد ملف بنجاح."
+		},
+		"bulkRequestsCreationConfirm": {
+			"CHANNEL_SOURCE": {
+				"title": "تأكيد القائمة ",
+				"editDetails": "عدل التفاصيل",
+				"message": "هل أنت متأكد من أنك تريد إضافة قائمة المرسل هذه؟ ",
+				"basicInfo": {
+					"company": "اسم الشركة",
+					"sender": "مرسل"
+				},
+				"requestsTable": {
+					"type": "يكتب",
+					"country": "البلد المستهدف",
+					"content": "عينة من المحتوى ",
+					"status": "حالة"
+				},
+				"submit": "يتأكد",
+				"cancel": "يلغي"
+			},
+			"CHANNEL_LISTING": {
+				"title": "تأكيد القائمة ",
+				"editDetails": "عدل التفاصيل",
+				"message": "هل أنت متأكد من أنك تريد إضافة قائمة المرسل هذه؟ ",
+				"basicInfo": {
+					"company": "اسم الشركة",
+					"sender": "مرسل"
+				},
+				"requestsTable": {
+					"type": "يكتب",
+					"country": "البلد المستهدف",
+					"content": "عينة من المحتوى ",
+					"status": "حالة"
+				},
+				"submit": "يتأكد",
+				"cancel": "يلغي"
+			},
+			"CHANNEL_SOURCE_REQUEST": {
+				"title": "تأكيد الطلب ",
+				"editDetails": "عدل التفاصيل",
+				"message": "هل أنت متأكد من أنك تريد إضافة طلب المرسل هذا؟ ",
+				"basicInfo": {
+					"company": "اسم الشركة",
+					"email": "البريد الإلكتروني العميل ",
+					"sender": "مرسل"
+				},
+				"requestsTable": {
+					"type": "يكتب",
+					"country": "البلد المستهدف",
+					"content": "عينة من المحتوى"
+				},
+				"submit": "يتأكد",
+				"cancel": "يلغي"
+			}
 		}
 	}
 }

@@ -13,7 +13,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, React.TextareaHTMLAttributes<HT
 				 data-[hasvalue=true]:ring-primary-500 focus:ring-2 focus:!ring-primary-500 active:ring-2
 				   active:!ring-primary-500 disabled:cursor-not-allowed disabled:opacity-50`,
 				// styling when input invalid:
-				`aria-[invalid=true]:!ring-red-500  focus-within:aria-[invalid=true]:!ring-1 focus-within:aria-[invalid=true]:!ring-red-500 
+				`aria-[invalid=true]:!ring-red-500 focus-within:aria-[invalid=true]:!ring-1 focus-within:aria-[invalid=true]:!ring-red-500 
 				data-[hasvalue=true]:invalid:!ring-red-500 active:aria-[invalid=true]:!ring-1 active:aria-[invalid=true]:!ring-red-500`,
 				className
 			)}

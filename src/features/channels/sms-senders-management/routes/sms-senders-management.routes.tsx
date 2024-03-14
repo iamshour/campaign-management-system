@@ -5,10 +5,11 @@ import { Navigate, Outlet, Route, Routes } from "react-router-dom"
 
 import SmsListingRequestsLayout from "../layouts/sms-listing-requests-layout"
 import SmsSendersManagementLayout from "../layouts/sms-senders-management-layout"
+import AddListingsToChannelSourceRoute from "./add-listings-to-channel-source-route"
 
 const AdminListingsRoute = lazy(() => import("./admin-listings-route"))
 
-const CreateSmsSenderRoute = lazy(() => import("./create-sms-sender-route"))
+const CreateChannelSourceRoute = lazy(() => import("./create-channel-source-route"))
 
 const CreateChannelSourceRequestRoute = lazy(() => import("./create-channel-source-request-route"))
 
@@ -26,9 +27,6 @@ const ChannelSourceOptedOutListRoute = lazy(() => import("./channel-source-opted
 const SmsSendersManagementRoutes = () => (
 	<Routes>
 		<Route element={<SmsSendersManagementLayout />}>
-			<Route element={<AdminChannelSourcesRoute />} path='local-sms/senders' />
-			<Route element={<AdminChannelSourcesRoute />} path='international-sms/senders' />
-
 			<Route element={<SmsListingRequestsLayout />}>
 				<Route element={<ChannelSourceRequestsPendingRoute />} path='local-sms/listing-requests/pending' />
 				<Route element={<ChannelSourceRequestsCompletedRoute />} path='local-sms/listing-requests/completed' />
@@ -36,6 +34,9 @@ const SmsSendersManagementRoutes = () => (
 				<Route element={<ChannelSourceRequestsPendingRoute />} path='international-sms/listing-requests/pending' />
 				<Route element={<ChannelSourceRequestsCompletedRoute />} path='international-sms/listing-requests/completed' />
 			</Route>
+
+			<Route element={<AdminChannelSourcesRoute />} path='local-sms/senders' />
+			<Route element={<AdminChannelSourcesRoute />} path='international-sms/senders' />
 
 			<Route element={<Navigate to='./senders' />} path='local-sms' />
 			<Route element={<Navigate to='./senders' />} path='international-sms' />
@@ -48,8 +49,14 @@ const SmsSendersManagementRoutes = () => (
 			<Route element={<CreateChannelSourceRequestRoute />} path='local-sms/listing-requests/new-request' />
 			<Route element={<CreateChannelSourceRequestRoute />} path='international-sms/listing-requests/new-request' />
 
-			<Route element={<CreateSmsSenderRoute />} path='local-sms/senders/new-sender' />
-			<Route element={<CreateSmsSenderRoute />} path='international-sms/senders/new-sender' />
+			<Route element={<CreateChannelSourceRoute />} path='local-sms/senders/new-sender' />
+			<Route element={<CreateChannelSourceRoute />} path='international-sms/senders/new-sender' />
+
+			<Route element={<AddListingsToChannelSourceRoute />} path='local-sms/senders/:channelSourceId/add-listings' />
+			<Route
+				element={<AddListingsToChannelSourceRoute />}
+				path='international-sms/senders/:channelSourceId/add-listings'
+			/>
 		</Route>
 
 		<Route element={<AdminListingsRoute />} path='local-sms/senders/:channelSourceId' />

@@ -114,3 +114,19 @@ export type OptInOptedOutChannelSourceListBody = {
 	channelSourceOptOutSearchFilter: ChannelSourceOptOutSearchFilter | undefined
 	optedOutIds: string[] | undefined
 }
+
+/**
+ * Body Arguments passed to the `addBulkSmsListings` mutation, used to send multiple new listings
+ */
+export type AddBulkChannelSourceRequestsBody = {
+	channelSource?: string
+	channelSourceRequestRouteList: {
+		channelSourceListingStatus?: Extract<ChannelSourceListingStatus, "APPROVED" | "BLOCKED">
+		country: Country
+		sample: string
+		templateType: TemplateType
+	}[]
+	channelType: ChannelType
+	companyId: string
+	userId?: string
+}

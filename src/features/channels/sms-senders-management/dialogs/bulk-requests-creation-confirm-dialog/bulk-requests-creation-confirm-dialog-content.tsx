@@ -1,41 +1,80 @@
 //#region Import
-import type { AddBulkSmsListingsBody } from "@/features/channels/sms-senders-management/types"
+import type { AddBulkChannelSourceRequestsBody } from "@/features/channels/sms-senders-management/types/api.types"
 
+import useGetChannelType from "@/core/hooks/useGetChannelType"
 import getCountryName from "@/core/utils/get-country-name"
-import { Button, CompactTable, ReadonlyInput, SectionHeading, Tooltip } from "@/ui"
+import { Button, CompactTable, Footer, ReadonlyInput, SectionHeading, Tooltip } from "@/ui"
 import JamTriangleDangerF from "~icons/jam/triangle-danger-f"
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
+import { useState } from "react"
+import { useFormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import { useLocation, useNavigate } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
+
+import type { BulkPreviewData, ListingError } from "../../components/bulk-requests-form/types"
+
+import { useBulkRequestsFormContext } from "../../components/bulk-requests-form/bulk-requests-form-context"
+import getBulkCreationErrorsList from "../../utils/get-bulk-creation-errors-list"
 //#endregion
 
-export type ListingError = { errorIdx: number; errorMessage: string }
-
-export type SmsListingRequestCreationPreviewData = Omit<AddBulkSmsListingsBody, "channelSourceRequestRouteList"> & {
-	channelSourceRequestRouteList: (AddBulkSmsListingsBody["channelSourceRequestRouteList"][number] & {
-		errorKey: string
-	})[]
-}
-
-export interface SmsListingRequestCreationPreviewProps {
+export interface BulkRequestsCreationConfirmDialogContentProps {
 	/**
 	 * Callback function used to close the dialog
 	 */
 	closeDialog: () => void
 
-	data: SmsListingRequestCreationPreviewData
+	data: BulkPreviewData
 
-	errors: ListingError[]
+	/**
+	 * Callback function used to Submit Data to the server
+	 */
+	onSubmit: <T extends AddBulkChannelSourceRequestsBody>(data: T) => Promise<T>
 }
 
-const SmsListingRequestCreationPreview = ({
+const BulkRequestsCreationConfirmDialogContent = ({
 	closeDialog,
 	data,
-	errors = [],
-}: SmsListingRequestCreationPreviewProps) => {
-	const { t } = useTranslation("senders-management", {
-		keyPrefix: "components.smsListingRequestCreationPreview",
-	})
+	onSubmit,
+}: BulkRequestsCreationConfirmDialogContentProps) => {
+	const { funnelKey } = useBulkRequestsFormContext()
+
+	const navigate = useNavigate()
+
+	const { state } = useLocation()
+
+	const { t } = useTranslation("senders-management", { keyPrefix: `dialogs.bulkRequestsCreationConfirm.${funnelKey}` })
+
+	const { setError } = useFormContext()
+
+	const { channelType } = useGetChannelType()
+
+	const [errors, setErrors] = useState<ListingError[]>([])
+
+	const onDialogSubmit = () => {
+		if (!data || !channelType) return
+
+		const body: AddBulkChannelSourceRequestsBody = {
+			channelSource: data?.channelSource || undefined,
+			channelSourceRequestRouteList: data.channelSourceRequestRouteList.map((r) => ({ ...r, errorKey: undefined })),
+			channelType,
+			companyId: data?.company?.value,
+			userId: data.email?.value || undefined,
+		}
+
+		onSubmit(body)
+			.then(() => {
+				closeDialog()
+				navigate(state?.from || -1)
+			})
+			.catch((error: any) => {
+				if (error?.data?.statusCode === 4011303 && error?.data?.data !== undefined) {
+					const errors = getBulkCreationErrorsList({ data, errorsData: error?.data?.data, setError })
+
+					setErrors(errors)
+				}
+			})
+	}
 
 	const onRowClick = (formKeyId: string) => {
 		return () => {
@@ -65,14 +104,14 @@ const SmsListingRequestCreationPreview = ({
 						className='w-[340px] rounded-lg bg-white ring-0'
 						label={t("basicInfo.company")}
 						size='lg'
-						value={data.companyId}
+						value={data.company?.label}
 					/>
-					{data.userId && (
+					{!!data.email?.label && (
 						<ReadonlyInput
 							className='w-[340px] rounded-lg bg-white ring-0'
 							label={t("basicInfo.email")}
 							size='lg'
-							value={data.userId}
+							value={data.email?.label}
 						/>
 					)}
 					<ReadonlyInput
@@ -154,8 +193,17 @@ const SmsListingRequestCreationPreview = ({
 					</div>
 				)}
 			</div>
+
+			<Footer>
+				<Button className='px-10' onClick={closeDialog} variant='outline'>
+					{t("cancel")}
+				</Button>
+				<Button className='px-10' onClick={onDialogSubmit} type='button'>
+					{t("submit")}
+				</Button>
+			</Footer>
 		</div>
 	)
 }
 
-export default SmsListingRequestCreationPreview
+export default BulkRequestsCreationConfirmDialogContent

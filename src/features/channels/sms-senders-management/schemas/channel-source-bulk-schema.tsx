@@ -7,11 +7,13 @@ import ChannelSourceListingFieldSchema from "./channel-source-listing-field-sche
 //#endregion
 
 const bulkListingsGroup = ChannelSourceRequestSchema.pick({ templateType: true }).extend({
-	listingsFields: z.array(ChannelSourceListingFieldSchema),
+	listingsFields: z.array(
+		ChannelSourceListingFieldSchema.extend({ status: z.custom<"APPROVED" | "BLOCKED">((val) => !!val, "Required") })
+	),
 })
 
-const ChannelSourceRequestBulkSchema = z.object({
-	basicInfo: channelSourceRequestBasicInfoSchema,
+const ChannelSourceBulkSchema = z.object({
+	basicInfo: channelSourceRequestBasicInfoSchema.omit({ email: true }),
 	bulkListingsGroups: z
 		.array(bulkListingsGroup)
 		.max(3, { message: "Can't have more than three types!" })
@@ -25,6 +27,6 @@ const ChannelSourceRequestBulkSchema = z.object({
 		),
 })
 
-export default ChannelSourceRequestBulkSchema
+export default ChannelSourceBulkSchema
 
-export type ChannelSourceRequestBulkSchemaType = z.infer<typeof ChannelSourceRequestBulkSchema>
+export type ChannelSourceBulkSchemaType = z.infer<typeof ChannelSourceBulkSchema>

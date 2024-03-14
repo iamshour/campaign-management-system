@@ -98,9 +98,9 @@ const ChannelSourceRequestForm = ({ children, defaultValues }: ChannelSourceRequ
 						name='note'
 						render={({ field }) => (
 							<Form.Item>
-								<Form.Label>{t("channels-common:fields.note")}</Form.Label>
 								<Form.Control>
 									<TextareaPopover
+										label={t("channels-common:fields.note")}
 										onValueChange={field.onChange}
 										placeholder={t("components.channelSourceRequestForm.placeholders.note")}
 										size='lg'
@@ -117,7 +117,7 @@ const ChannelSourceRequestForm = ({ children, defaultValues }: ChannelSourceRequ
 						control={form.control}
 						name='sampleContent'
 						render={({ field }) => (
-							<Form.Item className='col-span-2'>
+							<Form.Item className='col-span-2 max-w-full'>
 								<Form.Label>{t("channels-common:fields.sampleContent")} *</Form.Label>
 								<Form.Control>
 									<Textarea

@@ -15,8 +15,8 @@ import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
 import { downloadFile } from "@/utils"
 
-import type { AddBulkSmsListingRequestsBody, AddBulkSmsListingsBody } from "./types"
 import type {
+	AddBulkChannelSourceRequestsBody,
 	ExportChannelSourceOptOutListParams,
 	GetChannelSourceOptOutListParams,
 	GetChannelSourceRequestAndListingByIdReturnType,
@@ -160,16 +160,14 @@ const smsSendersManagementApis = api.injectEndpoints({
 			}),
 		}),
 
-		// ---------------------------------
-
-		addBulkSmsListingRequests: builder.mutation<any, AddBulkSmsListingRequestsBody>({
+		addBulkChannelSourceRequests: builder.mutation<any, AddBulkChannelSourceRequestsBody>({
 			invalidatesTags: (res) => {
 				return res ? [{ id: "LIST", type: "ChannelSourceRequest" }] : []
 			},
 			query: (body) => ({ body, method: "POST", url: "/channel-source/request/bulk" }),
 		}),
 
-		addBulkSmsListings: builder.mutation<any, AddBulkSmsListingsBody>({
+		addBulkChannelSourceListings: builder.mutation<any, AddBulkChannelSourceRequestsBody>({
 			invalidatesTags: (res) => {
 				return res ? [{ id: "LIST", type: "ChannelSourceListing" }] : []
 			},
@@ -208,9 +206,8 @@ export const {
 	useImportChannelSourceOptOutMutation,
 	useOptInOptedOutChannelSourceListMutation,
 	useExportChannelSourceOptOutListMutation,
-
-	useAddBulkSmsListingRequestsMutation,
-	useAddBulkSmsListingsMutation,
+	useAddBulkChannelSourceRequestsMutation,
+	useAddBulkChannelSourceListingsMutation,
 	useGetCompaniesListQuery,
 	useGetUsersByCompanyIdQuery,
 } = smsSendersManagementApis
