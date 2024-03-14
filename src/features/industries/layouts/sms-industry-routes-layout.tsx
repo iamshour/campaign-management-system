@@ -1,5 +1,6 @@
 //#region Import
-import { NavTabs } from "@/ui"
+import { DataTableSkeleton, NavTabs } from "@/ui"
+import { Suspense } from "react"
 import { Outlet } from "react-router-dom"
 //#endregion
 
@@ -9,7 +10,9 @@ const SmsIndustryRoutesLayout = () => (
 			<NavTabs.Item to='.'>SMS</NavTabs.Item>
 		</NavTabs>
 
-		<Outlet />
+		<Suspense fallback={<DataTableSkeleton />}>
+			<Outlet />
+		</Suspense>
 	</div>
 )
 
