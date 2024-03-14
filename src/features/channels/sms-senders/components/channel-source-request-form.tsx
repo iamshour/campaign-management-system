@@ -15,7 +15,7 @@ import SenderNameInput from "./sender-name-input"
 interface ChannelSourceRequestFormProps {
 	children: React.ReactNode
 
-	defaultValues?: Partial<ChannelSourceRequestSchemaType>
+	defaultValues?: Partial<Pick<ChannelSourceRequestSchemaType, "country" | "sender" | "templateType">>
 }
 
 const ChannelSourceRequestForm = ({ children, defaultValues }: ChannelSourceRequestFormProps) => {

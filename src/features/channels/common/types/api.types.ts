@@ -1,5 +1,5 @@
 //#region Import
-import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
+import type { GetListReturnType, PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type { TemplateType } from "@/features/templates/common/types"
 import type { DateRange } from "@/ui"
 import type { Country } from "react-phone-number-input"
@@ -43,9 +43,6 @@ export type GetChannelSourceListingsParams = ChannelSourceListingFilter &
  */
 export type GetChannelSourceListingsReturnType = {
 	channelSourceId: string
-	channelSourceListings: {
-		count: number
-		list: ChannelSourceListing[]
-	}
+	channelSourceListings: GetListReturnType<ChannelSourceListing>
 	channelSourceName: string
 }

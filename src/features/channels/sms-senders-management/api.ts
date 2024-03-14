@@ -79,6 +79,7 @@ const smsSendersManagementApis = api.injectEndpoints({
 				return [
 					{ id: channelSourceRequestId, type: "ChannelSourceRequest" },
 					{ id: "LIST", type: "ChannelSourceRequest" },
+					{ id: "LIST", type: "ChannelSourceListing" },
 				]
 			},
 			query: (body) => ({ body, method: "PUT", url: "/channel-source/request/action" }),
