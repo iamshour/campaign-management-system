@@ -3,12 +3,23 @@
 		"icon": "Icon",
 		"name": "Industry Name",
 		"description": "Industry Description",
-		"createdAt": "Creation date"
+		"createdAt": "Creation Date"
 	},
 	"table": {
 		"topbar": {
 			"actions": {
 				"create-industry": "Create Industry"
+			}
+		}
+	},
+	"views": {
+		"industriesView": {
+			"industryCard": {
+				"callToAction": "View Templates"
+			},
+			"actions": {
+				"edit": "Edit",
+				"delete": "Delete"
 			}
 		}
 	},

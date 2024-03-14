@@ -4,6 +4,9 @@ import type { IndustryType } from "@/features/industries/types"
 import { Button } from "@/ui"
 import MdiCardText from "~icons/mdi/card-text"
 import { lazy } from "react"
+import { useTranslation } from "react-i18next"
+
+import industryFieldsMap from "../../constants/industry-fields-map"
 
 const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-view-date-cell"))
 
@@ -17,6 +20,8 @@ const IndustriesViewTableActions = lazy(
 //#endregion
 
 const IndustryCard = (industry: IndustryType) => {
+	const { t } = useTranslation("industries")
+
 	const { color, createdAt, description, icon, id, name } = industry
 
 	return (
@@ -33,14 +38,14 @@ const IndustryCard = (industry: IndustryType) => {
 
 			<ul className='w-full flex-1 space-y-2 p-4'>
 				<li className='flex gap-2 text-base'>
-					<span className='inline whitespace-nowrap text-[#8F8F8F]'>Industry description:</span>
+					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t(industryFieldsMap.description)}:</span>
 					<span className='block truncate' title={description}>
 						{description}
 					</span>
 				</li>
 				<li className='flex gap-2 text-base'>
-					<span className='inline whitespace-nowrap text-[#8F8F8F]'>Creation date and time:</span>
-					<DataViewDateCell date={createdAt} />
+					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t(industryFieldsMap.createdAt)}:</span>
+					<DataViewDateCell date={createdAt} dateFormat='MM-dd-yyyy | hh:mm aaa' />
 				</li>
 			</ul>
 
@@ -52,7 +57,7 @@ const IndustryCard = (industry: IndustryType) => {
 					to={`${id}/sms`}
 					variant='ghost'>
 					<MdiCardText />
-					<span>View Templates</span>
+					<span>{t("views.industriesView.industryCard.callToAction")}</span>
 				</Button>
 			</div>
 		</div>
