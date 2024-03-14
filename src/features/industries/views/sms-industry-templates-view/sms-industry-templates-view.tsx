@@ -5,8 +5,8 @@ import type { SmsIndustryTemplateType } from "@/features/industries/types"
 import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 
 import DataView from "@/core/components/data-view/data-view"
+import smsTemplatesTableColumns from "@/features/templates/common/constants/sms-templates-table-columns"
 import smsTemplatesTableClassNames from "@/features/templates/sms-templates/constants/sms-templates-table-classnames"
-import smsTemplatesTableColumns from "@/features/templates/sms-templates/constants/sms-templates-table-columns"
 import { lazy } from "react"
 import { useNavigate } from "react-router-dom"
 

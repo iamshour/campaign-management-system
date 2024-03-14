@@ -1,5 +1,5 @@
 //#region Import
-import type { SmsTemplateType } from "../types"
+import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 //#endregion
 
 const smsTemplateFieldsLocaleMap: Partial<Record<keyof SmsTemplateType, string>> = {

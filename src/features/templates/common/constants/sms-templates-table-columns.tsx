@@ -1,16 +1,14 @@
 //#region Import
 import type { ColumnType } from "@/core/components/data-view/data-table/types"
-import type { TemplateLanguage, TemplateStatus } from "@/features/templates/common/types"
+import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 
-import templateLanguagesLocaleMap from "@/features/templates/common/constants/template-languages-local-map"
-import templateStatusesLocaleMap from "@/features/templates/common/constants/template-statuses-local-map"
-import { Badge } from "@/ui"
 import { lazy } from "react"
 
-import type { SmsTemplateType } from "../types"
-
+import TemplateStatusTableCell from "../components/template-status-table-cell"
 import smsTemplateFieldsLocaleMap from "./sms-template-fields-locale-map"
-import smsTemplateStatusesColorsMap from "./sms-template-statuses-colors-map"
+
+// eslint-disable-next-line react-refresh/only-export-components
+const TemplateLanguageTableCell = lazy(() => import("../components/template-language-table-cell"))
 
 // eslint-disable-next-line react-refresh/only-export-components
 const TemplateTypesTableColumn = lazy(() => import("@/features/templates/common/components/template-types-table-cell"))
@@ -36,7 +34,7 @@ const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
 	},
 	{
 		accessorKey: "language",
-		cell: (language: TemplateLanguage) => templateLanguagesLocaleMap[language],
+		cell: (_, { language }) => <TemplateLanguageTableCell language={language} />,
 		header: smsTemplateFieldsLocaleMap.language,
 	},
 	{
@@ -47,12 +45,7 @@ const smsTemplatesTableColumns: ColumnType<SmsTemplateType>[] = [
 	},
 	{
 		accessorKey: "status",
-		cell: (status: TemplateStatus) =>
-			!!status?.length && (
-				<Badge className='rounded-md' key={status} style={{ backgroundColor: smsTemplateStatusesColorsMap[status] }}>
-					{templateStatusesLocaleMap[status]}
-				</Badge>
-			),
+		cell: (_, { status }) => !!status?.length && <TemplateStatusTableCell status={status} />,
 		header: smsTemplateFieldsLocaleMap.status,
 	},
 ]

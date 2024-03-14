@@ -8,8 +8,6 @@ import useSelector from "@/core/hooks/useSelector"
 import SelectMultiLanguagesPopover from "@/features/templates/common/components/select-multi-languages-popover"
 import SelectMultiTemplateStatusesPopover from "@/features/templates/common/components/select-multi-template-statuses-popover"
 import SelectMultiTemplateTypesPopover from "@/features/templates/common/components/select-multi-template-types-popover"
-import templateLanguagesLocaleMap from "@/features/templates/common/constants/template-languages-local-map"
-import templateStatusesLocaleMap from "@/features/templates/common/constants/template-statuses-local-map"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
 import { memo, useCallback } from "react"
@@ -38,7 +36,7 @@ const SmsTemplatesFiltersContent = memo(() => {
 			/>
 			<SelectMultiTemplateStatusesPopover
 				onValueChange={(selection) => onValueChange({ statuses: getListOfKey(selection, "value") as TemplateStatus[] })}
-				value={filters?.statuses?.map((value) => ({ label: templateStatusesLocaleMap[value], value })) || []}
+				value={filters?.statuses}
 			/>
 			<SelectMultiTemplateTypesPopover
 				onValueChange={(selection) => onValueChange({ types: getListOfKey(selection, "value") as TemplateType[] })}
@@ -49,7 +47,7 @@ const SmsTemplatesFiltersContent = memo(() => {
 				onValueChange={(selection) =>
 					onValueChange({ languages: getListOfKey(selection, "value") as TemplateLanguage[] })
 				}
-				value={filters?.languages?.map((value) => ({ label: templateLanguagesLocaleMap[value], value })) || []}
+				value={filters?.languages}
 			/>
 		</>
 	)

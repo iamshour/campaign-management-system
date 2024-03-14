@@ -31,6 +31,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 			readOnly,
 			rightIcon: RightIcon,
 			size,
+			value,
 			variant,
 			...props
 		},
@@ -45,10 +46,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
 			<div className='group !relative h-max w-full overflow-hidden'>
 				{!!LeftIcon && (
-					<LeftIcon
-						className={cn(iconVariants({ className: "start-3", size, variant }))}
-						data-hasvalue={!!props?.value}
-					/>
+					<LeftIcon className={cn(iconVariants({ className: "start-3", size, variant }))} data-hasvalue={!!value} />
 				)}
 
 				<input
@@ -58,11 +56,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 						"!pe-10": !!RightIcon,
 						"!ps-10": !!LeftIcon,
 					})}
-					data-hasvalue={!!props?.value}
+					data-hasvalue={!!value}
 					id={label ? `${props?.name}-field` : undefined}
 					readOnly={readOnly}
 					ref={ref}
-					value={props?.value ?? (ref === undefined ? "" : undefined)}
+					value={value || ""}
 				/>
 
 				{readOnly && (
@@ -72,10 +70,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 				)}
 
 				{!readOnly && !!RightIcon && (
-					<RightIcon
-						className={cn(iconVariants({ className: "end-3", size, variant }))}
-						data-hasvalue={!!props?.value}
-					/>
+					<RightIcon className={cn(iconVariants({ className: "end-3", size, variant }))} data-hasvalue={!!value} />
 				)}
 			</div>
 		</div>
