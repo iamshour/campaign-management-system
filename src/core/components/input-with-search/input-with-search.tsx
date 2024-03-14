@@ -72,7 +72,7 @@ const InputWithSearch = forwardRef<React.ElementRef<typeof Popover.Trigger>, Inp
 						ref={inputRef}
 						size='lg'
 						spellCheck='false'
-						value={value || ""}
+						value={value}
 						{...props}
 					/>
 				</Popover.Trigger>

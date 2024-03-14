@@ -34,7 +34,7 @@ const DeleteIndustryTemplateDialogContent = ({ closeDialog, ids = [] }: DeleteIn
 
 	const [triggerDeleteIndustryTemplates, { isLoading }] = useDeleteIndustryTemplatesMutation()
 
-	const [promptInputValue, setPromptInputValue] = useState<string>()
+	const [promptInputValue, setPromptInputValue] = useState<string>("")
 
 	const { filters, searchTerm, selection } = useSelector(({ dataView }) => dataView["sms-industry-templates"])
 

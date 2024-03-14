@@ -80,7 +80,7 @@ const SegmentSpecification = memo(
 							id={`specification-${ruleIdx}`}
 							onChange={(e) => onSelectValueChange({ specification: e.target.value })}
 							placeholder={t("placeholder")}
-							value={specification ?? ""}
+							value={specification}
 						/>
 					</div>
 				)

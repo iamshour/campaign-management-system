@@ -57,5 +57,9 @@
 		"arabic": "Arabic",
 		"english": "English",
 		"other": "Other"
+	},
+	"templateStatuses": {
+		"draft": "Draft",
+		"published": "Published"
 	}
 }
