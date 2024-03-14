@@ -16,6 +16,7 @@ interface SelectSingleOptionPopoverProps<T extends string> extends React.Compone
 }
 
 const SelectSingleOptionPopover = <T extends string>({
+	"aria-invalid": invalid,
 	className,
 	contentProps,
 	label,
@@ -28,14 +29,14 @@ const SelectSingleOptionPopover = <T extends string>({
 }: SelectSingleOptionPopoverProps<T>) => (
 	<div className={twMerge("relative w-[340px] max-w-full", className)}>
 		{!!label?.length && (
-			<Label aria-invalid={props["aria-invalid"]} size={size}>
+			<Label aria-invalid={invalid} size={size}>
 				{label} {required && "*"}
 			</Label>
 		)}
 
 		<Select {...props}>
 			<Select.Trigger
-				aria-invalid={props["aria-invalid"]}
+				aria-invalid={invalid}
 				className={twMerge("w-full text-sm font-normal", triggerProps?.className)}
 				hasValue={!!props?.value?.length}
 				size={size}>

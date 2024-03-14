@@ -71,12 +71,12 @@ type FormItemContextValue = { id: string }
 
 export const FormItemContext = createContext<FormItemContextValue>({} as FormItemContextValue)
 
-const FormItem = (props: React.HTMLAttributes<HTMLDivElement>) => {
+const FormItem = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
 	const id = useId()
 
 	return (
 		<FormItemContext.Provider value={{ id }}>
-			<div {...props} />
+			<div {...props} className={twMerge("flex w-full max-w-[340px] flex-col", className)} />
 		</FormItemContext.Provider>
 	)
 }
@@ -117,7 +117,7 @@ const FormMessage = ({ children, className, ...props }: React.HTMLAttributes<HTM
 	if (!body) return null
 
 	return (
-		<p className={twMerge("text-xs font-medium text-red-500", className)} id={formMessageId} {...props}>
+		<p className={twMerge("ps-0.5 pt-0.5 text-xs font-medium text-red-500", className)} id={formMessageId} {...props}>
 			{body}
 		</p>
 	)

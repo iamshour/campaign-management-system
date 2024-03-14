@@ -38,7 +38,7 @@ export const useSelectAsyncOptionsPopover = () => useContext(SelectAsyncOptionsP
 
 type SelectAsyncOptionsPopoverProps = Pick<
 	React.ComponentPropsWithoutRef<typeof Button>,
-	"children" | "className" | "disabled" | "size"
+	"aria-invalid" | "children" | "className" | "disabled" | "size"
 > & {
 	contentProps?: React.ComponentPropsWithoutRef<typeof Popover.Content>
 	label?: string
@@ -47,6 +47,7 @@ type SelectAsyncOptionsPopoverProps = Pick<
 } & SelectAsyncOptionsPopoverContextType
 
 const SelectAsyncOptionsPopover = ({
+	"aria-invalid": invalid,
 	children,
 	className,
 	contentProps,
@@ -63,7 +64,7 @@ const SelectAsyncOptionsPopover = ({
 		<SelectAsyncOptionsPopoverProvider.Provider value={contextValue}>
 			<div className={twMerge("relative w-full max-w-[340px]", className)}>
 				{!!label?.length && (
-					<Label disabled={disabled} size={size}>
+					<Label aria-invalid={invalid} disabled={disabled} size={size}>
 						{label}
 					</Label>
 				)}
@@ -71,6 +72,7 @@ const SelectAsyncOptionsPopover = ({
 				<Popover>
 					<Popover.Trigger asChild disabled={disabled}>
 						<Button
+							aria-invalid={invalid}
 							hasValue={(isMulti && !!selection?.length) || (!isMulti && !!selection?.value?.length)}
 							size={size}
 							variant='outline-grey'

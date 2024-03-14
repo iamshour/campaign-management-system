@@ -19,7 +19,7 @@ const AdminListingsViewTopbar = memo(() => {
 				{t("secondaryCallToAction")}
 			</Button>
 
-			<Button as='link' state={{ from: pathname }} to='./new-sender'>
+			<Button as='link' state={{ from: pathname }} to='./add-listings'>
 				<HeroiconsPlus16Solid />
 				{t("callToAction")}
 			</Button>

@@ -5,22 +5,22 @@ import SelectSingleTemplateTypePopover from "@/features/templates/common/compone
 import { Button, Form } from "@/ui"
 import { type Control, useFieldArray } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import * as z from "zod"
 
-import type { BulkListingsFunnelBase, BulkListingsGroup } from "./types"
-
-import { emptyBulkListingsGroup } from "./bulk-listings-funnel-configs"
-import ListingField from "./listing-field"
+import { useBulkRequestsFormContext } from "./bulk-requests-form-context"
+import BulkRequestsFormField from "./bulk-requests-form-field"
+import { type BulkRequestsFormSchemaType, defaultEmptyField } from "./configs"
 //#endregion
 
-interface BulkListingsFunnelProps {
-	bulkListingsGroups: BulkListingsGroup[]
+interface BulkRequestsFormFunnelProps {
+	bulkListingsGroups: z.infer<BulkRequestsFormSchemaType>["bulkListingsGroups"]
 
-	control: Control<BulkListingsFunnelBase>
-
-	defaultValues?: BulkListingsGroup
+	control: Control<z.infer<BulkRequestsFormSchemaType>>
 }
 
-const BulkListingsFunnel = ({ bulkListingsGroups, control }: BulkListingsFunnelProps) => {
+const BulkRequestsFormFunnel = ({ bulkListingsGroups, control }: BulkRequestsFormFunnelProps) => {
+	const { funnelKey } = useBulkRequestsFormContext()
+
 	const { t } = useTranslation("senders-management", { keyPrefix: "components.senderRequestFunnel.actions" })
 
 	const { append, fields, remove, update } = useFieldArray({ control, name: "bulkListingsGroups" })
@@ -30,7 +30,7 @@ const BulkListingsFunnel = ({ bulkListingsGroups, control }: BulkListingsFunnelP
 
 		bulkListingsGroups?.forEach((field, idx) => {
 			if (field.templateType === selectedType) {
-				update(idx, { listingsFields: field.listingsFields, templateType: undefined })
+				update(idx, { listingsFields: field.listingsFields, templateType: "" as TemplateType })
 			}
 		})
 	}
@@ -43,7 +43,7 @@ const BulkListingsFunnel = ({ bulkListingsGroups, control }: BulkListingsFunnelP
 						control={control}
 						name={`bulkListingsGroups.${SenderRequestsGroupsIdx}.templateType`}
 						render={({ field }) => (
-							<Form.Item className='w-full max-w-[340px]'>
+							<Form.Item>
 								<Form.Control>
 									<SelectSingleTemplateTypePopover
 										label='Template Type *'
@@ -51,7 +51,6 @@ const BulkListingsFunnel = ({ bulkListingsGroups, control }: BulkListingsFunnelP
 											onTypeSelect(selectedType)
 											field.onChange(selectedType)
 										}}
-										placeholder='Select type'
 										size='lg'
 										value={field.value}
 									/>
@@ -61,7 +60,7 @@ const BulkListingsFunnel = ({ bulkListingsGroups, control }: BulkListingsFunnelP
 						)}
 					/>
 
-					<ListingField
+					<BulkRequestsFormField
 						control={control}
 						removeType={fields?.length > 1 ? () => remove(SenderRequestsGroupsIdx) : undefined}
 						SenderRequestsGroupsIdx={SenderRequestsGroupsIdx}
@@ -73,7 +72,9 @@ const BulkListingsFunnel = ({ bulkListingsGroups, control }: BulkListingsFunnelP
 				className='me-auto mt-2 w-max shrink-0 gap-2 bg-primary-600'
 				// Max number of allowed types === 3 (PROMOTIONAL - TRANSACTIONAL - OTP)
 				disabled={fields?.length >= 3}
-				onClick={() => append([emptyBulkListingsGroup])}
+				onClick={() =>
+					append([{ listingsFields: [defaultEmptyField[funnelKey as keyof typeof defaultEmptyField]] } as any])
+				}
 				size='sm'
 				type='button'>
 				<span className='text-lg'>+</span>
@@ -83,4 +84,4 @@ const BulkListingsFunnel = ({ bulkListingsGroups, control }: BulkListingsFunnelP
 	)
 }
 
-export default BulkListingsFunnel
+export default BulkRequestsFormFunnel

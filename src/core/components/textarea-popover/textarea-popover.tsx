@@ -5,21 +5,17 @@ import { lazy, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 
-import IconTooltip from "../icon-tooltip/icon-tooltip"
 const TextareaPopoverContent = lazy(() => import("./textarea-popover-content"))
 //#endregion
 
 interface TextareaPopoverProps
-	extends Omit<React.ComponentPropsWithoutRef<typeof TextareaPopoverContent>, "closePopover"> {
-	className?: string
-
+	extends React.HTMLAttributes<HTMLDivElement>,
+		Omit<React.ComponentPropsWithoutRef<typeof TextareaPopoverContent>, "closePopover"> {
 	contentProps?: React.ComponentPropsWithoutRef<typeof Popover.Content>
 
-	label?: string
+	label?: React.ReactNode | string
 
 	size?: React.ComponentPropsWithoutRef<typeof Button>["size"]
-
-	tooltip?: string
 
 	triggerProps?: React.ComponentPropsWithoutRef<typeof Button>
 }
@@ -45,9 +41,9 @@ const TextareaPopover = ({
 	onValueChange,
 	placeholder,
 	size,
-	tooltip,
 	triggerProps,
 	value,
+	...props
 }: TextareaPopoverProps) => {
 	const { t } = useTranslation("ui", { keyPrefix: "textareaTooltip" })
 
@@ -56,18 +52,17 @@ const TextareaPopover = ({
 	const placeholderValue = placeholder ?? t("placeholder")
 
 	return (
-		<div className={twMerge("relative w-[340px] max-w-full", className)}>
-			{!!label?.length && (
-				<Label className='flex items-center gap-2' size={size}>
+		<div className={twMerge("relative w-[340px] max-w-full", className)} {...props}>
+			{!!label && (
+				<Label aria-invalid={props["aria-invalid"]} size={size}>
 					{label}
-
-					{!!tooltip?.length && <IconTooltip content={tooltip} />}
 				</Label>
 			)}
 
 			<Popover onOpenChange={setOpen} open={open}>
 				<Popover.Trigger asChild>
 					<Button
+						aria-invalid={props["aria-invalid"]}
 						hasValue={!!value?.length}
 						size={size}
 						variant='outline-grey'

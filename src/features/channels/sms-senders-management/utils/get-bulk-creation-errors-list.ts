@@ -1,14 +1,11 @@
 //#region Import
 import type { FieldValues, UseFormSetError } from "react-hook-form"
 
-import type {
-	ListingError,
-	SmsListingRequestCreationPreviewData,
-} from "../components/sms-listing-request-creation-preview"
+import type { BulkPreviewData, ListingError } from "../components/bulk-requests-form/types"
 //#endregion
 
 interface getBulkCreationErrorsListType {
-	data: SmsListingRequestCreationPreviewData
+	data: BulkPreviewData
 	errorsData: Record<string, string>
 	setError: UseFormSetError<FieldValues>
 }

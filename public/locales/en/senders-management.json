@@ -1,4 +1,16 @@
 {
+	"routes": {
+		"createChannelSource": {
+			"header": "Create Channel source"
+		},
+		"createChannelSourceRequest": {
+			"header": "Create Sender ID request"
+		},
+		"addListingsToChannelSource": {
+			"header": "Add Listings"
+		}
+	},
+
 	"views": {
 		"channelSourceRequestsPendingEmpty": {
 			"headline": "You didn't receive any sender yet",
@@ -88,24 +100,13 @@
 			"label": "Status",
 			"placeholder": "Select statuses"
 		},
+		"selectSingleListingStatusPopover": {
+			"label": "Status",
+			"placeholder": "Select status"
+		},
 		"actionReasonForm": {
 			"label": "Reason",
 			"placeholder": "Enter reason"
-		},
-		"smsListingRequestCreationPreview": {
-			"message": "Are you sure you want to add this Sender request?",
-			"editDetails": "Edit Details",
-			"basicInfo": {
-				"company": "Company Name",
-				"email": "Client Email",
-				"sender": "Sender"
-			},
-			"requestsTable": {
-				"type": "Type",
-				"country": "Target Country",
-				"content": "Sample Content",
-				"status": "Status"
-			}
 		}
 	},
 
@@ -166,16 +167,6 @@
 			"tooltip": "Opt-in",
 			"submit": "Confirm"
 		},
-		"createChannelSourceRequestConfirm": {
-			"title": "Confirm Request",
-			"submit": "Confirm",
-			"cancel": "Cancel"
-		},
-		"createSmsListingConfirm": {
-			"title": "Confirm Listing",
-			"submit": "Confirm",
-			"cancel": "Cancel"
-		},
 		"exportOptOutSmsSenders": {
 			"title": "Export",
 			"label": "Export file name",
@@ -194,6 +185,59 @@
 			},
 			"submit": "Import Now",
 			"successToast": "File imported successfully."
+		},
+		"bulkRequestsCreationConfirm": {
+			"CHANNEL_SOURCE": {
+				"title": "Confirm Listing",
+				"editDetails": "Edit Details",
+				"message": "Are you sure you want to add this Sender listing?",
+				"basicInfo": {
+					"company": "Company Name",
+					"sender": "Sender"
+				},
+				"requestsTable": {
+					"type": "Type",
+					"country": "Target Country",
+					"content": "Sample Content",
+					"status": "Status"
+				},
+				"submit": "Confirm",
+				"cancel": "Cancel"
+			},
+			"CHANNEL_LISTING": {
+				"title": "Confirm Listing",
+				"editDetails": "Edit Details",
+				"message": "Are you sure you want to add this Sender listing?",
+				"basicInfo": {
+					"company": "Company Name",
+					"sender": "Sender"
+				},
+				"requestsTable": {
+					"type": "Type",
+					"country": "Target Country",
+					"content": "Sample Content",
+					"status": "Status"
+				},
+				"submit": "Confirm",
+				"cancel": "Cancel"
+			},
+			"CHANNEL_SOURCE_REQUEST": {
+				"title": "Confirm Request",
+				"editDetails": "Edit Details",
+				"message": "Are you sure you want to add this Sender request?",
+				"basicInfo": {
+					"company": "Company Name",
+					"email": "Client Email",
+					"sender": "Sender"
+				},
+				"requestsTable": {
+					"type": "Type",
+					"country": "Target Country",
+					"content": "Sample Content"
+				},
+				"submit": "Confirm",
+				"cancel": "Cancel"
+			}
 		}
 	}
 }

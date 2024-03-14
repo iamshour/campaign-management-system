@@ -18,9 +18,9 @@ const FlagIcon = lazy(() => import("../../phone-input/flag-icon"))
 //#endregion
 
 interface SelectCountryPopoverProps
-	extends Partial<Pick<React.ComponentPropsWithoutRef<typeof Button>, "className" | "size">>,
+	extends Partial<Pick<React.ComponentPropsWithoutRef<typeof Button>, "aria-invalid" | "className" | "size">>,
 		Omit<React.ComponentPropsWithoutRef<typeof SelectCountryPopoverContent>, "closePopover"> {
-	label?: string
+	label?: React.ReactNode | string
 	readOnly?: boolean
 	withPlaceholder?: boolean
 }
@@ -28,6 +28,7 @@ interface SelectCountryPopoverProps
 const SelectCountryPopover = forwardRef<React.ElementRef<typeof Button>, SelectCountryPopoverProps>(
 	(
 		{
+			"aria-invalid": invalid,
 			className,
 			label,
 			options = isoCountryOptions,
@@ -45,11 +46,16 @@ const SelectCountryPopover = forwardRef<React.ElementRef<typeof Button>, SelectC
 
 		return (
 			<div className={twMerge("relative w-[340px] max-w-full", className)}>
-				{!!label?.length && <Label size={size}>{label}</Label>}
+				{!!label && (
+					<Label aria-invalid={invalid} size={size}>
+						{label}
+					</Label>
+				)}
 
 				<Popover onOpenChange={setOpen} open={open}>
 					<Popover.Trigger asChild>
 						<Button
+							aria-invalid={invalid}
 							className={twMerge("w-full px-2", readOnly && "pointer-events-none")}
 							hasValue={!!value?.length}
 							ref={ref}
@@ -64,9 +70,7 @@ const SelectCountryPopover = forwardRef<React.ElementRef<typeof Button>, SelectC
 										{options.find((c) => c?.value === value)?.label}
 									</span>
 								) : (
-									<span className='flex-1 truncate px-2 text-start font-normal text-[#9899A7]'>
-										{t("selectCountryPopover.placeholder")}
-									</span>
+									<span className='flex-1 truncate px-2 text-start'>{t("selectCountryPopover.placeholder")}</span>
 								))}
 
 							{readOnly && <MaterialSymbolsLock className='h-4 w-4 shrink-0 text-[#9899A7]' />}

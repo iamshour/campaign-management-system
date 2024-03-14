@@ -51,7 +51,7 @@ const ResendChannelSourceRequestDialog = ({ children, listingId, ...props }: Res
 		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 			<Dialog.Content
-				className='h-[712px] w-[382px] sm:h-[516px] sm:w-[746px]'
+				className='h-[723.8px] w-[382px] sm:h-[521.8px] sm:w-[746px]'
 				onInteractOutside={(e) => e.preventDefault()}
 				title={t("title")}>
 				{isLoading && <Skeleton />}
