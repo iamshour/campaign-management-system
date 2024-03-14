@@ -14,12 +14,16 @@ import { useParams } from "react-router-dom"
 //#endregion
 
 export interface CreateChannelSourceRequestDialogContentProps
-	extends Pick<React.ComponentPropsWithoutRef<typeof ChannelSourceRequestForm>, "defaultValues">,
-		Pick<React.ComponentPropsWithoutRef<typeof ConfirmRequestDialog>, "formType"> {
+	extends Pick<React.ComponentPropsWithoutRef<typeof ChannelSourceRequestForm>, "defaultValues"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
 	closeDialog: () => void
+
+	formType: Extract<
+		React.ComponentPropsWithoutRef<typeof ConfirmRequestDialog>["formType"],
+		"addRequest" | "newRequest"
+	>
 }
 
 type ButtonClicked = "multiRequest" | "singleRequest"

@@ -1,6 +1,7 @@
 //#region Import
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetChannelSourceListingByIdQuery } from "@/features/channels/common/api"
+import { useChannelSourceNameContext } from "@/features/channels/sms-senders/utils/channel-source-name-context"
 import { Dialog, Skeleton } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { lazy, useState } from "react"
@@ -19,12 +20,14 @@ interface ResendChannelSourceRequestDialogProps
 	children: React.ReactNode
 }
 
-const ResendChannelSourceRequestDialog = ({ children, listingId, ...props }: ResendChannelSourceRequestDialogProps) => {
+const ResendChannelSourceRequestDialog = ({ children, listingId }: ResendChannelSourceRequestDialogProps) => {
 	const { t } = useTranslation("sms-senders", { keyPrefix: `dialogs.resendChannelSourceRequestDialog` })
 
 	const [open, setOpen] = useState(false)
 
 	const { closeDropdown } = useDropdownStateContext()
+
+	const { channelSourceName } = useChannelSourceNameContext()
 
 	const onCloseDialog = () => {
 		// close action drop-down
@@ -34,13 +37,14 @@ const ResendChannelSourceRequestDialog = ({ children, listingId, ...props }: Res
 		setOpen(false)
 	}
 
-	const { isError, isLoading, isReady, ...listing } = useGetChannelSourceListingByIdQuery(listingId, {
-		selectFromResult: ({ data, isLoading, ...rest }) => ({
-			country: data?.country,
+	const { isError, isLoading, isReady, listing } = useGetChannelSourceListingByIdQuery(listingId, {
+		selectFromResult: ({ data, isLoading, isSuccess, ...rest }) => ({
 			isLoading: isLoading,
-			isReady: !isLoading && Boolean(data?.channelSourceName),
-			sender: data?.channelSourceName,
-			templateType: data?.templateType,
+			isReady: !isLoading && isSuccess,
+			listing: {
+				country: data?.country,
+				templateType: data?.templateType,
+			},
 			...rest,
 		}),
 		skip: !listingId || !open,
@@ -61,9 +65,8 @@ const ResendChannelSourceRequestDialog = ({ children, listingId, ...props }: Res
 				{isReady && (
 					<ResendChannelSourceRequestDialogContent
 						closeDialog={onCloseDialog}
-						defaultValues={listing}
+						defaultValues={{ ...listing, sender: channelSourceName }}
 						listingId={listingId}
-						{...props}
 					/>
 				)}
 			</Dialog.Content>
