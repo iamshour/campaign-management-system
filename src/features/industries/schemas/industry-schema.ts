@@ -7,7 +7,7 @@ import { IndustryIconEnum } from "../constants/industries-icons-map"
 
 const IndustrySchema = z.object({
 	color: z.string(),
-	description: z.string().min(1, { message: "Required" }).max(50, { message: "Maximum 100 characters allowed" }),
+	description: z.string().min(1, { message: "Required" }).max(100, { message: "Maximum 100 characters allowed" }),
 	icon: z.nativeEnum(IndustryIconEnum, { errorMap: () => ({ message: "Icon Required" }) }),
 	name: z
 		.string()

@@ -20,7 +20,7 @@ const EditIndustryDialog = ({ children, ...industry }: EditIndustryDialogProps) 
 		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 			<Dialog.Content
-				className='h-[485px] w-[288px] sm:h-[430px] sm:w-[390px]'
+				className='h-[559px] w-[288px] sm:h-[467px] sm:w-[390px]'
 				onInteractOutside={(e) => e.preventDefault()}
 				title='Edit Industry'>
 				<EditIndustryDialogContent {...industry} closeDialog={() => setOpen(false)} />
