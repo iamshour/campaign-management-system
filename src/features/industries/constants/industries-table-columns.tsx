@@ -36,7 +36,7 @@ const industriesTableColumns: ColumnType<IndustryType>[] = [
 	},
 	{
 		accessorKey: "createdAt",
-		cell: (date) => <DataViewDateCell date={date} />,
+		cell: (date) => <DataViewDateCell date={date} dateFormat='MM-dd-yyyy | hh:mm aaa' />,
 		header: industryFieldsMap.createdAt,
 		sortable: true,
 	},
