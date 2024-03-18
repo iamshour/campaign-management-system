@@ -33,7 +33,9 @@ const SmsPrebuiltTemplatesView = ({
 
 	const dispatch = useDispatch()
 
-	const { paginationAndSorting, searchTerm } = useSelector(({ dataView }) => dataView[prebuiltTemplatesGridKey])
+	const { filters, paginationAndSorting, searchTerm } = useSelector(
+		({ dataView }) => dataView[prebuiltTemplatesGridKey]
+	)
 
 	return (
 		<div className='flex h-full w-full flex-1 overflow-hidden'>
@@ -64,14 +66,17 @@ const SmsPrebuiltTemplatesView = ({
 					)}
 				</div>
 
-				<Pagination
-					count={count}
-					pageLimits={[10, 20, 30]}
-					pagination={{ limit: paginationAndSorting?.limit, offset: paginationAndSorting?.offset }}
-					updatePagination={(pagination) =>
-						dispatch(updatePaginationAndSorting({ [prebuiltTemplatesGridKey]: pagination }))
-					}
-				/>
+				{/* When user filters by "Recently Added", only show first 10 items and hide pagination */}
+				{filters?.filterBy !== "RECENT" && (
+					<Pagination
+						count={count}
+						pageLimits={[10, 20, 30]}
+						pagination={{ limit: paginationAndSorting?.limit, offset: paginationAndSorting?.offset }}
+						updatePagination={(pagination) =>
+							dispatch(updatePaginationAndSorting({ [prebuiltTemplatesGridKey]: pagination }))
+						}
+					/>
+				)}
 			</div>
 		</div>
 	)
