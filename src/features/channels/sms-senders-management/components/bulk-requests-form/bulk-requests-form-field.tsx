@@ -36,29 +36,23 @@ const BulkRequestsFormField = ({ control, removeType, SenderRequestsGroupsIdx }:
 
 	const {
 		formState: { errors },
+		getFieldState,
 	} = useFormContext()
 
 	return (
 		<>
-			{fields?.map((_, singleRequestIdx) => {
-				const bulkListingsGroupsErrors = errors ? errors?.bulkListingsGroups : []
-
-				const errorsInListings = bulkListingsGroupsErrors
-					? bulkListingsGroupsErrors[SenderRequestsGroupsIdx as keyof typeof bulkListingsGroupsErrors]
-					: undefined
-
-				const errorMessage =
-					!!errorsInListings && "listingsFields" in errorsInListings
-						? (errorsInListings as any)?.listingsFields[singleRequestIdx]?.message
-						: undefined
+			{fields?.map(({ id }, singleRequestIdx) => {
+				const rowHasBeError = !!getFieldState(
+					`bulkListingsGroups.${SenderRequestsGroupsIdx}.listingsFields.${singleRequestIdx}`
+				).error?.message
 
 				return (
 					<div
 						className={twMerge(
 							"flex items-center justify-between rounded-lg bg-[#F7F7F7] p-4",
-							!!errorMessage && "bg-red-100/80"
+							rowHasBeError && "bg-red-100/80"
 						)}
-						key={singleRequestIdx}>
+						key={id}>
 						<div className='flex w-full flex-col gap-2.5'>
 							<div className='flex w-full flex-wrap items-start gap-4'>
 								<Form.Field

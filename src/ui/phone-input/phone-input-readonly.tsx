@@ -2,11 +2,11 @@
 import { parsePhoneNumber } from "react-phone-number-input"
 import { twMerge } from "tailwind-merge"
 
-import Input from "../input/input"
+import ReadonlyInput from "../readonly-input/readonly-input"
 import FlagIcon from "./flag-icon"
 //#endregion
 
-interface PhoneInputReadonlyProps extends React.ComponentPropsWithoutRef<typeof Input> {
+interface PhoneInputReadonlyProps extends React.ComponentPropsWithoutRef<typeof ReadonlyInput> {
 	value: string
 }
 
@@ -27,14 +27,7 @@ const PhoneInputReadonly = ({ value, ...props }: PhoneInputReadonlyProps) => {
 				)}
 			</div>
 
-			<Input
-				aria-label={value}
-				// eslint-disable-next-line
-				autoFocus={false}
-				readOnly
-				value={value}
-				{...props}
-			/>
+			<ReadonlyInput aria-label={value} value={value} {...props} />
 		</div>
 	)
 }
