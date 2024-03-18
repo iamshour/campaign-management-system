@@ -38,9 +38,9 @@ function SmsTemplatePreview({ additionalTemplateInfo, children, ...smsTemplate }
 						label='Template Basic Info'
 					/>
 
-					<SmsTemplateInfoItem itemName='name' itemValue={name} />
-					<SmsTemplateInfoItem itemName='type' itemValue={t(templateTypesLocaleMap[type])} />
-					<SmsTemplateInfoItem itemName='language' itemValue={t(templateLanguagesLocaleMap[language])} />
+					<SmsTemplateInfoItem itemName='Template Name' itemValue={name} />
+					<SmsTemplateInfoItem itemName='Template Type' itemValue={t(templateTypesLocaleMap[type])} />
+					<SmsTemplateInfoItem itemName='Template Language' itemValue={t(templateLanguagesLocaleMap[language])} />
 					{additionalTemplateInfo?.map(({ label, value }) => (
 						<SmsTemplateInfoItem itemName={label} itemValue={value} key={label} />
 					))}
@@ -74,11 +74,9 @@ export default SmsTemplatePreview
  * @returns ReactNode containing formatted sms template detail
  */
 const SmsTemplateInfoItem = ({ itemName, itemValue }: { itemName: string; itemValue: string }) => {
-	const itemLabel = `Template ${itemName.charAt(0).toUpperCase() + itemName.slice(1)}`
-
 	return (
 		<p className='mb-2'>
-			<strong className='mr-2 font-medium'>{itemLabel}:</strong>
+			<strong className='mr-2 font-medium'>{itemName}:</strong>
 			{itemValue}
 		</p>
 	)

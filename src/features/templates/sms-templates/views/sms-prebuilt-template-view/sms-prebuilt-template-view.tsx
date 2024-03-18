@@ -8,7 +8,7 @@ import { useLocation, useParams } from "react-router-dom"
 //#endregion
 
 const SmsPrebuiltTemplateView = (
-	data: Pick<SmsIndustryTemplateType, "body" | "industryId" | "language" | "name" | "type">
+	data: Pick<SmsIndustryTemplateType, "body" | "industryId" | "industryName" | "language" | "name" | "type">
 ) => {
 	const { pathname, state } = useLocation()
 
@@ -18,7 +18,10 @@ const SmsPrebuiltTemplateView = (
 		<div className='flex h-full w-full flex-col overflow-y-auto p-6'>
 			<h1 className='mb-6 text-xl font-bold'>View {data?.name}</h1>
 
-			<SmsTemplatePreview {...data} additionalTemplateInfo={[{ label: "IndustryId", value: data.industryId ?? "" }]} />
+			<SmsTemplatePreview
+				{...data}
+				additionalTemplateInfo={[{ label: "Industry Name", value: data.industryName ?? "" }]}
+			/>
 
 			<Footer className='mt-5'>
 				<Button

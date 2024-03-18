@@ -20,6 +20,7 @@ const SmsPrebuiltTemplateRoute = () => {
 			data: data && {
 				body: data.body,
 				industryId: data.industryId,
+				industryName: data.industryName,
 				language: data.language,
 				name: data.name,
 				type: data.type,

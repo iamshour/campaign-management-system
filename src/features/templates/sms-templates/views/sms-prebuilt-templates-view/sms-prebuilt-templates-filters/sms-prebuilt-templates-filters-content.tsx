@@ -2,7 +2,7 @@
 import type { IndustryType, PrebuiltTemplateFilter } from "@/features/industries/types"
 import type { TemplateLanguage, TemplateType } from "@/features/templates/common/types"
 
-import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
+import { selectFilters, updateFilters, updatePaginationAndSorting } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import templateLanguagesOptions from "@/features/templates/common/constants/template-languages-options"
@@ -39,7 +39,17 @@ const SmsPrebuiltTemplatesFiltersContent = memo(
 
 		const onFilterClick = useCallback(
 			(updatedFilters: Partial<PrebuiltTemplateFilter>) => {
+				// update filterBy
 				dispatch(updateFilters({ [prebuiltTemplatesGridKey]: updatedFilters }))
+
+				// reset pagination when user toggles filterBy
+				if (updatedFilters?.filterBy) {
+					dispatch(
+						updatePaginationAndSorting({
+							[prebuiltTemplatesGridKey]: { limit: 10, offset: 0 },
+						})
+					)
+				}
 			},
 			[dispatch, prebuiltTemplatesGridKey]
 		)
