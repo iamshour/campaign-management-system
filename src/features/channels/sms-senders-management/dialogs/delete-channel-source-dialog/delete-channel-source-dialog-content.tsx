@@ -1,9 +1,10 @@
+//#region Import
+import { useDeleteChannelSourceMutation } from "@/features/channels/sms-senders-management/api"
 import { Button } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
-
-import { useDeleteChannelSourceMutation } from "../../api"
+//#endregion
 
 export interface DeleteChannelSourceDialogContentProps {
 	/**

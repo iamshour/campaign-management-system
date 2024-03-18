@@ -13,7 +13,7 @@ const ChannelSourceRequestsPendingActions = (
 ) => {
 	return (
 		<div className='flex items-center gap-2'>
-			<ChannelSourceRequestApproveDialog channelSourceRequestId={props?.channelSourceRequestId}>
+			<ChannelSourceRequestApproveDialog {...props}>
 				<MaterialSymbolsCheckSmall />
 			</ChannelSourceRequestApproveDialog>
 

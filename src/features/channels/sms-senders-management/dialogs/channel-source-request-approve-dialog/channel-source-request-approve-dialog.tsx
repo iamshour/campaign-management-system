@@ -7,17 +7,11 @@ const ChannelSourceRequestApproveDialogContent = lazy(() => import("./channel-so
 //#endregion
 
 interface ChannelSourceRequestApproveDialogProps
-	extends Pick<
-		React.ComponentPropsWithoutRef<typeof ChannelSourceRequestApproveDialogContent>,
-		"channelSourceRequestId"
-	> {
+	extends Omit<React.ComponentPropsWithoutRef<typeof ChannelSourceRequestApproveDialogContent>, "closeDialog"> {
 	children: React.ReactNode
 }
 
-const ChannelSourceRequestApproveDialog = ({
-	channelSourceRequestId,
-	children,
-}: ChannelSourceRequestApproveDialogProps) => {
+const ChannelSourceRequestApproveDialog = ({ children, ...props }: ChannelSourceRequestApproveDialogProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.channelSourceRequestApprove" })
 
 	const [open, setOpen] = useState(false)
@@ -30,11 +24,8 @@ const ChannelSourceRequestApproveDialog = ({
 				</Dialog.Trigger>
 			</Tooltip>
 
-			<Dialog.Content className='w-[395px] xs:h-[209px] sm:h-[217px]' title={t("title")}>
-				<ChannelSourceRequestApproveDialogContent
-					channelSourceRequestId={channelSourceRequestId}
-					closeDialog={() => setOpen(false)}
-				/>
+			<Dialog.Content className='h-[233px] w-[390px] sm:h-[241px]' title={t("title")}>
+				<ChannelSourceRequestApproveDialogContent {...props} closeDialog={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>
 	)

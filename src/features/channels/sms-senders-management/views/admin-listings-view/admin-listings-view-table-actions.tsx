@@ -7,6 +7,8 @@ import ChannelSourceListingSuspendDialog from "@/features/channels/sms-senders-m
 import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
 import { Fragment } from "react"
 import { useTranslation } from "react-i18next"
+
+import DeleteChannelSourceListingDialog from "../../dialogs/delete-channel-source-listing-dialog/delete-channel-source-listing-dialog"
 //#endregion
 
 const AdminListingsViewTableActions = ({
@@ -17,10 +19,9 @@ const AdminListingsViewTableActions = ({
 
 	return (
 		<ActionsDropdown>
-			<ActionsDropdown.Item>{t("edit")}</ActionsDropdown.Item>
-			<ActionsDropdown.Separator />
-
-			<ActionsDropdown.Item>{t("delete")}</ActionsDropdown.Item>
+			<DeleteChannelSourceListingDialog {...props}>
+				<ActionsDropdown.Item>{t("delete")}</ActionsDropdown.Item>
+			</DeleteChannelSourceListingDialog>
 
 			{(Object.entries(allowedActionsPerStatusMap) as [ActionType, ChannelSourceListingStatus[]][]).map(
 				([actionType, allowedStatuses]) => {
