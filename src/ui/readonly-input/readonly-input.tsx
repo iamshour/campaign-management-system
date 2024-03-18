@@ -12,19 +12,20 @@ import Label from "../label/label"
 import cn from "../utils/cn"
 
 export interface ReadonlyInputProps
-	extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
+	extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "readOnly" | "size">,
 		VariantProps<typeof inputVariants> {
 	label?: string
 	leftIcon?: IconType
 	rightIcon?: IconType
+	showLock?: boolean
 }
 
 const ReadonlyInput = ({
 	className,
 	label,
 	leftIcon: LeftIcon,
-	readOnly,
 	rightIcon: RightIcon,
+	showLock,
 	size,
 	value,
 	variant,
@@ -45,13 +46,13 @@ const ReadonlyInput = ({
 				{value}
 			</p>
 
-			{readOnly && (
+			{showLock && (
 				<MaterialSymbolsLock
 					className={cn(iconVariants({ className: "end-3 h-4 w-4 text-[#9899A7]", size, variant }))}
 				/>
 			)}
 
-			{!readOnly && !!RightIcon && (
+			{!showLock && !!RightIcon && (
 				<RightIcon className={cn(iconVariants({ className: "end-3", size, variant }))} data-hasvalue={!!value} />
 			)}
 		</div>
