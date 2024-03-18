@@ -2,49 +2,53 @@
 import type { ChannelSourceListing } from "@/features/channels/common/types/data.types"
 
 import getCountryName from "@/core/utils/get-country-name"
-import { useUpdateChannelSourceListingStatusMutation } from "@/features/channels/sms-senders-management/api"
+import { useDeleteChannelSourceListingMutation } from "@/features/channels/sms-senders-management/api"
 import { Button } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import toast from "react-hot-toast"
 import { Trans, useTranslation } from "react-i18next"
 //#endregion
 
-export interface ChannelSourceListingActivateDialogContentProps extends Pick<ChannelSourceListing, "country" | "id"> {
+export interface DeleteChannelSourceListingDialogContentProps
+	extends Pick<ChannelSourceListing, "company" | "country" | "id"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
 	closeDialog: () => void
+
+	/**
+	 * Channel Source Id, to be deleted
+	 */
+	id: string
 }
 
-const ChannelSourceListingActivateDialogContent = ({
+const DeleteChannelSourceListingDialogContent = ({
 	closeDialog,
+	company,
 	country,
 	id,
-}: ChannelSourceListingActivateDialogContentProps) => {
-	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.channelSourceListingActivate" })
+}: DeleteChannelSourceListingDialogContentProps) => {
+	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.deleteChannelSourceListing" })
 
 	const { closeDropdown } = useDropdownStateContext()
 
-	const [triggerUpdateChannelSourceListingStatus, { isLoading }] = useUpdateChannelSourceListingStatusMutation()
+	const [triggerDeleteChannelSource, { isLoading }] = useDeleteChannelSourceListingMutation()
 
 	const onSubmit = async () => {
-		await triggerUpdateChannelSourceListingStatus({
-			channelSourceListingId: id,
-			channelSourceListingStatus: "APPROVED",
-		}).unwrap()
+		await triggerDeleteChannelSource(id).unwrap()
 
 		toast.success(t("successToast"))
 
-		closeDropdown()
 		closeDialog()
+		closeDropdown()
 	}
 
 	return (
 		<div className='flex flex-1 flex-col justify-between gap-6 overflow-y-auto p-2'>
 			<p>
 				<Trans
-					i18nKey='senders-management:dialogs.channelSourceListingActivate.message'
-					values={{ country: getCountryName(country) }}
+					i18nKey='senders-management:dialogs.deleteChannelSourceListing.message'
+					values={{ company: company.name, country: getCountryName(country) }}
 				/>
 			</p>
 
@@ -55,4 +59,4 @@ const ChannelSourceListingActivateDialogContent = ({
 	)
 }
 
-export default ChannelSourceListingActivateDialogContent
+export default DeleteChannelSourceListingDialogContent

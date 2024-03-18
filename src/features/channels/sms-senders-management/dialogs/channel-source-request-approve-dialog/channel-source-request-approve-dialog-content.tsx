@@ -1,16 +1,15 @@
 //#region Import
+import type { ChannelSourceRequest } from "@/features/channels/sms-senders-management/types/data.types"
+
+import getCountryName from "@/core/utils/get-country-name"
 import { useUpdateChannelSourceRequestActionMutation } from "@/features/channels/sms-senders-management/api"
 import { Button } from "@/ui"
 import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
+import { Trans, useTranslation } from "react-i18next"
 //#endregion
 
-export interface ChannelSourceRequestApproveDialogContentProps {
-	/**
-	 * Channel Source request Id
-	 */
-	channelSourceRequestId: string
-
+export interface ChannelSourceRequestApproveDialogContentProps
+	extends Pick<ChannelSourceRequest, "channelSourceName" | "channelSourceRequestId" | "country"> {
 	/**
 	 * Callback function used to close the dialog
 	 */
@@ -18,8 +17,10 @@ export interface ChannelSourceRequestApproveDialogContentProps {
 }
 
 const ChannelSourceRequestApproveDialogContent = ({
+	channelSourceName,
 	channelSourceRequestId,
 	closeDialog,
+	country,
 }: ChannelSourceRequestApproveDialogContentProps) => {
 	const { t } = useTranslation("senders-management", { keyPrefix: "dialogs.channelSourceRequestApprove" })
 
@@ -34,10 +35,15 @@ const ChannelSourceRequestApproveDialogContent = ({
 	}
 
 	return (
-		<div className='flex flex-col gap-8 p-2'>
-			<p>{t("message")}</p>
+		<div className='flex flex-1 flex-col justify-between gap-8 overflow-y-auto p-2'>
+			<p>
+				<Trans
+					i18nKey={`senders-management:dialogs.channelSourceRequestApprove.message`}
+					values={{ country: getCountryName(country), name: channelSourceName }}
+				/>
+			</p>
 
-			<Button className='ms-auto w-full px-10 sm:w-max' loading={isLoading} onClick={handleSubmit}>
+			<Button className='ms-auto w-full shrink-0 px-10 sm:w-max' loading={isLoading} onClick={handleSubmit}>
 				{t("submit")}
 			</Button>
 		</div>
