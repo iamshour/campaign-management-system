@@ -10,7 +10,7 @@ import { getContactAdvancedFilter, getContactFilter, getContactSearchFilter } fr
 import { useSubmitExportsFileMutation } from "@/features/people/exports/api"
 import exportsFieldsOptions from "@/features/people/exports/constants/exports-fields-options"
 import exportSchema, { type ExportSchemaType } from "@/features/people/exports/schemas/export-schema"
-import { Button, Checkbox, Footer, Form, Input, useForm } from "@/ui"
+import { Button, Checkbox, Footer, Form, Input, Label, useForm } from "@/ui"
 import { cleanObject, generateFileName, omit } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMemo } from "react"
@@ -136,12 +136,8 @@ const ExportFieldsDialogContent = ({ exportsType, onDialogClose, segmentId }: Ex
 					control={form.control}
 					name='fileName'
 					render={({ field }) => (
-						<Form.Item>
-							<Form.Label>{t("dialogs.exportFields.fields.fileName.label")}</Form.Label>
-							<Form.Control>
-								<Input placeholder={t("dialogs.exportFields.fields.fileName.placeholder")} {...field} />
-							</Form.Control>
-							<Form.Message />
+						<Form.Item label={t("dialogs.exportFields.fields.fileName.label")}>
+							<Input placeholder={t("dialogs.exportFields.fields.fileName.placeholder")} {...field} />
 						</Form.Item>
 					)}
 				/>
@@ -151,47 +147,47 @@ const ExportFieldsDialogContent = ({ exportsType, onDialogClose, segmentId }: Ex
 					name='exportedFields'
 					render={() => (
 						<Form.Item className='flex flex-col overflow-hidden'>
-							<div className='mb-2 flex w-full items-end justify-between'>
-								<Form.Label className='pb-0'>{t("dialogs.exportFields.fields.selectExportFields.label")}</Form.Label>
-								<Button className='-mb-1 h-max p-0 pe-2' onClick={onSelectAll} size='sm' type='button' variant='text'>
-									{isAllSelected
-										? t("dialogs.exportFields.buttons.clearAll")
-										: t("dialogs.exportFields.buttons.selectAll")}
-								</Button>
-							</div>
+							<>
+								<div className='mb-2 flex w-full items-end justify-between'>
+									<Label className='pb-0'>{t("dialogs.exportFields.fields.selectExportFields.label")}</Label>
+									<Button className='-mb-1 h-max p-0 pe-2' onClick={onSelectAll} size='sm' type='button' variant='text'>
+										{isAllSelected
+											? t("dialogs.exportFields.buttons.clearAll")
+											: t("dialogs.exportFields.buttons.selectAll")}
+									</Button>
+								</div>
 
-							<div className='space-y-3 overflow-y-auto rounded-xl bg-[#f7f7f7] p-4'>
-								{exportsFieldsOptions.map(({ label, value }, idx) => (
-									<Form.Field
-										control={form.control}
-										key={`${value}-${idx}`}
-										name='exportedFields'
-										render={({ field }) => (
-											<Form.Item className='flex flex-row items-center space-x-3 space-y-0' key={`${value}-${idx}`}>
-												<Form.Control>
-													<Checkbox
-														checked={field.value?.includes(value)}
-														onCheckedChange={(checked) =>
-															checked
-																? field.onChange([...field.value, value])
-																: field.onChange(field.value?.filter((i) => i !== value))
-														}
-													/>
-												</Form.Control>
-												<Form.Label
-													className={twMerge(
-														"cursor-pointer pb-0 transition-basic hover:text-primary-900",
-														field.value?.includes(value) && "text-primary-900"
-													)}>
-													{t(label)}
-												</Form.Label>
-											</Form.Item>
-										)}
-									/>
-								))}
-							</div>
-
-							<Form.Message />
+								<div className='space-y-3 overflow-y-auto rounded-xl bg-[#f7f7f7] p-4'>
+									{exportsFieldsOptions.map(({ label, value }, idx) => (
+										<Form.Field
+											control={form.control}
+											key={`${value}-${idx}`}
+											name='exportedFields'
+											render={({ field }) => (
+												<Form.Item className='flex flex-row items-center space-x-3 space-y-0' key={`${value}-${idx}`}>
+													<>
+														<Checkbox
+															checked={field.value?.includes(value)}
+															onCheckedChange={(checked) =>
+																checked
+																	? field.onChange([...field.value, value])
+																	: field.onChange(field.value?.filter((i) => i !== value))
+															}
+														/>
+														<Label
+															className={twMerge(
+																"cursor-pointer pb-0 transition-basic hover:text-primary-900",
+																field.value?.includes(value) && "text-primary-900"
+															)}>
+															{t(label)}
+														</Label>
+													</>
+												</Form.Item>
+											)}
+										/>
+									))}
+								</div>
+							</>
 						</Form.Item>
 					)}
 				/>

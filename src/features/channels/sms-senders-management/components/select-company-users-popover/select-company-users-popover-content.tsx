@@ -1,6 +1,6 @@
 //#region Import
 import { useGetUsersByCompanyIdQuery } from "@/features/channels/sms-senders-management/api"
-import { SelectAsyncOptionsPopoverContent } from "@/ui"
+import { SelectAsyncPopoverContent } from "@/ui"
 import { useState } from "react"
 //#endregion
 
@@ -19,14 +19,7 @@ const SelectCompanyUsersPopoverContent = ({ companyId }: { companyId: string }) 
 		}
 	)
 
-	return (
-		<SelectAsyncOptionsPopoverContent
-			loading={loading}
-			onSearch={setSearchTerm}
-			options={list}
-			searchTerm={searchTerm}
-		/>
-	)
+	return <SelectAsyncPopoverContent loading={loading} onSearch={setSearchTerm} options={list} searchTerm={searchTerm} />
 }
 
 export default SelectCompanyUsersPopoverContent

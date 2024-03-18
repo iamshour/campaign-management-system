@@ -32,8 +32,7 @@ const Topbar = () => {
 
 			<div className='flex items-center gap-2'>
 				<SearchInput
-					className='w-max'
-					inputClassName='ring-[#054060]/30'
+					className='w-max [&_input]:ring-[#054060]/30'
 					// eslint-disable-next-line no-console
 					onChange={(searchTerm) => console.log(searchTerm)}
 					placeholder={t("top-bar.search")}

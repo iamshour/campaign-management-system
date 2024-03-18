@@ -14,7 +14,6 @@ import cn from "../utils/cn"
 export interface ReadonlyInputProps
 	extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
 		VariantProps<typeof inputVariants> {
-	inputClassName?: string
 	label?: string
 	leftIcon?: IconType
 	rightIcon?: IconType
@@ -22,32 +21,28 @@ export interface ReadonlyInputProps
 
 const ReadonlyInput = ({
 	className,
-	inputClassName,
 	label,
 	leftIcon: LeftIcon,
 	readOnly,
 	rightIcon: RightIcon,
 	size,
+	value,
 	variant,
-	...props
 }: ReadonlyInputProps) => (
 	<div className='flex flex-col'>
 		{label && <Label size={size}>{label}</Label>}
 		<div className={twMerge("group !relative h-max w-[340px] max-w-full overflow-hidden", className)}>
 			{!!LeftIcon && (
-				<LeftIcon
-					className={cn(iconVariants({ className: "start-3", size, variant }))}
-					data-hasvalue={!!props?.value}
-				/>
+				<LeftIcon className={cn(iconVariants({ className: "start-3", size, variant }))} data-hasvalue={!!value} />
 			)}
 
 			<p
-				className={cn(inputVariants({ className: inputClassName, size, variant }), {
+				className={cn(inputVariants({ size, variant }), {
 					"!pe-10": !!RightIcon,
 					"!ps-10": !!LeftIcon,
 					block: true,
 				})}>
-				{props?.value}
+				{value}
 			</p>
 
 			{readOnly && (
@@ -57,7 +52,7 @@ const ReadonlyInput = ({
 			)}
 
 			{!readOnly && !!RightIcon && (
-				<RightIcon className={cn(iconVariants({ className: "end-3", size, variant }))} data-hasvalue={!!props?.value} />
+				<RightIcon className={cn(iconVariants({ className: "end-3", size, variant }))} data-hasvalue={!!value} />
 			)}
 		</div>
 	</div>

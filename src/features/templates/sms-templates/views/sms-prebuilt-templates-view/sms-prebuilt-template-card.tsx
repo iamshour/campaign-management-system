@@ -5,6 +5,7 @@ import WavySvg from "@/assets/prebuilt-template-card-wavy.svg?react"
 import templateLanguagesLocaleMap from "@/features/templates/common/constants/template-languages-local-map"
 import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
 import { memo } from "react"
+import { useTranslation } from "react-i18next"
 import { twMerge } from "tailwind-merge"
 //#endregion
 
@@ -22,6 +23,8 @@ const SmsPrebuiltTemplateCard = memo(
 	> & {
 		className?: string
 	}) => {
+		const { t } = useTranslation("sms-templates")
+
 		const backgroundToDisplay = backgroundImage?.length ? backgroundImage : "#4cb0e6"
 
 		return (
@@ -36,16 +39,16 @@ const SmsPrebuiltTemplateCard = memo(
 					 before:[content:""] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-32 after:bg-gradient-to-b after:from-black/0 after:to-black/30 after:[content:""]`}
 					style={{ background: `url(${backgroundToDisplay})` }}>
 					<p className='relative z-10 text-white'>
-						<span className='font-light'>Industry: </span>
+						<span className='font-light'>{t("components.smsPrebuiltTemplateCard.labels.industry")}: </span>
 						{industryName?.length ? industryName : "N/A"}
 					</p>
 					<p className='relative z-10 inline text-white'>
-						<span className='font-light'>Type: </span>
-						{type ? templateTypesLocaleMap[type] : "N/A"} |
+						<span className='font-light'>{t("components.smsPrebuiltTemplateCard.labels.type")}: </span>
+						{type ? t(templateTypesLocaleMap[type]) : "N/A"} |
 					</p>{" "}
 					<p className='relative z-10 inline text-white'>
-						<span className='font-light'>Language: </span>
-						{language?.length ? templateLanguagesLocaleMap[language] : "N/A"}
+						<span className='font-light'>{t("components.smsPrebuiltTemplateCard.labels.language")}: </span>
+						{language?.length ? t(templateLanguagesLocaleMap[language]) : "N/A"}
 					</p>
 				</div>
 

@@ -7,7 +7,7 @@ import { useUpdateChannelSourceRequestActionMutation } from "@/features/channels
 import ActionReasonForm from "@/features/channels/sms-senders-management/components/action-reason-form"
 import { Button } from "@/ui"
 import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
+import { Trans, useTranslation } from "react-i18next"
 
 import { ChannelSourceRequest } from "../../types/data.types"
 //#endregion
@@ -52,9 +52,14 @@ const ChannelSourceRequestRejectDialogContent = ({
 
 	return (
 		<ActionReasonForm
-			message={t("message", { country: getCountryName(country), sender: channelSourceName })}
+			message={
+				<Trans
+					i18nKey={`senders-management:dialogs.channelSourceRequestRejection.${action}.message`}
+					values={{ country: getCountryName(country), sender: channelSourceName }}
+				/>
+			}
 			onSubmit={onSubmit}>
-			<Button className='ms-auto w-max px-10' loading={isLoading} type='submit'>
+			<Button className='ms-auto w-max shrink-0 px-10' loading={isLoading} type='submit'>
 				{t("submit")}
 			</Button>
 		</ActionReasonForm>

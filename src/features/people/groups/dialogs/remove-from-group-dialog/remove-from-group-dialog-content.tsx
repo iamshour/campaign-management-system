@@ -92,12 +92,8 @@ const RemoveMultiContactsFromGroup = ({ closeDialog, id }: RemoveFromGroupDialog
 							control={form.control}
 							name='prompt'
 							render={({ field }) => (
-								<Form.Item>
-									<Form.Label>{t("ui:prompt-input.label", { count: nbOfContactsToRemove })}</Form.Label>
-									<Form.Control>
-										<Input placeholder={t("ui:prompt-input.placeholder")} size='lg' {...field} />
-									</Form.Control>
-									<Form.Message />
+								<Form.Item label={t("ui:prompt-input.label", { count: nbOfContactsToRemove })} size='lg'>
+									<Input placeholder={t("ui:prompt-input.placeholder")} {...field} />
 								</Form.Item>
 							)}
 						/>

@@ -8,6 +8,7 @@ import SelectGroupsPopover from "@/features/people/groups/components/select-grou
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
 import { memo, useCallback } from "react"
+import { useTranslation } from "react-i18next"
 
 import type { ContactTableFiltersType } from "../types"
 //#endregion
@@ -16,6 +17,8 @@ import type { ContactTableFiltersType } from "../types"
  * Filter fields (content) used in All Pages that fetches Contacts ("./contacts", "./groups/:id/add-contacts")
  */
 const ContactsFiltersContent = memo(() => {
+	const { t } = useTranslation()
+
 	const dispatch = useDispatch()
 
 	const { dataViewKey } = useDataViewContext()
@@ -37,11 +40,13 @@ const ContactsFiltersContent = memo(() => {
 			/>
 			<SelectTagsPopover
 				isMulti
+				label={t("contacts:components.tagsPopover.label")}
 				selection={filters?.tags?.map((value) => ({ label: value, value })) || []}
 				updateSelection={(tags) => updateState({ tags: getListOfKey(tags, "value") })}
 			/>
 			<SelectGroupsPopover
 				isMulti
+				label={t("groups:components.groupsPopover.label")}
 				selection={filters?.groups || []}
 				updateSelection={(groups) => updateState({ groups })}
 			/>

@@ -10,7 +10,7 @@ import { twMerge } from "tailwind-merge"
 import * as z from "zod"
 
 import { useBulkRequestsFormContext } from "./bulk-requests-form-context"
-import { type BulkRequestsFormSchemaType, emptyListingField, fieldsToRender } from "./configs"
+import { type BulkRequestsFormSchemaType, defaultEmptyField, fieldsToRender } from "./configs"
 //#endregion
 
 export interface BulkRequestsFormFieldProps {
@@ -40,16 +40,17 @@ const BulkRequestsFormField = ({ control, removeType, SenderRequestsGroupsIdx }:
 
 	return (
 		<>
-			{fields.map((_, singleRequestIdx) => {
+			{fields?.map((_, singleRequestIdx) => {
 				const bulkListingsGroupsErrors = errors ? errors?.bulkListingsGroups : []
 
 				const errorsInListings = bulkListingsGroupsErrors
 					? bulkListingsGroupsErrors[SenderRequestsGroupsIdx as keyof typeof bulkListingsGroupsErrors]
 					: undefined
 
-				const errorMessage = errorsInListings
-					? (errorsInListings as any)?.listingsFields[singleRequestIdx]?.message
-					: undefined
+				const errorMessage =
+					!!errorsInListings && "listingsFields" in errorsInListings
+						? (errorsInListings as any)?.listingsFields[singleRequestIdx]?.message
+						: undefined
 
 				return (
 					<div
@@ -64,18 +65,13 @@ const BulkRequestsFormField = ({ control, removeType, SenderRequestsGroupsIdx }:
 									control={control}
 									name={`bulkListingsGroups.${SenderRequestsGroupsIdx}.listingsFields.${singleRequestIdx}.country`}
 									render={({ field }) => (
-										<Form.Item>
-											<Form.Control>
-												<SelectCountryPopover
-													className='[&>button]:text-base [&>button]:font-normal'
-													label={`${t("channels-common:fields.country")} *`}
-													onChange={field.onChange}
-													ref={field.ref}
-													size='lg'
-													value={field.value}
-												/>
-											</Form.Control>
-											<Form.Message />
+										<Form.Item label={t("channels-common:fields.country")} required size='lg'>
+											<SelectCountryPopover
+												className='[&>button]:text-base [&>button]:font-normal'
+												onChange={field.onChange}
+												ref={field.ref}
+												value={field.value}
+											/>
 										</Form.Item>
 									)}
 								/>
@@ -84,17 +80,12 @@ const BulkRequestsFormField = ({ control, removeType, SenderRequestsGroupsIdx }:
 									control={control}
 									name={`bulkListingsGroups.${SenderRequestsGroupsIdx}.listingsFields.${singleRequestIdx}.sampleContent`}
 									render={({ field }) => (
-										<Form.Item>
-											<Form.Control>
-												<TextareaPopover
-													className='self-start [&>button]:text-base [&>button]:font-normal'
-													label={`${t("channels-common:fields.sampleContent")} *`}
-													onValueChange={field.onChange}
-													size='lg'
-													value={field.value}
-												/>
-											</Form.Control>
-											<Form.Message />
+										<Form.Item label={t("channels-common:fields.sampleContent")} required size='lg'>
+											<TextareaPopover
+												className='self-start [&>button]:text-base [&>button]:font-normal'
+												onValueChange={field.onChange}
+												value={field.value}
+											/>
 										</Form.Item>
 									)}
 								/>
@@ -104,16 +95,8 @@ const BulkRequestsFormField = ({ control, removeType, SenderRequestsGroupsIdx }:
 										control={control}
 										name={`bulkListingsGroups.${SenderRequestsGroupsIdx}.listingsFields.${singleRequestIdx}.status`}
 										render={({ field }) => (
-											<Form.Item>
-												<Form.Control>
-													<SelectSingleListingStatusPopover
-														onValueChange={field.onChange}
-														required
-														size='lg'
-														value={field.value}
-													/>
-												</Form.Control>
-												<Form.Message />
+											<Form.Item label={t("components.selectSingleListingStatusPopover.label")} required size='lg'>
+												<SelectSingleListingStatusPopover onValueChange={field.onChange} value={field.value} />
 											</Form.Item>
 										)}
 									/>
@@ -147,7 +130,7 @@ const BulkRequestsFormField = ({ control, removeType, SenderRequestsGroupsIdx }:
 			<div className='mt-4 flex w-full items-center justify-between'>
 				<Button
 					className='w-max gap-2'
-					onClick={() => append([emptyListingField as any])}
+					onClick={() => append([defaultEmptyField[funnelKey] as any])}
 					size='sm'
 					type='button'
 					variant='outline'>

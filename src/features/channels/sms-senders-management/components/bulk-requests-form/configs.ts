@@ -1,6 +1,4 @@
 //#region Import
-import type { ListingField } from "./types"
-
 import ChannelSourceBulkSchema from "../../schemas/channel-source-bulk-schema"
 import ChannelSourceListingBulkSchema from "../../schemas/channel-source-listing-bulk-schema"
 import ChannelSourceRequestBulkSchema from "../../schemas/channel-source-request-bulk-schema"
@@ -15,8 +13,6 @@ export type BulkRequestsFormSchemaType =
 
 type InfoOptions = "company" | "email" | "sender"
 type FieldOptions = "country" | "sampleContent" | "status"
-
-export const emptyListingField: ListingField = { country: undefined, sampleContent: undefined }
 
 export const defaultEmptyField: Record<BulkFunnelKey, Record<FieldOptions, undefined>> = {
 	CHANNEL_LISTING: { country: undefined, sampleContent: undefined, status: undefined },

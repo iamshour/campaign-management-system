@@ -14,7 +14,12 @@ const CreateGroupContent = lazy(
 type SelectGroupsWithCreatePopover = React.ComponentPropsWithoutRef<typeof SelectGroupsPopover> &
 	Required<Pick<React.ComponentPropsWithoutRef<typeof CreateGroupContent>, "onCreateSuccess">>
 
-const SelectGroupsWithCreatePopover = ({ className, onCreateSuccess, ...props }: SelectGroupsWithCreatePopover) => {
+const SelectGroupsWithCreatePopover = ({
+	className,
+	onCreateSuccess,
+	size,
+	...props
+}: SelectGroupsWithCreatePopover) => {
 	const { t } = useTranslation("groups")
 
 	const [popoverOpen, setPopoverOpen] = useState(false)
@@ -22,7 +27,11 @@ const SelectGroupsWithCreatePopover = ({ className, onCreateSuccess, ...props }:
 	return (
 		<div className={twMerge("relative w-full", className)}>
 			<Popover onOpenChange={setPopoverOpen} open={popoverOpen}>
-				<Popover.Trigger className='absolute -top-0.5 end-2 z-10 w-max text-sm font-bold text-primary-500 transition-colors hover:text-primary-800'>
+				<Popover.Trigger
+					className={twMerge(
+						"absolute end-2 z-10 w-max text-sm font-bold text-primary-500 transition-colors hover:text-primary-800",
+						size === "lg" ? "-top-6" : "-top-0.5"
+					)}>
 					{t("components.groupsPopover.createNewPopover.title")}
 				</Popover.Trigger>
 				<Popover.Content align='end' alignOffset={-8} className='p-2' side='bottom' sideOffset={2}>
@@ -34,7 +43,7 @@ const SelectGroupsWithCreatePopover = ({ className, onCreateSuccess, ...props }:
 				</Popover.Content>
 			</Popover>
 
-			<SelectGroupsPopover {...props} />
+			<SelectGroupsPopover size={size} {...props} />
 		</div>
 	)
 }

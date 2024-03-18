@@ -33,12 +33,8 @@ const GroupForm = ({ children, className, defaultValues, onSubmit, size }: Group
 					control={form.control}
 					name='groupName'
 					render={({ field }) => (
-						<Form.Item>
-							<Form.Label size={size}>{t("fields.name.label")}</Form.Label>
-							<Form.Control>
-								<Input placeholder={t("fields.description.placeholder")} size={size} {...field} />
-							</Form.Control>
-							<Form.Message />
+						<Form.Item label={t("fields.name.label")} size={size}>
+							<Input placeholder={t("fields.name.placeholder")} {...field} />
 						</Form.Item>
 					)}
 				/>
@@ -46,12 +42,8 @@ const GroupForm = ({ children, className, defaultValues, onSubmit, size }: Group
 					control={form.control}
 					name='groupDescription'
 					render={({ field }) => (
-						<Form.Item className='pb-4'>
-							<Form.Label size={size}>{t("fields.description.label")}</Form.Label>
-							<Form.Control>
-								<Input placeholder={t("fields.description.placeholder")} size={size} {...field} />
-							</Form.Control>
-							<Form.Message />
+						<Form.Item className='pb-4' label={t("fields.description.label")} size={size}>
+							<Input placeholder={t("fields.description.placeholder")} {...field} />
 						</Form.Item>
 					)}
 				/>

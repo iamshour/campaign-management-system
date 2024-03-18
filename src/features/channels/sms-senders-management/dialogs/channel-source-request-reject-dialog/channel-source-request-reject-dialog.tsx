@@ -25,7 +25,7 @@ const ChannelSourceRequestRejectDialog = ({ action, children, ...props }: Channe
 				</Dialog.Trigger>
 			</Tooltip>
 
-			<Dialog.Content className='h-[401px] w-[416px] xs:h-[377px] sm:h-[385px]' title={t("title")}>
+			<Dialog.Content className='h-[379px] w-[416px] sm:h-[411px]' title={t("title")}>
 				<ChannelSourceRequestRejectDialogContent action={action} closeDialog={() => setOpen(false)} {...props} />
 			</Dialog.Content>
 		</Dialog>

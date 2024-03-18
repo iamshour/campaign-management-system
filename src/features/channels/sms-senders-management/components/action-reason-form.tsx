@@ -44,12 +44,8 @@ const ActionReasonForm = ({ children, message, onSubmit }: ActionReasonFormProps
 					control={form.control}
 					name='reason'
 					render={({ field }) => (
-						<Form.Item className='col-span-2 max-w-full'>
-							<Form.Label>{t("label")}</Form.Label>
-							<Form.Control>
-								<Textarea className='h-[100px]  rounded-md text-sm' placeholder={t("placeholder")} {...field} />
-							</Form.Control>
-							<Form.Message />
+						<Form.Item className='col-span-2 max-w-full' label={t("label")} required>
+							<Textarea className='h-[100px] rounded-md text-sm' placeholder={t("placeholder")} {...field} />
 						</Form.Item>
 					)}
 				/>

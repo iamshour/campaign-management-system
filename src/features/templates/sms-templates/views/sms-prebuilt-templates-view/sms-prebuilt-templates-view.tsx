@@ -41,7 +41,7 @@ const SmsPrebuiltTemplatesView = ({
 
 			<div className='flex h-full w-full flex-1 flex-col overflow-hidden p-4 pb-0'>
 				<SearchInput
-					className='mb-4'
+					className='mb-4 w-[14rem] !max-w-full md:w-[18rem]'
 					onChange={(searchTerm) => dispatch(updateSearch({ [prebuiltTemplatesGridKey]: searchTerm }))}
 					value={searchTerm}
 				/>

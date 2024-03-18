@@ -4,9 +4,12 @@ import useSmsTemplateBody from "@/features/templates/sms-templates/hooks/useSmsT
 import { Button, Form, Textarea } from "@/ui"
 import { useEffect, useRef } from "react"
 import { useFormContext } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 //#endregion
 
 const SmsTemplateBodyTextarea = () => {
+	const { t } = useTranslation("templates-common", { keyPrefix: "components.smsTemplateBuilder" })
+
 	const { control, setValue, watch } = useFormContext()
 
 	const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -86,19 +89,15 @@ const SmsTemplateBodyTextarea = () => {
 				control={control}
 				name='body'
 				render={({ field }) => (
-					<Form.Item className='col-span-2'>
-						<Form.Label>Template Body *</Form.Label>
-						<Form.Control>
-							<Textarea
-								className='resize-y bg-white !transition-none'
-								placeholder='Body goes here'
-								rows={3}
-								{...field}
-								onKeyDown={handleOnKeyDown}
-								ref={textareaRef}
-							/>
-						</Form.Control>
-						<Form.Message />
+					<Form.Item className='col-span-2 max-w-full' label={t("fields.body.label")} required>
+						<Textarea
+							className='resize-y bg-white !transition-none'
+							placeholder={t("fields.body.placeholder")}
+							rows={3}
+							{...field}
+							onKeyDown={handleOnKeyDown}
+							ref={textareaRef}
+						/>
 					</Form.Item>
 				)}
 			/>
@@ -106,11 +105,12 @@ const SmsTemplateBodyTextarea = () => {
 			<div className='mt-2 flex flex-row items-start justify-between'>
 				<div className='flex flex-row text-xs'>
 					<p className='my-auto pr-3'>
-						<span className='mr-1 text-[#8F8F8F]'>Charcters:</span>
+						<span className='mr-1 text-[#8F8F8F]'>{t("sectionHeadings.messageText.counter.characters")}:</span>
 						{charactersCountInCurrentPart}/{maxCharactersPerPart}
 					</p>
 					<p className='my-auto border-l-2 border-[#8F8F8F] pl-3'>
-						<span className='mr-1 text-[#8F8F8F]'>SMS Parts:</span>({partsCount}/{MAX_PARTS})
+						<span className='mr-1 text-[#8F8F8F]'>{t("sectionHeadings.messageText.counter.parts")}:</span>({partsCount}/
+						{MAX_PARTS})
 					</p>
 				</div>
 				<Button
@@ -118,7 +118,7 @@ const SmsTemplateBodyTextarea = () => {
 					size='sm'
 					type='button'
 					variant='secondary'>
-					Add Placeholder
+					{t("actions.addPlaceholder")}
 				</Button>
 			</div>
 		</div>

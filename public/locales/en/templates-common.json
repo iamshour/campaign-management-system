@@ -31,6 +31,10 @@
 				},
 				"language": {
 					"label": "Template Language"
+				},
+				"body": {
+					"label": "Template Body",
+					"placeholder": "Add template body"
 				}
 			},
 			"sectionHeadings": {
@@ -40,11 +44,16 @@
 				},
 				"messageText": {
 					"label": "Message Text",
-					"description": "Fill your template text"
+					"description": "Fill your template text",
+					"counter": {
+						"characters": "Characters",
+						"parts": "SMS Parts"
+					}
 				}
 			},
 			"actions": {
-				"cancel": "Cancel"
+				"cancel": "Cancel",
+				"addPlaceholder": "Add Placeholder"
 			}
 		}
 	},

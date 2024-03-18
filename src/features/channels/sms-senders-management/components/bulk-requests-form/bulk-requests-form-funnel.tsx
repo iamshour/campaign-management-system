@@ -43,19 +43,14 @@ const BulkRequestsFormFunnel = ({ bulkListingsGroups, control }: BulkRequestsFor
 						control={control}
 						name={`bulkListingsGroups.${SenderRequestsGroupsIdx}.templateType`}
 						render={({ field }) => (
-							<Form.Item>
-								<Form.Control>
-									<SelectSingleTemplateTypePopover
-										label='Template Type *'
-										onValueChange={(selectedType) => {
-											onTypeSelect(selectedType)
-											field.onChange(selectedType)
-										}}
-										size='lg'
-										value={field.value}
-									/>
-								</Form.Control>
-								<Form.Message />
+							<Form.Item label='Template Type' required size='lg'>
+								<SelectSingleTemplateTypePopover
+									onValueChange={(selectedType) => {
+										onTypeSelect(selectedType)
+										field.onChange(selectedType)
+									}}
+									value={field.value}
+								/>
 							</Form.Item>
 						)}
 					/>

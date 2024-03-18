@@ -1,5 +1,5 @@
 //#region Import
-import { type OptionType, SelectAsyncOptionsPopoverContent } from "@/ui"
+import { type OptionType, SelectAsyncPopoverContent } from "@/ui"
 import { useState } from "react"
 //#endregion
 
@@ -24,7 +24,7 @@ const SelectExportedByPopoverContent = () => {
 	]
 
 	return (
-		<SelectAsyncOptionsPopoverContent
+		<SelectAsyncPopoverContent
 			loading={false}
 			onSearch={setSearchTerm}
 			options={list as OptionType[] | undefined}

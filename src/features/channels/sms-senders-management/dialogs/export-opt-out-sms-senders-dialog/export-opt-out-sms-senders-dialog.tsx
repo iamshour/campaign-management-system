@@ -22,7 +22,7 @@ const ExportOptOutSmsSendersDialog = ({ children }: ExportOptOutSmsSendersDialog
 		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
-			<Dialog.Content className='h-[241px] w-[382px] sm:h-[249px] sm:w-[390px]' title={t("title")}>
+			<Dialog.Content className='h-[243px] w-[382px] sm:h-[251px] sm:w-[390px]' title={t("title")}>
 				<ExportOptOutSmsSendersDialogContent onClose={() => setOpen(false)} />
 			</Dialog.Content>
 		</Dialog>

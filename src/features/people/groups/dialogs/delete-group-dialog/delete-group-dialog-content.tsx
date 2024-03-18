@@ -24,7 +24,7 @@ export interface DeleteGroupDialogContentProps {
 }
 
 const DeleteGroupDialogContent = ({ closeDialog, groupId }: DeleteGroupDialogContentProps) => {
-	const { t } = useTranslation("groups", { keyPrefix: "dialogs.delete-group" })
+	const { t } = useTranslation("groups", { keyPrefix: "" })
 
 	const [triggerDeleteGroup, { isLoading: isDeleteLoading }] = useDeleteGroupMutation()
 
@@ -37,7 +37,7 @@ const DeleteGroupDialogContent = ({ closeDialog, groupId }: DeleteGroupDialogCon
 	const [selectedGroupToMoveTo, setSelectedGroupToMoveTo] = useState<OptionType>()
 
 	const onSuccess = (message: string) => {
-		toast.success(t(message))
+		toast.success(t(`dialogs.delete-group.${message}`))
 		closeDialog()
 		closeDropdown()
 	}
@@ -65,10 +65,11 @@ const DeleteGroupDialogContent = ({ closeDialog, groupId }: DeleteGroupDialogCon
 			{canGoToPrevStep && <BackButton className='absolute start-1.5 top-2' onClick={goToPrevStep} />}
 
 			{currentStep === 1 ? (
-				<p>{t("message")}</p>
+				<p>{t("dialogs.delete-group.message")}</p>
 			) : (
 				<SelectGroupsPopover
 					className='!w-full !max-w-full'
+					label={t("components.groupsPopover.label")}
 					selection={selectedGroupToMoveTo}
 					size='lg'
 					updateSelection={setSelectedGroupToMoveTo}
@@ -78,7 +79,7 @@ const DeleteGroupDialogContent = ({ closeDialog, groupId }: DeleteGroupDialogCon
 			<Footer>
 				{currentStep === 1 && (
 					<Button className='sm:w-[144px]' disabled={!canGoToNextStep} onClick={goToNextStep} variant='outline'>
-						{t("actions.move")}
+						{t("dialogs.delete-group.actions.move")}
 					</Button>
 				)}
 
@@ -87,7 +88,9 @@ const DeleteGroupDialogContent = ({ closeDialog, groupId }: DeleteGroupDialogCon
 					disabled={currentStep === 2 && !selectedGroupToMoveTo}
 					loading={isDeleteLoading || isMoveLoading}
 					onClick={handleDelete}>
-					{currentStep === 1 ? t("actions.delete") : t("actions.move-with-delete")}
+					{currentStep === 1
+						? t("dialogs.delete-group.actions.delete")
+						: t("dialogs.delete-group.actions.move-with-delete")}
 				</Button>
 			</Footer>
 		</div>

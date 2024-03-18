@@ -14,8 +14,8 @@ export type IndustryType = {
 	color: string
 	createdAt: string
 	description: string
-	icon: IndustryIconEnum
 	id: string
+	industryIcon: IndustryIconEnum
 	name: string
 }
 

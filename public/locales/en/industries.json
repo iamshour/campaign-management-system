@@ -1,9 +1,23 @@
 {
 	"fields": {
-		"icon": "Icon",
-		"name": "Industry Name",
-		"description": "Industry Description",
-		"createdAt": "Creation Date"
+		"icon": {
+			"label": "Icon",
+			"placeholder": "Select icon"
+		},
+		"name": {
+			"label": "Industry Name",
+			"placeholder": "Enter name"
+		},
+		"description": {
+			"label": "Industry Description",
+			"placeholder": "Enter description"
+		},
+		"createdAt": {
+			"label": "Creation date"
+		},
+		"color": {
+			"label": "Icon Color"
+		}
 	},
 	"table": {
 		"topbar": {

@@ -82,19 +82,15 @@ const BulkRequestsForm = ({ funnelKey, onSubmit }: BulkRequestsFormProps) => {
 									control={form.control}
 									name='basicInfo.company'
 									render={({ field }) => (
-										<Form.Item>
-											<Form.Control>
-												<SelectCompanyPopover
-													selection={field.value}
-													size='lg'
-													updateSelection={(option) => {
-														field.onChange(option)
-														// Clearing User Email when changing
-														form.setValue("basicInfo.email", { label: "", value: "" })
-													}}
-												/>
-											</Form.Control>
-											<Form.Message />
+										<Form.Item label={t("senders-management:components.companyPopover.label")} required size='lg'>
+											<SelectCompanyPopover
+												selection={field.value}
+												updateSelection={(option) => {
+													field.onChange(option)
+													// Clearing User Email when changing
+													form.setValue("basicInfo.email", { label: "", value: "" })
+												}}
+											/>
 										</Form.Item>
 									)}
 								/>
@@ -104,17 +100,13 @@ const BulkRequestsForm = ({ funnelKey, onSubmit }: BulkRequestsFormProps) => {
 										control={form.control}
 										name='basicInfo.email'
 										render={({ field }) => (
-											<Form.Item>
-												<Form.Control>
-													<SelectCompanyUsersPopover
-														companyId={selectedCompanyId}
-														disabled={!selectedCompanyId}
-														selection={field.value}
-														size='lg'
-														updateSelection={field.onChange}
-													/>
-												</Form.Control>
-												<Form.Message />
+											<Form.Item label={"senders-management:components.companyUsersPopover.label"} required size='lg'>
+												<SelectCompanyUsersPopover
+													companyId={selectedCompanyId}
+													disabled={!selectedCompanyId}
+													selection={field.value}
+													updateSelection={field.onChange}
+												/>
 											</Form.Item>
 										)}
 									/>
@@ -125,17 +117,8 @@ const BulkRequestsForm = ({ funnelKey, onSubmit }: BulkRequestsFormProps) => {
 										control={form.control}
 										name='basicInfo.sender'
 										render={({ field }) => (
-											<Form.Item>
-												<Form.Control>
-													<SenderNameInput
-														label={`${t("fields.sender")} *`}
-														name='sender'
-														onChange={field.onChange}
-														value={field.value}
-														variant='light'
-													/>
-												</Form.Control>
-												<Form.Message />
+											<Form.Item label={t("fields.sender")} required>
+												<SenderNameInput name='sender' onChange={field.onChange} value={field.value} variant='light' />
 											</Form.Item>
 										)}
 									/>

@@ -22,7 +22,7 @@ const EditContactDialog = ({ children, id }: EditContactDialogProps) => {
 		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 			<Dialog.Content
-				className='h-[765px] w-[382px] sm:h-[553px] sm:w-[746px] '
+				className='h-[813px] w-[382px] sm:h-[609px] sm:w-[746px]'
 				onInteractOutside={(e) => e.preventDefault()}
 				title={t("title")}>
 				<EditContactDialogContent closeDialog={() => setOpen(false)} id={id} />

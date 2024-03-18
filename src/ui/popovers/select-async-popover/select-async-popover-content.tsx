@@ -9,11 +9,11 @@ import type { OptionType } from "../../types"
 import Button from "../../button/button"
 import Command from "../../command/command"
 import Skeleton from "../../skeleton/skeleton"
-import { useSelectAsyncOptionsPopover } from "./select-async-options-popover"
+import { useSelectAsyncPopover } from "./select-async-popover"
 //#endregion
 
 // TODO: Handle Infinite Loading in Component to handle changing offset/limit Values
-const SelectAsyncOptionsPopoverContent = ({
+const SelectAsyncPopoverContent = ({
 	loading,
 	onSearch,
 	options = [],
@@ -27,7 +27,7 @@ const SelectAsyncOptionsPopoverContent = ({
 }) => {
 	const { t } = useTranslation("ui")
 
-	const { creatable, isMulti, maxLimit, selection, updateSelection } = useSelectAsyncOptionsPopover()
+	const { creatable, isMulti, maxLimit, selection, updateSelection } = useSelectAsyncPopover()
 
 	/**
 	 * Boolean to check if Limit of selected Entries has been reached (Only passed in case of Multi Selection)
@@ -171,4 +171,4 @@ const SelectAsyncOptionsPopoverContent = ({
 	)
 }
 
-export default SelectAsyncOptionsPopoverContent
+export default SelectAsyncPopoverContent

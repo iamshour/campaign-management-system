@@ -9,7 +9,6 @@ import MaterialSymbolsImagesmodeOutline from "~icons/material-symbols/imagesmode
 import { lazy, Suspense, useMemo } from "react"
 import { useFormContext } from "react-hook-form"
 import { useTranslation } from "react-i18next"
-import { twMerge } from "tailwind-merge"
 
 const BuilderPreviewBackgroundSection = lazy(() => import("./builder-preview-background-section"))
 
@@ -41,18 +40,10 @@ const SmsIndustryTemplateBuilderContent = () => {
 				control={control}
 				name='mostPopular'
 				render={({ field }) => (
-					<Form.Item className='flex flex-row items-center space-x-2'>
-						<Form.Control>
-							<Checkbox checked={field.value} onCheckedChange={(checked) => field.onChange(checked)} />
-						</Form.Control>
-						<Form.Label
-							className={twMerge(
-								"flex cursor-pointer flex-row items-center pb-0 transition-basic hover:text-primary-900",
-								!!field.value && "text-primary-900"
-							)}>
-							{t("mostPopularField.label")}
-						</Form.Label>
-						<Form.Message />
+					<Form.Item
+						className='flex-row-reverse items-center justify-end gap-2 space-x-2 [&_label]:cursor-pointer [&_label]:pb-0 [&_label]:transition-basic [&_label]:hover:text-primary-900'
+						label={t("mostPopularField.label")}>
+						<Checkbox checked={field.value} onCheckedChange={(checked) => field.onChange(checked)} />
 					</Form.Item>
 				)}
 			/>
@@ -74,18 +65,20 @@ const SmsIndustryTemplateBuilderContent = () => {
 					)}
 				</Suspense>
 
-				<PreviewTemplateCardDialog
-					backgroundImage={previewCardBackground}
-					body={smsTemplate?.body}
-					industryName={""}
-					language={smsTemplate?.language}
-					name={smsTemplate?.name}
-					type={smsTemplate?.type}>
-					<Button className='p-0' type='button' variant='link'>
-						Preview Card
-						<IconTooltip content={t("dropArea.previewCardIconTooltipContent")} />
-					</Button>
-				</PreviewTemplateCardDialog>
+				{!!previewCardBackground && (
+					<PreviewTemplateCardDialog
+						backgroundImage={previewCardBackground}
+						body={smsTemplate?.body}
+						industryName={""}
+						language={smsTemplate?.language}
+						name={smsTemplate?.name}
+						type={smsTemplate?.type}>
+						<Button className='p-0' type='button' variant='link'>
+							Preview Card
+							<IconTooltip content={t("dropArea.previewCardIconTooltipContent")} />
+						</Button>
+					</PreviewTemplateCardDialog>
+				)}
 			</div>
 		</>
 	)

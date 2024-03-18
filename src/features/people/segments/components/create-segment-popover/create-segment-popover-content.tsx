@@ -62,12 +62,8 @@ const CreateSegmentPopoverContent = ({ onClose }: CreateSegmentPopoverContentPro
 					control={form.control}
 					name='name'
 					render={({ field }) => (
-						<Form.Item>
-							<Form.Label size={"default"}>{t("fields.name.label")}*</Form.Label>
-							<Form.Control>
-								<Input placeholder={t("fields.name.placeholder")} size={"default"} {...field} />
-							</Form.Control>
-							<Form.Message />
+						<Form.Item label={t("fields.name.label")} required>
+							<Input placeholder={t("fields.name.placeholder")} {...field} />
 						</Form.Item>
 					)}
 				/>
@@ -75,12 +71,8 @@ const CreateSegmentPopoverContent = ({ onClose }: CreateSegmentPopoverContentPro
 					control={form.control}
 					name='description'
 					render={({ field }) => (
-						<Form.Item className='pb-4'>
-							<Form.Label size={"default"}>{t("fields.description.label")}</Form.Label>
-							<Form.Control>
-								<Input placeholder={t("fields.description.placeholder")} size={"default"} {...field} />
-							</Form.Control>
-							<Form.Message />
+						<Form.Item className='pb-4' label={t("fields.description.label")}>
+							<Input placeholder={t("fields.description.placeholder")} {...field} />
 						</Form.Item>
 					)}
 				/>

@@ -1,5 +1,5 @@
 //#region Import
-import { SelectMultiOptionsPopover } from "@/ui"
+import { Label, SelectMultiOptionsPopover } from "@/ui"
 import { useTranslation } from "react-i18next"
 
 import templateStatusesLocaleMap from "../constants/template-statuses-local-map"
@@ -9,6 +9,7 @@ import { TemplateStatus } from "../types"
 
 interface SelectMultiTemplateStatusesPopoverProps
 	extends Omit<React.ComponentPropsWithoutRef<typeof SelectMultiOptionsPopover>, "options" | "value"> {
+	label?: string
 	value?: TemplateStatus[]
 }
 
@@ -21,17 +22,20 @@ const SelectMultiTemplateStatusesPopover = ({
 	const { t } = useTranslation("templates-common")
 
 	return (
-		<SelectMultiOptionsPopover
-			label={label ?? t("components.selectMultiTemplateStatusesPopover.label")}
-			options={templateStatusesOptions?.map(({ label, value }) => ({ label: t(label), value }))}
-			placeholder={placeholder ?? t("components.selectMultiTemplateStatusesPopover.placeholder")}
-			value={
-				value?.length
-					? value?.map((op) => ({ label: t(templateStatusesLocaleMap[op as TemplateStatus]), value: op }))
-					: []
-			}
-			{...props}
-		/>
+		<div className='relative w-full max-w-[340px]'>
+			<Label>{label || t("components.selectMultiTemplateStatusesPopover.label")}</Label>
+
+			<SelectMultiOptionsPopover
+				options={templateStatusesOptions?.map(({ label, value }) => ({ label: t(label), value }))}
+				placeholder={placeholder ?? t("components.selectMultiTemplateStatusesPopover.placeholder")}
+				value={
+					value?.length
+						? value?.map((op) => ({ label: t(templateStatusesLocaleMap[op as TemplateStatus]), value: op }))
+						: []
+				}
+				{...props}
+			/>
+		</div>
 	)
 }
 
