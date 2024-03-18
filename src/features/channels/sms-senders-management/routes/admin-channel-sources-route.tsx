@@ -42,12 +42,14 @@ const AdminChannelSourcesRoute = () => {
 		},
 		{
 			selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({
-				count: data?.count,
+				count: data?.count ?? 0,
 				isEmptyView: !isFetching && !!isSuccess && !data?.list?.length && !(appliedFiltersCount || searchTerm),
 				isFetching,
 				isInitialLoading: !data && isLoading,
 				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-				list: data?.list?.map((sender) => ({ ...sender, name: sender.channelSourceName, types: sender.templateTypes })),
+				list:
+					data?.list?.map((sender) => ({ ...sender, name: sender.channelSourceName, types: sender.templateTypes })) ??
+					[],
 				...rest,
 			}),
 			...baseQueryConfigs,
@@ -61,9 +63,7 @@ const AdminChannelSourcesRoute = () => {
 	if (isError) return <DisplayError error={error as any} showReloadButton />
 
 	if (isReady)
-		return (
-			<AdminChannelSourcesView count={count || 0} dataViewKey={dataViewKey} isFetching={isFetching} list={list || []} />
-		)
+		return <AdminChannelSourcesView count={count} dataViewKey={dataViewKey} isFetching={isFetching} list={list} />
 }
 
 export default AdminChannelSourcesRoute

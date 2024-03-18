@@ -71,7 +71,7 @@ const OptInSmsSenderDialogContent = ({ closeDialog, id }: OptInSmsSenderDialogCo
 		<div className='flex flex-1 flex-col justify-between gap-8 overflow-x-auto p-2'>
 			<p>{t("message")}</p>
 
-			<Button className='ms-auto w-max shrink-0 px-10' loading={isLoading} onClick={onSubmit}>
+			<Button className='ms-auto w-full shrink-0 px-10 sm:w-max' loading={isLoading} onClick={onSubmit}>
 				{t("submit")}
 			</Button>
 		</div>

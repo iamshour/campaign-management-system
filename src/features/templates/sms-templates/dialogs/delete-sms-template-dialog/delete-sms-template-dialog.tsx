@@ -27,9 +27,7 @@ const DeleteSmsTemplateDialog = ({ children, ids }: DeleteSmsTemplateDialogProps
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
 			<Dialog.Content
-				className={
-					ids?.length == 1 ? "h-[201px] w-[319.5px] sm:h-[209px] sm:w-[350px]" : "w-[390px] xs:h-[295px] sm:h-[303px] "
-				}
+				className={ids?.length == 1 ? "h-[201px] w-[390px] sm:h-[185px]" : "w-[390px] xs:h-[295px] sm:h-[303px] "}
 				title='Delete Template'>
 				<DeleteSmsTemplateDialogContent closeDialog={() => setOpen(false)} ids={ids} />
 			</Dialog.Content>

@@ -1,6 +1,6 @@
 //#region Import
 import { useDeleteSegmentMutation } from "@/features/people/segments/api"
-import { Button, Footer } from "@/ui"
+import { Button } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -40,11 +40,9 @@ const DeleteSegmentDialogContent = ({ closeDialog, id }: DeleteSegmentDialogCont
 		<div className='flex flex-col gap-6 p-2'>
 			<p className='w-full overflow-x-auto text-base'>{t("message")}</p>
 
-			<Footer>
-				<Button className='px-10' loading={isLoading} onClick={onSubmit} type='submit'>
-					{t("actions.submit")}
-				</Button>
-			</Footer>
+			<Button className='ms-auto w-full px-10 sm:w-max' loading={isLoading} onClick={onSubmit} type='submit'>
+				{t("actions.submit")}
+			</Button>
 		</div>
 	)
 }

@@ -2,7 +2,7 @@
 import type { IndustryType } from "@/features/industries/types"
 
 import { useDeleteIndustryMutation } from "@/features/industries/api"
-import { Button, Footer, Input } from "@/ui"
+import { Button, Input } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { Label } from "@radix-ui/react-label"
 import { useState } from "react"
@@ -53,16 +53,14 @@ const DeleteIndustryDialogContent = ({ closeDialog, id, name }: DeleteIndustryDi
 				/>
 			</div>
 
-			<Footer>
-				<Button
-					className='px-10'
-					disabled={promptInputValue !== name}
-					loading={isLoading}
-					onClick={onSubmit}
-					type='submit'>
-					Delete
-				</Button>
-			</Footer>
+			<Button
+				className='ms-auto w-full px-10 sm:w-max'
+				disabled={promptInputValue !== name}
+				loading={isLoading}
+				onClick={onSubmit}
+				type='submit'>
+				Delete
+			</Button>
 		</div>
 	)
 }

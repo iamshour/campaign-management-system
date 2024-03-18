@@ -9,7 +9,7 @@ import useSelector from "@/core/hooks/useSelector"
 import { getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
 import { useMoveContactsToGroupMutation } from "@/features/people/groups/api"
 import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option-type-schema"
-import { Button, Footer, Form, type OptionType, Skeleton, useForm } from "@/ui"
+import { Button, Form, type OptionType, Skeleton, useForm } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { cleanObject } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -130,15 +130,13 @@ const MoveToGroupDialogContent = ({ closeDialog, id }: MoveToGroupDialogContentP
 					</>
 				)}
 
-				<Footer>
-					<Button
-						className='px-10'
-						disabled={nbOfContactsToMove > 1 && Number(form.watch("prompt")) !== nbOfContactsToMove}
-						loading={isLoading}
-						type='submit'>
-						{t("dialogs.move-to-group.actions.submit")}
-					</Button>
-				</Footer>
+				<Button
+					className='ms-auto w-full px-10 sm:w-max'
+					disabled={nbOfContactsToMove > 1 && Number(form.watch("prompt")) !== nbOfContactsToMove}
+					loading={isLoading}
+					type='submit'>
+					{t("dialogs.move-to-group.actions.submit")}
+				</Button>
 			</form>
 		</Form>
 	)

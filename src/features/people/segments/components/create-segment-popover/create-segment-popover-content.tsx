@@ -4,7 +4,7 @@ import { useCreateSegmentMutation } from "@/features/people/segments/api"
 import SegmentSchema, { type SegmentSchemaType } from "@/features/people/segments/schemas/segment-schema"
 import { CreateSegmentBody } from "@/features/people/segments/types"
 import { areConditionsValid } from "@/features/people/segments/utils"
-import { Button, Footer, Form, Input, useForm } from "@/ui"
+import { Button, Form, Input, useForm } from "@/ui"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMemo } from "react"
 import toast from "react-hot-toast"
@@ -77,11 +77,14 @@ const CreateSegmentPopoverContent = ({ onClose }: CreateSegmentPopoverContentPro
 					)}
 				/>
 
-				<Footer>
-					<Button className='px-6' loading={isCreateSegmentLoading} size='sm' type='submit' variant='secondary'>
-						{t("actions.create")}
-					</Button>
-				</Footer>
+				<Button
+					className='ms-auto w-full px-6 sm:w-max'
+					loading={isCreateSegmentLoading}
+					size='sm'
+					type='submit'
+					variant='secondary'>
+					{t("actions.create")}
+				</Button>
 			</form>
 		</Form>
 	)

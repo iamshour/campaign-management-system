@@ -8,7 +8,7 @@ import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
 import { useRemoveContactsFromGroupMutation } from "@/features/people/groups/api"
-import { Button, Footer, Form, Skeleton, useForm } from "@/ui"
+import { Button, Form, Skeleton, useForm } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { cleanObject } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -100,15 +100,13 @@ const RemoveMultiContactsFromGroup = ({ closeDialog, id }: RemoveFromGroupDialog
 					</Suspense>
 				)}
 
-				<Footer>
-					<Button
-						className='px-10'
-						disabled={nbOfContactsToRemove > 1 && Number(form.watch("prompt")) !== nbOfContactsToRemove}
-						loading={isLoading}
-						type='submit'>
-						{t("dialogs.remove-from-group.actions.submit")}
-					</Button>
-				</Footer>
+				<Button
+					className='ms-auto w-full px-10 sm:w-max'
+					disabled={nbOfContactsToRemove > 1 && Number(form.watch("prompt")) !== nbOfContactsToRemove}
+					loading={isLoading}
+					type='submit'>
+					{t("dialogs.remove-from-group.actions.submit")}
+				</Button>
 			</form>
 		</Form>
 	)

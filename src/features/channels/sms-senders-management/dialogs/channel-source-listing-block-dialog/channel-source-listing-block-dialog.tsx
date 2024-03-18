@@ -20,7 +20,7 @@ const ChannelSourceListingBlockDialog = ({ children, ...props }: ChannelSourceLi
 		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
-			<Dialog.Content className='h-[451px] w-[416px] sm:h-[459px]' title={t("title")}>
+			<Dialog.Content className='h-[481px] w-[416px] xs:h-[451px] sm:h-[459px]' title={t("title")}>
 				<ChannelSourceListingBlockDialogContent closeDialog={() => setOpen(false)} {...props} />
 			</Dialog.Content>
 		</Dialog>

@@ -2,10 +2,7 @@
 import type { ChannelSourceListing } from "@/features/channels/common/types/data.types"
 
 import getCountryName from "@/core/utils/get-country-name"
-import {
-	// useActivateChannelSourceListingMutation,
-	useUpdateChannelSourceListingStatusMutation,
-} from "@/features/channels/sms-senders-management/api"
+import { useUpdateChannelSourceListingStatusMutation } from "@/features/channels/sms-senders-management/api"
 import { Button } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import toast from "react-hot-toast"
@@ -29,11 +26,8 @@ const ChannelSourceListingActivateDialogContent = ({
 	const { closeDropdown } = useDropdownStateContext()
 
 	const [triggerUpdateChannelSourceListingStatus, { isLoading }] = useUpdateChannelSourceListingStatusMutation()
-	// const [triggerUpdateChannelSourceListingStatus, { isLoading }] = useActivateChannelSourceListingMutation()
 
 	const onSubmit = async () => {
-		// await triggerUpdateChannelSourceListingStatus({ active: true, channelSourceListingId: id }).unwrap()
-
 		await triggerUpdateChannelSourceListingStatus({
 			channelSourceListingId: id,
 			channelSourceListingStatus: "APPROVED",
@@ -54,7 +48,7 @@ const ChannelSourceListingActivateDialogContent = ({
 				/>
 			</p>
 
-			<Button className='ms-auto w-max shrink-0 px-10' loading={isLoading} onClick={onSubmit}>
+			<Button className='ms-auto w-full shrink-0 px-10 sm:w-max' loading={isLoading} onClick={onSubmit}>
 				{t("submit")}
 			</Button>
 		</div>
