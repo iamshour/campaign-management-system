@@ -51,7 +51,7 @@
 		},
 		"smsOptedOutSenders": {
 			"fields": {
-				"phoneNumbers": "أرقام الهواتف"
+				"destination": "وجهة"
 			},
 			"table": {
 				"topbar": {

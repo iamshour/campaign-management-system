@@ -4,7 +4,7 @@ import type { ChannelSourceOptOut } from "../types/data.types"
 
 const smsOptedOutFieldsLocaleMap: Partial<Record<keyof ChannelSourceOptOut, string>> = {
 	country: "channels-common:fields.country",
-	recipient: "senders-management:views.smsOptedOutSenders.fields.phoneNumbers",
+	recipient: "senders-management:views.smsOptedOutSenders.fields.destination",
 }
 
 export default smsOptedOutFieldsLocaleMap

@@ -7,12 +7,13 @@ import smsListingStatusesColorsMap from "@/features/channels/common/constants/sm
 import smsListingStatusesLocaleMap from "@/features/channels/common/constants/sms-listing-statuses-locale-map"
 import { ChannelSourceListingDisplayStatus } from "@/features/channels/sms-senders/types/data.types"
 import { Skeleton } from "@/ui"
+import TablerCircleFilled from "~icons/tabler/circle-filled"
 import { lazy, Suspense } from "react"
 import { useTranslation } from "react-i18next"
+import { twMerge } from "tailwind-merge"
 
 import getListingDisplayStatus from "../../utils/get-listing-display-status"
-
-const ListingActions = lazy(() => import("./listing-card-actions"))
+const ListingCardActions = lazy(() => import("./listing-card-actions"))
 //#endregion
 
 const ListingCard = ({
@@ -25,32 +26,41 @@ const ListingCard = ({
 }: ChannelSourceListing) => {
 	const { t } = useTranslation("channels-common")
 
-	const listingStatus = getListingDisplayStatus(active, channelSourceListingStatus, lastChannelSourceRequestStatus)
+	const isInactive = active === false
+
+	const listingStatus = getListingDisplayStatus(channelSourceListingStatus, lastChannelSourceRequestStatus)
 
 	const color = smsListingDisplayStatusesColorsMap[listingStatus] || "#EDF3F7"
 
 	const countryName = getCountryName(country)
 
 	return (
-		<div className='flex h-[80px] w-[445px] max-w-full flex-row items-center rounded-md bg-[#F7F7F7]'>
-			<div className={`h-full w-2 rounded-s-md`} style={{ backgroundColor: color }} />
-			<ul className='flex-1 space-y-2 p-4'>
-				<li className='flex gap-2 text-base'>
+		<div className='relative flex h-[80px] w-[445px] max-w-full flex-row items-center rounded-md bg-[#F7F7F7]'>
+			<div className={`h-full min-w-2 rounded-s-md`} style={{ backgroundColor: isInactive ? "#B9B9B9" : color }} />
+			<ul className='max-w-[438px] flex-1 space-y-2 p-4 text-[15px]'>
+				<li className='flex gap-2'>
 					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("fields.country")}:</span>
-					<span className='block max-w-28 truncate' title={countryName}>
+					<span className={twMerge("block truncate", isInactive ? "max-w-16" : "max-w-28")} title={countryName}>
 						{countryName}
 					</span>
 					<span style={{ color }}>({t(smsListingDisplayStatusesLocaleMap[listingStatus])})</span>
+
+					{isInactive && (
+						<span className='border-l-1 flex flex-row items-center gap-2 border-l border-[#707070] pl-2'>
+							<TablerCircleFilled className='h-3 w-3 text-[#C9C9C9]' />
+							{t("listingStatuses.inactive")}
+						</span>
+					)}
 				</li>
-				<li className='flex gap-2 text-base'>
+				<li className='flex gap-2'>
 					<span className='inline whitespace-nowrap text-[#8F8F8F]'>{t("fields.createdAt")}</span>
 
 					<DataViewDateCell date={updatedAt} dateFormat='MM-dd-yyyy | hh:mm aaa' />
 				</li>
 			</ul>
 
-			<Suspense fallback={<Skeleton className='h-[30px] w-[30px]' />}>
-				<ListingActions active={active} channelSourceListingStatus={channelSourceListingStatus} id={id} />
+			<Suspense fallback={<Skeleton className='absolute right-0 h-[30px] w-[30px]' />}>
+				<ListingCardActions active={active} channelSourceListingStatus={channelSourceListingStatus} id={id} />
 			</Suspense>
 		</div>
 	)
@@ -60,12 +70,10 @@ export default ListingCard
 
 const smsListingDisplayStatusesLocaleMap: Record<ChannelSourceListingDisplayStatus, string> = {
 	...smsListingStatusesLocaleMap,
-	DEACTIVATED: "channels-common:listingStatuses.deactivated",
 	PENDING: "channels-common:listingStatuses.pending",
 }
 
 const smsListingDisplayStatusesColorsMap: Record<ChannelSourceListingDisplayStatus, string> = {
 	...smsListingStatusesColorsMap,
-	DEACTIVATED: "#B9B9B9",
 	PENDING: "#2DAEF5",
 }

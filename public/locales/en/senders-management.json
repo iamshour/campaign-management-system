@@ -52,7 +52,7 @@
 		},
 		"smsOptedOutSenders": {
 			"fields": {
-				"phoneNumbers": "Phone Numbers"
+				"destination": "destination"
 			},
 			"table": {
 				"topbar": {

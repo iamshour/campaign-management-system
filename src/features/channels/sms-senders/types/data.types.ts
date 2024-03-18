@@ -9,7 +9,7 @@ export type SmsChannelSourceDataViewKey = "international-sms-channel-sources" | 
 
 /**
  * Status options to be displayed in ListingCard.
- * "DEACTIVATED" and "PENDING" are extra statuses that are not options for listing status but may be displayed as listing status in specific cases.
+ * "PENDING" is an extra status that is not option for listing status but may be displayed as listing status in specific cases.
  * (refer to getListingDisplayStatus)
  */
-export type ChannelSourceListingDisplayStatus = "DEACTIVATED" | "PENDING" | ChannelSourceListingStatus
+export type ChannelSourceListingDisplayStatus = "PENDING" | ChannelSourceListingStatus
