@@ -32,7 +32,7 @@ const ResendChannelSourceRequestDialog = lazy(
 )
 //#endregion
 
-const ListingActions = ({
+const ListingCardActions = ({
 	active,
 	channelSourceListingStatus,
 	id,
@@ -40,7 +40,7 @@ const ListingActions = ({
 	const { t } = useTranslation("sms-senders", { keyPrefix: "components.listingCard.actions" })
 
 	return (
-		<ActionsDropdown className='m-4'>
+		<ActionsDropdown className='absolute right-0 m-4' iconClassName='rotate-90'>
 			<ViewListingSampleContentDialog id={id}>
 				<ActionsDropdown.Item>{t("viewSampleContent")}</ActionsDropdown.Item>
 			</ViewListingSampleContentDialog>
@@ -88,7 +88,7 @@ const ListingActions = ({
 	)
 }
 
-export default ListingActions
+export default ListingCardActions
 
 type ActionType = "DEACTIVATE_LISTING" | "RESEND_REQUEST" | "VIEW_STATUS_REASON"
 

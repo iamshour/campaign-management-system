@@ -25,10 +25,10 @@
 	"listingStatuses": {
 		"approved": "Approved",
 		"blocked": "Blocked",
-		"deactivated": "Deactivated",
 		"new": "New",
 		"pending": "Pending",
 		"rejected": "Rejected",
-		"suspended": "Suspended"
+		"suspended": "Suspended",
+		"inactive": "Inactive"
 	}
 }
