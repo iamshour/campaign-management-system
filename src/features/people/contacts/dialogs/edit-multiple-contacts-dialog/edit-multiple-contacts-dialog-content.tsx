@@ -10,7 +10,7 @@ import { useUpdateMultipleContactsMutation } from "@/features/people/contacts/ap
 import TagSchema from "@/features/people/contacts/schemas/tag-schema"
 import { getContactAdvancedFilter, getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
 import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option-type-schema"
-import { Button, Footer, Form, type OptionType, Skeleton, useForm } from "@/ui"
+import { Button, Form, type OptionType, Skeleton, useForm } from "@/ui"
 import { cleanObject, getListOfKey, omit } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { lazy, Suspense } from "react"
@@ -180,16 +180,14 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 					</>
 				)}
 
-				<Footer>
-					<Button
-						className='px-10'
-						disabled={selection === "ALL" && Number(form.watch("prompt")) !== count}
-						loading={submitLoading}
-						onClick={form.handleSubmit(onSubmit)}
-						type='button'>
-						{t(submitLabelMap[actionType])}
-					</Button>
-				</Footer>
+				<Button
+					className='ms-auto w-full px-10 sm:w-max'
+					disabled={selection === "ALL" && Number(form.watch("prompt")) !== count}
+					loading={submitLoading}
+					onClick={form.handleSubmit(onSubmit)}
+					type='button'>
+					{t(submitLabelMap[actionType])}
+				</Button>
 			</form>
 		</Form>
 	)

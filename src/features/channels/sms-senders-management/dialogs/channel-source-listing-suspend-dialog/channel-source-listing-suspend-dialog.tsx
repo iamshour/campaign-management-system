@@ -20,7 +20,7 @@ const ChannelSourceListingSuspendDialog = ({ children, ...props }: ChannelSource
 		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
-			<Dialog.Content className='h-[425px] w-[416px] sm:h-[433px]' title={t("title")}>
+			<Dialog.Content className='h-[433px] w-[416px] xs:h-[425px] sm:h-[433px]' title={t("title")}>
 				<ChannelSourceListingSuspendDialogContent closeDialog={() => setOpen(false)} {...props} />
 			</Dialog.Content>
 		</Dialog>

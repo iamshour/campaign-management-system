@@ -10,7 +10,7 @@ import { getContactAdvancedFilter, getContactFilter, getContactSearchFilter } fr
 import { useSubmitExportsFileMutation } from "@/features/people/exports/api"
 import exportsFieldsOptions from "@/features/people/exports/constants/exports-fields-options"
 import exportSchema, { type ExportSchemaType } from "@/features/people/exports/schemas/export-schema"
-import { Button, Checkbox, Footer, Form, Input, Label, useForm } from "@/ui"
+import { Button, Checkbox, Form, Input, Label, useForm } from "@/ui"
 import { cleanObject, generateFileName, omit } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMemo } from "react"
@@ -192,11 +192,9 @@ const ExportFieldsDialogContent = ({ exportsType, onDialogClose, segmentId }: Ex
 					)}
 				/>
 
-				<Footer>
-					<Button className='px-10' loading={isLoading} type='submit'>
-						{t("dialogs.exportFields.buttons.submit")}
-					</Button>
-				</Footer>
+				<Button className='ms-auto w-full px-10 sm:w-max' loading={isLoading} type='submit'>
+					{t("dialogs.exportFields.buttons.submit")}
+				</Button>
 			</form>
 		</Form>
 	)

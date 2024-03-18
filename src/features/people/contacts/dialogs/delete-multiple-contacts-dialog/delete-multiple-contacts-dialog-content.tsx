@@ -7,7 +7,7 @@ import { clearSelection } from "@/core/components/data-view/data-view-slice"
 import useSelector from "@/core/hooks/useSelector"
 import { useDeleteContactsMutation } from "@/features/people/contacts/api"
 import { getContactAdvancedFilter, getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
-import { Button, Footer, Form, Input, useForm } from "@/ui"
+import { Button, Form, Input, useForm } from "@/ui"
 import { cleanObject, omit } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import toast from "react-hot-toast"
@@ -85,15 +85,13 @@ const DeleteContactsDialogContent = ({ onClose }: DeleteContactsDialogContent) =
 					)}
 				/>
 
-				<Footer>
-					<Button
-						className='px-10'
-						disabled={Number(form.watch("prompt")) !== nbOfContactsToDelete}
-						loading={submitLoading}
-						type='submit'>
-						{t("dialogs.deleteContacts.actions.submit")}
-					</Button>
-				</Footer>
+				<Button
+					className='ms-auto w-full px-10 sm:w-max'
+					disabled={Number(form.watch("prompt")) !== nbOfContactsToDelete}
+					loading={submitLoading}
+					type='submit'>
+					{t("dialogs.deleteContacts.actions.submit")}
+				</Button>
 			</form>
 		</Form>
 	)

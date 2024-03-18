@@ -37,7 +37,7 @@ const ChannelSourceRequestApproveDialogContent = ({
 		<div className='flex flex-col gap-8 p-2'>
 			<p>{t("message")}</p>
 
-			<Button className='ms-auto w-max px-10' loading={isLoading} onClick={handleSubmit}>
+			<Button className='ms-auto w-full px-10 sm:w-max' loading={isLoading} onClick={handleSubmit}>
 				{t("submit")}
 			</Button>
 		</div>

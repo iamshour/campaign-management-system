@@ -53,7 +53,7 @@ const ChannelSourceListingBlockDialog = ({
 				/>
 			}
 			onSubmit={onSubmit}>
-			<Button className='ms-auto w-max px-10' loading={isLoading} type='submit'>
+			<Button className='ms-auto w-full shrink-0 px-10 sm:w-max' loading={isLoading} type='submit'>
 				{t("submit")}
 			</Button>
 		</ActionReasonForm>

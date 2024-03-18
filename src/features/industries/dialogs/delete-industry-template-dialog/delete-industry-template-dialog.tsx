@@ -28,9 +28,7 @@ const DeleteIndustryTemplateDialog = ({ children, ids }: DeleteIndustryTemplateD
 
 			<Dialog.Content
 				className={
-					ids?.length == 1
-						? "h-[201px] w-[319.5px] sm:h-[209px] sm:w-[350px]"
-						: "h-[343px] w-[319.5px]  sm:h-[327px] sm:w-[350px]"
+					ids?.length == 1 ? "h-[201px] w-[390px] sm:h-[185px]" : "h-[343px] w-[319.5px]  sm:h-[327px] sm:w-[350px]"
 				}
 				title='Delete Template'>
 				<DeleteIndustryTemplateDialogContent closeDialog={() => setOpen(false)} ids={ids} />

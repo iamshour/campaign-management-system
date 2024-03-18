@@ -1,6 +1,6 @@
 //#region Import
 import { useDeleteExportMutation } from "@/features/people/exports/api"
-import { Button, Footer } from "@/ui"
+import { Button } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -38,11 +38,9 @@ const DeleteExportsDialogContent = ({ closeDialog, id }: DeleteExportsDialogCont
 		<div className='flex h-full flex-col justify-between gap-6 p-2'>
 			<p className='w-full overflow-x-auto text-base'>{t("message.warning")}</p>
 
-			<Footer>
-				<Button className='px-10' loading={isLoading} onClick={handleDelete} type='submit'>
-					{t("actions.submit")}
-				</Button>
-			</Footer>
+			<Button className='ms-auto w-full px-10 sm:w-max' loading={isLoading} onClick={handleDelete} type='submit'>
+				{t("actions.submit")}
+			</Button>
 		</div>
 	)
 }

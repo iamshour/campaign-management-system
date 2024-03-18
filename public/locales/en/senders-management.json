@@ -238,6 +238,12 @@
 				"submit": "Confirm",
 				"cancel": "Cancel"
 			}
+		},
+		"deleteChannelSource": {
+			"title": "Delete a Sender",
+			"message": "Are you sure you want to delete this sender?",
+			"submit": "Confirm",
+			"successToast": "Sender successfully deleted from the list."
 		}
 	}
 }

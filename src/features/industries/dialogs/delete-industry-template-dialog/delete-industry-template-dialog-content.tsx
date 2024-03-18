@@ -6,7 +6,7 @@ import { clearSelection } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
 import { useDeleteIndustryTemplatesMutation } from "@/features/industries/api"
-import { Button, Footer, Input, Label } from "@/ui"
+import { Button, Input, Label } from "@/ui"
 import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
 import { useState } from "react"
 import toast from "react-hot-toast"
@@ -67,7 +67,7 @@ const DeleteIndustryTemplateDialogContent = ({ closeDialog, ids = [] }: DeleteIn
 	}
 
 	return (
-		<div className='flex flex-col gap-6 p-2'>
+		<div className='flex flex-1 flex-col justify-between gap-6 p-2'>
 			{templatesToBeDeletedCount > 1 ? (
 				<>
 					<p className='w-full overflow-x-auto text-base'>
@@ -89,11 +89,14 @@ const DeleteIndustryTemplateDialogContent = ({ closeDialog, ids = [] }: DeleteIn
 				<p className='w-full overflow-x-auto text-base'>Are you sure you want to delete this template?</p>
 			)}
 
-			<Footer>
-				<Button className='px-10' disabled={deleteButtonDisabled} loading={isLoading} onClick={onSubmit} type='submit'>
-					Delete
-				</Button>
-			</Footer>
+			<Button
+				className='ms-auto w-full px-10 sm:w-max'
+				disabled={deleteButtonDisabled}
+				loading={isLoading}
+				onClick={onSubmit}
+				type='submit'>
+				Delete
+			</Button>
 		</div>
 	)
 }

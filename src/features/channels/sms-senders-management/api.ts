@@ -72,6 +72,15 @@ const smsSendersManagementApis = api.injectEndpoints({
 			providesTags: (result, error, args) => [{ id: args.channelSourceRequestId, type: "ChannelSourceRequest" }],
 		}),
 
+		deleteChannelSource: builder.mutation<any, string>({
+			invalidatesTags: (res, error, id) => {
+				if (!res) return []
+
+				return [{ id, type: "ChannelSource" }]
+			},
+			query: (id) => ({ method: "DELETE", url: `/channel-source/${id}` }),
+		}),
+
 		updateChannelSourceRequestAction: builder.mutation<any, UpdateChannelSourceRequestActionBody>({
 			invalidatesTags: (res, error, { channelSourceRequestId }) => {
 				if (!res) return []
@@ -200,6 +209,7 @@ const smsSendersManagementApis = api.injectEndpoints({
 export const {
 	useGetChannelSourceRequestsQuery,
 	useGetChannelSourceRequestAndListingByIdQuery,
+	useDeleteChannelSourceMutation,
 	useUpdateChannelSourceRequestActionMutation,
 	useUpdateChannelSourceListingStatusMutation,
 	useActivateChannelSourceListingMutation,
