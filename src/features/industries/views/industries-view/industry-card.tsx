@@ -22,13 +22,13 @@ const IndustriesViewTableActions = lazy(
 const IndustryCard = (industry: IndustryType) => {
 	const { t } = useTranslation("industries")
 
-	const { color, createdAt, description, icon, id, name } = industry
+	const { color, createdAt, description, id, industryIcon, name } = industry
 
 	return (
 		<div className='flex h-[220px] w-[470px] max-w-full flex-col rounded-xl shadow-[0px_0px_6px_#00000021] 3xl:w-[480px]'>
 			<div className='flex w-full justify-between gap-2 overflow-hidden border-b border-b-gray-200 p-4'>
 				<div className='flex flex-1 items-center gap-4 overflow-hidden'>
-					<IndustriesViewTableIcon className='h-[44px] w-[44px]' color={color} icon={icon} />
+					<IndustriesViewTableIcon className='h-[44px] w-[44px]' color={color} industryIcon={industryIcon} />
 					<p className='flex-1 truncate text-base font-bold'>{name}</p>
 				</div>
 

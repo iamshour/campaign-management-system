@@ -79,12 +79,8 @@ const DeleteContactsDialogContent = ({ onClose }: DeleteContactsDialogContent) =
 					control={form.control}
 					name='prompt'
 					render={({ field }) => (
-						<Form.Item>
-							<Form.Label>{t("ui:prompt-input.label", { count: nbOfContactsToDelete })}</Form.Label>
-							<Form.Control>
-								<Input className='w-full' placeholder={t("ui:prompt-input.placeholder")} size='lg' {...field} />
-							</Form.Control>
-							<Form.Message />
+						<Form.Item label={t("ui:prompt-input.label", { count: nbOfContactsToDelete })} size='lg'>
+							<Input className='w-full' placeholder={t("ui:prompt-input.placeholder")} {...field} />
 						</Form.Item>
 					)}
 				/>

@@ -35,21 +35,13 @@ const ChannelSourceRequestForm = ({ children, defaultValues }: ChannelSourceRequ
 						control={form.control}
 						name='sender'
 						render={({ field }) => (
-							<Form.Item>
-								<Form.Label className='flex flex-row items-center gap-2'>
-									{t("channels-common:fields.sender")} *
-									<IconTooltip content={t("components.channelSourceRequestForm.labels.name.iconTooltip")} />
-								</Form.Label>
-								<Form.Control>
-									<SenderNameInput
-										{...field}
-										onChange={field.onChange}
-										readOnly={!!defaultValues?.sender}
-										size='lg'
-										value={field.value}
-									/>
-								</Form.Control>
-								<Form.Message />
+							<Form.Item label={<SenderNameLable />} size='lg'>
+								<SenderNameInput
+									{...field}
+									onChange={field.onChange}
+									readOnly={!!defaultValues?.sender}
+									value={field.value}
+								/>
 							</Form.Item>
 						)}
 					/>
@@ -58,17 +50,12 @@ const ChannelSourceRequestForm = ({ children, defaultValues }: ChannelSourceRequ
 						control={form.control}
 						name='templateType'
 						render={({ field }) => (
-							<Form.Item className='w-full max-w-[340px]'>
-								<Form.Control>
-									<SelectSingleTemplateTypePopover
-										onValueChange={field.onChange}
-										readOnly={!!defaultValues?.templateType}
-										required
-										size='lg'
-										value={field.value}
-									/>
-								</Form.Control>
-								<Form.Message />
+							<Form.Item className='w-full max-w-[340px]' label={t("channels-common:fields.type")} required size='lg'>
+								<SelectSingleTemplateTypePopover
+									onValueChange={field.onChange}
+									readOnly={!!defaultValues?.templateType}
+									value={field.value}
+								/>
 							</Form.Item>
 						)}
 					/>
@@ -77,18 +64,12 @@ const ChannelSourceRequestForm = ({ children, defaultValues }: ChannelSourceRequ
 						control={form.control}
 						name='country'
 						render={({ field }) => (
-							<Form.Item>
-								<Form.Label>{t("channels-common:fields.country")} *</Form.Label>
-								<Form.Control>
-									<SelectCountryPopover
-										className='[&>*]:text-base [&>*]:font-normal'
-										onChange={field.onChange}
-										readOnly={!!defaultValues?.country}
-										size='lg'
-										value={field.value}
-									/>
-								</Form.Control>
-								<Form.Message />
+							<Form.Item label={t("channels-common:fields.country")} required size='lg'>
+								<SelectCountryPopover
+									onChange={field.onChange}
+									readOnly={!!defaultValues?.country}
+									value={field.value}
+								/>
 							</Form.Item>
 						)}
 					/>
@@ -97,18 +78,13 @@ const ChannelSourceRequestForm = ({ children, defaultValues }: ChannelSourceRequ
 						control={form.control}
 						name='note'
 						render={({ field }) => (
-							<Form.Item>
-								<Form.Control>
-									<TextareaPopover
-										label={t("channels-common:fields.note")}
-										onValueChange={field.onChange}
-										placeholder={t("components.channelSourceRequestForm.placeholders.note")}
-										size='lg'
-										triggerProps={{ className: "text-base" }}
-										value={field.value}
-									/>
-								</Form.Control>
-								<Form.Message />
+							<Form.Item label={t("channels-common:fields.note")} size='lg'>
+								<TextareaPopover
+									onValueChange={field.onChange}
+									placeholder={t("components.channelSourceRequestForm.placeholders.note")}
+									triggerProps={{ className: "text-base" }}
+									value={field.value}
+								/>
 							</Form.Item>
 						)}
 					/>
@@ -117,18 +93,14 @@ const ChannelSourceRequestForm = ({ children, defaultValues }: ChannelSourceRequ
 						control={form.control}
 						name='sampleContent'
 						render={({ field }) => (
-							<Form.Item className='col-span-2 max-w-full'>
-								<Form.Label>{t("channels-common:fields.sampleContent")} *</Form.Label>
-								<Form.Control>
-									<Textarea
-										maxLength={500}
-										onChange={field.onChange}
-										placeholder={t("components.channelSourceRequestForm.placeholders.sampleContent")}
-										rows={3}
-										value={field.value}
-									/>
-								</Form.Control>
-								<Form.Message />
+							<Form.Item className='col-span-2 max-w-full' label={t("channels-common:fields.sampleContent")} required>
+								<Textarea
+									maxLength={500}
+									onChange={field.onChange}
+									placeholder={t("components.channelSourceRequestForm.placeholders.sampleContent")}
+									rows={3}
+									value={field.value}
+								/>
 							</Form.Item>
 						)}
 					/>
@@ -141,3 +113,17 @@ const ChannelSourceRequestForm = ({ children, defaultValues }: ChannelSourceRequ
 }
 
 export default ChannelSourceRequestForm
+
+const SenderNameLable = () => {
+	const { t } = useTranslation("channels-common")
+
+	return (
+		<>
+			{t("fields.sender")} *
+			<IconTooltip
+				content={t("sms-senders:components.channelSourceRequestForm.senderTooltip")}
+				triggerClassName='absolute ms-1 text-xs'
+			/>
+		</>
+	)
+}

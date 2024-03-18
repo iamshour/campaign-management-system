@@ -40,11 +40,11 @@ const ChannelSourceRequestsPendingViewFiltersContent = memo(() => {
 				value={filters?.templateTypes}
 			/>
 
-			{/* TODO: MAKE IT MULTI SELECT  */}
 			<SelectCountryPopover
+				isMulti
 				label='Target Country'
-				onChange={(v) => updateState({ countries: [v] })}
-				value={filters?.countries?.length ? filters?.countries[0] : undefined}
+				onChange={(countries) => updateState({ countries })}
+				value={filters?.countries || []}
 			/>
 		</>
 	)

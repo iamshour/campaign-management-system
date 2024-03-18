@@ -1,5 +1,4 @@
 //#region Import
-import IconTooltip from "@/core/components/icon-tooltip/icon-tooltip"
 import fileMimeTypes from "@/core/constants/file-mime-types"
 import { useImportChannelSourceOptOutMutation } from "@/features/channels/sms-senders-management/api"
 import { Button, DropFileArea, Form, useForm } from "@/ui"
@@ -58,12 +57,8 @@ const ImportChannelSourceOptOutDialogContent = ({ closeDialog }: ImportChannelSo
 					control={form.control}
 					name='file'
 					render={({ field: { onChange, value } }) => (
-						<Form.Item className='flex h-full w-full flex-col'>
-							<Form.Label className='inline-flex items-center gap-1 [&_svg]:text-primary-600' size='lg'>
-								<span>{t("label")} *</span>
-								<IconTooltip className='text-bold max-w-[150px]' content={t("tooltip")} />
-							</Form.Label>
-							<Form.Control>
+						<Form.Item className='max-w-full' label={t("label")} required>
+							<div className='relative'>
 								<DropFileArea
 									accept={fileMimeTypes}
 									acceptedFiles={value ? [value] : []}
@@ -75,7 +70,6 @@ const ImportChannelSourceOptOutDialogContent = ({ closeDialog }: ImportChannelSo
 									}}
 									disabled={!!value?.name?.length}
 									maxFiles={1}
-									// maxSize={MAXSIZE}
 									multiple={false}
 									name='file'
 									onDrop={(acceptedFiles) => onChange(acceptedFiles[0])}
@@ -86,12 +80,8 @@ const ImportChannelSourceOptOutDialogContent = ({ closeDialog }: ImportChannelSo
 									preventDropOnDocument
 									validator={validator}
 								/>
-							</Form.Control>
-							<span className='inline-flex w-full items-center justify-between pt-2'>
-								<Form.Message />
-
-								<p className='ms-auto block text-xs text-gray-400'>{t("validationMessage")}</p>
-							</span>
+								<p className='absolute -bottom-5 end-2 ms-auto text-xs text-gray-400'>{t("validationMessage")}</p>
+							</div>
 						</Form.Item>
 					)}
 				/>

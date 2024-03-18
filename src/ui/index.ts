@@ -63,9 +63,9 @@ export { default as PhoneInputReadonly } from "./phone-input/phone-input-readonl
 export { default as Popover } from "./popover/popover"
 
 // RE-EXPORTING COMPONENTS
-export { default as SelectAsyncOptionsPopover } from "./popovers/select-async-options-popover/select-async-options-popover"
+export { default as SelectAsyncPopover } from "./popovers/select-async-popover/select-async-popover"
 
-export { default as SelectAsyncOptionsPopoverContent } from "./popovers/select-async-options-popover/select-async-options-popover-content"
+export { default as SelectAsyncPopoverContent } from "./popovers/select-async-popover/select-async-popover-content"
 
 export { default as SelectCountryPopover } from "./popovers/select-country-popover/select-country-popover"
 

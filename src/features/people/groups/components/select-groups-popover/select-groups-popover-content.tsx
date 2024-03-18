@@ -1,7 +1,7 @@
 //#region Import
 import getSearchFilter from "@/core/utils/get-search-filter"
 import { useGetGroupsQuery } from "@/features/people/groups/api"
-import { SelectAsyncOptionsPopoverContent } from "@/ui"
+import { SelectAsyncPopoverContent } from "@/ui"
 import { useState } from "react"
 //#endregion
 
@@ -25,12 +25,7 @@ const SelectGroupsPopoverContent = () => {
 	)
 
 	return (
-		<SelectAsyncOptionsPopoverContent
-			loading={fetchLoading}
-			onSearch={setSearchTerm}
-			options={list}
-			searchTerm={searchTerm}
-		/>
+		<SelectAsyncPopoverContent loading={fetchLoading} onSearch={setSearchTerm} options={list} searchTerm={searchTerm} />
 	)
 }
 

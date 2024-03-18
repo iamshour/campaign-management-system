@@ -69,6 +69,7 @@ const MappingStep = () => {
 					<SelectGroupsWithCreatePopover
 						className='w-[340px]'
 						isMulti
+						label={t("groups:components.groupsPopover.label")}
 						maxLimit={10}
 						onCreateSuccess={onCreateGroupSuccess}
 						selection={groups || []}
@@ -80,6 +81,7 @@ const MappingStep = () => {
 						className='w-[340px]'
 						creatable
 						isMulti
+						label={t("components.tagsPopover.label")}
 						maxLimit={10}
 						selection={tags?.map((value) => ({ label: value, value })) || []}
 						updateSelection={(updatedtags) =>

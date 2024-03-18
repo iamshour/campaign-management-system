@@ -1,5 +1,6 @@
 //#region Import
-import { NavTabs } from "@/ui"
+import { DataTableSkeleton, NavTabs } from "@/ui"
+import { Suspense } from "react"
 import { useTranslation } from "react-i18next"
 import { Outlet } from "react-router-dom"
 //#endregion
@@ -14,7 +15,9 @@ const SmsSendersRoutesLayout = () => {
 				<NavTabs.Item to='/channels/international-sms/senders'>{t("international")}</NavTabs.Item>
 			</NavTabs>
 
-			<Outlet />
+			<Suspense fallback={<DataTableSkeleton />}>
+				<Outlet />
+			</Suspense>
 		</div>
 	)
 }

@@ -20,9 +20,9 @@ const IndustriesViewTableActions = lazy(
 
 const industriesTableColumns: ColumnType<IndustryType>[] = [
 	{
-		accessorKey: "icon",
-		cell: (_, { color, icon }) => <IndustriesViewTableIcon color={color} icon={icon} />,
-		header: industryFieldsMap.icon,
+		accessorKey: "industryIcon",
+		cell: (_, { color, industryIcon }) => <IndustriesViewTableIcon color={color} industryIcon={industryIcon} />,
+		header: industryFieldsMap.industryIcon,
 	},
 	{
 		accessorKey: "name",

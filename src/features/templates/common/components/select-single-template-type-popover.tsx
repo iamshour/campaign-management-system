@@ -16,18 +16,12 @@ interface SelectSingleTemplateTypePopoverProps
 	readOnly?: boolean
 }
 
-const SelectSingleTemplateTypePopover = ({
-	label,
-	placeholder,
-	readOnly,
-	...props
-}: SelectSingleTemplateTypePopoverProps) => {
+const SelectSingleTemplateTypePopover = ({ placeholder, readOnly, ...props }: SelectSingleTemplateTypePopoverProps) => {
 	const { t } = useTranslation("templates-common")
 
 	return (
 		<SelectSingleOptionPopover
 			{...props}
-			label={label || `${t("components.selectSingleTemplateTypePopover.label")}`}
 			options={templateTypesOptions.map(({ label, value }) => ({
 				children: (
 					<span title='Lorem ipsum dolor sit amet consectetur adipisicing elit.'>

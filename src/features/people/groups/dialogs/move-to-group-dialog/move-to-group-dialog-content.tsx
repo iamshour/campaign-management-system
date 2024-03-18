@@ -101,16 +101,13 @@ const MoveToGroupDialogContent = ({ closeDialog, id }: MoveToGroupDialogContentP
 					control={form.control}
 					name='group'
 					render={({ field }) => (
-						<Form.Item>
+						<Form.Item label={t("groups:components.groupsPopover.label")} size='lg'>
 							<Suspense fallback={<Skeleton className='h-[72px] w-[340px]' />}>
 								<SelectGroupsPopover
 									selection={field.value}
-									size='lg'
 									updateSelection={(group) => form.setValue("group", group)}
 								/>
 							</Suspense>
-
-							<Form.Message />
 						</Form.Item>
 					)}
 				/>
@@ -124,12 +121,8 @@ const MoveToGroupDialogContent = ({ closeDialog, id }: MoveToGroupDialogContentP
 								control={form.control}
 								name='prompt'
 								render={({ field }) => (
-									<Form.Item>
-										<Form.Label>{t("ui:prompt-input.label", { count: nbOfContactsToMove })}</Form.Label>
-										<Form.Control>
-											<Input placeholder={t("ui:prompt-input.placeholder")} size='lg' {...field} />
-										</Form.Control>
-										<Form.Message />
+									<Form.Item label={t("ui:prompt-input.label", { count: nbOfContactsToMove })} size='lg'>
+										<Input placeholder={t("ui:prompt-input.placeholder")} {...field} />
 									</Form.Item>
 								)}
 							/>

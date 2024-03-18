@@ -19,7 +19,9 @@ const TableSkeleton = ({ className, colsLength = 8, rowsLength = 13, ...props }:
 		{Array.from({ length: rowsLength }, (_, i) => (
 			<div className='flex h-max w-full gap-2' key={i}>
 				{Array.from({ length: colsLength }, (_, i) => (
-					<div className={"h-[44px] w-full min-w-[120px] max-w-[200px] p-1 first:!min-w-[60px]"} key={i}>
+					<div
+						className={"h-[44px] w-full min-w-[120px] max-w-[200px] p-1 first:!min-w-[60px] 2xl:max-w-[300px]"}
+						key={i}>
 						<Skeleton className='h-full w-full' />
 					</div>
 				))}

@@ -112,17 +112,8 @@ const EditableSegmentView = ({ defaultValues, view }: EditableSegmentViewProps) 
 								control={form.control}
 								name='name'
 								render={({ field }) => (
-									<Form.Item>
-										<Form.Label>{t("items.basicInfo.fields.name.label")} *</Form.Label>
-										<Form.Control>
-											<Input
-												className='bg-white'
-												placeholder={t("items.basicInfo.fields.name.placeholder")}
-												size='lg'
-												{...field}
-											/>
-										</Form.Control>
-										<Form.Message />
+									<Form.Item label={t("items.basicInfo.fields.name.label")} required size='lg'>
+										<Input className='bg-white' placeholder={t("items.basicInfo.fields.name.placeholder")} {...field} />
 									</Form.Item>
 								)}
 							/>
@@ -130,17 +121,12 @@ const EditableSegmentView = ({ defaultValues, view }: EditableSegmentViewProps) 
 								control={form.control}
 								name='description'
 								render={({ field }) => (
-									<Form.Item>
-										<Form.Label>{t("items.basicInfo.fields.description.label")}</Form.Label>
-										<Form.Control>
-											<Input
-												className='bg-white'
-												placeholder={t("items.basicInfo.fields.description.placeholder")}
-												size='lg'
-												{...field}
-											/>
-										</Form.Control>
-										<Form.Message />
+									<Form.Item label={t("items.basicInfo.fields.description.label")} size='lg'>
+										<Input
+											className='bg-white'
+											placeholder={t("items.basicInfo.fields.description.placeholder")}
+											{...field}
+										/>
 									</Form.Item>
 								)}
 							/>

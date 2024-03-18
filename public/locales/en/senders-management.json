@@ -131,14 +131,14 @@
 			"REJECT": {
 				"title": "Reject Request",
 				"tooltip": "Reject",
-				"message": "Are you sure you want to reject the sender {{sender}} request for the target country {{country}}?",
+				"message": "Are you sure you want to reject the sender <strong>{{sender}}</strong> request for the target country <strong>{{country}}</strong>?",
 				"submit": "Confirm",
 				"successToast": "Request rejected successfully."
 			},
 			"BLOCK": {
 				"title": "Reject & Block Request",
 				"tooltip": "Reject & Block",
-				"message": "Are you sure you want to reject & Block the sender {{sender}} request for the target country {{country}}?",
+				"message": "Are you sure you want to reject & Block the sender <strong>{{sender}}</strong> request for the target country <strong>{{country}}</strong>?",
 				"submit": "Confirm",
 				"successToast": "Request rejected & blocked successfully."
 			}

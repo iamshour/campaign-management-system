@@ -41,11 +41,8 @@ const FormField = <
 	</FormFieldContext.Provider>
 )
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const useFormField = () => {
+const useFormField = () => {
 	const fieldContext = useContext(FormFieldContext)
-
-	const itemContext = useContext(FormItemContext)
 
 	const { formState, getFieldState } = useFormContext()
 
@@ -55,7 +52,7 @@ export const useFormField = () => {
 		throw new Error("useFormField should be used within <FormField>")
 	}
 
-	const { id } = itemContext
+	const id = useId()
 
 	return {
 		formDescriptionId: `${id}-form-item-description`,
@@ -67,67 +64,44 @@ export const useFormField = () => {
 	}
 }
 
-type FormItemContextValue = { id: string }
-
-export const FormItemContext = createContext<FormItemContextValue>({} as FormItemContextValue)
-
-const FormItem = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
-	const id = useId()
-
-	return (
-		<FormItemContext.Provider value={{ id }}>
-			<div {...props} className={twMerge("flex w-full max-w-[340px] flex-col", className)} />
-		</FormItemContext.Provider>
-	)
+interface FormItemProps extends SlotProps, Pick<React.ComponentPropsWithoutRef<typeof Label>, "required" | "size"> {
+	label?: React.ReactNode | string
 }
 
-const FormLabel = ({ className, ...props }: React.ComponentPropsWithoutRef<typeof Label>) => {
-	const { error, formItemId } = useFormField()
+const FormItem = forwardRef<React.ElementRef<typeof Slot>, FormItemProps>(
+	({ className, label, required, ...props }, ref) => {
+		const { error, formDescriptionId, formItemId, formMessageId } = useFormField()
 
-	return <Label htmlFor={formItemId} {...props} className={twMerge(className, error && "text-red-500")} />
-}
+		return (
+			<div className={twMerge("flex w-full max-w-[340px] flex-col", className)}>
+				{!!label && (
+					<Label aria-invalid={!!error} htmlFor={formItemId} required={required} size={props?.size}>
+						{label}
+					</Label>
+				)}
 
-const FormControl = forwardRef<React.ElementRef<typeof Slot>, SlotProps>((props, ref) => {
-	const { error, formDescriptionId, formItemId, formMessageId } = useFormField()
+				<Slot
+					aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
+					aria-invalid={!!error}
+					aria-required={required}
+					id={formItemId}
+					ref={ref}
+					{...props}
+				/>
 
-	return (
-		<Slot
-			aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
-			aria-invalid={!!error}
-			id={formItemId}
-			ref={ref}
-			{...props}
-		/>
-	)
-})
+				{!!error?.message && (
+					<p className={twMerge("ps-0.5 pt-0.5 text-xs font-medium text-red-500", className)} id={formMessageId}>
+						{String(error?.message)}
+					</p>
+				)}
+			</div>
+		)
+	}
+)
 
-FormControl.displayName = "FormControl"
-
-const FormDescription = ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => {
-	const { formDescriptionId } = useFormField()
-
-	return <p className={twMerge("text-sm text-slate-500", className)} id={formDescriptionId} {...props} />
-}
-
-const FormMessage = ({ children, className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => {
-	const { error, formMessageId } = useFormField()
-
-	const body = error ? String(error?.message) : children
-
-	if (!body) return null
-
-	return (
-		<p className={twMerge("ps-0.5 pt-0.5 text-xs font-medium text-red-500", className)} id={formMessageId} {...props}>
-			{body}
-		</p>
-	)
-}
+FormItem.displayName = "FormItem"
 
 Form.Item = FormItem
-Form.Label = FormLabel
-Form.Control = FormControl
-Form.Description = FormDescription
-Form.Message = FormMessage
 Form.Field = FormField
 
 export default Form

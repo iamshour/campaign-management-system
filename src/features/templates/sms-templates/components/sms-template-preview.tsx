@@ -6,6 +6,7 @@ import templateTypesLocaleMap from "@/features/templates/common/constants/templa
 import SectionHeading from "@/ui/section-heading/section-heading"
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
 import MdiMessageProcessing from "~icons/mdi/message-processing"
+import { useTranslation } from "react-i18next"
 
 import MobileSmsPreview from "./mobile-sms-preview"
 //#endregion
@@ -23,6 +24,8 @@ type SmsTemplatePreviewProps = Pick<SmsTemplateType, "body" | "language" | "name
 }
 
 function SmsTemplatePreview({ additionalTemplateInfo, children, ...smsTemplate }: SmsTemplatePreviewProps) {
+	const { t } = useTranslation("templates-common")
+
 	const { body, language, name, type } = smsTemplate
 
 	return (
@@ -36,8 +39,8 @@ function SmsTemplatePreview({ additionalTemplateInfo, children, ...smsTemplate }
 					/>
 
 					<SmsTemplateInfoItem itemName='name' itemValue={name} />
-					<SmsTemplateInfoItem itemName='type' itemValue={templateTypesLocaleMap[type]} />
-					<SmsTemplateInfoItem itemName='language' itemValue={templateLanguagesLocaleMap[language]} />
+					<SmsTemplateInfoItem itemName='type' itemValue={t(templateTypesLocaleMap[type])} />
+					<SmsTemplateInfoItem itemName='language' itemValue={t(templateLanguagesLocaleMap[language])} />
 					{additionalTemplateInfo?.map(({ label, value }) => (
 						<SmsTemplateInfoItem itemName={label} itemValue={value} key={label} />
 					))}

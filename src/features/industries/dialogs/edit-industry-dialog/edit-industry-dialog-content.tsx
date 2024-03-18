@@ -9,7 +9,7 @@ import toast from "react-hot-toast"
 //#endregion
 
 export interface EditIndustryDialogContentProps
-	extends Pick<IndustryType, "color" | "description" | "icon" | "id" | "name"> {
+	extends Pick<IndustryType, "color" | "description" | "id" | "industryIcon" | "name"> {
 	/**
 	 * Callback function used to close the dialog
 	 */

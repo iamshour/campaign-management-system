@@ -20,9 +20,13 @@
 				"updateDraft": "Update Draft",
 				"saveAndPublish": "Save & Publish Template"
 			}
+		},
+		"smsPrebuiltTemplateCard": {
+			"labels": {
+				"industry": "Industry",
+				"language": "Language",
+				"type": "Type"
+			}
 		}
-	},
-	"table": {},
-	"dialogs": {},
-	"views": {}
+	}
 }

@@ -1,9 +1,10 @@
 //#region Import
 import { lazy } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
-const SmsSendersRoutesLayout = lazy(() => import("../layouts/sms-senders-routes-layout"))
 
-import ChannelSourceRoute from "./channel-source-route"
+import SmsSendersRoutesLayout from "../layouts/sms-senders-routes-layout"
+
+const ChannelSourceRoute = lazy(() => import("./channel-source-route"))
 
 const ChannelSourcesRoute = lazy(() => import("./channel-sources-route"))
 //#endregion

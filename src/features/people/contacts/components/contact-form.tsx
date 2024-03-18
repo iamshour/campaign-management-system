@@ -2,6 +2,7 @@
 import SelectGroupsWithCreatePopover from "@/features/people/groups/components/select-groups-with-create-popover"
 import { Footer, Form, Input, PhoneInput, Textarea, useForm, UseFormReturn } from "@/ui"
 import { cleanObject, getListOfKey } from "@/utils"
+import { ErrorMessage } from "@hookform/error-message"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslation } from "react-i18next"
 
@@ -57,7 +58,7 @@ const ContactForm = ({ children, defaultValues, onSubmit }: ContactFormProps) =>
 	return (
 		<Form {...form}>
 			<form
-				className='h-full w-full overflow-y-auto p-2'
+				className='flex h-full w-full flex-col justify-around overflow-y-auto p-2'
 				onSubmit={(e) => {
 					e.preventDefault()
 
@@ -69,21 +70,15 @@ const ContactForm = ({ children, defaultValues, onSubmit }: ContactFormProps) =>
 
 					if (submitterButton?.dataset?.form === "contact-form") form.handleSubmit(onFormSubmit)()
 				}}>
-				{form?.formState?.errors?.root?.type === "required" && (
-					<Form.Message className='pb-2.5 ps-2'>{form?.formState?.errors?.root?.message}</Form.Message>
-				)}
+				<ErrorMessage name='root' render={({ message }) => <p className='pb-2.5 ps-2 text-red-500'>{message}</p>} />
 
 				<div className='w-full space-y-3 pb-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 sm:pb-8'>
 					<Form.Field
 						control={form.control}
 						name='firstName'
 						render={({ field }) => (
-							<Form.Item>
-								<Form.Label>{t("fields.firstName")}</Form.Label>
-								<Form.Control>
-									<Input placeholder={t("components.contactForm.placeholders.firstName")} size='lg' {...field} />
-								</Form.Control>
-								<Form.Message />
+							<Form.Item label={t("fields.firstName")} size='lg'>
+								<Input placeholder={t("components.contactForm.placeholders.firstName")} {...field} />
 							</Form.Item>
 						)}
 					/>
@@ -91,12 +86,8 @@ const ContactForm = ({ children, defaultValues, onSubmit }: ContactFormProps) =>
 						control={form.control}
 						name='lastName'
 						render={({ field }) => (
-							<Form.Item>
-								<Form.Label>{t("fields.lastName")}</Form.Label>
-								<Form.Control>
-									<Input placeholder={t("components.contactForm.placeholders.lastName")} size='lg' {...field} />
-								</Form.Control>
-								<Form.Message />
+							<Form.Item label={t("fields.lastName")} size='lg'>
+								<Input placeholder={t("components.contactForm.placeholders.lastName")} {...field} />
 							</Form.Item>
 						)}
 					/>
@@ -105,12 +96,8 @@ const ContactForm = ({ children, defaultValues, onSubmit }: ContactFormProps) =>
 						control={form.control}
 						name='email'
 						render={({ field }) => (
-							<Form.Item>
-								<Form.Label>{t("fields.email")}</Form.Label>
-								<Form.Control>
-									<Input placeholder={t("components.contactForm.placeholders.email")} size='lg' {...field} />
-								</Form.Control>
-								<Form.Message />
+							<Form.Item label={t("fields.email")} size='lg'>
+								<Input placeholder={t("components.contactForm.placeholders.email")} {...field} />
 							</Form.Item>
 						)}
 					/>
@@ -119,12 +106,8 @@ const ContactForm = ({ children, defaultValues, onSubmit }: ContactFormProps) =>
 						control={form.control}
 						name='phoneNumber'
 						render={({ field }) => (
-							<Form.Item>
-								<Form.Label>{t("fields.phoneNumber")}</Form.Label>
-								<Form.Control>
-									<PhoneInput size='lg' {...field} className='w-[340px]' />
-								</Form.Control>
-								<Form.Message />
+							<Form.Item label={t("fields.phoneNumber")} size='lg'>
+								<PhoneInput {...field} className='w-[340px]' />
 							</Form.Item>
 						)}
 					/>
@@ -133,17 +116,15 @@ const ContactForm = ({ children, defaultValues, onSubmit }: ContactFormProps) =>
 						control={form.control}
 						name='groups'
 						render={({ field }) => (
-							<Form.Item>
+							<Form.Item label={t("groups:components.groupsPopover.label")} size='lg'>
 								<SelectGroupsWithCreatePopover
 									isMulti
 									onCreateSuccess={(newGroup) =>
 										form.setValue("groups", field?.value?.length ? [...field.value, newGroup] : [newGroup])
 									}
 									selection={field.value || []}
-									size='lg'
 									updateSelection={(items) => form.setValue("groups", items)}
 								/>
-								<Form.Message />
 							</Form.Item>
 						)}
 					/>
@@ -152,12 +133,11 @@ const ContactForm = ({ children, defaultValues, onSubmit }: ContactFormProps) =>
 						control={form.control}
 						name='tags'
 						render={({ field }) => (
-							<Form.Item>
+							<Form.Item label={t("contacts:components.tagsPopover.label")} size='lg'>
 								<SelectTagsPopover
 									creatable
 									isMulti
 									selection={field.value?.map((value) => ({ label: value, value })) || []}
-									size='lg'
 									updateSelection={(items) =>
 										form.setValue(
 											"tags",
@@ -165,7 +145,6 @@ const ContactForm = ({ children, defaultValues, onSubmit }: ContactFormProps) =>
 										)
 									}
 								/>
-								<Form.Message />
 							</Form.Item>
 						)}
 					/>
@@ -174,17 +153,13 @@ const ContactForm = ({ children, defaultValues, onSubmit }: ContactFormProps) =>
 						control={form.control}
 						name='note'
 						render={({ field }) => (
-							<Form.Item className='col-span-2'>
-								<Form.Label>{t("fields.note")}</Form.Label>
-								<Form.Control>
-									<Textarea
-										maxLength={500}
-										placeholder={t("components.contactForm.placeholders.note")}
-										rows={3}
-										{...field}
-									/>
-								</Form.Control>
-								<Form.Message />
+							<Form.Item className='col-span-2 max-w-full' label={t("fields.note")}>
+								<Textarea
+									maxLength={500}
+									placeholder={t("components.contactForm.placeholders.note")}
+									rows={3}
+									{...field}
+								/>
 							</Form.Item>
 						)}
 					/>

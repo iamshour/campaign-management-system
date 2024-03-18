@@ -8,12 +8,15 @@ import SelectTagsPopover from "@/features/people/contacts/components/select-tags
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
 import { memo, useCallback } from "react"
+import { useTranslation } from "react-i18next"
 //#endregion
 
 /**
  * Filter fields (content) used in Contacts in Group page
  */
 const GroupViewFiltersContent = memo(() => {
+	const { t } = useTranslation()
+
 	const dispatch = useDispatch()
 
 	const filters = useSelector<DataViewFilterType["contacts-in-group"]>(
@@ -35,6 +38,7 @@ const GroupViewFiltersContent = memo(() => {
 			/>
 			<SelectTagsPopover
 				isMulti
+				label={t("contacts:components.tagsPopover.label")}
 				selection={filters?.tags?.map((value) => ({ label: value, value })) || []}
 				updateSelection={(tags) => updateSelection({ tags: getListOfKey(tags, "value") })}
 			/>

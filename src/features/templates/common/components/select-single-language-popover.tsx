@@ -15,13 +15,12 @@ interface SelectSingleLanguagePopoverProps
 	readOnly?: boolean
 }
 
-const SelectSingleLanguagePopover = ({ label, placeholder, readOnly, ...props }: SelectSingleLanguagePopoverProps) => {
+const SelectSingleLanguagePopover = ({ placeholder, readOnly, ...props }: SelectSingleLanguagePopoverProps) => {
 	const { t } = useTranslation("templates-common")
 
 	return (
 		<SelectSingleOptionPopover
 			{...props}
-			label={label || `${t("components.selectSingleLanguagePopover.label")}`}
 			options={templateLanguagesOptions.map(({ label, value }) => ({ label: t(label), value }))}
 			placeholder={placeholder || t("components.selectSingleLanguagePopover.placeholder")}
 			triggerProps={{ className: "text-base", readOnly }}

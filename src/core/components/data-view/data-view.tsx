@@ -116,7 +116,7 @@ const TopBar = memo(({ children, className, withFilters = true }: TopBarProps) =
 			<div className='flex gap-2'>
 				{withFilters && <DefaultFiltersBar.Trigger appliedFiltersCount={appliedFiltersCount} />}
 
-				<SearchInput className='max-w-[14rem] md:max-w-[18rem]' onChange={onSearchChange} value={searchTerm} />
+				<SearchInput className='w-[14rem] !max-w-full md:w-[18rem]' onChange={onSearchChange} value={searchTerm} />
 			</div>
 			{children}
 		</div>

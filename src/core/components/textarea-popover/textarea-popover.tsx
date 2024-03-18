@@ -15,6 +15,8 @@ interface TextareaPopoverProps
 
 	label?: React.ReactNode | string
 
+	required?: boolean
+
 	size?: React.ComponentPropsWithoutRef<typeof Button>["size"]
 
 	triggerProps?: React.ComponentPropsWithoutRef<typeof Button>
@@ -35,11 +37,13 @@ interface TextareaPopoverProps
  *
  */
 const TextareaPopover = ({
+	"aria-invalid": invalid,
 	className,
 	contentProps,
 	label,
 	onValueChange,
 	placeholder,
+	required,
 	size,
 	triggerProps,
 	value,
@@ -54,7 +58,7 @@ const TextareaPopover = ({
 	return (
 		<div className={twMerge("relative w-[340px] max-w-full", className)} {...props}>
 			{!!label && (
-				<Label aria-invalid={props["aria-invalid"]} size={size}>
+				<Label aria-invalid={invalid} required={required} size={size}>
 					{label}
 				</Label>
 			)}
@@ -62,7 +66,7 @@ const TextareaPopover = ({
 			<Popover onOpenChange={setOpen} open={open}>
 				<Popover.Trigger asChild>
 					<Button
-						aria-invalid={props["aria-invalid"]}
+						aria-invalid={invalid}
 						hasValue={!!value?.length}
 						size={size}
 						variant='outline-grey'

@@ -1,23 +1,7 @@
 //#region Import
-import type { ChannelSourceListingStatus } from "@/features/channels/common/types/data.types"
-import type { TemplateType } from "@/features/templates/common/types"
-import type { Country } from "react-phone-number-input"
-
-import { OptionType } from "@/ui"
-
-import { AddBulkChannelSourceRequestsBody } from "../../types/api.types"
-
+import type { AddBulkChannelSourceRequestsBody } from "@/features/channels/sms-senders-management/types/api.types"
+import type { OptionType } from "@/ui"
 //#endregion
-
-export type ListingField = {
-	country?: Country
-	sampleContent?: string
-	status?: Extract<ChannelSourceListingStatus, "APPROVED" | "BLOCKED">
-}
-
-export type BulkListingsGroup = { listingsFields: ListingField[]; templateType?: TemplateType }
-
-export type BulkListingsFunnelBase = { bulkListingsGroups: BulkListingsGroup[] }
 
 export type ListingError = { errorIdx: number; errorMessage: string }
 
@@ -29,7 +13,6 @@ export type BulkPreviewData = Omit<
 	channelSourceRequestRouteList: (AddBulkChannelSourceRequestsBody["channelSourceRequestRouteList"][number] & {
 		errorKey: string
 	})[]
-
 	company: OptionType
 	email?: OptionType
 }

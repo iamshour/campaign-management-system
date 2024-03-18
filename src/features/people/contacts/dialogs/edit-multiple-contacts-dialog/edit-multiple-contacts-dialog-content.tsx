@@ -117,7 +117,7 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 					control={form.control}
 					name={isTagsDialog ? "tags" : "groups"}
 					render={({ field }) => (
-						<Form.Item>
+						<Form.Item label={t(componentLabel[actionType])}>
 							<Suspense fallback={<Skeleton className='h-[72px] w-[340px]' />}>
 								{actionType === "addTags" ? (
 									<SelectTagsPopover
@@ -158,8 +158,6 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 									/>
 								) : null}
 							</Suspense>
-
-							<Form.Message />
 						</Form.Item>
 					)}
 				/>
@@ -173,12 +171,8 @@ const EditMultipleContactsDialogContent = ({ actionType, onClose }: EditMultiple
 								control={form.control}
 								name='prompt'
 								render={({ field }) => (
-									<Form.Item className='mb-2 w-full'>
-										<Form.Label>{t("ui:prompt-input.label", { count })}</Form.Label>
-										<Form.Control>
-											<Input className='w-full' placeholder={t("ui:prompt-input.placeholder")} size='lg' {...field} />
-										</Form.Control>
-										<Form.Message />
+									<Form.Item className='mb-2 w-full' label={t("ui:prompt-input.label", { count })} size='lg'>
+										<Input className='w-full' placeholder={t("ui:prompt-input.placeholder")} {...field} />
 									</Form.Item>
 								)}
 							/>
@@ -245,4 +239,11 @@ const submitLabelMap: Record<DialogActionType, string> = {
 	addToGroups: "dialogs.editMultiple.addToGroups.buttons.submit",
 	removeFromGroups: "dialogs.editMultiple.removeFromGroups.buttons.submit",
 	removeTags: "dialogs.editMultiple.removeTags.buttons.submit",
+}
+
+const componentLabel: Record<DialogActionType, string> = {
+	addTags: "contacts:components.tagsPopover.label",
+	addToGroups: "groups:components.groupsPopover.label",
+	removeFromGroups: "groups:components.groupsPopover.label",
+	removeTags: "contacts:components.tagsPopover.label",
 }

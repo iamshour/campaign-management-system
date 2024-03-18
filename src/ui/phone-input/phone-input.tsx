@@ -18,7 +18,15 @@ const PhoneInput = forwardRef<React.ElementRef<typeof PhoneInputWithCountry>, Ph
 		<PhoneInputWithCountry
 			className={twMerge("flex max-w-full gap-2", className)}
 			countrySelectComponent={(props) => (
-				<SelectCountryPopover className='w-max' size='lg' withCountryCode withPlaceholder={false} {...props} />
+				<SelectCountryPopover
+					className='w-max'
+					size='lg'
+					triggerProps={{ className: "px-2" }}
+					withCountryCode
+					withFallback
+					withPlaceholder={false}
+					{...props}
+				/>
 			)}
 			defaultCountry='US'
 			flags={flags}

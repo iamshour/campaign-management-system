@@ -24,11 +24,11 @@ const ChannelSourceOptOutListViewFiltersContent = memo(() => {
 	)
 
 	return (
-		//  TODO: MAKE IT MULTI SELECT
 		<SelectCountryPopover
+			isMulti
 			label='Target Country'
-			onChange={(v) => updateState({ countries: [v] })}
-			value={filters?.countries ? filters?.countries[0] : undefined}
+			onChange={(countries) => updateState({ countries })}
+			value={filters?.countries || []}
 		/>
 	)
 })

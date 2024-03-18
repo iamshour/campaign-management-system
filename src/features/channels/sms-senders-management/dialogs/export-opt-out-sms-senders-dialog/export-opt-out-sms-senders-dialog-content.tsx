@@ -91,14 +91,8 @@ const ExportOptOutSmsSendersDialogContent = ({ onClose }: ExportOptOutSmsSenders
 					control={form.control}
 					name='fileName'
 					render={({ field }) => (
-						<Form.Item>
-							<Form.Label className='font-bold' size='lg'>
-								{t("label")}
-							</Form.Label>
-							<Form.Control>
-								<Input placeholder={t("placeholder")} size='lg' {...field} />
-							</Form.Control>
-							<Form.Message />
+						<Form.Item label={t("label")} required size='lg'>
+							<Input placeholder={t("placeholder")} {...field} />
 						</Form.Item>
 					)}
 				/>

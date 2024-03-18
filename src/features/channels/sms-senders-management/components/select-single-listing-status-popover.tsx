@@ -23,7 +23,6 @@ interface SelectSingleListingStatusPopoverProps
  * Status options are filtered since users can only choose to create a listing in approved or blocked status.
  */
 const SelectSingleListingStatusPopover = ({
-	label,
 	placeholder,
 	readOnly,
 	...props
@@ -33,7 +32,6 @@ const SelectSingleListingStatusPopover = ({
 	return (
 		<SelectSingleOptionPopover
 			{...props}
-			label={label || `${t("components.selectSingleListingStatusPopover.label")}`}
 			options={channelSourceStatusesOptions
 				.filter((status) => ["APPROVED", "BLOCKED"].includes(status.value))
 				.map(({ label, value }) => ({

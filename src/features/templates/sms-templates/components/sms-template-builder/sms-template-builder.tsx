@@ -90,17 +90,8 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 							control={control}
 							name='name'
 							render={({ field }) => (
-								<Form.Item className='w-full max-w-[340px]'>
-									<Form.Label>{t("fields.name.label")} *</Form.Label>
-									<Form.Control>
-										<Input
-											className='w-full bg-white'
-											placeholder={t("fields.name.placeholder")}
-											size='lg'
-											{...field}
-										/>
-									</Form.Control>
-									<Form.Message />
+								<Form.Item className='w-full max-w-[340px]' label={t("fields.name.label")} required size='lg'>
+									<Input placeholder={t("fields.name.placeholder")} variant='light' {...field} />
 								</Form.Item>
 							)}
 						/>
@@ -109,17 +100,8 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 							control={control}
 							name='type'
 							render={({ field }) => (
-								<Form.Item className='w-full max-w-[340px]'>
-									<Form.Control>
-										<SelectSingleTemplateTypePopover
-											label={t("fields.type.label")}
-											onValueChange={field.onChange}
-											required
-											size='lg'
-											value={field.value}
-										/>
-									</Form.Control>
-									<Form.Message />
+								<Form.Item className='w-full max-w-[340px]' label={t("fields.type.label")} required size='lg'>
+									<SelectSingleTemplateTypePopover onValueChange={field.onChange} value={field.value} />
 								</Form.Item>
 							)}
 						/>
@@ -128,17 +110,8 @@ const SmsTemplateBuilderBody = ({ children }: { children?: React.ReactNode }) =>
 							control={control}
 							name='language'
 							render={({ field }) => (
-								<Form.Item className='w-full max-w-[340px]'>
-									<Form.Control>
-										<SelectSingleLanguagePopover
-											label={t("fields.language.label")}
-											onValueChange={field.onChange}
-											required
-											size='lg'
-											value={field.value}
-										/>
-									</Form.Control>
-									<Form.Message />
+								<Form.Item className='w-full max-w-[340px]' label={t("fields.language.label")} required size='lg'>
+									<SelectSingleLanguagePopover onValueChange={field.onChange} value={field.value} />
 								</Form.Item>
 							)}
 						/>

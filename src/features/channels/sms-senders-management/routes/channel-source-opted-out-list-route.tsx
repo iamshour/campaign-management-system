@@ -3,7 +3,7 @@ import useGetChannelType from "@/core/hooks/useGetChannelType"
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import getSearchFilter from "@/core/utils/get-search-filter"
-import { FullViewSkeleton } from "@/ui"
+import { DataTableSkeleton } from "@/ui"
 import { lazy } from "react"
 import { useParams } from "react-router-dom"
 
@@ -51,7 +51,7 @@ const ChannelSourceOptedOutListRoute = () => {
 			}
 		)
 
-	if (isInitialLoading) return <FullViewSkeleton />
+	if (isInitialLoading) return <DataTableSkeleton />
 
 	if (isEmptyView) return <ChannelSourceOptOutListViewEmpty />
 

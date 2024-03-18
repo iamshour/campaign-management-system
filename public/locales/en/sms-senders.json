@@ -11,7 +11,7 @@
 				"note": "Enter note",
 				"sampleContent": "Enter content"
 			},
-			"labels": { "name": { "iconTooltip": "Description Goes Here" } }
+			"senderTooltip": "Description Goes Here"
 		},
 		"listingCard": {
 			"actions": {

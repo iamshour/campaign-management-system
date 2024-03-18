@@ -1,7 +1,7 @@
 //#region Import
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
 import { useGetContactByIdQuery } from "@/features/people/contacts/api"
-import { Badge, Input, Label, PhoneInputReadonly, Skeleton, Textarea } from "@/ui"
+import { Badge, Label, PhoneInputReadonly, ReadonlyInput, Skeleton, Textarea } from "@/ui"
 import { getListOfKey } from "@/utils"
 import { format } from "date-fns"
 import { lazy } from "react"
@@ -22,9 +22,9 @@ const ViewContactDialogContent = ({ id }: { id: string }) => {
 
 	return (
 		<div className='space-y-2 overflow-y-auto p-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 sm:p-4'>
-			<ReadonlyInputField label={t("fields.firstName")} value={data?.firstName || "N/A"} />
-			<ReadonlyInputField label={t("fields.lastName")} value={data?.lastName || "N/A"} />
-			<ReadonlyInputField label={t("fields.email")} value={data?.email || "N/A"} />
+			<ReadonlyInput label={t("fields.firstName")} name='firstName' size='lg' value={data?.firstName || "N/A"} />
+			<ReadonlyInput label={t("fields.lastName")} name='lastName' size='lg' value={data?.lastName || "N/A"} />
+			<ReadonlyInput label={t("fields.email")} name='email' size='lg' value={data?.email || "N/A"} />
 
 			<ReadonlyFieldLayout label={t("fields.phoneNumber")}>
 				<PhoneInputReadonly className='w-[calc(340px-54px-8px)]' size='lg' value={data?.phoneNumber || "N/A"} />
@@ -38,9 +38,12 @@ const ViewContactDialogContent = ({ id }: { id: string }) => {
 				<OptionsReadonlyField options={data?.tags || []} />
 			</ReadonlyFieldLayout>
 
-			<ReadonlyInputField label={t("fields.country")} value={data?.country || "N/A"} />
-			<ReadonlyInputField
+			<ReadonlyInput label={t("fields.country")} name='country' size='lg' value={data?.country || "N/A"} />
+
+			<ReadonlyInput
 				label={t("fields.createdAt")}
+				name='createdAt'
+				size='lg'
 				value={data?.createdAt?.length ? format(new Date(data?.createdAt), "MM-dd-yyyy") : "N/A"}
 			/>
 
@@ -65,13 +68,6 @@ const ReadonlyFieldLayout = ({
 		</Label>
 		{children}
 	</div>
-)
-
-const ReadonlyInputField = ({ label, value }: Record<"label" | "value", string>) => (
-	<ReadonlyFieldLayout label={label}>
-		{/* eslint-disable-next-line  */}
-		<Input size='lg' id={label} aria-label={value} value={value} readOnly autoFocus={false} />
-	</ReadonlyFieldLayout>
 )
 
 const OptionsReadonlyField = ({ options }: { options: string[] }) => (

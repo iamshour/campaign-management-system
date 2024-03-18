@@ -60,7 +60,12 @@
 		}
 	},
 	"selectCountryPopover": {
-		"placeholder": "Select a country"
+		"single": {
+			"placeholder": "Select a country"
+		},
+		"multi": {
+			"placeholder": "Select Countries"
+		}
 	},
 	"noResultsComponent": "No results found",
 
