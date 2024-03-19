@@ -61,7 +61,7 @@ const CreateContactDialogContent = ({ onClose }: CreateContactDialogContentProps
 				{t("dialogs.addContact.buttons.multiAdd")}
 			</Button>
 			<Button
-				className='ms-auto'
+				className='ms-auto px-10'
 				data-form='contact-form'
 				disabled={isLoading}
 				loading={isLoading && buttonClicked === "singleAddContact"}

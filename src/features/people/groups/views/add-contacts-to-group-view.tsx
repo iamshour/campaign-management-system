@@ -27,7 +27,7 @@ const ContactsFiltersContent = lazy(() => import("@/features/people/contacts/com
 const AddContactsToGroupView = (props: SharedListViewProps<Contact>) => {
 	const { t } = useTranslation("groups", { keyPrefix: "views.addToGroup" })
 
-	const { id: groupId } = useParams()
+	const { groupId } = useParams()
 
 	const [triggerAddContactsToGroup, { isLoading }] = useAddContactsToGroupMutation()
 
@@ -80,7 +80,7 @@ const AddContactsToGroupView = (props: SharedListViewProps<Contact>) => {
 				<h3 className='pt-4 text-[21px] font-medium'>{t("title")}</h3>
 
 				<DataView.TopBar className='pt-4' />
-				<DataView.Body onRowClick={({ id }) => dispatch(checkItem({ "add-contacts-to-group": id }))} />
+				<DataView.Body<Contact> onRowClick={({ id }) => dispatch(checkItem({ "add-contacts-to-group": id }))} />
 				<DataView.Pagination>
 					<DataView.Pagination.Message />
 				</DataView.Pagination>

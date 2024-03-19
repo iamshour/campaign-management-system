@@ -48,7 +48,10 @@ const GroupView = (props: SharedListViewProps<Contact>) => {
 						<GroupViewTopbar />
 					</DataView.TopBar>
 
-					<DataView.Body onRowClick={({ id }) => setViewContactId(id)} />
+					<DataView.Body
+						classNames={{ emptyTableCell: "h-[calc(100vh-268px)]" }}
+						onRowClick={({ id }) => setViewContactId(id)}
+					/>
 					<DataView.Pagination>
 						<DataView.Pagination.Message />
 					</DataView.Pagination>

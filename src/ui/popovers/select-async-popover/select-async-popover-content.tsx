@@ -112,7 +112,7 @@ const SelectAsyncPopoverContent = ({
 		<Command className='!h-full' shouldFilter={onSearch === undefined}>
 			<Command.Input
 				onValueChange={onSearch}
-				placeholder={t("selectAsyncOptionsPopover.placeholder")}
+				placeholder={t(`selectAsyncOptionsPopover.${creatable ? "placeholderCreatable" : "placeholder"}`)}
 				value={searchTerm}
 			/>
 

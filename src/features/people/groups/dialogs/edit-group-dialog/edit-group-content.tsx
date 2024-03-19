@@ -47,7 +47,7 @@ const EditGroupContent = ({ closeDialog, groupId, size, ...defaultValues }: Edit
 
 	return (
 		<GroupForm defaultValues={defaultValues} onSubmit={onSubmit} size={size}>
-			<Button className='px-8' loading={isLoading} type='submit'>
+			<Button className='ms-auto w-full shrink-0 px-8 sm:w-max' loading={isLoading} type='submit'>
 				Save
 			</Button>
 		</GroupForm>

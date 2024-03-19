@@ -89,7 +89,7 @@ export type GetContactsParams = PaginationAndSorting<Contact> &
  * Body Arguments passed to the `addNewContact` mutation, used to post a new contact entry
  */
 export type AddNewContactBody = Omit<Contact, "createdAt" | "id" | "phoneNumber" | "updatedAt"> & {
-	phoneNumberDto?: ParsedPhoneNumberDto
+	contactPhoneNumberDto?: ParsedPhoneNumberDto
 }
 
 /**

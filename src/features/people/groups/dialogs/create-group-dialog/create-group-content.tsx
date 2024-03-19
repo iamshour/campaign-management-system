@@ -54,7 +54,12 @@ const CreateGroupContent = ({ closeDialog, ctaProps = {}, onCreateSuccess, size 
 
 	return (
 		<GroupForm onSubmit={onSubmit} size={size}>
-			<Button className='px-8' data-form='group-form' loading={isLoading} type='submit' {...ctaProps}>
+			<Button
+				className='ms-auto w-full shrink-0 px-8 sm:w-max'
+				data-form='group-form'
+				loading={isLoading}
+				type='submit'
+				{...ctaProps}>
 				Create
 			</Button>
 		</GroupForm>

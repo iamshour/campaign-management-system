@@ -15,7 +15,7 @@ const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const AddContactsToGroupRoute = () => {
-	const { id: groupId } = useParams()
+	const { groupId } = useParams()
 
 	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector<
 		DataViewState<"add-contacts-to-group">
@@ -29,12 +29,12 @@ const AddContactsToGroupRoute = () => {
 		},
 		{
 			selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({
-				count: data?.count,
-				isEmptyView: !isFetching && !!isSuccess && !data && !(appliedFiltersCount || !!searchTerm?.length),
+				count: data?.count || 0,
+				isEmptyView: !isFetching && !!isSuccess && !data?.count && !(appliedFiltersCount || !!searchTerm?.length),
 				isFetching,
 				isInitialLoading: !data && isLoading,
 				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-				list: data?.list,
+				list: data?.list || [],
 				...rest,
 			}),
 			skip: !groupId,
@@ -44,12 +44,11 @@ const AddContactsToGroupRoute = () => {
 
 	if (isInitialLoading) return <DataTableSkeleton />
 
-	// TODO: Create EmprtyView Component here
 	if (isEmptyView) return <div className='h-full w-full flex-center'>No Contacts to be added to this group!</div>
 
 	if (isError) return <DisplayError error={error as any} />
 
-	if (isReady) return <AddContactsToGroupView count={count || 0} isFetching={isFetching} list={list || []} />
+	if (isReady) return <AddContactsToGroupView count={count} isFetching={isFetching} list={list} />
 }
 
 export default AddContactsToGroupRoute

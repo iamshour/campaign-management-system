@@ -35,6 +35,7 @@
 	"selectAsyncOptionsPopover": {
 		"clearButton": "Clear filters",
 		"placeholder": "Type to search",
+		"placeholderCreatable": "Type to search or create a new entry",
 		"message": {
 			"maxLimitReached": "Max Limit Reached"
 		}

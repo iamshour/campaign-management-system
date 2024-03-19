@@ -34,7 +34,7 @@ const SelectGroupsWithCreatePopover = ({
 					)}>
 					{t("components.groupsPopover.createNewPopover.title")}
 				</Popover.Trigger>
-				<Popover.Content align='end' alignOffset={-8} className='p-2' side='bottom' sideOffset={2}>
+				<Popover.Content align='end' alignOffset={-8} className='h-[262px] p-2' side='bottom' sideOffset={2}>
 					<CreateGroupContent
 						closeDialog={() => setPopoverOpen(false)}
 						ctaProps={{ size: "sm", variant: "secondary" }}

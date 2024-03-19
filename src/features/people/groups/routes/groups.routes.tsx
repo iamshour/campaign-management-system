@@ -13,9 +13,9 @@ const GroupsRoutes = () => (
 	<Routes>
 		<Route element={<GroupsRoute />} path='' />
 
-		<Route element={<GroupRoute />} path=':id' />
+		<Route element={<GroupRoute />} path=':groupId' />
 
-		<Route element={<AddContactsToGroupRoute />} path=':id/add-contacts' />
+		<Route element={<AddContactsToGroupRoute />} path=':groupId/add-contacts' />
 
 		<Route element={<Navigate to='.' />} path='*' />
 	</Routes>
