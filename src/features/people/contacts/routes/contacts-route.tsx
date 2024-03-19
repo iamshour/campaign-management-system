@@ -10,9 +10,10 @@ import { getContactAdvancedFilter, getContactFilter, getContactSearchFilter } fr
 import { DataTableSkeleton } from "@/ui"
 import { omit } from "@/utils"
 import { lazy } from "react"
+
 const ContactsView = lazy(() => import("@/features/people/contacts/views/contacts-view/contacts-view"))
 
-const ContactsEmptyView = lazy(() => import("@/features/people/contacts/views/contacts-empty-view"))
+const ContactsEmptyView = lazy(() => import("@/features/people/contacts/views/contacts-view/contacts-empty-view"))
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
@@ -33,12 +34,12 @@ const ContactsRoute = () => {
 		},
 		{
 			selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({
-				count: data?.count,
+				count: data?.count || 0,
 				isEmptyView: !isFetching && !!isSuccess && !data?.count && !(appliedFiltersCount || !!searchTerm?.length),
 				isFetching,
 				isInitialLoading: !data && isLoading,
 				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-				list: data?.list,
+				list: data?.list || [],
 				...rest,
 			}),
 			...baseQueryConfigs,
@@ -51,7 +52,7 @@ const ContactsRoute = () => {
 
 	if (isError) return <DisplayError error={error as any} onReload={() => dispatch(clearFilters("contacts"))} />
 
-	if (isReady) return <ContactsView count={count || 0} isFetching={isFetching} list={list || []} />
+	if (isReady) return <ContactsView count={count} isFetching={isFetching} list={list} />
 }
 
 export default ContactsRoute

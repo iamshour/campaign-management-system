@@ -9,6 +9,8 @@ import { DataTableSkeleton } from "@/ui"
 import { lazy } from "react"
 import { useParams } from "react-router-dom"
 
+const ContactsEmptyView = lazy(() => import("@/features/people/contacts/views/contacts-view/contacts-empty-view"))
+
 const AddContactsToGroupView = lazy(() => import("@/features/people/groups/views/add-contacts-to-group-view"))
 
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
@@ -44,7 +46,7 @@ const AddContactsToGroupRoute = () => {
 
 	if (isInitialLoading) return <DataTableSkeleton />
 
-	if (isEmptyView) return <div className='h-full w-full flex-center'>No Contacts to be added to this group!</div>
+	if (isEmptyView) return <ContactsEmptyView />
 
 	if (isError) return <DisplayError error={error as any} />
 

@@ -65,11 +65,16 @@ const useFormField = () => {
 }
 
 interface FormItemProps extends SlotProps, Pick<React.ComponentPropsWithoutRef<typeof Label>, "required" | "size"> {
+	/**
+	 * Custom Bool check used to hide
+	 */
+	hideError?: boolean
+
 	label?: React.ReactNode | string
 }
 
 const FormItem = forwardRef<React.ElementRef<typeof Slot>, FormItemProps>(
-	({ className, label, required, ...props }, ref) => {
+	({ className, hideError, label, required, ...props }, ref) => {
 		const { error, formDescriptionId, formItemId, formMessageId } = useFormField()
 
 		return (
@@ -89,7 +94,7 @@ const FormItem = forwardRef<React.ElementRef<typeof Slot>, FormItemProps>(
 					{...props}
 				/>
 
-				{!!error?.message && (
+				{!!error?.message && !hideError && (
 					<p className={twMerge("ps-0.5 pt-0.5 text-xs font-medium text-red-500", className)} id={formMessageId}>
 						{String(error?.message)}
 					</p>

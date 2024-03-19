@@ -23,7 +23,7 @@ const ExportFieldsDialog = ({ children, exportsType, segmentId }: ExportFieldsDi
 		<Dialog onOpenChange={setOpen} open={open}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
-			<Dialog.Content className='h-[507px] w-[382px] sm:h-[515px] sm:w-[390px]' title={t("title")}>
+			<Dialog.Content className='h-[589px] w-[382px] sm:h-[597px] sm:w-[390px]' title={t("title")}>
 				<ExportFieldsDialogContent
 					exportsType={exportsType}
 					onDialogClose={() => setOpen(false)}

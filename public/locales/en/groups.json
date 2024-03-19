@@ -92,6 +92,11 @@
 			},
 			"successMessage": "Contact added to group successfully",
 			"successMessage_other": "Contacts added to group successfully"
+		},
+		"groupEmptyView": {
+			"headline": "You don't have any contact yet",
+			"message": "Add Contacts from the exciting contacts list",
+			"submit": "Add Contact"
 		}
 	}
 }

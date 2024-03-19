@@ -17,7 +17,6 @@ import { useMemo } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
-import { twMerge } from "tailwind-merge"
 //#endregion
 
 export type ExportsType = Extract<DataViewKey, "contacts-in-group" | "contacts" | "segments">
@@ -131,7 +130,9 @@ const ExportFieldsDialogContent = ({ exportsType, onDialogClose, segmentId }: Ex
 
 	return (
 		<Form {...form}>
-			<form className='flex flex-col gap-6 overflow-hidden p-2' onSubmit={form.handleSubmit(onSubmit)}>
+			<form
+				className='flex h-full flex-col justify-between gap-6 overflow-hidden p-2'
+				onSubmit={form.handleSubmit(onSubmit)}>
 				<Form.Field
 					control={form.control}
 					name='fileName'
@@ -164,24 +165,19 @@ const ExportFieldsDialogContent = ({ exportsType, onDialogClose, segmentId }: Ex
 											key={`${value}-${idx}`}
 											name='exportedFields'
 											render={({ field }) => (
-												<Form.Item className='flex flex-row items-center space-x-3 space-y-0' key={`${value}-${idx}`}>
-													<>
-														<Checkbox
-															checked={field.value?.includes(value)}
-															onCheckedChange={(checked) =>
-																checked
-																	? field.onChange([...field.value, value])
-																	: field.onChange(field.value?.filter((i) => i !== value))
-															}
-														/>
-														<Label
-															className={twMerge(
-																"cursor-pointer pb-0 transition-basic hover:text-primary-900",
-																field.value?.includes(value) && "text-primary-900"
-															)}>
-															{t(label)}
-														</Label>
-													</>
+												<Form.Item
+													className='flex-row-reverse items-center justify-end gap-2 space-x-2 [&_button]:!mx-0 [&_label]:cursor-pointer [&_label]:pb-0 [&_label]:transition-basic [&_label]:hover:text-primary-900'
+													hideError
+													key={`${value}-${idx}`}
+													label={t(label)}>
+													<Checkbox
+														checked={field.value?.includes(value)}
+														onCheckedChange={(checked) =>
+															checked
+																? field.onChange([...field.value, value])
+																: field.onChange(field.value?.filter((i) => i !== value))
+														}
+													/>
 												</Form.Item>
 											)}
 										/>

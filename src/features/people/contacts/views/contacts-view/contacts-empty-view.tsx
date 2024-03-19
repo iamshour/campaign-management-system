@@ -7,7 +7,7 @@ import { Button } from "@/ui"
 import { useTranslation } from "react-i18next"
 //#endregion
 
-const EmptyContactsView = () => {
+const ContactsEmptyView = () => {
 	const { t } = useTranslation("contacts")
 
 	return (
@@ -41,4 +41,4 @@ const EmptyContactsView = () => {
 	)
 }
 
-export default EmptyContactsView
+export default ContactsEmptyView
