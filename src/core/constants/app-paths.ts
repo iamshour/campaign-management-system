@@ -26,13 +26,6 @@ const appPaths = {
 	// #start channels
 	CHANNELS: "/channels",
 	// #end channels
-
-	// MOCK
-	INBOX: "/inbox",
-	CHATBOT: "/chatbot",
-	DASHBOARD: "/dashboard",
-	INTEGRATIONS: "/integrations",
-	CAMPAIGNS_MANAGER: "/campaigns-manager",
 }
 
 export default appPaths

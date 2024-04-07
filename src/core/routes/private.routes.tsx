@@ -13,7 +13,7 @@ import GroupsRoutes from "@/features/people/groups/routes/groups.routes"
 import SegmentsRoutes from "@/features/people/segments/routes/segments.routes"
 import SmsTemplatesRoutes from "@/features/templates/sms-templates/routes/sms-templates.routes"
 import { lazy } from "react"
-import { Navigate, RouteObject } from "react-router-dom"
+import { RouteObject } from "react-router-dom"
 
 // eslint-disable-next-line react-refresh/only-export-components
 const DisplayError = lazy(() => import("@/ui/errors/display-error"))
@@ -39,12 +39,7 @@ const privateRoutes: RouteObject[] = [
 			{ element: <IndustriesRoutes />, path: `${appPaths.INDUSTRIES}/*` },
 			{ element: <SmsSendersManagementRoutes />, path: "/admin/channels/*" },
 
-			{ element: <Navigate to={appPaths.DASHBOARD} />, path: "/" },
-			{ element: <div className='mb-8 text-4xl'>Dashboard Route</div>, path: appPaths.DASHBOARD },
-			{ element: <div className='text-4xl'>Inbox Route</div>, path: appPaths.INBOX },
-			{ element: <div className='text-4xl'>Integrations Route</div>, path: appPaths.INTEGRATIONS },
-			{ element: <div className='text-4xl'>Campaign Manager Route</div>, path: appPaths.CAMPAIGNS_MANAGER },
-			{ element: <div className='text-4xl'>Chatbot Route</div>, path: appPaths.CHATBOT },
+			{ element: <div className='text-4xl'>Campaign Manager Route</div>, path: appPaths.HOME },
 
 			// FALLBACK - 404 IF ROUTE DOES NOT EXIST
 			{ element: <DisplayError error={{ status: 404 }} />, path: "*" },

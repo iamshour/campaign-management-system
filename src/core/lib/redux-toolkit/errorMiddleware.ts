@@ -1,7 +1,7 @@
 import { isRejectedWithValue, type Middleware } from "@reduxjs/toolkit"
 import toast from "react-hot-toast"
 
-import { getErrorMessage } from "./helpers"
+import { type ErrorObject, getErrorMessage } from "./helpers"
 
 /**
  * Error middleware for Redux store.
@@ -13,7 +13,7 @@ const errorMiddleware: Middleware =
 	() => (next) => (action) => {
 		if (isRejectedWithValue(action)) {
 			// RTK Rejection Error from errorMiddleware
-			toast.error(getErrorMessage(action?.payload))
+			toast.error(getErrorMessage(action?.payload as ErrorObject))
 		}
 
 		return next(action)

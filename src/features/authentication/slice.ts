@@ -4,10 +4,10 @@ import type { AuthSliceState } from "./types"
 
 const initialState: AuthSliceState = {
 	user: {
-		company: "Blue.Ai Technologies",
+		company: "XYZ Technologies",
 		industryId: undefined,
-		name: "John Dow",
-		role: "BUSINESS",
+		name: "John Doe",
+		role: "USER",
 		src: "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(2).webp",
 	},
 }
@@ -27,7 +27,7 @@ const authSlice = createSlice({
 
 		// MOCK FUNCTION USED TO SWITCH USER ROLE ----- ONLY USED FOR QA TESTING FOR NOW
 		switchRole: (state) => {
-			state.user.role = state.user.role === "BLUE" ? "BUSINESS" : "BLUE"
+			state.user.role = state.user.role === "ADMIN" ? "USER" : "ADMIN"
 		},
 
 		updateToken: (state, { payload }: PayloadAction<AuthSliceState["token"]>) => {

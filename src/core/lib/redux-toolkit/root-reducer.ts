@@ -14,7 +14,7 @@ import api from "./api"
 //#endregion
 
 // const APP_PREFIX = `${import.meta.env.VITE_APP_PREFIX}_`
-const APP_PREFIX = "BLUE.AI"
+const APP_PREFIX = "CAMPAIGN_MANAGEMENT_SYSTEM"
 
 export type RootState = {
 	app: AppSliceState

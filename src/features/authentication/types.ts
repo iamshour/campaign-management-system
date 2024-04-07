@@ -1,6 +1,4 @@
-export type AuthViews = "NEW_PASS" | "OTP" | "RESET_PASS" | "SIGN_IN" | "SIGN_UP"
-
-export type UserRole = "BLUE" | "BUSINESS"
+export type UserRole = "ADMIN" | "USER"
 
 export interface AuthSliceState {
 	token?: string

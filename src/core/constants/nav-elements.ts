@@ -2,15 +2,11 @@
 import type { UserRole } from "@/features/authentication/types"
 import type { IconType } from "@/ui"
 
-import BiBarChartFill from "~icons/bi/bar-chart-fill"
 import IcBaselineCampaign from "~icons/ic/baseline-campaign"
 import IcBaselineInsertDriveFile from "~icons/ic/baseline-insert-drive-file"
-import IcRoundMoveToInbox from "~icons/ic/round-move-to-inbox"
 import IcRoundPermContactCalendar from "~icons/ic/round-perm-contact-calendar"
 import MaterialSymbolsLightLabProfileSharp from "~icons/material-symbols-light/lab-profile-sharp"
-import RiRobot2Fill from "~icons/ri/robot-2-fill"
 import NetworkHierarchy from "~icons/streamline/interface-hierarchy-2-node-organization-links-structure-link-nodes-network-hierarchy"
-import TablerAppsFilled from "~icons/tabler/apps-filled"
 
 import appPaths from "./app-paths"
 //#endregion
@@ -54,24 +50,10 @@ type NavElementProps = {
 
 const navElements: NavElementProps[] = [
 	{
-		Icon: BiBarChartFill,
-		label: "navbar.nav-elements.dashboard",
-		path: appPaths.DASHBOARD,
-		roles: ["BLUE", "BUSINESS"],
-		type: "nav-link",
-	},
-	{
-		Icon: IcRoundMoveToInbox,
-		label: "navbar.nav-elements.inbox",
-		path: appPaths.INBOX,
-		roles: ["BLUE", "BUSINESS"],
-		type: "nav-link",
-	},
-	{
-		Icon: TablerAppsFilled,
-		label: "navbar.nav-elements.integrations",
-		path: appPaths.INTEGRATIONS,
-		roles: ["BLUE", "BUSINESS"],
+		Icon: IcBaselineCampaign,
+		label: "navbar.nav-elements.campaigns",
+		path: appPaths.HOME,
+		roles: ["ADMIN", "USER"],
 		type: "nav-link",
 	},
 	{
@@ -95,7 +77,7 @@ const navElements: NavElementProps[] = [
 		],
 		Icon: IcRoundPermContactCalendar,
 		label: "navbar.nav-elements.people.title",
-		roles: ["BLUE", "BUSINESS"],
+		roles: ["ADMIN", "USER"],
 		type: "accordion",
 	},
 	{
@@ -107,14 +89,14 @@ const navElements: NavElementProps[] = [
 		],
 		Icon: IcBaselineInsertDriveFile,
 		label: "navbar.nav-elements.templates.title",
-		roles: ["BUSINESS"],
+		roles: ["USER"],
 		type: "accordion",
 	},
 	{
 		Icon: MaterialSymbolsLightLabProfileSharp,
 		label: "navbar.nav-elements.industries",
 		path: appPaths.INDUSTRIES,
-		roles: ["BLUE"],
+		roles: ["ADMIN"],
 		type: "nav-link",
 	},
 	{
@@ -134,26 +116,7 @@ const navElements: NavElementProps[] = [
 		],
 		Icon: NetworkHierarchy,
 		label: "navbar.nav-elements.channels.title",
-		roles: ["BLUE", "BUSINESS"],
-		type: "accordion",
-	},
-	{
-		Icon: IcBaselineCampaign,
-		label: "navbar.nav-elements.campaigns",
-		path: appPaths.CAMPAIGNS_MANAGER,
-		roles: ["BLUE", "BUSINESS"],
-		type: "nav-link",
-	},
-	{
-		content: [
-			{
-				label: "navbar.nav-elements.chatbot.elements.page-1",
-				path: appPaths.CHATBOT,
-			},
-		],
-		Icon: RiRobot2Fill,
-		label: "navbar.nav-elements.chatbot.title",
-		roles: ["BLUE", "BUSINESS"],
+		roles: ["ADMIN", "USER"],
 		type: "accordion",
 	},
 ]

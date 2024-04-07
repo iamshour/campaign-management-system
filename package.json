@@ -1,17 +1,16 @@
 {
-	"name": "@blueai/cms",
-	"version": "0.6.3",
-	"type": "module",
+	"name": "campaign-management-system",
+	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite --clearScreen false",
 		"server": "json-server public/db.json --port 5000",
-		"concurrent": "concurrently \"npm run dev\" \"npm run server\"",
-		"build": "npm run clean && tsc && vite build",
+		"concurrent": "concurrently \"pnpm dev\" \"pnpm server\"",
+		"build": "pnpm clean && tsc && vite build",
 		"start": "vite preview --port 3000 --host",
 		"clean": "rm -rf dist",
-		"reset": "npm run clean && rm -rf node_modules && rm -rf package-lock.json && npm install",
+		"reset": "pnpm clean && rm -rf node_modules && rm -rf pnpm-lock.yaml && pnpm i",
 		"typecheck": "tsc --noEmit",
-		"lint": "npm run typecheck && eslint \"src/**/*.ts*\"",
+		"lint": "pnpm typecheck && eslint \"src/**/*.ts*\"",
 		"test": "vitest run",
 		"test:watch": "vitest"
 	},
@@ -34,7 +33,7 @@
 		"@radix-ui/react-toolbar": "1.0.4",
 		"@radix-ui/react-tooltip": "1.0.7",
 		"@react-spring/web": "9.7.3",
-		"@reduxjs/toolkit": "1.9.7",
+		"@reduxjs/toolkit": "2.2.3",
 		"class-variance-authority": "0.7.0",
 		"clsx": "2.1.0",
 		"cmdk": "0.2.1",
@@ -52,8 +51,8 @@
 		"react-hot-toast": "2.4.1",
 		"react-i18next": "13.5.0",
 		"react-phone-number-input": "3.3.9",
-		"react-redux": "8.1.3",
-		"react-router-dom": "6.21.3",
+		"react-redux": "9.1.0",
+		"react-router-dom": "6.22.3",
 		"redux-persist": "6.0.0",
 		"redux-persist-transform-filter": "0.0.22",
 		"tailwind-merge": "2.2.1",
@@ -70,6 +69,7 @@
 		"@types/node": "20.11.16",
 		"@types/react": "18.2.51",
 		"@types/react-dom": "18.2.18",
+		"@types/redux-persist": "4.3.1",
 		"@types/uuid": "9.0.8",
 		"@typescript-eslint/eslint-plugin": "^6.21.0",
 		"@typescript-eslint/parser": "^6.21.0",
@@ -102,9 +102,5 @@
 		"vite-plugin-svgr": "4.2.0",
 		"vite-tsconfig-paths": "^4.3.1",
 		"vitest": "0.34.6"
-	},
-	"publishConfig": {
-		"access": "public",
-		"registry": "https://gitlab.com/api/v4/projects/54390424/packages/npm/"
 	}
 }

@@ -41,7 +41,7 @@ const Navbar = () => {
 	return (
 		<ErrorBoundary className='h-full w-[250px]'>
 			<Spring
-				aria-label='Blue.Ai Navbar'
+				aria-label='Navbar'
 				className='z-50 flex h-screen flex-col bg-[#054060] shadow-[0_3px_18px_#77777715]'
 				transition={{ from: { width: isInitiallyOpen?.current ? 250 : 78 }, to: { width: isNavOpen ? 250 : 78 } }}>
 				{/* Top Section  */}
@@ -59,11 +59,11 @@ const Navbar = () => {
 					</Tooltip>
 
 					<div className='flex items-center justify-center py-2'>
-						<img alt='Blue.Ai Logo' className='ms-2 h-[60px] w-auto' src={logo} />
+						<img alt='Logo' className='ms-2 h-[60px] w-auto' src={logo} />
 					</div>
 
 					<div
-						aria-label='Blue.Ai Navbar'
+						aria-label='Navbar'
 						aria-orientation='horizontal'
 						className={twMerge(
 							"flex w-full flex-1 flex-col gap-1.5 overflow-y-auto overflow-x-hidden px-[7px] py-3",

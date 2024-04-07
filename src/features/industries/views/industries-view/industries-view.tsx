@@ -5,7 +5,7 @@ import type { IndustryType } from "@/features/industries/types"
 import DataView from "@/core/components/data-view/data-view"
 import industriesTableColumns from "@/features/industries/constants/industries-table-columns"
 import { lazy } from "react"
-import { useNavigate } from "react-router"
+import { useNavigate } from "react-router-dom"
 
 import IndustryCard from "./industry-card"
 
