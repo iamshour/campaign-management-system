@@ -1,61 +1,69 @@
 //#region Import
+import type { DataViewFilterType, DataViewKey } from "@/core/components/data-view/types"
+import type { SubmitExportsFileBody } from "@/features/people/exports/types"
+
+import { clearSelection } from "@/core/components/data-view/data-view-slice"
+import appPaths from "@/core/constants/app-paths"
+import useDispatch from "@/core/hooks/useDispatch"
+import useSelector from "@/core/hooks/useSelector"
+import { getContactAdvancedFilter, getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
+import { useSubmitExportsFileMutation } from "@/features/people/exports/api"
+import exportsFieldsOptions from "@/features/people/exports/constants/exports-fields-options"
+import exportSchema, { type ExportSchemaType } from "@/features/people/exports/schemas/export-schema"
+import { Button, Checkbox, Form, Input, Label, useForm } from "@/ui"
+import { cleanObject, generateFileName, omit } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMemo } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
-
-import appPaths from "@/core/constants/app-paths"
-import useDispatch from "@/core/hooks/useDispatch"
-import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { FiltersFieldMappingType, TableKey } from "@/core/slices/advanced-table-slice/types"
-import { getContactFilterAndContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
-import { useSubmitExportsFileMutation } from "@/features/people/exports/api"
-import exportFields from "@/features/people/exports/constants/export-fields"
-import exportSchema, { type ExportSchemaType } from "@/features/people/exports/schemas/export-schema"
-import type { SubmitExportsFileArgs } from "@/features/people/exports/types"
-import { getDefaultExportsFileName } from "@/features/people/exports/utils"
-import { twMerge, useForm, Button, Checkbox, Footer, Form, Input } from "@/ui"
-import { cleanObject } from "@/utils"
 //#endregion
 
-export type ExportsType = Extract<TableKey, "contacts" | "contacts-in-group" | "segments">
+export type ExportsType = Extract<DataViewKey, "contacts-in-group" | "contacts" | "segments">
+
+const companyName = import.meta.env.VITE_APP_PREFIX
 
 export interface ExportFieldsDialogContentProps {
-	/**
-	 * Callback function used to close the dialog
-	 */
-	onClose: () => void
-
 	/**
 	 * Type of entries to be exported. This prop is mainly used to identify whether we're exporting contacts or segments
 	 */
 	exportsType: ExportsType
+
+	/**
+	 * Callback function used to close the dialog
+	 */
+	onDialogClose: () => void
+
+	/**
+	 * Only Passed if component is used for exporting segments
+	 */
+	segmentId?: string
 }
 
-const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogContentProps) => {
+const ExportFieldsDialogContent = ({ exportsType, onDialogClose, segmentId }: ExportFieldsDialogContentProps) => {
 	const { t } = useTranslation("exports")
 
 	const dispatch = useDispatch()
 
-	const { selection, filters, searchTerm } = useSelector(
-		({ advancedTable }) => advancedTable[exportsType as ExportsType]
-	)
+	const { filters, searchTerm, selection } = useSelector(({ dataView }) => dataView[exportsType as ExportsType])
+
+	const defaultFileName = generateFileName(companyName, exportsType === "segments" ? "segments" : "contacts")
 
 	const form = useForm<ExportSchemaType>({
-		resolver: zodResolver(exportSchema),
 		defaultValues: {
-			fileName: getDefaultExportsFileName("Blue", exportsType === "segments" ? "segments" : "contacts"),
 			exportedFields: [],
+			fileName: defaultFileName,
 		},
 		mode: "onSubmit",
+		resolver: zodResolver(exportSchema),
 	})
 
 	const [submitExport, { isLoading }] = useSubmitExportsFileMutation()
 
 	const selectedFields = form.watch("exportedFields")
-	const allFields = useMemo(() => exportFields?.map(({ value }) => value), [])
+
+	const allFields = useMemo(() => exportsFieldsOptions?.map(({ value }) => value), [])
+
 	const isAllSelected = useMemo(
 		() => !!selectedFields?.length && selectedFields?.length === allFields?.length,
 		[selectedFields, allFields]
@@ -69,59 +77,68 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 
 		// using Set to prevent having same entries
 		const allSelection = new Set([...selectedFields, ...allFields])
+
 		return form.setValue("exportedFields", [...allSelection])
 	}
 
-	const onSubmit = async ({ fileName, exportedFields }: ExportSchemaType) => {
-		let body: SubmitExportsFileArgs = {
-			fileName,
+	const onSubmit = async ({ exportedFields, fileName }: ExportSchemaType) => {
+		let body: SubmitExportsFileBody = {
 			contactsIds: !!selection && selection !== "ALL" ? selection : undefined,
 			exportedFields,
+			fileName,
 		}
 
+		// Calling From Contacts-View
 		if (exportsType === "contacts") {
-			body = {
-				...body,
-				// Statically inferring type of Filters to Its Origin -- Contacts Filters used only in Contacts Table, In order to find advancedFilters without TS erros
-				...getContactAdvancedFilter((filters as FiltersFieldMappingType["contacts"])?.advancedFilters),
-			}
+			// Statically inferring type of Filters to Its Origin -- Contacts Filters used only in Contacts Table, In order to find advancedFilters without TS erros
+			const contactAdvancedFilter = getContactAdvancedFilter(
+				(filters as DataViewFilterType["contacts"])?.advancedFilters
+			)
+
+			body = { ...body, contactAdvancedFilter }
 		}
 
+		// Calling From Contacts-View OR Contacts in Group View
 		if (exportsType !== "segments") {
 			body = {
 				...body,
-				...getContactFilterAndContactSearchFilter(filters, searchTerm),
+				contactFilter: getContactFilter(omit(filters as DataViewFilterType["contacts"], "advancedFilters")),
+				contactSearchFilter: getContactSearchFilter(searchTerm),
 			}
 		}
 
-		// Cleaning Body from all undefined values, empty objects, and nested objects with undefined values
+		if (exportsType === "segments") {
+			body = {
+				...body,
+				contactAdvancedFilter: { segmentId },
+			}
+		}
+
+		// Cleaning Body from all undefined/empty/nullish objects/nested objects
 		const cleanBody = cleanObject(body)
 
-		await submitExport(cleanBody)
-			.unwrap()
-			.then(() => {
-				// Clearing Selection list if contacts were selected using their Ids
-				if (cleanBody?.contactsIds) dispatch(clearSelection(exportsType as TableKey))
+		await submitExport(cleanBody).unwrap()
 
-				toast.success(({ id }) => <SuccessToast id={id} />)
-				form.reset()
-				onClose()
-			})
+		// Clearing Selection list if contacts were selected using their Ids
+		if (cleanBody?.contactsIds) dispatch(clearSelection(exportsType as DataViewKey))
+
+		toast.success(({ id }) => <SuccessToast id={id} />)
+
+		form.reset()
+		onDialogClose()
 	}
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-6 overflow-hidden p-2'>
+			<form
+				className='flex h-full flex-col justify-between gap-6 overflow-hidden p-2'
+				onSubmit={form.handleSubmit(onSubmit)}>
 				<Form.Field
 					control={form.control}
 					name='fileName'
 					render={({ field }) => (
-						<Form.Item>
-							<Form.Label>{t("dialogs.exportFields.fields.fileName.label")}</Form.Label>
-							<Form.Control>
-								<Input placeholder={t("dialogs.exportFields.fields.fileName.placeholder")} {...field} />
-							</Form.Control>
-							<Form.Message />
+						<Form.Item label={t("dialogs.exportFields.fields.fileName.label")}>
+							<Input placeholder={t("dialogs.exportFields.fields.fileName.placeholder")} {...field} />
 						</Form.Item>
 					)}
 				/>
@@ -131,24 +148,28 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 					name='exportedFields'
 					render={() => (
 						<Form.Item className='flex flex-col overflow-hidden'>
-							<div className='mb-2 flex w-full items-end justify-between'>
-								<Form.Label className='pb-0'>{t("dialogs.exportFields.fields.selectExportFields.label")}</Form.Label>
-								<Button type='button' variant='text' size='sm' className='-mb-1 h-max p-0 pe-2' onClick={onSelectAll}>
-									{isAllSelected
-										? t("dialogs.exportFields.buttons.clearAll")
-										: t("dialogs.exportFields.buttons.selectAll")}
-								</Button>
-							</div>
+							<>
+								<div className='mb-2 flex w-full items-end justify-between'>
+									<Label className='pb-0'>{t("dialogs.exportFields.fields.selectExportFields.label")}</Label>
+									<Button className='-mb-1 h-max p-0 pe-2' onClick={onSelectAll} size='sm' type='button' variant='text'>
+										{isAllSelected
+											? t("dialogs.exportFields.buttons.clearAll")
+											: t("dialogs.exportFields.buttons.selectAll")}
+									</Button>
+								</div>
 
-							<div className='space-y-3 overflow-y-auto rounded-xl bg-[#f7f7f7] p-4'>
-								{exportFields.map(({ value, label }, idx) => (
-									<Form.Field
-										key={`${value}-${idx}`}
-										control={form.control}
-										name='exportedFields'
-										render={({ field }) => (
-											<Form.Item key={`${value}-${idx}`} className='flex flex-row items-center space-x-3 space-y-0'>
-												<Form.Control>
+								<div className='space-y-3 overflow-y-auto rounded-xl bg-[#f7f7f7] p-4'>
+									{exportsFieldsOptions.map(({ label, value }, idx) => (
+										<Form.Field
+											control={form.control}
+											key={`${value}-${idx}`}
+											name='exportedFields'
+											render={({ field }) => (
+												<Form.Item
+													className='flex-row-reverse items-center justify-end gap-2 space-x-2 [&_button]:!mx-0 [&_label]:cursor-pointer [&_label]:pb-0 [&_label]:transition-basic [&_label]:hover:text-primary-900'
+													hideError
+													key={`${value}-${idx}`}
+													label={t(label)}>
 													<Checkbox
 														checked={field.value?.includes(value)}
 														onCheckedChange={(checked) =>
@@ -157,30 +178,19 @@ const ExportFieldsDialogContent = ({ exportsType, onClose }: ExportFieldsDialogC
 																: field.onChange(field.value?.filter((i) => i !== value))
 														}
 													/>
-												</Form.Control>
-												<Form.Label
-													className={twMerge(
-														"cursor-pointer pb-0 transition-basic hover:text-primary-900",
-														field.value?.includes(value) && "text-primary-900"
-													)}>
-													{t(label)}
-												</Form.Label>
-											</Form.Item>
-										)}
-									/>
-								))}
-							</div>
-
-							<Form.Message />
+												</Form.Item>
+											)}
+										/>
+									))}
+								</div>
+							</>
 						</Form.Item>
 					)}
 				/>
 
-				<Footer>
-					<Button type='submit' className='px-10' loading={isLoading}>
-						{t("dialogs.exportFields.buttons.submit")}
-					</Button>
-				</Footer>
+				<Button className='ms-auto w-full px-10 sm:w-max' loading={isLoading} type='submit'>
+					{t("dialogs.exportFields.buttons.submit")}
+				</Button>
 			</form>
 		</Form>
 	)
@@ -194,7 +204,7 @@ const SuccessToast = ({ id }: { id: string }) => {
 	return (
 		<div>
 			<span className='me-1.5 text-sm font-medium'>{t("success_1")}</span>
-			<Link className='text-sm text-primary-700 underline' to={appPaths.EXPORTS} onClick={() => toast.dismiss(id)}>
+			<Link className='text-sm text-primary-700 underline' onClick={() => toast.dismiss(id)} to={appPaths.EXPORTS}>
 				{t("success_2")}
 			</Link>
 		</div>

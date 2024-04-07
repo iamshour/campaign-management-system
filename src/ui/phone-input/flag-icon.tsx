@@ -1,13 +1,12 @@
 //#region Import
-import flags from "react-phone-number-input/flags"
-import { twMerge } from "tailwind-merge"
-
-import type { CountryOption } from "../select-country-popover"
+import type { Country } from "react-phone-number-input"
 
 import RadixIconsGlobe from "~icons/radix-icons/globe"
+import flags from "react-phone-number-input/flags"
+import { twMerge } from "tailwind-merge"
 //#endregion
 
-type FlagIconProps = CountryOption & React.SVGProps<SVGSVGElement>
+type FlagIconProps = React.SVGProps<SVGSVGElement> & { label?: string; value?: Country; withFallback?: boolean }
 
 /**
  * FlagIcon Component to be rendered inside Phone Number Input or somewhere else
@@ -21,12 +20,18 @@ type FlagIconProps = CountryOption & React.SVGProps<SVGSVGElement>
  * @param props.value - Country Code
  * @param props.label - String passed for the title attribute, could be country name or country code
  */
-const FlagIcon = ({ className, ...props }: FlagIconProps) => {
+const FlagIcon = ({ className, withFallback = true, ...props }: FlagIconProps) => {
+	if (!props?.value || !props?.label) {
+		if (!withFallback) return
+
+		return <RadixIconsGlobe className={twMerge("h-5 w-5 shrink-0", className)} />
+	}
+
 	const Component: React.ElementType<FlagIconProps & { title: string }> | undefined = flags[props.value]
 
-	if (!Component) return <RadixIconsGlobe className={twMerge("h-5 w-5 shrink-0", className)} />
+	if (!Component) return
 
-	return <Component {...props} title={props.label} className={twMerge("h-5 w-5 shrink-0", className)} />
+	return <Component {...props} className={twMerge("h-5 w-5 shrink-0", className)} title={props.label} />
 }
 
 export default FlagIcon

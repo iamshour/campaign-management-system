@@ -6,8 +6,8 @@ import { RouteObject } from "react-router-dom"
  */
 const commonRoutes: RouteObject[] = [
 	{
-		path: "/privacy-policy",
 		element: <div className='text-4xl'>Privacy Policy Page</div>,
+		path: "/privacy-policy",
 	},
 ]
 

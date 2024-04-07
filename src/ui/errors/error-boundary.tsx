@@ -1,11 +1,11 @@
-import { Component } from "react"
+import { Component, lazy } from "react"
 
-import ServerError from "./server-error"
+const DisplayError = lazy(() => import("./display-error"))
 
 interface Props {
 	children: React.ReactNode
-	fallback?: React.ReactNode
 	className?: string
+	fallback?: React.ReactNode
 }
 
 interface State {
@@ -23,17 +23,27 @@ class ErrorBoundary extends Component<Props, State> {
 	}
 
 	public componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+		// eslint-disable-next-line no-console
 		console.error("Uncaught error:", error, errorInfo)
 	}
 
 	// Clearing Console when ErrorBoundary Component isn't mounted any more (ex. When used In Portals)
 	public componentWillUnmount(): void {
+		// eslint-disable-next-line no-console
 		console.clear()
 	}
 
 	public render() {
 		if (this.state.hasError) {
-			return this.props.fallback || <ServerError className={this.props.className} />
+			return (
+				this.props.fallback || (
+					<DisplayError
+						className={this.props.className}
+						error={{ data: { message: "Component Render Error", statusCode: 500 }, status: 500 }}
+						showReloadButton
+					/>
+				)
+			)
 		}
 
 		return this.props.children

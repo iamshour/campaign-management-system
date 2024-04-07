@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge"
 
-import Skeleton from "../skeleton"
+import Skeleton from "../skeleton/skeleton"
 
 interface TableSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
 	/**
@@ -14,12 +14,14 @@ interface TableSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
 	rowsLength?: number
 }
 
-const TableSkeleton = ({ colsLength = 8, rowsLength = 13, className, ...props }: TableSkeletonProps) => (
-	<div className={twMerge("flex h-full w-full flex-col gap-2 overflow-y-auto px-4", className)} {...props}>
+const TableSkeleton = ({ className, colsLength = 8, rowsLength = 13, ...props }: TableSkeletonProps) => (
+	<div className={twMerge("flex h-full w-full flex-col gap-2 overflow-hidden px-4", className)} {...props}>
 		{Array.from({ length: rowsLength }, (_, i) => (
-			<div key={i} className='flex h-max w-full gap-2'>
+			<div className='flex h-max w-full gap-2' key={i}>
 				{Array.from({ length: colsLength }, (_, i) => (
-					<div key={i} className={"h-[44px] w-full p-1 first:!min-w-[60px]"}>
+					<div
+						className={"h-[44px] w-full min-w-[120px] max-w-[200px] p-1 first:!min-w-[60px] 2xl:max-w-[300px]"}
+						key={i}>
 						<Skeleton className='h-full w-full' />
 					</div>
 				))}

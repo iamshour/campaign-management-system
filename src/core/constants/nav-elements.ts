@@ -1,74 +1,80 @@
+//#region Import
+import type { UserRole } from "@/features/authentication/types"
 import type { IconType } from "@/ui"
-
-import appPaths from "./app-paths"
 
 import BiBarChartFill from "~icons/bi/bar-chart-fill"
 import IcBaselineCampaign from "~icons/ic/baseline-campaign"
 import IcBaselineInsertDriveFile from "~icons/ic/baseline-insert-drive-file"
 import IcRoundMoveToInbox from "~icons/ic/round-move-to-inbox"
 import IcRoundPermContactCalendar from "~icons/ic/round-perm-contact-calendar"
-import MdiVirus from "~icons/mdi/virus"
+import MaterialSymbolsLightLabProfileSharp from "~icons/material-symbols-light/lab-profile-sharp"
 import RiRobot2Fill from "~icons/ri/robot-2-fill"
+import NetworkHierarchy from "~icons/streamline/interface-hierarchy-2-node-organization-links-structure-link-nodes-network-hierarchy"
 import TablerAppsFilled from "~icons/tabler/apps-filled"
 
+import appPaths from "./app-paths"
+//#endregion
+
 type NavElementProps = {
+	/**
+	 * Icon passed to be displayed in the navbar
+	 */
+	Icon: IconType
+
 	/**
 	 * Translated String to be displayed for end-users in the navbar
 	 */
 	label: string
 
-	/**
-	 * Icon passed to be displayed in the navbar
-	 */
-	Icon: IconType
+	roles: UserRole[]
 } & (
 	| {
-			/**
-			 * Type of element to be used in the navbar, could be a `nav-link` or `accordion`
-			 */
-			type: "nav-link"
-
-			/**
-			 * Path to be navigated to when this element is clicked
-			 */
-			path: string
-	  }
-	| {
-			/**
-			 * Type of element to be used in the navbar, could be a `nav-link` or `accordion`
-			 */
-			type: "accordion"
-
 			/**
 			 * List of links to be displayed inside a navbar accordion
 			 */
 			content: Record<"label" | "path", string>[]
+
+			/**
+			 * Type of element to be used in the navbar, could be a `nav-link` or `accordion`
+			 */
+			type: "accordion"
+	  }
+	| {
+			/**
+			 * Path to be navigated to when this element is clicked
+			 */
+			path: string
+
+			/**
+			 * Type of element to be used in the navbar, could be a `nav-link` or `accordion`
+			 */
+			type: "nav-link"
 	  }
 )
 
 const navElements: NavElementProps[] = [
 	{
-		type: "nav-link",
+		Icon: BiBarChartFill,
 		label: "navbar.nav-elements.dashboard",
 		path: appPaths.DASHBOARD,
-		Icon: BiBarChartFill,
+		roles: ["BLUE", "BUSINESS"],
+		type: "nav-link",
 	},
 	{
-		type: "nav-link",
+		Icon: IcRoundMoveToInbox,
 		label: "navbar.nav-elements.inbox",
 		path: appPaths.INBOX,
-		Icon: IcRoundMoveToInbox,
+		roles: ["BLUE", "BUSINESS"],
+		type: "nav-link",
 	},
 	{
-		type: "nav-link",
+		Icon: TablerAppsFilled,
 		label: "navbar.nav-elements.integrations",
 		path: appPaths.INTEGRATIONS,
-		Icon: TablerAppsFilled,
+		roles: ["BLUE", "BUSINESS"],
+		type: "nav-link",
 	},
 	{
-		type: "accordion",
-		label: "navbar.nav-elements.people.title",
-		Icon: IcRoundPermContactCalendar,
 		content: [
 			{
 				label: "navbar.nav-elements.people.elements.contacts",
@@ -87,45 +93,69 @@ const navElements: NavElementProps[] = [
 				path: appPaths.SEGMENTS,
 			},
 		],
+		Icon: IcRoundPermContactCalendar,
+		label: "navbar.nav-elements.people.title",
+		roles: ["BLUE", "BUSINESS"],
+		type: "accordion",
 	},
 	{
-		type: "accordion",
-		label: "navbar.nav-elements.templates.title",
-		Icon: IcBaselineInsertDriveFile,
 		content: [
 			{
 				label: "navbar.nav-elements.templates.elements.smsTemplates",
 				path: appPaths.SMS_TEMPLATES,
 			},
 		],
-	},
-	{
-		type: "nav-link",
-		label: "navbar.nav-elements.campaigns",
-		path: appPaths.CAMPAIGNS_MANAGER,
-		Icon: IcBaselineCampaign,
-	},
-	{
+		Icon: IcBaselineInsertDriveFile,
+		label: "navbar.nav-elements.templates.title",
+		roles: ["BUSINESS"],
 		type: "accordion",
-		label: "navbar.nav-elements.channels.title",
-		Icon: MdiVirus,
+	},
+	{
+		Icon: MaterialSymbolsLightLabProfileSharp,
+		label: "navbar.nav-elements.industries",
+		path: appPaths.INDUSTRIES,
+		roles: ["BLUE"],
+		type: "nav-link",
+	},
+	{
 		content: [
 			{
-				label: "navbar.nav-elements.channels.elements.whatsapp",
+				label: "navbar.nav-elements.channels.elements.smsSendersManagementLocal",
+				path: "admin/channels/local-sms",
+			},
+			{
+				label: "navbar.nav-elements.channels.elements.smsSendersManagementInternational",
+				path: "admin/channels/international-sms",
+			},
+			{
+				label: "navbar.nav-elements.channels.elements.smsChannels",
 				path: appPaths.CHANNELS,
 			},
 		],
+		Icon: NetworkHierarchy,
+		label: "navbar.nav-elements.channels.title",
+		roles: ["BLUE", "BUSINESS"],
+		type: "accordion",
 	},
 	{
-		type: "accordion",
-		label: "navbar.nav-elements.chatbot.title",
-		Icon: RiRobot2Fill,
+		Icon: IcBaselineCampaign,
+		label: "navbar.nav-elements.campaigns",
+		path: appPaths.CAMPAIGNS_MANAGER,
+		roles: ["BLUE", "BUSINESS"],
+		type: "nav-link",
+	},
+	{
 		content: [
 			{
 				label: "navbar.nav-elements.chatbot.elements.page-1",
 				path: appPaths.CHATBOT,
 			},
 		],
+		Icon: RiRobot2Fill,
+		label: "navbar.nav-elements.chatbot.title",
+		roles: ["BLUE", "BUSINESS"],
+		type: "accordion",
 	},
 ]
+
 export default navElements

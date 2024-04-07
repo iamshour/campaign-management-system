@@ -1,20 +1,25 @@
 //#region Import
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
+import type { ContactSchemaType } from "@/features/people/contacts/schemas/contact-schema"
+import type { AddNewContactBody } from "@/features/people/contacts/types"
 
 import { useGetContactByIdQuery, useUpdateContactMutation } from "@/features/people/contacts/api"
 import ContactForm from "@/features/people/contacts/components/contact-form"
-import type { ContactSchemaType } from "@/features/people/contacts/schemas/contact-schema"
-import type { AddNewContactArgs } from "@/features/people/contacts/types"
 import { addLeadingPlusToPhoneNumber } from "@/features/people/contacts/utils"
-import { Button, NotFoundError, Skeleton, type UseFormReturn } from "@/ui"
+import { Button, Skeleton, type UseFormReturn } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import { cleanObject } from "@/utils"
+import { lazy } from "react"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
+
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 export interface EditContactDialogContentProps {
 	/**
 	 * Callback function used to close the dialog
 	 */
-	onClose: () => void
+	closeDialog: () => void
 
 	/**
 	 * contact id, passed in case we're editing a contact
@@ -22,18 +27,20 @@ export interface EditContactDialogContentProps {
 	id: string
 }
 
-const EditContactDialogContent = ({ onClose, id }: EditContactDialogContentProps) => {
+const EditContactDialogContent = ({ closeDialog, id }: EditContactDialogContentProps) => {
 	const { t } = useTranslation("contacts")
 
-	const { values, isFetching, isFetchError } = useGetContactByIdQuery(id, {
+	const { closeDropdown } = useDropdownStateContext()
+
+	const { isFetchError, isFetching, values } = useGetContactByIdQuery(id, {
 		selectFromResult: ({ data, isError, ...rest }) => ({
+			isFetchError: isError,
 			values: {
 				...data,
-				groups: data?.groups?.map(({ name, id }) => ({ label: name, value: id })),
+				groups: data?.groups?.map(({ id, name }) => ({ label: name, value: id })),
 				// If Phone number exists, add + prefix for compatability with the PhoneNumberInput Component
 				phoneNumber: addLeadingPlusToPhoneNumber(data?.phoneNumber),
 			},
-			isFetchError: isError,
 			...rest,
 		}),
 	})
@@ -47,24 +54,25 @@ const EditContactDialogContent = ({ onClose, id }: EditContactDialogContentProps
 	 * @param form form passed from the `ContactForm` component, which we can access to reset from data, or handle other
 	 *             actions such as sending back an error on a specific field
 	 */
-	const onSubmit = async (body: AddNewContactArgs, form: UseFormReturn<ContactSchemaType>) => {
+	const onSubmit = async (body: AddNewContactBody, form: UseFormReturn<ContactSchemaType>) => {
 		if (!body) return
 
-		await updateContact({ id, ...body })
-			.unwrap()
-			.then(() => {
-				form.reset()
-				onClose()
-				toast.success(t("dialogs.addContact.message.editContactSuccess"))
-			})
+		await updateContact({ id, ...body }).unwrap()
+
+		toast.success(t("dialogs.addContact.message.editContactSuccess"))
+		form.reset()
+
+		closeDialog()
+		closeDropdown()
 	}
 
 	if (isFetching) return <Skeleton className='h-full' />
-	if (isFetchError) return <NotFoundError />
+
+	if (isFetchError) return <DisplayError />
 
 	return (
-		<ContactForm onSubmit={onSubmit} defaultValues={values}>
-			<Button type='submit' loading={isUpdateLoading} disabled={isUpdateLoading}>
+		<ContactForm defaultValues={cleanObject(values)} onSubmit={onSubmit}>
+			<Button data-form='contact-form' disabled={isUpdateLoading} loading={isUpdateLoading} type='submit'>
 				{t("dialogs.editContact.buttons.save")}
 			</Button>
 		</ContactForm>

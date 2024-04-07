@@ -31,3 +31,10 @@ body {
 		scrollbar-color: rgba(0, 0, 0, 0.2);
 	}
 }
+
+/* TODO */
+/* @media screen (min-width: 2000px) {
+	html {
+		font-size: 2rem;
+	}
+} */

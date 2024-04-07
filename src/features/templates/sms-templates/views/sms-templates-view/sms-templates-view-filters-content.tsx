@@ -1,71 +1,58 @@
 //#region Import
+import type { TemplateLanguage, TemplateStatus, TemplateType } from "@/features/templates/common/types"
+import type { TemplateFilter } from "@/features/templates/sms-templates/types"
+
+import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import SelectLanguagesPopover from "@/features/templates/sms-templates/components/select-languages-popover"
-import SelectStatusesPopover from "@/features/templates/sms-templates/components/select-statuses-popover"
-import SelectTypesPopover from "@/features/templates/sms-templates/components/select-types-popover"
-import type {
-	SmsTemplateLanguageOption,
-	SmsTemplateStatusOption,
-	SmsTemplateTypeOption,
-} from "@/features/templates/sms-templates/types"
+import SelectMultiLanguagesPopover from "@/features/templates/common/components/select-multi-languages-popover"
+import SelectMultiTemplateStatusesPopover from "@/features/templates/common/components/select-multi-template-statuses-popover"
+import SelectMultiTemplateTypesPopover from "@/features/templates/common/components/select-multi-template-types-popover"
 import { DateRangePicker } from "@/ui"
 import { getListOfKey } from "@/utils"
+import { memo, useCallback } from "react"
 //#endregion
 
-const SmsTemplatesViewFiltersContent = () => {
+const SmsTemplatesFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const { filters } = useSelector<AdvancedTableStateType<"sms-templates">>(
-		({ advancedTable }) => advancedTable["sms-templates"]
+	const filters = useSelector<TemplateFilter | undefined>(
+		(state) => selectFilters(state, "sms-templates") as TemplateFilter | undefined
+	)
+
+	const onValueChange = useCallback(
+		(newFilters?: Partial<TemplateFilter>) => {
+			dispatch(updateFilters({ "sms-templates": newFilters }))
+		},
+		[dispatch]
 	)
 
 	return (
 		<>
 			<DateRangePicker
+				dateRange={{ endDate: filters?.endDate, startDate: filters?.startDate }}
 				label='Last updated date'
-				dateRange={filters?.dateRange}
-				updateDateRange={(dateRange) => dispatch(updateFilters({ "sms-templates": { dateRange } }))}
+				updateDateRange={onValueChange}
 			/>
-			<SelectStatusesPopover
-				isMulti
-				selection={filters?.templateStatus?.map((value) => ({ label: value, value })) || []}
-				updateSelection={(selection) =>
-					dispatch(
-						updateFilters({
-							"sms-templates": { templateStatus: getListOfKey(selection, "value") as SmsTemplateStatusOption[] },
-						})
-					)
-				}
+			<SelectMultiTemplateStatusesPopover
+				onValueChange={(selection) => onValueChange({ statuses: getListOfKey(selection, "value") as TemplateStatus[] })}
+				value={filters?.statuses}
 			/>
-			<SelectTypesPopover
-				isMulti
-				selection={filters?.templateType?.map((value) => ({ label: value, value })) || []}
-				updateSelection={(selection) =>
-					dispatch(
-						updateFilters({
-							"sms-templates": { templateType: getListOfKey(selection, "value") as SmsTemplateTypeOption[] },
-						})
-					)
-				}
+			<SelectMultiTemplateTypesPopover
+				onValueChange={(selection) => onValueChange({ types: getListOfKey(selection, "value") as TemplateType[] })}
+				value={filters?.types}
 			/>
-			<SelectLanguagesPopover
-				isMulti
-				selection={filters?.templateLanguage?.map((value) => ({ label: value, value })) || []}
-				updateSelection={(selection) =>
-					dispatch(
-						updateFilters({
-							"sms-templates": {
-								templateLanguage: getListOfKey(selection, "value") as SmsTemplateLanguageOption[],
-							},
-						})
-					)
+
+			<SelectMultiLanguagesPopover
+				onValueChange={(selection) =>
+					onValueChange({ languages: getListOfKey(selection, "value") as TemplateLanguage[] })
 				}
+				value={filters?.languages}
 			/>
 		</>
 	)
-}
+})
 
-export default SmsTemplatesViewFiltersContent
+SmsTemplatesFiltersContent.displayName = "SmsTemplatesFiltersContent"
+
+export default SmsTemplatesFiltersContent

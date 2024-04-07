@@ -1,27 +1,25 @@
 //#region Import
-//#region Import
-import { useTranslation } from "react-i18next"
-import { useLocation, useNavigate } from "react-router-dom"
-
 import { Button, type IconType } from "@/ui"
-
-import SegmentsFunnelReadonly from "../components/segments-funnel-readonly"
-import type { Segment, SegmentConditionType } from "../types"
-
 import MaterialSymbolsEdit from "~icons/material-symbols/edit"
 import MdiFileDocument from "~icons/mdi/file-document"
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
+import { useTranslation } from "react-i18next"
+import { useLocation } from "react-router-dom"
+
+import type { Segment, SegmentConditionType } from "../types"
+
+import SegmentsFunnelReadonly from "../components/segments-funnel-readonly/segments-funnel-readonly"
 //#endregion
 
 const SegmentView = ({
-	name,
-	description,
 	conditions,
-}: Pick<Segment, "name" | "description"> & {
+	description,
+	name,
+}: Pick<Segment, "description" | "name"> & {
 	conditions?: SegmentConditionType[]
 }) => {
-	const navigate = useNavigate()
 	const { pathname } = useLocation()
+
 	const { t } = useTranslation("segments", { keyPrefix: "views" })
 
 	return (
@@ -29,7 +27,7 @@ const SegmentView = ({
 			<div className='flex justify-between'>
 				<h2 className='text-[21px] font-medium'>{t(`viewSegment.title`)}</h2>
 
-				<Button variant='link' size='sm' onClick={() => navigate(`./edit-segment`, { state: { from: pathname } })}>
+				<Button as='link' size='sm' state={{ from: pathname }} to='./edit-segment' variant='link'>
 					<MaterialSymbolsEdit />
 					{t("viewSegment.actions.editSegment")}
 				</Button>
@@ -37,7 +35,7 @@ const SegmentView = ({
 
 			<div className='flex h-full w-full flex-col gap-10 overflow-hidden rounded-xl bg-[#F7F7F7] p-6'>
 				<div>
-					<TitleWithIcon title={t("editableSegmentView.items.basicInfo.title")} icon={MdiInformationVariantCircle} />
+					<TitleWithIcon icon={MdiInformationVariantCircle} title={t("editableSegmentView.items.basicInfo.title")} />
 
 					<p className='mt-4 truncate text-base font-bold text-black'>
 						{t("viewSegment.fields.name")}: <span className='truncate font-normal'>{name}</span>
@@ -51,9 +49,9 @@ const SegmentView = ({
 				</div>
 
 				<div className='flex flex-1 flex-col gap-6 overflow-hidden'>
-					<TitleWithIcon title={t("editableSegmentView.items.conditions.title")} icon={MdiFileDocument} />
+					<TitleWithIcon icon={MdiFileDocument} title={t("editableSegmentView.items.conditions.title")} />
 
-					<SegmentsFunnelReadonly conditions={conditions} className='overflow-y-auto' />
+					<SegmentsFunnelReadonly className='overflow-y-auto' conditions={conditions} />
 				</div>
 			</div>
 		</div>
@@ -62,7 +60,7 @@ const SegmentView = ({
 
 export default SegmentView
 
-export const TitleWithIcon = ({ title, icon: Icon }: { title: string; icon: IconType }) => (
+export const TitleWithIcon = ({ icon: Icon, title }: { icon: IconType; title: string }) => (
 	<div className='flex items-center gap-3'>
 		<Icon className='h-6 w-6 shrink-0 text-primary-700' />
 		<h3 className='text-xl font-bold text-black'>{title}</h3>

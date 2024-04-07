@@ -15,7 +15,7 @@ const ImportContactsDialogContent = () => {
 export default ImportContactsDialogContent
 
 const views: Record<number, React.LazyExoticComponent<() => JSX.Element>> = {
-	1: lazy(() => import("./selection-step")),
-	2: lazy(() => import("./mapping-step")),
+	1: lazy(() => import("./selection-step/selection-step")),
+	2: lazy(() => import("./mapping-step/mapping-step")),
 	3: lazy(() => import("./review-step")),
 }

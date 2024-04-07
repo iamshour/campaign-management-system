@@ -11,6 +11,7 @@ const getInitials = (name: string, options?: { uppercase?: boolean }) => {
 		.split(/[\s-]+/)
 		.map((part) => {
 			const initial = part[0]
+
 			return options?.uppercase ? initial.toUpperCase() : initial
 		})
 		.join("")

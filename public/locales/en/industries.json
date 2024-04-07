@@ -1,0 +1,66 @@
+{
+	"fields": {
+		"icon": {
+			"label": "Icon",
+			"placeholder": "Select icon"
+		},
+		"name": {
+			"label": "Industry Name",
+			"placeholder": "Enter name"
+		},
+		"description": {
+			"label": "Industry Description",
+			"placeholder": "Enter description"
+		},
+		"createdAt": {
+			"label": "Creation date"
+		},
+		"color": {
+			"label": "Icon Color"
+		}
+	},
+	"table": {
+		"topbar": {
+			"actions": {
+				"create-industry": "Create Industry"
+			}
+		}
+	},
+	"views": {
+		"industriesView": {
+			"industryCard": {
+				"callToAction": "View Templates"
+			},
+			"actions": {
+				"edit": "Edit",
+				"delete": "Delete"
+			}
+		}
+	},
+	"components": {
+		"smsTemplateBuilder": {
+			"backgroundField": {
+				"sectionHeading": {
+					"label": "Template Background",
+					"description": "Import template background"
+				},
+				"mostPopularField": {
+					"label": "Add template to most popular"
+				},
+				"dropArea": {
+					"label": "Import",
+					"labelIconTooltipContent": "The image you want to upload should be related to the industry",
+					"previewCardIconTooltipContent": "You can preview how your images will be displayed on the prebuilt templates",
+					"validationMessage": "Size less than 500 KB, Format PNG, JPG",
+					"errors": {
+						"file-too-large": "File is too large, and exceeds the limit: 500KB",
+						"file-invalid-type": "Invalid file upload. Your uploaded file should be of type: png or jpg."
+					},
+					"actions": {
+						"remove": "Remove Background Image"
+					}
+				}
+			}
+		}
+	}
+}

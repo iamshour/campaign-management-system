@@ -1,37 +1,82 @@
+//#region Import
+import type { SharedListViewProps } from "@/core/types"
+import type { SmsIndustryTemplateType } from "@/features/industries/types"
+
+import { updatePaginationAndSorting, updateSearch } from "@/core/components/data-view/data-view-slice"
+import appPaths from "@/core/constants/app-paths"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateAdvancedTableState } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import { SharedListViewProps } from "@/core/types"
-import type { SmsPrebuiltTemplateType } from "@/features/templates/sms-templates/types"
-import { SearchInput } from "@/ui"
+import { NoResultsFound, SearchInput } from "@/ui"
+import { lazy } from "react"
+import { Link, useLocation } from "react-router-dom"
 
 import SmsPrebuiltTemplateCard from "./sms-prebuilt-template-card"
-import SmsPrebuiltTemplatesViewFilters from "./sms-prebuilt-templates-view-filters-bar"
 
-const SmsPrebuiltTemplatesView = ({ list, isFetching }: SharedListViewProps<SmsPrebuiltTemplateType>) => {
+const SmsPrebuiltTemplatesFilters = lazy(
+	() => import("./sms-prebuilt-templates-filters/sms-prebuilt-templates-filters")
+)
+
+const Pagination = lazy(() => import("@/ui/pagination/pagination"))
+//#endregion
+
+export interface SmsPrebuiltTemplatesViewProps
+	extends SharedListViewProps<SmsIndustryTemplateType>,
+		Pick<React.ComponentPropsWithoutRef<typeof SmsPrebuiltTemplatesFilters>, "prebuiltTemplatesGridKey"> {}
+
+const SmsPrebuiltTemplatesView = ({
+	count,
+	isFetching,
+	list,
+	prebuiltTemplatesGridKey,
+}: SmsPrebuiltTemplatesViewProps) => {
+	const { pathname } = useLocation()
+
 	const dispatch = useDispatch()
 
-	const searchTerm = useSelector(({ advancedTable }) => advancedTable["sms-prebuilt-templates"]?.searchTerm)
+	const { filters, paginationAndSorting, searchTerm } = useSelector(
+		({ dataView }) => dataView[prebuiltTemplatesGridKey]
+	)
 
 	return (
 		<div className='flex h-full w-full flex-1 overflow-hidden'>
-			<SmsPrebuiltTemplatesViewFilters />
+			<SmsPrebuiltTemplatesFilters prebuiltTemplatesGridKey={prebuiltTemplatesGridKey} />
 
-			<div className='flex h-full w-full flex-1 flex-col gap-4 overflow-hidden p-4 pb-0'>
+			<div className='flex h-full w-full flex-1 flex-col overflow-hidden p-4 pb-0'>
 				<SearchInput
+					className='mb-4 w-[14rem] !max-w-full md:w-[18rem]'
+					onChange={(searchTerm) => dispatch(updateSearch({ [prebuiltTemplatesGridKey]: searchTerm }))}
 					value={searchTerm}
-					onChange={(searchTerm) => dispatch(updateAdvancedTableState({ "sms-prebuilt-templates": { searchTerm } }))}
 				/>
 
-				<div className='grid flex-1 justify-evenly gap-6 overflow-y-auto p-4 [grid-template-columns:repeat(auto-fit,377px)]'>
-					{list?.map((prebuiltTemplate) => (
-						<SmsPrebuiltTemplateCard
-							className={isFetching ? "opacity-50" : undefined}
-							key={prebuiltTemplate?.id}
-							{...prebuiltTemplate}
-						/>
-					))}
+				<div className='flex-1 overflow-y-auto'>
+					{!list?.length ? (
+						<NoResultsFound />
+					) : (
+						<div className='flex flex-wrap gap-6 p-4 pt-0'>
+							{list.map(({ backgroundImage, id, ...prebuiltTemplateDetails }) => (
+								<Link key={id} state={{ from: pathname }} to={`${appPaths.SMS_TEMPLATES_PREBUILT_TEMPLATES}/${id}`}>
+									<SmsPrebuiltTemplateCard
+										backgroundImage={`data:image;base64,${backgroundImage}`}
+										className={isFetching ? "opacity-50" : undefined}
+										{...prebuiltTemplateDetails}
+									/>
+								</Link>
+							))}
+						</div>
+					)}
 				</div>
+
+				{/* When user filters by "Recently Added", only show first 10 items and hide pagination */}
+				{filters?.filterBy !== "RECENT" && (
+					<Pagination
+						count={count}
+						pageLimits={[10, 20, 30]}
+						pagination={{ limit: paginationAndSorting?.limit, offset: paginationAndSorting?.offset }}
+						updatePagination={(pagination) =>
+							dispatch(updatePaginationAndSorting({ [prebuiltTemplatesGridKey]: pagination }))
+						}
+					/>
+				)}
 			</div>
 		</div>
 	)

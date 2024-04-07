@@ -1,47 +1,41 @@
 //#region Import
-import { useLocation, useNavigate } from "react-router-dom"
-
 import appPaths from "@/core/constants/app-paths"
-import ExportFieldsDialog from "@/features/people/exports/dialogs/export-fields-dialog"
-import DeleteSegmentDialog from "@/features/people/segments/dialogs/delete-segment-dialog"
-import { Dropdown } from "@/ui"
-
-import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
+import ExportFieldsDialog from "@/features/people/exports/dialogs/export-fields-dialog/export-fields-dialog"
+import DeleteSegmentDialog from "@/features/people/segments/dialogs/delete-segment-dialog/delete-segment-dialog"
+import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
+import { useLocation, useNavigate } from "react-router-dom"
 //#endregion
 
 /**
- * Table Actions Component used inside td of AdvancedTable used in `SegmentsView` Component
+ * Table Actions Component used inside td of DataView used in `SegmentsView` Component
  *
  * @param param0.id Row Id that would have edit/delete/eport actions supported
  * @returns
  */
 const SegmentsViewTableActions = ({ id }: { id: string }) => {
 	const { pathname } = useLocation()
+
 	const navigate = useNavigate()
 
 	return (
-		<Dropdown>
-			<Dropdown.Trigger showArrow={false} variant='ghost' className='h-max w-max p-1.5'>
-				<BiThreeDotsVertical />
-			</Dropdown.Trigger>
+		<ActionsDropdown>
+			<ActionsDropdown.Item
+				onClick={() => navigate(appPaths.SEGMENT_EDIT.replace(":id", id), { state: { from: pathname } })}>
+				Edit
+			</ActionsDropdown.Item>
 
-			<Dropdown.Content sideOffset={0} align='end'>
-				<Dropdown.Item
-					onClick={() => navigate(appPaths.SEGMENT_EDIT.replace(":id", id), { state: { from: pathname } })}>
-					Edit
-				</Dropdown.Item>
-				<Dropdown.Separator />
+			<ActionsDropdown.Separator />
 
-				<DeleteSegmentDialog id={id}>
-					<Dropdown.Item>Delete</Dropdown.Item>
-				</DeleteSegmentDialog>
-				<Dropdown.Separator />
+			<DeleteSegmentDialog id={id}>
+				<ActionsDropdown.Item>Delete</ActionsDropdown.Item>
+			</DeleteSegmentDialog>
 
-				<ExportFieldsDialog exportsType='segments'>
-					<Dropdown.Item>Export</Dropdown.Item>
-				</ExportFieldsDialog>
-			</Dropdown.Content>
-		</Dropdown>
+			<ActionsDropdown.Separator />
+
+			<ExportFieldsDialog exportsType='segments' segmentId={id}>
+				<ActionsDropdown.Item>Export</ActionsDropdown.Item>
+			</ExportFieldsDialog>
+		</ActionsDropdown>
 	)
 }
 

@@ -12,7 +12,7 @@ const errorMiddleware: Middleware =
 	// api: MiddlewareAPI
 	() => (next) => (action) => {
 		if (isRejectedWithValue(action)) {
-			console.log("RTK Rejection Error from errorMiddleware")
+			// RTK Rejection Error from errorMiddleware
 			toast.error(getErrorMessage(action?.payload))
 		}
 

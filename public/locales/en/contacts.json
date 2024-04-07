@@ -50,7 +50,7 @@
 		"groupName": "Group name"
 	},
 	"table": {
-		"toolbar": {
+		"topbar": {
 			"search": "Search by any field",
 
 			"actions": {
@@ -63,15 +63,10 @@
 					"removeGroups": "Remove Groups"
 				},
 				"import": "Import",
-				"add-contact": "Add Contact"
+				"add-contact": "Add Contact",
+				"export": "Export Selected",
+				"export_other": "Export All"
 			}
-		},
-		"pagination": {
-			"initial-message": "{{selectionLength, number}} of {{totalLength, number}} entries selected",
-			"select-everything-prompt": "Do you want to select everything?",
-			"everything-already-selected-message": "All Contacts in the server are selected.",
-			"select-all-button": "Select All {{count}} Contacts",
-			"clear-all-button": "Clear all Selection?"
 		},
 		"rows": {
 			"tagsRows": {

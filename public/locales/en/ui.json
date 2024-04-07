@@ -5,10 +5,6 @@
 				"ascending": "Asc",
 				"descending": "Desc",
 				"reset": "Reset"
-			},
-			"export": {
-				"label": "Export Selected",
-				"label_other": "Export All"
 			}
 		},
 		"pagination": {
@@ -18,22 +14,29 @@
 				"next-page": "Go to next page",
 				"last-page": "Go to last page"
 			},
-			"message": "Page {{currentPage, number}} of {{totalPages, number}}",
-			"limit-selectbar": "Entries per page"
-		},
-		"message": {
-			"noResults": "No results found"
+			"pageCounter": "Page {{currentPage}} of {{totalPages}}",
+			"limit-selectbar": "Entries per page",
+
+			"messages": {
+				"totalEntries": "Total Entries",
+				"selectedPerPage": "Selected per page",
+				"totalSelected": "Total selected",
+				"selectAllAction": "Select everything?",
+				"clearAllAction": "Clear all?",
+				"selectEverythingTooltip": "Do you want to select all entries from all pages? ({{count}})",
+				"clearEverythingTooltip": "Do you want to clear all selected entries from all pages?"
+			}
 		}
 	},
 	"prompt-input": {
 		"placeholder": "Enter the number above",
 		"label": "Type '{{count}}' to confirm'"
 	},
-	"comboBox": {
+	"selectAsyncOptionsPopover": {
 		"clearButton": "Clear filters",
 		"placeholder": "Type to search",
+		"placeholderCreatable": "Type to search or create a new entry",
 		"message": {
-			"noResults": "No results found",
 			"maxLimitReached": "Max Limit Reached"
 		}
 	},
@@ -42,7 +45,7 @@
 		"cancel": "Cancel"
 	},
 	"drop-file-area": {
-		"message": "Drag and drop some files here, or click to select files",
+		"message": "Drag & drop here or choose a file",
 		"buttons": {
 			"remove": "Remove File"
 		}
@@ -58,6 +61,17 @@
 		}
 	},
 	"selectCountryPopover": {
-		"placeholder": "Select a country"
+		"single": {
+			"placeholder": "Select a country"
+		},
+		"multi": {
+			"placeholder": "Select Countries"
+		}
+	},
+	"noResultsComponent": "No results found",
+
+	"textareaTooltip": {
+		"placeholder": "Enter content",
+		"submit": "Add"
 	}
 }

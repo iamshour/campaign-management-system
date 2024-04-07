@@ -1,16 +1,19 @@
+/* eslint-disable react-refresh/only-export-components */
+import type { ColumnType } from "@/core/components/data-view/data-table/types"
+
 //#region Import
 import { lazy } from "react"
 
-import type { ColumnType } from "@/ui"
-import { format } from "@/utils"
-
-import type { ContactExportStatusOption, ContactExports } from "../types"
+import type { ContactExports, ContactExportStatusOption } from "../types"
 
 import exportsFieldsMap from "./exports-fields-map"
 import exportStatusesColorsMap from "./statuses-colors-map"
 
-// eslint-disable-next-line react-refresh/only-export-components
-const ExportsViewTableActions = lazy(() => import("../views/exports-view/exports-view-table-actions"))
+const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-view-date-cell"))
+
+const ExportsViewTableActions = lazy(
+	() => import("../views/exports-view/exports-view-table-actions/exports-view-table-actions")
+)
 //#endregion
 
 const exportsTableColumns: ColumnType<ContactExports>[] = [
@@ -28,21 +31,22 @@ const exportsTableColumns: ColumnType<ContactExports>[] = [
 	},
 	{
 		accessorKey: "createdAt",
+		cell: (date) => <DataViewDateCell date={date} />,
 		header: exportsFieldsMap.createdAt,
-		cell: (createdAt) => <>{format(new Date(createdAt), "MM-dd-yyyy")}</>,
 	},
 	{
 		accessorKey: "contactExportStatus",
-		header: exportsFieldsMap.contactExportStatus,
 		cell: (status: ContactExportStatusOption) => (
 			<p style={{ color: exportStatusesColorsMap[status] ?? "" }}>{status}</p>
 		),
+		header: exportsFieldsMap.contactExportStatus,
 	},
 	{
 		accessorKey: "actions",
-		cell: (_, { id, fileName, contactExportStatus }) => (
-			<ExportsViewTableActions id={id} fileName={fileName} contactExportStatus={contactExportStatus} />
-		),
+		cell: (_, { contactExportStatus, fileName, id }) =>
+			contactExportStatus !== "IN_PROGRESS" && (
+				<ExportsViewTableActions contactExportStatus={contactExportStatus} fileName={fileName} id={id} />
+			),
 	},
 ]
 

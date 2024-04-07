@@ -3,13 +3,15 @@ import type { ContactExportField } from "../types"
 //#endregion
 
 const contactExportsFieldsMap: Partial<Record<ContactExportField, string>> = {
-	"First name": "contacts:fields.firstName",
-	"Last name": "contacts:fields.lastName",
-	"Email address": "contacts:fields.email",
-	"Phone number": "contacts:fields.phoneNumber",
-	Groups: "contacts:fields.groups",
-	Tags: "contacts:fields.tags",
+	Country: "contacts:fields.country",
 	"Creation date": "contacts:fields.createdAt",
+	"Email address": "contacts:fields.email",
+	"First name": "contacts:fields.firstName",
+	Groups: "contacts:fields.groups",
+	"Last name": "contacts:fields.lastName",
+	Note: "contacts:fields.note",
+	"Phone number": "contacts:fields.phoneNumber",
+	Tags: "contacts:fields.tags",
 }
 
 export default contactExportsFieldsMap

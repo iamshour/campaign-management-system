@@ -1,114 +1,101 @@
 //#region Import
+import type { DataViewState } from "@/core/components/data-view/types"
+import type { SharedListViewProps } from "@/core/types"
+import type { Contact } from "@/features/people/contacts/types"
+
+import DataView from "@/core/components/data-view/data-view"
+import { checkItem, clearSelection, resetDataViewState } from "@/core/components/data-view/data-view-slice"
+import appPaths from "@/core/constants/app-paths"
+import useDispatch from "@/core/hooks/useDispatch"
+import useSelector from "@/core/hooks/useSelector"
+import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
+import { Button, Footer } from "@/ui"
+import { cleanObject } from "@/utils"
 import { lazy } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useNavigate, useParams } from "react-router-dom"
 
-import AdvancedTable from "@/core/components/advanced-table"
-import appPaths from "@/core/constants/app-paths"
-import useDispatch from "@/core/hooks/useDispatch"
-import useSelector from "@/core/hooks/useSelector"
-import {
-	clearSelection,
-	resetAdvancedTableState,
-	updateSelection,
-} from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import type { SharedListViewProps } from "@/core/types"
-import contactsTableColumns from "@/features/people/contacts/constants/contacts-table-columns"
-import type { Contact } from "@/features/people/contacts/types"
-import { getContactFilterAndContactSearchFilter } from "@/features/people/contacts/utils"
-import { Button, Footer } from "@/ui"
-import { cleanObject } from "@/utils"
+import type { AddContactsToGroupBody } from "../types"
 
+import { getContactFilter, getContactSearchFilter } from "../../contacts/utils"
 import { useAddContactsToGroupMutation } from "../api"
-import type { AddContactsToGroupArgs } from "../types"
 
-const ContactsViewFiltersContent = lazy(
-	() => import("@/features/people/contacts/views/contacts-view/contacts-view-filters-content")
-)
+const ContactsFiltersContent = lazy(() => import("@/features/people/contacts/components/contacts-filters-content"))
 //#endregion
 
-const AddContactsToGroupView = ({ list, count, ...tableProps }: SharedListViewProps<Contact>) => {
+const AddContactsToGroupView = (props: SharedListViewProps<Contact>) => {
 	const { t } = useTranslation("groups", { keyPrefix: "views.addToGroup" })
 
-	const { id: groupId } = useParams()
+	const { groupId } = useParams()
 
 	const [triggerAddContactsToGroup, { isLoading }] = useAddContactsToGroupMutation()
 
 	const dispatch = useDispatch()
+
 	const navigate = useNavigate()
 
-	const { selection, filters, searchTerm } = useSelector<AdvancedTableStateType<"add-contacts-to-group">>(
-		({ advancedTable }) => advancedTable["add-contacts-to-group"]
+	const { filters, searchTerm, selection } = useSelector<DataViewState<"add-contacts-to-group">>(
+		({ dataView }) => dataView["add-contacts-to-group"]
 	)
 
 	const onBack = () => {
-		dispatch(resetAdvancedTableState("add-contacts-to-group"))
+		dispatch(resetDataViewState("add-contacts-to-group"))
 		navigate(`${appPaths.GROUPS}/${groupId}`, { replace: true })
 	}
 
 	const onAdd = async () => {
 		const contactsIds = !!selection && selection !== "ALL" ? selection : undefined
 
-		const body: AddContactsToGroupArgs = {
+		const body: AddContactsToGroupBody = {
+			contactFilter: getContactFilter(filters),
 			contactGroupsIds: [groupId!],
+			contactSearchFilter: getContactSearchFilter(searchTerm),
 			contactsIds,
-			...getContactFilterAndContactSearchFilter(filters, searchTerm),
 		}
 
-		// Cleaning Body from all undefined values, empty objects, and nested objects with undefined values
+		// Cleaning Body from all undefined/empty/nullish objects/nested objects
 		const cleanBody = cleanObject(body)
 
-		await triggerAddContactsToGroup(cleanBody)
-			.unwrap()
-			.then(() => {
-				// Clearing Selection list if contacts were selected using their Ids
-				if (cleanBody?.contactsIds?.length) dispatch(clearSelection("add-contacts-to-group"))
+		await triggerAddContactsToGroup(cleanBody).unwrap()
 
-				toast.success(t("successMessage", { count: contactsIds?.length ?? 2 }))
-				onBack()
-			})
+		// Clearing Selection list if contacts were selected using their Ids
+		if (cleanBody?.contactsIds?.length) dispatch(clearSelection("add-contacts-to-group"))
+
+		toast.success(t("successMessage", { count: contactsIds?.length ?? 2 }))
+		onBack()
 	}
 
 	return (
-		<AdvancedTable tableKey='add-contacts-to-group' count={count}>
-			<AdvancedTable.FiltersBar>
-				<AdvancedTable.FiltersBar.Header />
-				<AdvancedTable.FiltersBar.Content>
-					<ContactsViewFiltersContent />
-				</AdvancedTable.FiltersBar.Content>
-				<AdvancedTable.FiltersBar.Footer />
-			</AdvancedTable.FiltersBar>
+		<DataView columns={contactsTableColumns} dataViewKey='add-contacts-to-group' {...props}>
+			<DataView.FiltersBar>
+				<DataView.FiltersBar.Header />
+				<DataView.FiltersBar.Content>
+					<ContactsFiltersContent />
+				</DataView.FiltersBar.Content>
+				<DataView.FiltersBar.Footer />
+			</DataView.FiltersBar>
 
-			<AdvancedTable.Content>
+			<DataView.Content>
 				<h3 className='pt-4 text-[21px] font-medium'>{t("title")}</h3>
 
-				<AdvancedTable.TopBar />
-				<AdvancedTable.Table
-					list={list}
-					columns={contactsTableColumns}
-					onRowClick={({ id }) => dispatch(updateSelection({ "add-contacts-to-group": id }))}
-					classNames={{
-						wrapper: "px-4",
-					}}
-					{...tableProps}
-				/>
-				<AdvancedTable.Pagination>
-					<AdvancedTable.Pagination.Message />
-				</AdvancedTable.Pagination>
+				<DataView.TopBar className='pt-4' />
+				<DataView.Body<Contact> onRowClick={({ id }) => dispatch(checkItem({ "add-contacts-to-group": id }))} />
+				<DataView.Pagination>
+					<DataView.Pagination.Message />
+				</DataView.Pagination>
 
-				<Footer className='p-4'>
-					<Button variant='outline' onClick={onBack}>
+				<Footer className='py-4'>
+					<Button onClick={onBack} variant='outline'>
 						{t("actions.cancel")}
 					</Button>
 
-					<Button onClick={onAdd} disabled={!selection} loading={isLoading}>
+					<Button disabled={!selection} loading={isLoading} onClick={onAdd}>
 						{t("actions.submit")}
 					</Button>
 				</Footer>
-			</AdvancedTable.Content>
-		</AdvancedTable>
+			</DataView.Content>
+		</DataView>
 	)
 }
 

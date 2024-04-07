@@ -1,19 +1,22 @@
 //#region Import
-import { Suspense, lazy, useMemo } from "react"
+import type { ContactTableAdvancedFiltersType } from "@/features/people/contacts/types"
+
+import { updateFilters } from "@/core/components/data-view/data-view-slice"
+import useDispatch from "@/core/hooks/useDispatch"
+import CreateSegmentPopover from "@/features/people/segments/components/create-segment-popover/create-segment-popover"
+import { areConditionsValid } from "@/features/people/segments/utils"
+import { Button, Footer, RadioGroup, Skeleton } from "@/ui"
+import { lazy, Suspense, useMemo } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
-import useDispatch from "@/core/hooks/useDispatch"
-import { updateFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import CreateSegmentPopover from "@/features/people/segments/components/create-segment-popover"
-import { areConditionsValid } from "@/features/people/segments/utils"
-import { Button, Footer, RadioGroup, Skeleton } from "@/ui"
-
-import { useAdvancedFiltersDialogContext } from "./advanced-filters-dialog-context"
 import type { AdvancedFiltersTab } from "./types"
 
+import { useAdvancedFiltersDialogContext } from "./advanced-filters-dialog-context"
+
 const NewConditionsTab = lazy(() => import("./new-conditions-tab"))
-const SegmentSelectionTab = lazy(() => import("./segment-selection-tab"))
+
+const SegmentSelectionTab = lazy(() => import("./segment-selection-tab/segment-selection-tab"))
 //#endregion
 
 interface AdvancedFiltersDialogContentProps {
@@ -27,54 +30,43 @@ const AdvancedFiltersDialogContent = ({ onClose }: AdvancedFiltersDialogContentP
 	const { t } = useTranslation("contacts", { keyPrefix: "dialogs.advancedFilters" })
 
 	const dispatch = useDispatch()
+
 	const {
-		selectedTab,
-		onTabChange,
 		areContextConditionsEmpty,
 		conditions,
-		selectedSegmentOption,
+		onTabChange,
 		segmentSelectionTabView,
+		selectedSegmentOption,
+		selectedTab,
 	} = useAdvancedFiltersDialogContext()
 
 	const areContextConditionsValid = useMemo(() => areConditionsValid(conditions), [conditions])
 
+	const handleUpdateFilters = (advancedFilters: ContactTableAdvancedFiltersType["advancedFilters"]) =>
+		dispatch(updateFilters({ contacts: { advancedFilters } }))
+
 	const onSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
 
-		if (areContextConditionsEmpty) {
-			dispatch(updateFilters({ contacts: { advancedFilters: undefined } }))
-		}
+		// TODO: CHECK IF WORKING!!
+		if (areContextConditionsEmpty) handleUpdateFilters(undefined)
 
-		if (areContextConditionsValid) {
-			if (selectedTab == "newConditions") {
-				dispatch(updateFilters({ contacts: { advancedFilters: { segment: undefined, conditions } } }))
-			} else {
-				dispatch(
-					updateFilters({
-						contacts: {
-							advancedFilters: {
-								segment: selectedSegmentOption,
-								conditions,
-							},
-						},
-					})
-				)
-			}
-		}
+		if (areContextConditionsValid)
+			handleUpdateFilters({ conditions, segment: selectedTab === "newConditions" ? undefined : selectedSegmentOption })
 
 		onClose()
 		toast.success(t("appliedSuccessMessage"))
 	}
 
 	return (
-		<form onSubmit={onSubmit} className='flex h-full flex-col justify-between gap-6 overflow-hidden p-2'>
+		<form className='flex h-full flex-col justify-between gap-6 overflow-hidden p-2' onSubmit={onSubmit}>
 			<div className='flex flex-col gap-4 overflow-hidden'>
 				<p>{t("radioGroup.label")}</p>
 
 				<RadioGroup
 					defaultValue={"newConditions" as AdvancedFiltersTab}
-					value={selectedTab}
-					onValueChange={onTabChange}>
+					onValueChange={onTabChange}
+					value={selectedTab}>
 					<RadioGroup.Item value={"newConditions" as AdvancedFiltersTab}>
 						{t("radioGroup.tabs.advancedFilter")}
 					</RadioGroup.Item>
@@ -92,15 +84,15 @@ const AdvancedFiltersDialogContent = ({ onClose }: AdvancedFiltersDialogContentP
 				{selectedTab === "newConditions" && <CreateSegmentPopover disabled={!areContextConditionsValid} />}
 
 				<div className='flex flex-1 flex-col gap-2 sm:flex-row sm:justify-end sm:gap-4'>
-					<Button type='reset' variant='outline' onClick={onClose}>
+					<Button onClick={onClose} type='reset' variant='outline'>
 						{t("actions.cancel")}
 					</Button>
 					<Button
-						type='submit'
 						disabled={
 							segmentSelectionTabView === "editSegmentConditions" ||
 							(!areContextConditionsEmpty && !areContextConditionsValid)
-						}>
+						}
+						type='submit'>
 						{t("actions.applyFilter")}
 					</Button>
 				</div>

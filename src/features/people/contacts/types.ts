@@ -1,113 +1,139 @@
 //#region Import
-import type { CommonListArguments } from "@/core/lib/redux-toolkit/types"
+import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
 import type { DateRange, OptionType } from "@/ui"
 
+import type { SegmentConditionType } from "../segments/types"
 import type { ParsedPhoneNumberDto } from "./utils"
 //#endregion
 
 /**
  * Fetched Tag entry type (Fetched from `getTagsList` query)
  */
-export type Tag = {
-	// Currently Returned from server, but not needed at all
-	// id: null
-	// count: number
-
-	name: string
-}
+export type Tag = { name: string }
 
 /**
  * Fetched Contact Type
  */
 export type Contact = {
-	id: string
-	firstName?: string
-	lastName?: string
-	phoneNumber?: string
-	email?: string
-	tags?: string[]
-	groups?: string[]
 	country?: string
 	createdAt?: string
-	updatedAt?: string
+	email?: string
+	firstName?: string
+	groups?: string[]
+	id: string
+	lastName?: string
 	note?: string
+	phoneNumber?: string
+	tags?: string[]
+	updatedAt?: string
 }
 
 /**
  * Filters used in Filters bar (Internally / Only Client-Side - Not sent to the server)
  */
-export type ContactTableFiltersType = {
-	dateRange?: DateRange
-	tags?: string[]
+export type ContactTableFiltersType = DateRange & {
 	groups?: OptionType[]
-}
-
-/**
- * Filters Sent to the server, using any Fetch Contacts Endpoint
- */
-export type ContactFilters = {
-	/**
-	 * List of contact Ids. Could be empty if no entries are selected, meaning that filtering would be applied on other additional filters
-	 */
-	contactsIds?: string[]
-
-	/**
-	 * Current filters used to filter contacts list. Includes: Tags[], groups[], excludedGroupsList[], and DateRange
-	 */
-	contactFilter?: DateRange & Pick<Contact, "tags" | "groups"> & { excludedGroupsList?: string[] }
-
-	/**
-	 * Object of contact fields that mapped with the `searchTerm` value for each one (currently they share same `searchTerm` value)
-	 */
-	contactSearchFilter?: Partial<Pick<Contact, "firstName" | "lastName" | "email" | "phoneNumber">> & {
-		tag?: string
-		any?: boolean
-	}
-
-	contactAdvancedFilter?: { segmentId?: string } | { conditions?: string }
-}
-
-/**
- * Arguments passed to the server whilst using the `getContactsQuery` query to fetch Contacts List
- */
-export type GetContactsArgs = CommonListArguments<Contact> & {
-	excludedGroupsList?: string[]
 	tags?: string[]
-	groups?: string[]
-	segmentId?: string
-} & ContactFilters["contactSearchFilter"]
-
-/**
- * Arguments passed to the server whilst using the `addNewContact` mutation to post a new contact entry
- */
-export type AddNewContactArgs = Omit<Contact, "id" | "phoneNumber" | "createdAt" | "updatedAt"> & {
-	branchId?: string
-	phoneNumberDto?: ParsedPhoneNumberDto
 }
 
 /**
- * Returned data shape from the `getContactById` query
+ * Filters used in Advanced filters dialog (Internally / Only Client-Side - Not sent to the server)
+ */
+export type ContactTableAdvancedFiltersType = {
+	advancedFilters?: { conditions: SegmentConditionType[]; segment?: OptionType }
+}
+
+/**
+ * Filters used in Filters bar, as well as in params and body request of some api calls (`getContacts`, `deleteContacts`, etc)
+ */
+export type ContactFilter = DateRange & Pick<Contact, "groups" | "tags"> & { excludedGroupsList?: string[] }
+
+/**
+ * Contact search filters, sent to server
+ * Used when fetching contacts list and when updating/deleting multiple contacts
+ */
+export type ContactSearchFilter = Partial<Pick<Contact, "email" | "firstName" | "lastName" | "phoneNumber">> & {
+	any?: true
+	tag?: string
+}
+
+/**
+ * Contact advanced filters, sent to server
+ * Used when fetching contacts list and when updating/deleting multiple contacts
+ */
+export type ContactAdvancedFilter = {
+	contactSegmentConditionList?:
+		| {
+				contactSegmentRuleList: {
+					contactSegmentId?: string
+					contactSegmentRuleAttribute: string
+					contactSegmentRuleCondition: string
+					country?: string
+					groupId?: string
+					specification?: string
+				}[]
+		  }[]
+		| string
+	segmentId?: string
+}
+
+/**
+ * Params passed to the `getContactsQuery` query, used to fetch Contacts List
+ */
+export type GetContactsParams = PaginationAndSorting<Contact> &
+	ContactAdvancedFilter &
+	ContactFilter &
+	ContactSearchFilter
+
+/**
+ * Body Arguments passed to the `addNewContact` mutation, used to post a new contact entry
+ */
+export type AddNewContactBody = Omit<Contact, "createdAt" | "id" | "phoneNumber" | "updatedAt"> & {
+	contactPhoneNumberDto?: ParsedPhoneNumberDto
+}
+
+/**
+ * Body Arguments passed to the `updateContact` mutation, used to update an existing contact entry
+ */
+export type UpdateContactBody = AddNewContactBody & { id: string }
+
+/**
+ * Returned response shape after calling the `getContactById` query
  */
 export type GetContactBytIdReturnType = Omit<Contact, "groups"> & {
-	branchId?: string
-	groups?: Record<"name" | "id", string>[]
+	groups?: Record<"id" | "name", string>[]
 }
 
 /**
- * Arguments passed to the server whilst using the `getTagsList` query to fetch Tags List
+ * Params passed to the `getTags` query, used to fetch Tags List
  */
-export type GetTagsListArgs = CommonListArguments<string> & { name?: string }
+export type GetTagsParams = PaginationAndSorting<string> & { name?: string }
 
 /**
- * Arguments passed to the server whilst using the `updateMultipleContacts` mutation to update multiple contacts
+ * Body Arguments passed to the `updateMultipleContacts` mutation, used to update multiple contacts
  */
-export type UpdateMultipleContactsArgs = (ContactFilters & { addToContact: boolean }) & {
-	tags?: string[]
+export type UpdateMultipleContactsBody = {
+	addToContact: boolean
+	contactAdvancedFilter?: ContactAdvancedFilter
+	contactFilter?: ContactFilter
+	contactSearchFilter?: ContactSearchFilter
+	contactsIds?: string[]
 	groups?: string[]
+	tags?: string[]
 }
 
 /**
- * Returned data shape from the `uploadContactsMutation` mutation function, which runs when users uploads a file
+ * Body Arguments passed to the `deleteContacts` mutation, used to delete contacts
+ */
+export type DeleteContactsBody = {
+	contactAdvancedFilter?: ContactAdvancedFilter
+	contactFilter?: ContactFilter
+	contactSearchFilter?: ContactSearchFilter
+	contactsIds?: string[]
+}
+
+/**
+ * Returned response shape after calling the `uploadContactsMutation` mutation function, which runs when users uploads a file
  */
 export type UploadContactsMutationReturnType = {
 	/**
@@ -121,16 +147,16 @@ export type UploadContactsMutationReturnType = {
 	previewRows: string[]
 }
 
-export type ContactScreamSnakeCaseKey = "FIRST_NAME" | "LAST_NAME" | "EMAIL" | "PHONE_NUMBER" | "NOTE"
+export type ContactScreamSnakeCaseKey = "EMAIL" | "FIRST_NAME" | "LAST_NAME" | "NOTE" | "PHONE_NUMBER"
 
 /**
- * Arguments passed to the server whilst using the `importFileMapping` mutation to import File mapping by user
+ * Body Arguments passed to the `importFileMapping` mutation, used to import File mapping by user
  */
-export type ImportFileMappingArgs = {
+export type ImportFileMappingBody = {
 	/**
-	 * File of which the data should be retrieved from
+	 * A map contains the column name with the related column number in the uploaded file.
 	 */
-	fileName: string
+	columnNameToIndexMapping: Partial<Record<ContactScreamSnakeCaseKey, number>>
 
 	/**
 	 * Represents either the uploaded file has header or not.
@@ -138,9 +164,9 @@ export type ImportFileMappingArgs = {
 	fileHasHeader: boolean
 
 	/**
-	 * List of Selected Tags to be added for imported contacts
+	 * File of which the data should be retrieved from
 	 */
-	tags?: string[]
+	fileName: string
 
 	/**
 	 * List of Selected Groups to be added for imported contacts
@@ -148,25 +174,15 @@ export type ImportFileMappingArgs = {
 	groups?: string[]
 
 	/**
-	 * A map contains the column name with the related column number in the uploaded file.
+	 * List of Selected Tags to be added for imported contacts
 	 */
-	columnNameToIndexMapping: Partial<Record<ContactScreamSnakeCaseKey, number>>
+	tags?: string[]
 }
 
+/**
+ * Returned response shape after calling the `importFileMapping` mutation function, which runs when users uploads file mapping (submission of 2nd step in import contact dialog)
+ */
 export type ImportFileMappingReturnType = {
-	/**
-	 * Total number of successfully validated contacts.
-	 */
-	totalSuccessCount: number
-	/**
-	 * Total number of failed validations (includes both invalid and already exist contacts).
-	 */
-	totalFailedCount: number
-	/**
-	 * Number of failed validations specifically related to invalid contacts.
-	 * This count is included in the total failed count.
-	 */
-	invalidContactsFailedCount: number
 	/**
 	 * Map containing the count of contacts that already exist for each Contact identifier key.
 	 */
@@ -179,4 +195,17 @@ export type ImportFileMappingReturnType = {
 	 * File name of invalid contact csv file to export.
 	 */
 	invalidContactsExportFileName: string
+	/**
+	 * Number of failed validations specifically related to invalid contacts.
+	 * This count is included in the total failed count.
+	 */
+	invalidContactsFailedCount: number
+	/**
+	 * Total number of failed validations (includes both invalid and already exist contacts).
+	 */
+	totalFailedCount: number
+	/**
+	 * Total number of successfully validated contacts.
+	 */
+	totalSuccessCount: number
 }

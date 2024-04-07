@@ -1,19 +1,19 @@
 //#region Import
+import type { DataViewState } from "@/core/components/data-view/types"
+import type { DeleteContactsBody } from "@/features/people/contacts/types"
+
+import { useDataViewContext } from "@/core/components/data-view/data-view-context"
+import { clearSelection } from "@/core/components/data-view/data-view-slice"
+import useSelector from "@/core/hooks/useSelector"
+import { useDeleteContactsMutation } from "@/features/people/contacts/api"
+import { getContactAdvancedFilter, getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
+import { Button, Form, Input, useForm } from "@/ui"
+import { cleanObject, omit } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useDispatch } from "react-redux"
 import { object, string } from "zod"
-
-import { useAdvancedTableContext } from "@/core/components/advanced-table"
-import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import { useDeleteContactsMutation } from "@/features/people/contacts/api"
-import type { ContactFilters } from "@/features/people/contacts/types"
-import { getContactFilterAndContactSearchFilter, getContactAdvancedFilter } from "@/features/people/contacts/utils"
-import { useForm, Button, Footer, Form, Input } from "@/ui"
-import { cleanObject } from "@/utils"
 //#endregion
 
 export interface DeleteContactsDialogContent {
@@ -28,21 +28,21 @@ const DeleteContactsDialogContent = ({ onClose }: DeleteContactsDialogContent) =
 
 	const dispatch = useDispatch()
 
-	const { selection, filters, searchTerm } = useSelector<AdvancedTableStateType<"contacts">>(
-		({ advancedTable }) => advancedTable["contacts"]
+	const { filters, searchTerm, selection } = useSelector<DataViewState<"contacts">>(
+		({ dataView }) => dataView["contacts"]
 	)
-	const { count } = useAdvancedTableContext()
+
+	const { count } = useDataViewContext()
 
 	const nbOfContactsToDelete = selection === "ALL" ? count : selection !== undefined ? selection?.length : 0
 
 	const form = useForm<{ prompt: number }>({
+		defaultValues: { prompt: 0 },
 		resolver: zodResolver(
 			object({
-				// Custom Validation for Prompt input, so that it's only accepted if passed input in promt equals to number of contacts to be deleted
 				prompt: string().refine((v) => Number(v) === nbOfContactsToDelete, { message: "Numbers do not match" }),
 			})
 		),
-		defaultValues: { prompt: 0 },
 	})
 
 	const [deleteContacts, { isLoading: submitLoading }] = useDeleteContactsMutation()
@@ -50,56 +50,48 @@ const DeleteContactsDialogContent = ({ onClose }: DeleteContactsDialogContent) =
 	const onSubmit = async () => {
 		if (Number(form.watch("prompt")) !== nbOfContactsToDelete) return
 
-		const body: ContactFilters = {
+		const body: DeleteContactsBody = {
+			contactAdvancedFilter: getContactAdvancedFilter(filters?.advancedFilters),
+			contactFilter: getContactFilter(omit(filters, ["advancedFilters"])),
+			contactSearchFilter: getContactSearchFilter(searchTerm),
 			contactsIds: !!selection?.length && selection !== "ALL" ? selection : undefined,
-			...getContactFilterAndContactSearchFilter(filters, searchTerm),
-			...getContactAdvancedFilter(filters?.advancedFilters),
 		}
 
-		// Cleaning Body from all undefined/nullish values
+		// Cleaning Body from all undefined/empty/nullish objects/nested objects
 		const cleanBody = cleanObject(body)
 
-		await deleteContacts(cleanBody)
-			.unwrap()
-			.then(() => {
-				// Clearing Selection list if contacts were selected using their Ids
-				if (cleanBody?.contactsIds?.length) dispatch(clearSelection("contacts"))
+		await deleteContacts(cleanBody).unwrap()
 
-				toast.success(t("dialogs.deleteContacts.success.multi"))
-				onClose()
-			})
+		dispatch(clearSelection("contacts"))
+
+		toast.success(t("dialogs.deleteContacts.success.multi"))
+		onClose()
 	}
 
 	return (
 		<Form {...form}>
 			<form
-				onSubmit={form.handleSubmit(onSubmit)}
-				className='flex h-full flex-col justify-between gap-4 overflow-y-auto p-2 sm:gap-6'>
+				className='flex h-full flex-col justify-between gap-4 overflow-y-auto p-2 sm:gap-6'
+				onSubmit={form.handleSubmit(onSubmit)}>
 				<p className='w-full text-base'>{t("dialogs.deleteContacts.message", { count: nbOfContactsToDelete })}</p>
 
 				<Form.Field
-					name='prompt'
 					control={form.control}
+					name='prompt'
 					render={({ field }) => (
-						<Form.Item>
-							<Form.Label>{t("ui:prompt-input.label", { count: nbOfContactsToDelete })}</Form.Label>
-							<Form.Control>
-								<Input size='lg' className='w-full' placeholder={t("ui:prompt-input.placeholder")} {...field} />
-							</Form.Control>
-							<Form.Message />
+						<Form.Item label={t("ui:prompt-input.label", { count: nbOfContactsToDelete })} size='lg'>
+							<Input className='w-full' placeholder={t("ui:prompt-input.placeholder")} {...field} />
 						</Form.Item>
 					)}
 				/>
 
-				<Footer>
-					<Button
-						loading={submitLoading}
-						type='submit'
-						className='px-10'
-						disabled={Number(form.watch("prompt")) !== nbOfContactsToDelete}>
-						{t("dialogs.deleteContacts.actions.submit")}
-					</Button>
-				</Footer>
+				<Button
+					className='ms-auto w-full px-10 sm:w-max'
+					disabled={Number(form.watch("prompt")) !== nbOfContactsToDelete}
+					loading={submitLoading}
+					type='submit'>
+					{t("dialogs.deleteContacts.actions.submit")}
+				</Button>
 			</form>
 		</Form>
 	)

@@ -1,40 +1,58 @@
 //#region Import
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import PrebuiltSmsTemplatesView from "@/features/templates/sms-templates/views/sms-prebuilt-templates-view/sms-prebuilt-templates-view"
-import { DataGridSkeleton, DisplayError } from "@/ui"
+import getSearchFilter from "@/core/utils/get-search-filter"
+import { useGetSmsIndustryTemplatesQuery } from "@/features/industries/api"
+import { DataGridSkeleton } from "@/ui"
+import { omit } from "@/utils"
+import { lazy } from "react"
 
-import { useGetSmsPrebuiltTemplatesByIndustryIdQuery } from "../api"
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
+
+const SmsPrebuiltTemplatesView = lazy(
+	() => import("@/features/templates/sms-templates/views/sms-prebuilt-templates-view/sms-prebuilt-templates-view")
+)
 //#endregion
 
-const PrebuiltSmsTemplatesRoute = () => {
-	// TODO: Mock Industry Id, From User's Account (Get from User Token OR User info in authSlice)
-	const userDeafultIndustryId = "Rental Services"
+interface SmsPrebuiltTemplatesRouteProps
+	extends Pick<React.ComponentPropsWithoutRef<typeof SmsPrebuiltTemplatesView>, "prebuiltTemplatesGridKey"> {}
 
-	const { offset, limit, filters, searchTerm } = useSelector<AdvancedTableStateType<"sms-prebuilt-templates">>(
-		({ advancedTable }) => advancedTable["sms-prebuilt-templates"]
+const SmsPrebuiltTemplatesRoute = ({ prebuiltTemplatesGridKey }: SmsPrebuiltTemplatesRouteProps) => {
+	// Getting Default User's Industry from User info in authSlice (Token))
+	const defaultUserIndustryId = useSelector(({ auth }) => auth?.user?.industryId)
+
+	const { filters, paginationAndSorting, searchTerm } = useSelector(
+		({ dataView }) => dataView[prebuiltTemplatesGridKey]
 	)
 
-	const { list, count, isInitialLoading, isFetching, isError, error } = useGetSmsPrebuiltTemplatesByIndustryIdQuery(
+	/**
+	 * Industry Id used to fetch prebuilt Templates
+	 */
+	const industryId = !filters?.industryId
+		? defaultUserIndustryId
+		: filters?.industryId !== "ALL"
+			? filters?.industryId
+			: undefined
+
+	const { count, error, isError, isFetching, isInitialLoading, isReady, list } = useGetSmsIndustryTemplatesQuery(
 		{
-			industryId: filters?.industryId || userDeafultIndustryId,
-			limit,
-			offset,
-			sort: !!filters?.filterBy && filters?.filterBy === "RECENT" ? "createdAt" : undefined,
-			order: !!filters?.filterBy && filters?.filterBy === "RECENT" ? "desc" : undefined,
-			name: searchTerm,
-			any: searchTerm ? true : undefined,
-			type: filters?.templateType,
-			language: filters?.templateLanguage,
-			mostPopular: Boolean(!!filters?.filterBy && filters?.filterBy === "POPULAR") ?? undefined,
+			...omit(filters, ["filterBy", "industryId"]),
+			...paginationAndSorting,
+			...getSearchFilter<["name"]>(searchTerm, ["name"]),
+			industryId,
+			mostPopular: Boolean(filters?.filterBy === "POPULAR") || undefined,
+			order: filters?.filterBy === "RECENT" ? "desc" : undefined,
+			sort: filters?.filterBy === "RECENT" ? "createdAt" : undefined,
+			// Business users can only see published prebuilt templates
+			statuses: ["PUBLISHED"],
 		},
 		{
-			selectFromResult: ({ data, isLoading, isFetching, ...rest }) => ({
-				list: data?.list?.slice(offset, limit),
+			selectFromResult: ({ data, isFetching, isLoading, ...rest }) => ({
 				count: data?.count,
-				isInitialLoading: !data && isLoading,
 				isFetching,
+				isInitialLoading: !data && isLoading,
+				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
+				list: data?.list,
 				...rest,
 			}),
 			...baseQueryConfigs,
@@ -43,9 +61,17 @@ const PrebuiltSmsTemplatesRoute = () => {
 
 	if (isInitialLoading) return <DataGridSkeleton className='px-8' />
 
-	if (isError) return <DisplayError error={error as any} />
+	if (isError) return <DisplayError error={error as any} showReloadButton />
 
-	return <PrebuiltSmsTemplatesView list={list || []} count={count || 0} isFetching={isFetching} />
+	if (isReady)
+		return (
+			<SmsPrebuiltTemplatesView
+				count={count || 0}
+				isFetching={isFetching}
+				list={list || []}
+				prebuiltTemplatesGridKey={prebuiltTemplatesGridKey}
+			/>
+		)
 }
 
-export default PrebuiltSmsTemplatesRoute
+export default SmsPrebuiltTemplatesRoute

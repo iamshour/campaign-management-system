@@ -1,58 +1,60 @@
 //#region Import
+import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
+import { useGetSegmentByIdQuery } from "@/features/people/segments/api"
+import SegmentFunnelSkeleton from "@/features/people/segments/components/segment-funnel-skeleton"
+import { lazy } from "react"
 import { useParams } from "react-router-dom"
 
-import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { NotFoundError } from "@/ui"
+const EditableSegmentView = lazy(() => import("@/features/people/segments/views/editable-segment-view"))
 
-import { useGetSegmentByIdQuery } from "../api"
-import SegmentFunnelSkeleton from "../components/segment-funnel-skeleton"
-import EditableSegmentView from "../views/editable-segment-view"
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const EditSegmentRoute = () => {
 	const { id } = useParams()
 
-	const { defaultValues, isInitialLoading, isReady, isError } = useGetSegmentByIdQuery(id, {
-		skip: !id,
+	const { defaultValues, isError, isInitialLoading, isReady } = useGetSegmentByIdQuery(id, {
 		selectFromResult: ({ data, isLoading, ...rest }) => ({
 			defaultValues: {
-				name: data?.name,
-				description: data?.description,
 				conditions: data?.contactSegmentConditionDetailsList?.map((condition) => ({
 					id: condition?.id,
 					rules: condition?.contactSegmentRuleDetailsList?.map((rule) => ({
-						id: rule?.id,
 						attribute: rule?.contactSegmentRuleAttribute,
 						condition: rule?.contactSegmentRuleCondition,
-						specification: rule?.specification,
 						country: rule?.country,
 						group: {
 							label: rule?.group?.name,
 							value: rule?.group?.id,
 						},
+						id: rule?.id,
 						segment: {
 							label: rule?.contactSegment?.name,
 							value: rule?.contactSegment?.id,
 						},
+						specification: rule?.specification,
 					})),
 				})),
+				description: data?.description,
+				name: data?.name,
 			},
 
 			isInitialLoading: data === undefined && isLoading,
 			isReady: !isLoading && !!data?.name?.length,
 			...rest,
 		}),
+		skip: !id,
 		...baseQueryConfigs,
 	})
 
 	if (isInitialLoading) return <SegmentFunnelSkeleton />
-	if (isError || !id || !defaultValues?.name) return <NotFoundError className='h-full w-full' />
+
+	if (isError || !id || !defaultValues?.name) return <DisplayError className='h-full w-full' />
 
 	if (isReady)
 		return (
 			<EditableSegmentView
-				view='editSegment'
 				defaultValues={{ ...defaultValues, id, name: defaultValues?.name as string }}
+				view='editSegment'
 			/>
 		)
 }

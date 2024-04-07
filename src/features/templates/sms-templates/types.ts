@@ -1,106 +1,53 @@
 //#region Import
-import { CommonListArguments } from "@/core/lib/redux-toolkit/types"
-import type { DateRange, TableState } from "@/ui"
+import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
+import type { TemplateLanguage, TemplateStatus, TemplateType } from "@/features/templates/common/types"
+import type { DateRange } from "@/ui"
 //#endregion
-
-/**
- * Type options for the SMS Template
- */
-export type SmsTemplateTypeOption = "PROMOTIONAL" | "TRANSACTIONAL" | "OTP"
-
-/**
- * Language options for the SMS Template
- */
-export type SmsTemplateLanguageOption = "ENGLISH" | "UNICODE"
-
-/**
- * Status options for the SMS Template
- */
-export type SmsTemplateStatusOption = "PUBLISHED" | "DRAFT" | "DELETED"
 
 /**
  * Shape of fetched SMS Template
  */
-export interface SmsTemplateType {
-	id: string
-	name: string
-	type: SmsTemplateTypeOption
-	language: SmsTemplateLanguageOption
-	updatedAt: string
-	status: SmsTemplateStatusOption
+export type SmsTemplateType = {
 	body: string
-}
-
-/**
- * Arguments used for the `getSmsTemplates` query, passed for the server as params when fetching SMS Templates List
- */
-export type GetSmsTemplatesArgs = CommonListArguments<SmsTemplateType> & {
-	name?: string
-	statuses?: SmsTemplateStatusOption[]
-	types?: SmsTemplateTypeOption[]
-	languages?: SmsTemplateLanguageOption[]
-	any?: boolean
-}
-
-/**
- * Returned data shape from the `getSmsTemplateById` query
- */
-export type GetSmsTemplateBytIdReturnType = SmsTemplateType
-
-/**
- * Arguments used for the `getSmsTemplates` query, passed for the server as params when fetching SMS Templates List
- */
-export type DeleteSmsTemplatesArgs = string[]
-
-/**
- * Filters used in Filters bar (Internally / Only Client-Side - Not sent to the server)
- */
-export type SmsTemplatesTableFiltersType = {
-	dateRange?: DateRange
-	templateStatus?: SmsTemplateStatusOption[]
-	templateType?: SmsTemplateTypeOption[]
-	templateLanguage?: SmsTemplateLanguageOption[]
-}
-
-// ---------------------------------------------
-// ALL TYPES RELATED TO PREBUILT TEMPLATES BELOW
-// ---------------------------------------------
-
-/**
- * Shape of fetched Prebuilt SMS Template
- */
-export type SmsPrebuiltTemplateType = {
 	id: string
-	industryId: string
+	language: TemplateLanguage
 	name: string
-	language: SmsTemplateLanguageOption
-	type: SmsTemplateTypeOption
-	createdAt: string
+	status: TemplateStatus
+	type: TemplateType
 	updatedAt: string
-	status: SmsTemplateStatusOption
-	mostPopular: boolean
-	background: string
-	body: string
 }
 
 /**
- * Arguments used for the `getSmsTemplates` query, passed for the server as params when fetching SMS Prebuilt Templates List
+ * Filters used in Filters bar, as well as in params and body request of some api calls (`getSmsTemplates`, `deleteSmsTemplates`)
  */
-export type GetSmsPrebuiltTemplatesByIndustryIdArgs = Omit<TableState<SmsPrebuiltTemplateType>, "selection"> & {
-	industryId: string
-	name?: string
-	any?: boolean
-	type?: SmsTemplateTypeOption[]
-	language?: SmsTemplateLanguageOption[]
-	mostPopular?: boolean
+export type TemplateFilter = DateRange & {
+	languages?: TemplateLanguage[]
+	statuses?: TemplateStatus[]
+	types?: TemplateType[]
 }
 
+type TemplateSearchFilter = { any?: true; name?: string }
+
 /**
- * Filters used in Filters bar (Internally / Only Client-Side - Not sent to the server)
+ * Params passed to the `getSmsTemplates` query, used for fetching SMS Templates List
  */
-export type SmsPrebuiltTemplatesTableFiltersType = {
-	filterBy?: "POPULAR" | "RECENT"
-	templateType?: SmsTemplateTypeOption[]
-	templateLanguage?: SmsTemplateLanguageOption[]
-	industryId?: string
+export type GetSmsTemplatesParams = PaginationAndSorting<SmsTemplateType> & TemplateFilter & TemplateSearchFilter
+
+/**
+ * Body Arguments passed to the `addNewSmsTemplate` mutation, used to create a new SMS Template entry
+ */
+export type AddNewSmsTemplateBody = Omit<SmsTemplateType, "id" | "updatedAt">
+
+/**
+ * Body Arguments passed to the `updateSmsTemplate` mutation, used to update an existing SMS Template entry
+ */
+export type UpdateSmsTemplateBody = Omit<SmsTemplateType, "updatedAt">
+
+/**
+ * Body Arguments passed to the `deleteSmsTemplates` mutation, used for deleting one or more SMS Template/s
+ */
+export type DeleteSmsTemplatesBody = {
+	templateFilter?: TemplateFilter
+	templateSearchFilter: TemplateSearchFilter | undefined
+	templatesIds?: string[]
 }

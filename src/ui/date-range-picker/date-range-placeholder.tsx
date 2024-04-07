@@ -1,14 +1,14 @@
 //#region Import
 import { format } from "date-fns"
 
-import type { DateRange } from "./index"
+import type { DateRange } from "./date-range-picker"
 //#endregion
 
 interface DateRangePlaceholderProps extends Partial<DateRange> {
 	placeholder: string
 }
 
-const DateRangePlaceholder = ({ placeholder, startDate, endDate }: DateRangePlaceholderProps) => (
+const DateRangePlaceholder = ({ endDate, placeholder, startDate }: DateRangePlaceholderProps) => (
 	<>
 		{startDate ? (
 			endDate ? (

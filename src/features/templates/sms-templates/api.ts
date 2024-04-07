@@ -1,61 +1,57 @@
 //#region Import
+import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
+
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
-import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
-import { getListOfKey } from "@/utils"
 
 import type {
+	AddNewSmsTemplateBody,
+	DeleteSmsTemplatesBody,
+	GetSmsTemplatesParams,
 	SmsTemplateType,
-	GetSmsTemplatesArgs,
-	GetSmsTemplateBytIdReturnType,
-	DeleteSmsTemplatesArgs,
-	SmsPrebuiltTemplateType,
-	GetSmsPrebuiltTemplatesByIndustryIdArgs,
+	UpdateSmsTemplateBody,
 } from "./types"
 //#endregion
 
 const smsTemplatesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getSmsTemplates: builder.query<ListDataReturnType<SmsTemplateType>, GetSmsTemplatesArgs>({
-			query: (params) => ({ url: "/templates", params }),
-			providesTags: (result) => providesList(getListOfKey(result?.list, "id"), "SmsTemplate"),
+		addNewSmsTemplate: builder.mutation<any, AddNewSmsTemplateBody>({
+			invalidatesTags: (res) => (res ? [{ id: "LIST", type: "SmsTemplate" }] : []),
+			query: (body) => ({ body, method: "POST", url: "/template/sms" }),
+		}),
+
+		deleteSmsTemplates: builder.mutation<any, DeleteSmsTemplatesBody>({
+			invalidatesTags: (res) => (res ? [{ id: "LIST", type: "SmsTemplate" }] : []),
+			query: (body) => ({ body, method: "POST", url: `/template/sms/delete` }),
+		}),
+
+		getSmsTemplateById: builder.query<SmsTemplateType, string>({
+			providesTags: (result) => [{ id: result?.id, type: "SmsTemplate" }],
+			query: (id) => `/template/sms/${id}`,
 			transformResponse,
 		}),
 
-		getSmsTemplateById: builder.query<GetSmsTemplateBytIdReturnType, string>({
-			query: (id) => `/templatesById/${id}`,
-			providesTags: (result) => [{ type: "SmsTemplate", id: result?.id }],
-			// transformResponse,
-		}),
-
-		deleteSmsTemplates: builder.mutation<any, DeleteSmsTemplatesArgs>({
-			query: (templatesIds) => ({ url: `/templates/delete`, method: "POST", body: { templatesIds } }),
-
-			invalidatesTags: (res) => (res ? [{ type: "SmsTemplate", id: "LIST" }] : []),
-		}),
-
-		// ALL API'S RELATED TO SMS PREBUILT TEMPLATES BELOW
-
-		getSmsPrebuiltTemplatesByIndustryId: builder.query<
-			ListDataReturnType<SmsPrebuiltTemplateType>,
-			GetSmsPrebuiltTemplatesByIndustryIdArgs
-		>({
-			// query: ({ industryId, ...params }) => ({ url: `/template/prebuilt/${industryId}/list`, params }),
-			// TODO: Will Use the above endpoint enstead of the one below, which is only a mock
-			query: (params) => ({ url: "/prebuilt-templates", params }),
+		getSmsTemplates: builder.query<GetListReturnType<SmsTemplateType>, GetSmsTemplatesParams>({
 			providesTags: (result) =>
 				providesList(
 					result?.list?.map(({ id }) => id),
-					"SmsPrebuiltTemplate"
+					"SmsTemplate"
 				),
+			query: (params) => ({ params, url: "/template/sms" }),
 			transformResponse,
+		}),
+
+		updateSmsTemplate: builder.mutation<any, UpdateSmsTemplateBody>({
+			invalidatesTags: (res) => (res ? [{ id: res?.id, type: "SmsTemplate" }] : []),
+			query: ({ id, ...body }) => ({ body, method: "PATCH", url: `/template/sms/${id}` }),
 		}),
 	}),
 })
 
 export const {
-	useGetSmsTemplatesQuery,
-	useGetSmsPrebuiltTemplatesByIndustryIdQuery,
-	useGetSmsTemplateByIdQuery,
+	useAddNewSmsTemplateMutation,
 	useDeleteSmsTemplatesMutation,
+	useGetSmsTemplateByIdQuery,
+	useGetSmsTemplatesQuery,
+	useUpdateSmsTemplateMutation,
 } = smsTemplatesApi

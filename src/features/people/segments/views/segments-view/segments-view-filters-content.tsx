@@ -1,25 +1,24 @@
 //#region Import
-
+import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import { DateRangePicker } from "@/ui"
+import { DateRange, DateRangePicker } from "@/ui"
+import { memo } from "react"
 //#endregion
 
-const SegmentsViewFiltersContent = () => {
+const SegmentsViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const { filters } = useSelector<AdvancedTableStateType<"segments">>(({ advancedTable }) => advancedTable["segments"])
+	const filters = useSelector<DateRange>((state) => selectFilters(state, "segments") as DateRange)
 
 	return (
-		<>
-			<DateRangePicker
-				dateRange={filters?.dateRange}
-				updateDateRange={(dateRange) => dispatch(updateFilters({ segments: { dateRange } }))}
-			/>
-		</>
+		<DateRangePicker
+			dateRange={{ endDate: filters?.endDate, startDate: filters?.startDate }}
+			updateDateRange={(segments) => dispatch(updateFilters({ segments }))}
+		/>
 	)
-}
+})
+
+SegmentsViewFiltersContent.displayName = "SegmentsViewFiltersContent"
 
 export default SegmentsViewFiltersContent

@@ -45,16 +45,13 @@
 		}
 	},
 	"components": {
-		"statusesPopover": {
+		"selectMultiExportsStatusesPopover": {
 			"label": "Status",
-			"placeholder": {
-				"single": "Select a status",
-				"multi": "Select one or more statuses"
-			},
+			"placeholder": "Select one or more statuses",
 			"options": {
 				"processing": "In Progress",
 				"failed": "Failed",
-				"ready": "Completed"
+				"completed": "Completed"
 			}
 		},
 		"exportedByPopover": {

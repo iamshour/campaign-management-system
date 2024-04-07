@@ -15,6 +15,7 @@
 			"dashboard": "Dashboard",
 			"inbox": "Inbox",
 			"integrations": "Integrations",
+			"industies": "Industies",
 			"people": {
 				"title": "People",
 				"elements": {
@@ -30,11 +31,14 @@
 					"smsTemplates": "SMS Templates"
 				}
 			},
+			"industries": "Industries",
 			"campaigns": "Campaigns Manager",
 			"channels": {
 				"title": "Channels",
 				"elements": {
-					"whatsapp": "Whatsapp"
+					"smsSendersManagementLocal": "Sender Mgmt - LOCAL",
+					"smsSendersManagementInternational": "Sender Mgmt - INT",
+					"smsChannels": "SMS Channels"
 				}
 			},
 			"chatbot": {

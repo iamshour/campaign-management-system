@@ -1,32 +1,36 @@
 //#region Import
+import type { DataViewState } from "@/core/components/data-view/types"
+import type { MoveContactsToGroupBody } from "@/features/people/groups/types"
+
+import { useDataViewContext } from "@/core/components/data-view/data-view-context"
+import { clearSelection } from "@/core/components/data-view/data-view-slice"
+import useDispatch from "@/core/hooks/useDispatch"
+import useSelector from "@/core/hooks/useSelector"
+import { getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
+import { useMoveContactsToGroupMutation } from "@/features/people/groups/api"
+import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option-type-schema"
+import { Button, Form, type OptionType, Skeleton, useForm } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import { cleanObject } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Suspense, lazy } from "react"
+import { lazy, Suspense } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
-import { object, string, any } from "zod"
+import { any, object, string } from "zod"
 
-import { useAdvancedTableContext } from "@/core/components/advanced-table"
-import useDispatch from "@/core/hooks/useDispatch"
-import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import { getContactFilterAndContactSearchFilter } from "@/features/people/contacts/utils"
-import { useMoveContactsToGroupMutation } from "@/features/people/groups/api"
-import GroupOptionTypeSchema from "@/features/people/groups/schemas/group-option-type-schema"
-import type { MoveContactsToGroupArgs } from "@/features/people/groups/types"
-import { Button, Footer, Form, Skeleton, useForm, type OptionType } from "@/ui"
-import { cleanObject } from "@/utils"
+const Input = lazy(() => import("@/ui/input/input"))
 
-const Input = lazy(() => import("@/ui").then((mod) => ({ default: mod.Input })))
-const SelectGroupsPopover = lazy(() => import("@/features/people/groups/components/select-groups-popover"))
+const SelectGroupsPopover = lazy(
+	() => import("@/features/people/groups/components/select-groups-popover/select-groups-popover")
+)
 //#endregion
 
 export interface MoveToGroupDialogContentProps {
 	/**
 	 * Callback function used to close the dialog
 	 */
-	onClose: () => void
+	closeDialog: () => void
 
 	/**
 	 * Contact Id in the Group we want to remove from
@@ -34,26 +38,30 @@ export interface MoveToGroupDialogContentProps {
 	id?: string
 }
 
-type DialogFormData = { prompt: number; group?: OptionType }
+type DialogFormData = { group?: OptionType; prompt: number }
 
-const MoveToGroupDialogContent = ({ id, onClose }: MoveToGroupDialogContentProps) => {
+const MoveToGroupDialogContent = ({ closeDialog, id }: MoveToGroupDialogContentProps) => {
 	const { t } = useTranslation("groups")
+
 	const { id: currentGroupId } = useParams()
 
 	const dispatch = useDispatch()
 
-	const { selection, filters, searchTerm } = useSelector<AdvancedTableStateType<"contacts-in-group">>(
-		({ advancedTable }) => advancedTable["contacts-in-group"]
+	const { closeDropdown } = useDropdownStateContext()
+
+	const { filters, searchTerm, selection } = useSelector<DataViewState<"contacts-in-group">>(
+		({ dataView }) => dataView["contacts-in-group"]
 	)
-	const { count } = useAdvancedTableContext()
+
+	const { count } = useDataViewContext()
 
 	const [triggerMoveContactsToGroup, { isLoading }] = useMoveContactsToGroupMutation()
 
 	const nbOfContactsToMove = id ? 1 : selection ? (selection === "ALL" ? count : selection?.length) : 0
 
 	const form = useForm<DialogFormData>({
-		resolver: getResolvedFormSchema(nbOfContactsToMove),
 		defaultValues: { prompt: 0 },
+		resolver: getResolvedFormSchema(nbOfContactsToMove),
 	})
 
 	const onSubmit = async ({ group }: DialogFormData) => {
@@ -61,48 +69,45 @@ const MoveToGroupDialogContent = ({ id, onClose }: MoveToGroupDialogContentProps
 
 		const contactsIdsToBeMoved = id ? [id] : !!selection && selection !== "ALL" ? selection : undefined
 
-		const body: MoveContactsToGroupArgs = {
+		const body: MoveContactsToGroupBody = {
+			contactFilter: getContactFilter(filters),
+			contactSearchFilter: getContactSearchFilter(searchTerm),
 			contactsIds: contactsIdsToBeMoved,
 			fromGroupId: currentGroupId!,
-			toGroupId: group?.value,
 			moveAndDelete: false,
-			...getContactFilterAndContactSearchFilter(filters, searchTerm),
+			toGroupId: group?.value,
 		}
 
-		// Cleaning Body from all undefined values, empty objects, and nested objects with undefined values
+		// Cleaning Body from all undefined/empty/nullish objects/nested objects
 		const cleanBody = cleanObject(body)
 
-		await triggerMoveContactsToGroup(cleanBody)
-			.unwrap()
-			.then(() => {
-				// Clearing Selection list if contacts were selected using their Ids
-				if (cleanBody?.contactsIds?.length) dispatch(clearSelection("contacts-in-group"))
+		await triggerMoveContactsToGroup(cleanBody).unwrap()
 
-				toast.success(t("dialogs.move-to-group.successMessage", { count: nbOfContactsToMove }))
-				onClose()
-			})
+		// Clearing Selection list if contacts were selected using their Ids
+		if (cleanBody?.contactsIds?.length) dispatch(clearSelection("contacts-in-group"))
+
+		toast.success(t("dialogs.move-to-group.successMessage", { count: nbOfContactsToMove }))
+
+		closeDialog()
+		closeDropdown()
 	}
 
 	return (
 		<Form {...form}>
 			<form
-				onSubmit={form.handleSubmit(onSubmit)}
-				className='flex h-full flex-col justify-between gap-6 overflow-y-auto p-2'>
+				className='flex h-full flex-col justify-between gap-6 overflow-y-auto p-2'
+				onSubmit={form.handleSubmit(onSubmit)}>
 				<Form.Field
 					control={form.control}
 					name='group'
 					render={({ field }) => (
-						<Form.Item>
+						<Form.Item label={t("groups:components.groupsPopover.label")} size='lg'>
 							<Suspense fallback={<Skeleton className='h-[72px] w-[340px]' />}>
 								<SelectGroupsPopover
-									isMulti={false}
 									selection={field.value}
 									updateSelection={(group) => form.setValue("group", group)}
-									size='lg'
 								/>
 							</Suspense>
-
-							<Form.Message />
 						</Form.Item>
 					)}
 				/>
@@ -113,15 +118,11 @@ const MoveToGroupDialogContent = ({ id, onClose }: MoveToGroupDialogContentProps
 
 						<Suspense fallback={<Skeleton className='h-[50px] w-[340px]' />}>
 							<Form.Field
-								name='prompt'
 								control={form.control}
+								name='prompt'
 								render={({ field }) => (
-									<Form.Item>
-										<Form.Label>{t("ui:prompt-input.label", { count: nbOfContactsToMove })}</Form.Label>
-										<Form.Control>
-											<Input size='lg' placeholder={t("ui:prompt-input.placeholder")} {...field} />
-										</Form.Control>
-										<Form.Message />
+									<Form.Item label={t("ui:prompt-input.label", { count: nbOfContactsToMove })} size='lg'>
+										<Input placeholder={t("ui:prompt-input.placeholder")} {...field} />
 									</Form.Item>
 								)}
 							/>
@@ -129,15 +130,13 @@ const MoveToGroupDialogContent = ({ id, onClose }: MoveToGroupDialogContentProps
 					</>
 				)}
 
-				<Footer>
-					<Button
-						type='submit'
-						className='px-10'
-						loading={isLoading}
-						disabled={nbOfContactsToMove > 1 && Number(form.watch("prompt")) !== nbOfContactsToMove}>
-						{t("dialogs.move-to-group.actions.submit")}
-					</Button>
-				</Footer>
+				<Button
+					className='ms-auto w-full px-10 sm:w-max'
+					disabled={nbOfContactsToMove > 1 && Number(form.watch("prompt")) !== nbOfContactsToMove}
+					loading={isLoading}
+					type='submit'>
+					{t("dialogs.move-to-group.actions.submit")}
+				</Button>
 			</form>
 		</Form>
 	)
