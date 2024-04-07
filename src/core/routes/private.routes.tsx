@@ -3,6 +3,7 @@
 //#region Import
 import appPaths from "@/core/constants/app-paths"
 import PrivateLayout from "@/core/layouts/private-layout/private-layout"
+import CampaignsRoute from "@/features/campaigns/routes/campaigns-route"
 import SmsSendersManagementRoutes from "@/features/channels/sms-senders-management/routes/sms-senders-management.routes"
 import SmsSendersRoutes from "@/features/channels/sms-senders/routes/sms-senders.routes"
 // TODO: LAZY LOAD ALL BELOW
@@ -39,7 +40,7 @@ const privateRoutes: RouteObject[] = [
 			{ element: <IndustriesRoutes />, path: `${appPaths.INDUSTRIES}/*` },
 			{ element: <SmsSendersManagementRoutes />, path: "/admin/channels/*" },
 
-			{ element: <div className='text-4xl'>Campaign Manager Route</div>, path: appPaths.HOME },
+			{ element: <CampaignsRoute />, path: appPaths.HOME },
 
 			// FALLBACK - 404 IF ROUTE DOES NOT EXIST
 			{ element: <DisplayError error={{ status: 404 }} />, path: "*" },

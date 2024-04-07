@@ -1,5 +1,4 @@
 //#region Import
-import logo from "@/assets/logo.png"
 import navElements from "@/core/constants/nav-elements"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
@@ -58,8 +57,10 @@ const Navbar = () => {
 						</Button>
 					</Tooltip>
 
-					<div className='flex items-center justify-center py-2'>
-						<img alt='Logo' className='ms-2 h-[60px] w-auto' src={logo} />
+					<div className='w-full px-2 py-4 flex-center'>
+						<div className='h-[40px] w-full rounded-full border border-white/80 p-4 text-sm text-white/80 flex-center'>
+							Logo
+						</div>
 					</div>
 
 					<div
