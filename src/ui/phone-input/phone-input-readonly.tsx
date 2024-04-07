@@ -2,12 +2,11 @@
 import { parsePhoneNumber } from "react-phone-number-input"
 import { twMerge } from "tailwind-merge"
 
-import Input from "../input"
-
+import ReadonlyInput from "../readonly-input/readonly-input"
 import FlagIcon from "./flag-icon"
 //#endregion
 
-interface PhoneInputReadonlyProps extends React.ComponentPropsWithoutRef<typeof Input> {
+interface PhoneInputReadonlyProps extends React.ComponentPropsWithoutRef<typeof ReadonlyInput> {
 	value: string
 }
 
@@ -22,20 +21,13 @@ const PhoneInputReadonly = ({ value, ...props }: PhoneInputReadonlyProps) => {
 					props?.size === "lg" ? "rounded-lg" : "rounded-md"
 				)}>
 				{countryInfo?.country ? (
-					<FlagIcon className='h-5 w-5 md:h-8 md:w-8' value={countryInfo?.country} label={countryInfo?.country} />
+					<FlagIcon className='h-5 w-5 md:h-8 md:w-8' label={countryInfo?.country} value={countryInfo?.country} />
 				) : (
 					"N/A"
 				)}
 			</div>
 
-			<Input
-				aria-label={value}
-				value={value}
-				readOnly
-				// eslint-disable-next-line
-				autoFocus={false}
-				{...props}
-			/>
+			<ReadonlyInput aria-label={value} value={value} {...props} />
 		</div>
 	)
 }

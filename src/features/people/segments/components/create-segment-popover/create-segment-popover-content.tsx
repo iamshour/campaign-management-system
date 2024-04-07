@@ -1,15 +1,14 @@
 //#region Import
+import { useAdvancedFiltersDialogContext } from "@/features/people/contacts/dialogs/advanced-filters-dialog/advanced-filters-dialog-context"
+import { useCreateSegmentMutation } from "@/features/people/segments/api"
+import SegmentSchema, { type SegmentSchemaType } from "@/features/people/segments/schemas/segment-schema"
+import { CreateSegmentBody } from "@/features/people/segments/types"
+import { areConditionsValid } from "@/features/people/segments/utils"
+import { Button, Form, Input, useForm } from "@/ui"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMemo } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
-
-import { useAdvancedFiltersDialogContext } from "@/features/people/contacts/dialogs/advanced-filters-dialog/advanced-filters-dialog-context"
-import { useCreateSegmentMutation } from "@/features/people/segments/api"
-import SegmentSchema, { type SegmentSchemaType } from "@/features/people/segments/schemas/segment-schema"
-import { createSegmentArgsType } from "@/features/people/segments/types"
-import { areConditionsValid } from "@/features/people/segments/utils"
-import { useForm, Button, Footer, Form, Input } from "@/ui"
 //#endregion
 
 export interface CreateSegmentPopoverContentProps {
@@ -27,49 +26,44 @@ const CreateSegmentPopoverContent = ({ onClose }: CreateSegmentPopoverContentPro
 	const [triggerCreateSegment, { isLoading: isCreateSegmentLoading }] = useCreateSegmentMutation()
 
 	const { conditions } = useAdvancedFiltersDialogContext()
+
 	const areEditableConditionsValid = useMemo(() => areConditionsValid(conditions), [conditions])
 
-	const onSubmit = async ({ name, description }: SegmentSchemaType) => {
+	const onSubmit = async ({ description, name }: SegmentSchemaType) => {
 		if (!areEditableConditionsValid) return
 
-		const body: createSegmentArgsType = {
-			name,
-			description,
+		const body: CreateSegmentBody = {
 			contactSegmentConditionList: conditions?.map((condition) => ({
-				id: condition?.id,
 				contactSegmentRuleList: condition?.rules?.map((rule) => ({
-					id: rule?.id,
+					contactSegmentId: rule?.segment?.value,
 					contactSegmentRuleAttribute: rule?.attribute,
 					contactSegmentRuleCondition: rule?.condition,
-					specification: rule?.specification,
 					country: rule?.country,
 					groupId: rule?.group?.value,
-					contactSegmentId: rule?.segment?.value,
+					id: rule?.id,
+					specification: rule?.specification,
 				})),
+				id: condition?.id,
 			})),
+			description,
+			name,
 		}
 
-		await triggerCreateSegment(body)
-			.unwrap()
-			.then(() => {
-				toast.success(t("successMessage"))
-				onClose()
-			})
+		await triggerCreateSegment(body).unwrap()
+
+		toast.success(t("successMessage"))
+		onClose()
 	}
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+			<form className='space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
 				<Form.Field
 					control={form.control}
 					name='name'
 					render={({ field }) => (
-						<Form.Item>
-							<Form.Label size={"default"}>{t("fields.name.label")}*</Form.Label>
-							<Form.Control>
-								<Input size={"default"} placeholder={t("fields.name.placeholder")} {...field} />
-							</Form.Control>
-							<Form.Message />
+						<Form.Item label={t("fields.name.label")} required>
+							<Input placeholder={t("fields.name.placeholder")} {...field} />
 						</Form.Item>
 					)}
 				/>
@@ -77,21 +71,20 @@ const CreateSegmentPopoverContent = ({ onClose }: CreateSegmentPopoverContentPro
 					control={form.control}
 					name='description'
 					render={({ field }) => (
-						<Form.Item className='pb-4'>
-							<Form.Label size={"default"}>{t("fields.description.label")}</Form.Label>
-							<Form.Control>
-								<Input size={"default"} placeholder={t("fields.description.placeholder")} {...field} />
-							</Form.Control>
-							<Form.Message />
+						<Form.Item className='pb-4' label={t("fields.description.label")}>
+							<Input placeholder={t("fields.description.placeholder")} {...field} />
 						</Form.Item>
 					)}
 				/>
 
-				<Footer>
-					<Button type='submit' loading={isCreateSegmentLoading} className='px-6' variant='secondary' size='sm'>
-						{t("actions.create")}
-					</Button>
-				</Footer>
+				<Button
+					className='ms-auto w-full px-6 sm:w-max'
+					loading={isCreateSegmentLoading}
+					size='sm'
+					type='submit'
+					variant='secondary'>
+					{t("actions.create")}
+				</Button>
 			</form>
 		</Form>
 	)

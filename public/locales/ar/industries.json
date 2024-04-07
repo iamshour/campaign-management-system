@@ -1,0 +1,52 @@
+{
+	"fields": {
+		"icon": "أيقونة",
+		"name": "اسم الصناعة ",
+		"description": "وصف الصناعة ",
+		"createdAt": "تاريخ الإنشاء"
+	},
+	"table": {
+		"topbar": {
+			"actions": {
+				"create-industry": "إنشاء الصناعة"
+			}
+		}
+	},
+	"views": {
+		"industriesView": {
+			"industryCard": {
+				"callToAction": "عرض القوالب"
+			},
+			"actions": {
+				"edit": "يحرر",
+				"delete": "يمسح"
+			}
+		}
+	},
+	"components": {
+		"smsTemplateBuilder": {
+			"backgroundField": {
+				"sectionHeading": {
+					"label": "خلفية القالب ",
+					"description": "استيراد خلفية قالب"
+				},
+				"mostPopularField": {
+					"label": "أضف قالب إلى الأكثر شعبية"
+				},
+				"dropArea": {
+					"label": "يستورد",
+					"labelIconTooltipContent": "يجب أن تكون الصورة التي تريد تحميلها مرتبطة بالصناعة ",
+					"previewCardIconTooltipContent": "يمكنك معاينة كيفية عرض صورك على القوالب المسبقة ",
+					"validationMessage": "حجم أقل من 500 كيلو بايت ، تنسيق PNG ، JPG ",
+					"errors": {
+						"file-too-large": "الملف كبير جدًا ، ويتجاوز الحد: 500 كيلو بايت ",
+						"file-invalid-type": "تحميل ملف غير صالح.يجب أن يكون ملفك الذي تم تحميله من النوع: PNG أو JPG."
+					},
+					"actions": {
+						"remove": "إزالة صورة الخلفية"
+					}
+				}
+			}
+		}
+	}
+}

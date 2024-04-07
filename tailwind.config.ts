@@ -1,29 +1,31 @@
 //#region Import
+import type { Config } from "tailwindcss"
+
 import FormPlugin from "@tailwindcss/forms"
 import TypographyPlugin from "@tailwindcss/typography"
 import ScrollbarPlugin from "tailwind-scrollbar"
-import type { Config } from "tailwindcss"
-import plugin from "tailwindcss/plugin"
 import AnimatePlugin from "tailwindcss-animate"
+import plugin from "tailwindcss/plugin"
 //#endregion
 
 const customUtilities = plugin(function ({ addUtilities }) {
 	addUtilities({
-		".backface-visible": { "backface-visibility": "visible" },
 		".backface-hidden": { "backface-visibility": "hidden" },
-		".flex-center": { display: "flex", justifyContent: "center", alignItems: "center" },
+		".backface-visible": { "backface-visibility": "visible" },
+		".flex-center": { alignItems: "center", display: "flex", justifyContent: "center" },
+		".inline-flex-center": { alignItems: "center", display: "inline-flex", justifyContent: "center" },
 		".prevent-selection": {
+			MozUserSelect: "none",
+			MsUserSelect: "none",
 			"user-select": "none",
 			WebkitTouchCallout: "none",
 			WebkitUserDrag: "none",
 			WebkitUserSelect: "none",
-			MozUserSelect: "none",
-			MsUserSelect: "none",
 		},
 		".transition-basic": {
+			transitionDuration: "300ms",
 			transitionProperty: "all",
 			transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-			transitionDuration: "300ms",
 		},
 	})
 })
@@ -31,6 +33,7 @@ const customUtilities = plugin(function ({ addUtilities }) {
 const config: Config = {
 	content: ["./src/**/*.{js,ts,jsx,tsx,mdx}", "../../packages/ui/src/**/*.{js,ts,jsx,tsx}"],
 	darkMode: ["class"],
+	plugins: [customUtilities, ScrollbarPlugin({ nocompatible: true }), FormPlugin, AnimatePlugin, TypographyPlugin],
 	theme: {
 		container: {
 			center: true,
@@ -38,13 +41,23 @@ const config: Config = {
 			screens: { "2xl": "1400px" },
 		},
 		extend: {
+			animation: {
+				"accordion-down": "accordion-down 0.2s ease-out",
+				"accordion-up": "accordion-up 0.2s ease-out",
+
+				"collapse-down": "collapse-down 300ms ease-out",
+				"collapse-up": "collapse-up 300ms ease-out",
+
+				"collapse-x-close": "collapse-x-close 300ms ease-out",
+				"collapse-x-open": "collapse-x-open 300ms ease-out",
+			},
 			colors: {
 				primary: {
-					50: "#C3E5F7",
 					100: "#B5DEF5",
 					200: "#A6D7F2",
 					300: "#97D1F0",
 					400: "#88CAEE",
+					50: "#C3E5F7",
 					500: "#79C4EC",
 					600: "#4CB0E6",
 					700: "#2EA3E2",
@@ -53,11 +66,6 @@ const config: Config = {
 					950: "#054060",
 					DEFAULT: "#6ABDEA",
 				},
-			},
-			screens: {
-				"2xs": "400px",
-				xs: "576px",
-				"3xl": "2000px",
 			},
 			keyframes: {
 				"accordion-down": {
@@ -79,29 +87,23 @@ const config: Config = {
 					to: { height: 0 as any },
 				},
 
-				"collapse-x-open": {
-					from: { width: 0 as any },
-					to: { width: "var(--radix-collapsible-content-width)" },
-				},
-
 				"collapse-x-close": {
 					from: { width: "var(--radix-collapsible-content-width)" },
 					to: { width: 0 as any },
 				},
+
+				"collapse-x-open": {
+					from: { width: 0 as any },
+					to: { width: "var(--radix-collapsible-content-width)" },
+				},
 			},
-			animation: {
-				"accordion-down": "accordion-down 0.2s ease-out",
-				"accordion-up": "accordion-up 0.2s ease-out",
-
-				"collapse-down": "collapse-down 300ms ease-out",
-				"collapse-up": "collapse-up 300ms ease-out",
-
-				"collapse-x-open": "collapse-x-open 300ms ease-out",
-				"collapse-x-close": "collapse-x-close 300ms ease-out",
+			screens: {
+				"2xs": "400px",
+				"3xl": "2000px",
+				xs: "576px",
 			},
 		},
 	},
-	plugins: [customUtilities, ScrollbarPlugin({ nocompatible: true }), FormPlugin, AnimatePlugin, TypographyPlugin],
 }
 
 export default config

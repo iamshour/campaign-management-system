@@ -1,3 +1,4 @@
+import { REGEX_NAME_FIELDS } from "@/core/constants/regex"
 import * as z from "zod"
 
 // const rulesSchema = z
@@ -15,11 +16,14 @@ import * as z from "zod"
 // 	.max(10)
 
 const SegmentSchema = z.object({
+	description: z.string().max(100, { message: "Maximum 100 characters allowed" }).optional(),
 	name: z
 		.string()
-		.min(1, { message: "Segment Name is required" })
-		.max(50, { message: "Maximum 50 characters allowed" }),
-	description: z.string().max(100, { message: "Maximum 100 characters allowed" }).optional(),
+		.min(1, { message: "Required" })
+		.max(50, { message: "Maximum 50 characters allowed" })
+		.refine((val) => REGEX_NAME_FIELDS.test(val), {
+			message: "Name can include letters, numbers and characters #@_`/&~",
+		}),
 	// List of conditions, each containing a list of rules
 	// conditions: z
 	// 	.array(

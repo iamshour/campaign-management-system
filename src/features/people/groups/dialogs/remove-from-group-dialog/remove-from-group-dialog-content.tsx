@@ -1,112 +1,112 @@
 //#region Import
+import type { DataViewState } from "@/core/components/data-view/types"
+import type { RemoveContactsFromGroupBody } from "@/features/people/groups/types"
+
+import { useDataViewContext } from "@/core/components/data-view/data-view-context"
+import { clearSelection } from "@/core/components/data-view/data-view-slice"
+import useDispatch from "@/core/hooks/useDispatch"
+import useSelector from "@/core/hooks/useSelector"
+import { getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
+import { useRemoveContactsFromGroupMutation } from "@/features/people/groups/api"
+import { Button, Form, Skeleton, useForm } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import { cleanObject } from "@/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Suspense, lazy } from "react"
+import { lazy, Suspense } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
 import { any, object, string } from "zod"
 
-import { useAdvancedTableContext } from "@/core/components/advanced-table"
-import useDispatch from "@/core/hooks/useDispatch"
-import useSelector from "@/core/hooks/useSelector"
-import { clearSelection } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import { getContactFilterAndContactSearchFilter } from "@/features/people/contacts/utils"
-import { useRemoveContactsFromGroupMutation } from "@/features/people/groups/api"
-import type { RemoveContactsFromGroupArgs } from "@/features/people/groups/types"
-import { useForm, Button, Footer, Form, Skeleton } from "@/ui"
-import { cleanObject } from "@/utils"
-
-const Input = lazy(() => import("@/ui").then((mod) => ({ default: mod.Input })))
+const Input = lazy(() => import("@/ui/input/input"))
 //#endregion
 
 export interface RemoveFromGroupDialogContentProps {
 	/**
+	 * Callback function used to close the dialog
+	 */
+	closeDialog: () => void
+
+	/**
 	 * Contact Id in the Group we want to remove from
 	 */
 	id?: string
-
-	/**
-	 * Callback function used to close the dialog
-	 */
-	onClose: () => void
 }
 
-const RemoveMultiContactsFromGroup = ({ id, onClose }: RemoveFromGroupDialogContentProps) => {
+const RemoveMultiContactsFromGroup = ({ closeDialog, id }: RemoveFromGroupDialogContentProps) => {
 	const { t } = useTranslation("groups")
+
 	const { id: currentGroupId } = useParams()
 
 	const dispatch = useDispatch()
 
-	const { selection, filters, searchTerm } = useSelector<AdvancedTableStateType<"contacts-in-group">>(
-		({ advancedTable }) => advancedTable["contacts-in-group"]
+	const { closeDropdown } = useDropdownStateContext()
+
+	const { filters, searchTerm, selection } = useSelector<DataViewState<"contacts-in-group">>(
+		({ dataView }) => dataView["contacts-in-group"]
 	)
-	const { count } = useAdvancedTableContext()
+
+	const { count } = useDataViewContext()
 
 	const [triggerRemoveContactsFromGroup, { isLoading }] = useRemoveContactsFromGroupMutation()
 
 	const nbOfContactsToRemove = (selection === "ALL" ? count : selection?.length) ?? 0
 
 	const form = useForm<{ prompt?: number }>({
-		resolver: getResolvedFormSchema(nbOfContactsToRemove),
 		defaultValues: { prompt: 0 },
+		resolver: getResolvedFormSchema(nbOfContactsToRemove),
 	})
 
 	const onSubmit = async () => {
 		const contactsIdsToBeRemoved = id ? [id] : !!selection && selection !== "ALL" ? selection : undefined
 
-		const body: RemoveContactsFromGroupArgs = {
-			contactsIds: contactsIdsToBeRemoved,
+		const body: RemoveContactsFromGroupBody = {
+			contactFilter: getContactFilter(filters),
 			contactGroupsIds: [currentGroupId!],
-			...getContactFilterAndContactSearchFilter(filters, searchTerm),
+			contactSearchFilter: getContactSearchFilter(searchTerm),
+			contactsIds: contactsIdsToBeRemoved,
 		}
 
-		// Cleaning Body from all undefined values, empty objects, and nested objects with undefined values
+		// Cleaning Body from all undefined/empty/nullish objects/nested objects
 		const cleanBody = cleanObject(body)
 
-		await triggerRemoveContactsFromGroup(cleanBody)
-			.unwrap()
-			.then(() => {
-				// Clearing Selection list if contacts were selected using their Ids
-				if (cleanBody?.contactsIds?.length) dispatch(clearSelection("contacts-in-group"))
+		await triggerRemoveContactsFromGroup(cleanBody).unwrap()
 
-				toast.success(t("successMessage", { count: nbOfContactsToRemove }))
-				onClose()
-			})
+		// Clearing Selection list if contacts were selected using their Ids
+		if (cleanBody?.contactsIds?.length) dispatch(clearSelection("contacts-in-group"))
+
+		toast.success(t("successMessage", { count: nbOfContactsToRemove }))
+
+		closeDialog()
+		closeDropdown()
 	}
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-6 overflow-y-auto p-2'>
+			<form className='flex flex-col gap-6 overflow-y-auto p-2' onSubmit={form.handleSubmit(onSubmit)}>
 				<p>{t("dialogs.remove-from-group.message", { count: nbOfContactsToRemove })}</p>
 
 				{nbOfContactsToRemove > 1 && (
 					<Suspense fallback={<Skeleton className='h-[50px]' />}>
 						<Form.Field
-							name='prompt'
 							control={form.control}
+							name='prompt'
 							render={({ field }) => (
-								<Form.Item>
-									<Form.Label>{t("ui:prompt-input.label", { count: nbOfContactsToRemove })}</Form.Label>
-									<Form.Control>
-										<Input size='lg' placeholder={t("ui:prompt-input.placeholder")} {...field} />
-									</Form.Control>
-									<Form.Message />
+								<Form.Item label={t("ui:prompt-input.label", { count: nbOfContactsToRemove })} size='lg'>
+									<Input placeholder={t("ui:prompt-input.placeholder")} {...field} />
 								</Form.Item>
 							)}
 						/>
 					</Suspense>
 				)}
 
-				<Footer>
-					<Button
-						type='submit'
-						className='px-10'
-						loading={isLoading}
-						disabled={nbOfContactsToRemove > 1 && Number(form.watch("prompt")) !== nbOfContactsToRemove}>
-						{t("dialogs.remove-from-group.actions.submit")}
-					</Button>
-				</Footer>
+				<Button
+					className='ms-auto w-full px-10 sm:w-max'
+					disabled={nbOfContactsToRemove > 1 && Number(form.watch("prompt")) !== nbOfContactsToRemove}
+					loading={isLoading}
+					type='submit'>
+					{t("dialogs.remove-from-group.actions.submit")}
+				</Button>
 			</form>
 		</Form>
 	)

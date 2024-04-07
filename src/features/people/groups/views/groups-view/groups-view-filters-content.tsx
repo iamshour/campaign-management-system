@@ -1,22 +1,26 @@
 //#region Import
+import type { ContactGroupFilter } from "@/features/people/groups/types"
+
+import { selectFilters, updateFilters } from "@/core/components/data-view/data-view-slice"
 import useDispatch from "@/core/hooks/useDispatch"
 import useSelector from "@/core/hooks/useSelector"
-import { updateFilters } from "@/core/slices/advanced-table-slice/advanced-table-slice"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
 import { DateRangePicker } from "@/ui"
+import { memo } from "react"
 //#endregion
 
-const GroupsViewFiltersContent = () => {
+const GroupsViewFiltersContent = memo(() => {
 	const dispatch = useDispatch()
 
-	const { filters } = useSelector<AdvancedTableStateType<"groups">>(({ advancedTable }) => advancedTable["groups"])
+	const filters = useSelector<ContactGroupFilter>((state) => selectFilters(state, "groups") as ContactGroupFilter)
 
 	return (
 		<DateRangePicker
-			dateRange={filters?.dateRange}
-			updateDateRange={(dateRange) => dispatch(updateFilters({ groups: { dateRange } }))}
+			dateRange={{ endDate: filters?.endDate, startDate: filters?.startDate }}
+			updateDateRange={(groups) => dispatch(updateFilters({ groups }))}
 		/>
 	)
-}
+})
+
+GroupsViewFiltersContent.displayName = "GroupsViewFiltersContent"
 
 export default GroupsViewFiltersContent

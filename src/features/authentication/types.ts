@@ -1,10 +1,15 @@
-export type AuthViews = "SIGN_IN" | "SIGN_UP" | "RESET_PASS" | "NEW_PASS" | "OTP"
+export type AuthViews = "NEW_PASS" | "OTP" | "RESET_PASS" | "SIGN_IN" | "SIGN_UP"
 
-export type user = {
-	company: string
-}
+export type UserRole = "BLUE" | "BUSINESS"
 
 export interface AuthSliceState {
-	user?: user
 	token?: string
+
+	user: {
+		company: string
+		industryId?: string
+		name: string
+		role: UserRole
+		src: string
+	}
 }

@@ -1,58 +1,59 @@
 //#region Import
+import type { GetListReturnType } from "@/core/lib/redux-toolkit/types"
+
 import api from "@/core/lib/redux-toolkit/api"
 import { providesList, transformResponse } from "@/core/lib/redux-toolkit/helpers"
-import type { ListDataReturnType } from "@/core/lib/redux-toolkit/types"
 
-import type { GetSegmentArgs, GetSegmentByIdReturnValue, Segment, createSegmentArgsType } from "./types"
+import type { CreateSegmentBody, GetSegmentByIdReturnValue, GetSegmentsParams, Segment } from "./types"
 //#endregion
 
 const segmentsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getSegments: builder.query<ListDataReturnType<Segment>, GetSegmentArgs>({
-			query: (params) => ({ url: "/contact/segment", params }),
+		createSegment: builder.mutation<any, CreateSegmentBody>({
+			invalidatesTags: (res) => (res ? [{ id: "LIST", type: "Segment" }] : []),
+			query: (body) => ({ body, method: "POST", url: "/contact/segment" }),
+		}),
+
+		deleteSegment: builder.mutation<any, string>({
+			invalidatesTags: (res, error, id) => {
+				if (!res) return []
+
+				return [{ id, type: "Segment" }]
+			},
+			query: (id) => ({ method: "DELETE", url: `/contact/segment/${id}` }),
+		}),
+
+		getSegmentById: builder.query<GetSegmentByIdReturnValue, string | undefined>({
+			providesTags: (result) => [{ id: result?.id, type: "Segment" }],
+			query: (id) => `/contact/segment/${id}`,
+			transformResponse,
+		}),
+
+		getSegments: builder.query<GetListReturnType<Segment>, GetSegmentsParams>({
 			providesTags: (result) =>
 				providesList(
 					result?.list?.map(({ id }) => id),
 					"Segment"
 				),
+			query: (params) => ({ params, url: "/contact/segment" }),
 			transformResponse,
 		}),
 
-		getSegmentById: builder.query<GetSegmentByIdReturnValue, string | undefined>({
-			query: (id) => `/contact/segment/${id}`,
-			providesTags: (result) => [{ type: "Segment", id: result?.id }],
-			transformResponse,
-		}),
-
-		createSegment: builder.mutation<any, createSegmentArgsType>({
-			query: (body) => ({ url: "/contact/segment", method: "POST", body }),
-			invalidatesTags: (res) => (res ? [{ type: "Segment", id: "LIST" }] : []),
-		}),
-
-		updateSegment: builder.mutation<any, createSegmentArgsType>({
-			query: ({ id, ...body }) => ({ url: `/contact/segment/${id}`, method: "PUT", body }),
+		updateSegment: builder.mutation<any, CreateSegmentBody>({
 			invalidatesTags: (res, error, { id }) => {
 				if (!res) return []
 
-				return [{ type: "Segment", id }]
+				return [{ id, type: "Segment" }]
 			},
-		}),
-
-		deleteSegment: builder.mutation<any, string>({
-			query: (id) => ({ url: `/contact/segment/${id}`, method: "DELETE" }),
-			invalidatesTags: (res, error, id) => {
-				if (!res) return []
-
-				return [{ type: "Segment", id }]
-			},
+			query: ({ id, ...body }) => ({ body, method: "PUT", url: `/contact/segment/${id}` }),
 		}),
 	}),
 })
 
 export const {
-	useGetSegmentsQuery,
-	useGetSegmentByIdQuery,
 	useCreateSegmentMutation,
-	useUpdateSegmentMutation,
 	useDeleteSegmentMutation,
+	useGetSegmentByIdQuery,
+	useGetSegmentsQuery,
+	useUpdateSegmentMutation,
 } = segmentsApi

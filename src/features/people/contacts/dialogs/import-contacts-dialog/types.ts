@@ -1,29 +1,32 @@
 //#region Import
 import type {
-	ImportFileMappingArgs,
+	ImportFileMappingBody,
 	ImportFileMappingReturnType,
 	UploadContactsMutationReturnType,
 } from "@/features/people/contacts/types"
 import type { OptionType } from "@/ui"
-
 //#endregion
 
 /**
  * Type of imported entry: Could be `file` OR `copyPaste` relating to pasted text entry
  */
-export type ImportType = "file" | "copyPaste"
+export type ImportType = "copyPaste" | "file"
 
 export type ImportsDataType = Partial<UploadContactsMutationReturnType> &
-	Partial<Omit<ImportFileMappingArgs, "groups">> & {
-		/**
-		 * Type of imported entry: Could be `file` OR `copyPaste` relating to pasted text entry
-		 */
-		importType: ImportType
+	Partial<Omit<ImportFileMappingBody, "groups">> & {
+		exportsFileName?: string
 
 		/**
 		 * Uploaded File if ImportType is file
 		 */
 		file?: File
+
+		groups?: OptionType[]
+
+		/**
+		 * Type of imported entry: Could be `file` OR `copyPaste` relating to pasted text entry
+		 */
+		importType: ImportType
 
 		/**
 		 * Pasted Content, copied from either an excel or csv file
@@ -31,18 +34,9 @@ export type ImportsDataType = Partial<UploadContactsMutationReturnType> &
 		pastedContent?: string
 
 		validationResponse?: ImportFileMappingReturnType
-
-		exportsFileName?: string
-
-		groups?: OptionType[]
 	}
 
 export type ImportContactsDialogContextValueType = {
-	/**
-	 * Boolean used if an asychronous action is pending
-	 */
-	uploadFileLoading?: boolean
-
 	/**
 	 * Number of current active step
 	 */
@@ -54,15 +48,20 @@ export type ImportContactsDialogContextValueType = {
 	data: ImportsDataType
 
 	/**
+	 * Callback function used to reset data
+	 */
+	resetData: () => void
+
+	/**
 	 * Callback function used to update data, by spreading previous data, and passing new ones
 	 * @param updatedData New updated data
 	 */
 	updateData: (newData: Partial<ImportsDataType> | React.SetStateAction<ImportsDataType>) => void
 
 	/**
-	 * Callback function used to reset data
+	 * Boolean used if an asychronous action is pending
 	 */
-	resetData: () => void
+	uploadFileLoading?: boolean
 }
 
 export interface ImportContactsDialogContextProps {

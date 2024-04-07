@@ -37,7 +37,7 @@
 		"contactsCount": "عدد جهات الاتصال"
 	},
 	"table": {
-		"toolbar": {
+		"topbar": {
 			"search": "البحث عن طريق أي مجال",
 
 			"actions": {

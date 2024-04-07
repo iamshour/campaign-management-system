@@ -1,67 +1,62 @@
 //#region Import
+import type { MoveContactsToGroupBody } from "@/features/people/groups/types"
+
+import { useDeleteGroupMutation, useMoveContactsToGroupMutation } from "@/features/people/groups/api"
+import SelectGroupsPopover from "@/features/people/groups/components/select-groups-popover/select-groups-popover"
+import { BackButton, Button, Footer, type OptionType } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import { useStep } from "@/utils"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
-
-import { useDeleteGroupMutation, useMoveContactsToGroupMutation } from "@/features/people/groups/api"
-import SelectGroupsPopover from "@/features/people/groups/components/select-groups-popover"
-import type { MoveContactsToGroupArgs } from "@/features/people/groups/types"
-import { BackButton, Button, Footer, type OptionType } from "@/ui"
-import { useStep } from "@/utils"
 //#endregion
 
 export interface DeleteGroupDialogContentProps {
 	/**
+	 * Callback function used to close the dialog
+	 */
+	closeDialog: () => void
+
+	/**
 	 * Group Id For the group we want to delete
 	 */
 	groupId: string
-
-	/**
-	 * Closes the actions dropdown in table row
-	 */
-	closeActionsDropDown: () => void
-
-	/**
-	 * Callback function used to close the dialog
-	 */
-	closeDeleteGroupDialog: () => void
 }
 
-const DeleteGroupDialogContent = ({
-	groupId,
-	closeActionsDropDown,
-	closeDeleteGroupDialog,
-}: DeleteGroupDialogContentProps) => {
-	const { t } = useTranslation("groups", { keyPrefix: "dialogs.delete-group" })
-	const [triggerDeleteGroupMutation, { isLoading: isDeleteLoading }] = useDeleteGroupMutation()
-	const [triggerMoveContactsToGroupMutation, { isLoading: isMoveLoading }] = useMoveContactsToGroupMutation()
+const DeleteGroupDialogContent = ({ closeDialog, groupId }: DeleteGroupDialogContentProps) => {
+	const { t } = useTranslation("groups", { keyPrefix: "" })
 
-	const [currentStep, { goToNextStep, goToPrevStep, canGoToNextStep, canGoToPrevStep }] = useStep(2)
+	const [triggerDeleteGroup, { isLoading: isDeleteLoading }] = useDeleteGroupMutation()
+
+	const [triggerMoveContactsToGroup, { isLoading: isMoveLoading }] = useMoveContactsToGroupMutation()
+
+	const { closeDropdown } = useDropdownStateContext()
+
+	const [currentStep, { canGoToNextStep, canGoToPrevStep, goToNextStep, goToPrevStep }] = useStep(2)
 
 	const [selectedGroupToMoveTo, setSelectedGroupToMoveTo] = useState<OptionType>()
 
 	const onSuccess = (message: string) => {
-		toast.success(t(message))
-		closeDeleteGroupDialog()
-		closeActionsDropDown()
+		toast.success(t(`dialogs.delete-group.${message}`))
+		closeDialog()
+		closeDropdown()
 	}
 
 	const handleDelete = async () => {
 		if (currentStep === 1) {
-			await triggerDeleteGroupMutation(groupId)
-				.unwrap()
-				.then(() => onSuccess("successMessage"))
+			await triggerDeleteGroup(groupId).unwrap()
+			onSuccess("successMessage")
 		}
 
 		if (currentStep === 2 && selectedGroupToMoveTo?.value) {
-			const body: MoveContactsToGroupArgs = {
+			const body: MoveContactsToGroupBody = {
 				fromGroupId: groupId,
-				toGroupId: selectedGroupToMoveTo?.value,
 				moveAndDelete: true,
+				toGroupId: selectedGroupToMoveTo?.value,
 			}
-			await triggerMoveContactsToGroupMutation(body)
-				.unwrap()
-				.then(() => onSuccess("successMessage"))
+
+			await triggerMoveContactsToGroup(body).unwrap()
+			onSuccess("successMessage")
 		}
 	}
 
@@ -70,30 +65,32 @@ const DeleteGroupDialogContent = ({
 			{canGoToPrevStep && <BackButton className='absolute start-1.5 top-2' onClick={goToPrevStep} />}
 
 			{currentStep === 1 ? (
-				<p>{t("message")}</p>
+				<p>{t("dialogs.delete-group.message")}</p>
 			) : (
 				<SelectGroupsPopover
-					size='lg'
 					className='!w-full !max-w-full'
-					isMulti={false}
+					label={t("components.groupsPopover.label")}
 					selection={selectedGroupToMoveTo}
+					size='lg'
 					updateSelection={setSelectedGroupToMoveTo}
 				/>
 			)}
 
 			<Footer>
 				{currentStep === 1 && (
-					<Button variant='outline' className='sm:w-[144px]' onClick={goToNextStep} disabled={!canGoToNextStep}>
-						{t("actions.move")}
+					<Button className='sm:w-[144px]' disabled={!canGoToNextStep} onClick={goToNextStep} variant='outline'>
+						{t("dialogs.delete-group.actions.move")}
 					</Button>
 				)}
 
 				<Button
-					onClick={handleDelete}
+					className='sm:w-[144px]'
 					disabled={currentStep === 2 && !selectedGroupToMoveTo}
 					loading={isDeleteLoading || isMoveLoading}
-					className='sm:w-[144px]'>
-					{currentStep === 1 ? t("actions.delete") : t("actions.move-with-delete")}
+					onClick={handleDelete}>
+					{currentStep === 1
+						? t("dialogs.delete-group.actions.delete")
+						: t("dialogs.delete-group.actions.move-with-delete")}
 				</Button>
 			</Footer>
 		</div>

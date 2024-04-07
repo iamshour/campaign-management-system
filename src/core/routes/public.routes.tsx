@@ -6,8 +6,8 @@ import { RouteObject } from "react-router-dom"
  */
 const publicRoutes: RouteObject[] = [
 	{
-		path: "/",
 		element: <div className='text-4xl'>Landing Page (Home Route)</div>,
+		path: "/",
 	},
 ]
 

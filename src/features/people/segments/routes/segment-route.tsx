@@ -1,29 +1,24 @@
 //#region Import
+import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
+import { useGetSegmentByIdQuery } from "@/features/people/segments/api"
+import { FullViewSkeleton } from "@/ui"
 import { lazy } from "react"
 import { useParams } from "react-router-dom"
 
-import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import { FullViewSkeleton } from "@/ui"
+const SegmentView = lazy(() => import("@/features/people/segments/views/segment-view"))
 
-import { useGetSegmentByIdQuery } from "../api"
-
-const SegmentView = lazy(() => import("../views/segment-view"))
-const NotFoundError = lazy(() => import("@/ui").then((mod) => ({ default: mod.NotFoundError })))
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const SegmentRoute = () => {
 	const { id } = useParams()
 
-	const { name, description, conditions, isInitialLoading, isReady, isError } = useGetSegmentByIdQuery(id, {
-		skip: !id,
+	const { conditions, description, isError, isInitialLoading, isReady, name } = useGetSegmentByIdQuery(id, {
 		selectFromResult: ({ data, isLoading, ...rest }) => ({
-			name: data?.name,
-			description: data?.description,
 			conditions: data?.contactSegmentConditionDetailsList?.map((condition) => ({
 				rules: condition?.contactSegmentRuleDetailsList?.map((rule) => ({
 					attribute: rule?.contactSegmentRuleAttribute,
 					condition: rule?.contactSegmentRuleCondition,
-					specification: rule?.specification,
 					country: rule?.country,
 					group: {
 						label: rule?.group?.name,
@@ -33,18 +28,24 @@ const SegmentRoute = () => {
 						label: rule?.contactSegment?.name,
 						value: rule?.contactSegment?.id,
 					},
+					specification: rule?.specification,
 				})),
 			})),
+			description: data?.description,
 			isInitialLoading: data === undefined && isLoading,
 			isReady: !isLoading && Boolean(data?.name?.length),
+			name: data?.name,
 			...rest,
 		}),
+		skip: !id,
 		...baseQueryConfigs,
 	})
 
 	if (isInitialLoading) return <FullViewSkeleton />
-	if (isError || !name?.length) return <NotFoundError className='h-full w-full' />
-	if (isReady) return <SegmentView name={name} description={description} conditions={conditions} />
+
+	if (isError || !name?.length) return <DisplayError className='h-full w-full' showReloadButton />
+
+	if (isReady) return <SegmentView conditions={conditions} description={description} name={name} />
 }
 
 export default SegmentRoute

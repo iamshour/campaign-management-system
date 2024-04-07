@@ -1,0 +1,34 @@
+{
+	"fields": {
+		"company": "اسم الشركة",
+		"sender": "مرسل",
+		"type": "يكتب",
+		"country": "البلد المستهدف",
+		"updatedAt": "التاريخ / الوقت ",
+		"createdAt": "تاريخ الإنشاء",
+		"action": "فعل",
+		"sampleContent": "عينة من المحتوى ",
+		"note": "ملحوظة",
+		"requesterUserEmail": "الطالب ",
+		"actionReason": "سبب العمل ",
+		"currentSenderStatus": "حالة المرسل الحالية ",
+		"statusReason": "سبب الحالة ",
+		"listingStatus": "حالة"
+	},
+
+	"listingRequestActions": {
+		"approved": "موافقة",
+		"rejected": "مرفوض",
+		"rejectedAndBlocked": "رفض وحظر"
+	},
+
+	"listingStatuses": {
+		"approved": "موافقة",
+		"blocked": "مسدود ",
+		"new": "جديد",
+		"pending": "قيد الانتظار",
+		"rejected": "مرفوض",
+		"suspended": "معلق",
+		"inactive": "غير نشط"
+	}
+}

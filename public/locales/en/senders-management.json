@@ -1,0 +1,254 @@
+{
+	"routes": {
+		"createChannelSource": {
+			"header": "Create Channel source"
+		},
+		"createChannelSourceRequest": {
+			"header": "Create Sender ID request"
+		},
+		"addListingsToChannelSource": {
+			"header": "Add Listings"
+		}
+	},
+
+	"views": {
+		"channelSourceRequestsPendingEmpty": {
+			"headline": "You didn't receive any sender yet",
+			"message": "You haven't received any requests from your client yet",
+			"submit": "Add Sender Request"
+		},
+		"channelSourceRequestsPending": {
+			"callToAction": "Add Sender Request"
+		},
+		"channelSourceRequestsCompletedEmpty": {
+			"headline": "You don't have sender yet with complete status",
+			"message": "Check the request you have received on pending list to complete them"
+		},
+		"adminChannelSourcesView": {
+			"table": {
+				"callToAction": "Create Sender",
+				"actionsCell": {
+					"addList": "Add List",
+					"delete": "Delete"
+				}
+			}
+		},
+		"adminSmsSendersViewEmpty": {
+			"headline": "You don't have sender yet",
+			"message": "Create a new sender"
+		},
+		"adminSmsListingsView": {
+			"table": {
+				"callToAction": "Add List",
+				"secondaryCallToAction": "Opted-out List",
+				"actionsCell": {
+					"delete": "Delete",
+					"block": "Block",
+					"suspend": "Suspend",
+					"activate": "Activate"
+				}
+			}
+		},
+		"smsOptedOutSenders": {
+			"fields": {
+				"destination": "destination"
+			},
+			"table": {
+				"topbar": {
+					"actions": {
+						"export": "Export Selected",
+						"export_other": "Export All",
+						"optIn": "Opt-in Selected",
+						"optIn_other": "Opt-in All",
+						"import": "Import"
+					}
+				}
+			}
+		},
+		"channelSourceOptOutListViewEmpty": {
+			"firstLabelHint": "You can click on the import section.",
+			"secondLabelHint": "You can create new contacts or import your own list of contacts to start sending you campaigns.",
+			"headline": "You don't have any opt-out list yet",
+			"message": "Import a new List",
+			"callToAction": "Import"
+		}
+	},
+
+	"components": {
+		"companyPopover": {
+			"label": "Company name",
+			"placeholder": "Select company"
+		},
+		"companyUsersPopover": {
+			"label": "Client email",
+			"placeholder": "Select client email"
+		},
+		"senderRequestFunnel": {
+			"actions": {
+				"addType": "Add Type",
+				"addCountry": "Add Country",
+				"deleteType": "Delete type",
+				"deleteCountry": "Delete country"
+			}
+		},
+		"selectMultiListingRequestActionPopover": {
+			"label": "Action",
+			"placeholder": "Select actions"
+		},
+		"selectMultiListingStatusesPopover": {
+			"label": "Status",
+			"placeholder": "Select statuses"
+		},
+		"selectSingleListingStatusPopover": {
+			"label": "Status",
+			"placeholder": "Select status"
+		},
+		"actionReasonForm": {
+			"label": "Reason",
+			"placeholder": "Enter reason"
+		}
+	},
+
+	"dialogs": {
+		"channelSourceRequestDetails": {
+			"title": "View Sender Request Details",
+			"senderRequestInfo": "Sender request info",
+			"senderStatusInfo": "Sender status info"
+		},
+		"adminListingDetails": {
+			"title": "View Sender Details",
+			"otherInfo": "Other info"
+		},
+		"channelSourceRequestApprove": {
+			"title": "Approve Request",
+			"tooltip": "Approve",
+			"message": "Are you sure you want to approve the sender <strong>{{name}}</strong> request for the target country <strong>{{country}}</strong>?",
+			"submit": "Confirm",
+			"successToast": "Request Approved successfully."
+		},
+		"channelSourceRequestRejection": {
+			"REJECT": {
+				"title": "Reject Request",
+				"tooltip": "Reject",
+				"message": "Are you sure you want to reject the sender <strong>{{sender}}</strong> request for the target country <strong>{{country}}</strong>?",
+				"submit": "Confirm",
+				"successToast": "Request rejected successfully."
+			},
+			"BLOCK": {
+				"title": "Reject & Block Request",
+				"tooltip": "Reject & Block",
+				"message": "Are you sure you want to reject & Block the sender <strong>{{sender}}</strong> request for the target country <strong>{{country}}</strong>?",
+				"submit": "Confirm",
+				"successToast": "Request rejected & blocked successfully."
+			}
+		},
+		"channelSourceListingBlock": {
+			"title": "Block Sender Listing",
+			"message": "Are you sure you wish to block this sender for <strong>{{company}}</strong> towards <strong>{{country}}</strong>? The client will be unable to send messages through this sender to the chosen country and it will appear as Blocked at the clients list end.",
+			"submit": "Confirm",
+			"successToast": "Sender listing blocked successfully."
+		},
+		"channelSourceListingSuspend": {
+			"title": "Suspend Sender",
+			"message": "Are you sure you wish to Suspend this sender for <strong>{{country}}</strong>? The client using it will be unable to send messages through this sender to the chosen country.",
+			"submit": "Confirm",
+			"successToast": "Sender listing suspended successfully."
+		},
+		"channelSourceListingActivate": {
+			"title": "Activate Sender",
+			"message": "Are you sure you wish to approve this sender for <strong>{{country}}</strong>? The company with access will be able to send messages through this sender to the chosen country.",
+			"submit": "Confirm",
+			"successToast": "Sender listing activated successfully."
+		},
+		"smsOptInSender": {
+			"title": "Opt-in Phone Number",
+			"message": "Are you sure you want to opt-in this phone number?",
+			"tooltip": "Opt-in",
+			"submit": "Confirm"
+		},
+		"exportOptOutSmsSenders": {
+			"title": "Export",
+			"label": "Export file name",
+			"placeholder": "Enter name",
+			"submit": "Export"
+		},
+		"importChannelSourceOptOut": {
+			"title": "Import",
+			"label": "Import file",
+			"placeholder": "Enter name",
+			"tooltip": "Make sure the file includes only one column in valid phone number format",
+			"validationMessage": "Size less than 50 MB for CSV, and 30 MB for XLX",
+			"errors": {
+				"file-too-large": "File is too large, and exceeds the limit: 50MB for csv / 30MB for excel",
+				"file-invalid-type": "Invalid file upload. Your uploaded file should be of type: csv or excel."
+			},
+			"submit": "Import Now",
+			"successToast": "File imported successfully."
+		},
+		"bulkRequestsCreationConfirm": {
+			"CHANNEL_SOURCE": {
+				"title": "Confirm Listing",
+				"editDetails": "Edit Details",
+				"message": "Are you sure you want to add this Sender listing?",
+				"basicInfo": {
+					"company": "Company Name",
+					"sender": "Sender"
+				},
+				"requestsTable": {
+					"type": "Type",
+					"country": "Target Country",
+					"content": "Sample Content",
+					"status": "Status"
+				},
+				"submit": "Confirm",
+				"cancel": "Cancel"
+			},
+			"CHANNEL_LISTING": {
+				"title": "Confirm Listing",
+				"editDetails": "Edit Details",
+				"message": "Are you sure you want to add this Sender listing?",
+				"basicInfo": {
+					"company": "Company Name",
+					"sender": "Sender"
+				},
+				"requestsTable": {
+					"type": "Type",
+					"country": "Target Country",
+					"content": "Sample Content",
+					"status": "Status"
+				},
+				"submit": "Confirm",
+				"cancel": "Cancel"
+			},
+			"CHANNEL_SOURCE_REQUEST": {
+				"title": "Confirm Request",
+				"editDetails": "Edit Details",
+				"message": "Are you sure you want to add this Sender request?",
+				"basicInfo": {
+					"company": "Company Name",
+					"email": "Client Email",
+					"sender": "Sender"
+				},
+				"requestsTable": {
+					"type": "Type",
+					"country": "Target Country",
+					"content": "Sample Content"
+				},
+				"submit": "Confirm",
+				"cancel": "Cancel"
+			}
+		},
+		"deleteChannelSource": {
+			"title": "Delete a Sender",
+			"message": "Are you sure you want to delete this sender?",
+			"submit": "Confirm",
+			"successToast": "Sender successfully deleted from the list."
+		},
+		"deleteChannelSourceListing": {
+			"title": "Delete a Sender from List",
+			"message": "Are you sure you wish to delete this Sender for <strong>{{company}}</strong> towards <strong>{{country}}</strong>?",
+			"submit": "Confirm",
+			"successToast": "Sender successfully deleted from the list."
+		}
+	}
+}

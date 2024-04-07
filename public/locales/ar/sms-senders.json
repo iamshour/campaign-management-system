@@ -1,0 +1,126 @@
+{
+	"components": {
+		"navTabs": {
+			"local": "محلي",
+			"international": "دولي"
+		},
+		"channelSourceRequestForm": {
+			"placeholders": {
+				"name": "أدخل الاسم",
+				"type": "اختر صنف",
+				"note": "أدخل الملاحظة ",
+				"sampleContent": "أدخل المحتوى"
+			},
+			"labels": { "name": { "iconTooltip": "الوصف يذهب هنا " } }
+		},
+		"listingCard": {
+			"actions": {
+				"viewSampleContent": "عرض نموذج المحتوى ",
+				"viewStatusReason": {
+					"SUSPENDED": "عرض سبب تعليق ",
+					"BLOCKED": "عرض العقل ",
+					"REJECTED": "عرض رفض العقل"
+				},
+				"activate": "تفعيل",
+				"deactivate": "إلغاء تنشيط ",
+				"resendRequest": "طلب إعادة الالتزام"
+			}
+		}
+	},
+	"table": {
+		"actions": {
+			"addRequest": "أضف طلب ",
+			"viewAllTypes": "عرض جميع الأنواع ",
+			"requestSender": "طلب المرسل"
+		}
+	},
+	"grid": {
+		"card": {
+			"sender": "مرسل"
+		}
+	},
+	"dialogs": {
+		"createChannelSourceRequestDialog": {
+			"title": { "newRequest": "طلب المرسل", "addRequest": "إضافة طلب" },
+			"buttons": {
+				"multiRequest": "أرسل وإضافة آخر ",
+				"singleRequest": "ارسل طلب"
+			},
+			"message": {
+				"multiRequestSuccess": "تم إرسال طلبك بنجاح ، يمكنك إرسال طلب آخر ",
+				"singleRequestSuccess": "تم ارسال طلبك بنجاح"
+			}
+		},
+		"resendChannelSourceRequestDialog": {
+			"title": "طلب إعادة الالتزام ",
+			"submit": "طلب إعادة الالتزام ",
+			"message": "تم استياء طلبك بنجاح"
+		},
+		"activateSmsDialog": {
+			"title": {
+				"local": "تنشيط الرسائل القصيرة المحلية ",
+				"international": "تنشيط الرسائل القصيرة الدولية"
+			},
+			"text": "ستحتاج إلى معرف مرسل لإرسال حملات الرسائل القصيرة ، يرجى طلب تسجيل المرسل للبدء في إرسال الحملات ",
+			"buttons": { "confirm": "يتأكد" }
+		},
+		"confirmRequestDialog": {
+			"newRequest": {
+				"title": "تأكيد الطلب ",
+				"text": "هل أنت متأكد من أنك تريد إرسال طلب المرسل هذا؟ ",
+				"buttons": { "confirm": "يتأكد" }
+			},
+			"addRequest": {
+				"title": "تأكيد الطلب ",
+				"text": "هل أنت متأكد من أنك تريد إرسال طلب المرسل هذا؟ ",
+				"buttons": { "confirm": "يتأكد" }
+			},
+			"resendRequest": {
+				"title": "تأكيد الطلب ",
+				"text": "هل أنت متأكد من أنك تريد إعادة تقديم هذا الطلب؟ ",
+				"buttons": { "confirm": "يتأكد" }
+			}
+		},
+		"viewListingSampleContentDialog": {
+			"title": "عرض نموذج محتوى"
+		},
+		"viewListingStatusReasonDialog": {
+			"SUSPENDED": { "title": "عرض سبب تعليق " },
+			"BLOCKED": { "title": "عرض سبب كتلة " },
+			"REJECTED": { "title": "عرض رفض العقل " }
+		},
+		"activateListingDialog": {
+			"title": "تفعيل",
+			"text": "هل أنت متأكد من أنك تريد تنشيط هذا المرسل في هذا البلد؟ ",
+			"buttons": { "confirm": "يتأكد" },
+			"message": { "success": "تم تنشيط القائمة بنجاح " }
+		},
+		"deactivateListingDialog": {
+			"title": "إلغاء تنشيط ",
+			"text": "هل أنت متأكد من أنك تريد إلغاء تنشيط المرسل.لن تكون قادرًا على استخدامه في حملاتك.سيؤدي هذا الإجراء إلى فشل رسائل الحملات التي تم إطلاقها وتعليق الحملات المجدولة باستخدام المرسل الذي تم إلغاء تنشيطه المطلوب ",
+			"buttons": { "confirm": "يتأكد" },
+			"message": { "success": "تم إلغاء تنشيط الإدراج بنجاح " }
+		}
+	},
+	"views": {
+		"emptyView": {
+			"title": "ليس لديك مرسل بعد ",
+			"text": "اطلب معرف المرسل من أجل البدء في إرسال حملاتك ",
+			"buttons": {
+				"local": "تنشيط الرسائل القصيرة المحلية ",
+				"international": "تنشيط الرسائل القصيرة الدولية"
+			}
+		},
+		"channelSourceListingsViewEmpty": {
+			"title": "لا قائمة في هذا النوع",
+			"text": "يمكنك طلب قائمة أو التحقق من نوع آخر"
+		}
+	},
+	"routes": {
+		"channelSourceRoute": {
+			"actions": {
+				"addRequest": "أضف الطلب"
+			}
+		}
+	}
+}

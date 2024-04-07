@@ -1,40 +1,43 @@
 //#region Import
-import { Suspense, lazy } from "react"
+import type { Selection } from "@/core/components/data-view/types"
 
+import { selectSelection } from "@/core/components/data-view/data-view-slice"
 import useSelector from "@/core/hooks/useSelector"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
+import CreateSmsTemplateDialog from "@/features/templates/sms-templates/dialogs/create-sms-template-dialog/create-sms-template-dialog"
 import { Button, Skeleton } from "@/ui"
-
 import PhUserPlus from "~icons/ph/user-plus"
+import { lazy, memo, Suspense } from "react"
 
-const DeleteTemplateDialog = lazy(() => import("@/features/templates/sms-templates/dialogs/delete-template-dialog"))
+const DeleteSmsTemplateDialog = lazy(
+	() => import("@/features/templates/sms-templates/dialogs/delete-sms-template-dialog/delete-sms-template-dialog")
+)
 //#endregion
 
-const SmsTemplatesViewTopbar = () => {
-	const { selection } = useSelector<AdvancedTableStateType<"sms-templates">>(
-		({ advancedTable }) => advancedTable["sms-templates"]
-	)
+const SmsTemplatesViewTopbar = memo(() => {
+	const selection = useSelector<Selection>((state) => selectSelection(state, "sms-templates"))
 
 	return (
-		<>
-			<div className='flex flex-1 justify-between'>
-				<div className='flex gap-2'>
-					{(selection === "ALL" || !!selection?.length) && (
-						<Suspense fallback={<Skeleton className='h-[36px] w-[140px]' />}>
-							<DeleteTemplateDialog ids={selection === "ALL" ? [] : selection}>
-								<Button variant='secondary'>Delete Templates</Button>
-							</DeleteTemplateDialog>
-						</Suspense>
-					)}
-				</div>
+		<div className='flex flex-1 justify-between'>
+			<div className='flex gap-2'>
+				{(selection === "ALL" || !!selection?.length) && (
+					<Suspense fallback={<Skeleton className='h-[36px] w-[140px]' />}>
+						<DeleteSmsTemplateDialog ids={selection === "ALL" ? [] : selection}>
+							<Button variant='secondary'>Delete Templates</Button>
+						</DeleteSmsTemplateDialog>
+					</Suspense>
+				)}
+			</div>
 
+			<CreateSmsTemplateDialog>
 				<Button>
 					<PhUserPlus />
 					Create Template
 				</Button>
-			</div>
-		</>
+			</CreateSmsTemplateDialog>
+		</div>
 	)
-}
+})
+
+SmsTemplatesViewTopbar.displayName = "SmsTemplatesViewTopbar"
 
 export default SmsTemplatesViewTopbar

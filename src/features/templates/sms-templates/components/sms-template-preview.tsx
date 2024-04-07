@@ -1,51 +1,83 @@
 //#region Import
-import type { SmsTemplateType } from "../types"
+import type { SmsTemplateType } from "@/features/templates/sms-templates/types"
 
-import MobileSmsPreview from "./mobile-sms-preview"
-
+import templateLanguagesLocaleMap from "@/features/templates/common/constants/template-languages-local-map"
+import templateTypesLocaleMap from "@/features/templates/common/constants/template-types-local-map"
+import SectionHeading from "@/ui/section-heading/section-heading"
 import MdiInformationVariantCircle from "~icons/mdi/information-variant-circle"
 import MdiMessageProcessing from "~icons/mdi/message-processing"
+import { useTranslation } from "react-i18next"
+
+import MobileSmsPreview from "./mobile-sms-preview"
 //#endregion
 
-const SmsTemplatePreview = ({ name, type, language, body }: SmsTemplateType) => (
-	<div className='flex h-full w-full flex-col overflow-y-auto p-6'>
-		<h1 className='mb-6 text-xl font-bold'>View {name}</h1>
+type SmsTemplatePreviewProps = Pick<SmsTemplateType, "body" | "language" | "name" | "type"> & {
+	/**
+	 * Additional info to be displayed under "Template Basic Info" section
+	 */
+	additionalTemplateInfo?: { label: string; value: string }[]
+
+	/**
+	 * Additional Nodes to be added (Ex. Background when using this component to preview prebuilt templates)
+	 */
+	children?: React.ReactNode
+}
+
+function SmsTemplatePreview({ additionalTemplateInfo, children, ...smsTemplate }: SmsTemplatePreviewProps) {
+	const { t } = useTranslation("templates-common")
+
+	const { body, language, name, type } = smsTemplate
+
+	return (
 		<div className=' flex flex-1 flex-row flex-wrap justify-between rounded-xl bg-[#F7F7F7] p-6 px-12 lg:flex-nowrap'>
-			<div className='ml-8 max-w-[700px]'>
+			<div className='ms-8 max-w-full space-y-8 md:max-w-[700px]'>
 				<div>
-					<h1 className='relative mb-5 text-xl font-bold'>
-						<MdiInformationVariantCircle className='absolute -left-9 top-1 text-[#2daef5]' />
-						Template Basic Info
-					</h1>
+					<SectionHeading
+						className='relative -start-10 mb-4'
+						icon={MdiInformationVariantCircle}
+						label='Template Basic Info'
+					/>
+
+					<SmsTemplateInfoItem itemName='Template Name' itemValue={name} />
+					<SmsTemplateInfoItem itemName='Template Type' itemValue={t(templateTypesLocaleMap[type])} />
+					<SmsTemplateInfoItem itemName='Template Language' itemValue={t(templateLanguagesLocaleMap[language])} />
+					{additionalTemplateInfo?.map(({ label, value }) => (
+						<SmsTemplateInfoItem itemName={label} itemValue={value} key={label} />
+					))}
+				</div>
+
+				<div>
+					<SectionHeading className='relative -start-10 mb-4' icon={MdiMessageProcessing} label='Message Text' />
+
 					<p className='mb-2'>
-						<strong className='mr-2 font-medium'>Template Name:</strong>
-						{name}
-					</p>
-					<p className='mb-2'>
-						<strong className='mr-2 font-medium'>Template Type:</strong>
-						{type}
-					</p>
-					<p className='mb-2'>
-						<strong className='mr-2 font-medium'>Template Lanugauge:</strong>
-						{language}
+						<strong className='block pb-2 font-medium'>Template Body:</strong>
+						{body}
 					</p>
 				</div>
 
-				<div className='mt-8'>
-					<h1 className='relative mb-5 text-xl font-bold'>
-						<MdiMessageProcessing className='absolute -left-9 top-1 text-[#2daef5]' />
-						Message Text
-					</h1>
-					<p className='mb-2'>
-						<strong className='font-medium'>Template Body:</strong>
-					</p>
-					<p>{body}</p>
-				</div>
+				{children}
 			</div>
 
 			<MobileSmsPreview message={body} />
 		</div>
-	</div>
-)
+	)
+}
 
 export default SmsTemplatePreview
+
+/**
+ * Component to render sms template detail in the following format:
+ * @example "Template Language: English"
+ *
+ * @param itemName: name of the field, to be used when displaying field label
+ * @param itemValue: value of the field
+ * @returns ReactNode containing formatted sms template detail
+ */
+const SmsTemplateInfoItem = ({ itemName, itemValue }: { itemName: string; itemValue: string }) => {
+	return (
+		<p className='mb-2'>
+			<strong className='mr-2 font-medium'>{itemName}:</strong>
+			{itemValue}
+		</p>
+	)
+}

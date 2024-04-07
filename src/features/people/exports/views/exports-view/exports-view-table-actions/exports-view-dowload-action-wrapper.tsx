@@ -1,18 +1,14 @@
 //#region Import
-import toast from "react-hot-toast"
-import { useTranslation } from "react-i18next"
+import type { ContactExports } from "@/features/people/exports/types"
 
 import { useDownloadExportMutation } from "@/features/people/exports/api"
-import type { ContactExports } from "@/features/people/exports/types"
 import { Slot } from "@/ui"
+import { useDropdownStateContext } from "@/ui/dropdown/dropdown-state-context"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
 //#endregion
 
-interface ExportViewDownloadActionWrapperProps extends Pick<ContactExports, "id" | "fileName" | "contactExportStatus"> {
-	/**
-	 * Closes the actions dropdown in table row
-	 */
-	closeActionsDropDown: () => void
-
+interface ExportViewDownloadActionWrapperProps extends Pick<ContactExports, "contactExportStatus" | "fileName" | "id"> {
 	/**
 	 * Dropdown.Item that will trigger export download
 	 */
@@ -20,29 +16,31 @@ interface ExportViewDownloadActionWrapperProps extends Pick<ContactExports, "id"
 }
 
 function ExportViewDownloadActionWrapper({
-	id,
-	fileName,
-	contactExportStatus,
-	closeActionsDropDown,
 	children,
+	contactExportStatus,
+	fileName,
+	id,
 }: ExportViewDownloadActionWrapperProps) {
 	const { t } = useTranslation("exports", { keyPrefix: "components.exportTableActions" })
-	const [triggerDownloadExportMutation] = useDownloadExportMutation()
+
+	const { closeDropdown } = useDropdownStateContext()
+
+	const [triggerDownloadExport] = useDownloadExportMutation()
 
 	const canDownloadExport = contactExportStatus === "COMPLETED"
 
 	const handleDownload = async () => {
 		if (!canDownloadExport) return
 
-		const res = await triggerDownloadExportMutation({ id, fileName }).unwrap()
+		const res = await triggerDownloadExport({ fileName, id }).unwrap()
 
-		closeActionsDropDown()
+		closeDropdown()
 
 		if (res?.ok) return toast.success(t("downloadSuccess"))
 	}
 
 	return (
-		<Slot onClick={handleDownload} className={!canDownloadExport ? "pointer-events-none opacity-50" : ""}>
+		<Slot className={!canDownloadExport ? "pointer-events-none opacity-50" : ""} onClick={handleDownload}>
 			{children}
 		</Slot>
 	)

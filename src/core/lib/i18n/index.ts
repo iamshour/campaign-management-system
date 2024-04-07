@@ -5,6 +5,22 @@ import { initReactI18next } from "react-i18next"
 
 export const defaultNS = "common"
 
+export const nameSpaces = [
+	defaultNS,
+	"contacts",
+	"groups",
+	"exports",
+	"segments",
+	"campaigns",
+	"ui",
+	"sms-templates",
+	"industries",
+	"senders-management",
+	"sms-senders",
+	"templates-common",
+	"channels-common",
+] as const
+
 i18n
 	// load translation using http -> see /public/locales
 	// learn more: https://github.com/i18next/i18next-http-backend
@@ -19,29 +35,30 @@ i18n
 	.init<HttpBackendOptions>({
 		// debug: true,
 
+		defaultNS,
 		fallbackLng: "en",
+
 		interpolation: {
 			// not needed for react as it escapes by default
 			escapeValue: false,
 			skipOnVariables: false,
 		},
+		load: "languageOnly",
 
-		saveMissing: true, // for missing key handler to fire
 		missingKeyHandler: function (lng, ns, key) {
+			// eslint-disable-next-line no-console
 			console.log("i18n Missing key handler fired: ", key)
 		},
-
-		defaultNS,
-		ns: ["common", "contacts", "groups", "exports", "segments", "campaigns", "ui", "sms-templates"],
-
-		supportedLngs: ["en", "ar"],
-
 		// Example: so that an ar-EG (Egyptian Arabic) user will see the ar (Arabic) version of our app
 		nonExplicitSupportedLngs: true,
 
+		ns: nameSpaces,
+
 		preload: ["en", "ar"],
 
-		load: "languageOnly",
+		saveMissing: true, // for missing key handler to fire
+
+		supportedLngs: ["en", "ar"],
 	})
 
 // import { DateTime } from 'luxon';

@@ -1,0 +1,126 @@
+{
+	"components": {
+		"navTabs": {
+			"local": "Local",
+			"international": "International"
+		},
+		"channelSourceRequestForm": {
+			"placeholders": {
+				"name": "Enter name",
+				"type": "Select type",
+				"note": "Enter note",
+				"sampleContent": "Enter content"
+			},
+			"senderTooltip": "Description Goes Here"
+		},
+		"listingCard": {
+			"actions": {
+				"viewSampleContent": "View Sample Content",
+				"viewStatusReason": {
+					"SUSPENDED": "View Suspend Reason",
+					"BLOCKED": "View Block Reason",
+					"REJECTED": "View Reject Reason"
+				},
+				"activate": "Activate",
+				"deactivate": "Deactivate",
+				"resendRequest": "Resend Request"
+			}
+		}
+	},
+	"table": {
+		"actions": {
+			"addRequest": "Add Request",
+			"viewAllTypes": "View All Types",
+			"requestSender": "Request Sender"
+		}
+	},
+	"grid": {
+		"card": {
+			"sender": "Sender"
+		}
+	},
+	"dialogs": {
+		"createChannelSourceRequestDialog": {
+			"title": { "newRequest": "Request Sender", "addRequest": "Add Request" },
+			"buttons": {
+				"multiRequest": "Send & Add Another",
+				"singleRequest": "Send Request"
+			},
+			"message": {
+				"multiRequestSuccess": "Your request has been successfully sent, you can send another request",
+				"singleRequestSuccess": "Your request has been sent successfully"
+			}
+		},
+		"resendChannelSourceRequestDialog": {
+			"title": "Resend Request",
+			"submit": "Resend Request",
+			"message": "Your request has been resent successfully"
+		},
+		"activateSmsDialog": {
+			"title": {
+				"local": "Activate Local SMS",
+				"international": "Activate International SMS"
+			},
+			"text": "You will need a Sender ID in order to send SMS campaigns, please request a sender registration to start sending campaigns",
+			"buttons": { "confirm": "Confirm" }
+		},
+		"confirmRequestDialog": {
+			"newRequest": {
+				"title": "Confirm Request",
+				"text": "Are you sure you want to send this Sender request?",
+				"buttons": { "confirm": "Confirm" }
+			},
+			"addRequest": {
+				"title": "Confirm Request",
+				"text": "Are you sure you want to send this Sender request?",
+				"buttons": { "confirm": "Confirm" }
+			},
+			"resendRequest": {
+				"title": "Confirm Request",
+				"text": "Are you sure you want to resend this request?",
+				"buttons": { "confirm": "Confirm" }
+			}
+		},
+		"viewListingSampleContentDialog": {
+			"title": "View Sample Content"
+		},
+		"viewListingStatusReasonDialog": {
+			"SUSPENDED": { "title": "View Suspend Reason" },
+			"BLOCKED": { "title": "View Block Reason" },
+			"REJECTED": { "title": "View Reject Reason" }
+		},
+		"activateListingDialog": {
+			"title": "Activate",
+			"text": "Are you sure you want to activate this sender on this country?",
+			"buttons": { "confirm": "Confirm" },
+			"message": { "success": "Listing successfully activated" }
+		},
+		"deactivateListingDialog": {
+			"title": "Deactivate",
+			"text": "Are you sure you want to deactivate the sender. You will no longer be able to use it in your campaigns. This action will lead to failing launched campaigns messages and suspending scheduled campaigns using the desired deactivated sender",
+			"buttons": { "confirm": "Confirm" },
+			"message": { "success": "Listing successfully deactivated" }
+		}
+	},
+	"views": {
+		"emptyView": {
+			"title": "You don't have sender yet",
+			"text": "Request a Sender ID in order to start sending you're campaigns",
+			"buttons": {
+				"local": "Activate Local SMS",
+				"international": "Activate International SMS"
+			}
+		},
+		"channelSourceListingsViewEmpty": {
+			"title": "No listing In this type",
+			"text": "You can request a list or check another type"
+		}
+	},
+	"routes": {
+		"channelSourceRoute": {
+			"actions": {
+				"addRequest": "Add Request"
+			}
+		}
+	}
+}

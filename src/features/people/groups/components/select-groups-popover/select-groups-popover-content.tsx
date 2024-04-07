@@ -1,26 +1,32 @@
 //#region Import
-import { useState } from "react"
-
+import getSearchFilter from "@/core/utils/get-search-filter"
 import { useGetGroupsQuery } from "@/features/people/groups/api"
-import { ComboBoxPopper } from "@/ui"
+import { SelectAsyncPopoverContent } from "@/ui"
+import { useState } from "react"
 //#endregion
 
 const SelectGroupsPopoverContent = () => {
 	const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined)
 
-	const { list, fetchLoading } = useGetGroupsQuery(
-		{ offset: 0, limit: 100 },
+	const { fetchLoading, list } = useGetGroupsQuery(
+		{
+			limit: 100,
+			offset: 0,
+			...getSearchFilter<["name"]>(searchTerm, ["name"]),
+		},
 		{
 			selectFromResult: ({ data, isFetching, ...rest }) => ({
-				list: data?.list?.map(({ groupName, groupId }) => ({ label: groupName, value: groupId })),
 				count: data?.count,
 				fetchLoading: isFetching,
+				list: data?.list?.map(({ groupId, groupName }) => ({ label: groupName, value: groupId })),
 				...rest,
 			}),
 		}
 	)
 
-	return <ComboBoxPopper options={list} loading={fetchLoading} searchTerm={searchTerm} onSearch={setSearchTerm} />
+	return (
+		<SelectAsyncPopoverContent loading={fetchLoading} onSearch={setSearchTerm} options={list} searchTerm={searchTerm} />
+	)
 }
 
 export default SelectGroupsPopoverContent

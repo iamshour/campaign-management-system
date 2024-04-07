@@ -30,7 +30,7 @@
 		"createdAt": "Creation Date"
 	},
 	"table": {
-		"toolbar": {
+		"topbar": {
 			"search": "Search for segments",
 
 			"actions": {

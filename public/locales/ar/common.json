@@ -15,6 +15,7 @@
 			"dashboard": "لوحة القيادة",
 			"inbox": "صندوق الوارد",
 			"integrations": "التكامل",
+			"industies": "الصناعات",
 			"people": {
 				"title": "الناس",
 				"elements": {
@@ -34,7 +35,7 @@
 			"channels": {
 				"title": "القنوات",
 				"elements": {
-					"whatsapp": "واتس اب"
+					"smsChannels": "قنوات الرسائل القصيرة"
 				}
 			},
 			"chatbot": {

@@ -1,41 +1,35 @@
 //#region Import
+import EditContactDialog from "@/features/people/contacts/dialogs/edit-contact-dialog/edit-contact-dialog"
+import MoveToGroupDialog from "@/features/people/groups/dialogs/move-to-group-dialog/move-to-group-dialog"
+import RemoveFromGroupDialog from "@/features/people/groups/dialogs/remove-from-group-dialog/remove-from-group-dialog"
+import ActionsDropdown from "@/ui/dropdown/actions-dropdown"
+import { memo } from "react"
 import { useTranslation } from "react-i18next"
-
-import EditContactDialog from "@/features/people/contacts/dialogs/edit-contact-dialog"
-import MoveToGroupDialog from "@/features/people/groups/dialogs/move-to-group-dialog"
-import RemoveFromGroupDialog from "@/features/people/groups/dialogs/remove-from-group-dialog"
-import { Dropdown } from "@/ui"
-
-import BiThreeDotsVertical from "~icons/bi/three-dots-vertical"
 //#endregion
 
-const GroupViewTableActions = ({ id }: { id: string }) => {
+const GroupViewTableActions = memo(({ id }: { id: string }) => {
 	const { t } = useTranslation("groups", { keyPrefix: "components.groupContactsTable.actionsDropdown" })
 
 	return (
-		<Dropdown>
-			<Dropdown.Trigger showArrow={false} variant='ghost' className='h-max w-max p-1.5'>
-				<BiThreeDotsVertical />
-			</Dropdown.Trigger>
+		<ActionsDropdown>
+			<EditContactDialog id={id}>
+				<ActionsDropdown.Item>{t("edit")}</ActionsDropdown.Item>
+			</EditContactDialog>
+			<ActionsDropdown.Separator />
 
-			<Dropdown.Content sideOffset={0} align='end'>
-				<EditContactDialog id={id}>
-					<Dropdown.Item>{t("edit")}</Dropdown.Item>
-				</EditContactDialog>
-				<Dropdown.Separator />
+			<MoveToGroupDialog id={id}>
+				<ActionsDropdown.Item>{t("move")}</ActionsDropdown.Item>
+			</MoveToGroupDialog>
 
-				<MoveToGroupDialog id={id}>
-					<Dropdown.Item>{t("move")}</Dropdown.Item>
-				</MoveToGroupDialog>
+			<ActionsDropdown.Separator />
 
-				<Dropdown.Separator />
-
-				<RemoveFromGroupDialog id={id}>
-					<Dropdown.Item>{t("remove")}</Dropdown.Item>
-				</RemoveFromGroupDialog>
-			</Dropdown.Content>
-		</Dropdown>
+			<RemoveFromGroupDialog id={id}>
+				<ActionsDropdown.Item>{t("remove")}</ActionsDropdown.Item>
+			</RemoveFromGroupDialog>
+		</ActionsDropdown>
 	)
-}
+})
+
+GroupViewTableActions.displayName = "GroupViewTableActions"
 
 export default GroupViewTableActions

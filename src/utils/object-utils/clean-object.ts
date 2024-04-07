@@ -13,6 +13,7 @@ export default function cleanObject<T extends Record<string, any>>(entry: T): Cl
 		if (value !== null && value !== undefined) {
 			if (typeof value === "object" && !Array.isArray(value)) {
 				const cleanedNestedObject = cleanObject(value)
+
 				if (Object.keys(cleanedNestedObject).length > 0) {
 					newObj[key as keyof typeof newObj] = cleanedNestedObject
 				}
@@ -20,6 +21,7 @@ export default function cleanObject<T extends Record<string, any>>(entry: T): Cl
 				const cleanedArray = value.map((item) =>
 					typeof item === "object" && !Array.isArray(item) ? cleanObject(item) : item
 				)
+
 				newObj[key as keyof typeof newObj] = cleanedArray as CleanObject<T[typeof key]>
 			} else if (value !== "") {
 				newObj[key as keyof typeof newObj] = value as CleanObject<T[typeof key]>

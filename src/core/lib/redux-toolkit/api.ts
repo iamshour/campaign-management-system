@@ -1,8 +1,7 @@
 //#region Import
+import API_BASE_URL from "@/core/constants/api-base-url"
 import { type BaseQueryFn, createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import toast from "react-hot-toast"
-
-import API_BASE_URL from "@/core/constants/api-base-url"
 
 import { getErrorMessage } from "./helpers"
 
@@ -47,8 +46,6 @@ const baseQueryWrapper: BaseQueryFn = async (args, api, otherOptions) => {
 	// }
 
 	if (res?.error && res?.error?.status === "FETCH_ERROR") {
-		console.log("NETWORK ERROR LOGGED FROM ./core/api/index.ts: ", res?.error)
-
 		toast.error(getErrorMessage(res?.error as any))
 		api.abort()
 	}
@@ -58,11 +55,28 @@ const baseQueryWrapper: BaseQueryFn = async (args, api, otherOptions) => {
 }
 
 const api = createApi({
-	reducerPath: "api",
 	baseQuery: baseQueryWrapper,
-	tagTypes: ["Contact", "Tag", "Group", "Segment", "Export", "SmsTemplate", "SmsPrebuiltTemplate", "Industry"],
 	endpoints: () => ({}),
+	reducerPath: "api",
 	refetchOnReconnect: true,
+	tagTypes: [
+		// Related to People Feature
+		"Contact",
+		"Tag",
+		"Group",
+		"Segment",
+		// Related to Templates Feature
+		"SmsTemplate",
+		"Industry",
+		"SmsIndustryTemplate",
+		// Related to Channels Feature
+		"ChannelSource",
+		"ChannelSourceRequest",
+		"ChannelSourceListing",
+		"ChannelSourceOptedOut",
+		"Company",
+		"UserInCompany",
+	],
 })
 
 export default api

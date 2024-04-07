@@ -1,10 +1,11 @@
 //#region Import
-import { useTranslation } from "react-i18next"
-import { v4 as newId } from "uuid"
+import type { ContactScreamSnakeCaseKey } from "@/features/people/contacts/types"
 
 import fileMappingHeadersOptions from "@/features/people/contacts/constants/file-mapping-headers-options"
-import type { ContactScreamSnakeCaseKey } from "@/features/people/contacts/types"
-import { twMerge, CompactTable, Select } from "@/ui"
+import { CompactTable, Select } from "@/ui"
+import { useTranslation } from "react-i18next"
+import { twMerge } from "tailwind-merge"
+import { v4 as newId } from "uuid"
 
 import { useImportContactsDialogContext } from "../import-contacts-dialog-context"
 //#endregion
@@ -13,7 +14,7 @@ const MappingTable = () => {
 	const { t } = useTranslation("contacts")
 
 	const {
-		data: { fileHasHeader, columnNameToIndexMapping, previewRows },
+		data: { columnNameToIndexMapping, fileHasHeader, previewRows },
 		updateData,
 	} = useImportContactsDialogContext()
 
@@ -40,6 +41,7 @@ const MappingTable = () => {
 				}
 
 			const found = Object.entries(prevColumnNameToIndexMapping).find(([, v]) => v === uniqueIndex)
+
 			delete prevColumnNameToIndexMapping[found![0] as ContactScreamSnakeCaseKey]
 
 			return {
@@ -61,23 +63,23 @@ const MappingTable = () => {
 							: undefined
 
 						return (
-							<CompactTable.Head key={newId()} className='px-3 even:bg-gray-50/75'>
-								<Select value={selectedValue} onValueChange={(contactKey) => onHeaderSelect(contactKey, idx)}>
-									<Select.Trigger hasValue={!!selectedValue} className='h-[30px] w-full truncate px-2'>
+							<CompactTable.Head className='px-3 even:bg-gray-50/75' key={newId()}>
+								<Select onValueChange={(contactKey) => onHeaderSelect(contactKey, idx)} value={selectedValue}>
+									<Select.Trigger className='h-[30px] w-full truncate px-2' hasValue={!!selectedValue}>
 										<Select.Value />
 									</Select.Trigger>
 									<Select.Content>
 										{fileMappingHeadersOptions?.map(({ label, value }) => (
 											<Select.Item
-												key={value}
-												value={value}
-												showCheck={false}
 												className={twMerge(
 													!!columnNameToIndexMapping &&
 														Object.keys(columnNameToIndexMapping)?.includes(value as ContactScreamSnakeCaseKey)
 														? "data-[state=checked]:!bg-primary-50"
 														: "pointer-events-all data-[state=checked]:!bg-transparent hover:!bg-slate-100"
-												)}>
+												)}
+												key={value}
+												showCheck={false}
+												value={value}>
 												<Select.Text>{t(label)}</Select.Text>
 											</Select.Item>
 										))}
@@ -90,15 +92,15 @@ const MappingTable = () => {
 			</CompactTable.Header>
 			<CompactTable.Body>
 				{previewRows.map((row, rowIndex) => (
-					<CompactTable.Row key={rowIndex} className='hover:bg-transparent'>
+					<CompactTable.Row className='hover:bg-transparent' key={rowIndex}>
 						{row?.split(",").map((cell, cellIdx) => (
 							<CompactTable.Cell
-								title={cell}
 								className={twMerge(
 									"max-w-[200px] truncate px-2.5 py-2 text-xs",
 									rowIndex === 0 && fileHasHeader ? "bg-primary-50/50 font-bold" : "even:bg-gray-50/75"
 								)}
-								key={cellIdx}>
+								key={cellIdx}
+								title={cell}>
 								{cell}
 							</CompactTable.Cell>
 						))}

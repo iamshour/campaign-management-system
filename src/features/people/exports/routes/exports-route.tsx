@@ -1,62 +1,54 @@
 //#region Import
-import { lazy } from "react"
+import type { DataViewState } from "@/core/components/data-view/types"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
-import { DisplayError, DataTableSkeleton } from "@/ui"
+import getSearchFilter from "@/core/utils/get-search-filter"
+import { useGetExportsQuery } from "@/features/people/exports/api"
+import { DataTableSkeleton } from "@/ui"
+import { lazy } from "react"
 
-import { useGetExportsQuery } from "../api"
+const ExportsView = lazy(() => import("@/features/people/exports/views/exports-view/exports-view"))
 
-const ExportsView = lazy(() => import("../views/exports-view"))
-const EmptyExportsView = lazy(() => import("../views/empty-exports-view"))
+const ExportsEmptyView = lazy(() => import("@/features/people/exports/views/exports-empty-view"))
+
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const ExportsRoute = () => {
-	const { offset, limit, order, sort, filters, searchTerm, appliedFiltersCount } = useSelector<
-		AdvancedTableStateType<"contacts-exports">
-	>(({ advancedTable }) => advancedTable["contacts-exports"])
+	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector<
+		DataViewState<"contacts-exports">
+	>(({ dataView }) => dataView["contacts-exports"])
 
-	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetExportsQuery(
+	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } = useGetExportsQuery(
 		{
-			limit,
-			offset,
-			sort,
-			order,
-			fileName: searchTerm,
-			any: searchTerm ? true : undefined,
-			// date range filter:
-			startDate: getValueFromSafeObject("startDate", filters?.dateRange),
-			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
-			// status filter:
-			statuses: filters?.status?.length ? filters.status : undefined,
-			// exported by filter:
-			exportedBy: filters?.exportedBy?.length ? filters.exportedBy : undefined,
+			...filters,
+			...getSearchFilter<["fileName"]>(searchTerm, ["fileName"]),
+			...paginationAndSorting,
+			order: "desc",
+			sort: "createdAt",
 		},
 		{
-			selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => {
-				return {
-					list: data?.list,
-					count: data?.count,
-					isInitialLoading: !data && isLoading,
-					isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-					isEmptyView: !isFetching && !!isSuccess && !data && !(appliedFiltersCount || !!searchTerm?.length),
-					isFetching,
-					...rest,
-				}
-			},
+			selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({
+				count: data?.count,
+				isEmptyView: !isFetching && !!isSuccess && !data?.count && !(appliedFiltersCount || !!searchTerm?.length),
+				isFetching,
+				isInitialLoading: !data && isLoading,
+				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
+				list: data?.list,
+				...rest,
+			}),
 			...baseQueryConfigs,
 		}
 	)
 
 	if (isInitialLoading) return <DataTableSkeleton />
 
-	if (isEmptyView) return <EmptyExportsView />
+	if (isEmptyView) return <ExportsEmptyView />
 
-	if (isError) return <DisplayError error={error as any} />
+	if (isError) return <DisplayError error={error as any} showReloadButton />
 
-	if (isReady) return <ExportsView list={list || []} count={count || 0} isFetching={isFetching} />
+	if (isReady) return <ExportsView count={count || 0} isFetching={isFetching} list={list || []} />
 }
 
 export default ExportsRoute

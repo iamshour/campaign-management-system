@@ -1,50 +1,51 @@
 //#region Import
-import type { CommonListArguments } from "@/core/lib/redux-toolkit/types"
-import type { OptionType } from "@/ui"
+import type { PaginationAndSorting } from "@/core/lib/redux-toolkit/types"
+import type { DateRange, OptionType } from "@/ui"
 //#endregion
 
 export type Segment = {
+	createdAt: string
+	description?: string
 	id: string
 	name: string
-	description?: string
-	createdAt: string
 }
 
 // Same as Backend's enum
 export type SegmentRuleAttribute =
+	| "COUNTRY"
+	| "EMAIL_ADDRESS"
 	| "FIRST_NAME"
+	| "GROUPS"
 	| "LAST_NAME"
 	| "PHONE_NUMBER"
-	| "EMAIL_ADDRESS"
-	| "COUNTRY"
-	| "TAGS"
-	| "GROUPS"
 	| "SEGMENTS"
+	| "TAGS"
 
 // Same as Backend's enum
 export type SegmentRuleCondition =
-	| "IS"
-	| "IS_NOT"
-	| "STARTS_WITH"
-	| "ENDS_WITH"
+	| ""
 	| "CONTAINS"
-	| "NOT_CONTAINS"
+	| "ENDS_WITH"
 	| "IS_EMPTY"
 	| "IS_NOT_EMPTY"
-	| ""
+	| "IS_NOT"
+	| "IS"
+	| "NOT_CONTAINS"
+	| "STARTS_WITH"
 
 // <----------------------->
 // Types used internally for All segments Creation/View/Edit components
 export type SegmentRuleType = {
-	// Optional since it only exists for editing rules
-	id?: string
 	attribute: SegmentRuleAttribute
 	condition: SegmentRuleCondition
-	specification?: string
 	country?: string
 	group?: OptionType
+	// Optional since it only exists for editing rules
+	id?: string
 	segment?: OptionType
+	specification?: string
 }
+
 export type SegmentConditionType = {
 	// Optional since it only exists for editing conditions
 	id?: string
@@ -53,43 +54,50 @@ export type SegmentConditionType = {
 // <----------------------->
 
 /**
- * Arguments passed to the server whilst using the `getSegments` query to fetch Segments List
+ * Filters used in Filters bar (Internally / Only Client-Side - Not sent to the server)
  */
-export type GetSegmentArgs = Omit<CommonListArguments<Segment>, "startDate" | "endDate">
+export type ContactSegmentFilter = DateRange
+
+type ContactSegmentSearchFilter = { any?: true; name?: string }
 
 /**
- * Arguments passed to the server whilst using the `createSegment` mutation to post a new created segment entry
+ * Arguments passed to the getSegments` query, used to fetch Segments List
  */
-export type createSegmentArgsType = Pick<Segment, "name"> &
-	Partial<Pick<Segment, "id" | "description">> & {
+export type GetSegmentsParams = PaginationAndSorting<Segment> & ContactSegmentFilter & ContactSegmentSearchFilter
+
+/**
+ * Body Arguments passed to the `createSegment` mutation, used to post a new created segment entry
+ */
+export type CreateSegmentBody = Pick<Segment, "name"> &
+	Partial<Pick<Segment, "description" | "id">> & {
 		contactSegmentConditionList: {
-			id?: string
 			contactSegmentRuleList: {
-				id: string | undefined
+				contactSegmentId: string | undefined
 				contactSegmentRuleAttribute: SegmentRuleAttribute
 				contactSegmentRuleCondition: SegmentRuleCondition
-				specification: string | undefined
 				country: string | undefined
 				groupId: string | undefined
-				contactSegmentId: string | undefined
+				id: string | undefined
+				specification: string | undefined
 			}[]
+			id?: string
 		}[]
 	}
 
 /**
- * Returned data shape from the `uploadContactsMutation` mutation function, which runs when users uploads a file
+ * Returned data shape from the `getSegmentById` query, used to get Segment details
  */
-export type GetSegmentByIdReturnValue = Pick<Segment, "id" | "name" | "description"> & {
+export type GetSegmentByIdReturnValue = Pick<Segment, "description" | "id" | "name"> & {
 	contactSegmentConditionDetailsList: {
-		id: string
 		contactSegmentRuleDetailsList: {
-			id: string
+			contactSegment: Record<"id" | "name", string>
 			contactSegmentRuleAttribute: SegmentRuleAttribute
 			contactSegmentRuleCondition: SegmentRuleCondition
-			specification?: string
 			country?: string
-			group: Record<"name" | "id", string>
-			contactSegment: Record<"name" | "id", string>
+			group: Record<"id" | "name", string>
+			id: string
+			specification?: string
 		}[]
+		id: string
 	}[]
 }

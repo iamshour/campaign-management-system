@@ -1,23 +1,22 @@
 //#region Import
-import { Suspense, lazy, useCallback } from "react"
+import { Label, Select, Skeleton } from "@/ui"
+import { lazy, Suspense, useCallback } from "react"
 import { useTranslation } from "react-i18next"
 
-import { Label, Select, Skeleton } from "@/ui"
-
-import segmentRuleAttributeFields from "../../constants/segment-rule-attribute-fields"
 import type { SegmentRuleAttribute, SegmentRuleCondition, SegmentRuleType } from "../../types"
 
-import { useSegmentsFunnelContext } from "."
+import segmentRuleAttributeFields from "../../constants/segment-rule-attribute-fields"
+import { useSegmentsFunnelContext } from "./segments-funnel-editable"
 
 const SegmentSpecification = lazy(() => import("./segment-specification"))
 //#endregion
 
 interface SegmentRuleProps extends SegmentRuleType {
-	ruleIdx: number
 	conditionIdx: number
+	ruleIdx: number
 }
 
-const SegmentRule = ({ ruleIdx, conditionIdx, ...rule }: SegmentRuleProps) => {
+const SegmentRule = ({ conditionIdx, ruleIdx, ...rule }: SegmentRuleProps) => {
 	const { attribute, condition } = rule
 
 	const { t } = useTranslation("segments", { keyPrefix: "views.editableSegmentView.items.conditions.fields" })
@@ -42,6 +41,7 @@ const SegmentRule = ({ ruleIdx, conditionIdx, ...rule }: SegmentRuleProps) => {
 								return prevRule
 							}),
 						}
+
 					return condition
 				})
 			)
@@ -55,8 +55,8 @@ const SegmentRule = ({ ruleIdx, conditionIdx, ...rule }: SegmentRuleProps) => {
 			<div className='flex w-full max-w-[340px] flex-col'>
 				<Label size='default'>{t("attribute.label")} *</Label>
 				<Select
-					value={attribute}
-					onValueChange={(attribute) => onSelectValueChange({ ...EmptyConditionValues, attribute })}>
+					onValueChange={(attribute) => onSelectValueChange({ ...EmptyConditionValues, attribute })}
+					value={attribute}>
 					<Select.Trigger className='w-full bg-white' hasValue={!!attribute?.length}>
 						<Select.Value placeholder={t("attribute.placeholder")} />
 					</Select.Trigger>
@@ -75,8 +75,8 @@ const SegmentRule = ({ ruleIdx, conditionIdx, ...rule }: SegmentRuleProps) => {
 				<div className='flex w-full max-w-[340px] flex-col'>
 					<Label size='default'>{t("condition.label")} *</Label>
 					<Select
-						value={condition}
-						onValueChange={(condition) => onSelectValueChange({ ...EmptyConditionValues, condition })}>
+						onValueChange={(condition) => onSelectValueChange({ ...EmptyConditionValues, condition })}
+						value={condition}>
 						<Select.Trigger className='w-full bg-white' hasValue={!!condition?.length}>
 							<Select.Value placeholder={t("condition.placeholder")} />
 						</Select.Trigger>
@@ -96,7 +96,7 @@ const SegmentRule = ({ ruleIdx, conditionIdx, ...rule }: SegmentRuleProps) => {
 				!!condition?.length &&
 				!(["IS_EMPTY", "IS_NOT_EMPTY"] as SegmentRuleCondition[]).includes(condition) && (
 					<Suspense fallback={<Skeleton className='h-[40px] w-[340px] rounded-md' />}>
-						<SegmentSpecification {...rule} ruleIdx={ruleIdx} onSelectValueChange={onSelectValueChange} />
+						<SegmentSpecification {...rule} onSelectValueChange={onSelectValueChange} ruleIdx={ruleIdx} />
 					</Suspense>
 				)}
 		</div>
@@ -107,10 +107,10 @@ export default SegmentRule
 
 const EmptyConditionValues: Partial<SegmentRuleType> = {
 	condition: "",
-	specification: undefined,
-	segment: undefined,
-	group: undefined,
 	country: undefined,
+	group: undefined,
+	segment: undefined,
+	specification: undefined,
 }
 
 const allConditionFields: { label: string; value: SegmentRuleCondition }[] = [
@@ -128,12 +128,12 @@ const pickConditionFields = (valuesToBePicked: SegmentRuleCondition[]) =>
 	allConditionFields.filter(({ value }) => valuesToBePicked.includes(value))
 
 const conditionsMap: Record<SegmentRuleAttribute, typeof allConditionFields> = {
+	COUNTRY: pickConditionFields(["IS", "IS_NOT", "IS_EMPTY", "IS_NOT_EMPTY"]),
+	EMAIL_ADDRESS: allConditionFields,
 	FIRST_NAME: allConditionFields,
+	GROUPS: pickConditionFields(["IS", "IS_NOT", "IS_EMPTY", "IS_NOT_EMPTY"]),
 	LAST_NAME: allConditionFields,
 	PHONE_NUMBER: allConditionFields,
-	EMAIL_ADDRESS: allConditionFields,
-	COUNTRY: pickConditionFields(["IS", "IS_NOT", "IS_EMPTY", "IS_NOT_EMPTY"]),
-	TAGS: pickConditionFields(["IS", "IS_NOT", "IS_EMPTY", "IS_NOT_EMPTY"]),
-	GROUPS: pickConditionFields(["IS", "IS_NOT", "IS_EMPTY", "IS_NOT_EMPTY"]),
 	SEGMENTS: pickConditionFields(["IS", "IS_NOT"]),
+	TAGS: pickConditionFields(["IS", "IS_NOT", "IS_EMPTY", "IS_NOT_EMPTY"]),
 }

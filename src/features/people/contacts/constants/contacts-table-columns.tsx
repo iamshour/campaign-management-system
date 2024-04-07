@@ -1,12 +1,14 @@
 //#region Import
-import { lazy } from "react"
+import type { ColumnType } from "@/core/components/data-view/data-table/types"
 
-import type { ColumnType } from "@/ui"
-import { format } from "@/utils"
+import { lazy } from "react"
 
 import type { Contact } from "../types"
 
 import contactFieldsMap from "./contact-fields-map"
+
+// eslint-disable-next-line react-refresh/only-export-components
+const DataViewDateCell = lazy(() => import("@/core/components/data-view/data-view-date-cell"))
 
 // eslint-disable-next-line react-refresh/only-export-components
 const ContactsTableTagsRow = lazy(() => import("../components/contacts-table-tags-row"))
@@ -38,14 +40,14 @@ const contactsTableColumns: ColumnType<Contact>[] = [
 	},
 	{
 		accessorKey: "createdAt",
+		cell: (date) => <DataViewDateCell date={date} />,
 		header: contactFieldsMap.createdAt,
-		cell: (createdAt) => !!createdAt && <>{format(new Date(createdAt), "MM-dd-yyyy")}</>,
 		sortable: true,
 	},
 	{
 		accessorKey: "tags",
-		header: contactFieldsMap.tags,
 		cell: (tags: string[]) => !!tags?.length && <ContactsTableTagsRow tags={tags} />,
+		header: contactFieldsMap.tags,
 	},
 ]
 

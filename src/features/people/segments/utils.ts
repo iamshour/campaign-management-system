@@ -1,5 +1,5 @@
 //#region Import
-import type { SegmentRuleCondition, SegmentConditionType, SegmentRuleType } from "./types"
+import type { SegmentConditionType, SegmentRuleCondition, SegmentRuleType } from "./types"
 //#endregion
 
 const isRuleValid = (rule: Partial<SegmentRuleType>) => {
@@ -8,7 +8,9 @@ const isRuleValid = (rule: Partial<SegmentRuleType>) => {
 	// Checking if condition will render a specification field, and specification field has valid value
 	if (!(["IS_EMPTY", "IS_NOT_EMPTY"] as SegmentRuleCondition[]).includes(rule.condition)) {
 		if (rule?.attribute === "GROUPS") return !!rule?.group?.value
+
 		if (rule?.attribute === "SEGMENTS") return !!rule?.segment?.value
+
 		if (rule?.attribute === "COUNTRY") return !!rule?.country?.length
 
 		return !!rule?.specification?.length
@@ -16,6 +18,7 @@ const isRuleValid = (rule: Partial<SegmentRuleType>) => {
 
 	return true
 }
+
 const isConditionValid = (condition: Partial<SegmentConditionType[][number]>) => {
 	if (!condition?.rules?.length || condition.rules.length > 10) return false
 

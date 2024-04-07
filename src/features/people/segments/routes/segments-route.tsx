@@ -1,39 +1,39 @@
 //#region Import
-import { lazy } from "react"
+import type { DataViewState } from "@/core/components/data-view/types"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import { DisplayError, DataTableSkeleton } from "@/ui"
+import getSearchFilter from "@/core/utils/get-search-filter"
+import { useGetSegmentsQuery } from "@/features/people/segments/api"
+import { DataTableSkeleton } from "@/ui"
+import { lazy } from "react"
 
-import { getContactSearchFilter } from "../../contacts/utils"
-import { useGetSegmentsQuery } from "../api"
+const SegmentsView = lazy(() => import("@/features/people/segments/views/segments-view/segments-view"))
 
-const SegmentsView = lazy(() => import("../views/segments-view"))
-const EmptySegmentsView = lazy(() => import("../views/empty-segments-view"))
+const SegmentsEmptyView = lazy(() => import("@/features/people/segments/views/segments-empty-view"))
+
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const SegmentsRoute = () => {
-	const { offset, limit, order, sort, appliedFiltersCount, searchTerm } = useSelector<
-		AdvancedTableStateType<"segments">
-	>(({ advancedTable }) => advancedTable["segments"])
+	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector<DataViewState<"segments">>(
+		({ dataView }) => dataView["segments"]
+	)
 
-	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetSegmentsQuery(
+	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } = useGetSegmentsQuery(
 		{
-			limit,
-			offset,
-			sort,
-			order,
-			...getContactSearchFilter(searchTerm),
+			...filters,
+			...getSearchFilter<["name"]>(searchTerm, ["name"]),
+			...paginationAndSorting,
 		},
 		{
-			selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => ({
-				list: data?.list,
+			selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({
 				count: data?.count,
+				isEmptyView: !isFetching && !!isSuccess && !data?.count && !(appliedFiltersCount || !!searchTerm?.length),
+				isFetching,
 				isInitialLoading: !data && isLoading,
 				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-				isEmptyView: !isFetching && !!isSuccess && !data && !(appliedFiltersCount || !!searchTerm?.length),
-				isFetching,
+				list: data?.list,
 				...rest,
 			}),
 			...baseQueryConfigs,
@@ -42,12 +42,11 @@ const SegmentsRoute = () => {
 
 	if (isInitialLoading) return <DataTableSkeleton />
 
-	// If no entries were found at all
-	if (isEmptyView) return <EmptySegmentsView />
+	if (isEmptyView) return <SegmentsEmptyView />
 
-	if (isError) return <DisplayError error={error as any} />
+	if (isError) return <DisplayError error={error as any} showReloadButton />
 
-	if (isReady) return <SegmentsView list={list || []} count={count || 0} isFetching={isFetching} />
+	if (isReady) return <SegmentsView count={count || 0} isFetching={isFetching} list={list || []} />
 }
 
 export default SegmentsRoute

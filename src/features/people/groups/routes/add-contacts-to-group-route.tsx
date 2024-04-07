@@ -1,64 +1,56 @@
 //#region Import
-import { lazy } from "react"
-import { useParams } from "react-router-dom"
+import type { DataViewState } from "@/core/components/data-view/types"
 
 import useSelector from "@/core/hooks/useSelector"
 import baseQueryConfigs from "@/core/lib/redux-toolkit/config"
-import type { AdvancedTableStateType } from "@/core/slices/advanced-table-slice/types"
-import getValueFromSafeObject from "@/core/utils/get-value-from-safe-obj"
 import { useGetContactsQuery } from "@/features/people/contacts/api"
-import { getContactSearchFilter } from "@/features/people/contacts/utils"
-import { DisplayError, DataTableSkeleton } from "@/ui"
-import { getListOfKey } from "@/utils"
+import { getContactFilter, getContactSearchFilter } from "@/features/people/contacts/utils"
+import { DataTableSkeleton } from "@/ui"
+import { lazy } from "react"
+import { useParams } from "react-router-dom"
 
-const AddContactsToGroupView = lazy(() => import("../views/add-contacts-to-group-view"))
+const ContactsEmptyView = lazy(() => import("@/features/people/contacts/views/contacts-view/contacts-empty-view"))
+
+const AddContactsToGroupView = lazy(() => import("@/features/people/groups/views/add-contacts-to-group-view"))
+
+const DisplayError = lazy(() => import("@/ui/errors/display-error"))
 //#endregion
 
 const AddContactsToGroupRoute = () => {
-	const { id: groupId } = useParams()
+	const { groupId } = useParams()
 
-	const { offset, limit, sort, order, filters, searchTerm, appliedFiltersCount } = useSelector<
-		AdvancedTableStateType<"contacts-in-group">
-	>(({ advancedTable }) => advancedTable["add-contacts-to-group"])
+	const { appliedFiltersCount, filters, paginationAndSorting, searchTerm } = useSelector<
+		DataViewState<"add-contacts-to-group">
+	>(({ dataView }) => dataView["add-contacts-to-group"])
 
-	const { list, count, isInitialLoading, isReady, isEmptyView, isFetching, isError, error } = useGetContactsQuery(
+	const { count, error, isEmptyView, isError, isFetching, isInitialLoading, isReady, list } = useGetContactsQuery(
 		{
-			excludedGroupsList: [groupId!],
-			limit,
-			offset,
-			sort,
-			order,
-			tags: filters?.tags,
-			groups: getListOfKey(filters?.groups, "value"),
-			startDate: getValueFromSafeObject("startDate", filters?.dateRange), // TODO: function to generate startDate and endDate filters
-			endDate: getValueFromSafeObject("endDate", filters?.dateRange),
+			...getContactFilter(filters, { excludedGroupsList: [groupId!] }),
 			...getContactSearchFilter(searchTerm),
+			...paginationAndSorting,
 		},
 		{
+			selectFromResult: ({ data, isFetching, isLoading, isSuccess, ...rest }) => ({
+				count: data?.count || 0,
+				isEmptyView: !isFetching && !!isSuccess && !data?.count && !(appliedFiltersCount || !!searchTerm?.length),
+				isFetching,
+				isInitialLoading: !data && isLoading,
+				isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
+				list: data?.list || [],
+				...rest,
+			}),
 			skip: !groupId,
-			selectFromResult: ({ data, isLoading, isFetching, isSuccess, ...rest }) => {
-				return {
-					list: data?.list,
-					count: data?.count,
-					isInitialLoading: !data && isLoading,
-					isReady: !isLoading && data?.list !== undefined && data?.count !== undefined,
-					isEmptyView: !isFetching && !!isSuccess && !data && !(appliedFiltersCount || !!searchTerm?.length),
-					isFetching,
-					...rest,
-				}
-			},
 			...baseQueryConfigs,
 		}
 	)
 
 	if (isInitialLoading) return <DataTableSkeleton />
 
-	// TODO: Create EmprtyView Component here
-	if (isEmptyView) return <div className='h-full w-full flex-center'>No Contacts to be added to this group!</div>
+	if (isEmptyView) return <ContactsEmptyView />
 
 	if (isError) return <DisplayError error={error as any} />
 
-	if (isReady) return <AddContactsToGroupView list={list || []} count={count || 0} isFetching={isFetching} />
+	if (isReady) return <AddContactsToGroupView count={count} isFetching={isFetching} list={list} />
 }
 
 export default AddContactsToGroupRoute
