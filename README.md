@@ -2,6 +2,10 @@
 
 Client-side application for campaign management system, developed by Ali Shour and Haifa Naim, two awesome Front-end devs!
 
+## About the Project
+
+This project helps businesses set up and launch promotional and marketing campaigns. Through CMS, businesses can save all customers' data and create SMS (local and international), Email, and WhatsApp campaigns, choosing from prebuilt campaign templates or creating campaigns from scratch.
+
 ## Getting Started
 
 Follow these instructions to set up and run the project on your local machine.
